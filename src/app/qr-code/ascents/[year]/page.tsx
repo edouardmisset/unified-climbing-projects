@@ -6,7 +6,8 @@ import { createAscentTooltip } from '~/helpers/tooltips'
 import { seasonAscent } from '~/data/ascent-data'
 import styles from './page.module.css'
 
-export default function Page({ props: { year } }: { props: { year: string } }) {
+export default function Page({ params: { year } }: { params: { year: string } }) {
+
   const selectedAscents = seasonAscent[Number(year)]
 
   if (selectedAscents === undefined) return <div>Year not found</div>
