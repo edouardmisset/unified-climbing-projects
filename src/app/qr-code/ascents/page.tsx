@@ -23,7 +23,7 @@ export default function Page() {
                   : undefined,
               }))
               return (
-                <div key={year}>
+                <div key={`ascents in ${year}`}>
                   <h3 style={{ textAlign: 'center' }}>
                     <Link href={`/qr-code/ascents/${year}`}>{year}</Link>
                   </h3>
@@ -32,8 +32,11 @@ export default function Page() {
                     itemRender={ascentDay => {
                       const hardestAscent = ascentDay?.ascents?.at(0)
                       return (
-                        <span
-                          key={ascentDay.date.dayOfYear}
+                        <i
+                          key={
+                            String(ascentDay.date.dayOfYear) +
+                              ascentDay.ascents?.[0]?.routeName ?? ''
+                          }
                           style={{
                             backgroundColor:
                               hardestAscent === undefined
