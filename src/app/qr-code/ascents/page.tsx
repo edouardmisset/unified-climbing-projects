@@ -5,6 +5,7 @@ import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
 import { seasonAscent } from '~/data/ascent-data'
 import styles from './page.module.css'
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -14,7 +15,7 @@ export default function Page() {
         <div className={styles.grid}>
           {Object.entries(seasonAscent)
             .reverse()
-            .map(([season, ascents]) => {
+            .map(([year, ascents]) => {
               const sortedAscents = [...ascents].map(ascentDay => ({
                 ...ascentDay,
                 ascents: ascentDay?.ascents
@@ -22,8 +23,10 @@ export default function Page() {
                   : undefined,
               }))
               return (
-                <div key={season}>
-                  <h3 style={{ textAlign: 'center' }}>{season}</h3>
+                <div key={year}>
+                  <h3 style={{ textAlign: 'center' }}>
+                    <Link href={`/qr-code/ascents/${year}`}>{year}</Link>
+                  </h3>
                   <QRCode
                     data={sortedAscents}
                     itemRender={ascentDay => {
