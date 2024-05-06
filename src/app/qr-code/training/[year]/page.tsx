@@ -39,6 +39,7 @@ export default function Page({
             >
               <Image
                 alt=""
+                priority
                 src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
                 width={120}
                 height={120}

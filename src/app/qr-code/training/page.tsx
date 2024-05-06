@@ -24,7 +24,10 @@ export default function Page() {
                   data={training}
                   itemRender={(trainingSession: TrainingSession) => (
                     <i
-                      key={trainingSession.date.dayOfYear}
+                      key={
+                        String(trainingSession.date.dayOfYear) +
+                        trainingSession.date.toString()
+                      }
                       style={{
                         backgroundColor: convertSessionTypeToBackgroundColor(
                           trainingSession.sessionType,
@@ -39,6 +42,7 @@ export default function Page() {
                     src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
                     width={120}
                     height={120}
+                    priority
                   />
                 </QRCode>
               </div>

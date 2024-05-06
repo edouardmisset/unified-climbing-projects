@@ -57,6 +57,7 @@ export default function Page() {
                       src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
                       width={120}
                       height={120}
+                      priority
                     />
                   </QRCode>
                 </div>
