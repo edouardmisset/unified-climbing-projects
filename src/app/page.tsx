@@ -15,6 +15,12 @@ export default async function Home() {
           <Link className={styles.link} href="./qr-code/ascents">
             <h3>Ascent QR Code</h3>
           </Link>
+          <Link
+            className={styles.link}
+            href={`./visualization/training/${new Date().getFullYear()}`}
+          >
+            <h3>Training Visualization</h3>
+          </Link>
         </div>
       </div>
     </main>
