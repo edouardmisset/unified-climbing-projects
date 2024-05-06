@@ -9,12 +9,18 @@ import Color from 'colorjs.io'
 
 import styles from './year-grid.module.css'
 
-export function YearGrid({ gridContent }: { gridContent: TrainingSession[] }) {
+export function YearGrid({
+  gridContent,
+  year,
+}: {
+  gridContent: TrainingSession[]
+  year: number
+}) {
   return (
     <div className={styles.yearGrid}>
       {Array.from({ length: 8 }, (_, i) => {
         const d = new Date()
-        d.setFullYear(2024)
+        d.setFullYear(year)
         d.setMonth(0)
         d.setDate(i)
         return i === 0 ? (

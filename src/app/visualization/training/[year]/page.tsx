@@ -22,7 +22,7 @@ export default function Visualization({
       {yearSession.length === 0 ? (
         <span>No record</span>
       ) : (
-        <YearGrid gridContent={yearSession} />
+        <YearGrid gridContent={yearSession} year={numberYear} />
       )}
       <div
         style={{
