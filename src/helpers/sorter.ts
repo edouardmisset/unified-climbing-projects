@@ -1,4 +1,4 @@
-import { Ascent } from "@/types/ascent"
+import { type Ascent } from "~/types/ascent"
 import { convertAscentGradeToNumber } from "./converter"
 
 export const sortByDescendingGrade = (

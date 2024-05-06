@@ -5,8 +5,8 @@ import Color from 'colorjs.io'
 export const convertAscentGradeToNumber = (grade: Grade): number =>
   GRADE_TO_NUMBER[grade]
 
-const lightness = '0.8'
-const chroma = '0.1'
+const lightness = '0.7'
+const chroma = '0.15'
 
 const staminaColor = new Color(`oklch(${lightness} ${chroma} 260)`)
 const taperedColor = new Color(`oklch(${lightness} ${chroma} 295)`)
@@ -17,37 +17,71 @@ const otherTrainingColor = new Color(`oklch(${lightness} 0 0)`)
 
 const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   Exclude<TrainingSession['sessionType'], undefined>,
-  string
+  Color
 > = {
-  Ex: outdoorColor.toString(),
+  Ex: outdoorColor,
 
-  Ta: taperedColor.toString(),
+  Ta: taperedColor,
 
-  Co: otherTrainingColor.toString(),
-  FB: otherTrainingColor.toString(),
-  Ro: otherTrainingColor.toString(),
-  Sg: otherTrainingColor.toString(),
+  Co: otherTrainingColor,
+  FB: otherTrainingColor,
+  Ro: otherTrainingColor,
+  Sg: otherTrainingColor,
 
-  CS: strengthColor.toString(),
-  Po: strengthColor.toString(),
-  MS: strengthColor.toString(),
+  CS: strengthColor,
+  Po: strengthColor,
+  MS: strengthColor,
 
-  En: enduranceColor.toString(),
-  PE: enduranceColor.toString(),
-  SE: enduranceColor.toString(),
+  En: enduranceColor,
+  PE: enduranceColor,
+  SE: enduranceColor,
 
-  Sk: staminaColor.toString(),
-  St: staminaColor.toString(),
+  Sk: staminaColor,
+  St: staminaColor,
 }
 
 export const convertSessionTypeToBackgroundColor = (
   sessionType: TrainingSession['sessionType'],
-): string =>
+): Color =>
   sessionType === undefined
-    ? 'white'
+    ? new Color('white')
     : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 
+export const getColorVariant = (
+  color: Color,
+  intensityPercent: number,
+  volumePercent: number,
+): Color => {
+  const upperThreshold = 80
+  const lowerThreshold = 50
 
+  const isOneComponentAboveThreshold =
+    intensityPercent >= upperThreshold || volumePercent >= upperThreshold
+
+  const isOneComponentBelowThreshold =
+    intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
+
+  const lightness = isOneComponentBelowThreshold
+    ? 0.9
+    : isOneComponentAboveThreshold
+    ? 0.6
+    : 0.75
+
+  return new Color(
+    new Color(color).set({
+      l: l => (l === 0 ? 0 : lightness),
+    }),
+  )
+}
+
+export const convertSessionTypeToAccentColor = (
+  sessionType: TrainingSession['sessionType'],
+): Color =>
+  new Color(
+    sessionType === undefined
+      ? 'transparent'
+      : new Color(SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]).darken(0.2),
+  )
 
 const ascentLightness = '1'
 const ascentChroma = '0.15'
@@ -55,7 +89,7 @@ const ascentChroma = '0.15'
 const color7a = new Color(`oklch(${ascentLightness} ${ascentChroma} 135)`)
 const color8a = new Color(`oklch(${ascentLightness} ${ascentChroma} 220)`)
 
-const darkeningCoefficient = .1
+const darkeningCoefficient = 0.1
 
 const ASCENT_GRADE_TO_COLOR: Record<Grade, string> = {
   '6c': 'red',
@@ -72,4 +106,5 @@ const ASCENT_GRADE_TO_COLOR: Record<Grade, string> = {
   '8b+': new Color(color8a.darken(3 * darkeningCoefficient)).toString(),
 }
 
-export const convertGradeToColor = (grade: Grade): string => ASCENT_GRADE_TO_COLOR[grade] ?? 'black'
+export const convertGradeToColor = (grade: Grade): string =>
+  ASCENT_GRADE_TO_COLOR[grade] ?? 'black'

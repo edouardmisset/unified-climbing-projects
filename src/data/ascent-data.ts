@@ -4,11 +4,7 @@ import { ascentSchema, type Ascent } from "~/types/ascent"
 
 import ascentData from '~/data/all-successes.json'
 
-
-
-
 const parsedAscentData = ascentSchema.array().parse(ascentData)
-
 
 const ascentSeasons = [
   ...new Set(parsedAscentData.map(({ date }) => date.year)),

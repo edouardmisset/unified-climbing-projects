@@ -1,0 +1,41 @@
+.gridHeader {
+  background-color: transparent !important;
+  color: #fff !important;
+  color: light-dark(#000, #fff) !important;
+  border: none !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.yearGrid {
+  --gap: 1px;
+  --background-color: #fff;
+  --text-color: #000;
+
+  --border-color: currentColor;
+  --border-width: 1px;
+  --border-radius: 2px;
+
+  width: min-content;
+
+  display: grid;
+  grid-template-columns: repeat(54, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  grid-auto-flow: column;
+
+  gap: var(--gap, 1px);
+}
+
+.yearGridCell {
+  font-size: 0.5rem;
+
+  block-size: 1rem;
+  aspect-ratio: 1 / 1;
+
+  color: var(--text-color, #000);
+  background-color: var(--background-color, #fff);
+
+  border-width: var(--border-width, 1px);
+  border-style: solid;
+  border-radius: var(--border-radius, 2px);
+  border-color: var(--border-color, currentColor);
+}

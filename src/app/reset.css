@@ -1,0 +1,118 @@
+/** Kevin Powell's reset CSS
+ * https://github.com/kevin-powell/website-starter-template-v3/
+ * 
+ * Remove all animations, transitions and smooth scroll for people that prefer not to see them:
+ * https://github.com/kevin-powell/demo-starter-template-with-sass/blob/main/src/sass/base/_reset.scss
+ * 
+ * 25 lines of CSS is all you need (to start with, anyway):
+ * https://www.youtube.com/shorts/ydGti7sLVOc
+ *
+ * Under the radar CSS features for your CSS reset:
+ * https://www.youtube.com/watch?v=cCAtD_BAHNw
+ * 
+ * A better image reset for your CSS:
+ * https://www.youtube.com/watch?v=345V2MU3E_w
+*/
+
+:root {
+  color: hsl(0deg 0% 100% / 90%);
+  font-weight: 400;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  background-color: hsl(0deg 0% 14%);
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+html {
+  hanging-punctuation: first last;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100svh;
+  font-size: 1.125rem;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+main {
+  inline-size: min(65ch, 100% - 4rem);
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  max-inline-size: 65ch;
+  text-wrap: pretty;
+}
+
+img,
+svg,
+picture {
+  max-width: 100%;
+  height: auto;
+
+  display: block;
+  vertical-align: middle;
+  font-style: italic;
+}
+
+a {
+  color: hsl(235deg 100% 70%);
+  font-weight: 500;
+}
+
+a:hover {
+  color: hsl(235deg 85% 65%);
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :has(:target) {
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
+  }
+}

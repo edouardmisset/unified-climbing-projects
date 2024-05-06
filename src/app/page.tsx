@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import './reset.css'
 import styles from './index.module.css'
 
 export default async function Home() {

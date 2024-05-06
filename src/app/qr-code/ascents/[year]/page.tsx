@@ -1,16 +1,12 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { convertGradeToColor } from '~/utils/converter'
-import { sortByDescendingGrade } from '~/utils/sorter'
-import { createAscentQRTooltip } from '~/utils/tooltips'
-import { seasonAscent } from '../data'
+import { convertGradeToColor } from '~/helpers/converter'
+import { sortByDescendingGrade } from '~/helpers/sorter'
+import { createAscentTooltip } from '~/helpers/tooltips'
+import { seasonAscent } from '~/data/ascent-data'
 import styles from './page.module.css'
 
-export default function Page({
-  params: { year },
-}: {
-  params: { year: string }
-}) {
+export default function Page({ props: { year } }: { props: { year: string } }) {
   const selectedAscents = seasonAscent[Number(year)]
 
   if (selectedAscents === undefined) return <div>Year not found</div>
@@ -44,7 +40,7 @@ export default function Page({
                     }}
                     title={
                       ascentDay?.ascents
-                        ? createAscentQRTooltip(ascentDay.ascents)
+                        ? createAscentTooltip(ascentDay.ascents)
                         : ''
                     }
                   />

@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import type { TrainingSession } from '~/types/training'
-import { convertSessionTypeToBackgroundColor } from '~/utils/converter'
-import { createTrainingQRTooltip } from '~/utils/tooltips'
-import { seasonTraining } from '../data'
+import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
+import { createTrainingTooltip } from '~/helpers/tooltips'
+import { seasonTraining } from '~/data/training-data'
 import styles from './page.module.css'
 
 export default function Home({
@@ -32,9 +32,9 @@ export default function Home({
                   style={{
                     backgroundColor: convertSessionTypeToBackgroundColor(
                       trainingSession.sessionType,
-                    ),
+                    ).toString(),
                   }}
-                  title={createTrainingQRTooltip(trainingSession)}
+                  title={createTrainingTooltip(trainingSession)}
                 />
               )}
             >

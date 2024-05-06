@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { convertGradeToColor } from '~/utils/converter'
-import { sortByDescendingGrade } from '~/utils/sorter'
-import { createAscentQRTooltip } from '~/utils/tooltips'
-import { seasonAscent } from './data'
+import { convertGradeToColor } from '~/helpers/converter'
+import { sortByDescendingGrade } from '~/helpers/sorter'
+import { createAscentTooltip } from '~/helpers/tooltips'
+import { seasonAscent } from '~/data/ascent-data'
 import styles from './page.module.css'
 
 export default function Page() {
@@ -39,7 +39,7 @@ export default function Page() {
                           }}
                           title={
                             ascentDay?.ascents
-                              ? createAscentQRTooltip(ascentDay.ascents)
+                              ? createAscentTooltip(ascentDay.ascents)
                               : ''
                           }
                         />

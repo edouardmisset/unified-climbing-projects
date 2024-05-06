@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   min-height: 100vh;
   background-image: linear-gradient(to bottom, #2e026d, #15162c);
 }
@@ -89,4 +89,9 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+}
+
+.super-center {
+  display: grid;
+  place-items: center;
 }
