@@ -1,0 +1,123 @@
+/** Credits to Stephanie Eckles
+* (https://moderncss.dev/12-modern-css-one-line-upgrades) 
+*/
+
+/** Stable Upgrade */
+
+/** Aspect Ratio */
+.aspect-ratio-hd {
+  aspect-ratio: 16/9;
+}
+
+.aspect-ratio-square {
+  aspect-ratio: 1;
+}
+
+/** object-fit */
+.cover-image {
+  object-fit: cover;
+  aspect-ratio: 1;
+
+  /* Optional: constrain image size */
+  max-block-size: 250px;
+}
+
+.scale-image {
+  object-fit: scale-down;
+  aspect-ratio: 1;
+
+  /* Optional: constrain image size */
+  max-block-size: 250px;
+}
+
+/** margin-inline */
+.center {
+  /* Before */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* After */
+  margin-inline: auto;
+}
+
+/** Stable Enhancements */
+
+/** text-underline-offset */
+a:not([class]) {
+  text-underline-offset: 0.25em;
+}
+
+/** outline-offset */
+
+/* Reminder: 
+outlines are not computed as part of the element’s box size, so
+increasing the distance will not increase the amount of space an element
+occupies. This is similar to how box-shadow is rendered without impacting the
+element size as well. 
+*/
+.outline-offset {
+  outline: 2px dashed blue;
+  outline-offset: var(--outline-offset, 0.5em);
+}
+
+/** scroll-margin-top/bottom */
+[id] {
+  /* Update --scroll-margin with JS if needed */
+  scroll-margin-top: var(--scroll-margin, 2rem);
+}
+
+/** color-scheme & accent-color */
+:root {
+  color-scheme: dark light;
+  accent-color: purple;
+}
+
+.dark-background {
+  color-scheme: dark;
+}
+
+/** width: fit-content */
+.fit-content {
+  inline-size: fit-content;
+}
+
+/** Progressive Enhancements */
+
+/** overscroll-behavior */
+.sidebar,
+.article {
+  overscroll-behavior: contain;
+}
+
+/** text-wrap */
+:is(h1, h2, h3, h4, .text-balance) {
+  text-wrap: balance;
+
+  /* For demonstration */
+  max-inline-size: 25ch;
+}
+
+p {
+  text-wrap: pretty;
+
+  /* For demonstration */
+  max-inline-size: 35ch;
+}
+
+/** scrollbar-gutter */
+
+/* Consider which element this applies to... */
+
+/* From https://moderncss.dev/12-modern-css-one-line-upgrades/#scrollbar-gutter
+In some scenarios, the appearance or disappearance of scrollbars can cause an
+unwanted layout shift. For example, when a dialog overlay is displayed and the
+background page adds overflow: hidden to prevent scrolling, causing a shift from
+removing the no longer needed scrollbars.
+The modern CSS property scrollbar-gutter enables a reservation of space for
+scrollbars in the layout, which prevents that undesirable shift. When there’s no
+need for a scrollbar, the browser will still paint a gutter as extra space
+created in addition to any padding on the scroll container. 
+*/
+.container {
+  scrollbar-gutter: stable both-edges;
+}

@@ -23,6 +23,8 @@
   grid-auto-flow: column;
 
   gap: var(--gap, 1px);
+
+  place-items: center;
 }
 
 .yearGridCell {

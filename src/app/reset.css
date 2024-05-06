@@ -50,7 +50,6 @@ html:focus-within {
 
 body {
   min-height: 100svh;
-  font-size: 1.125rem;
   font-family: system-ui, sans-serif;
   line-height: 1.6;
 }

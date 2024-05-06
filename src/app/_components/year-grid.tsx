@@ -19,6 +19,7 @@ export function YearGrid({ gridContent }: { gridContent: TrainingSession[] }) {
         d.setDate(i)
         return i === 0 ? (
           <div
+            key="first-cell"
             className={styles.yearGridCell}
             style={{
               backgroundColor: 'transparent',
@@ -27,7 +28,7 @@ export function YearGrid({ gridContent }: { gridContent: TrainingSession[] }) {
           />
         ) : (
           <div
-            key={i}
+            key={`${i}-day`}
             className="super-center grid-header"
             style={{
               minInlineSize: '4ch',
@@ -40,7 +41,7 @@ export function YearGrid({ gridContent }: { gridContent: TrainingSession[] }) {
       {Array.from({ length: 53 }, (_, i) => {
         return i === 0 ? null : (
           <div
-            key={i}
+            key={`${i}-week`}
             className={
               'super-center' +
               ' ' +
