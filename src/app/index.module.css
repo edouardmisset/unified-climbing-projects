@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   min-height: 100vh;
   background-image: linear-gradient(to bottom, #2e026d, #15162c);
 }
@@ -62,92 +62,6 @@
   }
 }
 
-.pinkSpan {
-  color: hsl(280 100% 70%);
-}
-
-.cardRow {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-@media (min-width: 640px) {
-  .cardRow {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 768px) {
-  .cardRow {
-    gap: 2rem;
-  }
-}
-
-.card {
-  max-width: 20rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  color: white;
-  background-color: rgb(255 255 255 / 0.1);
-}
-
-.card:hover {
-  background-color: rgb(255 255 255 / 0.2);
-  transition: background-color 150ms cubic-bezier(0.5, 0, 0.2, 1);
-}
-
-.cardTitle {
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.cardText {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.showcaseContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.showcaseText {
-  color: white;
-  text-align: center;
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
-.authContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.loginButton {
-  border-radius: 9999px;
-  background-color: rgb(255 255 255 / 0.1);
-  padding: 0.75rem 2.5rem;
-  font-weight: 600;
-  color: white;
-  text-decoration-line: none;
-  transition: background-color 150ms cubic-bezier(0.5, 0, 0.2, 1);
-}
-
-.loginButton:hover {
-  background-color: rgb(255 255 255 / 0.2);
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -161,17 +75,18 @@
   color: black;
 }
 
-.submitButton {
-  all: unset;
-  border-radius: 9999px;
-  background-color: rgb(255 255 255 / 0.1);
-  padding: 0.75rem 2.5rem;
-  font-weight: 600;
+.link {
   color: white;
-  text-align: center;
-  transition: background-color 150ms cubic-bezier(0.5, 0, 0.2, 1);
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.submitButton:hover {
-  background-color: rgb(255 255 255 / 0.2);
+.link:hover {
+  text-decoration: underline;
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
 }
