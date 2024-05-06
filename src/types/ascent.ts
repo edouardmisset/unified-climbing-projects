@@ -100,34 +100,31 @@ export const gradeSchema = z.enum(grades)
 
 export type Grade = z.infer<typeof gradeSchema>
 
-const frenchDateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/gi
-
-const stringOrEmptyStringSchema = string().or(literal(''))
+const optionalStringSchema = string().optional()
 
 export const ascentSchema = z.object({
-  routeName: string().nonempty().or(number()),
+  routeName: string().min(1).or(number()),
   topoGrade: gradeSchema,
   tries: z.enum(tries),
-  personalGrade: gradeSchema,
-  height: z.enum(heights).or(literal('')),
-  profile: z.enum(profiles),
-  holds: z.enum(holds),
-  rating: z.enum(ratings),
+  personalGrade: gradeSchema.optional(),
+  height: z.enum(heights).optional(),
+  profile: z.enum(profiles).optional(),
+  holds: z.enum(holds).optional(),
+  rating: z.enum(ratings).optional(),
   routeOrBoulder: z.enum(['Route', 'Boulder']),
   crag: string(),
-  area: z.union([string(), number(), literal('')]),
-  departement: stringOrEmptyStringSchema,
-  date: string().nonempty()
-    .regex(frenchDateFormat)
+  area: z.union([string(), number()]).optional(),
+  departement: optionalStringSchema,
+  date: string().min(1).datetime()
     .transform(stringDate => {
-      const [day, month, year] = stringDate.split('/').map(Number)
+      const d = new Date(stringDate)
       return Temporal.PlainDate.from(
-        { day, month, year },
+        { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },
         { overflow: 'reject' },
       )
     }),
   climber: string(),
-  ascentComment: stringOrEmptyStringSchema,
+  ascentComment: optionalStringSchema,
 })
 
 export type Ascent = z.infer<typeof ascentSchema>

@@ -1,22 +1,18 @@
-import { Temporal } from "@js-temporal/polyfill"
+import { Temporal } from '@js-temporal/polyfill'
 
-import { trainingSessionSchema, type TrainingSession } from "~/types/training"
+import { trainingSessionSchema, type TrainingSession } from '~/types/training'
 
-import trainingData from '~/data/training-data.json'
-
-
-const parsedTrainingData = trainingSessionSchema.array().parse(trainingData)
-
+const parsedTrainingData = await fetch(
+  'https://climbing-back.deno.dev/api/training',
+)
+  .then(response => response.json())
+  .then(({ data }) => trainingSessionSchema.array().parse(data))
 
 const trainingSeasons = [
   ...new Set(parsedTrainingData.map(({ date }) => date.year)),
-]
-  .filter(s => s !== Temporal.Now.plainDateISO().year)
-  .reverse()
+].reverse()
 
-
-
-const trainingQRCodeCollection: Record<number, TrainingSession[]> =
+const trainingCollection: Record<number, TrainingSession[]> =
   Object.fromEntries(
     trainingSeasons.map(season => {
       const daysPerYear = 365
@@ -35,13 +31,11 @@ const trainingQRCodeCollection: Record<number, TrainingSession[]> =
     }),
   )
 
-export const seasonTraining = parsedTrainingData
-  .filter(({ date }) => Temporal.Now.plainDateISO().year !== date.year)
-  .reduce(
-    (acc, trainingSession) => {
-      acc[trainingSession.date.year]![trainingSession.date.dayOfYear - 1] =
-        trainingSession
-      return acc
-    },
-    { ...trainingQRCodeCollection },
-  )
+export const seasonTraining = parsedTrainingData.reduce(
+  (acc, trainingSession) => {
+    acc[trainingSession.date.year]![trainingSession.date.dayOfYear - 1] =
+      trainingSession
+    return acc
+  },
+  { ...trainingCollection },
+)

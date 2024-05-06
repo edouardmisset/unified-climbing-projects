@@ -18,17 +18,15 @@ const sessionTypeSchema = z.enum([
   'FB',
 ])
 
-const frenchDateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/gi
-
 const percentSchema = number().min(0).max(100)
 export const trainingSessionSchema = z.object({
   date: string()
-    .nonempty()
-    .regex(frenchDateFormat)
+    .min(1)
+    .datetime()
     .transform(stringDate => {
-      const [day, month, year] = stringDate.split('/').map(Number)
+      const d = new Date(stringDate)
       return Temporal.PlainDate.from(
-        { day, month, year },
+        { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },
         { overflow: 'reject' },
       )
     }),

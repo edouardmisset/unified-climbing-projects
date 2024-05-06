@@ -1,32 +1,31 @@
-import { Temporal } from "@js-temporal/polyfill"
-import type { TemporalDate } from "~/app/_components/qr-code/qr-code"
-import { ascentSchema, type Ascent } from "~/types/ascent"
+import { Temporal } from '@js-temporal/polyfill'
+import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
+import { ascentSchema, type Ascent } from '~/types/ascent'
 
-import ascentData from '~/data/all-successes.json'
-
-const parsedAscentData = ascentSchema.array().parse(ascentData)
+const parsedAscentData = await fetch('https://climbing-back.deno.dev/api/ascents')
+  .then(response => response.json())
+  .then(({ data }) => ascentSchema.array().parse(data))
 
 const ascentSeasons = [
   ...new Set(parsedAscentData.map(({ date }) => date.year)),
 ]
-  .filter(s => s !== Temporal.Now.plainDateISO().year)
   .reverse()
 
-const ascentQRCodeCollection: Record<
+const ascentsCollection: Record<
   number,
   (TemporalDate & { ascents?: Ascent[] })[]
 > = Object.fromEntries(
-  ascentSeasons.map(season => {
+  ascentSeasons.map(year => {
     const daysPerYear = 365
     return [
-      season,
+      year,
       Array.from({ length: daysPerYear })
         .fill(undefined)
         .map((_, i) => ({
           date: Temporal.PlainDate.from({
             day: 1,
             month: 1,
-            year: season,
+            year,
           }).add({ days: i }),
         })),
     ]
@@ -34,16 +33,17 @@ const ascentQRCodeCollection: Record<
 )
 
 export const seasonAscent = parsedAscentData
-  .filter(({ date }) => Temporal.Now.plainDateISO().year !== date.year)
   .reduce(
     (acc, ascent) => {
       const { date } = ascent
-      const thisDay = acc[date.year]![date.dayOfYear - 1]
-      acc[date.year]![date.dayOfYear - 1] = {
+      const { year, dayOfYear } = date
+      const thisDay = acc[year]?.[dayOfYear - 1]
+
+      acc[year]![dayOfYear - 1] = {
         date,
         ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
       }
       return acc
     },
-    { ...ascentQRCodeCollection },
+    { ...ascentsCollection },
   )
