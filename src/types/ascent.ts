@@ -1,5 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { literal, number, string, z } from 'zod'
+import { number, string, z } from 'zod'
 
 const ratings = ['1*', '2*', '3*', '4*', '5*'] as const
 

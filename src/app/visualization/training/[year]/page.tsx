@@ -1,4 +1,4 @@
-import { YearGrid } from '~/app/_components/year-grid'
+import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
 import Link from 'next/link'
 import { seasonTraining } from '~/data/training-data'

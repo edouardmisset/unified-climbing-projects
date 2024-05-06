@@ -1,8 +1,8 @@
 import { type Ascent } from "~/types/ascent"
-import { convertAscentGradeToNumber } from "./converter"
+import { convertGradeToNumber } from "./converter"
 
 export const sortByDescendingGrade = (
   { topoGrade: aGrade }: Ascent,
   { topoGrade: bGrade }: Ascent,
 ): number =>
-  convertAscentGradeToNumber(bGrade) - convertAscentGradeToNumber(aGrade)
+  convertGradeToNumber(bGrade) - convertGradeToNumber(aGrade)

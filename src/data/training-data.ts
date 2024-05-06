@@ -1,4 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill'
+import { isDataResponse } from '~/types/generic'
 
 import { trainingSessionSchema, type TrainingSession } from '~/types/training'
 
@@ -6,7 +7,16 @@ const parsedTrainingData = await fetch(
   'https://climbing-back.deno.dev/api/training',
 )
   .then(response => response.json())
-  .then(({ data }) => trainingSessionSchema.array().parse(data))
+  .then((json) => {
+    if (!(isDataResponse(json)))
+      throw new Error('Invalid response')
+
+    return trainingSessionSchema.array().parse(json.data)
+  }).catch((error) => {
+    console.error(error)
+    return []
+  }
+  )
 
 const trainingSeasons = [
   ...new Set(parsedTrainingData.map(({ date }) => date.year)),
