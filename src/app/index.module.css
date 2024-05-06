@@ -61,37 +61,3 @@
     font-size: 5rem;
   }
 }
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.input {
-  width: 100%;
-  border-radius: 9999px;
-  padding: 0.5rem 1rem;
-  color: black;
-}
-
-.link {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
-.linkContainer {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.super-center {
-  display: grid;
-  place-items: center;
-}
