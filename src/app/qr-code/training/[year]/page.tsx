@@ -6,16 +6,15 @@ import { createTrainingTooltip } from '~/helpers/tooltips'
 import { seasonTraining } from '~/data/training-data'
 import styles from './page.module.css'
 
-export default function Home({
+export default function Page({
   params: { year },
 }: {
   params: { year: string }
 }) {
   const selectedTrainingSessions = seasonTraining[Number(year)]
 
-  if (selectedTrainingSessions === undefined) {
-    return <div>Year not found</div>
-  }
+  if (selectedTrainingSessions === undefined)
+    return <div>No data found for the year {year}</div>
 
   return (
     <main className={styles.main}>

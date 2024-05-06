@@ -6,11 +6,15 @@ import { createAscentTooltip } from '~/helpers/tooltips'
 import { seasonAscent } from '~/data/ascent-data'
 import styles from './page.module.css'
 
-export default function Page({ params: { year } }: { params: { year: string } }) {
-
+export default function Page({
+  params: { year },
+}: {
+  params: { year: string }
+}) {
   const selectedAscents = seasonAscent[Number(year)]
 
-  if (selectedAscents === undefined) return <div>Year not found</div>
+  if (selectedAscents === undefined)
+    return <div>No data found for the year {year}</div>
 
   const sortedAscents = [...selectedAscents].map(ascentDay => ({
     ...ascentDay,
