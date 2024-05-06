@@ -1,12 +1,11 @@
 import '~/styles/globals.css'
 
-import { Inter } from 'next/font/google'
-
 import { TRPCReactProvider } from '~/trpc/react'
 
-const inter = Inter({
-  subsets: ['latin'],
-})
+import './reset.css'
+import './quick-upgrades.css'
+import './global-styles.css'
+import Link from 'next/link'
 
 export const metadata = {
   title: 'Unified Climbing Projects',
@@ -21,8 +20,51 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+      <body>
+        <TRPCReactProvider>
+          <header>
+            <nav>
+              <ul
+                className="flex-row wrap gap flex-center flex-even margin-auto"
+                style={{
+                  height: '3rem',
+                  listStyle: 'none',
+                }}
+              >
+                <li>
+                  <Link href={'/'}>Home</Link>
+                </li>
+                <li>
+                  <Link href={'/qr-code/ascents'}>Ascents QR</Link>
+                </li>
+                <li>
+                  <Link href={'/'}>Ascents Barcode</Link>
+                </li>
+                <li>
+                  <Link
+                    href={`/visualization/ascents/${new Date().getFullYear()}`}
+                  >
+                    Ascents Visualization
+                  </Link>
+                </li>
+                <li>
+                  <Link href={'/qr-code/training'}>Training QR</Link>
+                </li>
+                <li>
+                  <Link href={'/'}>Training Barcode</Link>
+                </li>
+                <li>
+                  <Link
+                    href={`/visualization/training/${new Date().getFullYear()}`}
+                  >
+                    Training Visualization
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </header>
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   )
