@@ -39,6 +39,7 @@ export default function QRCode<T extends Obj>(
         maxHeight: 400,
         backgroundColor: 'white',
         padding: '1rem',
+        marginInline: 'auto',
       }}
     >
       {/* Markers */}
