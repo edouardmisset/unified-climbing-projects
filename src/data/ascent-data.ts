@@ -17,7 +17,7 @@ const parsedAscentData = await fetch(
     return []
   })
 
-const ascentSeasons = [
+export const ascentSeasons = [
   ...new Set(parsedAscentData.map(({ date }) => date.year)),
 ].reverse()
 
@@ -42,7 +42,7 @@ const ascentsCollection: Record<
   }),
 )
 
-export const seasonAscent = parsedAscentData.reduce(
+export const seasonAscentPerDay = parsedAscentData.reduce(
   (acc, ascent) => {
     const { date } = ascent
     const { year, dayOfYear } = date
@@ -55,4 +55,33 @@ export const seasonAscent = parsedAscentData.reduce(
     return acc
   },
   { ...ascentsCollection },
+)
+
+
+const createEmptyBarcodeCollection = <T>() => Object.fromEntries(
+  ascentSeasons.map(season => {
+    const weeksPerYear = 52
+    return [
+      season,
+      Array.from({ length: weeksPerYear })
+        .fill(undefined)
+        .map((): (T)[] => []),
+    ]
+  }),
+)
+
+export const seasonsAscentsPerWeek = parsedAscentData.reduce(
+  (accumulator, ascent) => {
+    const {
+      date: { year, weekOfYear },
+    } = ascent
+
+    const weekAscents = accumulator[year]?.[weekOfYear]
+    accumulator[year]![weekOfYear] = weekAscents
+      ? [...weekAscents, ascent]
+      : [ascent]
+
+    return accumulator
+  },
+  { ...createEmptyBarcodeCollection<Ascent>() },
 )

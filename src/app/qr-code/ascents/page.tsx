@@ -3,7 +3,7 @@ import QRCode from '~/app/_components/qr-code/qr-code'
 import { convertGradeToColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
-import { seasonAscent } from '~/data/ascent-data'
+import { seasonAscentPerDay } from '~/data/ascent-data'
 import styles from './page.module.css'
 import Link from 'next/link'
 
@@ -13,7 +13,7 @@ export default function Page() {
       <section style={{ display: 'flex', flexDirection: 'column' }}>
         <h2 style={{ textAlign: 'center' }}>Ascents</h2>
         <div className={styles.grid}>
-          {Object.entries(seasonAscent)
+          {Object.entries(seasonAscentPerDay)
             .reverse()
             .map(([year, ascents]) => {
               const sortedAscents = [...ascents].map(ascentDay => ({

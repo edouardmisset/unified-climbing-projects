@@ -27,7 +27,7 @@ export default function RootLayout({
               <ul
                 className="flex-row wrap gap flex-center flex-even margin-auto"
                 style={{
-                  height: '3rem',
+                  minHeight: '3rem',
                   listStyle: 'none',
                 }}
               >
@@ -38,7 +38,7 @@ export default function RootLayout({
                   <Link href={'/qr-code/ascents'}>Ascents QR</Link>
                 </li>
                 <li>
-                  <Link href={'/'}>Ascents Barcode</Link>
+                  <Link href={'/barcode/ascents'}>Ascents Barcode</Link>
                 </li>
                 <li>
                   <Link

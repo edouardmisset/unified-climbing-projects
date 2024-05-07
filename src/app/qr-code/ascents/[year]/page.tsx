@@ -3,7 +3,7 @@ import QRCode from '~/app/_components/qr-code/qr-code'
 import { convertGradeToColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
-import { seasonAscent } from '~/data/ascent-data'
+import { seasonAscentPerDay } from '~/data/ascent-data'
 import styles from './page.module.css'
 
 export default function Page({
@@ -11,7 +11,7 @@ export default function Page({
 }: {
   params: { year: string }
 }) {
-  const selectedAscents = seasonAscent[Number(year)]
+  const selectedAscents = seasonAscentPerDay[Number(year)]
 
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>
