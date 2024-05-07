@@ -2,6 +2,7 @@ import { Temporal } from '@js-temporal/polyfill'
 import { isDataResponse } from '~/types/generic'
 
 import { trainingSessionSchema, type TrainingSession } from '~/types/training'
+import { createEmptyBarcodeCollection } from './ascent-data'
 
 const parsedTrainingData = await fetch(
   'https://climbing-back.deno.dev/api/training',
@@ -14,7 +15,7 @@ const parsedTrainingData = await fetch(
     return trainingSessionSchema.array().parse(json.data)
   }).catch((error) => {
     console.error(error)
-    return []
+    return [] as TrainingSession[]
   }
   )
 
@@ -48,4 +49,20 @@ export const seasonTraining = parsedTrainingData.reduce(
     return acc
   },
   { ...trainingCollection },
+)
+
+export const seasonsTrainingPerWeek = parsedTrainingData.reduce(
+  (accumulator, training) => {
+    const {
+      date: { year, weekOfYear },
+    } = training
+
+    const weekTrainingSessions = accumulator[year]?.[weekOfYear]
+    accumulator[year]![weekOfYear] = weekTrainingSessions
+      ? [...weekTrainingSessions, training]
+      : [training]
+
+    return accumulator
+  },
+  { ...createEmptyBarcodeCollection<TrainingSession>() },
 )

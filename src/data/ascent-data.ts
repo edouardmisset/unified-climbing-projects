@@ -58,14 +58,12 @@ export const seasonAscentPerDay = parsedAscentData.reduce(
 )
 
 
-const createEmptyBarcodeCollection = <T>() => Object.fromEntries(
+export const createEmptyBarcodeCollection = <T>() => Object.fromEntries(
   ascentSeasons.map(season => {
     const weeksPerYear = 52
     return [
       season,
-      Array.from({ length: weeksPerYear })
-        .fill(undefined)
-        .map((): (T)[] => []),
+      Array.from({ length: weeksPerYear }, (): (T)[] => [])
     ]
   }),
 )
