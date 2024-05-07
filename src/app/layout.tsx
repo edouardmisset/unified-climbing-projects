@@ -51,7 +51,9 @@ export default function RootLayout({
                   <Link href={'/qr-code/training'}>Training QR</Link>
                 </li>
                 <li>
-                  <Link href={'/'}>Training Barcode</Link>
+                  <Link href={`/barcode/training/${new Date().getFullYear()}`}>
+                    Training Barcode
+                  </Link>
                 </li>
                 <li>
                   <Link
