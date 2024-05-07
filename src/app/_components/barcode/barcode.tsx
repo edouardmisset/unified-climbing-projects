@@ -7,10 +7,8 @@ const maxBarWidth = 2.5 * minBarWidth
 
 export default function Barcode({
   seasonAscents,
-  label,
 }: {
   seasonAscents: Ascent[][]
-  label: string
 }): JSX.Element {
   return (
     <div
@@ -23,7 +21,6 @@ export default function Barcode({
         width: '100%',
       }}
     >
-      <h3>{label}</h3>
       <div
         style={{
           width: '100%',
