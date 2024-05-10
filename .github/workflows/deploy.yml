@@ -39,4 +39,4 @@ jobs:
         with:
           project: "unified-climbing-project"
           entrypoint: "https://deno.land/std@0.217.0/http/file_server.ts"
-          root: "out"
+          root: ".next/cache/server/app"
