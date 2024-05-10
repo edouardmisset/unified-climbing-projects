@@ -1,12 +1,11 @@
-import { type Ascent } from "~/types/ascent"
-import { convertGradeToNumber } from "./converter"
+import { type Ascent } from '~/types/ascent'
+import { convertGradeToNumber } from './converter'
 import { type TrainingSession } from '~/types/training'
 
 export const sortByDescendingGrade = (
   { topoGrade: aGrade }: Ascent,
   { topoGrade: bGrade }: Ascent,
-): number =>
-  convertGradeToNumber(bGrade) - convertGradeToNumber(aGrade)
+): number => convertGradeToNumber(bGrade) - convertGradeToNumber(aGrade)
 
 const SESSION_TYPE_TO_SORT_ORDER: Record<
   Required<TrainingSession>['sessionType'],

@@ -65,7 +65,7 @@ export function YearGrid({
           </div>
         )
       })}
-      {gridContent.map(session => {
+      {gridContent.map((session) => {
         const { date, sessionType } = session
         const bgColor = getColorVariant(
           new Color(convertSessionTypeToBackgroundColor(sessionType)).to(

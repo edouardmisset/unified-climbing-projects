@@ -7,17 +7,16 @@ import { createEmptyBarcodeCollection } from './ascent-data'
 const parsedTrainingData = await fetch(
   'https://climbing-back.deno.dev/api/training',
 )
-  .then(response => response.json())
+  .then((response) => response.json())
   .then((json) => {
-    if (!(isDataResponse(json)))
-      throw new Error('Invalid response')
+    if (!isDataResponse(json)) throw new Error('Invalid response')
 
     return trainingSessionSchema.array().parse(json.data)
-  }).catch((error) => {
+  })
+  .catch((error) => {
     console.error(error)
     return [] as TrainingSession[]
-  }
-  )
+  })
 
 const trainingSeasons = [
   ...new Set(parsedTrainingData.map(({ date }) => date.year)),
@@ -25,7 +24,7 @@ const trainingSeasons = [
 
 const trainingCollection: Record<number, TrainingSession[]> =
   Object.fromEntries(
-    trainingSeasons.map(season => {
+    trainingSeasons.map((season) => {
       const daysPerYear = 365
       return [
         season,

@@ -35,7 +35,7 @@ export default function Form() {
       tries: 1,
     },
   })
-  const onSubmit: SubmitHandler<AscentDescription> = data => console.log(data)
+  const onSubmit: SubmitHandler<AscentDescription> = (data) => console.log(data)
 
   return (
     <form name="ascent" onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +75,7 @@ export default function Form() {
           {(watch('ascentType') === 'boulder'
             ? boulderNumberGrades
             : routeNumberGrades
-          ).map(numberGrade => {
+          ).map((numberGrade) => {
             const grade = convertNumberToGrade(numberGrade)
             return (
               <option value={numberGrade} key={numberGrade}>

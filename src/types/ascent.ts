@@ -115,8 +115,10 @@ export const ascentSchema = z.object({
   crag: string(),
   area: z.union([string(), number()]).optional(),
   departement: optionalStringSchema,
-  date: string().min(1).datetime()
-    .transform(stringDate => {
+  date: string()
+    .min(1)
+    .datetime()
+    .transform((stringDate) => {
       const d = new Date(stringDate)
       return Temporal.PlainDate.from(
         { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },

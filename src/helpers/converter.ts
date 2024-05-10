@@ -67,7 +67,7 @@ export const getColorVariant = (
 
   return new Color(
     new Color(color).set({
-      l: l => (l === 0 ? 0 : lightness),
+      l: (l) => (l === 0 ? 0 : lightness),
     }),
   )
 }
@@ -146,15 +146,17 @@ const createFrenchGradingScale = <GradeType extends Grade>(
     degreeSchema.parse((i + Number(min)).toString()),
   )
 
-  return scale.flatMap(degree =>
+  return scale.flatMap((degree) =>
     ROUTE_LETTERS.map(
-      letter =>
+      (letter) =>
         degree +
         (isBoulderGrade
           ? (letter.toUpperCase() as BoulderGradeLetter)
           : letter),
-    ).flatMap(degreeAndLetter =>
-      optionalPlus.map(maybePlus => (degreeAndLetter + maybePlus) as GradeType),
+    ).flatMap((degreeAndLetter) =>
+      optionalPlus.map(
+        (maybePlus) => (degreeAndLetter + maybePlus) as GradeType,
+      ),
     ),
   )
 }

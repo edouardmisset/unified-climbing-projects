@@ -46,7 +46,7 @@ export default function Page({
             week.length === 1
               ? convertSessionTypeToColor(week[0]!.sessionType!)
               : `linear-gradient(${week
-                  .map(session =>
+                  .map((session) =>
                     convertSessionTypeToColor(session.sessionType!),
                   )
                   .join(', ')})`

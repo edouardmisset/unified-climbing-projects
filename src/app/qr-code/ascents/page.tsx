@@ -16,7 +16,7 @@ export default function Page() {
           {Object.entries(seasonAscentPerDay)
             .reverse()
             .map(([year, ascents]) => {
-              const sortedAscents = [...ascents].map(ascentDay => ({
+              const sortedAscents = [...ascents].map((ascentDay) => ({
                 ...ascentDay,
                 ascents: ascentDay?.ascents
                   ? ascentDay.ascents.sort(sortByDescendingGrade)
@@ -29,7 +29,7 @@ export default function Page() {
                   </h3>
                   <QRCode
                     data={sortedAscents}
-                    itemRender={ascentDay => {
+                    itemRender={(ascentDay) => {
                       const hardestAscent = ascentDay?.ascents?.at(0)
                       return (
                         <i

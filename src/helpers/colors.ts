@@ -1,4 +1,4 @@
-import type { TrainingSession } from "~/types/training"
+import type { TrainingSession } from '~/types/training'
 
 export const otherSessionTypeColor = 'lightGrey'
 export const taperedColor = 'violet'
@@ -7,7 +7,10 @@ export const strengthColor = 'indianRed'
 export const enduranceColor = 'lightSalmon'
 export const outdoorColor = 'lightGreen'
 
-const SESSION_TYPE_TO_COLOR: Record<Required<TrainingSession>['sessionType'], string> = {
+const SESSION_TYPE_TO_COLOR: Record<
+  Required<TrainingSession>['sessionType'],
+  string
+> = {
   Ex: outdoorColor,
 
   En: enduranceColor,
@@ -29,4 +32,6 @@ const SESSION_TYPE_TO_COLOR: Record<Required<TrainingSession>['sessionType'], st
   Ro: otherSessionTypeColor,
 }
 
-export const convertSessionTypeToColor = (sessionType: Required<TrainingSession>['sessionType']): string => SESSION_TYPE_TO_COLOR[sessionType] ?? 'black'
+export const convertSessionTypeToColor = (
+  sessionType: Required<TrainingSession>['sessionType'],
+): string => SESSION_TYPE_TO_COLOR[sessionType] ?? 'black'

@@ -45,7 +45,7 @@ export default function Barcode({
             weeklyAscents.length === 1
               ? convertGradeToColor(weeklyAscents[0]!.topoGrade)
               : `linear-gradient(${weeklyAscents
-                  .map(ascent => convertGradeToColor(ascent.topoGrade))
+                  .map((ascent) => convertGradeToColor(ascent.topoGrade))
                   .join(', ')})`
 
           return (

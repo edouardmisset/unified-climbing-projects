@@ -6,6 +6,7 @@ import './reset.css'
 import './quick-upgrades.css'
 import './global-styles.css'
 import Link from 'next/link'
+import Sync from './_components/sync-button/sync-button'
 
 export const metadata = {
   title: 'Unified Climbing Projects',
@@ -18,6 +19,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const thisYear = new Date().getFullYear()
   return (
     <html lang="en">
       <body>
@@ -41,9 +43,7 @@ export default function RootLayout({
                   <Link href={'/barcode/ascents'}>Ascents Barcode</Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/visualization/ascents/${new Date().getFullYear()}`}
-                  >
+                  <Link href={`/visualization/ascents/${thisYear}`}>
                     Ascents Visualization
                   </Link>
                 </li>
@@ -51,16 +51,17 @@ export default function RootLayout({
                   <Link href={'/qr-code/training'}>Training QR</Link>
                 </li>
                 <li>
-                  <Link href={`/barcode/training/${new Date().getFullYear()}`}>
+                  <Link href={`/barcode/training/${thisYear}`}>
                     Training Barcode
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/visualization/training/${new Date().getFullYear()}`}
-                  >
+                  <Link href={`/visualization/training/${thisYear}`}>
                     Training Visualization
                   </Link>
+                </li>
+                <li>
+                  <Sync />
                 </li>
               </ul>
             </nav>
