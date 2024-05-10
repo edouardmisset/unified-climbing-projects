@@ -24,7 +24,9 @@ type AscentDescription = {
 export default function Form() {
   const climberAverageGrade: RouteGrade = '7b'
   const climberHighestGrade: RouteGrade = '8b+'
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const climberHighestGradeNumber = convertGradeToNumber(climberHighestGrade)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const numberOfGradeFromWarmUpToMax = 8
 
   const { register, handleSubmit, watch } = useForm<AscentDescription>({
@@ -35,7 +37,7 @@ export default function Form() {
       tries: 1,
     },
   })
-  const onSubmit: SubmitHandler<AscentDescription> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<AscentDescription> = data => console.log(data)
 
   return (
     <form name="ascent" onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +77,7 @@ export default function Form() {
           {(watch('ascentType') === 'boulder'
             ? boulderNumberGrades
             : routeNumberGrades
-          ).map((numberGrade) => {
+          ).map(numberGrade => {
             const grade = convertNumberToGrade(numberGrade)
             return (
               <option value={numberGrade} key={numberGrade}>

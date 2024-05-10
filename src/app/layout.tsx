@@ -1,3 +1,5 @@
+import { SpeedInsights } from '@vercel/speed-insights/next'
+
 import '~/styles/globals.css'
 
 import { TRPCReactProvider } from '~/trpc/react'
@@ -68,6 +70,7 @@ export default function RootLayout({
           </header>
           {children}
         </TRPCReactProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
