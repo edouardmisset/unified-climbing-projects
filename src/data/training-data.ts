@@ -5,7 +5,7 @@ import { trainingSessionSchema, type TrainingSession } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data'
 
 const parsedTrainingData = await fetch(
-  'https://climbing-back.deno.dev/api/training',
+  `${process.env.NEXT_PUBLIC_API_BASE_URL}/training`,
 )
   .then((response) => response.json())
   .then((json) => {

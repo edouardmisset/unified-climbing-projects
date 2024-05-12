@@ -4,7 +4,7 @@ export default function Sync() {
   return (
     <button
       onClick={() => {
-        fetch('https://climbing-back.deno.dev/api/sync', {
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/sync`, {
           method: 'POST',
         }).catch(console.error)
       }}

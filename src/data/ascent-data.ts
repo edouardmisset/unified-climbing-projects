@@ -4,7 +4,7 @@ import { ascentSchema, type Ascent } from '~/types/ascent'
 import { isDataResponse } from '~/types/generic'
 
 const parsedAscentData = await fetch(
-  'https://climbing-back.deno.dev/api/ascents',
+  `${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`,
 )
   .then((response) => response.json())
   .then((json) => {
