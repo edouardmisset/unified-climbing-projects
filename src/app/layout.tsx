@@ -39,6 +39,9 @@ export default function RootLayout({
                   <Link href={'/'}>Home</Link>
                 </li>
                 <li>
+                  <Link href={'/log'}>Log</Link>
+                </li>
+                <li>
                   <Link href={'/qr-code/ascents'}>Ascents QR</Link>
                 </li>
                 <li>
