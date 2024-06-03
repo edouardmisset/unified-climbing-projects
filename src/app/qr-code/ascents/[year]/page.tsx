@@ -16,10 +16,11 @@ export default function Page({
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>
 
-  const sortedAscents = [...selectedAscents].map((ascentDay) => ({
+  const sortedAscents = [...selectedAscents].map(ascentDay => ({
     ...ascentDay,
-    ascents: ascentDay?.ascents
-      ? ascentDay.ascents.sort(sortByDescendingGrade)
+    ascents:
+      ascentDay?.ascents ?
+        ascentDay.ascents.sort(sortByDescendingGrade)
       : undefined,
   }))
 
@@ -32,21 +33,21 @@ export default function Page({
             <h3 style={{ textAlign: 'center' }}>{year}</h3>
             <QRCode
               data={sortedAscents}
-              itemRender={(ascentDay) => {
+              itemRender={ascentDay => {
                 const hardestAscent = ascentDay?.ascents?.at(0)
                 return (
                   <span
                     key={ascentDay.date.dayOfYear}
                     style={{
                       backgroundColor:
-                        hardestAscent === undefined
-                          ? 'white'
-                          : convertGradeToColor(hardestAscent.topoGrade),
+                        hardestAscent === undefined ? 'white' : (
+                          convertGradeToColor(hardestAscent.topoGrade)
+                        ),
                     }}
                     title={
-                      ascentDay?.ascents
-                        ? createAscentTooltip(ascentDay.ascents)
-                        : ''
+                      ascentDay?.ascents ?
+                        createAscentTooltip(ascentDay.ascents)
+                      : ''
                     }
                   />
                 )

@@ -19,11 +19,9 @@ export default function Visualization({
   return (
     <>
       <div>An overview of my training in {year}</div>
-      {yearSession.length === 0 ? (
+      {yearSession.length === 0 ?
         <span>No record</span>
-      ) : (
-        <YearGrid gridContent={yearSession} year={numberYear} />
-      )}
+      : <YearGrid gridContent={yearSession} year={numberYear} />}
       <div
         style={{
           display: 'flex',

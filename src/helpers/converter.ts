@@ -41,9 +41,9 @@ const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
 export const convertSessionTypeToBackgroundColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
-  sessionType === undefined
-    ? new Color('white')
-    : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
+  sessionType === undefined ?
+    new Color('white')
+  : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 
 export const getColorVariant = (
   color: Color,
@@ -59,15 +59,14 @@ export const getColorVariant = (
   const isOneComponentBelowThreshold =
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
-  const lightness = isOneComponentBelowThreshold
-    ? 0.9
-    : isOneComponentAboveThreshold
-      ? 0.6
-      : 0.75
+  const lightness =
+    isOneComponentBelowThreshold ? 0.9
+    : isOneComponentAboveThreshold ? 0.6
+    : 0.75
 
   return new Color(
     new Color(color).set({
-      l: (l) => (l === 0 ? 0 : lightness),
+      l: l => (l === 0 ? 0 : lightness),
     }),
   )
 }
@@ -76,9 +75,9 @@ export const convertSessionTypeToAccentColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
   new Color(
-    sessionType === undefined
-      ? 'transparent'
-      : new Color(SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]).darken(0.2),
+    sessionType === undefined ? 'transparent' : (
+      new Color(SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]).darken(0.2)
+    ),
   )
 
 const ascentLightness = '1'
@@ -146,17 +145,15 @@ const createFrenchGradingScale = <GradeType extends Grade>(
     degreeSchema.parse((i + Number(min)).toString()),
   )
 
-  return scale.flatMap((degree) =>
+  return scale.flatMap(degree =>
     ROUTE_LETTERS.map(
-      (letter) =>
+      letter =>
         degree +
-        (isBoulderGrade
-          ? (letter.toUpperCase() as BoulderGradeLetter)
-          : letter),
-    ).flatMap((degreeAndLetter) =>
-      optionalPlus.map(
-        (maybePlus) => (degreeAndLetter + maybePlus) as GradeType,
-      ),
+        (isBoulderGrade ?
+          (letter.toUpperCase() as BoulderGradeLetter)
+        : letter),
+    ).flatMap(degreeAndLetter =>
+      optionalPlus.map(maybePlus => (degreeAndLetter + maybePlus) as GradeType),
     ),
   )
 }
@@ -192,14 +189,14 @@ export const NUMBER_TO_BOULDER_GRADE = invertMapKeyValue(
 export const convertGradeToNumber = <GradeType extends Grade>(
   grade: GradeType,
 ): number =>
-  ROUTE_GRADES.includes(grade as RouteGrade)
-    ? ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0
-    : BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0
+  ROUTE_GRADES.includes(grade as RouteGrade) ?
+    ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0
+  : BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0
 
 export const convertNumberToGrade = (
   gradeNumber: number,
   toBoulderGrade = false,
 ): Grade =>
-  toBoulderGrade
-    ? NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A'
-    : NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a'
+  toBoulderGrade ?
+    NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A'
+  : NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a'

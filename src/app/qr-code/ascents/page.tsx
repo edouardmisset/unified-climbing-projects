@@ -16,10 +16,11 @@ export default function Page() {
           {Object.entries(seasonAscentPerDay)
             .reverse()
             .map(([year, ascents]) => {
-              const sortedAscents = [...ascents].map((ascentDay) => ({
+              const sortedAscents = [...ascents].map(ascentDay => ({
                 ...ascentDay,
-                ascents: ascentDay?.ascents
-                  ? ascentDay.ascents.sort(sortByDescendingGrade)
+                ascents:
+                  ascentDay?.ascents ?
+                    ascentDay.ascents.sort(sortByDescendingGrade)
                   : undefined,
               }))
               return (
@@ -29,7 +30,7 @@ export default function Page() {
                   </h3>
                   <QRCode
                     data={sortedAscents}
-                    itemRender={(ascentDay) => {
+                    itemRender={ascentDay => {
                       const hardestAscent = ascentDay?.ascents?.at(0)
                       return (
                         <i
@@ -39,14 +40,14 @@ export default function Page() {
                           }
                           style={{
                             backgroundColor:
-                              hardestAscent === undefined
-                                ? 'white'
-                                : convertGradeToColor(hardestAscent.topoGrade),
+                              hardestAscent === undefined ? 'white' : (
+                                convertGradeToColor(hardestAscent.topoGrade)
+                              ),
                           }}
                           title={
-                            ascentDay?.ascents
-                              ? createAscentTooltip(ascentDay.ascents)
-                              : ''
+                            ascentDay?.ascents ?
+                              createAscentTooltip(ascentDay.ascents)
+                            : ''
                           }
                         />
                       )

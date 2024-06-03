@@ -120,7 +120,7 @@ export const ascentSchema = z.object({
   date: string()
     .min(1)
     .datetime()
-    .transform((stringDate) => {
+    .transform(stringDate => {
       const d = new Date(stringDate)
       return Temporal.PlainDate.from(
         { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },

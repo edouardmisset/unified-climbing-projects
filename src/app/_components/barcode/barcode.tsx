@@ -42,11 +42,11 @@ export default function Barcode({
 
           // Colorize bars
           const backgroundGradient =
-            weeklyAscents.length === 1
-              ? convertGradeToColor(weeklyAscents[0]!.topoGrade)
-              : `linear-gradient(${weeklyAscents
-                  .map((ascent) => convertGradeToColor(ascent.topoGrade))
-                  .join(', ')})`
+            weeklyAscents.length === 1 ?
+              convertGradeToColor(weeklyAscents[0]!.topoGrade)
+            : `linear-gradient(${weeklyAscents
+                .map(ascent => convertGradeToColor(ascent.topoGrade))
+                .join(', ')})`
 
           return (
             <span
@@ -68,8 +68,8 @@ export default function Barcode({
 }
 
 const createBarTooltip = (ascents: Ascent[]): string =>
-  ascents.length >= 1
-    ? `Week # ${ascents[0]!.date.weekOfYear.toString()}
+  ascents.length >= 1 ?
+    `Week # ${ascents[0]!.date.weekOfYear.toString()}
 Routes (${ascents.length}):
 ${ascents
   .map(
@@ -79,4 +79,4 @@ ${ascents
       } ${routeName} (${crag}) - ${topoGrade}`,
   )
   .join('\n')}`
-    : ''
+  : ''

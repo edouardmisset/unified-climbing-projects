@@ -74,16 +74,16 @@ export default function Form() {
       <label htmlFor="topoGrade">
         Topo Grade
         <select {...register('topoGrade')}>
-          {(watch('ascentType') === 'boulder'
-            ? boulderNumberGrades
-            : routeNumberGrades
+          {(watch('ascentType') === 'boulder' ? boulderNumberGrades : (
+            routeNumberGrades
+          )
           ).map(numberGrade => {
             const grade = convertNumberToGrade(numberGrade)
             return (
               <option value={numberGrade} key={numberGrade}>
-                {watch('ascentType') === 'boulder'
-                  ? grade.toLocaleUpperCase()
-                  : grade}
+                {watch('ascentType') === 'boulder' ?
+                  grade.toLocaleUpperCase()
+                : grade}
               </option>
             )
           })}

@@ -2,16 +2,16 @@ import { type Ascent } from '~/types/ascent'
 import { type TrainingSession } from '~/types/training'
 
 export const createAscentTooltip = (ascents: Ascent[]): string =>
-  ascents.length >= 1
-    ? `📅 ${ascents[0]!.date.toLocaleString(undefined, {
-        day: 'numeric',
-        weekday: 'long',
-        month: 'long',
-      })}
+  ascents.length >= 1 ?
+    `📅 ${ascents[0]!.date.toLocaleString(undefined, {
+      day: 'numeric',
+      weekday: 'long',
+      month: 'long',
+    })}
 ${
-  ascents.some((ascent) => ascent.routeOrBoulder === 'Route')
-    ? 'Routes'
-    : 'Boulders'
+  ascents.some(ascent => ascent.routeOrBoulder === 'Route') ? 'Routes' : (
+    'Boulders'
+  )
 } (${ascents.length}):
 ${ascents
   .map(
@@ -21,7 +21,7 @@ ${ascents
       } ${routeName} (${crag}) - ${topoGrade}`,
   )
   .join('\n')}`
-    : ''
+  : ''
 
 export const createTrainingTooltip = ({
   date,
@@ -40,15 +40,13 @@ export const createTrainingTooltip = ({
     weekday: 'long',
     month: 'long',
   })}`
-  const cragum = gymCrag
-    ? `\t${
-        routeOrBouldering === 'Bouldering'
-          ? '🪨'
-          : routeOrBouldering === 'Route'
-            ? '🧗'
-            : routeOrBouldering === 'Multi-Pitch'
-              ? '⛰️'
-              : ''
+  const cragum =
+    gymCrag ?
+      `\t${
+        routeOrBouldering === 'Bouldering' ? '🪨'
+        : routeOrBouldering === 'Route' ? '🧗'
+        : routeOrBouldering === 'Multi-Pitch' ? '⛰️'
+        : ''
       } ${gymCrag}`
     : ''
   const seshum = sessionType ? ` (${sessionType})` : ''
@@ -57,36 +55,30 @@ export const createTrainingTooltip = ({
   const loadum = load ? `Load: ${roundToTen(load)}%` : ''
   const commentum = comments ? `💬 “${comments}”` : ''
   const anatomicum =
-    anatomicalRegion === undefined
-      ? ''
-      : `| ${
-          anatomicalRegion === 'Ar'
-            ? '💪'
-            : anatomicalRegion === 'Fi'
-              ? '🖐️'
-              : anatomicalRegion === 'Ge'
-                ? '🦵'
-                : ''
-        }`
+    anatomicalRegion === undefined ? '' : (
+      `| ${
+        anatomicalRegion === 'Ar' ? '💪'
+        : anatomicalRegion === 'Fi' ? '🖐️'
+        : anatomicalRegion === 'Ge' ? '🦵'
+        : ''
+      }`
+    )
   const energium =
-    energySystem === undefined
-      ? ''
-      : `| ${
-          energySystem === 'AA'
-            ? '🔥'
-            : energySystem === 'AL'
-              ? '🪫'
-              : energySystem === 'AE'
-                ? '🫀'
-                : ''
-        }`
+    energySystem === undefined ? '' : (
+      `| ${
+        energySystem === 'AA' ? '🔥'
+        : energySystem === 'AL' ? '🪫'
+        : energySystem === 'AE' ? '🫀'
+        : ''
+      }`
+    )
 
   return [
     `${datum} ${cragum} ${seshum}`,
     `${volum} ${intensitum} ${loadum} ${anatomicum} ${energium}`,
     commentum,
   ]
-    .filter((s) => s !== '')
+    .filter(s => s !== '')
     .join('\n\n')
 }
 

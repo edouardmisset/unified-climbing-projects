@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "format": "prettier --write --no-semi --single-quote src/",
+    "format": "prettier --write src/",
     "lint": "next lint",
     "start": "next start"
   },

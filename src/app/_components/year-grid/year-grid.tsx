@@ -23,49 +23,47 @@ export function YearGrid({
         d.setFullYear(year)
         d.setMonth(0)
         d.setDate(i)
-        return i === 0 ? (
-          <div
-            key="first-cell"
-            className={styles.yearGridCell}
-            style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
-        ) : (
-          <div
-            key={`${i}-day`}
-            className="super-center grid-header"
-            style={{
-              minInlineSize: '4ch',
-            }}
-          >
-            {d.toDateString().slice(0, 3)}
-          </div>
-        )
+        return i === 0 ?
+            <div
+              key="first-cell"
+              className={styles.yearGridCell}
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+              }}
+            />
+          : <div
+              key={`${i}-day`}
+              className="super-center grid-header"
+              style={{
+                minInlineSize: '4ch',
+              }}
+            >
+              {d.toDateString().slice(0, 3)}
+            </div>
       })}
       {Array.from({ length: 53 }, (_, i) => {
         return i === 0 ? null : (
-          <div
-            key={`${i}-week`}
-            className={
-              'super-center' +
-              ' ' +
-              styles.yearGridCell +
-              ' ' +
-              styles.gridHeader
-            }
-            style={{
-              minBlockSize: '3ch',
-              gridColumn: i + 1,
-              gridRow: 1,
-            }}
-          >
-            {i}
-          </div>
-        )
+            <div
+              key={`${i}-week`}
+              className={
+                'super-center' +
+                ' ' +
+                styles.yearGridCell +
+                ' ' +
+                styles.gridHeader
+              }
+              style={{
+                minBlockSize: '3ch',
+                gridColumn: i + 1,
+                gridRow: 1,
+              }}
+            >
+              {i}
+            </div>
+          )
       })}
-      {gridContent.map((session) => {
+      {gridContent.map(session => {
         const { date, sessionType } = session
         const bgColor = getColorVariant(
           new Color(convertSessionTypeToBackgroundColor(sessionType)).to(

@@ -6,13 +6,13 @@ import { isDataResponse } from '~/types/generic'
 const parsedAscentData = await fetch(
   `${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`,
 )
-  .then((response) => response.json())
-  .then((json) => {
+  .then(response => response.json())
+  .then(json => {
     if (!isDataResponse(json)) throw new Error('Invalid response')
 
     return ascentSchema.array().parse(json.data)
   })
-  .catch((error) => {
+  .catch(error => {
     console.error(error)
     return []
   })
@@ -25,7 +25,7 @@ const ascentsCollection: Record<
   number,
   (TemporalDate & { ascents?: Ascent[] })[]
 > = Object.fromEntries(
-  ascentSeasons.map((year) => {
+  ascentSeasons.map(year => {
     const daysPerYear = 365
     return [
       year,
@@ -59,7 +59,7 @@ export const seasonAscentPerDay = parsedAscentData.reduce(
 
 export const createEmptyBarcodeCollection = <T>() =>
   Object.fromEntries(
-    ascentSeasons.map((season) => {
+    ascentSeasons.map(season => {
       const weeksPerYear = 52
       return [season, Array.from({ length: weeksPerYear }, (): T[] => [])]
     }),
@@ -72,9 +72,8 @@ export const seasonsAscentsPerWeek = parsedAscentData.reduce(
     } = ascent
 
     const weekAscents = accumulator[year]?.[weekOfYear]
-    accumulator[year]![weekOfYear] = weekAscents
-      ? [...weekAscents, ascent]
-      : [ascent]
+    accumulator[year]![weekOfYear] =
+      weekAscents ? [...weekAscents, ascent] : [ascent]
 
     return accumulator
   },

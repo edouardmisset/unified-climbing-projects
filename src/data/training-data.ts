@@ -7,13 +7,13 @@ import { createEmptyBarcodeCollection } from './ascent-data'
 const parsedTrainingData = await fetch(
   `${process.env.NEXT_PUBLIC_API_BASE_URL}/training`,
 )
-  .then((response) => response.json())
-  .then((json) => {
+  .then(response => response.json())
+  .then(json => {
     if (!isDataResponse(json)) throw new Error('Invalid response')
 
     return trainingSessionSchema.array().parse(json.data)
   })
-  .catch((error) => {
+  .catch(error => {
     console.error(error)
     return [] as TrainingSession[]
   })
@@ -24,7 +24,7 @@ const trainingSeasons = [
 
 const trainingCollection: Record<number, TrainingSession[]> =
   Object.fromEntries(
-    trainingSeasons.map((season) => {
+    trainingSeasons.map(season => {
       const daysPerYear = 365
       return [
         season,
@@ -57,9 +57,8 @@ export const seasonsTrainingPerWeek = parsedTrainingData.reduce(
     } = training
 
     const weekTrainingSessions = accumulator[year]?.[weekOfYear]
-    accumulator[year]![weekOfYear] = weekTrainingSessions
-      ? [...weekTrainingSessions, training]
-      : [training]
+    accumulator[year]![weekOfYear] =
+      weekTrainingSessions ? [...weekTrainingSessions, training] : [training]
 
     return accumulator
   },
