@@ -1,5 +1,5 @@
 export default function Visualization({
-  params: { year },
+  params: { year: _year },
 }: {
   params: { year: string }
 }) {

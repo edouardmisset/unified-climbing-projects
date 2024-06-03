@@ -11,13 +11,11 @@ import {
 import { cn } from '~/lib/utils'
 import { ThemeProvider } from '../_components/theme-provider'
 
-const numberGrades = [...ROUTE_GRADE_TO_NUMBER.values()]
-
 type AscentDescription = {
   topoGrade: number
   routeName: string
   routeOrBoulder: 'route' | 'boulder'
-  crag: string // look up in DB
+  crag: string // pick from a look up in DB
   date: string // yyyy-mm-dd
   holds?: string // should be an enum : Jugs, crimps, pockets, slopers...
   height?: number // from 0 to 100 m
