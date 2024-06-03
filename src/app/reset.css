@@ -79,11 +79,6 @@ body {
   line-height: 1.5;
 }
 
-main {
-  inline-size: min(65ch, 100% - 4rem);
-  margin-inline: auto;
-}
-
 h1,
 h2,
 h3,
