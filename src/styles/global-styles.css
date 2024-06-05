@@ -2,26 +2,32 @@
 
 nav a {
   --link-color: white;
-
+  --linear-gradient: linear-gradient(
+    to right,
+    var(--violet-0),
+    var(--violet-2),
+    var(--violet-4),
+    var(--violet-6),
+    var(--violet-8),
+    var(--violet-10)
+  );
   color: var(--link-color);
   text-decoration: none;
   font-weight: 300;
+
+  &:hover {
+    background: var(--linear-gradient);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
   &::after {
     content: '';
     display: block;
     width: 0;
     height: 2px;
-    background: linear-gradient(
-      to left,
-      var(--violet-0),
-      var(--violet-2),
-      var(--violet-4),
-      var(--violet-6),
-      var(--violet-8),
-      var(--violet-10)
-    );
-    transition: width 0.4s;
+    background: var(--linear-gradient);
+    transition: width 0.3s;
   }
 
   &:hover::after {
