@@ -37,6 +37,7 @@ export function YearGrid({
               className="super-center grid-header"
               style={{
                 minInlineSize: '4ch',
+                lineHeight: 1,
               }}
             >
               {d.toDateString().slice(0, 3)}
