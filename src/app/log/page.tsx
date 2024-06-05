@@ -43,8 +43,8 @@ export default function Log(): React.JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { ref: _ref, ...topoGradeRegister } = register('topoGrade')
   return (
-    <div className="flex-column">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex-column">
         <h2 className="">Congrats 🎉</h2>
         <fieldset className="flex-column">
           The Basics
@@ -52,7 +52,7 @@ export default function Log(): React.JSX.Element {
             Date
             <input required {...register('date')} type="date" title="Date" />
           </label>
-          <label htmlFor="routeName" className="">
+          <label htmlFor="routeName" className="flex-column">
             Route Name
             <input
               required
@@ -63,7 +63,7 @@ export default function Log(): React.JSX.Element {
               title="Route Name"
             />
           </label>
-          <label htmlFor="routeName" className="">
+          <label htmlFor="routeName" className="flex-column">
             Route or Boulder
             <select
               id="routeOrBoulder"
@@ -76,7 +76,7 @@ export default function Log(): React.JSX.Element {
               <option value="boulder">Boulder</option>
             </select>
           </label>
-          <label htmlFor="crag" className="">
+          <label htmlFor="crag" className="flex-column">
             Crag
             <input
               required
@@ -153,7 +153,7 @@ export default function Log(): React.JSX.Element {
             />
           </label>
           <label htmlFor="comments" className="flex-column">
-            comments
+            Comments
             <textarea
               {...register('comments')}
               name="comments"
