@@ -8,7 +8,7 @@
 
 .yearGrid {
   --gap: 1px;
-  --background-color: #fff;
+  --cell-color: hsla(0deg 0% 50% / 0.5);
   --text-color: #000;
 
   --border-color: currentColor;
@@ -34,7 +34,7 @@
   aspect-ratio: 1 / 1;
 
   color: var(--text-color, #000);
-  background-color: var(--background-color, #fff);
+  background-color: var(--cell-color, hsla(0 0% 100% / 0.5));
 
   border-width: var(--border-width, 1px);
   border-style: solid;

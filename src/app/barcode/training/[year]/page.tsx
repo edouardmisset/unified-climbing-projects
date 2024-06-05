@@ -22,7 +22,8 @@ export default function Page({
           justifyContent: 'space-between',
           gap: 4,
 
-          padding: '10%',
+          padding: 'clamp(.5rem, 5cqi, 2rem)',
+          margin: 'auto',
         }}
       >
         {selectedTraining.map((week, i) => {

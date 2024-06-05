@@ -66,13 +66,16 @@ export function YearGrid({
       })}
       {gridContent.map(session => {
         const { date, sessionType } = session
-        const bgColor = getColorVariant(
-          new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
-            'oklch',
-          ),
-          session?.intensity ?? 65,
-          session?.volume ?? 65,
-        )
+        const backgroundColor =
+          sessionType === undefined ?
+            'hsla(0deg 0% 100% / 0.3)'
+          : getColorVariant(
+              new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
+                'oklch',
+              ),
+              session?.intensity ?? 65,
+              session?.volume ?? 65,
+            ).toString()
         return (
           <i
             key={date.toString()}
@@ -81,7 +84,7 @@ export function YearGrid({
             style={{
               gridColumn: date.weekOfYear + 1,
               gridRow: date.dayOfWeek + 1,
-              backgroundColor: bgColor.toString(),
+              backgroundColor,
               color: convertSessionTypeToAccentColor(sessionType).toString(),
             }}
           />

@@ -1,12 +1,13 @@
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-import '~/styles/globals.css'
-
 import { TRPCReactProvider } from '~/trpc/react'
 
-import './reset.css'
-import './quick-upgrades.css'
-import './global-styles.css'
+import '~/styles/reset.css'
+import '~/styles/colors.css'
+import '~/styles/quick-upgrades.css'
+import '~/styles/global-styles.css'
+import '~/styles/normalize.css'
+
 import Link from 'next/link'
 import Sync from './_components/sync-button/sync-button'
 
