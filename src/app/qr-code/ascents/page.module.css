@@ -1,8 +1,6 @@
 .main {
   display: flex;
   flex-direction: column;
-
-  /* scroll-snap-type: y mandatory; */
 }
 
 .grid {
@@ -11,7 +9,4 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
   padding: 1rem;
-  min-height: 100vh;
-
-  /* scroll-snap-align: start; */
 }
