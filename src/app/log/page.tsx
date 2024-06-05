@@ -51,9 +51,17 @@ export default function Log(): React.JSX.Element {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex-column">
-        <h2 className="">Congrats 🎉</h2>
-        <fieldset className="flex-column">
-          The Basics
+        <h2
+          className=""
+          style={{
+            maxWidth: '100%',
+            textAlign: 'center',
+          }}
+        >
+          Congrats 🎉
+        </h2>
+        <fieldset className="flex-column" id="basics">
+          <legend>The Basics</legend>
           <label htmlFor="date" className="flex-column">
             Date
             <input required {...register('date')} type="date" title="Date" />

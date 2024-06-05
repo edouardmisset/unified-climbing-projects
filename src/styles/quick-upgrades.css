@@ -51,7 +51,7 @@ occupies. This is similar to how box-shadow is rendered without impacting the
 element size as well. 
 */
 .outline-offset {
-  outline: 2px dashed blue;
+  outline: 2px dashed var(--blue-5);
   outline-offset: var(--outline-offset, 0.5em);
 }
 
@@ -63,7 +63,7 @@ element size as well.
 
 /** color-scheme & accent-color */
 :root {
-  accent-color: purple;
+  accent-color: var(--violet-4);
 }
 
 .dark-background {
