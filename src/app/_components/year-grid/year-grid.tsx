@@ -34,10 +34,11 @@ export function YearGrid({
             />
           : <div
               key={`${i}-day`}
-              className="super-center grid-header"
               style={{
                 minInlineSize: '4ch',
                 lineHeight: 1,
+                display: 'flex',
+                alignContent: 'center',
               }}
             >
               {d.toDateString().slice(0, 3)}
@@ -58,6 +59,7 @@ export function YearGrid({
                 minBlockSize: '3ch',
                 gridColumn: i + 1,
                 gridRow: 1,
+                fontWeight: 'bold',
               }}
             >
               {i}
