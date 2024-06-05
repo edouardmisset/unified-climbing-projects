@@ -1,5 +1,7 @@
 'use client'
 
+import { RefreshCcw } from 'lucide-react'
+
 export default function Sync() {
   return (
     <button
@@ -10,7 +12,7 @@ export default function Sync() {
       }}
       type="button"
     >
-      🔄
+      <RefreshCcw color="var(--violet-7)" />
     </button>
   )
 }
