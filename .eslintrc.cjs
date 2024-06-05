@@ -25,7 +25,8 @@ const config = {
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/require-await": "off",
@@ -39,4 +40,4 @@ const config = {
     ]
   }
 }
-module.exports = config;
+module.exports = config

@@ -1,11 +1,23 @@
 /* Components */
 
 nav a {
-  color: white;
+  --link-color: white;
+
+  color: var(--link-color);
   text-decoration: none;
-  font-weight: 600;
-  &:hover {
-    text-decoration: underline;
+  font-weight: 300;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, #f6d365, #fda085);
+    transition: width 0.4s;
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 }
 

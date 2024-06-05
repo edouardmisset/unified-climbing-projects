@@ -19,6 +19,7 @@ const sessionTypeSchema = z.enum([
 ])
 
 const percentSchema = number().min(0).max(100)
+export const climbingDisciplineSchema = z.enum(['Route', 'Bouldering', 'Multi-Pitch'])
 export const trainingSessionSchema = z.object({
   date: string()
     .min(1)
@@ -34,7 +35,7 @@ export const trainingSessionSchema = z.object({
   volume: percentSchema.optional(),
   anatomicalRegion: z.enum(['Ar', 'Fi', 'Ge']).optional(),
   energySystem: z.enum(['AA', 'AL', 'AE']).optional(),
-  routeOrBouldering: z.enum(['Route', 'Bouldering', 'Multi-Pitch']).optional(),
+  routeOrBouldering: climbingDisciplineSchema.optional(),
   gymCrag: string().optional(),
   comments: string().optional(),
   intensity: percentSchema.optional(),

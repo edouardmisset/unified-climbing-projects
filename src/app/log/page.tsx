@@ -1,6 +1,8 @@
 'use client'
 
 import { useForm, type SubmitHandler } from 'react-hook-form'
+import { fromZodError } from 'zod-validation-error'
+
 import {
   ROUTE_GRADE_TO_NUMBER,
   convertGradeToNumber,
@@ -8,40 +10,44 @@ import {
   type RouteGrade,
 } from '~/helpers/converter'
 import { GradeSlider } from '../_components/slider/slider'
+import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
+import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
 
-type AscentDescription = {
-  topoGrade: number
-  routeName: string
-  routeOrBoulder: 'route' | 'boulder'
-  crag: string // pick from a look up in DB
-  date: string // yyyy-mm-dd
-  holds?: string // should be an enum : Jugs, crimps, pockets, slopers...
-  height?: number // from 0 to 100 m
-  rating?: number // from 0 to 5*
-  profile?: string // should be an enum : Vertical, overhang, slab...
-  comments?: string
+const climberAverageGrade: RouteGrade = '7b' // get this from the api
+
+const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
+  try {
+    console.log({ data: formData })
+    const parsedData = ascentFormOutputSchema.parse(formData)
+    console.log({ parsedData })
+
+    // send data to the api...
+  } catch (error) {
+    const zErrors = fromZodError(error as Zod.ZodError)
+
+    zErrors.details.forEach(detail => {
+      console.error(detail)
+      // TODO transform this log to a toast
+      console.error(detail.message)
+    })
+  }
 }
 
+const defaultAscentFormValues = ascentFormInputSchema.parse({
+  topoGrade: climberAverageGrade,
+  date: new Date(),
+  holds: 'Crimp',
+  routeOrBoulder: 'Route',
+  profile: 'Vertical',
+})
+
 export default function Log(): React.JSX.Element {
-  const climberAverageGrade: RouteGrade = '7b'
+  const { handleSubmit, register, setValue, watch } = useForm({
+    defaultValues: defaultAscentFormValues,
+  })
 
-  const defaultTopoGrade = convertGradeToNumber(climberAverageGrade)
-  const now = new Date()
-  const { handleSubmit, register, setValue, watch } =
-    useForm<AscentDescription>({
-      defaultValues: {
-        topoGrade: defaultTopoGrade,
-        date: `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`,
-        holds: 'crimps',
-        routeOrBoulder: 'route',
-        profile: 'vertical',
-      },
-    })
-
-  const onSubmit: SubmitHandler<AscentDescription> = data => console.log(data)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { ref: _ref, ...topoGradeRegister } = register('topoGrade')
+  const topoGradeValue = watch('topoGrade')
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex-column">
@@ -70,10 +76,10 @@ export default function Log(): React.JSX.Element {
               {...register('routeOrBoulder')}
               title="Route or Boulder"
             >
-              <option value="route" defaultChecked>
+              <option value="Route" defaultChecked>
                 Route
               </option>
-              <option value="boulder">Boulder</option>
+              <option value="Boulder">Boulder</option>
             </select>
           </label>
           <label htmlFor="crag" className="flex-column">
@@ -87,12 +93,20 @@ export default function Log(): React.JSX.Element {
             />
           </label>
           <label htmlFor="topoGrade" className="">
-            Topo Grade {convertNumberToGrade(watch('topoGrade'))}
+            Topo Grade {topoGradeValue}
             <GradeSlider
               {...topoGradeRegister}
-              defaultValue={[defaultTopoGrade]}
+              defaultValue={[convertGradeToNumber(climberAverageGrade)]}
               onValueChange={([value]) =>
-                setValue('topoGrade', value ?? defaultTopoGrade)
+                setValue(
+                  'topoGrade',
+
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                  convertNumberToGrade(
+                    value ?? convertGradeToNumber(climberAverageGrade),
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  ) as any,
+                )
               }
               min={1}
               max={ROUTE_GRADE_TO_NUMBER.size}
@@ -129,12 +143,12 @@ export default function Log(): React.JSX.Element {
             <input
               {...register('height')}
               type="number"
-              min={0}
-              max={100}
+              min={MIN_HEIGHT}
+              max={MAX_HEIGHT}
               step={1}
               name="height"
               id="height"
-              placeholder="Height of the route (no need for boulders)"
+              placeholder="Height of the route (not needed for boulders)"
               title="height"
             />
           </label>
@@ -142,13 +156,13 @@ export default function Log(): React.JSX.Element {
             Rating
             <input
               {...register('rating')}
-              min={0}
-              max={5}
+              min={MIN_RATING}
+              max={MAX_RATING}
               step={1}
               type="number"
               name="rating"
               id="rating"
-              placeholder="/5*"
+              placeholder="5*"
               title="rating"
             />
           </label>
