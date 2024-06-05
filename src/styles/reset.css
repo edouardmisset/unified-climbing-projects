@@ -30,8 +30,8 @@
   font-weight: 400;
   font-family: system-ui, sans-serif;
 
-  --color-dark: hsl(0deg 0% 14%);
-  --color-light: hsl(0, 0%, 94%);
+  --color-dark: var(--gray-10);
+  --color-light: var(--gray-1);
   /* By default we enable dark mode */
   color-scheme: light dark;
   background-color: var(--color-dark, black);
@@ -114,12 +114,12 @@ picture {
 }
 
 a {
-  color: hsl(235deg 100% 70%);
+  color: var(--violet-4);
   font-weight: 500;
 }
 
 a:hover {
-  color: hsl(235deg 85% 65%);
+  color: var(--violet-3);
 }
 
 /* A elements that don't have a class get default styles */

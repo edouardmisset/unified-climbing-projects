@@ -1,6 +1,7 @@
 import { type Temporal } from '@js-temporal/polyfill'
 import { cloneElement } from 'react'
 import Marker from './marker'
+import styles from './qr-code.module.css'
 
 const gridSize = 25
 const imageSize = 9
@@ -30,6 +31,7 @@ export default function QRCode<T extends Obj>(
   const { data, children: image } = props
   return (
     <div
+      className={styles.qrcode}
       style={{
         display: 'grid',
         gridTemplate: `repeat(${gridSize}, 1fr) / repeat(${gridSize}, 1fr)`,

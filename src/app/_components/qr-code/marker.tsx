@@ -24,7 +24,8 @@ export default function Marker({
             <i
               key={i}
               style={{
-                backgroundColor: i % 2 === 0 ? 'white' : 'hsl(0, 0%, 30%)',
+                backgroundColor:
+                  i % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
                 gridArea: `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`,
               }}
             />

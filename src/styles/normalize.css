@@ -3,6 +3,7 @@
  */
 
 :where(html) {
+  --brand: var(--violet-4);
   --link: var(--indigo-7);
   --link-visited: var(--purple-7);
   --text-1: var(--gray-12);

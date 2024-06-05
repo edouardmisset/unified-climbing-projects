@@ -12,7 +12,15 @@ nav a {
     display: block;
     width: 0;
     height: 2px;
-    background: linear-gradient(to right, #f6d365, #fda085);
+    background: linear-gradient(
+      to left,
+      var(--violet-0),
+      var(--violet-2),
+      var(--violet-4),
+      var(--violet-6),
+      var(--violet-8),
+      var(--violet-10)
+    );
     transition: width 0.4s;
   }
 
