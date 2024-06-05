@@ -7,6 +7,7 @@ import {
   convertNumberToGrade,
   type RouteGrade,
 } from '~/helpers/converter'
+import { GradeSlider } from '../_components/slider/slider'
 
 type AscentDescription = {
   topoGrade: number
@@ -39,13 +40,15 @@ export default function Log(): React.JSX.Element {
 
   const onSubmit: SubmitHandler<AscentDescription> = data => console.log(data)
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { ref: _ref, ...topoGradeRegister } = register('topoGrade')
   return (
-    <div className="">
+    <div className="flex-column">
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className="">Congrats 🎉</h2>
-        <fieldset className="">
+        <fieldset className="flex-column">
           The Basics
-          <label htmlFor="date" className="">
+          <label htmlFor="date" className="flex-column">
             Date
             <input required {...register('date')} type="date" title="Date" />
           </label>
@@ -85,8 +88,8 @@ export default function Log(): React.JSX.Element {
           </label>
           <label htmlFor="topoGrade" className="">
             Topo Grade {convertNumberToGrade(watch('topoGrade'))}
-            <Slider
-              {...register('topoGrade')}
+            <GradeSlider
+              {...topoGradeRegister}
               defaultValue={[defaultTopoGrade]}
               onValueChange={([value]) =>
                 setValue('topoGrade', value ?? defaultTopoGrade)
@@ -98,8 +101,8 @@ export default function Log(): React.JSX.Element {
           </label>
         </fieldset>
         The nitty gritty
-        <fieldset className="">
-          <label htmlFor="holds" className="">
+        <fieldset className="flex-column">
+          <label htmlFor="holds" className="flex-column">
             Holds
             <input
               {...register('holds')}
@@ -110,7 +113,7 @@ export default function Log(): React.JSX.Element {
               title="Holds"
             />
           </label>
-          <label htmlFor="profile" className="">
+          <label htmlFor="profile" className="flex-column">
             profile
             <input
               {...register('profile')}
@@ -121,7 +124,7 @@ export default function Log(): React.JSX.Element {
               title="profile"
             />
           </label>
-          <label htmlFor="height" className="">
+          <label htmlFor="height" className="flex-column">
             Height
             <input
               {...register('height')}
@@ -135,7 +138,7 @@ export default function Log(): React.JSX.Element {
               title="height"
             />
           </label>
-          <label htmlFor="rating" className="">
+          <label htmlFor="rating" className="flex-column">
             Rating
             <input
               {...register('rating')}
@@ -149,7 +152,7 @@ export default function Log(): React.JSX.Element {
               title="rating"
             />
           </label>
-          <label htmlFor="comments" className="">
+          <label htmlFor="comments" className="flex-column">
             comments
             <textarea
               {...register('comments')}
