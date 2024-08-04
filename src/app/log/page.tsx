@@ -12,6 +12,7 @@ import {
 import { GradeSlider } from '../_components/slider/slider'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
 import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
+import styles from './page.module.css'
 
 const climberAverageGrade: RouteGrade = '7b' // get this from the api
 
@@ -46,11 +47,14 @@ export default function Log(): React.JSX.Element {
     defaultValues: defaultAscentFormValues,
   })
 
-  const { ref: _ref, ...topoGradeRegister } = register('topoGrade')
+  const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
   const topoGradeValue = watch('topoGrade')
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex-column">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`${styles.form} flex-column intrinsic-container`}
+      >
         <h2
           className=""
           style={{
@@ -60,7 +64,10 @@ export default function Log(): React.JSX.Element {
         >
           Congrats 🎉
         </h2>
-        <fieldset className="flex-column" id="basics">
+        <fieldset
+          className={`${styles.fields} intrinsic-container flex-column`}
+          id="basics"
+        >
           <legend>The Basics</legend>
           <label htmlFor="date" className="flex-column">
             Date
@@ -122,8 +129,10 @@ export default function Log(): React.JSX.Element {
             />
           </label>
         </fieldset>
-        The nitty gritty
-        <fieldset className="flex-column">
+        <fieldset
+          className={`${styles.fields} intrinsic-container flex-column`}
+        >
+          <legend>The nitty gritty</legend>
           <label htmlFor="holds" className="flex-column">
             Holds
             <input

@@ -71,3 +71,12 @@ nav a {
 .margin-auto {
   margin: auto;
 }
+
+/** Intrinsic Container */
+.intrinsic-container {
+  --container-max: 60ch;
+  --margin: 3rem;
+
+  inline-size: min(100% - var(--margin, 3rem), var(--container-max, 60ch));
+  margin-inline: auto;
+}

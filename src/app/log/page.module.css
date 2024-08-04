@@ -1,0 +1,14 @@
+.form {
+  /* Uses intrinsic container */
+  --container-max: 60ch;
+  --margin: 0rem;
+  gap: 1rem;
+}
+
+.fields {
+  /* Uses intrinsic container */
+  --container-max: 60ch;
+  --margin: 0rem;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+}
