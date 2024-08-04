@@ -7,14 +7,14 @@ import {
   ROUTE_GRADE_TO_NUMBER,
   convertGradeToNumber,
   convertNumberToGrade,
-  type RouteGrade,
 } from '~/helpers/converter'
 import { GradeSlider } from '../_components/slider/slider'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
 import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
 import styles from './page.module.css'
+import type { Grade } from '~/types/ascent'
 
-const climberAverageGrade: RouteGrade = '7b' // get this from the api
+const climberAverageGrade: Grade = '7b' // get this from the api
 
 const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
   try {
@@ -107,7 +107,7 @@ export default function Log(): React.JSX.Element {
             : topoGradeValue}
             <GradeSlider
               {...topoGradeRegister}
-              defaultValue={[convertGradeToNumber(climberAverageGrade)]}
+              defaultValue={[climberAverageGrade]}
               onValueChange={([value]) =>
                 setValue(
                   'topoGrade',
