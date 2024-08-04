@@ -48,7 +48,8 @@ export default function Log(): React.JSX.Element {
   })
 
   const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
-  const topoGradeValue = watch('topoGrade')
+  const topoGradeValue = watch('topoGrade') ?? ''
+
   return (
     <div>
       <form
@@ -100,14 +101,16 @@ export default function Log(): React.JSX.Element {
             />
           </label>
           <label htmlFor="topoGrade" className="">
-            Topo Grade {topoGradeValue}
+            Topo Grade{' '}
+            {typeof topoGradeValue === 'number' ?
+              convertNumberToGrade(topoGradeValue)
+            : topoGradeValue}
             <GradeSlider
               {...topoGradeRegister}
               defaultValue={[convertGradeToNumber(climberAverageGrade)]}
               onValueChange={([value]) =>
                 setValue(
                   'topoGrade',
-
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   convertNumberToGrade(
                     value ?? convertGradeToNumber(climberAverageGrade),
