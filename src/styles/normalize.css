@@ -435,7 +435,7 @@
 @media (prefers-color-scheme: light) {
   :where(table tr:hover td),
   :where(tbody tr:nth-child(2n):hover td) {
-    background-color: #fff;
+    background-color: var(--gray-0);
   }
 }
 :where(table > caption) {
@@ -451,7 +451,7 @@
       select,
       input:not([type='button'], [type='submit'], [type='reset'])
     ) {
-    background-color: #171a1c;
+    background-color: var(--surface-2);
   }
   :where(dialog) {
     background-color: var(--surface-2);

@@ -55,15 +55,7 @@ export default function Log(): React.JSX.Element {
         onSubmit={handleSubmit(onSubmit)}
         className={`${styles.form} flex-column intrinsic-container`}
       >
-        <h2
-          className=""
-          style={{
-            maxWidth: '100%',
-            textAlign: 'center',
-          }}
-        >
-          Congrats 🎉
-        </h2>
+        <h2 className={styles.title}>Congrats 🎉</h2>
         <fieldset
           className={`${styles.fields} intrinsic-container flex-column`}
           id="basics"

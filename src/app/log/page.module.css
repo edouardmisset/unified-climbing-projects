@@ -12,3 +12,8 @@
   padding-block: 0.5rem;
   padding-inline: 1rem;
 }
+
+.title {
+  max-width: 100%;
+  text-align: center;
+}
