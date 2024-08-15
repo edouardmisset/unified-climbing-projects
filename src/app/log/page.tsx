@@ -84,184 +84,176 @@ export default function Log(): React.JSX.Element {
         className={`${styles.form} flex-column intrinsic-container`}
       >
         <h2 className={styles.title}>Congrats 🎉</h2>
-        <fieldset
-          className={`${styles.fields} intrinsic-container flex-column`}
-          id="basics"
-        >
-          <legend>The Basics</legend>
-          <label htmlFor="date" className="flex-column">
-            Date
-            <input required {...register('date')} type="date" title="Date" />
-          </label>
-          <label htmlFor="routeName" className="flex-column">
-            Route Name
-            <input
-              required
-              id="routeName"
-              autoComplete="off"
-              {...register('routeName')}
-              placeholder="The name of the route or boulder climbed"
-              title="Route Name"
-            />
-          </label>
-          <label htmlFor="routeOrBoulder" className="flex-column">
-            Route or Boulder
-            <select
-              id="routeOrBoulder"
-              {...register('routeOrBoulder')}
-              title="Route or Boulder"
-            >
-              <option value="Route" defaultChecked>
-                Route
-              </option>
-              <option value="Bouldering">Bouldering</option>
-            </select>
-          </label>
-          <label htmlFor="crag" className="flex-column">
-            Crag
-            <input
-              required
-              id="crag"
-              {...register('crag')}
-              placeholder="The name of the crag"
-              title="Crag Name"
-            />
-          </label>
-          <label htmlFor="area" className="flex-column">
-            Area
-            <input
-              id="area"
-              {...register('area')}
-              placeholder="The name of the crag's sector or area"
-              title="Crag'area"
-            />
-          </label>
-          <label htmlFor="numberOfTries" className="flex-column">
-            Tries
-            <input
-              {...register('numberOfTries')}
-              min={1}
-              step={1}
-              type="number"
-              id="numberOfTries"
-              placeholder="1"
-              title="Number of tries"
-            />
-          </label>
+
+        <label htmlFor="date" className="flex-column">
+          Date
+          <input required {...register('date')} type="date" title="Date" />
+        </label>
+        <label htmlFor="routeName" className="flex-column">
+          Route Name
+          <input
+            required
+            id="routeName"
+            autoComplete="off"
+            {...register('routeName')}
+            placeholder="The name of the route or boulder climbed"
+            title="Route Name"
+          />
+        </label>
+        <label htmlFor="routeOrBoulder" className="flex-column">
+          Route or Boulder
+          <select
+            id="routeOrBoulder"
+            {...register('routeOrBoulder')}
+            title="Route or Boulder"
+          >
+            <option value="Route" defaultChecked>
+              Route
+            </option>
+            <option value="Bouldering">Bouldering</option>
+          </select>
+        </label>
+        <label htmlFor="crag" className="flex-column">
+          Crag
+          <input
+            required
+            id="crag"
+            {...register('crag')}
+            placeholder="The name of the crag"
+            title="Crag Name"
+          />
+        </label>
+        <label htmlFor="area" className="flex-column">
+          Area
+          <input
+            id="area"
+            {...register('area')}
+            placeholder="The name of the crag's sector or area"
+            title="Crag'area"
+          />
+        </label>
+        <label htmlFor="numberOfTries" className="flex-column">
+          Tries
+          <input
+            {...register('numberOfTries')}
+            min={1}
+            step={1}
+            type="number"
+            id="numberOfTries"
+            placeholder="1"
+            title="Number of tries"
+          />
+        </label>
+        <div className={styles.grades}>
           <label htmlFor="topoGrade" className="">
             Topo Grade {topoGrade}
-            <GradeSlider
-              {...topoGradeRegister}
-              value={[(topoGrade as Grade) || climberAverageGrade]}
-              onValueChange={([value]) => {
-                setValue(
-                  'topoGrade',
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  convertNumberToGrade(
-                    value ?? convertGradeToNumber(climberAverageGrade),
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  ) as any,
-                )
-
-                setValue(
-                  'personalGrade',
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  convertNumberToGrade(
-                    value ?? convertGradeToNumber(climberAverageGrade),
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  ) as any,
-                )
-              }}
-              min={1}
-              max={ROUTE_GRADE_TO_NUMBER.size}
-              step={1}
-            />
           </label>
+          <GradeSlider
+            {...topoGradeRegister}
+            value={[(topoGrade as Grade) || climberAverageGrade]}
+            onValueChange={([value]) => {
+              setValue(
+                'topoGrade',
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                convertNumberToGrade(
+                  value ?? convertGradeToNumber(climberAverageGrade),
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ) as any,
+              )
+
+              setValue(
+                'personalGrade',
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                convertNumberToGrade(
+                  value ?? convertGradeToNumber(climberAverageGrade),
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ) as any,
+              )
+            }}
+            min={1}
+            max={ROUTE_GRADE_TO_NUMBER.size}
+            step={1}
+          />
           <label htmlFor="personalGrade" className="">
             Personal Grade{' '}
             {typeof personalGradeOrNumber === 'number' ?
               convertNumberToGrade(personalGradeOrNumber)
             : personalGradeOrNumber}
-            <GradeSlider
-              {...personalGradeRegister}
-              value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
-              onValueChange={([value]) =>
-                setValue(
-                  'personalGrade',
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                  convertNumberToGrade(
-                    value ?? convertGradeToNumber(climberAverageGrade),
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  ) as any,
-                )
-              }
-              min={1}
-              max={ROUTE_GRADE_TO_NUMBER.size}
-              step={1}
-            />
           </label>
-        </fieldset>
-        <fieldset
-          className={`${styles.fields} intrinsic-container flex-column`}
-        >
-          <legend>The nitty gritty</legend>
-          <label htmlFor="holds" className="flex-column">
-            Holds
-            <input
-              {...register('holds')}
-              type="text"
-              id="holds"
-              placeholder="Hold types (crimps, jugs, underclings, pockets...)"
-              title="Hold type"
-            />
-          </label>
-          <label htmlFor="profile" className="flex-column">
-            profile
-            <input
-              {...register('profile')}
-              type="text"
-              id="profile"
-              placeholder="Route's profile (vertical, slab, overhang...)"
-              title="Profile of the route"
-            />
-          </label>
-          <label htmlFor="height" className="flex-column">
-            Height
-            <input
-              {...register('height')}
-              type="number"
-              min={MIN_HEIGHT}
-              max={MAX_HEIGHT}
-              step={1}
-              id="height"
-              placeholder="Height of the route (not needed for boulders)"
-              title="Height of the route (does not apply for boulders)"
-            />
-          </label>
-          <label htmlFor="rating" className="flex-column">
-            Rating
-            <input
-              {...register('rating')}
-              min={MIN_RATING}
-              max={MAX_RATING}
-              step={1}
-              type="number"
-              id="rating"
-              placeholder="5*"
-              title="Route rating (on a 5 stars system)"
-            />
-          </label>
-          <label htmlFor="comments" className="flex-column">
-            Comments
-            <textarea
-              {...register('comments')}
-              id="comments"
-              placeholder="Feelings, partners, betas..."
-              title="Comments: Feelings, partners, betas..."
-              autoComplete="off"
-            />
-          </label>
-        </fieldset>
+          <GradeSlider
+            {...personalGradeRegister}
+            value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
+            onValueChange={([value]) =>
+              setValue(
+                'personalGrade',
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                convertNumberToGrade(
+                  value ?? convertGradeToNumber(climberAverageGrade),
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ) as any,
+              )
+            }
+            min={1}
+            max={ROUTE_GRADE_TO_NUMBER.size}
+            step={1}
+          />
+        </div>
+        <label htmlFor="holds" className="flex-column">
+          Holds
+          <input
+            {...register('holds')}
+            type="text"
+            id="holds"
+            placeholder="Hold types (crimps, jugs, underclings, pockets...)"
+            title="Hold type"
+          />
+        </label>
+        <label htmlFor="profile" className="flex-column">
+          profile
+          <input
+            {...register('profile')}
+            type="text"
+            id="profile"
+            placeholder="Route's profile (vertical, slab, overhang...)"
+            title="Profile of the route"
+          />
+        </label>
+        <label htmlFor="height" className="flex-column">
+          Height
+          <input
+            {...register('height')}
+            type="number"
+            min={MIN_HEIGHT}
+            max={MAX_HEIGHT}
+            step={1}
+            id="height"
+            placeholder="Height of the route (not needed for boulders)"
+            title="Height of the route (does not apply for boulders)"
+          />
+        </label>
+        <label htmlFor="rating" className="flex-column">
+          Rating
+          <input
+            {...register('rating')}
+            min={MIN_RATING}
+            max={MAX_RATING}
+            step={1}
+            type="number"
+            id="rating"
+            placeholder="5*"
+            title="Route rating (on a 5 stars system)"
+          />
+        </label>
+        <label htmlFor="comments" className="flex-column">
+          Comments
+          <textarea
+            {...register('comments')}
+            id="comments"
+            placeholder="Feelings, partners, betas..."
+            title="Comments: Feelings, partners, betas..."
+            autoComplete="off"
+          />
+        </label>
         <input type="submit" />
       </form>
     </div>

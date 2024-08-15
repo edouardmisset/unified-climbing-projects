@@ -1,19 +1,27 @@
 .form {
   /* Uses intrinsic container */
-  --container-max: 60ch;
+  --container-max: 45ch;
   --margin: 0rem;
-  gap: 1rem;
-}
-
-.fields {
-  /* Uses intrinsic container */
-  --container-max: 60ch;
-  --margin: 0rem;
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
+  gap: 0.5em;
 }
 
 .title {
   max-width: 100%;
   text-align: center;
+}
+
+.grades {
+  --gap: 1rem;
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(15ch, calc(50% - (var(--gap) / 2)))
+  );
+  align-items: center;
+  grid-gap: var(--gap);
+
+  & > span {
+    width: 100%;
+  }
 }
