@@ -48,7 +48,7 @@ const defaultAscentFormValues = ascentFormInputSchema.parse({
   profile: 'Vertical',
   height: env.NEXT_PUBLIC_ENV === 'development' ? 10 : undefined,
   rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
-  numberOfTries: 1,
+  numberOfTries: '1',
 })
 
 export default function Log(): React.JSX.Element {
@@ -118,16 +118,14 @@ export default function Log(): React.JSX.Element {
               title="Crag Name"
             />
           </label>
-          <label htmlFor="tries" className="flex-column">
+          <label htmlFor="numberOfTries" className="flex-column">
             Tries
             <input
               {...register('numberOfTries')}
-              defaultValue={1}
               min={1}
               step={1}
               type="number"
-              name="tries"
-              id="tries"
+              id="numberOfTries"
               placeholder="1"
               title="Number of tries"
             />
@@ -194,7 +192,6 @@ export default function Log(): React.JSX.Element {
             <input
               {...register('holds')}
               type="text"
-              name="holds"
               id="holds"
               placeholder="Hold types (crimps, jugs, underclings, pockets...)"
               title="Hold type"
@@ -205,7 +202,6 @@ export default function Log(): React.JSX.Element {
             <input
               {...register('profile')}
               type="text"
-              name="profile"
               id="profile"
               placeholder="Route's profile (vertical, slab, overhang...)"
               title="Profile of the route"
@@ -219,7 +215,6 @@ export default function Log(): React.JSX.Element {
               min={MIN_HEIGHT}
               max={MAX_HEIGHT}
               step={1}
-              name="height"
               id="height"
               placeholder="Height of the route (not needed for boulders)"
               title="Height of the route (does not apply for boulders)"
@@ -233,7 +228,6 @@ export default function Log(): React.JSX.Element {
               max={MAX_RATING}
               step={1}
               type="number"
-              name="rating"
               id="rating"
               placeholder="5*"
               title="Route rating (on a 5 stars system)"
@@ -243,7 +237,6 @@ export default function Log(): React.JSX.Element {
             Comments
             <textarea
               {...register('comments')}
-              name="comments"
               id="comments"
               placeholder="Feelings, partners, betas..."
               title="Comments: Feelings, partners, betas..."
