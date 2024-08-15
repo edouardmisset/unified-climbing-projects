@@ -60,8 +60,13 @@ export default function Log(): React.JSX.Element {
   const { ref: _unusedRef2, ...personalGradeRegister } =
     register('personalGrade')
 
-  const topoGradeValue = watch('topoGrade') ?? ''
-  const personalGradeValue = watch('personalGrade') ?? topoGradeValue
+  const topoGradeOrNumber = watch('topoGrade') ?? climberAverageGrade
+  const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
+
+  const topoGrade =
+    typeof topoGradeOrNumber === 'number' ?
+      convertNumberToGrade(topoGradeOrNumber)
+    : topoGradeOrNumber
 
   return (
     <div>
@@ -128,16 +133,10 @@ export default function Log(): React.JSX.Element {
             />
           </label>
           <label htmlFor="topoGrade" className="">
-            Topo Grade{' '}
-            {typeof topoGradeValue === 'number' ?
-              convertNumberToGrade(topoGradeValue)
-            : topoGradeValue}
+            Topo Grade {topoGrade}
             <GradeSlider
               {...topoGradeRegister}
-              defaultValue={[climberAverageGrade]}
-              value={[
-                topoGradeValue || convertGradeToNumber(climberAverageGrade),
-              ]}
+              value={[(topoGrade as Grade) || climberAverageGrade]}
               onValueChange={([value]) => {
                 setValue(
                   'topoGrade',
@@ -164,15 +163,12 @@ export default function Log(): React.JSX.Element {
           </label>
           <label htmlFor="personalGrade" className="">
             Personal Grade{' '}
-            {typeof personalGradeValue === 'number' ?
-              convertNumberToGrade(personalGradeValue)
-            : personalGradeValue}
+            {typeof personalGradeOrNumber === 'number' ?
+              convertNumberToGrade(personalGradeOrNumber)
+            : personalGradeOrNumber}
             <GradeSlider
               {...personalGradeRegister}
-              // defaultValue={[climberAverageGrade]}
-              value={[
-                personalGradeValue || convertGradeToNumber(climberAverageGrade),
-              ]}
+              value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
               onValueChange={([value]) =>
                 setValue(
                   'personalGrade',

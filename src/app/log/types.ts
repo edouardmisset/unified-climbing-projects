@@ -1,5 +1,5 @@
 import { stringifyDate, datification } from "@edouardmisset/utils"
-import { z } from "zod"
+import { string, z } from "zod"
 import { convertGradeToNumber, convertNumberToGrade } from "~/helpers/converter"
 import { gradeSchema, holdsSchema, profileSchema } from "~/types/ascent"
 import { climbingDisciplineSchema } from "~/types/training"
@@ -8,14 +8,13 @@ import { MAX_HEIGHT, MAX_RATING } from "./constants"
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
 
+const optionalGradeToNumberSchema = gradeSchema
+  .transform(grade => convertGradeToNumber(grade))
+  .optional()
 export const ascentFormInputSchema = z.object({
   numberOfTries: z.number().min(1).step(1).optional(),
-  topoGrade: gradeSchema
-    .transform(grade => convertGradeToNumber(grade))
-    .optional(),
-  personalGrade: gradeSchema
-    .transform(grade => convertGradeToNumber(grade))
-    .optional(),
+  topoGrade: optionalGradeToNumberSchema,
+  personalGrade: optionalGradeToNumberSchema,
   routeName: z.string().optional(),
   routeOrBoulder: climbingDisciplineSchema.optional(),
   crag: z.string().optional(), // pick from a look up in DB
@@ -38,18 +37,16 @@ export const ascentFormInputSchema = z.object({
 })
 
 
+const numberGradeToGradeSchema = z
+  .number().or(string())
+  .refine(stringOrNumberGrade =>
+    convertNumberToGrade(Number(stringOrNumberGrade)),
+  )
+
 export const ascentFormOutputSchema = z.object({
   numberOfTries: z.number().min(1).step(1).optional(),
-  topoGrade: z
-    .string()
-    .refine(stringNumberGrade =>
-      convertNumberToGrade(Number(stringNumberGrade)),
-    ),
-  personalGrade: z
-    .string()
-    .refine(stringNumberGrade =>
-      convertNumberToGrade(Number(stringNumberGrade)),
-    ),
+  topoGrade: numberGradeToGradeSchema,
+  personalGrade: numberGradeToGradeSchema,
   routeName: z.string().trim(),
   routeOrBoulder: climbingDisciplineSchema,
   crag: z.string().min(1).trim(),
