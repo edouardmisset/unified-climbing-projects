@@ -10,7 +10,11 @@ import {
 } from '~/helpers/converter'
 import { GradeSlider } from '../_components/slider/slider'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
-import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
+import {
+  ascentFormInputSchema,
+  ascentFormOutputSchema,
+  type AscentFormInput,
+} from './types'
 import styles from './page.module.css'
 import type { Grade } from '~/types/ascent'
 import { env } from '~/env'
@@ -24,6 +28,8 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
     console.log({ parsedData })
 
     // TODO: send data to the api...
+    // If the data is sent to my Google Sheet's DB, we need to make some
+    // transformations (personalGrade => 'My Grade')
   } catch (error) {
     const zErrors = fromZodError(error as Zod.ZodError)
 
@@ -36,7 +42,7 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
 }
 
 // TODO: get intelligent default values from the API
-const defaultAscentFormValues = ascentFormInputSchema.parse({
+const defaultAscentToParse = {
   routeName:
     env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Route_Name' : '',
   crag: env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Crag' : '',
@@ -46,10 +52,12 @@ const defaultAscentFormValues = ascentFormInputSchema.parse({
   holds: 'Crimp',
   routeOrBoulder: 'Route',
   profile: 'Vertical',
-  height: env.NEXT_PUBLIC_ENV === 'development' ? 10 : undefined,
+  height: env.NEXT_PUBLIC_ENV === 'development' ? 20 : undefined,
   rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
   numberOfTries: '1',
-})
+} satisfies AscentFormInput
+const defaultAscentFormValues =
+  ascentFormInputSchema.parse(defaultAscentToParse)
 
 export default function Log(): React.JSX.Element {
   const { handleSubmit, register, setValue, watch } = useForm({
@@ -95,7 +103,7 @@ export default function Log(): React.JSX.Element {
               title="Route Name"
             />
           </label>
-          <label htmlFor="routeName" className="flex-column">
+          <label htmlFor="routeOrBoulder" className="flex-column">
             Route or Boulder
             <select
               id="routeOrBoulder"
@@ -105,7 +113,7 @@ export default function Log(): React.JSX.Element {
               <option value="Route" defaultChecked>
                 Route
               </option>
-              <option value="Boulder">Boulder</option>
+              <option value="Bouldering">Bouldering</option>
             </select>
           </label>
           <label htmlFor="crag" className="flex-column">

@@ -39,6 +39,8 @@ export const ascentFormInputSchema = z.object({
   comments: z.string().optional(),
 })
 
+export type AscentFormInput = z.input<typeof ascentFormInputSchema>
+
 
 const numberGradeToGradeSchema = z
   .number().or(string())
