@@ -9,17 +9,23 @@ export function GradeSlider(
     defaultValue?: Grade[] | Slider.SliderProps['defaultValue']
   } & React.RefAttributes<HTMLSpanElement>,
 ): React.JSX.Element {
-  const { defaultValue } = props
+  const { defaultValue, value } = props
 
   const numberDefaultValue =
     defaultValue === undefined ? [0]
     : typeof defaultValue[0] === 'number' ? (defaultValue as number[])
     : (defaultValue as Grade[]).map(df => convertGradeToNumber(df))
 
+  const numberValue =
+    value === undefined ? [0]
+    : typeof value[0] === 'number' ? value
+    : (value as unknown[] as Grade[]).map(df => convertGradeToNumber(df))
+
   return (
     <Slider.Root
       className={styles.SliderRoot}
       {...props}
+      value={numberValue}
       defaultValue={numberDefaultValue}
     >
       <Slider.Track className={styles.SliderTrack}>

@@ -14,7 +14,7 @@ import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
 import styles from './page.module.css'
 import type { Grade } from '~/types/ascent'
 
-const climberAverageGrade: Grade = '7b' // get this from the api
+const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
 const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
   try {
@@ -22,18 +22,19 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
     const parsedData = ascentFormOutputSchema.parse(formData)
     console.log({ parsedData })
 
-    // send data to the api...
+    // TODO: send data to the api...
   } catch (error) {
     const zErrors = fromZodError(error as Zod.ZodError)
 
     zErrors.details.forEach(detail => {
       console.error(detail)
-      // TODO transform this log to a toast
+      // TODO: change this console.log to a toast
       console.error(detail.message)
     })
   }
 }
 
+// TODO: get intelligent default values from the API
 const defaultAscentFormValues = ascentFormInputSchema.parse({
   topoGrade: climberAverageGrade,
   date: new Date(),
@@ -48,7 +49,11 @@ export default function Log(): React.JSX.Element {
   })
 
   const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
+  const { ref: _unusedRef2, ...personalGradeRegister } =
+    register('personalGrade')
+
   const topoGradeValue = watch('topoGrade') ?? ''
+  const personalGradeValue = watch('personalGrade') ?? topoGradeValue
 
   return (
     <div>
@@ -108,9 +113,47 @@ export default function Log(): React.JSX.Element {
             <GradeSlider
               {...topoGradeRegister}
               defaultValue={[climberAverageGrade]}
-              onValueChange={([value]) =>
+              value={[
+                topoGradeValue || convertGradeToNumber(climberAverageGrade),
+              ]}
+              onValueChange={([value]) => {
                 setValue(
                   'topoGrade',
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                  convertNumberToGrade(
+                    value ?? convertGradeToNumber(climberAverageGrade),
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  ) as any,
+                )
+
+                setValue(
+                  'personalGrade',
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                  convertNumberToGrade(
+                    value ?? convertGradeToNumber(climberAverageGrade),
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  ) as any,
+                )
+              }}
+              min={1}
+              max={ROUTE_GRADE_TO_NUMBER.size}
+              step={1}
+            />
+          </label>
+          <label htmlFor="personalGrade" className="">
+            Personal Grade{' '}
+            {typeof personalGradeValue === 'number' ?
+              convertNumberToGrade(personalGradeValue)
+            : personalGradeValue}
+            <GradeSlider
+              {...personalGradeRegister}
+              // defaultValue={[climberAverageGrade]}
+              value={[
+                personalGradeValue || convertGradeToNumber(climberAverageGrade),
+              ]}
+              onValueChange={([value]) =>
+                setValue(
+                  'personalGrade',
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   convertNumberToGrade(
                     value ?? convertGradeToNumber(climberAverageGrade),

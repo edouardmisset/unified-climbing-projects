@@ -12,6 +12,9 @@ export const ascentFormInputSchema = z.object({
   topoGrade: gradeSchema
     .transform(grade => convertGradeToNumber(grade))
     .optional(),
+  personalGrade: gradeSchema
+    .transform(grade => convertGradeToNumber(grade))
+    .optional(),
   routeName: z.string().optional(),
   routeOrBoulder: climbingDisciplineSchema.optional(),
   crag: z.string().optional(), // pick from a look up in DB
@@ -36,6 +39,11 @@ export const ascentFormInputSchema = z.object({
 
 export const ascentFormOutputSchema = z.object({
   topoGrade: z
+    .string()
+    .refine(stringNumberGrade =>
+      convertNumberToGrade(Number(stringNumberGrade)),
+    ),
+  personalGrade: z
     .string()
     .refine(stringNumberGrade =>
       convertNumberToGrade(Number(stringNumberGrade)),
