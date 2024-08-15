@@ -15,6 +15,7 @@ const numberOfTriesSchema = z.string().min(1).max(MAX_TRIES.toString().length).r
   message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
 }).transform(st => Number(st)).optional()
 export const ascentFormInputSchema = z.object({
+  area: z.string().optional(),
   numberOfTries: numberOfTriesSchema.transform(num => num?.toString()),
   topoGrade: optionalGradeToNumberSchema,
   personalGrade: optionalGradeToNumberSchema,
@@ -49,6 +50,7 @@ const numberGradeToGradeSchema = z
   )
 
 export const ascentFormOutputSchema = z.object({
+  area: z.string().optional(),
   numberOfTries: numberOfTriesSchema,
   topoGrade: numberGradeToGradeSchema,
   personalGrade: numberGradeToGradeSchema,

@@ -29,7 +29,8 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
 
     // TODO: send data to the api...
     // If the data is sent to my Google Sheet's DB, we need to make some
-    // transformations (personalGrade => 'My Grade')
+    // transformations (personalGrade => 'My Grade', department lookup, climber,
+    // etc.)
   } catch (error) {
     const zErrors = fromZodError(error as Zod.ZodError)
 
@@ -124,6 +125,15 @@ export default function Log(): React.JSX.Element {
               {...register('crag')}
               placeholder="The name of the crag"
               title="Crag Name"
+            />
+          </label>
+          <label htmlFor="area" className="flex-column">
+            Area
+            <input
+              id="area"
+              {...register('area')}
+              placeholder="The name of the crag's sector or area"
+              title="Crag'area"
             />
           </label>
           <label htmlFor="numberOfTries" className="flex-column">
