@@ -13,6 +13,7 @@ import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
 import { ascentFormInputSchema, ascentFormOutputSchema } from './types'
 import styles from './page.module.css'
 import type { Grade } from '~/types/ascent'
+import { env } from '~/env'
 
 const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
@@ -36,11 +37,18 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
 
 // TODO: get intelligent default values from the API
 const defaultAscentFormValues = ascentFormInputSchema.parse({
+  routeName:
+    env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Route_Name' : '',
+  crag: env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Crag' : '',
   topoGrade: climberAverageGrade,
+  personalGrade: climberAverageGrade,
   date: new Date(),
   holds: 'Crimp',
   routeOrBoulder: 'Route',
   profile: 'Vertical',
+  height: env.NEXT_PUBLIC_ENV === 'development' ? 10 : undefined,
+  rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
+  numberOfTries: 1,
 })
 
 export default function Log(): React.JSX.Element {
@@ -103,6 +111,20 @@ export default function Log(): React.JSX.Element {
               {...register('crag')}
               placeholder="The name of the crag"
               title="Crag Name"
+            />
+          </label>
+          <label htmlFor="tries" className="flex-column">
+            Tries
+            <input
+              {...register('numberOfTries')}
+              defaultValue={1}
+              min={1}
+              step={1}
+              type="number"
+              name="tries"
+              id="tries"
+              placeholder="1"
+              title="Number of tries"
             />
           </label>
           <label htmlFor="topoGrade" className="">
@@ -179,7 +201,7 @@ export default function Log(): React.JSX.Element {
               name="holds"
               id="holds"
               placeholder="Hold types (crimps, jugs, underclings, pockets...)"
-              title="Holds"
+              title="Hold type"
             />
           </label>
           <label htmlFor="profile" className="flex-column">
@@ -190,7 +212,7 @@ export default function Log(): React.JSX.Element {
               name="profile"
               id="profile"
               placeholder="Route's profile (vertical, slab, overhang...)"
-              title="profile"
+              title="Profile of the route"
             />
           </label>
           <label htmlFor="height" className="flex-column">
@@ -204,7 +226,7 @@ export default function Log(): React.JSX.Element {
               name="height"
               id="height"
               placeholder="Height of the route (not needed for boulders)"
-              title="height"
+              title="Height of the route (does not apply for boulders)"
             />
           </label>
           <label htmlFor="rating" className="flex-column">
@@ -218,7 +240,7 @@ export default function Log(): React.JSX.Element {
               name="rating"
               id="rating"
               placeholder="5*"
-              title="rating"
+              title="Route rating (on a 5 stars system)"
             />
           </label>
           <label htmlFor="comments" className="flex-column">
@@ -228,7 +250,7 @@ export default function Log(): React.JSX.Element {
               name="comments"
               id="comments"
               placeholder="Feelings, partners, betas..."
-              title="comments"
+              title="Comments: Feelings, partners, betas..."
               autoComplete="off"
             />
           </label>

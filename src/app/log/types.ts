@@ -9,6 +9,7 @@ const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
 
 export const ascentFormInputSchema = z.object({
+  numberOfTries: z.number().min(1).step(1).optional(),
   topoGrade: gradeSchema
     .transform(grade => convertGradeToNumber(grade))
     .optional(),
@@ -38,6 +39,7 @@ export const ascentFormInputSchema = z.object({
 
 
 export const ascentFormOutputSchema = z.object({
+  numberOfTries: z.number().min(1).step(1).optional(),
   topoGrade: z
     .string()
     .refine(stringNumberGrade =>
