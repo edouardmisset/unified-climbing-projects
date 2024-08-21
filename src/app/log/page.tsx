@@ -128,8 +128,8 @@ export default function Log(): React.JSX.Element {
           <input
             id="area"
             {...register('area')}
-            placeholder="The name of the crag's sector or area"
-            title="Crag'area"
+            placeholder="The name of the crag's sector (or area)"
+            title="Crag's area"
           />
         </label>
         <label htmlFor="numberOfTries" className="flex-column">
@@ -209,7 +209,7 @@ export default function Log(): React.JSX.Element {
           />
         </label>
         <label htmlFor="profile" className="flex-column">
-          profile
+          Profile
           <input
             {...register('profile')}
             type="text"
@@ -219,7 +219,7 @@ export default function Log(): React.JSX.Element {
           />
         </label>
         <label htmlFor="height" className="flex-column">
-          Height
+          Height (m)
           <input
             {...register('height')}
             type="number"
