@@ -43,7 +43,7 @@ export const convertSessionTypeToBackgroundColor = (
 ): Color =>
   sessionType === undefined ?
     new Color('white')
-    : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
+  : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 
 export const getColorVariant = (
   color: Color,
@@ -61,8 +61,8 @@ export const getColorVariant = (
 
   const lightness =
     isOneComponentBelowThreshold ? 0.9
-      : isOneComponentAboveThreshold ? 0.6
-        : 0.75
+    : isOneComponentAboveThreshold ? 0.6
+    : 0.75
 
   return new Color(
     new Color(color).set({
@@ -151,7 +151,7 @@ const createFrenchGradingScale = <GradeType extends Grade>(
         degree +
         (isBoulderGrade ?
           (letter.toUpperCase() as BoulderGradeLetter)
-          : letter),
+        : letter),
     ).flatMap(degreeAndLetter =>
       optionalPlus.map(maybePlus => (degreeAndLetter + maybePlus) as GradeType),
     ),
@@ -190,13 +190,13 @@ export const convertGradeToNumber = <GradeType extends Grade>(
   grade: GradeType,
 ): number =>
   ROUTE_GRADES.includes(grade as RouteGrade) ?
-    ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0
-    : BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0
+    (ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0)
+  : (BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0)
 
 export const convertNumberToGrade = (
   gradeNumber: number,
   toBoulderGrade = false,
 ): Grade =>
   toBoulderGrade ?
-    NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A'
-    : NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a'
+    (NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A')
+  : (NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a')

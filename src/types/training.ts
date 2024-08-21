@@ -19,7 +19,11 @@ const sessionTypeSchema = z.enum([
 ])
 
 const percentSchema = number().min(0).max(100)
-export const climbingDisciplineSchema = z.enum(['Route', 'Bouldering', 'Multi-Pitch'])
+export const climbingDisciplineSchema = z.enum([
+  'Route',
+  'Bouldering',
+  'Multi-Pitch',
+])
 export const trainingSessionSchema = z.object({
   date: string()
     .min(1)

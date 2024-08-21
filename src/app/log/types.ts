@@ -1,9 +1,15 @@
-import { stringifyDate, datification } from "@edouardmisset/utils"
-import { string, z } from "zod"
-import { convertGradeToNumber, convertNumberToGrade } from "~/helpers/converter"
-import { gradeSchema, holdsSchema, profileSchema } from "~/types/ascent"
-import { climbingDisciplineSchema } from "~/types/training"
-import { MAX_HEIGHT, MAX_RATING, MAX_TRIES, MIN_HEIGHT, MIN_RATING } from "./constants"
+import { stringifyDate, datification } from '@edouardmisset/utils'
+import { string, z } from 'zod'
+import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
+import { gradeSchema, holdsSchema, profileSchema } from '~/types/ascent'
+import { climbingDisciplineSchema } from '~/types/training'
+import {
+  MAX_HEIGHT,
+  MAX_RATING,
+  MAX_TRIES,
+  MIN_HEIGHT,
+  MIN_RATING,
+} from './constants'
 
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
@@ -11,9 +17,15 @@ const futureDateErrorMessage =
 const optionalGradeToNumberSchema = gradeSchema
   .transform(grade => convertGradeToNumber(grade))
   .optional()
-const numberOfTriesSchema = z.string().min(1).max(MAX_TRIES.toString().length).refine(val => /^[1-9999]$/.test(val), {
-  message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
-}).transform(st => Number(st)).optional()
+const numberOfTriesSchema = z
+  .string()
+  .min(1)
+  .max(MAX_TRIES.toString().length)
+  .refine(val => /^[1-9999]$/.test(val), {
+    message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
+  })
+  .transform(st => Number(st))
+  .optional()
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
   numberOfTries: numberOfTriesSchema.transform(num => num?.toString()),
@@ -42,9 +54,9 @@ export const ascentFormInputSchema = z.object({
 
 export type AscentFormInput = z.input<typeof ascentFormInputSchema>
 
-
 const numberGradeToGradeSchema = z
-  .number().or(string())
+  .number()
+  .or(string())
   .transform(stringOrNumberGrade =>
     convertNumberToGrade(Number(stringOrNumberGrade)),
   )
