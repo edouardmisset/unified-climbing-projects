@@ -225,7 +225,7 @@ export default function Log(): React.JSX.Element {
             type="number"
             min={MIN_HEIGHT}
             max={MAX_HEIGHT}
-            step={1}
+            step={5}
             id="height"
             placeholder="Height of the route (not needed for boulders)"
             title="Height of the route (does not apply for boulders)"
