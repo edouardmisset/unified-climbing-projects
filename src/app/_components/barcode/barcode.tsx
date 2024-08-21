@@ -17,20 +17,20 @@ export default function Barcode({
         flexDirection: 'column',
         alignItems: 'center',
         gap: '1rem',
-        height: '100%',
+        maxHeight: '100%',
         width: '100%',
       }}
     >
       <div
         style={{
-          width: '100%',
+          width: 'clamp(30ch, 50%, 80ch)',
           background: 'white',
           display: 'flex',
           justifyContent: 'space-between',
 
           gap: minBarWidth,
 
-          padding: `3% ${1.5 * minBarWidth}% 4%`,
+          padding: `3% ${1.5 * minBarWidth}px 4%`,
           aspectRatio: '3 / 2',
         }}
       >
