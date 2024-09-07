@@ -14,7 +14,7 @@ const parsedAscentData = await fetch(
   })
   .catch(error => {
     console.error(error)
-    return []
+    return [] as Ascent[]
   })
 
 export const ascentSeasons = [
@@ -26,7 +26,9 @@ const ascentsCollection: Record<
   (TemporalDate & { ascents?: Ascent[] })[]
 > = Object.fromEntries(
   ascentSeasons.map(year => {
-    const daysPerYear = 365
+    const daysPerYear = Temporal.PlainDate.from({
+      year, month: 1, day: 1
+    }).daysInYear
     return [
       year,
       Array.from({ length: daysPerYear })
