@@ -55,7 +55,7 @@ const defaultAscentToParse = {
   profile: 'Vertical',
   height: env.NEXT_PUBLIC_ENV === 'development' ? 20 : undefined,
   rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
-  numberOfTries: '1',
+  tries: '1',
 } satisfies AscentFormInput
 const defaultAscentFormValues =
   ascentFormInputSchema.parse(defaultAscentToParse)
@@ -135,11 +135,11 @@ export default function Log(): React.JSX.Element {
         <label htmlFor="numberOfTries" className="flex-column">
           Tries
           <input
-            {...register('numberOfTries')}
+            {...register('tries')}
             min={1}
             step={1}
             type="number"
-            id="numberOfTries"
+            id="tries"
             placeholder="1"
             title="Number of tries"
           />

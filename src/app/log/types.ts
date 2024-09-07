@@ -28,7 +28,7 @@ const numberOfTriesSchema = z
   .optional()
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
-  numberOfTries: numberOfTriesSchema.transform(num => num?.toString()),
+  tries: numberOfTriesSchema.transform(num => num?.toString()),
   topoGrade: optionalGradeToNumberSchema,
   personalGrade: optionalGradeToNumberSchema,
   routeName: z.string().optional(),
@@ -63,7 +63,7 @@ const numberGradeToGradeSchema = z
 
 export const ascentFormOutputSchema = z.object({
   area: z.string().optional(),
-  numberOfTries: numberOfTriesSchema,
+  tries: numberOfTriesSchema,
   topoGrade: numberGradeToGradeSchema,
   personalGrade: numberGradeToGradeSchema,
   routeName: z.string().trim(),
