@@ -1,7 +1,8 @@
-import { Temporal } from '@js-temporal/polyfill'
 import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
 import { ascentSchema, type Ascent } from '~/types/ascent'
 import { isDataResponse } from '~/types/generic'
+import { createEmptyYearlyCollections } from './helpers'
+import { Temporal } from '@js-temporal/polyfill'
 
 const parsedAscentData = await fetch(
   `${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`,
@@ -24,25 +25,7 @@ export const ascentSeasons = [
 const ascentsCollection: Record<
   number,
   (TemporalDate & { ascents?: Ascent[] })[]
-> = Object.fromEntries(
-  ascentSeasons.map(year => {
-    const daysPerYear = Temporal.PlainDate.from({
-      year, month: 1, day: 1
-    }).daysInYear
-    return [
-      year,
-      Array.from({ length: daysPerYear })
-        .fill(undefined)
-        .map((_, i) => ({
-          date: Temporal.PlainDate.from({
-            day: 1,
-            month: 1,
-            year,
-          }).add({ days: i }),
-        })),
-    ]
-  }),
-)
+> = createEmptyYearlyCollections(ascentSeasons)
 
 export const seasonAscentPerDay = parsedAscentData.reduce(
   (acc, ascent) => {
@@ -62,7 +45,7 @@ export const seasonAscentPerDay = parsedAscentData.reduce(
 export const createEmptyBarcodeCollection = <T>() =>
   Object.fromEntries(
     ascentSeasons.map(season => {
-      const weeksPerYear = 52
+      const weeksPerYear = Temporal.PlainDate.from({ year: season, month: 12, day: 31 }).weekOfYear
       return [season, Array.from({ length: weeksPerYear }, (): T[] => [])]
     }),
   )

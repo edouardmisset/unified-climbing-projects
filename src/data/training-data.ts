@@ -1,8 +1,9 @@
-import { Temporal } from '@js-temporal/polyfill'
 import { isDataResponse } from '~/types/generic'
 
 import { trainingSessionSchema, type TrainingSession } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data'
+import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
+import { createEmptyYearlyCollections } from './helpers'
 
 const parsedTrainingData = await fetch(
   `${process.env.NEXT_PUBLIC_API_BASE_URL}/training`,
@@ -22,27 +23,8 @@ const trainingSeasons = [
   ...new Set(parsedTrainingData.map(({ date }) => date.year)),
 ].reverse()
 
-const trainingCollection: Record<number, TrainingSession[]> =
-  Object.fromEntries(
-    trainingSeasons.map(year => {
-      const daysPerYear = Temporal.PlainDate.from({
-        year, month: 1, day: 1
-      }).daysInYear
-
-      return [
-        year,
-        Array.from({ length: daysPerYear })
-          .fill(undefined)
-          .map((_, i) => ({
-            date: Temporal.PlainDate.from({
-              day: 1,
-              month: 1,
-              year,
-            }).add({ days: i }),
-          })),
-      ]
-    }),
-  )
+const trainingCollection: Record<number, (TemporalDate & TrainingSession)[]> =
+  createEmptyYearlyCollections(trainingSeasons)
 
 export const seasonTraining = parsedTrainingData.reduce(
   (acc, trainingSession) => {
