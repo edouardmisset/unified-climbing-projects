@@ -24,17 +24,20 @@ const trainingSeasons = [
 
 const trainingCollection: Record<number, TrainingSession[]> =
   Object.fromEntries(
-    trainingSeasons.map(season => {
-      const daysPerYear = 365
+    trainingSeasons.map(year => {
+      const daysPerYear = Temporal.PlainDate.from({
+        year, month: 1, day: 1
+      }).daysInYear
+
       return [
-        season,
+        year,
         Array.from({ length: daysPerYear })
           .fill(undefined)
           .map((_, i) => ({
             date: Temporal.PlainDate.from({
               day: 1,
               month: 1,
-              year: season,
+              year,
             }).add({ days: i }),
           })),
       ]
