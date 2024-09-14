@@ -1,8 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
 import { number, string, z } from 'zod'
 
-const ratings = ['1*', '2*', '3*', '4*', '5*'] as const
-
 const holds = [
   'Positive',
   'Jug',
@@ -28,31 +26,7 @@ const profiles = [
   'Roof',
 ] as const
 
-const heights = [
-  '3m',
-  '5m',
-  '7m',
-  '10m',
-  '15m',
-  '20m',
-  '25m',
-  '30m',
-  '35m',
-  '40m',
-  '45m',
-  '50m',
-  '100m',
-  '150m',
-  '200m',
-  '250m',
-  '300m',
-  '350m',
-  '400m',
-  '500m',
-  '600m',
-  '800m',
-  '1000m',
-] as const
+
 
 const grades = [
   '6c',
@@ -69,19 +43,6 @@ const grades = [
   '8b+',
 ] as const
 
-const tries = [
-  '001 Onsight',
-  '01 Flash',
-  '02 go',
-  '03 go',
-  '05 go',
-  '10 go',
-  '15 go',
-  '20 go',
-  '30 go',
-  '50 go',
-  '100 go',
-] as const
 
 export const GRADE_TO_NUMBER: Record<Grade, number> = {
   '6c': 5,
@@ -104,11 +65,12 @@ export type Grade = z.infer<typeof gradeSchema>
 
 const optionalStringSchema = string().optional()
 
-export const heightSchema = z.enum(heights)
+export const heightSchema = number().optional()
 export const profileSchema = z.enum(profiles)
 export const holdsSchema = z.enum(holds)
-export const ratingSchema = z.enum(ratings)
-export const triesSchema = z.enum(tries)
+export const ratingSchema = number().optional()
+export const triesSchema = number()
+
 export const ascentSchema = z.object({
   routeName: string().min(1).or(number()),
   topoGrade: gradeSchema,
@@ -133,7 +95,8 @@ export const ascentSchema = z.object({
       )
     }),
   climber: string(),
-  ascentComment: optionalStringSchema,
+  comments: optionalStringSchema,
+  style: z.enum(['Onsight', 'Flash', 'Redpoint'])
 })
 
 export type Ascent = z.infer<typeof ascentSchema>
