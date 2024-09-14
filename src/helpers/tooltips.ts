@@ -35,12 +35,12 @@ export const createTrainingTooltip = ({
   sessionType,
   comments,
 }: TrainingSession): string => {
-  const datum = `📅 ${date.toLocaleString(undefined, {
+  const localeDate = `📅 ${date.toLocaleString(undefined, {
     day: 'numeric',
     weekday: 'long',
     month: 'long',
   })}`
-  const cragum =
+  const cragEmoji =
     gymCrag ?
       `\t${
         routeOrBouldering === 'Bouldering' ? '🪨'
@@ -49,12 +49,12 @@ export const createTrainingTooltip = ({
         : ''
       } ${gymCrag}`
     : ''
-  const seshum = sessionType ? ` (${sessionType})` : ''
-  const volum = volume ? `Volume: ${volume}%` : ''
-  const intensitum = intensity ? `Intensity: ${intensity}%` : ''
-  const loadum = load ? `Load: ${roundToTen(load)}%` : ''
-  const commentum = comments ? `💬 “${comments}”` : ''
-  const anatomicum =
+  const sessionText = sessionType ? ` (${sessionType})` : ''
+  const volumeText = volume ? `Volume: ${volume}%` : ''
+  const intensityText = intensity ? `Intensity: ${intensity}%` : ''
+  const loadText = load ? `Load: ${roundToTen(load)}%` : ''
+  const commentText = comments ? `💬 “${comments}”` : ''
+  const anatomicalRegionEmoji =
     anatomicalRegion === undefined ? '' : (
       `| ${
         anatomicalRegion === 'Ar' ? '💪'
@@ -63,7 +63,7 @@ export const createTrainingTooltip = ({
         : ''
       }`
     )
-  const energium =
+  const energySystemEmoji =
     energySystem === undefined ? '' : (
       `| ${
         energySystem === 'AA' ? '🔥'
@@ -74,9 +74,9 @@ export const createTrainingTooltip = ({
     )
 
   return [
-    `${datum} ${cragum} ${seshum}`,
-    `${volum} ${intensitum} ${loadum} ${anatomicum} ${energium}`,
-    commentum,
+    `${localeDate} ${cragEmoji} ${sessionText}`,
+    `${volumeText} ${intensityText} ${loadText} ${anatomicalRegionEmoji} ${energySystemEmoji}`,
+    commentText,
   ]
     .filter(s => s !== '')
     .join('\n\n')

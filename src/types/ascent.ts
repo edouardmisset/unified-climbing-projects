@@ -65,21 +65,18 @@ export type Grade = z.infer<typeof gradeSchema>
 
 const optionalStringSchema = string().optional()
 
-export const heightSchema = number().optional()
 export const profileSchema = z.enum(profiles)
 export const holdsSchema = z.enum(holds)
-export const ratingSchema = number().optional()
-export const triesSchema = number()
 
 export const ascentSchema = z.object({
   routeName: string().min(1).or(number()),
   topoGrade: gradeSchema,
-  tries: triesSchema,
+  tries: number(),
   personalGrade: gradeSchema.optional(),
-  height: heightSchema.optional(),
+  height: number().optional(),
   profile: profileSchema.optional(),
   holds: holdsSchema.optional(),
-  rating: ratingSchema.optional(),
+  rating: number().optional(),
   routeOrBoulder: z.enum(['Route', 'Boulder']),
   crag: string(),
   area: z.union([string(), number()]).optional(),
