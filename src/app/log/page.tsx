@@ -51,7 +51,7 @@ const defaultAscentToParse = {
   personalGrade: climberAverageGrade,
   date: new Date(),
   holds: 'Crimp',
-  routeOrBoulder: 'Route',
+  climbingDiscipline: 'Route',
   profile: 'Vertical',
   height: env.NEXT_PUBLIC_ENV === 'development' ? 20 : undefined,
   rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
@@ -100,17 +100,18 @@ export default function Log(): React.JSX.Element {
             title="Route Name"
           />
         </label>
-        <label htmlFor="routeOrBoulder" className="flex-column">
-          Route or Boulder
+        <label htmlFor="climbingDiscipline" className="flex-column">
+          Route, Boulder or Multi-Pitch
           <select
-            id="routeOrBoulder"
-            {...register('routeOrBoulder')}
-            title="Route or Boulder"
+            id="climbingDiscipline"
+            {...register('climbingDiscipline')}
+            title="Route, Boulder or Multi-Pitch"
           >
             <option value="Route" defaultChecked>
               Route
             </option>
-            <option value="Bouldering">Bouldering</option>
+            <option value="Boulder">Boulder</option>
+            <option value="Multi-Pitch">Multi-Pitch</option>
           </select>
         </label>
         <label htmlFor="crag" className="flex-column">
@@ -132,7 +133,7 @@ export default function Log(): React.JSX.Element {
             title="Crag's area"
           />
         </label>
-        <label htmlFor="numberOfTries" className="flex-column">
+        <label htmlFor="tries" className="flex-column">
           Tries
           <input
             {...register('tries')}
@@ -240,7 +241,7 @@ export default function Log(): React.JSX.Element {
             step={1}
             type="number"
             id="rating"
-            placeholder="5*"
+            placeholder="5 ⭐️"
             title="Route rating (on a 5 stars system)"
           />
         </label>

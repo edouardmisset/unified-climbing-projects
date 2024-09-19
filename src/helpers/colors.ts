@@ -11,7 +11,7 @@ const SESSION_TYPE_TO_COLOR: Record<
   Required<TrainingSession>['sessionType'],
   string
 > = {
-  Ex: outdoorColor,
+  Out: outdoorColor,
 
   En: enduranceColor,
   PE: enduranceColor,

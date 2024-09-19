@@ -17,7 +17,7 @@ const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   Exclude<TrainingSession['sessionType'], undefined>,
   Color
 > = {
-  Ex: outdoorColor,
+  Out: outdoorColor,
 
   Ta: taperedColor,
 

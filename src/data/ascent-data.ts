@@ -45,7 +45,11 @@ export const seasonAscentPerDay = parsedAscentData.reduce(
 export const createEmptyBarcodeCollection = <T>() =>
   Object.fromEntries(
     ascentSeasons.map(season => {
-      const weeksPerYear = Temporal.PlainDate.from({ year: season, month: 12, day: 31 }).weekOfYear
+      const weeksPerYear = Temporal.PlainDate.from({
+        year: season,
+        month: 12,
+        day: 31,
+      }).weekOfYear
       return [season, Array.from({ length: weeksPerYear }, (): T[] => [])]
     }),
   )

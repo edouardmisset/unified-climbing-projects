@@ -11,7 +11,7 @@ const SESSION_TYPE_TO_SORT_ORDER: Record<
   Required<TrainingSession>['sessionType'],
   number
 > = {
-  Ex: 1,
+  Out: 1,
   CS: 2,
   MS: 2,
   Po: 2,

@@ -8,32 +8,30 @@ export const createAscentTooltip = (ascents: Ascent[]): string =>
       weekday: 'long',
       month: 'long',
     })}
-${
-  ascents.some(ascent => ascent.routeOrBoulder === 'Route') ? 'Routes' : (
-    'Boulders'
-  )
-} (${ascents.length}):
+${ascents.some(ascent => ascent.climbingDiscipline === 'Route') ? 'Routes' : (
+      'Boulders'
+    )
+    } (${ascents.length}):
 ${ascents
-  .map(
-    ({ routeName, topoGrade, routeOrBoulder, crag }) =>
-      `${routeOrBoulder === 'Boulder' ? '🪨' : ''}${
-        routeOrBoulder === 'Route' ? '🧗' : ''
-      } ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
-  : ''
+      .map(
+        ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+          `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${climbingDiscipline === 'Route' ? '🧗' : ''
+          } ${routeName} (${crag}) - ${topoGrade}`,
+      )
+      .join('\n')}`
+    : ''
 
 export const createTrainingTooltip = ({
-  date,
-  routeOrBouldering,
-  volume,
-  load,
-  intensity,
-  gymCrag,
   anatomicalRegion,
-  energySystem,
-  sessionType,
+  climbingDiscipline,
   comments,
+  date,
+  energySystem,
+  gymCrag,
+  intensity,
+  load,
+  sessionType,
+  volume,
 }: TrainingSession): string => {
   const localeDate = `📅 ${date.toLocaleString(undefined, {
     day: 'numeric',
@@ -42,13 +40,12 @@ export const createTrainingTooltip = ({
   })}`
   const cragEmoji =
     gymCrag ?
-      `\t${
-        routeOrBouldering === 'Bouldering' ? '🪨'
-        : routeOrBouldering === 'Route' ? '🧗'
-        : routeOrBouldering === 'Multi-Pitch' ? '⛰️'
-        : ''
+      `\t${climbingDiscipline === 'Boulder' ? '🪨'
+        : climbingDiscipline === 'Route' ? '🧗'
+          : climbingDiscipline === 'Multi-Pitch' ? '⛰️'
+            : ''
       } ${gymCrag}`
-    : ''
+      : ''
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''
   const intensityText = intensity ? `Intensity: ${intensity}%` : ''
@@ -56,20 +53,18 @@ export const createTrainingTooltip = ({
   const commentText = comments ? `💬 “${comments}”` : ''
   const anatomicalRegionEmoji =
     anatomicalRegion === undefined ? '' : (
-      `| ${
-        anatomicalRegion === 'Ar' ? '💪'
+      `| ${anatomicalRegion === 'Ar' ? '💪'
         : anatomicalRegion === 'Fi' ? '🖐️'
-        : anatomicalRegion === 'Ge' ? '🦵'
-        : ''
+          : anatomicalRegion === 'Ge' ? '🦵'
+            : ''
       }`
     )
   const energySystemEmoji =
     energySystem === undefined ? '' : (
-      `| ${
-        energySystem === 'AA' ? '🔥'
+      `| ${energySystem === 'AA' ? '🔥'
         : energySystem === 'AL' ? '🪫'
-        : energySystem === 'AE' ? '🫀'
-        : ''
+          : energySystem === 'AE' ? '🫀'
+            : ''
       }`
     )
 
@@ -82,4 +77,6 @@ export const createTrainingTooltip = ({
     .join('\n\n')
 }
 
-export const roundToTen = (n: number): number => Math.round(n / 10) * 10
+const roundTo = (powerOfTen: number) => (numberToRound: number) => Math.round(numberToRound / powerOfTen) * powerOfTen
+
+export const roundToTen = roundTo(10)

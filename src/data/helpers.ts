@@ -1,12 +1,11 @@
-import { Temporal } from "@js-temporal/polyfill"
-import type { TemporalDate } from "~/app/_components/qr-code/qr-code"
+import { Temporal } from '@js-temporal/polyfill'
+import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
 
 export function createEmptyYearlyCollections(
   listOfYears: number[],
 ): Record<number, TemporalDate[]> {
   return Object.fromEntries(
     listOfYears.map(year => {
-
       const daysPerYear = Temporal.PlainDate.from({
         year,
         month: 1,

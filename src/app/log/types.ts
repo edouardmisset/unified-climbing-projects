@@ -32,7 +32,7 @@ export const ascentFormInputSchema = z.object({
   topoGrade: optionalGradeToNumberSchema,
   personalGrade: optionalGradeToNumberSchema,
   routeName: z.string().optional(),
-  routeOrBoulder: climbingDisciplineSchema.optional(),
+  climbingDiscipline: climbingDisciplineSchema.optional(),
   crag: z.string().optional(), // pick from a look up in DB
   date: z.date().transform(date => stringifyDate(date)),
   holds: holdsSchema.optional(),
@@ -67,7 +67,7 @@ export const ascentFormOutputSchema = z.object({
   topoGrade: numberGradeToGradeSchema,
   personalGrade: numberGradeToGradeSchema,
   routeName: z.string().trim(),
-  routeOrBoulder: climbingDisciplineSchema,
+  climbingDiscipline: climbingDisciplineSchema,
   crag: z.string().min(1).trim(),
   date: z
     .string() // yyyy-mm-dd
