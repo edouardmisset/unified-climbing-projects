@@ -45,7 +45,7 @@ export const convertSessionTypeToBackgroundColor = (
     new Color('white')
   : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 
-export const getColorVariant = (
+export const getTrainingSessionColorVariant = (
   color: Color,
   intensityPercent: number,
   volumePercent: number,
@@ -59,10 +59,14 @@ export const getColorVariant = (
   const isOneComponentBelowThreshold =
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
+  const maximumLightness = 0.9
+  const minimumLightness = 0.6
+  const defaultLightness = 0.75
+
   const lightness =
-    isOneComponentBelowThreshold ? 0.9
-    : isOneComponentAboveThreshold ? 0.6
-    : 0.75
+    isOneComponentBelowThreshold ? maximumLightness
+    : isOneComponentAboveThreshold ? minimumLightness
+    : defaultLightness
 
   return new Color(
     new Color(color).set({
@@ -71,7 +75,7 @@ export const getColorVariant = (
   )
 }
 
-export const convertSessionTypeToAccentColor = (
+export const convertSessionTypeToForeColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
   new Color(
@@ -107,7 +111,7 @@ const ASCENT_GRADE_TO_COLOR: Partial<Record<Grade, string>> = {
   '8c+': new Color(color8a.darken(5 * darkeningCoefficient)).toString(),
 }
 
-export const convertGradeToColor = (grade: Grade): string =>
+export const convertGradeToBackgroundColor = (grade: Grade): string =>
   ASCENT_GRADE_TO_COLOR[grade] ?? 'black'
 
 const degrees = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const

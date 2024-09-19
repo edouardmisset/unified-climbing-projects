@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { convertGradeToColor } from '~/helpers/converter'
+import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
 import { seasonAscentPerDay } from '~/data/ascent-data'
@@ -41,7 +41,7 @@ export default function Page({
                     style={{
                       backgroundColor:
                         hardestAscent === undefined ? 'white' : (
-                          convertGradeToColor(hardestAscent.topoGrade)
+                          convertGradeToBackgroundColor(hardestAscent.topoGrade)
                         ),
                     }}
                     title={

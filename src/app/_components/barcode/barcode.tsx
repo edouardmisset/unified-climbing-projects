@@ -1,4 +1,4 @@
-import { convertGradeToColor } from '~/helpers/converter'
+import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { type Ascent } from '~/types/ascent'
 
@@ -43,9 +43,9 @@ export default function Barcode({
           // Colorize bars
           const backgroundGradient =
             weeklyAscents.length === 1 ?
-              convertGradeToColor(weeklyAscents[0]!.topoGrade)
+              convertGradeToBackgroundColor(weeklyAscents[0]!.topoGrade)
             : `linear-gradient(${weeklyAscents
-                .map(ascent => convertGradeToColor(ascent.topoGrade))
+                .map(ascent => convertGradeToBackgroundColor(ascent.topoGrade))
                 .join(', ')})`
 
           return (

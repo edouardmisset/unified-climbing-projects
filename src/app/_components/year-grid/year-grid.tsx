@@ -1,9 +1,9 @@
 import { type TrainingSession } from '~/types/training'
 import { createTrainingTooltip } from '~/helpers/tooltips'
 import {
-  convertSessionTypeToAccentColor,
+  convertSessionTypeToForeColor,
   convertSessionTypeToBackgroundColor,
-  getColorVariant,
+  getTrainingSessionColorVariant,
 } from '~/helpers/converter'
 import Color from 'colorjs.io'
 
@@ -18,12 +18,12 @@ export function YearGrid({
 }) {
   return (
     <div className={styles.yearGrid}>
-      {Array.from({ length: 8 }, (_, i) => {
-        const d = new Date()
-        d.setFullYear(year)
-        d.setMonth(0)
-        d.setDate(i)
-        return i === 0 ?
+      {Array.from({ length: 8 }, (_, index) => {
+        const date = new Date()
+        date.setFullYear(year)
+        date.setMonth(0)
+        date.setDate(index)
+        return index === 0 ?
             <div
               key="first-cell"
               className={styles.yearGridCell}
@@ -33,7 +33,7 @@ export function YearGrid({
               }}
             />
           : <div
-              key={`${i}-day`}
+              key={`${index}-day`}
               style={{
                 minInlineSize: '4ch',
                 lineHeight: 1,
@@ -41,28 +41,22 @@ export function YearGrid({
                 alignContent: 'center',
               }}
             >
-              {d.toDateString().slice(0, 3)}
+              {date.toDateString().slice(0, 3)}
             </div>
       })}
-      {Array.from({ length: 53 }, (_, i) => {
-        return i === 0 ? null : (
+      {Array.from({ length: 53 }, (_, index) => {
+        return index === 0 ? null : (
             <div
-              key={`${i}-week`}
-              className={
-                'super-center' +
-                ' ' +
-                styles.yearGridCell +
-                ' ' +
-                styles.gridHeader
-              }
+              key={`${index}-week`}
+              className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
               style={{
                 minBlockSize: '3ch',
-                gridColumn: i + 1,
+                gridColumn: index + 1,
                 gridRow: 1,
                 fontWeight: 'bold',
               }}
             >
-              {i}
+              {index}
             </div>
           )
       })}
@@ -71,7 +65,7 @@ export function YearGrid({
         const backgroundColor =
           sessionType === undefined ?
             'hsla(0deg 0% 100% / 0.3)'
-          : getColorVariant(
+          : getTrainingSessionColorVariant(
               new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
                 'oklch',
               ),
@@ -87,7 +81,7 @@ export function YearGrid({
               gridColumn: date.weekOfYear + 1,
               gridRow: date.dayOfWeek + 1,
               backgroundColor,
-              color: convertSessionTypeToAccentColor(sessionType).toString(),
+              color: convertSessionTypeToForeColor(sessionType).toString(),
             }}
           />
         )
