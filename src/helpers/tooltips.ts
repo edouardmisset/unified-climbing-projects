@@ -8,18 +8,20 @@ export const createAscentTooltip = (ascents: Ascent[]): string =>
       weekday: 'long',
       month: 'long',
     })}
-${ascents.some(ascent => ascent.climbingDiscipline === 'Route') ? 'Routes' : (
-      'Boulders'
-    )
-    } (${ascents.length}):
+${
+  ascents.some(ascent => ascent.climbingDiscipline === 'Route') ? 'Routes' : (
+    'Boulders'
+  )
+} (${ascents.length}):
 ${ascents
-      .map(
-        ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-          `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${climbingDiscipline === 'Route' ? '🧗' : ''
-          } ${routeName} (${crag}) - ${topoGrade}`,
-      )
-      .join('\n')}`
-    : ''
+  .map(
+    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
+        climbingDiscipline === 'Route' ? '🧗' : ''
+      } ${routeName} (${crag}) - ${topoGrade}`,
+  )
+  .join('\n')}`
+  : ''
 
 export const createTrainingTooltip = ({
   anatomicalRegion,
@@ -40,12 +42,13 @@ export const createTrainingTooltip = ({
   })}`
   const cragEmoji =
     gymCrag ?
-      `\t${climbingDiscipline === 'Boulder' ? '🪨'
+      `\t${
+        climbingDiscipline === 'Boulder' ? '🪨'
         : climbingDiscipline === 'Route' ? '🧗'
-          : climbingDiscipline === 'Multi-Pitch' ? '⛰️'
-            : ''
+        : climbingDiscipline === 'Multi-Pitch' ? '⛰️'
+        : ''
       } ${gymCrag}`
-      : ''
+    : ''
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''
   const intensityText = intensity ? `Intensity: ${intensity}%` : ''
@@ -53,18 +56,20 @@ export const createTrainingTooltip = ({
   const commentText = comments ? `💬 “${comments}”` : ''
   const anatomicalRegionEmoji =
     anatomicalRegion === undefined ? '' : (
-      `| ${anatomicalRegion === 'Ar' ? '💪'
+      `| ${
+        anatomicalRegion === 'Ar' ? '💪'
         : anatomicalRegion === 'Fi' ? '🖐️'
-          : anatomicalRegion === 'Ge' ? '🦵'
-            : ''
+        : anatomicalRegion === 'Ge' ? '🦵'
+        : ''
       }`
     )
   const energySystemEmoji =
     energySystem === undefined ? '' : (
-      `| ${energySystem === 'AA' ? '🔥'
+      `| ${
+        energySystem === 'AA' ? '🔥'
         : energySystem === 'AL' ? '🪫'
-          : energySystem === 'AE' ? '🫀'
-            : ''
+        : energySystem === 'AE' ? '🫀'
+        : ''
       }`
     )
 
@@ -77,6 +82,7 @@ export const createTrainingTooltip = ({
     .join('\n\n')
 }
 
-const roundTo = (powerOfTen: number) => (numberToRound: number) => Math.round(numberToRound / powerOfTen) * powerOfTen
+const roundTo = (powerOfTen: number) => (numberToRound: number) =>
+  Math.round(numberToRound / powerOfTen) * powerOfTen
 
 export const roundToTen = roundTo(10)

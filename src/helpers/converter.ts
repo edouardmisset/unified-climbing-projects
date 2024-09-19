@@ -91,16 +91,20 @@ const darkeningCoefficient = 0.1
 const ASCENT_GRADE_TO_COLOR: Partial<Record<Grade, string>> = {
   '6c': 'red',
   '6c+': 'red',
+
   '7a': color7a.toString(),
   '7a+': new Color(color7a.darken(1 * darkeningCoefficient)).toString(),
   '7b': new Color(color7a.darken(2 * darkeningCoefficient)).toString(),
   '7b+': new Color(color7a.darken(3 * darkeningCoefficient)).toString(),
   '7c': new Color(color7a.darken(4 * darkeningCoefficient)).toString(),
   '7c+': new Color(color7a.darken(5 * darkeningCoefficient)).toString(),
+
   '8a': color8a.toString(),
   '8a+': new Color(color8a.darken(1 * darkeningCoefficient)).toString(),
   '8b': new Color(color8a.darken(2 * darkeningCoefficient)).toString(),
   '8b+': new Color(color8a.darken(3 * darkeningCoefficient)).toString(),
+  '8c': new Color(color8a.darken(4 * darkeningCoefficient)).toString(),
+  '8c+': new Color(color8a.darken(5 * darkeningCoefficient)).toString(),
 }
 
 export const convertGradeToColor = (grade: Grade): string =>

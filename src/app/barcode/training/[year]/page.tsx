@@ -1,5 +1,5 @@
 import { seasonsTrainingPerWeek } from '~/data/training-data'
-import { convertSessionTypeToColor } from '~/helpers/colors'
+import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 
 export default function Page({
@@ -45,9 +45,15 @@ export default function Page({
 
           const backgroundGradient =
             week.length === 1 ?
-              convertSessionTypeToColor(week[0]!.sessionType!)
+              convertSessionTypeToBackgroundColor(
+                week[0]!.sessionType,
+              ).toString()
             : `linear-gradient(${week
-                .map(session => convertSessionTypeToColor(session.sessionType!))
+                .map(session =>
+                  convertSessionTypeToBackgroundColor(
+                    session.sessionType,
+                  ).toString(),
+                )
                 .join(', ')})`
 
           const firstDate = week?.[0]?.date
