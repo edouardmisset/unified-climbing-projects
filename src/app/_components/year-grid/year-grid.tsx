@@ -4,24 +4,26 @@ import { WeeksRow } from './weeks-row'
 import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell'
 
+type DayDescriptor = {
+  date: Temporal.PlainDate
+  backgroundColor: string
+  foreColor: string
+  tooltip: string
+  shortText?: string
+}
+
 export function YearGrid({
-  yearlyData: content,
+  dayCollection,
   year,
 }: {
   year: number
-  yearlyData: {
-    date: Temporal.PlainDate
-    backgroundColor: string
-    foreColor: string
-    tooltip: string
-    shortText?: string
-  }[]
+  dayCollection: DayDescriptor[]
 }) {
   return (
     <div className={styles.yearGrid}>
       {<DaysColumn year={year} />}
       {<WeeksRow />}
-      {content.map(
+      {dayCollection.map(
         ({ date, tooltip, backgroundColor, foreColor, shortText = '' }) => {
           return (
             <YearGridCell
