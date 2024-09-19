@@ -73,9 +73,9 @@ const createBarTooltip = (ascents: Ascent[]): string =>
 Routes (${ascents.length}):
 ${ascents
   .map(
-    ({ routeName, topoGrade, routeOrBoulder, crag }) =>
-      `${routeOrBoulder === 'Boulder' ? '🪨' : ''}${
-        routeOrBoulder === 'Route' ? '🧗' : ''
+    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
+        climbingDiscipline === 'Route' ? '🧗' : ''
       } ${routeName} (${crag}) - ${topoGrade}`,
   )
   .join('\n')}`
