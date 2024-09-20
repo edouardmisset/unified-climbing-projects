@@ -44,22 +44,22 @@ export default function Page({
           })
 
           const backgroundGradient =
-            week.length === 1 ?
-              convertSessionTypeToBackgroundColor(
-                week[0]!.sessionType,
-              ).toString()
-            : `linear-gradient(${week
-                .map(session =>
-                  convertSessionTypeToBackgroundColor(
-                    session.sessionType,
-                  ).toString(),
-                )
-                .join(', ')})`
+            week.length === 1
+              ? convertSessionTypeToBackgroundColor(
+                  week[0]?.sessionType,
+                ).toString()
+              : `linear-gradient(${week
+                  .map(session =>
+                    convertSessionTypeToBackgroundColor(
+                      session.sessionType,
+                    ).toString(),
+                  )
+                  .join(', ')})`
 
           const firstDate = week?.[0]?.date
           return (
             <span
-              key={i}
+              key={firstDate?.toString()}
               style={{
                 display: 'block',
                 height: '100%',
@@ -67,9 +67,9 @@ export default function Page({
                 background: backgroundGradient,
               }}
               title={
-                firstDate === undefined ? '' : (
-                  `Week # ${firstDate.weekOfYear.toString()}`
-                )
+                firstDate === undefined
+                  ? ''
+                  : `Week # ${firstDate.weekOfYear.toString()}`
               }
             />
           )

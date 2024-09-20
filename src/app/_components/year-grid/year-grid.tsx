@@ -1,8 +1,8 @@
 import type { Temporal } from '@js-temporal/polyfill'
 import { DaysColumn } from './days-column'
 import { WeeksRow } from './weeks-row'
-import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell'
+import styles from './year-grid.module.css'
 
 type DayDescriptor = {
   date: Temporal.PlainDate

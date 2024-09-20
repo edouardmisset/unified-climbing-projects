@@ -24,9 +24,7 @@ type AscentDescription = {
 export default function Form() {
   const climberAverageGrade: RouteGrade = '7b'
   const climberHighestGrade: RouteGrade = '8b+'
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const climberHighestGradeNumber = convertGradeToNumber(climberHighestGrade)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const numberOfGradeFromWarmUpToMax = 8
 
   const { register, handleSubmit, watch } = useForm<AscentDescription>({
@@ -74,16 +72,16 @@ export default function Form() {
       <label htmlFor="topoGrade">
         Topo Grade
         <select {...register('topoGrade')}>
-          {(watch('ascentType') === 'boulder' ? boulderNumberGrades : (
-            routeNumberGrades
-          )
+          {(watch('ascentType') === 'boulder'
+            ? boulderNumberGrades
+            : routeNumberGrades
           ).map(numberGrade => {
             const grade = convertNumberToGrade(numberGrade)
             return (
               <option value={numberGrade} key={numberGrade}>
-                {watch('ascentType') === 'boulder' ?
-                  grade.toLocaleUpperCase()
-                : grade}
+                {watch('ascentType') === 'boulder'
+                  ? grade.toLocaleUpperCase()
+                  : grade}
               </option>
             )
           })}
@@ -95,7 +93,7 @@ export default function Form() {
         <input type="number" id="tries" {...register('tries')} />
       </label>
 
-      <input type="submit">Save</input>
+      <input type="submit" />
     </form>
   )
 }

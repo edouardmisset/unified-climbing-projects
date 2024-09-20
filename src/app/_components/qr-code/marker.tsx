@@ -15,18 +15,21 @@ export default function Marker({
     <>
       {Array.from({ length: numberOfSquareInMarker })
         .fill(undefined)
-        .map((_, i) => {
-          const rowStart = i <= 1 ? startingRow : startingRow * i
-          const columnStart = i <= 1 ? startingColumn : startingColumn * i
-          const columnEnd = startingColumn * (markerSize - i)
-          const rowEnd = startingRow * (markerSize - i)
+        .map((_, index) => {
+          const rowStart = index <= 1 ? startingRow : startingRow * index
+          const columnStart =
+            index <= 1 ? startingColumn : startingColumn * index
+          const columnEnd = startingColumn * (markerSize - index)
+          const rowEnd = startingRow * (markerSize - index)
+
+          const gridArea = `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`
           return (
             <i
-              key={i}
+              key={gridArea}
               style={{
                 backgroundColor:
-                  i % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
-                gridArea: `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`,
+                  index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
+                gridArea,
               }}
             />
           )

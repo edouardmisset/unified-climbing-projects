@@ -1,6 +1,6 @@
-import { type Ascent } from '~/types/ascent'
+import type { Ascent } from '~/types/ascent'
+import type { TrainingSession } from '~/types/training'
 import { convertGradeToNumber } from './converter'
-import { type TrainingSession } from '~/types/training'
 
 export const sortByDescendingGrade = (
   { topoGrade: aGrade }: Ascent,

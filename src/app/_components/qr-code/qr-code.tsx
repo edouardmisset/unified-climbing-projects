@@ -1,4 +1,4 @@
-import { type Temporal } from '@js-temporal/polyfill'
+import type { Temporal } from '@js-temporal/polyfill'
 import { cloneElement } from 'react'
 import Marker from './marker'
 import styles from './qr-code.module.css'
@@ -50,29 +50,28 @@ export default function QRCode<T extends Obj>(
       <Marker placement="BottomLeft" />
 
       {/* Image */}
-      {image ?
-        cloneElement(image, {
-          style: {
-            gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
-            height: '100%',
-            width: '100%',
-            padding: '1rem',
-          },
-        })
-      : undefined}
+      {image
+        ? cloneElement(image, {
+            style: {
+              gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
+              height: '100%',
+              width: '100%',
+              padding: '1rem',
+            },
+          })
+        : undefined}
 
       {/* Data */}
-      {'itemRender' in props ?
-        data.map(props.itemRender)
-      : data.map((element, i) => (
-          <i
-            key={i}
-            style={{
-              backgroundColor: element[props.field] ? 'black' : 'white',
-            }}
-          />
-        ))
-      }
+      {'itemRender' in props
+        ? data.map(props.itemRender)
+        : data.map(element => (
+            <i
+              key={element.date.toString()}
+              style={{
+                backgroundColor: element[props.field] ? 'black' : 'white',
+              }}
+            />
+          ))}
     </div>
   )
 }

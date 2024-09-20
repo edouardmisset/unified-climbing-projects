@@ -1,6 +1,6 @@
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { type Ascent } from '~/types/ascent'
+import type { Ascent } from '~/types/ascent'
 
 const minBarWidth = 4
 const maxBarWidth = 2.5 * minBarWidth
@@ -42,15 +42,17 @@ export default function Barcode({
 
           // Colorize bars
           const backgroundGradient =
-            weeklyAscents.length === 1 ?
-              convertGradeToBackgroundColor(weeklyAscents[0]!.topoGrade)
-            : `linear-gradient(${weeklyAscents
-                .map(ascent => convertGradeToBackgroundColor(ascent.topoGrade))
-                .join(', ')})`
+            weeklyAscents.length === 1
+              ? convertGradeToBackgroundColor(weeklyAscents[0]?.topoGrade)
+              : `linear-gradient(${weeklyAscents
+                  .map(ascent =>
+                    convertGradeToBackgroundColor(ascent.topoGrade),
+                  )
+                  .join(', ')})`
 
           return (
             <span
-              key={i}
+              key={weeklyAscents[0]?.date.toString()}
               style={{
                 display: 'block',
                 height: '100%',
@@ -68,8 +70,8 @@ export default function Barcode({
 }
 
 const createBarTooltip = (ascents: Ascent[]): string =>
-  ascents.length >= 1 ?
-    `Week # ${ascents[0]!.date.weekOfYear.toString()}
+  ascents.length >= 1 && ascents[0] !== undefined
+    ? `Week # ${ascents[0].date.weekOfYear.toString()}
 Routes (${ascents.length}):
 ${ascents
   .map(
@@ -79,4 +81,4 @@ ${ascents
       } ${routeName} (${crag}) - ${topoGrade}`,
   )
   .join('\n')}`
-  : ''
+    : ''

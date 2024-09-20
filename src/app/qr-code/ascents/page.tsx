@@ -1,11 +1,11 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
+import { seasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
-import { seasonAscentPerDay } from '~/data/ascent-data'
 import styles from './page.module.css'
-import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -18,9 +18,8 @@ export default function Page() {
             .map(([year, ascents]) => {
               const sortedAscents = [...ascents].map(ascentDay => ({
                 ...ascentDay,
-                ascents:
-                  ascentDay?.ascents ?
-                    ascentDay.ascents.sort(sortByDescendingGrade)
+                ascents: ascentDay?.ascents
+                  ? ascentDay.ascents.sort(sortByDescendingGrade)
                   : undefined,
               }))
               return (
@@ -40,16 +39,16 @@ export default function Page() {
                           }
                           style={{
                             backgroundColor:
-                              hardestAscent === undefined ? 'white' : (
-                                convertGradeToBackgroundColor(
-                                  hardestAscent.topoGrade,
-                                )
-                              ),
+                              hardestAscent === undefined
+                                ? 'white'
+                                : convertGradeToBackgroundColor(
+                                    hardestAscent.topoGrade,
+                                  ),
                           }}
                           title={
-                            ascentDay?.ascents ?
-                              createAscentTooltip(ascentDay.ascents)
-                            : ''
+                            ascentDay?.ascents
+                              ? createAscentTooltip(ascentDay.ascents)
+                              : ''
                           }
                         />
                       )

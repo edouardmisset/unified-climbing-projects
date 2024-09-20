@@ -27,15 +27,15 @@ export default function Visualization({
       yearSession?.map(session => {
         const { date, sessionType } = session
         const backgroundColor =
-          sessionType === undefined ?
-            'hsla(0deg 0% 100% / 0.3)'
-          : getTrainingSessionColorVariant(
-              new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
-                'oklch',
-              ),
-              session?.intensity ?? 65,
-              session?.volume ?? 65,
-            ).toString()
+          sessionType === undefined
+            ? 'hsla(0deg 0% 100% / 0.3)'
+            : getTrainingSessionColorVariant(
+                new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
+                  'oklch',
+                ),
+                session?.intensity ?? 65,
+                session?.volume ?? 65,
+              ).toString()
         return {
           date,
           backgroundColor,
@@ -52,9 +52,11 @@ export default function Visualization({
   return (
     <>
       <div>An overview of my training in {year}</div>
-      {yearSession.length === 0 ?
+      {yearSession.length === 0 ? (
         <span>No record</span>
-      : <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />}
+      ) : (
+        <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
+      )}
       <div
         style={{
           display: 'flex',

@@ -1,30 +1,30 @@
 /** Kevin Powell's reset CSS
  * https://github.com/kevin-powell/website-starter-template-v3/
- * 
+ *
  * Remove all animations, transitions and smooth scroll for people that prefer not to see them:
  * https://github.com/kevin-powell/demo-starter-template-with-sass/blob/main/src/sass/base/_reset.scss
- * 
+ *
  * 25 lines of CSS is all you need (to start with, anyway):
  * https://www.youtube.com/shorts/ydGti7sLVOc
  *
  * Under the radar CSS features for your CSS reset:
  * https://www.youtube.com/watch?v=cCAtD_BAHNw
- * 
+ *
  * A better image reset for your CSS:
  * https://www.youtube.com/watch?v=345V2MU3E_w
- * 
+ *
  * Building out a furniture site from Dribbble by Andy Bell:
  * https://piccalil.li/blog/reality-check-1-building-out-a-furniture-site-from-dribbble
  * &
  * https://piccalil.li/blog/a-more-modern-css-reset/
- * 
+ *
  * Josh Comeau
  * https://www.joshwcomeau.com/css/custom-css-reset/
  *
  * Animation and transitions' timing function values inspired by the
  * "exponential smoothing" from lisyarus'
  * [blog](https://lisyarus.github.io/blog/posts/exponential-smoothing.html)
-*/
+ */
 
 :root {
   font-weight: 400;

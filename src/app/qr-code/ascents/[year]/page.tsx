@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
+import { seasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentTooltip } from '~/helpers/tooltips'
-import { seasonAscentPerDay } from '~/data/ascent-data'
 import styles from './page.module.css'
 
 export default function Page({
@@ -18,9 +18,8 @@ export default function Page({
 
   const sortedAscents = [...selectedAscents].map(ascentDay => ({
     ...ascentDay,
-    ascents:
-      ascentDay?.ascents ?
-        ascentDay.ascents.sort(sortByDescendingGrade)
+    ascents: ascentDay?.ascents
+      ? ascentDay.ascents.sort(sortByDescendingGrade)
       : undefined,
   }))
 
@@ -40,14 +39,16 @@ export default function Page({
                     key={ascentDay.date.dayOfYear}
                     style={{
                       backgroundColor:
-                        hardestAscent === undefined ? 'white' : (
-                          convertGradeToBackgroundColor(hardestAscent.topoGrade)
-                        ),
+                        hardestAscent === undefined
+                          ? 'white'
+                          : convertGradeToBackgroundColor(
+                              hardestAscent.topoGrade,
+                            ),
                     }}
                     title={
-                      ascentDay?.ascents ?
-                        createAscentTooltip(ascentDay.ascents)
-                      : ''
+                      ascentDay?.ascents
+                        ? createAscentTooltip(ascentDay.ascents)
+                        : ''
                     }
                   />
                 )

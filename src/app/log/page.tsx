@@ -1,23 +1,23 @@
 'use client'
 
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import { fromZodError } from 'zod-validation-error'
 
+import { env } from '~/env'
 import {
   ROUTE_GRADE_TO_NUMBER,
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converter'
+import type { Grade } from '~/types/ascent'
 import { GradeSlider } from '../_components/slider/slider'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
+import styles from './page.module.css'
 import {
+  type AscentFormInput,
   ascentFormInputSchema,
   ascentFormOutputSchema,
-  type AscentFormInput,
 } from './types'
-import styles from './page.module.css'
-import type { Grade } from '~/types/ascent'
-import { env } from '~/env'
 
 const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
@@ -34,11 +34,11 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
   } catch (error) {
     const zErrors = fromZodError(error as Zod.ZodError)
 
-    zErrors.details.forEach(detail => {
+    for (const detail of zErrors.details) {
       console.error(detail)
       // TODO: change this console.log to a toast
       console.error(detail.message)
-    })
+    }
   }
 }
 
@@ -73,9 +73,9 @@ export default function Log(): React.JSX.Element {
   const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
 
   const topoGrade =
-    typeof topoGradeOrNumber === 'number' ?
-      convertNumberToGrade(topoGradeOrNumber)
-    : topoGradeOrNumber
+    typeof topoGradeOrNumber === 'number'
+      ? convertNumberToGrade(topoGradeOrNumber)
+      : topoGradeOrNumber
 
   return (
     <div>
@@ -155,19 +155,17 @@ export default function Log(): React.JSX.Element {
             onValueChange={([value]) => {
               setValue(
                 'topoGrade',
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 convertNumberToGrade(
                   value ?? convertGradeToNumber(climberAverageGrade),
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  // biome-ignore lint/suspicious/noExplicitAny:
                 ) as any,
               )
 
               setValue(
                 'personalGrade',
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 convertNumberToGrade(
                   value ?? convertGradeToNumber(climberAverageGrade),
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 ) as any,
               )
             }}
@@ -177,9 +175,9 @@ export default function Log(): React.JSX.Element {
           />
           <label htmlFor="personalGrade" className="">
             Personal Grade{' '}
-            {typeof personalGradeOrNumber === 'number' ?
-              convertNumberToGrade(personalGradeOrNumber)
-            : personalGradeOrNumber}
+            {typeof personalGradeOrNumber === 'number'
+              ? convertNumberToGrade(personalGradeOrNumber)
+              : personalGradeOrNumber}
           </label>
           <GradeSlider
             {...personalGradeRegister}
@@ -187,10 +185,9 @@ export default function Log(): React.JSX.Element {
             onValueChange={([value]) =>
               setValue(
                 'personalGrade',
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 convertNumberToGrade(
                   value ?? convertGradeToNumber(climberAverageGrade),
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
                 ) as any,
               )
             }

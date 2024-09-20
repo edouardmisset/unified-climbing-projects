@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import type { TrainingSession } from '~/types/training'
+import { seasonTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingTooltip } from '~/helpers/tooltips'
-import { seasonTraining } from '~/data/training-data'
+import type { TrainingSession } from '~/types/training'
 import styles from './page.module.css'
 
 export default function Page({

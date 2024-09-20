@@ -1,8 +1,8 @@
 import { isDataResponse } from '~/types/generic'
 
-import { trainingSessionSchema, type TrainingSession } from '~/types/training'
-import { createEmptyBarcodeCollection } from './ascent-data'
 import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
+import { type TrainingSession, trainingSessionSchema } from '~/types/training'
+import { createEmptyBarcodeCollection } from './ascent-data'
 import { createEmptyYearlyCollections } from './helpers'
 
 const parsedTrainingData = await fetch(
@@ -28,8 +28,13 @@ const trainingCollection: Record<number, (TemporalDate & TrainingSession)[]> =
 
 export const seasonTraining = parsedTrainingData.reduce(
   (acc, trainingSession) => {
-    acc[trainingSession.date.year]![trainingSession.date.dayOfYear - 1] =
-      trainingSession
+    const {
+      date: { year },
+    } = trainingSession
+
+    if (acc[year] === undefined) return acc
+
+    acc[year][trainingSession.date.dayOfYear - 1] = trainingSession
     return acc
   },
   { ...trainingCollection },
@@ -42,8 +47,12 @@ export const seasonsTrainingPerWeek = parsedTrainingData.reduce(
     } = training
 
     const weekTrainingSessions = accumulator[year]?.[weekOfYear]
-    accumulator[year]![weekOfYear] =
-      weekTrainingSessions ? [...weekTrainingSessions, training] : [training]
+
+    if (accumulator[year] === undefined) return accumulator
+
+    accumulator[year][weekOfYear] = weekTrainingSessions
+      ? [...weekTrainingSessions, training]
+      : [training]
 
     return accumulator
   },

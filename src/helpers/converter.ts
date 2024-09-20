@@ -1,5 +1,5 @@
 import Color from 'colorjs.io'
-import { type TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/types/training'
 
 import { z } from 'zod'
 
@@ -41,9 +41,9 @@ const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
 export const convertSessionTypeToBackgroundColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
-  sessionType === undefined ?
-    new Color('white')
-  : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
+  sessionType === undefined
+    ? new Color('white')
+    : SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 
 export const getTrainingSessionColorVariant = (
   color: Color,
@@ -63,10 +63,11 @@ export const getTrainingSessionColorVariant = (
   const minimumLightness = 0.6
   const defaultLightness = 0.75
 
-  const lightness =
-    isOneComponentBelowThreshold ? maximumLightness
-    : isOneComponentAboveThreshold ? minimumLightness
-    : defaultLightness
+  const lightness = isOneComponentBelowThreshold
+    ? maximumLightness
+    : isOneComponentAboveThreshold
+      ? minimumLightness
+      : defaultLightness
 
   return new Color(
     new Color(color).set({
@@ -79,9 +80,9 @@ export const convertSessionTypeToForeColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
   new Color(
-    sessionType === undefined ? 'transparent' : (
-      new Color(SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]).darken(0.2)
-    ),
+    sessionType === undefined
+      ? 'transparent'
+      : new Color(SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]).darken(0.2),
   )
 
 const ascentLightness = '1'
@@ -111,8 +112,10 @@ const ASCENT_GRADE_TO_COLOR: Partial<Record<Grade, string>> = {
   '8c+': new Color(color8a.darken(5 * darkeningCoefficient)).toString(),
 }
 
-export const convertGradeToBackgroundColor = (grade: Grade): string =>
-  ASCENT_GRADE_TO_COLOR[grade] ?? 'black'
+export const convertGradeToBackgroundColor = (
+  grade: Grade | undefined,
+): string =>
+  grade === undefined ? 'black' : (ASCENT_GRADE_TO_COLOR[grade] ?? 'black')
 
 const degrees = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const
 const degreeSchema = z.enum(degrees)
@@ -157,9 +160,9 @@ const createFrenchGradingScale = <GradeType extends Grade>(
     ROUTE_LETTERS.map(
       letter =>
         degree +
-        (isBoulderGrade ?
-          (letter.toUpperCase() as BoulderGradeLetter)
-        : letter),
+        (isBoulderGrade
+          ? (letter.toUpperCase() as BoulderGradeLetter)
+          : letter),
     ).flatMap(degreeAndLetter =>
       optionalPlus.map(maybePlus => (degreeAndLetter + maybePlus) as GradeType),
     ),
@@ -197,14 +200,14 @@ export const NUMBER_TO_BOULDER_GRADE = invertMapKeyValue(
 export const convertGradeToNumber = <GradeType extends Grade>(
   grade: GradeType,
 ): number =>
-  ROUTE_GRADES.includes(grade as RouteGrade) ?
-    (ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0)
-  : (BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0)
+  ROUTE_GRADES.includes(grade as RouteGrade)
+    ? (ROUTE_GRADE_TO_NUMBER.get(grade as RouteGrade) ?? 0)
+    : (BOULDER_GRADE_TO_NUMBER.get(grade as BoulderGrade) ?? 0)
 
 export const convertNumberToGrade = (
   gradeNumber: number,
   toBoulderGrade = false,
 ): Grade =>
-  toBoulderGrade ?
-    (NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A')
-  : (NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a')
+  toBoulderGrade
+    ? (NUMBER_TO_BOULDER_GRADE.get(gradeNumber) ?? '1A')
+    : (NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a')

@@ -1,8 +1,8 @@
+import { Temporal } from '@js-temporal/polyfill'
 import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
-import { ascentSchema, type Ascent } from '~/types/ascent'
+import { type Ascent, ascentSchema } from '~/types/ascent'
 import { isDataResponse } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers'
-import { Temporal } from '@js-temporal/polyfill'
 
 const parsedAscentData = await fetch(
   `${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`,
@@ -33,7 +33,9 @@ export const seasonAscentPerDay = parsedAscentData.reduce(
     const { year, dayOfYear } = date
     const thisDay = acc[year]?.[dayOfYear - 1]
 
-    acc[year]![dayOfYear - 1] = {
+    if (acc[year] === undefined) return acc
+
+    acc[year][dayOfYear - 1] = {
       date,
       ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
     }
@@ -61,8 +63,12 @@ export const seasonsAscentsPerWeek = parsedAscentData.reduce(
     } = ascent
 
     const weekAscents = accumulator[year]?.[weekOfYear]
-    accumulator[year]![weekOfYear] =
-      weekAscents ? [...weekAscents, ascent] : [ascent]
+
+    if (accumulator[year] === undefined) return accumulator
+
+    accumulator[year][weekOfYear] = weekAscents
+      ? [...weekAscents, ascent]
+      : [ascent]
 
     return accumulator
   },

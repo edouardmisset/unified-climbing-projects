@@ -1,8 +1,16 @@
 {
-  "cSpell.words": [
-    "departement",
-    "qrcode",
-    "Undercling",
-    "underclings"
-  ]
+  "cSpell.words": ["qrcode", "Undercling", "underclings"],
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
