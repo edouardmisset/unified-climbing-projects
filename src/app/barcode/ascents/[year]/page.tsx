@@ -25,7 +25,7 @@ export default function Page({
 
   return (
     <main>
-      <h3 style={{ textAlign: 'center' }}>{year}</h3>
+      <h3 className="section-header">{year}</h3>
       <Barcode
         data={sortedAscents}
         itemRender={(weeklyAscents, index) => {

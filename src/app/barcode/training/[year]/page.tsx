@@ -13,13 +13,13 @@ export default function Page({
 
   return (
     <main>
+      <h3 className="section-header">{year}</h3>
       <div
         style={{
           height: 400,
           width: 600,
           background: 'white',
           display: 'flex',
-          justifyContent: 'space-between',
           gap: 4,
 
           padding: 'clamp(.5rem, 5cqi, 2rem)',

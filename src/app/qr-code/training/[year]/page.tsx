@@ -22,7 +22,7 @@ export default function Page({
         <h2 style={{ textAlign: 'center' }}>Training</h2>
         <div className={styles.grid}>
           <div key={year}>
-            <h3 style={{ textAlign: 'center' }}>{year}</h3>
+            <h3 className="section-header">{year}</h3>
             <QRCode
               data={selectedTrainingSessions}
               itemRender={(trainingSession: TrainingSession) => (
