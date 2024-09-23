@@ -9,7 +9,7 @@ import {
   convertSessionTypeToForeColor,
   getTrainingSessionColorVariant,
 } from '~/helpers/converter'
-import { createTrainingTooltip } from '~/helpers/tooltips'
+import { createTrainingQRTooltip } from '~/helpers/tooltips'
 
 export default function Visualization({
   params: { year },
@@ -39,7 +39,7 @@ export default function Visualization({
         return {
           date,
           backgroundColor,
-          tooltip: createTrainingTooltip(session),
+          tooltip: createTrainingQRTooltip(session),
           foreColor: convertSessionTypeToForeColor(sessionType).toString(),
           shortText: sessionType,
         }

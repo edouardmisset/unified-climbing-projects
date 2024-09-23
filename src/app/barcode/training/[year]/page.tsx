@@ -59,7 +59,7 @@ export default function Page({
           const firstDate = week?.[0]?.date
           return (
             <span
-              key={firstDate?.toString()}
+              key={(firstDate ?? i).toString()}
               style={{
                 display: 'block',
                 height: '100%',

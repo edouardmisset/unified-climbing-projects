@@ -3,7 +3,7 @@ import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { seasonTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
-import { createTrainingTooltip } from '~/helpers/tooltips'
+import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/types/training'
 import styles from './page.module.css'
 
@@ -33,7 +33,7 @@ export default function Page() {
                           trainingSession.sessionType,
                         ).toString(),
                       }}
-                      title={createTrainingTooltip(trainingSession)}
+                      title={createTrainingQRTooltip(trainingSession)}
                     />
                   )}
                 >

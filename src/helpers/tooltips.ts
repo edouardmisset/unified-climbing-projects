@@ -1,7 +1,21 @@
 import type { Ascent } from '~/types/ascent'
 import type { TrainingSession } from '~/types/training'
 
-export const createAscentTooltip = (ascents: Ascent[]): string =>
+export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
+  ascents.length >= 1 && ascents[0] !== undefined
+    ? `Week # ${ascents[0].date.weekOfYear.toString()}
+Ascents (${ascents.length}):
+${ascents
+  .map(
+    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
+        climbingDiscipline === 'Route' ? '🧗' : ''
+      } ${routeName} (${crag}) - ${topoGrade}`,
+  )
+  .join('\n')}`
+    : ''
+
+export const createAscentQRTooltip = (ascents: Ascent[]): string =>
   ascents[0] === undefined
     ? ''
     : `📅 ${ascents[0].date.toLocaleString(undefined, {
@@ -23,7 +37,7 @@ ${ascents
   )
   .join('\n')}`
 
-export const createTrainingTooltip = ({
+export const createTrainingQRTooltip = ({
   anatomicalRegion,
   climbingDiscipline,
   comments,

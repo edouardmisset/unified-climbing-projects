@@ -1,5 +1,6 @@
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
+import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/types/ascent'
 
 const minBarWidth = 4
@@ -60,7 +61,7 @@ export default function Barcode({
                 maxWidth: maxBarWidth,
                 background: backgroundGradient,
               }}
-              title={createBarTooltip(weeklyAscents)}
+              title={createAscentBarCodeTooltip(weeklyAscents)}
             />
           )
         })}
@@ -68,17 +69,3 @@ export default function Barcode({
     </div>
   )
 }
-
-const createBarTooltip = (ascents: Ascent[]): string =>
-  ascents.length >= 1 && ascents[0] !== undefined
-    ? `Week # ${ascents[0].date.weekOfYear.toString()}
-Routes (${ascents.length}):
-${ascents
-  .map(
-    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
-        climbingDiscipline === 'Route' ? '🧗' : ''
-      } ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
-    : ''
