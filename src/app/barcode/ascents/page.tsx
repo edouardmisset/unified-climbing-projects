@@ -20,7 +20,7 @@ export default function Page() {
             ascentSeasons[ascentSeasons.length - 1 - i]?.toString() ?? ''
           return (
             <div key={year} className="flex-column" style={{}}>
-              <h3 style={{ textAlign: 'center' }}>
+              <h3 className="center-text">
                 <Link href={`/barcode/ascents/${year}`}>{year}</Link>
               </h3>
               <Barcode

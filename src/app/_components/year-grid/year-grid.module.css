@@ -35,6 +35,7 @@
 
   color: var(--text-color, #000);
   background-color: var(--cell-color, hsla(0 0% 50% / 0.5));
+  text-align: center;
 
   border-width: var(--border-width, 1px);
   border-style: solid;

@@ -4,7 +4,6 @@ import { seasonTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/types/training'
-import styles from './page.module.css'
 
 export default function Page({
   params: { year },
@@ -17,10 +16,10 @@ export default function Page({
     return <div>No data found for the year {year}</div>
 
   return (
-    <main className={styles.main}>
-      <section style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ textAlign: 'center' }}>Training</h2>
-        <div className={styles.grid}>
+    <main className="flex-column">
+      <section className="flex-column">
+        <h2 className="center-text">Training</h2>
+        <div className="qr-grid">
           <div key={year}>
             <h3 className="section-header">{year}</h3>
             <QRCode

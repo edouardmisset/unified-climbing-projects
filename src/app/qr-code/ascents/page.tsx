@@ -5,14 +5,13 @@ import { seasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentQRTooltip } from '~/helpers/tooltips'
-import styles from './page.module.css'
 
 export default function Page() {
   return (
-    <main className={styles.main}>
-      <section style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ textAlign: 'center' }}>Ascents</h2>
-        <div className={styles.grid}>
+    <main className="flex-column">
+      <section className="flex-column">
+        <h2 className="center-text">Ascents</h2>
+        <div className="qr-grid">
           {Object.entries(seasonAscentPerDay)
             .reverse()
             .map(([year, ascents]) => {
@@ -24,7 +23,7 @@ export default function Page() {
               }))
               return (
                 <div key={`ascents in ${year}`}>
-                  <h3 style={{ textAlign: 'center' }}>
+                  <h3 className="center-text">
                     <Link href={`/qr-code/ascents/${year}`}>{year}</Link>
                   </h3>
                   <QRCode
