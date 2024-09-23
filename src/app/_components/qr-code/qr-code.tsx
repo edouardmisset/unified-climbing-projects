@@ -1,5 +1,5 @@
-import type { Temporal } from '@js-temporal/polyfill'
 import { cloneElement } from 'react'
+import type { TemporalDate } from '~/types/generic'
 import Marker from './marker'
 import styles from './qr-code.module.css'
 
@@ -7,8 +7,6 @@ const gridSize = 25
 const imageSize = 9
 const imageStart = (gridSize - imageSize) / 2 + 1
 const imageEnd = gridSize - imageSize + 2
-
-export type TemporalDate = { date: Temporal.PlainDate }
 
 type Obj = Record<string, unknown>
 
@@ -44,12 +42,12 @@ export default function QRCode<T extends Obj>(
         marginInline: 'auto',
       }}
     >
-      {/* Markers */}
+      {/* Square markers */}
       <Marker placement="TopLeft" />
       <Marker placement="TopRight" />
       <Marker placement="BottomLeft" />
 
-      {/* Image */}
+      {/* Image at the center of the QR Code */}
       {image
         ? cloneElement(image, {
             style: {

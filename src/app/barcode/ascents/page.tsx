@@ -1,6 +1,9 @@
 import Link from 'next/link'
-import Barcode from '~/app/_components/barcode/barcode'
+import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
 import { ascentSeasons, seasonsAscentsPerWeek } from '~/data/ascent-data'
+import { convertGradeToBackgroundColor } from '~/helpers/converter'
+import { sortByDescendingGrade } from '~/helpers/sorter'
+import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 
 export default function Page() {
   return (
@@ -20,7 +23,47 @@ export default function Page() {
               <h3 style={{ textAlign: 'center' }}>
                 <Link href={`/barcode/ascents/${year}`}>{year}</Link>
               </h3>
-              <Barcode seasonAscents={seasonAscents} />
+              <Barcode
+                data={seasonAscents}
+                itemRender={(weeklyAscents, index) => {
+                  const barWidth = weeklyAscents.length
+
+                  // Sort week's ascents by ascending grades
+                  const filteredWeeklyAscents = weeklyAscents.filter(
+                    ascent => ascent !== undefined,
+                  )
+
+                  filteredWeeklyAscents.sort(
+                    (a, b) => -1 * sortByDescendingGrade(a, b),
+                  )
+
+                  // Colorize bars
+                  const backgroundGradient =
+                    weeklyAscents.length === 1
+                      ? convertGradeToBackgroundColor(
+                          weeklyAscents[0]?.topoGrade,
+                        )
+                      : `linear-gradient(${filteredWeeklyAscents
+                          .map(ascent =>
+                            convertGradeToBackgroundColor(ascent.topoGrade),
+                          )
+                          .join(', ')})`
+
+                  return (
+                    <span
+                      key={(weeklyAscents[0]?.date ?? index).toString()}
+                      style={{
+                        display: 'block',
+                        height: '100%',
+                        width: barWidth,
+                        maxWidth: maxBarWidth,
+                        background: backgroundGradient,
+                      }}
+                      title={createAscentBarCodeTooltip(filteredWeeklyAscents)}
+                    />
+                  )
+                }}
+              />
             </div>
           )
         })

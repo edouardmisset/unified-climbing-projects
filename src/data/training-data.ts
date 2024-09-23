@@ -1,6 +1,5 @@
-import { isDataResponse } from '~/types/generic'
+import { type TemporalDate, isDataResponse } from '~/types/generic'
 
-import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
 import { type TrainingSession, trainingSessionSchema } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data'
 import { createEmptyYearlyCollections } from './helpers'

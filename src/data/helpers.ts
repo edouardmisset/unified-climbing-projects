@@ -1,5 +1,5 @@
 import { Temporal } from '@js-temporal/polyfill'
-import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
+import type { TemporalDate } from '~/types/generic'
 
 export function createEmptyYearlyCollections(
   listOfYears: number[],

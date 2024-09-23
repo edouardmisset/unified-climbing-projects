@@ -1,7 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
-import type { TemporalDate } from '~/app/_components/qr-code/qr-code'
 import { type Ascent, ascentSchema } from '~/types/ascent'
-import { isDataResponse } from '~/types/generic'
+import { type TemporalDate, isDataResponse } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers'
 
 const parsedAscentData = await fetch(
@@ -72,5 +71,5 @@ export const seasonsAscentsPerWeek = parsedAscentData.reduce(
 
     return accumulator
   },
-  { ...createEmptyBarcodeCollection<Ascent>() },
+  { ...createEmptyBarcodeCollection<Ascent | undefined>() },
 )

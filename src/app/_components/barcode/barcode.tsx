@@ -1,16 +1,29 @@
-import { convertGradeToBackgroundColor } from '~/helpers/converter'
-import { sortByDescendingGrade } from '~/helpers/sorter'
-import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
-import type { Ascent } from '~/types/ascent'
+import type { TemporalDate } from '~/types/generic'
 
-const minBarWidth = 4
-const maxBarWidth = 2.5 * minBarWidth
+export const minBarWidth = 4
+export const maxBarWidth = 2.5 * minBarWidth
 
-export default function Barcode({
-  seasonAscents,
-}: {
-  seasonAscents: Ascent[][]
-}): JSX.Element {
+type Obj = Record<string, unknown>
+
+type MainBarCodeProps<T extends Obj> = {
+  data: ((TemporalDate & T) | undefined)[][]
+}
+
+type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
+  (
+    | {
+        itemRender: (
+          item: ((TemporalDate & T) | undefined)[],
+          index: number,
+        ) => JSX.Element
+      }
+    | { field: keyof T }
+  )
+
+export default function Barcode<T extends Obj>(
+  props: BarCodeProps<T>,
+): JSX.Element {
+  const { data = [] } = props
   return (
     <div
       style={{
@@ -35,36 +48,18 @@ export default function Barcode({
           aspectRatio: '3 / 2',
         }}
       >
-        {seasonAscents.map((weeklyAscents, i) => {
-          const barWidth = weeklyAscents.length
-
-          // Sort week's ascents by ascending grades
-          weeklyAscents.sort((a, b) => -1 * sortByDescendingGrade(a, b))
-
-          // Colorize bars
-          const backgroundGradient =
-            weeklyAscents.length === 1
-              ? convertGradeToBackgroundColor(weeklyAscents[0]?.topoGrade)
-              : `linear-gradient(${weeklyAscents
-                  .map(ascent =>
-                    convertGradeToBackgroundColor(ascent.topoGrade),
-                  )
-                  .join(', ')})`
-
-          return (
-            <span
-              key={weeklyAscents[0]?.date.toString()}
-              style={{
-                display: 'block',
-                height: '100%',
-                width: barWidth,
-                maxWidth: maxBarWidth,
-                background: backgroundGradient,
-              }}
-              title={createAscentBarCodeTooltip(weeklyAscents)}
-            />
-          )
-        })}
+        {'itemRender' in props
+          ? data.map(props.itemRender)
+          : data.map(elements => (
+              <span
+                key={elements[0]?.date.weekOfYear}
+                style={{
+                  backgroundColor: elements[0]?.[props.field]
+                    ? 'black'
+                    : 'white',
+                }}
+              />
+            ))}
       </div>
     </div>
   )
