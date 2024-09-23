@@ -19,6 +19,9 @@ export default function Visualization({
   const numberYear = Number(year)
   const yearSession = seasonTraining[numberYear]
 
+  const isDataPresentForPreviousYear = Boolean(seasonTraining[numberYear - 1])
+  const isDataPresentForNextYear = Boolean(seasonTraining[numberYear + 1])
+
   const nextYear = numberYear + 1
   const previousYear = numberYear - 1
 
@@ -51,20 +54,34 @@ export default function Visualization({
 
   return (
     <>
-      <div>An overview of my training in {year}</div>
-      {yearSession.length === 0 ? (
-        <span>No record</span>
-      ) : (
-        <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
-      )}
+      <div className="center-text">An overview of my training in {year}</div>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
+          paddingInline: '1rem',
         }}
       >
-        <Link href={`./${previousYear}`}>{previousYear}</Link>
-        <Link href={`./${nextYear}`}>{nextYear}</Link>
+        {isDataPresentForPreviousYear ? (
+          <Link className="btn" href={`./${previousYear}`}>
+            {`< ${previousYear}`}
+          </Link>
+        ) : (
+          <span />
+        )}
+
+        {yearSession.length === 0 ? (
+          <span>No record</span>
+        ) : (
+          <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
+        )}
+        {isDataPresentForNextYear ? (
+          <Link className="btn" href={`./${nextYear}`}>
+            {`${nextYear} >`}
+          </Link>
+        ) : (
+          <span />
+        )}
       </div>
     </>
   )
