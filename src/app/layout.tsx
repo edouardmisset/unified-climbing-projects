@@ -41,7 +41,7 @@ export default function RootLayout({
           <header>
             <nav>
               <ul
-                className="wrap gap flex-center flex-even margin-auto flex-row"
+                className="wrap gap center space-evenly margin-auto flex-row"
                 style={{
                   minHeight: '3rem',
                   listStyle: 'none',

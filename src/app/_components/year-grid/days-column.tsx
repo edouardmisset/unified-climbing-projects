@@ -18,11 +18,10 @@ export function DaysColumn({ year }: { year: number }) {
     ) : (
       <div
         key={date.toString()}
+        className="flex-row center"
         style={{
           minInlineSize: '4ch',
           lineHeight: 1,
-          display: 'flex',
-          alignContent: 'center',
         }}
       >
         {date.toDateString().slice(0, 3)}

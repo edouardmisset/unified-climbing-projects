@@ -15,11 +15,11 @@ export default function Page({
     <main>
       <h3 className="section-header">{year}</h3>
       <div
+        className="flex-row"
         style={{
           height: 400,
           width: 600,
           background: 'white',
-          display: 'flex',
           gap: 4,
 
           padding: 'clamp(.5rem, 5cqi, 2rem)',

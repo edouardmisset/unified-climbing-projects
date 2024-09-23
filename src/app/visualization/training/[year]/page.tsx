@@ -56,9 +56,8 @@ export default function Visualization({
     <>
       <div className="center-text">An overview of my training in {year}</div>
       <div
+        className="flex-row space-between"
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
           paddingInline: '1rem',
         }}
       >

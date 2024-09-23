@@ -25,43 +25,40 @@ export default function Page({
   return (
     <main className="flex-column">
       <section className="flex-column">
-        <h2 className="center-text">Ascents</h2>
-        <div className="qr-grid">
-          <div key={year}>
-            <h3 className="section-header">{year}</h3>
-            <QRCode
-              data={sortedAscents}
-              itemRender={ascentDay => {
-                const hardestAscent = ascentDay?.ascents?.at(0)
-                return (
-                  <span
-                    key={ascentDay.date.dayOfYear}
-                    style={{
-                      backgroundColor:
-                        hardestAscent === undefined
-                          ? 'white'
-                          : convertGradeToBackgroundColor(
-                              hardestAscent.topoGrade,
-                            ),
-                    }}
-                    title={
-                      ascentDay?.ascents
-                        ? createAscentQRTooltip(ascentDay.ascents)
-                        : ''
-                    }
-                  />
-                )
-              }}
-            >
-              <Image
-                alt=""
-                priority
-                src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
-                width={120}
-                height={120}
-              />
-            </QRCode>
-          </div>
+        <div key={year}>
+          <h3 className="section-header">{year}</h3>
+          <QRCode
+            data={sortedAscents}
+            itemRender={ascentDay => {
+              const hardestAscent = ascentDay?.ascents?.at(0)
+              return (
+                <span
+                  key={ascentDay.date.dayOfYear}
+                  style={{
+                    backgroundColor:
+                      hardestAscent === undefined
+                        ? 'white'
+                        : convertGradeToBackgroundColor(
+                            hardestAscent.topoGrade,
+                          ),
+                  }}
+                  title={
+                    ascentDay?.ascents
+                      ? createAscentQRTooltip(ascentDay.ascents)
+                      : ''
+                  }
+                />
+              )
+            }}
+          >
+            <Image
+              alt=""
+              priority
+              src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
+              width={120}
+              height={120}
+            />
+          </QRCode>
         </div>
       </section>
     </main>

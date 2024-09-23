@@ -26,21 +26,17 @@ export default function Barcode<T extends Obj>(
   const { data = [] } = props
   return (
     <div
+      className="flex-column center gap"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '1rem',
-        maxHeight: '100%',
-        width: '100%',
+        maxBlockSize: '100%',
+        inlineSize: '100%',
       }}
     >
       <div
+        className="flex-row space-between"
         style={{
-          width: 'clamp(30ch, 50%, 80ch)',
+          inlineSize: 'clamp(30ch, 50%, 80ch)',
           background: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
 
           gap: minBarWidth,
 

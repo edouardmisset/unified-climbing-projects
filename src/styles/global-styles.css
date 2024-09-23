@@ -51,7 +51,7 @@ nav a {
   flex-direction: column;
 }
 
-.flex-center {
+.center {
   justify-content: center;
   align-items: center;
 }
@@ -64,8 +64,12 @@ nav a {
   gap: 1rem;
 }
 
-.flex-even {
+.space-evenly {
   justify-content: space-evenly;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 .margin-auto {

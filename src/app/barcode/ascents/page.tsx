@@ -19,7 +19,7 @@ export default function Page() {
           const year =
             ascentSeasons[ascentSeasons.length - 1 - i]?.toString() ?? ''
           return (
-            <div key={year} className="flex-column" style={{}}>
+            <div key={year} className="flex-column">
               <h3 className="center-text">
                 <Link href={`/barcode/ascents/${year}`}>{year}</Link>
               </h3>
