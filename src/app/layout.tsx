@@ -20,7 +20,6 @@ import '~/styles/button.css'
 import '~/styles/normalize.css'
 
 import Link from 'next/link'
-import Sync from './_components/sync-button/sync-button'
 
 export const metadata = {
   title: 'Unified Climbing Projects',
@@ -76,9 +75,6 @@ export default function RootLayout({
                   <Link href={`/visualization/training/${thisYear}`}>
                     Training Visualization
                   </Link>
-                </li>
-                <li>
-                  <Sync />
                 </li>
               </ul>
             </nav>
