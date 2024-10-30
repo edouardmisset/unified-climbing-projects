@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { seasonAscentPerDay } from '~/data/ascent-data'
@@ -34,7 +33,7 @@ export default function Page() {
                         <i
                           key={
                             String(ascentDay.date.dayOfYear) +
-                              ascentDay.ascents?.[0]?.routeName ?? ''
+                            ascentDay.ascents?.[0]?.routeName
                           }
                           style={{
                             backgroundColor:
@@ -52,15 +51,7 @@ export default function Page() {
                         />
                       )
                     }}
-                  >
-                    <Image
-                      alt=""
-                      src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
-                      width={120}
-                      height={120}
-                      priority
-                    />
-                  </QRCode>
+                  />
                 </div>
               )
             })}

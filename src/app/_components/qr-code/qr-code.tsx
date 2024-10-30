@@ -1,6 +1,8 @@
+import Image from 'next/image'
 import { cloneElement } from 'react'
 import type { TemporalDate } from '~/types/generic'
 import Marker from './marker'
+import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
 
 const gridSize = 25
@@ -26,7 +28,16 @@ type QRCodeProps<T extends Obj> = MainQRCodeProps<T> &
 export default function QRCode<T extends Obj>(
   props: QRCodeProps<T>,
 ): JSX.Element {
-  const { data, children: image } = props
+  const { data, children } = props
+  const image = children ?? (
+    <Image
+      alt="emoji of a person climbing"
+      src={climberImagePath}
+      width={120}
+      height={120}
+      priority
+    />
+  )
   return (
     <div
       className={styles.qrcode}
@@ -48,16 +59,14 @@ export default function QRCode<T extends Obj>(
       <Marker placement="BottomLeft" />
 
       {/* Image at the center of the QR Code */}
-      {image
-        ? cloneElement(image, {
-            style: {
-              gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
-              height: '100%',
-              width: '100%',
-              padding: '1rem',
-            },
-          })
-        : undefined}
+      {cloneElement(image, {
+        style: {
+          gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
+          height: '100%',
+          width: '100%',
+          padding: '1rem',
+        },
+      })}
 
       {/* Data */}
       {'itemRender' in props

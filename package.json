@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
     "check": "biome check --fix src",
-    "lint": "next lint",
+    "dev": "next dev",
+    "reset": "rm -rf node_modules bun.lockb && bun install",
     "start": "next start",
-    "reset": "rm -rf node_modules bun.lockb && bun install"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@edouardmisset/utils": "npm:@jsr/edouardmisset__utils",

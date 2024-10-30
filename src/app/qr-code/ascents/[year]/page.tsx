@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { seasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
@@ -50,15 +49,7 @@ export default function Page({
                 />
               )
             }}
-          >
-            <Image
-              alt=""
-              priority
-              src="https://em-content.zobj.net/thumbs/120/apple/354/person-climbing_1f9d7.png"
-              width={120}
-              height={120}
-            />
-          </QRCode>
+          />
         </div>
       </section>
     </main>
