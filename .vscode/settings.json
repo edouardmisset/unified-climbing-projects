@@ -1,5 +1,9 @@
 {
-  "cSpell.words": ["qrcode", "Undercling", "underclings"],
+  "cSpell.words": [
+    "qrcode",
+    "Undercling",
+    "underclings"
+  ],
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"
@@ -12,5 +16,25 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#bb5cf9",
+    "activityBar.background": "#bb5cf9",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#7b4c05",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#bb5cf9",
+    "statusBar.background": "#a72bf7",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#bb5cf9",
+    "statusBarItem.remoteBackground": "#a72bf7",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#a72bf7",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#a72bf799",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#a72bf7"
 }
