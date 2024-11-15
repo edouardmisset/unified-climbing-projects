@@ -53,27 +53,28 @@ export default function RootLayout({
                   <Link href={'/log'}>Log</Link>
                 </li>
                 <li>
-                  <Link href={'/qr-code/ascents'}>Ascents QR</Link>
+                  <Link href={'/graphs/ascents/pyramid'}>🧗 Pyramid</Link>
                 </li>
                 <li>
-                  <Link href={'/barcode/ascents'}>Ascents Barcode</Link>
+                  <Link href={'/qr-code/ascents'}>🧗 QR</Link>
+                </li>
+                <li>
+                  <Link href={`/barcode/ascents/${thisYear}`}>🧗 Barcode</Link>
                 </li>
                 <li>
                   <Link href={`/visualization/ascents/${thisYear}`}>
-                    Ascents Visualization
+                    🧗 Visualization
                   </Link>
                 </li>
                 <li>
-                  <Link href={'/qr-code/training'}>Training QR</Link>
+                  <Link href={'/qr-code/training'}>💪 QR</Link>
                 </li>
                 <li>
-                  <Link href={`/barcode/training/${thisYear}`}>
-                    Training Barcode
-                  </Link>
+                  <Link href={`/barcode/training/${thisYear}`}>💪 Barcode</Link>
                 </li>
                 <li>
                   <Link href={`/visualization/training/${thisYear}`}>
-                    Training Visualization
+                    💪 Visualization
                   </Link>
                 </li>
               </ul>
