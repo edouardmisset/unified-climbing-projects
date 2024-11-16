@@ -1,13 +1,19 @@
-import * as Slider from '@radix-ui/react-slider'
+import {
+  Range,
+  Root,
+  type SliderProps,
+  Thumb,
+  Track,
+} from '@radix-ui/react-slider'
 import type React from 'react'
 import { convertGradeToNumber } from '~/helpers/converter'
 import type { Grade } from '~/types/ascent'
 import styles from './slider.module.css'
 
 export function GradeSlider(
-  props: Omit<Slider.SliderProps, 'defaultValue' | 'value'> & {
-    defaultValue?: Grade[] | Slider.SliderProps['defaultValue']
-    value?: Grade[] | Slider.SliderProps['value']
+  props: Omit<SliderProps, 'defaultValue' | 'value'> & {
+    defaultValue?: Grade[] | SliderProps['defaultValue']
+    value?: Grade[] | SliderProps['value']
   } & React.RefAttributes<HTMLSpanElement>,
 ): React.JSX.Element {
   const { defaultValue, value } = props
@@ -27,16 +33,16 @@ export function GradeSlider(
         : (value as Grade[]).map(df => convertGradeToNumber(df))
 
   return (
-    <Slider.Root
+    <Root
       className={styles.SliderRoot}
       {...props}
       value={numberValue}
       defaultValue={numberDefaultValue}
     >
-      <Slider.Track className={styles.SliderTrack}>
-        <Slider.Range className={styles.SliderRange} />
-      </Slider.Track>
-      <Slider.Thumb className={styles.SliderThumb} />
-    </Slider.Root>
+      <Track className={styles.SliderTrack}>
+        <Range className={styles.SliderRange} />
+      </Track>
+      <Thumb className={styles.SliderThumb} />
+    </Root>
   )
 }
