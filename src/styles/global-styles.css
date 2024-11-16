@@ -94,6 +94,10 @@ nav a {
   padding: 1rem;
 }
 
+text {
+  white-space: pre;
+}
+
 /** Intrinsic Container */
 .intrinsic-container {
   --container-max: 60ch;
