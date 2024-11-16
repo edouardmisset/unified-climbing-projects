@@ -1,0 +1,188 @@
+.Root {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  z-index: var(--layer-1, 1);
+}
+
+.List {
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-dark);
+  border-radius: var(--border-size-3);
+  list-style: none;
+  margin: 0;
+  &[data-orientation="vertical"] {
+    padding: var(--size-1);
+    flex-direction: column;
+  }
+}
+
+.Item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.Trigger,
+.Link {
+  all: unset;
+  padding: var(--size-3);
+  outline: none;
+  user-select: none;
+  line-height: 1;
+  border-radius: var(--border-size-3);
+  font-size: 1rem;
+  color: var(--color-light);
+  &:focus {
+    box-shadow: 0 0 0 2px var(--violet-3);
+  }
+  &:hover {
+    background-color: var(--color-dark);
+  }
+}
+
+.Trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-1);
+}
+
+.Link {
+  display: block;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.Content {
+  position: absolute;
+  top: 2.5rem;
+  left: -25%;
+  width: 100%;
+  animation-duration: 250ms;
+  animation-timing-function: ease;
+  &[data-motion="from-start"] {
+    animation-name: enterFromLeft;
+  }
+  &[data-motion="from-end"] {
+    animation-name: enterFromRight;
+  }
+  &[data-motion="to-start"] {
+    animation-name: exitToLeft;
+  }
+  &[data-motion="to-end"] {
+    animation-name: exitToRight;
+  }
+  @media only screen and (min-width: 600px) {
+    width: auto;
+  }
+}
+
+.List {
+  display: flex;
+  margin: 0;
+  gap: var(--size-2);
+  list-style: none;
+  white-space: pre;
+}
+
+.ListItemLink {
+  cursor: pointer;
+  display: block;
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+  padding: var(--size-2);
+  border-radius: var(--border-size-3);
+  font-size: 1rem;
+  line-height: 1;
+  &:focus {
+    box-shadow: 0 0 0 2px var(--violet-3);
+  }
+}
+
+@keyframes enterFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes enterFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes exitToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+}
+
+@keyframes exitToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: rotateX(-30deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: rotateX(-10deg) scale(0.95);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
