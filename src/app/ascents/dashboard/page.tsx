@@ -44,7 +44,7 @@ export default function Page() {
 
   return (
     <div>
-      <h1>Grade Pyramid</h1>
+      <h1>Dashboard</h1>
       <p>Pyramid of Ascents</p>
       <div
         style={{

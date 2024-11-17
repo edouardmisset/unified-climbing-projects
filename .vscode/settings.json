@@ -1,9 +1,5 @@
 {
-  "cSpell.words": [
-    "qrcode",
-    "Undercling",
-    "underclings"
-  ],
+  "cSpell.words": ["qrcode", "Undercling", "underclings"],
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"
@@ -15,6 +11,9 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
   "workbench.colorCustomizations": {

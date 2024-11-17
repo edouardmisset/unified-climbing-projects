@@ -23,7 +23,7 @@ export default function Page() {
               return (
                 <div key={`ascents in ${year}`}>
                   <h3 className="center-text">
-                    <Link href={`/qr-code/ascents/${year}`}>{year}</Link>
+                    <Link href={`/ascents/qr-code/${year}`}>{year}</Link>
                   </h3>
                   <QRCode
                     data={sortedAscents}

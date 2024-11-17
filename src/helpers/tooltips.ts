@@ -15,6 +15,22 @@ ${ascents
   .join('\n')}`
     : ''
 
+export const createTrainingBarCodeTooltip = (
+  sessions: TrainingSession[],
+): string =>
+  sessions.length >= 1 && sessions[0] !== undefined
+    ? `Week # ${sessions[0].date.weekOfYear.toString()}
+# Training (${sessions.length}):
+${sessions
+  .map(
+    ({ sessionType, climbingDiscipline, gymCrag, load }) =>
+      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
+        climbingDiscipline === 'Route' ? '🧗' : ''
+      } ${sessionType} (${gymCrag}) - ${load === undefined ? '' : roundToTen(load)}%`,
+  )
+  .join('\n')}`
+    : ''
+
 export const createAscentQRTooltip = (ascents: Ascent[]): string =>
   ascents[0] === undefined
     ? ''

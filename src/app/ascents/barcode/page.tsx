@@ -21,7 +21,7 @@ export default function Page() {
           return (
             <div key={year} className="flex-column">
               <h3 className="center-text">
-                <Link href={`/barcode/ascents/${year}`}>{year}</Link>
+                <Link href={`/ascents/barcode/${year}`}>{year}</Link>
               </h3>
               <Barcode
                 data={seasonAscents}

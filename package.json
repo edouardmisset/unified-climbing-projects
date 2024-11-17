@@ -46,7 +46,5 @@
   "ct3aMetadata": {
     "initVersion": "7.32.0"
   },
-  "trustedDependencies": [
-    "@vercel/speed-insights"
-  ]
+  "trustedDependencies": ["@vercel/speed-insights"]
 }

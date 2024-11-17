@@ -43,19 +43,19 @@ export function Navigation() {
         <Item className={styles.Item}>
           <Trigger className={styles.Trigger}>Ascents 🧗</Trigger>
           <Content className={styles.Content}>
-            <Sub orientation="vertical" defaultValue="pyramid">
+            <Sub orientation="vertical" defaultValue="dashboard">
               <List className={styles.List}>
-                <Item value="pyramid">
-                  <Link href={'/graphs/ascents/pyramid'}>🧗 Pyramid</Link>
+                <Item value="dashboard">
+                  <Link href={'/ascents/dashboard'}>🧗 Dashboard</Link>
                 </Item>
                 <Item value="qr-code">
-                  <Link href={'/qr-code/ascents'}>🧗 QR</Link>
+                  <Link href={'/ascents/qr-code'}>🧗 QR</Link>
                 </Item>
                 <Item value="barcode">
-                  <Link href={`/barcode/ascents/${thisYear}`}>🧗 Barcode</Link>
+                  <Link href={'/ascents/barcode'}>🧗 Barcode</Link>
                 </Item>
                 <Item value="visualization">
-                  <Link href={`/visualization/ascents/${thisYear}`}>
+                  <Link href={`/ascents/visualization/${thisYear}`}>
                     🧗 Visualization
                   </Link>
                 </Item>
@@ -71,13 +71,13 @@ export function Navigation() {
             <Sub orientation="vertical" defaultValue="visualization">
               <List className={styles.List}>
                 <Item className={styles.Item} value="qr-code">
-                  <Link href={'/qr-code/training'}>💪 QR</Link>
+                  <Link href={'/training/qr-code'}>💪 QR</Link>
                 </Item>
                 <Item className={styles.Item} value="barcode">
-                  <Link href={`/barcode/training/${thisYear}`}>💪 Barcode</Link>
+                  <Link href={'/training/barcode'}>💪 Barcode</Link>
                 </Item>
                 <Item className={styles.Item} value="visualization">
-                  <Link href={`/visualization/training/${thisYear}`}>
+                  <Link href={`/training/visualization/${thisYear}`}>
                     💪 Visualization
                   </Link>
                 </Item>

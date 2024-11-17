@@ -15,7 +15,7 @@ export default function Page() {
             .map(([year, training]) => (
               <div key={year}>
                 <h3 className="center-text">
-                  <Link href={`/qr-code/training/${year}`}>{year}</Link>
+                  <Link href={`/training/qr-code/${year}`}>{year}</Link>
                 </h3>
                 <QRCode
                   data={training}
