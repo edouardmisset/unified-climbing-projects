@@ -3,22 +3,22 @@ import { type Ascent, ascentSchema } from '~/types/ascent'
 import { type TemporalDate, isDataResponse } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers'
 
-const parsedAscentData = await fetch(
-  `${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`,
-)
-  .then(response => response.json())
-  .then(json => {
-    if (!isDataResponse(json)) throw new Error('Invalid response')
+async function getAscents(): Promise<Ascent[]> {
+  return await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`)
+    .then(response => response.json())
+    .then(json => {
+      if (!isDataResponse(json)) throw new Error('Invalid response')
 
-    return ascentSchema.array().parse(json.data)
-  })
-  .catch(error => {
-    console.error(error)
-    return [] as Ascent[]
-  })
+      return ascentSchema.array().parse(json.data)
+    })
+    .catch(error => {
+      console.error(error)
+      return [] as Ascent[]
+    })
+}
 
 export const ascentSeasons = [
-  ...new Set(parsedAscentData.map(({ date }) => date.year)),
+  ...new Set((await getAscents()).map(({ date }) => date.year)),
 ].reverse()
 
 const ascentsCollection: Record<
@@ -26,7 +26,7 @@ const ascentsCollection: Record<
   (TemporalDate & { ascents?: Ascent[] })[]
 > = createEmptyYearlyCollections(ascentSeasons)
 
-export const seasonAscentPerDay = parsedAscentData.reduce(
+export const seasonAscentPerDay = (await getAscents()).reduce(
   (acc, ascent) => {
     const { date } = ascent
     const { year, dayOfYear } = date
@@ -55,7 +55,7 @@ export const createEmptyBarcodeCollection = <T>() =>
     }),
   )
 
-export const seasonsAscentsPerWeek = parsedAscentData.reduce(
+export const seasonsAscentsPerWeek = (await getAscents()).reduce(
   (accumulator, ascent) => {
     const {
       date: { year, weekOfYear },

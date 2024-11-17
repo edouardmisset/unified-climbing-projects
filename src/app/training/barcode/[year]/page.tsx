@@ -1,6 +1,7 @@
 import { seasonsTrainingPerWeek } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
+import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 
 export default function Page({
   params: { year },
@@ -66,11 +67,7 @@ export default function Page({
                 width: barWidth,
                 background: backgroundGradient,
               }}
-              title={
-                firstDate === undefined
-                  ? ''
-                  : `Week # ${firstDate.weekOfYear.toString()}`
-              }
+              title={createTrainingBarCodeTooltip(week)}
             />
           )
         })}
