@@ -7,11 +7,13 @@ import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 
-export default function Page({
-  params: { year },
-}: {
-  params: { year: string }
+export default async function Page(props: {
+  params: Promise<{ year: string }>
 }) {
+  const params = await props.params
+
+  const { year } = params
+
   const selectedAscentsPerWeek = seasonsAscentsPerWeek[year]
 
   if (selectedAscentsPerWeek === undefined)

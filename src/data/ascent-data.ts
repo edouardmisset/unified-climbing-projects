@@ -1,6 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { type Ascent, ascentSchema } from '~/types/ascent'
-import { type TemporalDate, isDataResponse } from '~/types/generic'
+import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { type TemporalDateTime, isDataResponse } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers'
 
 async function getAscents(): Promise<Ascent[]> {
@@ -23,7 +23,7 @@ export const ascentSeasons = [
 
 const ascentsCollection: Record<
   number,
-  (TemporalDate & { ascents?: Ascent[] })[]
+  (TemporalDateTime & { ascents?: Ascent[] })[]
 > = createEmptyYearlyCollections(ascentSeasons)
 
 export const seasonAscentPerDay = (await getAscents()).reduce(

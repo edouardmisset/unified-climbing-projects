@@ -1,4 +1,4 @@
-import type { Ascent } from '~/types/ascent'
+import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>

@@ -30,7 +30,7 @@ export const trainingSessionSchema = z.object({
     .datetime()
     .transform(stringDate => {
       const d = new Date(stringDate)
-      return Temporal.PlainDate.from(
+      return Temporal.PlainDateTime.from(
         { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },
         { overflow: 'reject' },
       )

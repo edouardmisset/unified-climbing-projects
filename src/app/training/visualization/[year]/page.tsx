@@ -2,7 +2,7 @@ import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
 import Color from 'colorjs.io'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { use, useMemo } from 'react'
 import { seasonTraining } from '~/data/training-data'
 import {
   convertSessionTypeToBackgroundColor,
@@ -11,11 +11,13 @@ import {
 } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 
-export default function Visualization({
-  params: { year },
-}: {
-  params: { year: string }
+export default function Visualization(props: {
+  params: Promise<{ year: string }>
 }) {
+  const params = use(props.params)
+
+  const { year } = params
+
   const numberYear = Number(year)
   const yearSession = seasonTraining[numberYear]
 

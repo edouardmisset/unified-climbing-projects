@@ -7,7 +7,7 @@ import {
 } from '@radix-ui/react-slider'
 import type React from 'react'
 import { convertGradeToNumber } from '~/helpers/converter'
-import type { Grade } from '~/types/ascent'
+import type { Grade } from '~/schema/ascent'
 import styles from './slider.module.css'
 
 export function GradeSlider(

@@ -8,6 +8,16 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']),
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string(),
+    GOOGLE_PRIVATE_KEY: z.string(),
+    GOOGLE_SHEET_ID_ASCENTS: z.string(),
+    GOOGLE_SHEET_ASCENTS_SHEET_TITLE: z.string(),
+    GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE: z.string(),
+    GOOGLE_SHEET_ASCENTS_URL_CSV: z.string(),
+    GOOGLE_SHEET_ID_TRAINING: z.string(),
+    GOOGLE_SHEET_TRAINING_SHEET_TITLE: z.string(),
+    GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE: z.string(),
+    GOOGLE_SHEET_TRAINING_URL_CSV: z.string(),
   },
 
   /**
@@ -16,8 +26,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_ENV: z.enum(['development', 'test', 'production']),
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_ENV: z.string(),
   },
 
   /**
@@ -25,9 +34,24 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    NEXT_PUBLIC_ENV: process.env.NODE_ENV,
+    // Server-side env
     NODE_ENV: process.env.NODE_ENV,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
+    GOOGLE_SHEET_ID_ASCENTS: process.env.GOOGLE_SHEET_ID_ASCENTS,
+    GOOGLE_SHEET_ASCENTS_SHEET_TITLE:
+      process.env.GOOGLE_SHEET_ASCENTS_SHEET_TITLE,
+    GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE:
+      process.env.GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE,
+    GOOGLE_SHEET_ASCENTS_URL_CSV: process.env.GOOGLE_SHEET_ASCENTS_URL_CSV,
+    GOOGLE_SHEET_ID_TRAINING: process.env.GOOGLE_SHEET_ID_TRAINING,
+    GOOGLE_SHEET_TRAINING_SHEET_TITLE:
+      process.env.GOOGLE_SHEET_TRAINING_SHEET_TITLE,
+    GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE:
+      process.env.GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE,
+    GOOGLE_SHEET_TRAINING_URL_CSV: process.env.GOOGLE_SHEET_TRAINING_URL_CSV,
+    // Client-side env
+    NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

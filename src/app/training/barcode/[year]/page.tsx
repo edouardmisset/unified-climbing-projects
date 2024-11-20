@@ -3,11 +3,13 @@ import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 
-export default function Page({
-  params: { year },
-}: {
-  params: { year: string }
+export default async function Page(props: {
+  params: Promise<{ year: string }>
 }) {
+  const params = await props.params
+
+  const { year } = params
+
   const selectedTraining = seasonsTrainingPerWeek[year]
 
   if (selectedTraining === undefined) return <span>No Data</span>

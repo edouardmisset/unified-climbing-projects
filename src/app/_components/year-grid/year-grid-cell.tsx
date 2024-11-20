@@ -9,7 +9,7 @@ export function YearGridCell({
   foreColor,
   shortText,
 }: {
-  date: Temporal.PlainDate
+  date: Temporal.PlainDateTime
   tooltip: string
   backgroundColor: string
   foreColor: string

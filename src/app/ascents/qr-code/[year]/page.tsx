@@ -4,11 +4,13 @@ import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentQRTooltip } from '~/helpers/tooltips'
 
-export default function Page({
-  params: { year },
-}: {
-  params: { year: string }
+export default async function Page(props: {
+  params: Promise<{ year: string }>
 }) {
+  const params = await props.params
+
+  const { year } = params
+
   const selectedAscents = seasonAscentPerDay[Number(year)]
 
   if (selectedAscents === undefined)

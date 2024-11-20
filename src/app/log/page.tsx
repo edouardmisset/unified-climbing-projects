@@ -9,7 +9,7 @@ import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converter'
-import type { Grade } from '~/types/ascent'
+import type { Grade } from '~/schema/ascent'
 import { GradeSlider } from '../_components/slider/slider'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
 import styles from './page.module.css'

@@ -1,7 +1,7 @@
 import { datification, stringifyDate } from '@edouardmisset/utils'
 import { string, z } from 'zod'
 import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
-import { gradeSchema, holdsSchema, profileSchema } from '~/types/ascent'
+import { gradeSchema, holdsSchema, profileSchema } from '~/schema/ascent'
 import { climbingDisciplineSchema } from '~/types/training'
 import {
   MAX_HEIGHT,

@@ -5,7 +5,7 @@ import { YearGridCell } from './year-grid-cell'
 import styles from './year-grid.module.css'
 
 type DayDescriptor = {
-  date: Temporal.PlainDate
+  date: Temporal.PlainDateTime
   backgroundColor: string
   foreColor: string
   tooltip: string

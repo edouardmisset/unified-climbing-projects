@@ -1,4 +1,4 @@
-import type { TemporalDate } from '~/types/generic'
+import type { TemporalDateTime } from '~/types/generic'
 
 export const minBarWidth = 4
 export const maxBarWidth = 2.5 * minBarWidth
@@ -6,14 +6,14 @@ export const maxBarWidth = 2.5 * minBarWidth
 type Obj = Record<string, unknown>
 
 type MainBarCodeProps<T extends Obj> = {
-  data: ((TemporalDate & T) | undefined)[][]
+  data: ((TemporalDateTime & T) | undefined)[][]
 }
 
 type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
   (
     | {
         itemRender: (
-          item: ((TemporalDate & T) | undefined)[],
+          item: ((TemporalDateTime & T) | undefined)[],
           index: number,
         ) => JSX.Element
       }

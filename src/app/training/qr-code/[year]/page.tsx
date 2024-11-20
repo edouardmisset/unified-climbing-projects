@@ -4,11 +4,13 @@ import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/types/training'
 
-export default function Page({
-  params: { year },
-}: {
-  params: { year: string }
+export default async function Page(props: {
+  params: Promise<{ year: string }>
 }) {
+  const params = await props.params
+
+  const { year } = params
+
   const selectedTrainingSessions = seasonTraining[Number(year)]
 
   if (selectedTrainingSessions === undefined)

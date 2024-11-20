@@ -1,4 +1,4 @@
-import { type TemporalDate, isDataResponse } from '~/types/generic'
+import { type TemporalDateTime, isDataResponse } from '~/types/generic'
 
 import { type TrainingSession, trainingSessionSchema } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data'
@@ -22,8 +22,10 @@ const trainingSeasons = [
   ...new Set(parsedTrainingData.map(({ date }) => date.year)),
 ].reverse()
 
-const trainingCollection: Record<number, (TemporalDate & TrainingSession)[]> =
-  createEmptyYearlyCollections(trainingSeasons)
+const trainingCollection: Record<
+  number,
+  (TemporalDateTime & TrainingSession)[]
+> = createEmptyYearlyCollections(trainingSeasons)
 
 export const seasonTraining = parsedTrainingData.reduce(
   (acc, trainingSession) => {
