@@ -1,9 +1,7 @@
 export default async function Visualization(props: {
   params: Promise<{ year: string }>
 }) {
-  const params = await props.params
-
-  const { year: _year } = params
+  const { year: _year } = await props.params
 
   return <div>Coming soon</div>
 }

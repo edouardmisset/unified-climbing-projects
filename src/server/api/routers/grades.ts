@@ -1,12 +1,12 @@
 import { frequency } from '@edouardmisset/array'
 import { average } from '@edouardmisset/math/average.ts'
+import { mapObject } from '@edouardmisset/object'
 
 import { z } from 'zod'
 import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
-import { sortKeys } from '~/helpers/sort-keys'
 import { type Ascent, type Grade, ascentSchema } from '~/schema/ascent'
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
-import { createTRPCRouter, publicProcedure } from '../trpc'
 
 async function getFilteredAscents(
   climbingDiscipline?: Ascent['climbingDiscipline'],
@@ -60,7 +60,11 @@ export const gradesRouter = createTRPCRouter({
         await getFilteredAscents(climbingDiscipline, year)
       ).map(({ topoGrade }) => topoGrade)
 
-      return frequency(filteredGrades)
+      const gradeNumberTuple = Object.entries(frequency(filteredGrades)).map(
+        ([grade, count]) => [grade, count],
+      ) as Array<[Grade, number]>
+
+      return gradeNumberTuple.sort((a, b) => a[0].localeCompare(b[0]))
     }),
   getAverage: publicProcedure
     .input(

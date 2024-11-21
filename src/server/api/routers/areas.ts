@@ -1,4 +1,5 @@
 import { frequency } from '@edouardmisset/array'
+import { createCache } from '~/helpers/cache'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
 
@@ -13,6 +14,8 @@ async function getValidAreas(): Promise<NonNullable<Ascent['area']>[]> {
     .filter(area => area !== undefined)
 }
 
+const validAreas = await getValidAreas()
+
 // Get all known areas from the ascents
 export const areasRouter = createTRPCRouter({
   // Get all known areas
@@ -24,7 +27,6 @@ export const areasRouter = createTRPCRouter({
   }),
   // Get all known areas sorted by frequency
   frequency: publicProcedure.query(async () => {
-    const validAreas = await getValidAreas()
     const sortedAreasByFrequency = sortNumericalValues(
       frequency(validAreas),
       false,
@@ -33,14 +35,12 @@ export const areasRouter = createTRPCRouter({
   }),
   // Get all known areas that are similar
   duplicates: publicProcedure.query(async () => {
-    const validAreas = await getValidAreas()
     const duplicateAreas = findSimilar(validAreas)
 
     return duplicateAreas
   }),
   // Get all known areas that are similar
   similar: publicProcedure.query(async () => {
-    const validAreas = await getValidAreas()
     const similarAreas = Array.from(
       groupSimilarStrings(validAreas, 3).entries(),
     )

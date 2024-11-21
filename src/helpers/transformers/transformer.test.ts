@@ -1,13 +1,13 @@
 import { setDifference } from '@edouardmisset/array/sets.ts'
 import {
-  type GSAscentRecord,
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
-} from '~/helpers/transformers'
+} from '~/helpers/transformers/transformers'
 import { type Ascent, ascentSchema, holds, holdsFromGS } from '~/schema/ascent'
 
 import { Temporal } from '@js-temporal/polyfill'
 import { assert, describe, it } from 'poku'
+import type { GSAscentRecord } from './headers'
 
 describe('transformAscentFromJSToGS', () => {
   it('should transform boulder ascents', () => {

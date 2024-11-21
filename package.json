@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^4.0.1",
+    "@edouardmisset/date": "npm:@jsr/edouardmisset__date",
     "@edouardmisset/function": "npm:@jsr/edouardmisset__function@^4.0.0",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
     "@edouardmisset/object": "npm:@jsr/edouardmisset__object@^4.0.1",
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text@^4.0.0",
-    "@edouardmisset/utils": "npm:@jsr/edouardmisset__utils@^3",
     "@js-temporal/polyfill": "^0.4.4",
     "@nivo/bar": "^0.88.0",
     "@nivo/core": "^0.88.0",

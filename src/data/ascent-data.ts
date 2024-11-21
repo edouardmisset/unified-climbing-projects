@@ -1,51 +1,41 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { type Ascent, ascentSchema } from '~/schema/ascent'
-import { type TemporalDateTime, isDataResponse } from '~/types/generic'
+import type { Ascent } from '~/schema/ascent'
+import type { TemporalDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers'
 
-async function getAscents(): Promise<Ascent[]> {
-  return await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/ascents`)
-    .then(response => response.json())
-    .then(json => {
-      if (!isDataResponse(json)) throw new Error('Invalid response')
+export const createSeasons = <T extends Record<string, unknown>>(
+  data: (T & { date: Temporal.PlainDateTime })[],
+) => [...new Set(data.map(({ date }) => date.year))].reverse()
 
-      return ascentSchema.array().parse(json.data)
-    })
-    .catch(error => {
-      console.error(error)
-      return [] as Ascent[]
-    })
-}
+const getAscentsCollection: (
+  ascents: Ascent[],
+) => Record<number, (TemporalDateTime & { ascents?: Ascent[] })[]> = (
+  ascents: Ascent[],
+) => createEmptyYearlyCollections(createSeasons(ascents))
 
-export const ascentSeasons = [
-  ...new Set((await getAscents()).map(({ date }) => date.year)),
-].reverse()
+export const getSeasonAscentPerDay = (ascents: Ascent[]) =>
+  ascents.reduce(
+    (acc, ascent) => {
+      const { date } = ascent
+      const { year, dayOfYear } = date
+      const thisDay = acc[year]?.[dayOfYear - 1]
 
-const ascentsCollection: Record<
-  number,
-  (TemporalDateTime & { ascents?: Ascent[] })[]
-> = createEmptyYearlyCollections(ascentSeasons)
+      if (acc[year] === undefined) return acc
 
-export const seasonAscentPerDay = (await getAscents()).reduce(
-  (acc, ascent) => {
-    const { date } = ascent
-    const { year, dayOfYear } = date
-    const thisDay = acc[year]?.[dayOfYear - 1]
+      acc[year][dayOfYear - 1] = {
+        date,
+        ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
+      }
+      return acc
+    },
+    { ...getAscentsCollection(ascents) },
+  )
 
-    if (acc[year] === undefined) return acc
-
-    acc[year][dayOfYear - 1] = {
-      date,
-      ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
-    }
-    return acc
-  },
-  { ...ascentsCollection },
-)
-
-export const createEmptyBarcodeCollection = <T>() =>
+export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
+  data: (T & { date: Temporal.PlainDateTime })[],
+) =>
   Object.fromEntries(
-    ascentSeasons.map(season => {
+    createSeasons(data).map(season => {
       const weeksPerYear = Temporal.PlainDate.from({
         year: season,
         month: 12,
@@ -55,21 +45,22 @@ export const createEmptyBarcodeCollection = <T>() =>
     }),
   )
 
-export const seasonsAscentsPerWeek = (await getAscents()).reduce(
-  (accumulator, ascent) => {
-    const {
-      date: { year, weekOfYear },
-    } = ascent
+export const getSeasonsAscentsPerWeek = (ascents: Ascent[]) =>
+  ascents.reduce(
+    (accumulator, ascent) => {
+      const {
+        date: { year, weekOfYear },
+      } = ascent
 
-    const weekAscents = accumulator[year]?.[weekOfYear]
+      const weekAscents = accumulator[year]?.[weekOfYear]
 
-    if (accumulator[year] === undefined) return accumulator
+      if (accumulator[year] === undefined) return accumulator
 
-    accumulator[year][weekOfYear] = weekAscents
-      ? [...weekAscents, ascent]
-      : [ascent]
+      accumulator[year][weekOfYear] = weekAscents
+        ? [...weekAscents, ascent]
+        : [ascent]
 
-    return accumulator
-  },
-  { ...createEmptyBarcodeCollection<Ascent | undefined>() },
-)
+      return accumulator
+    },
+    { ...createEmptyBarcodeCollection<Ascent>(ascents) },
+  )

@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { ascentSeasons as trainingYear } from '~/data/ascent-data'
-import { seasonsTrainingPerWeek } from '~/data/training-data'
+import { createSeasons } from '~/data/ascent-data'
+import { getSeasonsTrainingPerWeek } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
-export default function Page() {
+export default async function Page() {
+  const trainingSessions = await api.training.getAllTrainingSessions()
+
   return (
     <main
       style={{
@@ -15,8 +18,9 @@ export default function Page() {
         gap: '1rem',
       }}
     >
-      {Object.values(seasonsTrainingPerWeek)
+      {Object.values(getSeasonsTrainingPerWeek(trainingSessions))
         .map((seasonTraining, i) => {
+          const trainingYear = createSeasons(trainingSessions)
           const year =
             trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
           return (

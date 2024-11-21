@@ -1,17 +1,18 @@
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { seasonAscentPerDay } from '~/data/ascent-data'
+import { getSeasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentQRTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const params = await props.params
+  const { year } = await props.params
 
-  const { year } = params
+  const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscents = seasonAscentPerDay[Number(year)]
+  const selectedAscents = getSeasonAscentPerDay(ascents)[Number(year)]
 
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>

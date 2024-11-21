@@ -1,16 +1,17 @@
-import { seasonsTrainingPerWeek } from '~/data/training-data'
+import { getSeasonsTrainingPerWeek } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const params = await props.params
+  const { year } = await props.params
 
-  const { year } = params
+  const trainingSessions = await api.training.getAllTrainingSessions()
 
-  const selectedTraining = seasonsTrainingPerWeek[year]
+  const selectedTraining = getSeasonsTrainingPerWeek(trainingSessions)[year]
 
   if (selectedTraining === undefined) return <span>No Data</span>
 

@@ -6,8 +6,8 @@ import { convertGradeToNumber } from '~/helpers/converter'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
 import type { Ascent, Grade } from '~/schema/ascent'
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
-import { createTRPCRouter, publicProcedure } from '../trpc'
 
 export const cragsRouter = createTRPCRouter({
   getAllCrags: publicProcedure.query(async () => {

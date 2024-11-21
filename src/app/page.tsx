@@ -4,6 +4,7 @@ import styles from './index.module.css'
 const searchedRouteName = 'no'
 
 export default async function Home() {
+  const posts = await api.post.hello({ text: 'world' })
   // Areas
   const areas = await api.areas.getAllAreas()
   const areaDuplicates = await api.areas.duplicates()
@@ -18,7 +19,6 @@ export default async function Home() {
   const searchedAscents = await api.ascents.search({
     query: searchedRouteName,
   })
-
   // Grades
   const grades = await api.grades.getAllGrades()
   const gradeAverage = await api.grades.getAverage()
@@ -26,7 +26,9 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Welcome to my climbing app</h1>
+        <h1 className={styles.title}>
+          Welcome {posts.greeting} to my climbing app
+        </h1>
         <div
           style={{
             display: 'grid',

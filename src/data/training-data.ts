@@ -1,61 +1,51 @@
-import { type TemporalDateTime, isDataResponse } from '~/types/generic'
+import type { TemporalDateTime } from '~/types/generic'
 
-import { type TrainingSession, trainingSessionSchema } from '~/types/training'
+import type { TrainingSession } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data'
 import { createEmptyYearlyCollections } from './helpers'
 
-const parsedTrainingData = await fetch(
-  `${process.env.NEXT_PUBLIC_API_BASE_URL}/training`,
-)
-  .then(response => response.json())
-  .then(json => {
-    if (!isDataResponse(json)) throw new Error('Invalid response')
+const getTrainingSeasons = (trainingSessions: TrainingSession[]) =>
+  [...new Set(trainingSessions.map(({ date }) => date.year))].reverse()
 
-    return trainingSessionSchema.array().parse(json.data)
-  })
-  .catch(error => {
-    console.error(error)
-    return [] as TrainingSession[]
-  })
+const getTrainingCollection: (
+  trainingSessions: TrainingSession[],
+) => Record<number, (TemporalDateTime & TrainingSession)[]> = (
+  trainingSessions: TrainingSession[],
+) => createEmptyYearlyCollections(getTrainingSeasons(trainingSessions))
 
-const trainingSeasons = [
-  ...new Set(parsedTrainingData.map(({ date }) => date.year)),
-].reverse()
+export const getSeasonTraining = (trainingSessions: TrainingSession[]) =>
+  trainingSessions.reduce(
+    (acc, trainingSession) => {
+      const {
+        date: { year },
+      } = trainingSession
 
-const trainingCollection: Record<
-  number,
-  (TemporalDateTime & TrainingSession)[]
-> = createEmptyYearlyCollections(trainingSeasons)
+      if (acc[year] === undefined) return acc
 
-export const seasonTraining = parsedTrainingData.reduce(
-  (acc, trainingSession) => {
-    const {
-      date: { year },
-    } = trainingSession
+      acc[year][trainingSession.date.dayOfYear - 1] = trainingSession
+      return acc
+    },
+    { ...getTrainingCollection(trainingSessions) },
+  )
 
-    if (acc[year] === undefined) return acc
+export const getSeasonsTrainingPerWeek = (
+  trainingSessions: TrainingSession[],
+) =>
+  trainingSessions.reduce(
+    (accumulator, training) => {
+      const {
+        date: { year, weekOfYear },
+      } = training
 
-    acc[year][trainingSession.date.dayOfYear - 1] = trainingSession
-    return acc
-  },
-  { ...trainingCollection },
-)
+      const weekTrainingSessions = accumulator[year]?.[weekOfYear]
 
-export const seasonsTrainingPerWeek = parsedTrainingData.reduce(
-  (accumulator, training) => {
-    const {
-      date: { year, weekOfYear },
-    } = training
+      if (accumulator[year] === undefined) return accumulator
 
-    const weekTrainingSessions = accumulator[year]?.[weekOfYear]
+      accumulator[year][weekOfYear] = weekTrainingSessions
+        ? [...weekTrainingSessions, training]
+        : [training]
 
-    if (accumulator[year] === undefined) return accumulator
-
-    accumulator[year][weekOfYear] = weekTrainingSessions
-      ? [...weekTrainingSessions, training]
-      : [training]
-
-    return accumulator
-  },
-  { ...createEmptyBarcodeCollection<TrainingSession>() },
-)
+      return accumulator
+    },
+    { ...createEmptyBarcodeCollection(trainingSessions) },
+  )

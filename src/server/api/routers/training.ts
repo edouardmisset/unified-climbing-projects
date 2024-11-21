@@ -1,5 +1,5 @@
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllTrainingSessions } from '~/services/training'
-import { createTRPCRouter, publicProcedure } from '../trpc'
 
 export const trainingRouter = createTRPCRouter({
   getAllTrainingSessions: publicProcedure.query(async () => {

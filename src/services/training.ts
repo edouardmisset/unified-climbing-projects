@@ -1,44 +1,38 @@
 import { createCache } from '~/helpers/cache'
-import { TRANSFORMED_TRAINING_HEADER_NAMES } from '~/helpers/transformers'
-import {
-  fetchAndParseCSV,
-  replaceHeaders,
-  transformClimbingData,
-} from '~/scripts/import-training-and-ascent-data-from-gs'
+import { transformTrainingSessionFromGSToJS } from '~/helpers/transformers/transformers'
 import { type TrainingSession, trainingSessionSchema } from '~/types/training'
-import { SHEETS_INFO } from './google-sheets'
+import { loadWorksheet } from './google-sheets'
 
 const { getCache, setCache } = createCache<TrainingSession[]>()
 
-export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
+/**
+ * Retrieves all training sessions from the Google Sheets 'training' worksheet,
+ * transforms them from Google Sheets format to JavaScript object format,
+ * and validates them against the trainingSession schema.
+ *
+ * @returns A promise that resolves to an array of TrainingSessions objects.
+ */
+async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
+  const allTrainingSessionsSheet = await loadWorksheet('training')
+  const rows = await allTrainingSessionsSheet.getRows()
+
+  const rawTrainingSessions = rows.map(row => {
+    return transformTrainingSessionFromGSToJS(row.toObject())
+  })
+
+  return trainingSessionSchema.array().parse(rawTrainingSessions)
+}
+
+export async function getAllTrainingSessions(options?: {
+  refresh?: boolean
+}): Promise<TrainingSession[]> {
   const cachedData = getCache()
-  if (cachedData !== undefined) {
-    return cachedData
+
+  if (options?.refresh === true || cachedData === undefined) {
+    const trainingSessions = await getTrainingSessionsFromDB()
+    setCache(trainingSessions)
+    return trainingSessions
   }
 
-  // Fetch CSV data
-  const { data, headers } = await fetchAndParseCSV(
-    SHEETS_INFO.training.csvExportURL,
-  )
-  // Transform CSV data into Array of Training Sessions
-  const transformedHeaders = replaceHeaders(
-    headers,
-    TRANSFORMED_TRAINING_HEADER_NAMES,
-  )
-
-  const transformedClimbingData = transformClimbingData(
-    data,
-    transformedHeaders,
-  )
-
-  try {
-    const parsedData = trainingSessionSchema
-      .array()
-      .parse(transformedClimbingData)
-    // Cache the transformed data
-    setCache(parsedData)
-    return parsedData
-  } catch (error) {
-    throw new Error('The data could not be parsed', error as Error)
-  }
+  return cachedData
 }

@@ -1,17 +1,19 @@
 import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { seasonAscentPerDay } from '~/data/ascent-data'
+import { getSeasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentQRTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
-export default function Page() {
+export default async function Page() {
+  const ascents = await api.ascents.getAllAscents()
   return (
     <main className="flex-column">
       <section className="flex-column">
         <h2 className="center-text">Ascents</h2>
         <div className="qr-grid">
-          {Object.entries(seasonAscentPerDay)
+          {Object.entries(getSeasonAscentPerDay(ascents))
             .reverse()
             .map(([year, ascents]) => {
               const sortedAscents = [...ascents].map(ascentDay => ({

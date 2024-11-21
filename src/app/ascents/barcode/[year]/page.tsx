@@ -2,19 +2,20 @@ import Barcode, {
   maxBarWidth,
   minBarWidth,
 } from '~/app/_components/barcode/barcode'
-import { seasonsAscentsPerWeek } from '~/data/ascent-data'
+import { getSeasonsAscentsPerWeek } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const params = await props.params
+  const { year } = await props.params
 
-  const { year } = params
+  const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscentsPerWeek = seasonsAscentsPerWeek[year]
+  const selectedAscentsPerWeek = getSeasonsAscentsPerWeek(ascents)[year]
 
   if (selectedAscentsPerWeek === undefined)
     return <span>No Data found for this year</span>

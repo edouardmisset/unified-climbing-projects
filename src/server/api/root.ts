@@ -17,6 +17,7 @@ export const appRouter = createTRPCRouter({
   crags: cragsRouter,
   grades: gradesRouter,
   training: trainingRouter,
+  post: postRouter,
 })
 
 // export type definition of API

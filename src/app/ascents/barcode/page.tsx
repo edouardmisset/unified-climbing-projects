@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { ascentSeasons, seasonsAscentsPerWeek } from '~/data/ascent-data'
+import { createSeasons, getSeasonsAscentsPerWeek } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
+import { api } from '~/trpc/server'
 
-export default function Page() {
+export default async function Page() {
+  const ascents = await api.ascents.getAllAscents()
   return (
     <main
       style={{
@@ -14,10 +16,10 @@ export default function Page() {
         gap: '1rem',
       }}
     >
-      {Object.values(seasonsAscentsPerWeek)
+      {Object.values(getSeasonsAscentsPerWeek(ascents))
         .map((seasonAscents, i) => {
-          const year =
-            ascentSeasons[ascentSeasons.length - 1 - i]?.toString() ?? ''
+          const seasons = createSeasons(ascents)
+          const year = seasons[seasons.length - 1 - i]?.toString() ?? ''
           return (
             <div key={year} className="flex-column">
               <h3 className="center-text">

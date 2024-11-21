@@ -9,8 +9,8 @@ import {
   climbingDisciplineSchema,
   type gradeSchema,
 } from '~/schema/ascent'
+import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
-import { createTRPCRouter, publicProcedure } from '../trpc'
 
 import { Temporal } from '@js-temporal/polyfill'
 import fuzzySort from 'fuzzysort'
@@ -93,6 +93,7 @@ export const ascentsRouter = createTRPCRouter({
       const filteredAscents = ascents.filter(ascent =>
         filters.every(
           ({ value, compare, key }) =>
+            // @ts-ignore
             value === undefined || compare(ascent[key], value),
         ),
       )
