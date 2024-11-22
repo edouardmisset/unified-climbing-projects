@@ -1,7 +1,7 @@
 import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
 import Color from 'colorjs.io'
-import Link from 'next/link'
+import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
 import { getSeasonTraining } from '~/data/training-data'
 import {
@@ -29,9 +29,6 @@ export default async function TrainingCalendar(props: {
     getSeasonTraining(trainingSessions)[numberYear + 1],
   )
 
-  const nextYear = numberYear + 1
-  const previousYear = numberYear - 1
-
   const sessionsDescriptions =
     yearSession?.map(session => {
       const { date, sessionType } = session
@@ -58,13 +55,16 @@ export default async function TrainingCalendar(props: {
 
   return (
     <>
-      <div className="center-text">An overview of my training in {year}</div>
-      <div
-        className="flex-row space-between"
+      <h1
+        className="center-text"
         style={{
-          paddingInline: 'var(--size-2)',
+          marginInline: 'auto',
         }}
       >
+        Training in {year}
+      </h1>
+      <Spacer size={3} />
+      <div className="flex-row space-between">
         <YearNavigationButton
           currentYear={numberYear}
           nextOrPrevious="previous"

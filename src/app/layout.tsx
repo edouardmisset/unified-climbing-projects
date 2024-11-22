@@ -23,6 +23,8 @@ import '~/styles/zindex.css'
 
 import { Navigation } from './_components/navigation/navigation'
 
+import styles from './index.module.css'
+
 export default function RootLayout({
   children,
 }: {
@@ -30,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={styles.body}>
         <TRPCReactProvider>
           <header>
             <Navigation />

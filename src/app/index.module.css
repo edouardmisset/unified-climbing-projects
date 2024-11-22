@@ -1,10 +1,22 @@
+.body {
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    to bottom,
+    var(--gray-10) 0,
+    var(--violet-12) 70%,
+    var(--violet-8)
+  );
+}
+
 .main {
+  flex: 1;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100svh;
-  background-image: linear-gradient(to bottom, #2e026d, #15162c);
 }
 
 .container {
@@ -18,6 +30,7 @@
 }
 
 .grid {
+  width: 100%;
   display: grid;
   gap: var(--size-4);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

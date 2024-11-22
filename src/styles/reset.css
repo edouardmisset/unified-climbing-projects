@@ -34,8 +34,8 @@
   --color-light: var(--gray-1);
   /* By default we enable dark mode */
   color-scheme: light dark;
-  background-color: var(--color-dark, black);
-  color: var(--color-light, white);
+  background-color: var(--color-dark, var(--surface-1, black));
+  color: var(--color-light, var(--text-1, white));
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -47,8 +47,8 @@
 }
 
 ::selection {
-  background-color: var(--color-light, white);
-  color: var(--color-dark, black);
+  background-color: var(--color-light, var(--text-1, white));
+  color: var(--color-dark, var(--surface-1, black));
 }
 
 *,
@@ -119,13 +119,13 @@
 /* Respects user preferences for dark mode */
 @media (prefers-color-scheme: light) {
   :root {
-    color: var(--color-dark, black);
-    background-color: var(--color-light, white);
+    color: var(--color-dark, var(--surface-1, black));
+    background-color: var(--color-light, var(--text-1, white));
   }
 
   ::selection {
-    background-color: var(--color-dark, black);
-    color: var(--color-light, white);
+    background-color: var(--color-dark, var(--surface-1, black));
+    color: var(--color-light, var(--text-1, white));
   }
 }
 

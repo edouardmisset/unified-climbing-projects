@@ -13,7 +13,9 @@ export async function AreaSummary({
 }) {
   return (
     <div id="areas">
-      <h2>Areas ({areas.length}):</h2>
+      <h2>
+        Areas <sup>{areas.length}</sup>
+      </h2>
       <p>{areaDuplicates.length} areas with duplicates</p>
       <p>{areaSimilar.length} areas with similar names</p>
       <p>

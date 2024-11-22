@@ -17,14 +17,16 @@ export async function AscentsSummary({
 }) {
   return (
     <div id="ascents">
-      <h2>Ascents ({ascents.length}):</h2>
+      <h2>
+        Ascents <sup>{ascents.length}</sup>
+      </h2>
       <p>
         Latest ascent: {ascents.slice(0, 1).map(ascent => ascent.routeName)}
       </p>
       <p>{duplicateAscents.length} duplicate ascents</p>
       <p>{similarAscents.length} similar ascents</p>
       <p>
-        Searched for "{searchedRouteName}" and found{' '}
+        Searched for <b>"{searchedRouteName}"</b> and found{' '}
         {searchedAscents.length === 0
           ? 'nothing'
           : searchedAscents

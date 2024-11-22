@@ -13,7 +13,9 @@ export async function CragSummary({
 }) {
   return (
     <div id="crags">
-      <h2>Crags ({crags.length}):</h2>
+      <h2>
+        Crags <sup>{crags.length}</sup>
+      </h2>
       <p>{cragDuplicates.length} crags with duplicates</p>
       <p>{cragSimilar.length} crags with similar names</p>
       <p>
