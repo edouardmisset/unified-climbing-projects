@@ -13,12 +13,12 @@ import '~/styles/easing.css'
 import '~/styles/fonts.css'
 import '~/styles/global-styles.css'
 import '~/styles/gradients.css'
-import '~/styles/normalize.css'
 import '~/styles/quick-upgrades.css'
 import '../styles/reset.css'
 import '~/styles/shadows.css'
 import '~/styles/sizes.css'
 import '~/styles/zindex.css'
+import '~/styles/normalize.css'
 
 import { Navigation } from './_components/navigation/navigation'
 

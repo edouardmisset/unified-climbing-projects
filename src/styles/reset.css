@@ -57,54 +57,41 @@
   box-sizing: border-box;
 }
 
-* {
+:where(*) {
   margin: 0;
   padding: 0;
   font: inherit;
 }
 
-html {
+:where(html) {
   hanging-punctuation: first last;
 }
 
-html:focus-within {
+:where(html:focus-within) {
   scroll-behavior: smooth;
 }
 
-body {
+:where(body) {
   min-height: 100svh;
   font-size: 1.125rem;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:where(h1, h2, h3, h4, h5, h6) {
   text-wrap: balance;
 }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+:where(p, h1, h2, h3, h4, h5, h6) {
   overflow-wrap: break-word;
 }
 
-p {
+:where(p) {
   max-inline-size: 65ch;
   text-wrap: pretty;
 }
 
-img,
-svg,
-picture {
+:where(img, svg, picture) {
   max-width: 100%;
   height: auto;
 
@@ -113,17 +100,17 @@ picture {
   font-style: italic;
 }
 
-a {
+:where(a) {
   color: var(--violet-4);
   font-weight: 500;
 }
 
-a:hover {
+:where(a:hover) {
   color: var(--violet-3);
 }
 
 /* A elements that don't have a class get default styles */
-a:not([class]) {
+:where(a:not([class])) {
   text-decoration-skip-ink: auto;
   text-underline-offset: 0.25em;
   color: currentColor;
