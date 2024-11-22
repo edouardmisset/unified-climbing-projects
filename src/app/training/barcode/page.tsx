@@ -11,7 +11,8 @@ export default async function Page() {
   const trainingSessions = await api.training.getAllTrainingSessions()
 
   return (
-    <main
+    <section
+      className="w100"
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
@@ -24,10 +25,10 @@ export default async function Page() {
           const year =
             trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
           return (
-            <div key={year} className="flex-column">
-              <h3 className="center-text">
+            <div key={year} className="flex-column w100">
+              <h1 className="center-text">
                 <Link href={`/training/barcode/${year}`}>{year}</Link>
-              </h3>
+              </h1>
               <Barcode
                 data={seasonTraining}
                 itemRender={(weeklyTraining, index) => {
@@ -82,6 +83,6 @@ export default async function Page() {
           )
         })
         .reverse()}
-    </main>
+    </section>
   )
 }

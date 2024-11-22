@@ -33,44 +33,42 @@ export default async function Home() {
   const gradeAverage = await api.grades.getAverage()
   const gradeFrequency = await api.grades.getFrequency()
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Welcome to my climbing app</h1>
-        <div className={styles.grid}>
-          <Card>
-            <AscentsSummary
-              ascents={ascents}
-              duplicateAscents={duplicateAscents}
-              similarAscents={similarAscents}
-              searchedAscents={searchedAscents}
-              searchedRouteName={searchedRouteName}
-            />
-          </Card>
-          <Card>
-            <CragSummary
-              cragDuplicates={cragDuplicates}
-              cragFrequency={cragFrequency}
-              cragSimilar={cragSimilar}
-              crags={crags}
-            />
-          </Card>
-          <Card>
-            <GradeSummary
-              gradeAverage={gradeAverage}
-              gradeFrequency={gradeFrequency}
-              grades={grades}
-            />
-          </Card>
-          <Card>
-            <AreaSummary
-              areaDuplicates={areaDuplicates}
-              areaFrequency={areaFrequency}
-              areaSimilar={areaSimilar}
-              areas={areas}
-            />
-          </Card>
-        </div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Welcome to my climbing app</h1>
+      <div className={styles.grid}>
+        <Card>
+          <AscentsSummary
+            ascents={ascents}
+            duplicateAscents={duplicateAscents}
+            similarAscents={similarAscents}
+            searchedAscents={searchedAscents}
+            searchedRouteName={searchedRouteName}
+          />
+        </Card>
+        <Card>
+          <CragSummary
+            cragDuplicates={cragDuplicates}
+            cragFrequency={cragFrequency}
+            cragSimilar={cragSimilar}
+            crags={crags}
+          />
+        </Card>
+        <Card>
+          <GradeSummary
+            gradeAverage={gradeAverage}
+            gradeFrequency={gradeFrequency}
+            grades={grades}
+          />
+        </Card>
+        <Card>
+          <AreaSummary
+            areaDuplicates={areaDuplicates}
+            areaFrequency={areaFrequency}
+            areaSimilar={areaSimilar}
+            areas={areas}
+          />
+        </Card>
       </div>
-    </main>
+    </div>
   )
 }

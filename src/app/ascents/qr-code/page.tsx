@@ -9,56 +9,54 @@ import { api } from '~/trpc/server'
 export default async function Page() {
   const ascents = await api.ascents.getAllAscents()
   return (
-    <main className="flex-column">
-      <section className="flex-column">
-        <h2 className="center-text">Ascents</h2>
-        <div className="qr-grid">
-          {Object.entries(getSeasonAscentPerDay(ascents))
-            .reverse()
-            .map(([year, ascents]) => {
-              const sortedAscents = [...ascents].map(ascentDay => ({
-                ...ascentDay,
-                ascents: ascentDay?.ascents
-                  ? ascentDay.ascents.sort(sortByDescendingGrade)
-                  : undefined,
-              }))
-              return (
-                <div key={`ascents in ${year}`}>
-                  <h3 className="center-text">
-                    <Link href={`/ascents/qr-code/${year}`}>{year}</Link>
-                  </h3>
-                  <QRCode
-                    data={sortedAscents}
-                    itemRender={ascentDay => {
-                      const hardestAscent = ascentDay?.ascents?.at(0)
-                      return (
-                        <i
-                          key={
-                            String(ascentDay.date.dayOfYear) +
-                            ascentDay.ascents?.[0]?.routeName
-                          }
-                          style={{
-                            backgroundColor:
-                              hardestAscent === undefined
-                                ? 'white'
-                                : convertGradeToBackgroundColor(
-                                    hardestAscent.topoGrade,
-                                  ),
-                          }}
-                          title={
-                            ascentDay?.ascents
-                              ? createAscentQRTooltip(ascentDay.ascents)
-                              : ''
-                          }
-                        />
-                      )
-                    }}
-                  />
-                </div>
-              )
-            })}
-        </div>
-      </section>
-    </main>
+    <section className="flex-column w100">
+      <h1 className="center-text">Ascents</h1>
+      <div className="qr-grid">
+        {Object.entries(getSeasonAscentPerDay(ascents))
+          .reverse()
+          .map(([year, ascents]) => {
+            const sortedAscents = [...ascents].map(ascentDay => ({
+              ...ascentDay,
+              ascents: ascentDay?.ascents
+                ? ascentDay.ascents.sort(sortByDescendingGrade)
+                : undefined,
+            }))
+            return (
+              <div key={`ascents in ${year}`}>
+                <h2 className="center-text">
+                  <Link href={`/ascents/qr-code/${year}`}>{year}</Link>
+                </h2>
+                <QRCode
+                  data={sortedAscents}
+                  itemRender={ascentDay => {
+                    const hardestAscent = ascentDay?.ascents?.at(0)
+                    return (
+                      <i
+                        key={
+                          String(ascentDay.date.dayOfYear) +
+                          ascentDay.ascents?.[0]?.routeName
+                        }
+                        style={{
+                          backgroundColor:
+                            hardestAscent === undefined
+                              ? 'white'
+                              : convertGradeToBackgroundColor(
+                                  hardestAscent.topoGrade,
+                                ),
+                        }}
+                        title={
+                          ascentDay?.ascents
+                            ? createAscentQRTooltip(ascentDay.ascents)
+                            : ''
+                        }
+                      />
+                    )
+                  }}
+                />
+              </div>
+            )
+          })}
+      </div>
+    </section>
   )
 }

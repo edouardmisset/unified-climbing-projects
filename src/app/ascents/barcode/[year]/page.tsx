@@ -27,8 +27,8 @@ export default async function Page(props: {
   )
 
   return (
-    <main>
-      <h3 className="section-header">{year}</h3>
+    <section className="w100">
+      <h1 className="section-header">{year}</h1>
       <Barcode
         data={sortedAscents}
         itemRender={(weeklyAscents, index) => {
@@ -67,6 +67,6 @@ export default async function Page(props: {
           )
         }}
       />
-    </main>
+    </section>
   )
 }

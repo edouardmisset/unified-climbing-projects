@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { TRPCReactProvider } from '~/trpc/react'
 
-import '../styles/reset.css'
+import '~/styles/reset.css'
 import '~/styles/normalize.css'
 
 import '~/styles/animation.css'
@@ -33,14 +33,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={styles.body}>
-        <TRPCReactProvider>
-          <header>
-            <Navigation />
-          </header>
-          {children}
-        </TRPCReactProvider>
-        <SpeedInsights />
-        <Analytics />
+        <main className={styles.main}>
+          <TRPCReactProvider>
+            <header>
+              <Navigation />
+            </header>
+            {children}
+          </TRPCReactProvider>
+          <SpeedInsights />
+          <Analytics />
+        </main>
       </body>
     </html>
   )

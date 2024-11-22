@@ -21,6 +21,8 @@ import {
 
 const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
+type GradeSetter = (value: number[]) => void
+
 const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
   try {
     console.log({ data: formData })
@@ -43,18 +45,19 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
 }
 
 // TODO: get intelligent default values from the API
+const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
+
 const defaultAscentToParse = {
-  routeName:
-    env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Route_Name' : '',
-  crag: env.NEXT_PUBLIC_ENV === 'development' ? 'This_Is_A_Test_Crag' : '',
+  routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
+  crag: isDevelopmentEnv ? 'This_Is_A_Test_Crag' : '',
   topoGrade: climberAverageGrade,
   personalGrade: climberAverageGrade,
   date: new Date(),
   holds: 'Crimp',
   climbingDiscipline: 'Route',
   profile: 'Vertical',
-  height: env.NEXT_PUBLIC_ENV === 'development' ? 20 : undefined,
-  rating: env.NEXT_PUBLIC_ENV === 'development' ? 1 : undefined,
+  height: isDevelopmentEnv ? 20 : undefined,
+  rating: isDevelopmentEnv ? 1 : undefined,
   tries: '1',
 } satisfies AscentFormInput
 const defaultAscentFormValues =
@@ -77,14 +80,38 @@ export default function Log(): React.JSX.Element {
       ? convertNumberToGrade(topoGradeOrNumber)
       : topoGradeOrNumber
 
+  const handleTopoGradeChange: GradeSetter = ([value]) => {
+    setValue(
+      'topoGrade',
+      convertNumberToGrade(
+        value ?? convertGradeToNumber(climberAverageGrade),
+        // biome-ignore lint/suspicious/noExplicitAny:
+      ) as any,
+    )
+
+    setValue(
+      'personalGrade',
+      convertNumberToGrade(
+        value ?? convertGradeToNumber(climberAverageGrade),
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      ) as any,
+    )
+  }
+  const updatePersonalGradeChange: GradeSetter = ([value]) =>
+    setValue(
+      'personalGrade',
+      convertNumberToGrade(
+        value ?? convertGradeToNumber(climberAverageGrade),
+        // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
+      ) as any,
+    )
   return (
-    <div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Congrats 🎉</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`${styles.form} flex-column intrinsic-container`}
       >
-        <h2 className={styles.title}>Congrats 🎉</h2>
-
         <label htmlFor="date" className="flex-column">
           Date
           <input required {...register('date')} type="date" title="Date" />
@@ -93,6 +120,7 @@ export default function Log(): React.JSX.Element {
           Route Name
           <input
             required
+            type="text"
             id="routeName"
             autoComplete="off"
             {...register('routeName')}
@@ -122,6 +150,7 @@ export default function Log(): React.JSX.Element {
             {...register('crag')}
             placeholder="The name of the crag"
             title="Crag Name"
+            type="text"
           />
         </label>
         <label htmlFor="area" className="flex-column">
@@ -131,6 +160,7 @@ export default function Log(): React.JSX.Element {
             {...register('area')}
             placeholder="The name of the crag's sector (or area)"
             title="Crag's area"
+            type="text"
           />
         </label>
         <label htmlFor="tries" className="flex-column">
@@ -152,23 +182,7 @@ export default function Log(): React.JSX.Element {
           <GradeSlider
             {...topoGradeRegister}
             value={[(topoGrade as Grade) || climberAverageGrade]}
-            onValueChange={([value]) => {
-              setValue(
-                'topoGrade',
-                convertNumberToGrade(
-                  value ?? convertGradeToNumber(climberAverageGrade),
-                  // biome-ignore lint/suspicious/noExplicitAny:
-                ) as any,
-              )
-
-              setValue(
-                'personalGrade',
-                convertNumberToGrade(
-                  value ?? convertGradeToNumber(climberAverageGrade),
-                  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                ) as any,
-              )
-            }}
+            onValueChange={handleTopoGradeChange}
             min={1}
             max={ROUTE_GRADE_TO_NUMBER.size}
             step={1}
@@ -182,15 +196,7 @@ export default function Log(): React.JSX.Element {
           <GradeSlider
             {...personalGradeRegister}
             value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
-            onValueChange={([value]) =>
-              setValue(
-                'personalGrade',
-                convertNumberToGrade(
-                  value ?? convertGradeToNumber(climberAverageGrade),
-                  // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
-                ) as any,
-              )
-            }
+            onValueChange={updatePersonalGradeChange}
             min={1}
             max={ROUTE_GRADE_TO_NUMBER.size}
             step={1}
@@ -200,33 +206,33 @@ export default function Log(): React.JSX.Element {
           Holds
           <input
             {...register('holds')}
-            type="text"
             id="holds"
             placeholder="Hold types (crimps, jugs, underclings, pockets...)"
             title="Hold type"
+            type="text"
           />
         </label>
         <label htmlFor="profile" className="flex-column">
           Profile
           <input
             {...register('profile')}
-            type="text"
             id="profile"
             placeholder="Route's profile (vertical, slab, overhang...)"
             title="Profile of the route"
+            type="text"
           />
         </label>
         <label htmlFor="height" className="flex-column">
           Height (m)
           <input
             {...register('height')}
-            type="number"
             min={MIN_HEIGHT}
             max={MAX_HEIGHT}
             step={5}
             id="height"
             placeholder="Height of the route (not needed for boulders)"
             title="Height of the route (does not apply for boulders)"
+            type="number"
           />
         </label>
         <label htmlFor="rating" className="flex-column">

@@ -16,8 +16,8 @@ export default async function Page(props: {
   if (selectedTraining === undefined) return <span>No Data</span>
 
   return (
-    <main>
-      <h3 className="section-header">{year}</h3>
+    <section className="w100">
+      <h1 className="section-header">{year}</h1>
       <div
         className="flex-row"
         style={{
@@ -75,6 +75,6 @@ export default async function Page(props: {
           )
         })}
       </div>
-    </main>
+    </section>
   )
 }

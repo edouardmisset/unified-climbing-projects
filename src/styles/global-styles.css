@@ -94,6 +94,10 @@ nav a {
   padding: 1rem;
 }
 
+.w100 {
+  inline-size: 100%;
+}
+
 text {
   white-space: pre;
 }

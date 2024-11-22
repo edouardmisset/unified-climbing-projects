@@ -25,37 +25,31 @@ export default async function Page(props: {
   }))
 
   return (
-    <main className="flex-column">
-      <section className="flex-column">
-        <div key={year}>
-          <h3 className="section-header">{year}</h3>
-          <QRCode
-            data={sortedAscents}
-            itemRender={ascentDay => {
-              const hardestAscent = ascentDay?.ascents?.at(0)
-              return (
-                <span
-                  key={ascentDay.date.dayOfYear}
-                  style={{
-                    backgroundColor:
-                      hardestAscent === undefined
-                        ? 'white'
-                        : convertGradeToBackgroundColor(
-                            hardestAscent.topoGrade,
-                          ),
-                  }}
-                  title={
-                    ascentDay?.ascents
-                      ? createAscentQRTooltip(ascentDay.ascents)
-                      : ''
-                  }
-                />
-              )
-            }}
-          />
-        </div>
-      </section>
-    </main>
+    <section className="flex-column w100">
+      <h1 className="section-header">{year}</h1>
+      <QRCode
+        data={sortedAscents}
+        itemRender={ascentDay => {
+          const hardestAscent = ascentDay?.ascents?.at(0)
+          return (
+            <span
+              key={ascentDay.date.dayOfYear}
+              style={{
+                backgroundColor:
+                  hardestAscent === undefined
+                    ? 'white'
+                    : convertGradeToBackgroundColor(hardestAscent.topoGrade),
+              }}
+              title={
+                ascentDay?.ascents
+                  ? createAscentQRTooltip(ascentDay.ascents)
+                  : ''
+              }
+            />
+          )
+        }}
+      />
+    </section>
   )
 }
 

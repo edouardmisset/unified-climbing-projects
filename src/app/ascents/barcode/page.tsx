@@ -9,8 +9,9 @@ import { api } from '~/trpc/server'
 export default async function Page() {
   const ascents = await api.ascents.getAllAscents()
   return (
-    <main
+    <div
       style={{
+        inlineSize: '100%',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
         gap: '1rem',
@@ -21,10 +22,10 @@ export default async function Page() {
           const seasons = createSeasons(ascents)
           const year = seasons[seasons.length - 1 - i]?.toString() ?? ''
           return (
-            <div key={year} className="flex-column">
-              <h3 className="center-text">
+            <div key={year} className="flex-column w100">
+              <h1 className="center-text">
                 <Link href={`/ascents/barcode/${year}`}>{year}</Link>
-              </h3>
+              </h1>
               <Barcode
                 data={seasonAscents}
                 itemRender={(weeklyAscents, index) => {
@@ -70,6 +71,6 @@ export default async function Page() {
           )
         })
         .reverse()}
-    </main>
+    </div>
   )
 }

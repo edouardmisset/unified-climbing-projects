@@ -19,26 +19,22 @@ export default async function Page(props: {
     return <div>No data found for the year {year}</div>
 
   return (
-    <main className="flex-column">
-      <section className="flex-column">
-        <div key={year}>
-          <h3 className="section-header">{year}</h3>
-          <QRCode
-            data={selectedTrainingSessions}
-            itemRender={(trainingSession: TrainingSession) => (
-              <i
-                key={trainingSession.date.dayOfYear}
-                style={{
-                  backgroundColor: convertSessionTypeToBackgroundColor(
-                    trainingSession.sessionType,
-                  ).toString(),
-                }}
-                title={createTrainingQRTooltip(trainingSession)}
-              />
-            )}
+    <section className="flex-column w100">
+      <h1 className="section-header">{year}</h1>
+      <QRCode
+        data={selectedTrainingSessions}
+        itemRender={(trainingSession: TrainingSession) => (
+          <i
+            key={trainingSession.date.dayOfYear}
+            style={{
+              backgroundColor: convertSessionTypeToBackgroundColor(
+                trainingSession.sessionType,
+              ).toString(),
+            }}
+            title={createTrainingQRTooltip(trainingSession)}
           />
-        </div>
-      </section>
-    </main>
+        )}
+      />
+    </section>
   )
 }
