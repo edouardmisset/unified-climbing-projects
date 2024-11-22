@@ -1,4 +1,8 @@
 import { api } from '~/trpc/server'
+import { AreaSummary } from './_components/areas-summary/areas-summary'
+import { AscentsSummary } from './_components/ascents-summary/ascents-summary'
+import { CragSummary } from './_components/crags-summary/crags-summary'
+import { GradeSummary } from './_components/grades-summary/grades-summary'
 import styles from './index.module.css'
 
 const searchedRouteName = 'no'
@@ -31,81 +35,31 @@ export default async function Home() {
     <main className={styles.main}>
       <div className={styles.container}>
         <h1 className={styles.title}>Welcome to my climbing app</h1>
-        <div
-          style={{
-            display: 'grid',
-          }}
-        >
-          <div id="ascents">
-            <h2>Ascents ({ascents.length}):</h2>
-            <p>
-              Latest ascent:{' '}
-              {ascents.slice(0, 1).map(ascent => ascent.routeName)}
-            </p>
-            <p>{duplicateAscents.length} duplicate ascents</p>
-            <p>{similarAscents.length} similar ascents</p>
-            <p>
-              Searched for "{searchedRouteName}" and found{' '}
-              <b>
-                {searchedAscents
-                  .slice(0, 2)
-                  .map(route => route.routeName)
-                  ?.join(' and ') ?? 'nothing'}
-              </b>
-            </p>
-          </div>
-          <div id="crags">
-            <h2>Crags ({crags.length}):</h2>
-            <p>{cragDuplicates.length} crags with duplicates</p>
-            <p>{cragSimilar.length} crags with similar names</p>
-            <p>
-              Most climbed crags:{' '}
-              {Object.entries(cragFrequency)
-                .map(([crag, count]) => [crag, count])
-                .sort(([_a, a], [_b, b]) => {
-                  if (typeof a === 'number' && typeof b === 'number')
-                    return b - a
-                  return 0
-                })
-                .slice(0, 4)
-                .map(([crag, count]) => `${crag} (${count})`)
-                ?.join(' - ')}
-            </p>
-          </div>
-          <div id="grades">
-            <h2>Grades:</h2>
-            <p>Hardes grade: {grades.at(-1)}</p>
-            <p>Average grade: {gradeAverage}</p>
-            <p>
-              Most climbed grade:{' '}
-              {Object.entries(gradeFrequency)
-                .map(([grade, count]) => [grade, count])
-                .sort(([_a, a], [_b, b]) => {
-                  if (typeof a === 'number' && typeof b === 'number')
-                    return b - a
-                  return 0
-                })[0]
-                ?.join(' - ')}{' '}
-              climbs
-            </p>
-          </div>
-          <div id="areas">
-            <h2>Areas ({areas.length}):</h2>
-            <p>{areaDuplicates.length} areas with duplicates</p>
-            <p>{areaSimilar.length} areas with similar names</p>
-            <p>
-              Most climbed area:{' '}
-              {Object.entries(areaFrequency)
-                .map(([area, count]) => [area, count])
-                .sort(([_a, a], [_b, b]) => {
-                  if (typeof a === 'number' && typeof b === 'number')
-                    return b - a
-                  return 0
-                })[0]
-                ?.join(' - ')}{' '}
-              climbs
-            </p>
-          </div>
+        <div className={styles.grid}>
+          <AscentsSummary
+            ascents={ascents}
+            duplicateAscents={duplicateAscents}
+            similarAscents={similarAscents}
+            searchedAscents={searchedAscents}
+            searchedRouteName={searchedRouteName}
+          />
+          <CragSummary
+            cragDuplicates={cragDuplicates}
+            cragFrequency={cragFrequency}
+            cragSimilar={cragSimilar}
+            crags={crags}
+          />
+          <GradeSummary
+            gradeAverage={gradeAverage}
+            gradeFrequency={gradeFrequency}
+            grades={grades}
+          />
+          <AreaSummary
+            areaDuplicates={areaDuplicates}
+            areaFrequency={areaFrequency}
+            areaSimilar={areaSimilar}
+            areas={areas}
+          />
         </div>
       </div>
     </main>

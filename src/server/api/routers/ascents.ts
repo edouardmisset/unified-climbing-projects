@@ -15,10 +15,6 @@ import { getAllAscents } from '~/services/ascents'
 import { Temporal } from '@js-temporal/polyfill'
 import fuzzySort from 'fuzzysort'
 
-const isEqual = (a: number, b: number) => {
-  return a === b
-}
-
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure
     .input(
@@ -119,7 +115,7 @@ export const ascentsRouter = createTRPCRouter({
       return sortedAscents
     }),
   getDuplicates: publicProcedure.query(async () => {
-    const ascentMap = new Map()
+    const ascentMap = new Map<string, number>()
     const ascents = await getAllAscents()
 
     for (const ascent of ascents) {
@@ -136,11 +132,11 @@ export const ascentsRouter = createTRPCRouter({
       ascentMap.set(key, (ascentMap.get(key) || 0) + 1)
     }
 
-    const duplicateRoutes = Array.from(ascentMap.entries())
+    const duplicateAscents = Array.from(ascentMap.entries())
       .filter(([, count]) => count > 1)
       .map(([key]) => key)
 
-    return duplicateRoutes
+    return duplicateAscents
   }),
   getSimilar: publicProcedure.query(async () => {
     const ascents = await getAllAscents()

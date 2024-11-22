@@ -17,6 +17,12 @@
   padding: 4rem 1rem;
 }
 
+.grid {
+  display: grid;
+  gap: var(--size-4);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
