@@ -17,7 +17,7 @@ export const cragsRouter = createTRPCRouter({
 
     return sortedCrags
   }),
-  getCragsFrequency: publicProcedure.query(async () => {
+  getFrequency: publicProcedure.query(async () => {
     const validCrags = await getValidCrags()
 
     const sortedCragsByFrequency = sortNumericalValues(
@@ -99,7 +99,7 @@ export const cragsRouter = createTRPCRouter({
         Number((val / highestScore).toFixed(1)),
       )
     }),
-  getDuplicateCrags: publicProcedure.query(async () => {
+  getDuplicate: publicProcedure.query(async () => {
     const validCrags = await getValidCrags()
 
     const similarCrags = findSimilar(validCrags)
@@ -107,7 +107,7 @@ export const cragsRouter = createTRPCRouter({
     return similarCrags
   }),
 
-  getSimilarCrags: publicProcedure.query(async () => {
+  getSimilar: publicProcedure.query(async () => {
     const validCrags = await getValidCrags()
     const similarCrags = Array.from(
       groupSimilarStrings(validCrags, 2).entries(),

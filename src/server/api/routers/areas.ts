@@ -26,7 +26,7 @@ export const areasRouter = createTRPCRouter({
     return sortedAreas
   }),
   // Get all known areas sorted by frequency
-  frequency: publicProcedure.query(async () => {
+  getFrequency: publicProcedure.query(async () => {
     const sortedAreasByFrequency = sortNumericalValues(
       frequency(validAreas),
       false,
@@ -34,13 +34,13 @@ export const areasRouter = createTRPCRouter({
     return sortedAreasByFrequency
   }),
   // Get all known areas that are similar
-  duplicates: publicProcedure.query(async () => {
+  getDuplicates: publicProcedure.query(async () => {
     const duplicateAreas = findSimilar(validAreas)
 
     return duplicateAreas
   }),
   // Get all known areas that are similar
-  similar: publicProcedure.query(async () => {
+  getSimilar: publicProcedure.query(async () => {
     const similarAreas = Array.from(
       groupSimilarStrings(validAreas, 3).entries(),
     )

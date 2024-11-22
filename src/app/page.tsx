@@ -10,14 +10,14 @@ const searchedRouteName = 'no'
 export default async function Home() {
   // Areas
   const areas = await api.areas.getAllAreas()
-  const areaDuplicates = await api.areas.duplicates()
-  const areaSimilar = await api.areas.similar()
-  const areaFrequency = await api.areas.frequency()
+  const areaDuplicates = await api.areas.getDuplicates()
+  const areaSimilar = await api.areas.getSimilar()
+  const areaFrequency = await api.areas.getFrequency()
   // Crags
   const crags = await api.crags.getAllCrags()
-  const cragDuplicates = await api.crags.getDuplicateCrags()
-  const cragSimilar = await api.crags.getSimilarCrags()
-  const cragFrequency = await api.crags.getCragsFrequency()
+  const cragDuplicates = await api.crags.getDuplicate()
+  const cragSimilar = await api.crags.getSimilar()
+  const cragFrequency = await api.crags.getFrequency()
   // Ascents
   const ascents = await api.ascents.getAllAscents({
     descending: true,
