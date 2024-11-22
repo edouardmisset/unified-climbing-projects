@@ -1,4 +1,4 @@
-export default async function Visualization(props: {
+export default async function AscentCalendar(props: {
   params: Promise<{ year: string }>
 }) {
   const { year: _year } = await props.params

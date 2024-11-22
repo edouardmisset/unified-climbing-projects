@@ -54,9 +54,9 @@ export function Navigation() {
                 <Item value="barcode">
                   <Link href={'/ascents/barcode'}>🧗 Barcode</Link>
                 </Item>
-                <Item value="visualization">
-                  <Link href={`/ascents/visualization/${thisYear}`}>
-                    🧗 Visualization
+                <Item value="calendar">
+                  <Link href={`/ascents/calendar/${thisYear}`}>
+                    🧗 Calendar
                   </Link>
                 </Item>
               </List>
@@ -68,7 +68,7 @@ export function Navigation() {
         <Item className={styles.Item}>
           <Trigger className={styles.Trigger}>Training 💪</Trigger>
           <Content className={styles.Content}>
-            <Sub orientation="vertical" defaultValue="visualization">
+            <Sub orientation="vertical" defaultValue="calendar">
               <List className={styles.List}>
                 <Item className={styles.Item} value="qr-code">
                   <Link href={'/training/qr-code'}>💪 QR</Link>
@@ -76,9 +76,9 @@ export function Navigation() {
                 <Item className={styles.Item} value="barcode">
                   <Link href={'/training/barcode'}>💪 Barcode</Link>
                 </Item>
-                <Item className={styles.Item} value="visualization">
-                  <Link href={`/training/visualization/${thisYear}`}>
-                    💪 Visualization
+                <Item className={styles.Item} value="calendar">
+                  <Link href={`/training/calendar/${thisYear}`}>
+                    💪 Calendar
                   </Link>
                 </Item>
               </List>

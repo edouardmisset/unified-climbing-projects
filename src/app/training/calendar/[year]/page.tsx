@@ -2,6 +2,7 @@ import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
 import Color from 'colorjs.io'
 import Link from 'next/link'
+import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
 import { getSeasonTraining } from '~/data/training-data'
 import {
   convertSessionTypeToBackgroundColor,
@@ -11,7 +12,7 @@ import {
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
 
-export default async function Visualization(props: {
+export default async function TrainingCalendar(props: {
   params: Promise<{ year: string }>
 }) {
   const { year } = await props.params
@@ -61,29 +62,25 @@ export default async function Visualization(props: {
       <div
         className="flex-row space-between"
         style={{
-          paddingInline: '1rem',
+          paddingInline: 'var(--size-2)',
         }}
       >
-        {isDataPresentForPreviousYear ? (
-          <Link className="btn" href={`./${previousYear}`}>
-            {`< ${previousYear}`}
-          </Link>
-        ) : (
-          <span />
-        )}
+        <YearNavigationButton
+          currentYear={numberYear}
+          nextOrPrevious="previous"
+          enabled={isDataPresentForPreviousYear}
+        />
 
         {yearSession.length === 0 ? (
           <span>No record</span>
         ) : (
           <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
         )}
-        {isDataPresentForNextYear ? (
-          <Link className="btn" href={`./${nextYear}`}>
-            {`${nextYear} >`}
-          </Link>
-        ) : (
-          <span />
-        )}
+        <YearNavigationButton
+          currentYear={numberYear}
+          nextOrPrevious="next"
+          enabled={isDataPresentForNextYear}
+        />
       </div>
     </>
   )
