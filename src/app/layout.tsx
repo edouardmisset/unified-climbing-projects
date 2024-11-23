@@ -33,16 +33,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={styles.body}>
-        <main className={styles.main}>
-          <TRPCReactProvider>
-            <header>
-              <Navigation />
-            </header>
-            {children}
-          </TRPCReactProvider>
-          <SpeedInsights />
-          <Analytics />
-        </main>
+        <TRPCReactProvider>
+          <header>
+            <Navigation />
+          </header>
+          <main className={styles.main}>{children}</main>
+          <footer className={styles.footer}>
+            <p>@edouardmisset 2024-{new Date().getFullYear()}</p>
+          </footer>
+        </TRPCReactProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )

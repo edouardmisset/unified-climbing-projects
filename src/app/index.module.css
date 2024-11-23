@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
 
-  block-size: 100svh;
+  min-block-size: 100svh;
 
   background: linear-gradient(
     to bottom,
@@ -40,6 +40,12 @@
   display: grid;
   gap: var(--size-4);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (min-width: 640px) {
