@@ -21,9 +21,10 @@ export default async function Page(props: {
       <div
         className="flex-row"
         style={{
-          height: 400,
-          width: 600,
-          background: 'white',
+          maxHeight: 400,
+          maxWidth: 600,
+          aspectRatio: '3 / 2',
+          background: 'var(--color-light)',
           gap: 4,
 
           padding: 'clamp(.5rem, 5cqi, 2rem)',
