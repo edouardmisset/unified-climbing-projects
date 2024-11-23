@@ -11,6 +11,7 @@ import {
 } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
+import styles from './page.module.css'
 
 export default async function TrainingCalendar(props: {
   params: Promise<{ year: string }>
@@ -64,7 +65,7 @@ export default async function TrainingCalendar(props: {
         Training in {year}
       </h1>
       <Spacer size={3} />
-      <div className="flex-row space-between">
+      <div className={styles.container}>
         <YearNavigationButton
           currentYear={numberYear}
           nextOrPrevious="previous"
@@ -74,7 +75,9 @@ export default async function TrainingCalendar(props: {
         {yearSession.length === 0 ? (
           <span>No record</span>
         ) : (
-          <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
+          <div className={styles.calendarContainer}>
+            <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
+          </div>
         )}
         <YearNavigationButton
           currentYear={numberYear}
