@@ -12,25 +12,25 @@ export function AscentPyramid({
       <p>Pyramid of Ascents</p>
       <div
         style={{
-          width: '400px',
-          height: '400px',
+          minWidth: '375px',
+          height: '375px',
         }}
       >
         <ResponsiveBar
           theme={{
-            background: 'var(--color-dark)',
+            background: 'var(--surface-1)',
             text: {
-              fill: 'var(--color-light)',
+              fill: 'var(--text-1)',
             },
             tooltip: {
               container: {
-                background: 'var(--color-dark)',
+                background: 'var(--surface-2)',
               },
             },
             axis: {
               ticks: {
                 text: {
-                  fill: 'var(--color-light)',
+                  fill: 'var(--text-2)',
                   fontFamily: 'monospace',
                   fontStyle: 'normal',
                   fontSize: 'var(--size-fluid-1)',
@@ -41,7 +41,7 @@ export function AscentPyramid({
           data={grades}
           keys={['number']}
           indexBy="grade"
-          margin={{ top: 50, right: 130, bottom: 80, left: 60 }}
+          margin={{ right: 20, bottom: 40, left: 40 }}
           padding={0.5}
           layout="horizontal"
           enableGridY={false}
