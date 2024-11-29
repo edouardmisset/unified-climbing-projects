@@ -1,5 +1,4 @@
 import { frequency } from '@edouardmisset/array'
-import { createCache } from '~/helpers/cache'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
 
