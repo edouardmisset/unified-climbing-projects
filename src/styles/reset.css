@@ -72,7 +72,7 @@
 }
 
 :where(body) {
-  min-height: 100svh;
+  min-block-size: 100svh;
   font-size: 1.125rem;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
@@ -92,8 +92,8 @@
 }
 
 :where(img, svg, picture) {
-  max-width: 100%;
-  height: auto;
+  max-inline-size: 100%;
+  block-size: auto;
 
   display: block;
   vertical-align: middle;

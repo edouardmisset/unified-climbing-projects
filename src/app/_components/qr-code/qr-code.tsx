@@ -45,10 +45,10 @@ export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
       style={{
         display: 'grid',
         gridTemplate: `repeat(${gridSize}, 1fr) / repeat(${gridSize}, 1fr)`,
-        minWidth: 50,
-        maxWidth: 400,
-        minHeight: 50,
-        maxHeight: 400,
+        minInlineSize: 50,
+        maxInlineSize: 400,
+        minBlockSize: 50,
+        maxBlockSize: 400,
         backgroundColor: 'white',
         padding: '1rem',
         marginInline: 'auto',
@@ -63,8 +63,8 @@ export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
       {cloneElement(image, {
         style: {
           gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
-          height: '100%',
-          width: '100%',
+          blockSize: '100%',
+          inlineSize: '100%',
           padding: '1rem',
         },
       })}

@@ -13,8 +13,8 @@ export function AscentPyramid({
       <p>Pyramid of Ascents</p>
       <div
         style={{
-          minWidth: '375px',
-          height: '375px',
+          minInlineSize: '375px',
+          blockSize: '375px',
         }}
       >
         <ResponsiveBar

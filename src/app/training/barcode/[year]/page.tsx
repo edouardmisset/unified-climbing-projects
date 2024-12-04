@@ -21,8 +21,8 @@ export default async function Page(props: {
       <div
         className="flex-row"
         style={{
-          maxHeight: 400,
-          maxWidth: 600,
+          maxBlockSize: 400,
+          maxInlineSize: 600,
           aspectRatio: '3 / 2',
           background: 'var(--color-light)',
           gap: 4,
@@ -67,8 +67,8 @@ export default async function Page(props: {
               key={(firstDate ?? i).toString()}
               style={{
                 display: 'block',
-                height: '100%',
-                width: barWidth,
+                blockSize: '100%',
+                inlineSize: barWidth,
                 background: backgroundGradient,
               }}
               title={createTrainingBarCodeTooltip(week)}

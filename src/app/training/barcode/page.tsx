@@ -67,7 +67,7 @@ export default async function Page() {
                       ).toString()}
                       style={{
                         display: 'block',
-                        height: '100%',
+                        blockSize: '100%',
                         width: barWidth,
                         maxWidth: maxBarWidth,
                         background: backgroundGradient,

@@ -57,9 +57,9 @@ export default async function Page() {
                       key={(weeklyAscents[0]?.date ?? index).toString()}
                       style={{
                         display: 'block',
-                        height: '100%',
-                        width: barWidth,
-                        maxWidth: maxBarWidth,
+                        blockSize: '100%',
+                        inlineSize: barWidth,
+                        maxInlineSize: maxBarWidth,
                         background: backgroundGradient,
                       }}
                       title={createAscentBarCodeTooltip(filteredWeeklyAscents)}
