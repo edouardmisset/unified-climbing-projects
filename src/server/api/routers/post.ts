@@ -25,7 +25,7 @@ export const postRouter = createTRPCRouter({
 
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ input }) => {
+    .mutation(({ input }) => {
       const post: Post = {
         id: posts.length + 1,
         name: input.name,

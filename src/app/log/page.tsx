@@ -1,6 +1,8 @@
 'use client'
 
+import type React from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import type Zod from 'zod'
 import { fromZodError } from 'zod-validation-error'
 
 import { env } from '~/env'
@@ -10,24 +12,23 @@ import {
   convertNumberToGrade,
 } from '~/helpers/converter'
 import type { Grade } from '~/schema/ascent'
-import { GradeSlider } from '../_components/slider/slider'
-import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants'
+
+import { GradeSlider } from '../_components/slider/slider.tsx'
+import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants.ts'
 import styles from './page.module.css'
 import {
   type AscentFormInput,
   ascentFormInputSchema,
   ascentFormOutputSchema,
-} from './types'
+} from './types.ts'
 
 const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
 type GradeSetter = (value: number[]) => void
 
-const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
+const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
   try {
-    console.log({ data: formData })
-    const parsedData = ascentFormOutputSchema.parse(formData)
-    console.log({ parsedData })
+    const _parsedData = ascentFormOutputSchema.parse(formData)
 
     // TODO: send data to the api...
     // If the data is sent to my Google Sheet's DB, we need to make some
@@ -36,10 +37,9 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = async formData => {
   } catch (error) {
     const zErrors = fromZodError(error as Zod.ZodError)
 
-    for (const detail of zErrors.details) {
-      console.error(detail)
-      // TODO: change this console.log to a toast
-      console.error(detail.message)
+    for (const _detail of zErrors.details) {
+      // biome-ignore lint/suspicious/noConsole: WIP
+      globalThis.console.error(_detail)
     }
   }
 }
@@ -114,12 +114,17 @@ export default function Log(): React.JSX.Element {
       >
         <label htmlFor="date" className="flex-column">
           Date
-          <input required {...register('date')} type="date" title="Date" />
+          <input
+            required={true}
+            {...register('date')}
+            type="date"
+            title="Date"
+          />
         </label>
         <label htmlFor="routeName" className="flex-column">
           Route Name
           <input
-            required
+            required={true}
             type="text"
             id="routeName"
             autoComplete="off"
@@ -135,7 +140,7 @@ export default function Log(): React.JSX.Element {
             {...register('climbingDiscipline')}
             title="Route, Boulder or Multi-Pitch"
           >
-            <option value="Route" defaultChecked>
+            <option value="Route" defaultChecked={true}>
               Route
             </option>
             <option value="Boulder">Boulder</option>
@@ -145,7 +150,7 @@ export default function Log(): React.JSX.Element {
         <label htmlFor="crag" className="flex-column">
           Crag
           <input
-            required
+            required={true}
             id="crag"
             {...register('crag')}
             placeholder="The name of the crag"

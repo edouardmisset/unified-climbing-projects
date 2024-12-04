@@ -1,6 +1,5 @@
 import { frequency } from '@edouardmisset/array'
 import { average } from '@edouardmisset/math/average.ts'
-import { mapObject } from '@edouardmisset/object'
 
 import { z } from 'zod'
 import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
@@ -62,7 +61,7 @@ export const gradesRouter = createTRPCRouter({
 
       const gradeNumberTuple = Object.entries(frequency(filteredGrades)).map(
         ([grade, count]) => [grade, count],
-      ) as Array<[Grade, number]>
+      ) as [Grade, number][]
 
       return gradeNumberTuple.sort((a, b) => a[0].localeCompare(b[0]))
     }),

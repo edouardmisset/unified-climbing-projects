@@ -2,18 +2,12 @@ import { sortBy } from '@edouardmisset/array'
 import { validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents, stringEqualsCaseInsensitive } from '@edouardmisset/text'
 
+import fuzzySort from 'fuzzysort'
 import { boolean, number, string, z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
-import {
-  type Ascent,
-  climbingDisciplineSchema,
-  type gradeSchema,
-} from '~/schema/ascent'
+import { type Ascent, climbingDisciplineSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
-
-import { Temporal } from '@js-temporal/polyfill'
-import fuzzySort from 'fuzzysort'
 
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure

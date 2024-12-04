@@ -21,8 +21,9 @@ import '~/styles/shadows.css'
 import '~/styles/sizes.css'
 import '~/styles/zindex.css'
 
-import { Navigation } from './_components/navigation/navigation'
+import { Navigation } from './_components/navigation/navigation.tsx'
 
+import type React from 'react'
 import styles from './index.module.css'
 
 export default function RootLayout({
@@ -31,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={styles.body}>
         <TRPCReactProvider>
           <header>

@@ -1,8 +1,8 @@
 import type { TemporalDateTime } from '~/types/generic'
 
 import type { TrainingSession } from '~/types/training'
-import { createEmptyBarcodeCollection } from './ascent-data'
-import { createEmptyYearlyCollections } from './helpers'
+import { createEmptyBarcodeCollection } from './ascent-data.ts'
+import { createEmptyYearlyCollections } from './helpers.ts'
 
 const getTrainingSeasons = (trainingSessions: TrainingSession[]) =>
   [...new Set(trainingSessions.map(({ date }) => date.year))].reverse()

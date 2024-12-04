@@ -1,7 +1,10 @@
+'use server'
+
 import Image from 'next/image'
+import type React from 'react'
 import { cloneElement } from 'react'
 import type { TemporalDateTime } from '~/types/generic'
-import Marker from './marker'
+import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
 
@@ -14,20 +17,18 @@ type Obj = Record<string, unknown>
 
 type MainQRCodeProps<T extends Obj> = {
   data: (TemporalDateTime & T)[]
-  children?: JSX.Element
+  children?: React.JSX.Element
 }
 
 type QRCodeProps<T extends Obj> = MainQRCodeProps<T> &
   (
     | {
-        itemRender: (item: TemporalDateTime & T) => JSX.Element
+        itemRender: (item: TemporalDateTime & T) => React.ReactNode
       }
     | { field: keyof T }
   )
 
-export default function QRCode<T extends Obj>(
-  props: QRCodeProps<T>,
-): JSX.Element {
+export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
   const { data, children } = props
   const image = children ?? (
     <Image
@@ -35,7 +36,7 @@ export default function QRCode<T extends Obj>(
       src={climberImagePath}
       width={120}
       height={120}
-      priority
+      priority={true}
     />
   )
   return (

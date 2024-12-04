@@ -1,37 +1,74 @@
+'use server'
+
 import { api } from '~/trpc/server'
-import { AreaSummary } from './_components/areas-summary/areas-summary'
-import { AscentsSummary } from './_components/ascents-summary/ascents-summary'
-import { Card } from './_components/card/card'
-import { CragSummary } from './_components/crags-summary/crags-summary'
-import { GradeSummary } from './_components/grades-summary/grades-summary'
+import { AreaSummary } from './_components/areas-summary/areas-summary.tsx'
+import { AscentsSummary } from './_components/ascents-summary/ascents-summary.tsx'
+import { Card } from './_components/card/card.tsx'
+import { CragSummary } from './_components/crags-summary/crags-summary.tsx'
+import { GradeSummary } from './_components/grades-summary/grades-summary.tsx'
 import styles from './index.module.css'
 
 const searchedRouteName = 'no'
 
 export default async function Home() {
   // Areas
-  const areas = await api.areas.getAllAreas()
-  const areaDuplicates = await api.areas.getDuplicates()
-  const areaSimilar = await api.areas.getSimilar()
-  const areaFrequency = await api.areas.getFrequency()
+  const areasPromise = api.areas.getAllAreas()
+  const areaDuplicatesPromise = api.areas.getDuplicates()
+  const areaSimilarPromise = api.areas.getSimilar()
+  const areaFrequencyPromise = api.areas.getFrequency()
   // Crags
-  const crags = await api.crags.getAllCrags()
-  const cragDuplicates = await api.crags.getDuplicate()
-  const cragSimilar = await api.crags.getSimilar()
-  const cragFrequency = await api.crags.getFrequency()
+  const cragsPromise = api.crags.getAllCrags()
+  const cragDuplicatesPromise = api.crags.getDuplicate()
+  const cragSimilarPromise = api.crags.getSimilar()
+  const cragFrequencyPromise = api.crags.getFrequency()
   // Ascents
-  const ascents = await api.ascents.getAllAscents({
+  const ascentsPromise = api.ascents.getAllAscents({
     descending: true,
   })
-  const duplicateAscents = await api.ascents.getDuplicates()
-  const similarAscents = await api.ascents.getSimilar()
-  const searchedAscents = await api.ascents.search({
+  const duplicateAscentsPromise = api.ascents.getDuplicates()
+  const similarAscentsPromise = api.ascents.getSimilar()
+  const searchedAscentsPromise = api.ascents.search({
     query: searchedRouteName,
   })
   // Grades
-  const grades = await api.grades.getAllGrades()
-  const gradeAverage = await api.grades.getAverage()
-  const gradeFrequency = await api.grades.getFrequency()
+  const gradesPromise = api.grades.getAllGrades()
+  const gradeAveragePromise = api.grades.getAverage()
+  const gradeFrequencyPromise = api.grades.getFrequency()
+
+  const [
+    areas,
+    areaDuplicates,
+    areaSimilar,
+    areaFrequency,
+    crags,
+    cragDuplicates,
+    cragSimilar,
+    cragFrequency,
+    ascents,
+    duplicateAscents,
+    similarAscents,
+    searchedAscents,
+    grades,
+    gradeAverage,
+    gradeFrequency,
+  ] = await Promise.all([
+    areasPromise,
+    areaDuplicatesPromise,
+    areaSimilarPromise,
+    areaFrequencyPromise,
+    cragsPromise,
+    cragDuplicatesPromise,
+    cragSimilarPromise,
+    cragFrequencyPromise,
+    ascentsPromise,
+    duplicateAscentsPromise,
+    similarAscentsPromise,
+    searchedAscentsPromise,
+    gradesPromise,
+    gradeAveragePromise,
+    gradeFrequencyPromise,
+  ])
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Welcome to my climbing app</h1>

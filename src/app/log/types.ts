@@ -9,10 +9,14 @@ import {
   MAX_TRIES,
   MIN_HEIGHT,
   MIN_RATING,
-} from './constants'
+} from './constants.ts'
 
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
+
+const _1To9999RegEx = /^[1-9999]$/
+const _0To100RegEx = /^0*(?:[1-9][0-9]?|100)$/
+const _0To5RegEx = /^[0-5]$/
 
 const optionalGradeToNumberSchema = gradeSchema
   .transform(grade => convertGradeToNumber(grade))
@@ -21,7 +25,7 @@ const numberOfTriesSchema = z
   .string()
   .min(1)
   .max(MAX_TRIES.toString().length)
-  .refine(val => /^[1-9999]$/.test(val), {
+  .refine(val => _1To9999RegEx.test(val), {
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
   .transform(st => Number(st))
@@ -81,7 +85,7 @@ export const ascentFormOutputSchema = z.object({
     .string()
     .min(MIN_HEIGHT.toString().length)
     .max(MAX_HEIGHT.toString().length)
-    .refine(val => /^0*(?:[1-9][0-9]?|100)$/.test(val), {
+    .refine(val => _0To100RegEx.test(val), {
       message: `Height should be a number between ${MIN_HEIGHT} and ${MAX_HEIGHT}`,
     })
     .transform(val => Number(val))
@@ -90,7 +94,7 @@ export const ascentFormOutputSchema = z.object({
     .string()
     .min(MIN_RATING.toString().length)
     .max(MAX_RATING.toString().length)
-    .refine(val => /^[0-5]$/.test(val), {
+    .refine(val => _0To5RegEx.test(val), {
       message: `Rating should be a number between ${MIN_RATING} and ${MAX_RATING}`,
     })
     .transform(val => Number(val))

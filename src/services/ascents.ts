@@ -4,7 +4,7 @@ import {
   transformAscentFromJSToGS,
 } from '~/helpers/transformers/transformers'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
-import { loadWorksheet } from './google-sheets'
+import { loadWorksheet } from './google-sheets.ts'
 
 /**
  * Retrieves all ascent records from the Google Sheets 'ascents' worksheet,

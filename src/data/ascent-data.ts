@@ -1,7 +1,7 @@
 import { Temporal } from '@js-temporal/polyfill'
 import type { Ascent } from '~/schema/ascent'
 import type { TemporalDateTime } from '~/types/generic'
-import { createEmptyYearlyCollections } from './helpers'
+import { createEmptyYearlyCollections } from './helpers.ts'
 
 export const createSeasons = <T extends Record<string, unknown>>(
   data: (T & { date: Temporal.PlainDateTime })[],

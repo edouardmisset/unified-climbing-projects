@@ -1,10 +1,10 @@
 import { postRouter } from '~/server/api/routers/post'
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc'
-import { areasRouter } from './routers/areas'
-import { ascentsRouter } from './routers/ascents'
-import { cragsRouter } from './routers/crags'
-import { gradesRouter } from './routers/grades'
-import { trainingRouter } from './routers/training'
+import { areasRouter } from './routers/areas.ts'
+import { ascentsRouter } from './routers/ascents.ts'
+import { cragsRouter } from './routers/crags.ts'
+import { gradesRouter } from './routers/grades.ts'
+import { trainingRouter } from './routers/training.ts'
 
 /**
  * This is the primary router for your server.

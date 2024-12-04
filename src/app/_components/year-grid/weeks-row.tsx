@@ -1,6 +1,8 @@
+'use server'
+
 import styles from './year-grid.module.css'
 
-export function WeeksRow() {
+export async function WeeksRow() {
   return Array.from({ length: 53 }, (_, index) => {
     return index === 0 ? null : (
       <div

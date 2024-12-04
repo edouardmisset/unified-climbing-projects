@@ -1,7 +1,7 @@
 import { createCache } from '~/helpers/cache'
 import { transformTrainingSessionFromGSToJS } from '~/helpers/transformers/transformers'
 import { type TrainingSession, trainingSessionSchema } from '~/types/training'
-import { loadWorksheet } from './google-sheets'
+import { loadWorksheet } from './google-sheets.ts'
 
 const { getCache, setCache } = createCache<TrainingSession[]>()
 

@@ -88,7 +88,9 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   const result = await next()
 
   const end = Date.now()
-  console.log(`[TRPC] ${path} took ${end - start}ms to execute`)
+  // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+  // biome-ignore lint/suspicious/noConsole: <explanation>
+  globalThis.console.log(`[TRPC] ${path} took ${end - start}ms to execute`)
 
   return result
 })

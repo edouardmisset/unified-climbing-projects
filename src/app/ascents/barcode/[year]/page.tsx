@@ -1,7 +1,4 @@
-import Barcode, {
-  maxBarWidth,
-  minBarWidth,
-} from '~/app/_components/barcode/barcode'
+import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
 import { getSeasonsAscentsPerWeek } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'

@@ -5,8 +5,8 @@
  * ---------------------------------------------
  */
 
-import type { ClimbingAttempt } from './gs-to-js'
-import type { JSAscentKeys, JSTrainingKeys } from './headers'
+import type { ClimbingAttempt } from './gs-to-js.ts'
+import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 
 export type TransformFunctionJSToGS = (value: string) => string
 

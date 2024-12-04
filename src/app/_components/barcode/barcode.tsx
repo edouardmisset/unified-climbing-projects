@@ -1,3 +1,4 @@
+import type React from 'react'
 import type { TemporalDateTime } from '~/types/generic'
 
 export const minBarWidth = 4
@@ -15,14 +16,14 @@ type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
         itemRender: (
           item: ((TemporalDateTime & T) | undefined)[],
           index: number,
-        ) => JSX.Element
+        ) => React.JSX.Element
       }
     | { field: keyof T }
   )
 
 export default function Barcode<T extends Obj>(
   props: BarCodeProps<T>,
-): JSX.Element {
+): React.JSX.Element {
   const { data = [] } = props
   return (
     <div

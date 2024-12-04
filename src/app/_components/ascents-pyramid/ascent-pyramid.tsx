@@ -1,12 +1,13 @@
 'use client'
 
 import { ResponsiveBar } from '@nivo/bar'
+import type React from 'react'
 import { roundToTen } from '~/helpers/tooltips'
 import type { Grade } from '~/schema/ascent'
 
 export function AscentPyramid({
   grades,
-}: { grades: { grade: Grade; number: number }[] }): JSX.Element {
+}: { grades: { grade: Grade; number: number }[] }): React.JSX.Element {
   return (
     <>
       <p>Pyramid of Ascents</p>

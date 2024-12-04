@@ -1,15 +1,20 @@
+'use server'
+
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
 
 const markerSize = 8
 const numberOfSquareInMarker = 4
 
-export default function Marker({
+const leftRegEx = /left/i
+const topRegEx = /top/i
+
+export default async function Marker({
   placement,
 }: {
   placement: MarkerPlacement
-}): JSX.Element {
-  const startingColumn = /left/i.test(placement) ? 1 : -1
-  const startingRow = /top/i.test(placement) ? 1 : -1
+}) {
+  const startingColumn = leftRegEx.test(placement) ? 1 : -1
+  const startingRow = topRegEx.test(placement) ? 1 : -1
 
   return (
     <>

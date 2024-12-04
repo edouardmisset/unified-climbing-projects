@@ -1,21 +1,26 @@
 import type { Temporal } from '@js-temporal/polyfill'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
-import { removeObjectExtendedNullishValues } from '../remove-undefined-values'
-import { sortKeys } from '../sort-keys'
-import { TRANSFORM_FUNCTIONS_GS_TO_JS, transformTriesGSToJS } from './gs-to-js'
+import { removeObjectExtendedNullishValues } from '../remove-undefined-values.ts'
+import { sortKeys } from '../sort-keys.ts'
+import {
+  TRANSFORM_FUNCTIONS_GS_TO_JS,
+  transformTriesGSToJS,
+} from './gs-to-js.ts'
 import {
   ASCENT_HEADERS,
   type GSAscentKeys,
   type GSAscentRecord,
   type GSTrainingKeys,
   type GSTrainingRecord,
-  type JSTrainingKeys,
   TRAINING_HEADERS,
   TRANSFORMED_ASCENT_HEADER_NAMES,
   TRANSFORMED_TRAINING_HEADER_NAMES,
-} from './headers'
-import { TRANSFORM_FUNCTIONS_JS_TO_GS, transformTriesJSToGS } from './js-to-gs'
+} from './headers.ts'
+import {
+  TRANSFORM_FUNCTIONS_JS_TO_GS,
+  transformTriesJSToGS,
+} from './js-to-gs.ts'
 
 /**
  * Transforms a raw ascent record from Google Sheets format to a JavaScript

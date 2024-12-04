@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Range,
   Root,
@@ -15,7 +17,7 @@ export function GradeSlider(
     defaultValue?: Grade[] | SliderProps['defaultValue']
     value?: Grade[] | SliderProps['value']
   } & React.RefAttributes<HTMLSpanElement>,
-): React.JSX.Element {
+) {
   const { defaultValue, value } = props
 
   const numberDefaultValue =

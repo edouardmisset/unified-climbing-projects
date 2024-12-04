@@ -1,7 +1,9 @@
+'use server'
+
 import type { Temporal } from '@js-temporal/polyfill'
-import { DaysColumn } from './days-column'
-import { WeeksRow } from './weeks-row'
-import { YearGridCell } from './year-grid-cell'
+import { DaysColumn } from './days-column.tsx'
+import { WeeksRow } from './weeks-row.tsx'
+import { YearGridCell } from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
 
 type DayDescriptor = {
@@ -12,7 +14,7 @@ type DayDescriptor = {
   shortText?: string
 }
 
-export function YearGrid({
+export async function YearGrid({
   dayCollection,
   year,
 }: {

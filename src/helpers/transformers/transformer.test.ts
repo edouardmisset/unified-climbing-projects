@@ -3,11 +3,11 @@ import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
 } from '~/helpers/transformers/transformers'
-import { type Ascent, ascentSchema, holds, holdsFromGS } from '~/schema/ascent'
+import { type Ascent, holds, holdsFromGS } from '~/schema/ascent'
 
 import { Temporal } from '@js-temporal/polyfill'
 import { assert, describe, it } from 'poku'
-import type { GSAscentRecord } from './headers'
+import type { GSAscentRecord } from './headers.ts'
 
 describe('transformAscentFromJSToGS', () => {
   it('should transform boulder ascents', () => {

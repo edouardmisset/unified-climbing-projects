@@ -1,7 +1,7 @@
 import { isValidNumber } from '@edouardmisset/math'
 import { Temporal } from '@js-temporal/polyfill'
 import { holdsFomGSSchema } from '~/schema/ascent'
-import type { JSAscentKeys, JSTrainingKeys } from './headers'
+import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 
 /* ---------------------------------------------
  *                   TRANSFORMS

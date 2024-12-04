@@ -2,6 +2,7 @@ import { removeAccents } from '@edouardmisset/text'
 import { levenshteinDistance } from '@std/text'
 
 function formatString(item: string): string {
+  // TODO: comment traiter toutes les différentes combinatoires Majuscules etc.
   const synonyms: Record<string, string> = {
     '(l1 + l2)': 'l1 + l2',
     'l1+l2': 'l1 + l2',
@@ -65,11 +66,13 @@ export function groupSimilarStrings(
     if (!seen.has(word)) {
       const similarStrings: string[] = []
       for (const str of arr) {
-        if (str !== word && !seen.has(str)) {
-          if (getDistance(str, word) <= maxDistance) {
-            similarStrings.push(str)
-            seen.add(str)
-          }
+        if (
+          str !== word &&
+          !seen.has(str) &&
+          getDistance(str, word) <= maxDistance
+        ) {
+          similarStrings.push(str)
+          seen.add(str)
         }
       }
       if (similarStrings.length > 1) {

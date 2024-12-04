@@ -3,6 +3,7 @@ import { removeObjectExtendedNullishValues } from '~/helpers/remove-undefined-va
 import { sortKeys } from '~/helpers/sort-keys'
 import { SHEETS_INFO } from '~/services/google-sheets'
 
+// biome-ignore lint/correctness/noNodejsModules: ???
 import { writeFile } from 'node:fs/promises'
 import type { Temporal } from '@js-temporal/polyfill'
 import {
@@ -43,6 +44,7 @@ export async function fetchAndParseCSV(url: string): Promise<CSVParsedData> {
     const [headers = [''], ...data] = parse(csv)
     return { headers, data }
   } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
     console.error('An error occurred while fetching and parsing data:', error)
     throw error
   }
@@ -126,15 +128,11 @@ async function writeDataToFile(
   fileName: string,
   data: Record<string, string | number | boolean | Temporal.PlainDateTime>[],
 ): Promise<void> {
-  try {
-    await writeFile(
-      `${backupFilePath}${fileName}`,
-      JSON.stringify({ data }, null, 2),
-      { flag: 'w' },
-    )
-  } catch (error) {
-    console.error(error)
-  }
+  await writeFile(
+    `${backupFilePath}${fileName}`,
+    JSON.stringify({ data }, null, 2),
+    { flag: 'w' },
+  )
 }
 
 /**
@@ -152,17 +150,13 @@ export async function processCsvDataFromUrl({
   fileName: string
   transformedHeaderNames: Record<string, string>
 }): Promise<void> {
-  try {
-    const { headers, data } = await fetchAndParseCSV(uri)
+  const { headers, data } = await fetchAndParseCSV(uri)
 
-    const replacedHeaders = replaceHeaders(headers, transformedHeaderNames)
+  const replacedHeaders = replaceHeaders(headers, transformedHeaderNames)
 
-    const transformedData = transformClimbingData(data, replacedHeaders)
+  const transformedData = transformClimbingData(data, replacedHeaders)
 
-    await writeDataToFile(fileName, transformedData)
-  } catch (error) {
-    console.error(error)
-  }
+  await writeDataToFile(fileName, transformedData)
 }
 
 /**
@@ -185,10 +179,6 @@ export async function backupAscentsAndTrainingFromGoogleSheets(): Promise<boolea
 
     return true
   } catch (_error) {
-    console.error(
-      'An error occurred while backing up data from Google Sheets',
-      _error,
-    )
     return false
   }
 }

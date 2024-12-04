@@ -1,4 +1,3 @@
-import { load } from '@std/dotenv'
 import { JWT } from 'google-auth-library'
 import {
   GoogleSpreadsheet,

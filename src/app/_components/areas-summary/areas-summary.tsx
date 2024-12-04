@@ -11,6 +11,7 @@ export async function AreaSummary({
   areaSimilar: [string, string[]][]
   areas: string[]
 }) {
+  const mostFrequent = await getMostFrequent(areaFrequency)
   return (
     <div id="areas">
       <h2>
@@ -18,17 +19,25 @@ export async function AreaSummary({
       </h2>
       <p>{areaDuplicates.length} areas with duplicates</p>
       <p>{areaSimilar.length} areas with similar names</p>
-      <p>
-        Most climbed area:{' '}
-        {Object.entries(areaFrequency)
-          .map(([area, count]) => [area, count])
-          .sort(([_a, a], [_b, b]) => {
-            if (typeof a === 'number' && typeof b === 'number') return b - a
-            return 0
-          })[0]
-          ?.join(' - ')}{' '}
-        climbs
-      </p>
+      <p>Most climbed area: {mostFrequent} climbs</p>
     </div>
   )
+}
+
+export async function getMostFrequent(areaFrequency: Record<string, number>) {
+  return (await transformFrequencyData(areaFrequency))[0]?.join(' - ')
+}
+
+export async function transformFrequencyData(
+  frequency: Record<string, number>,
+  options?: { descending?: boolean },
+): Promise<[string, number][]> {
+  const { descending = true } = options ?? {}
+  return Object.entries(frequency)
+    .map(([area, count]) => [area, count])
+    .sort(([_a, a], [_b, b]) =>
+      typeof a === 'number' && typeof b === 'number'
+        ? b - a * (descending ? 1 : -1)
+        : 0,
+    ) as [string, number][]
 }

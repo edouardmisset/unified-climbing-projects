@@ -1,3 +1,5 @@
+'use server'
+
 import {
   Content,
   Item,
@@ -7,18 +9,18 @@ import {
   Sub,
   Trigger,
 } from '@radix-ui/react-navigation-menu'
-
 import NextLink from 'next/link'
+import type React from 'react'
 
 import styles from './navigation.module.css'
 
-const Link = ({
+const Link = async ({
   href,
   children,
   ...props
 }: { children: React.ReactNode; href: string }) => {
   return (
-    <NavLink className={styles.ListItemLink} asChild>
+    <NavLink className={styles.ListItemLink} asChild={true}>
       <NextLink href={href} {...props}>
         {children}
       </NextLink>
@@ -26,7 +28,7 @@ const Link = ({
   )
 }
 
-export function Navigation() {
+export async function Navigation() {
   const thisYear = new Date().getFullYear()
 
   return (

@@ -1,6 +1,8 @@
+'use server'
+
 import styles from './year-grid.module.css'
 
-export function DaysColumn({ year }: { year: number }) {
+export async function DaysColumn({ year }: { year: number }) {
   return Array.from({ length: 8 }, (_, index) => {
     const date = new Date()
     date.setFullYear(year)
