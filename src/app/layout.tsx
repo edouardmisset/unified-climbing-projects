@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body className={styles.body}>
         <TRPCReactProvider>
-          <header>
+          <header className={styles.header}>
             <Navigation />
           </header>
           <main className={styles.main}>{children}</main>

@@ -46,6 +46,10 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
+.header {
+  padding-block-end: var(--size-fluid-1);
+}
+
 .footer {
   display: flex;
   flex-direction: column;

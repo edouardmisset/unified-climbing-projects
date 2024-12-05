@@ -108,24 +108,23 @@ export default function Log(): React.JSX.Element {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`${styles.form} flex-column intrinsic-container`}
-      >
-        <label htmlFor="date" className="flex-column">
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <label htmlFor="date" className={styles.label}>
           Date
           <input
             required={true}
             {...register('date')}
+            className={styles.input}
             type="date"
             title="Date"
           />
         </label>
-        <label htmlFor="routeName" className="flex-column">
+        <label htmlFor="routeName" className={styles.label}>
           Route Name
           <input
             required={true}
             type="text"
+            className={styles.input}
             id="routeName"
             autoComplete="off"
             {...register('routeName')}
@@ -133,10 +132,11 @@ export default function Log(): React.JSX.Element {
             title="Route Name"
           />
         </label>
-        <label htmlFor="climbingDiscipline" className="flex-column">
+        <label htmlFor="climbingDiscipline" className={styles.label}>
           Route, Boulder or Multi-Pitch
           <select
             id="climbingDiscipline"
+            className={styles.input}
             {...register('climbingDiscipline')}
             title="Route, Boulder or Multi-Pitch"
           >
@@ -147,33 +147,36 @@ export default function Log(): React.JSX.Element {
             <option value="Multi-Pitch">Multi-Pitch</option>
           </select>
         </label>
-        <label htmlFor="crag" className="flex-column">
+        <label htmlFor="crag" className={styles.label}>
           Crag
           <input
             required={true}
             id="crag"
+            className={styles.input}
             {...register('crag')}
             placeholder="The name of the crag"
             title="Crag Name"
             type="text"
           />
         </label>
-        <label htmlFor="area" className="flex-column">
+        <label htmlFor="area" className={styles.label}>
           Area
           <input
             id="area"
+            className={styles.input}
             {...register('area')}
             placeholder="The name of the crag's sector (or area)"
             title="Crag's area"
             type="text"
           />
         </label>
-        <label htmlFor="tries" className="flex-column">
+        <label htmlFor="tries" className={styles.label}>
           Tries
           <input
             {...register('tries')}
             min={1}
             step={1}
+            className={styles.input}
             type="number"
             id="tries"
             placeholder="1"
@@ -181,7 +184,7 @@ export default function Log(): React.JSX.Element {
           />
         </label>
         <div className={styles.grades}>
-          <label htmlFor="topoGrade" className="">
+          <label htmlFor="topoGrade" className={styles.label}>
             Topo Grade {topoGrade}
           </label>
           <GradeSlider
@@ -192,7 +195,7 @@ export default function Log(): React.JSX.Element {
             max={ROUTE_GRADE_TO_NUMBER.size}
             step={1}
           />
-          <label htmlFor="personalGrade" className="">
+          <label htmlFor="personalGrade" className={styles.label}>
             Personal Grade{' '}
             {typeof personalGradeOrNumber === 'number'
               ? convertNumberToGrade(personalGradeOrNumber)
@@ -207,27 +210,29 @@ export default function Log(): React.JSX.Element {
             step={1}
           />
         </div>
-        <label htmlFor="holds" className="flex-column">
+        <label htmlFor="holds" className={styles.label}>
           Holds
           <input
             {...register('holds')}
             id="holds"
+            className={styles.input}
             placeholder="Hold types (crimps, jugs, underclings, pockets...)"
             title="Hold type"
             type="text"
           />
         </label>
-        <label htmlFor="profile" className="flex-column">
+        <label htmlFor="profile" className={styles.label}>
           Profile
           <input
             {...register('profile')}
             id="profile"
+            className={styles.input}
             placeholder="Route's profile (vertical, slab, overhang...)"
             title="Profile of the route"
             type="text"
           />
         </label>
-        <label htmlFor="height" className="flex-column">
+        <label htmlFor="height" className={styles.label}>
           Height (m)
           <input
             {...register('height')}
@@ -235,12 +240,13 @@ export default function Log(): React.JSX.Element {
             max={MAX_HEIGHT}
             step={5}
             id="height"
+            className={styles.input}
             placeholder="Height of the route (not needed for boulders)"
             title="Height of the route (does not apply for boulders)"
             type="number"
           />
         </label>
-        <label htmlFor="rating" className="flex-column">
+        <label htmlFor="rating" className={styles.label}>
           Rating
           <input
             {...register('rating')}
@@ -248,16 +254,18 @@ export default function Log(): React.JSX.Element {
             max={MAX_RATING}
             step={1}
             type="number"
+            className={styles.input}
             id="rating"
             placeholder="5 ⭐️"
             title="Route rating (on a 5 stars system)"
           />
         </label>
-        <label htmlFor="comments" className="flex-column">
+        <label htmlFor="comments" className={styles.label}>
           Comments
           <textarea
             {...register('comments')}
             id="comments"
+            className={`${styles.input} ${styles.textarea}`}
             placeholder="Feelings, partners, betas..."
             title="Comments: Feelings, partners, betas..."
             autoComplete="off"
