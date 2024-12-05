@@ -13,6 +13,8 @@
   flex-direction: column;
   gap: 0.5em;
 
+  border-radius: var(--radius-conditional-4);
+
   overflow: scroll;
 
   inline-size: clamp(15ch, 75ch, 100%);

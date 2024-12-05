@@ -1,19 +1,32 @@
 'use server'
 
-import type { Grade } from '~/schema/ascent'
+import {
+  convertGradeToNumber,
+  convertNumberToGrade,
+} from '~/helpers/converters.ts'
+import type { Ascent, Grade } from '~/schema/ascent'
+import { AscentComponent } from '../ascent-component/ascent-component.tsx'
 
 export async function GradeSummary({
   gradeAverage,
   gradeFrequency,
   grades,
-  highestDegree = 8,
+  ascents,
 }: {
   gradeAverage: Grade
   gradeFrequency: [Grade, number][] // [Grade, count]
   grades: Grade[]
-  highestDegree?: number
+  ascents: Ascent[]
 }) {
-  const climbsInTheHardestDegree = gradeFrequency
+  const highestDegree = Math.max(...grades.map(grade => Number(grade[0])))
+  const numberGrades = grades.map(grade => convertGradeToNumber(grade))
+  const maxNumberGrade = Math.max(...numberGrades)
+  const highestGrade = convertNumberToGrade(maxNumberGrade)
+  const hardestAscent = ascents.find(
+    ascent => ascent.topoGrade === highestGrade,
+  )
+
+  const ascentsInTheHardestDegree = gradeFrequency
     .map(([grade, count]) => [grade, count])
     .filter(([grade, _count]) =>
       String(grade).startsWith(String(highestDegree)),
@@ -22,10 +35,17 @@ export async function GradeSummary({
   return (
     <div id="grades">
       <h2>Grades</h2>
-      <p>Hardes grade: {grades.at(-1)}</p>
+      {hardestAscent ? (
+        <>
+          <p>Hardest ascent:</p>{' '}
+          <AscentComponent ascent={hardestAscent} showGrade={true} />
+        </>
+      ) : (
+        <p>Hardest grade: {grades.at(-1)}</p>
+      )}
       <p>Average grade: {gradeAverage}</p>
       <p>
-        {climbsInTheHardestDegree} climbs in the {highestDegree}
+        {ascentsInTheHardestDegree} climbs in the {highestDegree}
         <sup>th</sup> degree
       </p>
     </div>

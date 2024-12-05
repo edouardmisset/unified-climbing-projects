@@ -1,7 +1,7 @@
 import { Temporal } from '@js-temporal/polyfill'
 import { number, string, z } from 'zod'
 
-const grades = [
+export const _GRADES = [
   '1a',
   '1a+',
   '1b',
@@ -131,7 +131,7 @@ export const GRADE_TO_NUMBER = {
   '9c+': 54,
 } as const satisfies Record<Grade, number>
 
-export const gradeSchema = z.enum(grades)
+export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
 export type BoulderGrade = Uppercase<Grade>

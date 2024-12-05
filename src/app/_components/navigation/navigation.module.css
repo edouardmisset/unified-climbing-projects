@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   background-color: var(--surface-1);
-  border-radius: var(--border-size-3);
+  border-radius: var(--radius-conditional-4);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -33,7 +33,7 @@
   outline: none;
   user-select: none;
   line-height: 1;
-  border-radius: var(--border-size-3);
+  border-radius: var(--radius-conditional-4);
   font-size: 1rem;
   color: var(--text-2);
   &:focus {
@@ -96,7 +96,7 @@
   text-decoration: none;
   user-select: none;
   padding: var(--size-2);
-  border-radius: var(--border-size-3);
+  border-radius: var(--radius-conditional-4);
   font-size: 1rem;
   line-height: 1;
   &:focus {

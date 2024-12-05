@@ -8,7 +8,7 @@ import {
   Track,
 } from '@radix-ui/react-slider'
 import type React from 'react'
-import { convertGradeToNumber } from '~/helpers/converter'
+import { convertGradeToNumber } from '~/helpers/converters'
 import type { Grade } from '~/schema/ascent'
 import styles from './slider.module.css'
 

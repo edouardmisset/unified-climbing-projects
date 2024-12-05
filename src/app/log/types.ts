@@ -1,6 +1,9 @@
 import { datification, stringifyDate } from '@edouardmisset/date'
 import { string, z } from 'zod'
-import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
+import {
+  convertGradeToNumber,
+  convertNumberToGrade,
+} from '~/helpers/converters'
 import { gradeSchema, holdsSchema, profileSchema } from '~/schema/ascent'
 import { climbingDisciplineSchema } from '~/types/training'
 import {

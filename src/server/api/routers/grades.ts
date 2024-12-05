@@ -2,7 +2,10 @@ import { frequency } from '@edouardmisset/array'
 import { average } from '@edouardmisset/math/average.ts'
 
 import { z } from 'zod'
-import { convertGradeToNumber, convertNumberToGrade } from '~/helpers/converter'
+import {
+  convertGradeToNumber,
+  convertNumberToGrade,
+} from '~/helpers/converters'
 import { type Ascent, type Grade, ascentSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'

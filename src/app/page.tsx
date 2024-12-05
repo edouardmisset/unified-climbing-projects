@@ -95,6 +95,7 @@ export default async function Home() {
             gradeAverage={gradeAverage}
             gradeFrequency={gradeFrequency}
             grades={grades}
+            ascents={ascents}
           />
         </Card>
         <Card>

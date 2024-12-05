@@ -1,7 +1,6 @@
 import Color from 'colorjs.io'
+import type { Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
-
-import { z } from 'zod'
 
 const lightness = '0.7'
 const chroma = '0.15'
@@ -117,6 +116,8 @@ export const convertGradeToBackgroundColor = (
 ): string =>
   grade === undefined ? 'black' : (ASCENT_GRADE_TO_COLOR[grade] ?? 'black')
 
+/*! DEPRECATED
+
 const degrees = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const
 const degreeSchema = z.enum(degrees)
 
@@ -185,3 +186,5 @@ export const convertGradeToNumber = <GradeType extends Grade>(
 
 export const convertNumberToGrade = (gradeNumber: number): Grade =>
   NUMBER_TO_ROUTE_GRADE.get(gradeNumber) ?? '1a'
+
+*/

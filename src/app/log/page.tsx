@@ -7,11 +7,10 @@ import { fromZodError } from 'zod-validation-error'
 
 import { env } from '~/env'
 import {
-  ROUTE_GRADE_TO_NUMBER,
   convertGradeToNumber,
   convertNumberToGrade,
-} from '~/helpers/converter'
-import type { Grade } from '~/schema/ascent'
+} from '~/helpers/converters'
+import { type Grade, _GRADES } from '~/schema/ascent'
 
 import { GradeSlider } from '../_components/slider/slider.tsx'
 import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants.ts'
@@ -192,7 +191,7 @@ export default function Log(): React.JSX.Element {
             value={[(topoGrade as Grade) || climberAverageGrade]}
             onValueChange={handleTopoGradeChange}
             min={1}
-            max={ROUTE_GRADE_TO_NUMBER.size}
+            max={_GRADES.length}
             step={1}
           />
           <label htmlFor="personalGrade" className={styles.label}>
@@ -206,7 +205,7 @@ export default function Log(): React.JSX.Element {
             value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
             onValueChange={updatePersonalGradeChange}
             min={1}
-            max={ROUTE_GRADE_TO_NUMBER.size}
+            max={_GRADES.length}
             step={1}
           />
         </div>
