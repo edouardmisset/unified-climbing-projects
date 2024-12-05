@@ -3,7 +3,7 @@ import QRCode from '~/app/_components/qr-code/qr-code'
 import { getSeasonAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { createAscentQRTooltip } from '~/helpers/tooltips'
+import { createAscentsQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
 
 export default async function Page() {
@@ -46,7 +46,7 @@ export default async function Page() {
                         }}
                         title={
                           ascentDay?.ascents
-                            ? createAscentQRTooltip(ascentDay.ascents)
+                            ? createAscentsQRTooltip(ascentDay.ascents)
                             : ''
                         }
                       />

@@ -35,7 +35,7 @@ export async function CragSummary({
         <p>{numberOfSimilarCrags} crags with similar names</p>
       )}
       <p>Most climbed crags:</p>
-      <ul>{mostClimbedCrag}</ul>
+      <ol>{mostClimbedCrag}</ol>
     </div>
   )
 }

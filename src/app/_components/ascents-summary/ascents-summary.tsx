@@ -1,6 +1,6 @@
 'use server'
-
 import type { Ascent } from '~/schema/ascent'
+import { AscentComponent } from '../ascent-component/ascent-component.tsx'
 
 export async function AscentsSummary({
   ascents,
@@ -17,13 +17,14 @@ export async function AscentsSummary({
 }) {
   const numberOfSimilarAscents = similarAscents.length
   const numberOfDuplicateAscents = duplicateAscents.length
+  const latestAscent = ascents.at(0) as Ascent
   return (
     <div id="ascents">
       <h2>
         Ascents <sup>{ascents.length}</sup>
       </h2>
       <p>
-        Latest ascent: {ascents.slice(0, 1).map(ascent => ascent.routeName)}
+        Latest ascent: <AscentComponent ascent={latestAscent} />
       </p>
       {numberOfDuplicateAscents > 0 && (
         <p>{numberOfDuplicateAscents} duplicate ascents</p>

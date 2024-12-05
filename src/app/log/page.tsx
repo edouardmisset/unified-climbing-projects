@@ -256,8 +256,8 @@ export default function Log(): React.JSX.Element {
             type="number"
             className={styles.input}
             id="rating"
-            placeholder="5 ⭐️"
-            title="Route rating (on a 5 stars system)"
+            placeholder={`${MAX_RATING} ⭐️`}
+            title={`Route rating (on a ${MAX_RATING} stars system)`}
           />
         </label>
         <label htmlFor="comments" className={styles.label}>
@@ -271,7 +271,7 @@ export default function Log(): React.JSX.Element {
             autoComplete="off"
           />
         </label>
-        <input type="submit" />
+        <input type="submit" value="Send 📮" />
       </form>
     </div>
   )

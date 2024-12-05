@@ -1,3 +1,4 @@
+import type { Temporal } from '@js-temporal/polyfill'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
 
@@ -29,27 +30,30 @@ ${sessions
   .join('\n')}`
     : ''
 
-export const createAscentQRTooltip = (ascents: Ascent[]): string =>
-  ascents[0] === undefined
-    ? ''
-    : `📅 ${ascents[0].date.toLocaleString(undefined, {
-        day: 'numeric',
-        weekday: 'long',
-        month: 'long',
-      })}
+export const createAscentsQRTooltip = (ascents: Ascent[]): string => {
+  if (ascents[0] === undefined) {
+    return ''
+  }
+
+  const ascentsCount = ascents.length
+  const isMultipleAscents = ascentsCount > 1
+  const includeRoute = ascents.some(
+    ascent => ascent.climbingDiscipline === 'Route',
+  )
+
+  return `${formattedDate(ascents[0])}
 ${
-  ascents.some(ascent => ascent.climbingDiscipline === 'Route')
-    ? 'Routes'
-    : 'Boulders'
-} (${ascents.length}):
+  isMultipleAscents
+    ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
+    : ''
+}
 ${ascents
   .map(
     ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
-        climbingDiscipline === 'Route' ? '🧗' : ''
-      } ${routeName} (${crag}) - ${topoGrade}`,
+      `${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
   )
   .join('\n')}`
+}
 
 export const createTrainingQRTooltip = (
   trainingSession: TrainingSession,
@@ -146,4 +150,154 @@ function createCragEmoji({
   return gymCrag === undefined
     ? ''
     : `\t${createClimbingDisciplineEmoji(climbingDiscipline)} ${gymCrag}`
+}
+
+export function formattedDate<T>(data: T & { date: Temporal.PlainDateTime }) {
+  return `📅 ${data.date.toLocaleString(undefined, {
+    day: 'numeric',
+    weekday: 'long',
+    month: 'long',
+  })}`
+}
+
+export const createAscentTooltip = (
+  ascent: Ascent,
+  options?: { showDetails?: boolean },
+): string => {
+  const { showDetails = true } = options ?? {}
+  const {
+    climbingDiscipline,
+    topoGrade,
+    routeName,
+    crag,
+    comments,
+    tries,
+    area,
+    height,
+    holds,
+    personalGrade,
+    profile,
+    rating,
+    style,
+  } = ascent
+
+  return `${formattedDate(ascent)}
+
+${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrade({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers(style, tries, { showDetails })}
+
+${
+  showDetails
+    ? [
+        formatHeight(height),
+        formatProfile(profile),
+        formatHolds(holds),
+        formatRating(rating),
+        formatComments(comments),
+      ]
+        .filter(string => string !== '')
+        .join('\n')
+    : ''
+}`
+}
+
+function formatComments(
+  comments: Ascent['comments'] | TrainingSession['comments'],
+) {
+  return comments ? `💬 “${comments}”` : ''
+}
+function formatHeight(height: Ascent['height']) {
+  return height ? `📏 ${height}m` : ''
+}
+function formatHolds(holds: Ascent['holds']) {
+  return holds ? `✊ ${holds}` : ''
+}
+
+function formatCragAndArea(
+  crag: Ascent['crag'],
+  area: Ascent['area'],
+  options?: { showDetails?: boolean },
+) {
+  const { showDetails = true } = options ?? {}
+
+  return `📍 ${crag}${showDetails && area ? ` > ${area}` : ''}`
+}
+function formatRegion(region: Ascent['region']) {
+  return region ? `🌍 ${region}` : ''
+}
+function formatRating(rating: Ascent['rating']) {
+  return rating === undefined
+    ? ''
+    : Array.from({ length: rating }, () => '⭐').join('')
+}
+function formatGrade({
+  topoGrade,
+  personalGrade,
+  showDetails = true,
+}: {
+  topoGrade: Ascent['topoGrade']
+  personalGrade?: Ascent['personalGrade']
+  showDetails?: boolean
+}) {
+  if (topoGrade === undefined) {
+    return ''
+  }
+
+  const maybePersonalGrade =
+    personalGrade === undefined || personalGrade === topoGrade || !showDetails
+      ? ''
+      : `(${personalGrade})`
+
+  return `⚡︎ ${topoGrade} ${maybePersonalGrade}`.trim()
+}
+
+function formatProfile(profile: Ascent['profile']) {
+  return profile ? `📐 ${profile}` : ''
+}
+
+const enOrdinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' })
+const suffixes = new Map([
+  ['one', 'st'],
+  ['two', 'nd'],
+  ['few', 'rd'],
+  ['other', 'th'],
+])
+const formatOrdinals = (number_: number) => {
+  const rule = enOrdinalRules.select(number_)
+  const suffix = suffixes.get(rule)
+  return `${number_}${suffix}`
+}
+
+function formatStyle(
+  style: Ascent['style'],
+  options?: { showDetails?: boolean },
+) {
+  const { showDetails = true } = options ?? {}
+  const text = showDetails ? style : ''
+
+  return style === 'Onsight'
+    ? `👁️ ${text}`
+    : style === 'Flash'
+      ? `🔦 ${text}`
+      : ''
+}
+
+function formatTries(tries: Ascent['tries']) {
+  return tries > 1 ? `🔁 ${formatOrdinals(tries)})}` : ''
+}
+
+function formatStyleAndTriers(
+  style: Ascent['style'],
+  tries: Ascent['tries'],
+  options?: { showDetails?: boolean },
+) {
+  const { showDetails = false } = options ?? {}
+
+  const styleEmoji = style === 'Onsight' ? '👁️' : style === 'Flash' ? '🔦' : '🔴'
+  const styleText = showDetails ? style : ''
+
+  const triesText = tries > 1 ? `(${formatOrdinals(tries)})` : ''
+
+  return [styleEmoji, styleText, triesText]
+    .filter(string => string !== '')
+    .join(' ')
 }
