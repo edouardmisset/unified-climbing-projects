@@ -16,6 +16,7 @@
   overflow: scroll;
 
   inline-size: clamp(15ch, 75ch, 100%);
+  margin-inline: auto;
 
   padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
   padding-block: clamp(var(--size-1), 5vw, var(--size-3));
