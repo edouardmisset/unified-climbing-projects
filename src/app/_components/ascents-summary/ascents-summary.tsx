@@ -15,6 +15,8 @@ export async function AscentsSummary({
   searchedAscents: Ascent[]
   searchedRouteName: string
 }) {
+  const numberOfSimilarAscents = similarAscents.length
+  const numberOfDuplicateAscents = duplicateAscents.length
   return (
     <div id="ascents">
       <h2>
@@ -23,16 +25,22 @@ export async function AscentsSummary({
       <p>
         Latest ascent: {ascents.slice(0, 1).map(ascent => ascent.routeName)}
       </p>
-      <p>{duplicateAscents.length} duplicate ascents</p>
-      <p>{similarAscents.length} similar ascents</p>
+      {numberOfDuplicateAscents > 0 && (
+        <p>{numberOfDuplicateAscents} duplicate ascents</p>
+      )}
+      {numberOfSimilarAscents > 0 && (
+        <p>{numberOfSimilarAscents} similar ascents</p>
+      )}
       <p>
         Searched for <b>"{searchedRouteName}"</b> and found{' '}
-        {searchedAscents.length === 0
-          ? 'nothing'
-          : searchedAscents
-              .slice(0, 2)
-              .map(route => route.routeName)
-              .join(' and ')}
+        {searchedAscents.length === 0 ? (
+          <em>nothing</em>
+        ) : (
+          searchedAscents
+            .slice(0, 2)
+            .map(route => route.routeName)
+            .join(' and ')
+        )}
       </p>
     </div>
   )

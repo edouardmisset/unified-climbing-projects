@@ -12,13 +12,19 @@ export async function AreaSummary({
   areas: string[]
 }) {
   const mostFrequent = await getMostFrequent(areaFrequency)
+  const numberOfDuplicateAreas = areaDuplicates.length
+  const numberOfSimilarAreas = areaSimilar.length
   return (
     <div id="areas">
       <h2>
         Areas <sup>{areas.length}</sup>
       </h2>
-      <p>{areaDuplicates.length} areas with duplicates</p>
-      <p>{areaSimilar.length} areas with similar names</p>
+      {numberOfDuplicateAreas > 0 && (
+        <p>{numberOfDuplicateAreas} areas with duplicates</p>
+      )}
+      {numberOfSimilarAreas > 0 && (
+        <p>{numberOfSimilarAreas} areas with similar names</p>
+      )}
       <p>Most climbed area: {mostFrequent} climbs</p>
     </div>
   )

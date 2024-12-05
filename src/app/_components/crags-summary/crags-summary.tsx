@@ -11,25 +11,31 @@ export async function CragSummary({
   cragSimilar: [string, string[]][]
   crags: string[]
 }) {
+  const numberOfDuplicateCrags = cragDuplicates.length
+  const numberOfSimilarCrags = cragSimilar.length
+  const mostClimbedCrag = Object.entries(cragFrequency)
+    .map(([crag, count]) => [crag, count])
+    .sort(([_a, a], [_b, b]) =>
+      typeof a === 'number' && typeof b === 'number' ? b - a : 0,
+    )
+    .slice(0, 4)
+    .map(([crag, count]) => {
+      const text = `${crag} (${count})`
+      return <li key={text}>{text}</li>
+    })
   return (
     <div id="crags">
       <h2>
         Crags <sup>{crags.length}</sup>
       </h2>
-      <p>{cragDuplicates.length} crags with duplicates</p>
-      <p>{cragSimilar.length} crags with similar names</p>
-      <p>
-        Most climbed crags:{' '}
-        {Object.entries(cragFrequency)
-          .map(([crag, count]) => [crag, count])
-          .sort(([_a, a], [_b, b]) => {
-            if (typeof a === 'number' && typeof b === 'number') return b - a
-            return 0
-          })
-          .slice(0, 4)
-          .map(([crag, count]) => `${crag} (${count})`)
-          ?.join(' - ')}
-      </p>
+      {numberOfDuplicateCrags > 0 && (
+        <p>{numberOfDuplicateCrags} crags with duplicates</p>
+      )}
+      {numberOfSimilarCrags > 0 && (
+        <p>{numberOfSimilarCrags} crags with similar names</p>
+      )}
+      <p>Most climbed crags:</p>
+      <ul>{mostClimbedCrag}</ul>
     </div>
   )
 }
