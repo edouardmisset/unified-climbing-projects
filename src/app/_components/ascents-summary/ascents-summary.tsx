@@ -24,7 +24,8 @@ export async function AscentsSummary({
         Ascents <sup>{ascents.length}</sup>
       </h2>
       <p>
-        Latest ascent: <AscentComponent ascent={latestAscent} />
+        Latest ascent:{' '}
+        <AscentComponent ascent={latestAscent} showGrade={true} />
       </p>
       {numberOfDuplicateAscents > 0 && (
         <p>{numberOfDuplicateAscents} duplicate ascents</p>
