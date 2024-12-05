@@ -221,9 +221,6 @@ function formatCragAndArea(
 
   return `📍 ${crag}${showDetails && area ? ` > ${area}` : ''}`
 }
-function formatRegion(region: Ascent['region']) {
-  return region ? `🌍 ${region}` : ''
-}
 function formatRating(rating: Ascent['rating']) {
   return rating === undefined
     ? ''
@@ -265,24 +262,6 @@ const formatOrdinals = (number_: number) => {
   const rule = enOrdinalRules.select(number_)
   const suffix = suffixes.get(rule)
   return `${number_}${suffix}`
-}
-
-function formatStyle(
-  style: Ascent['style'],
-  options?: { showDetails?: boolean },
-) {
-  const { showDetails = true } = options ?? {}
-  const text = showDetails ? style : ''
-
-  return style === 'Onsight'
-    ? `👁️ ${text}`
-    : style === 'Flash'
-      ? `🔦 ${text}`
-      : ''
-}
-
-function formatTries(tries: Ascent['tries']) {
-  return tries > 1 ? `🔁 ${formatOrdinals(tries)})}` : ''
 }
 
 function formatStyleAndTriers(
