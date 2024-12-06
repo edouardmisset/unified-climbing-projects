@@ -151,9 +151,7 @@ export default function Log(): React.JSX.Element {
             {...register('climbingDiscipline')}
             title="Route, Boulder or Multi-Pitch"
           >
-            <option value="Route" defaultChecked={true}>
-              Route
-            </option>
+            <option value="Route">Route</option>
             <option value="Boulder">Boulder</option>
             <option value="Multi-Pitch">Multi-Pitch</option>
           </select>
