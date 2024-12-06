@@ -101,12 +101,16 @@
 }
 
 :where(a) {
-  color: var(--violet-4);
+  color: var(--violet-9);
   font-weight: 500;
 }
 
 :where(a:hover) {
-  color: var(--violet-3);
+  color: var(--violet-7);
+}
+
+:where(a:visited) {
+  color: var(--violet-7);
 }
 
 /* A elements that don't have a class get default styles */

@@ -38,7 +38,9 @@ type GradeSetter = (value: number[]) => void
 const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
   try {
     const _parsedData = ascentFormOutputSchema.parse(formData)
-
+    // biome-ignore lint/suspicious/noConsole: WIP
+    // biome-ignore lint/suspicious/noConsoleLog: WIP
+    globalThis.console.log(_parsedData)
     // TODO: send data to the api...
     // If the data is sent to my Google Sheet's DB, we need to make some
     // transformations (personalGrade => 'My Grade', department lookup, climber,
