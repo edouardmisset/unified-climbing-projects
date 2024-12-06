@@ -22,7 +22,6 @@
     "@js-temporal/polyfill": "^0.4.4",
     "@nivo/bar": "^0.88.0",
     "@nivo/core": "^0.88.0",
-    "@number-flow/react": "^0.4.2",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slider": "^1.1.2",
     "@std/csv": "npm:@jsr/std__csv",
