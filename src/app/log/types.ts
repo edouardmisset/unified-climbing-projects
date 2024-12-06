@@ -17,9 +17,9 @@ import {
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
 
-const _1To9999RegEx = /^[1-9999]$/
-const _0To100RegEx = /^0*(?:[1-9][0-9]?|100)$/
-const _0To5RegEx = /^[0-5]$/
+export const _1To9999RegEx = /^[1-9999]$/
+export const _0To100RegEx = /^0*(?:[1-9][0-9]?|100)$/
+export const _0To5RegEx = /^[0-5]$/
 
 const optionalGradeToNumberSchema = gradeSchema
   .transform(grade => convertGradeToNumber(grade))

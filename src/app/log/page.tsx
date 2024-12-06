@@ -17,6 +17,9 @@ import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants.ts'
 import styles from './page.module.css'
 import {
   type AscentFormInput,
+  _0To5RegEx,
+  _0To100RegEx,
+  _1To9999RegEx,
   ascentFormInputSchema,
   ascentFormOutputSchema,
 } from './types.ts'
@@ -176,10 +179,12 @@ export default function Log(): React.JSX.Element {
             min={1}
             step={1}
             className={styles.input}
-            type="number"
             id="tries"
             placeholder="1"
             title="Number of tries"
+            type="number"
+            inputMode="numeric"
+            pattern={_1To9999RegEx.source}
           />
         </label>
         <div className={styles.grades}>
@@ -243,6 +248,8 @@ export default function Log(): React.JSX.Element {
             placeholder="Height of the route (not needed for boulders)"
             title="Height of the route (does not apply for boulders)"
             type="number"
+            inputMode="numeric"
+            pattern={_0To100RegEx.source}
           />
         </label>
         <label htmlFor="rating" className={styles.label}>
@@ -252,11 +259,13 @@ export default function Log(): React.JSX.Element {
             min={MIN_RATING}
             max={MAX_RATING}
             step={1}
-            type="number"
             className={styles.input}
             id="rating"
             placeholder={`${MAX_RATING} ⭐️`}
             title={`Route rating (on a ${MAX_RATING} stars system)`}
+            type="number"
+            inputMode="numeric"
+            pattern={_0To5RegEx.source}
           />
         </label>
         <label htmlFor="comments" className={styles.label}>
