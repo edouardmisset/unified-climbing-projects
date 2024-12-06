@@ -25,9 +25,10 @@ export async function CragSummary({
     })
   return (
     <div id="crags">
-      <h2>
-        Crags <sup>{crags.length}</sup>
-      </h2>
+      <h2>Crags</h2>
+      <p>
+        <b>{crags.length}</b> crags visited
+      </p>
       {numberOfDuplicateCrags > 0 && (
         <p>{numberOfDuplicateCrags} crags with duplicates</p>
       )}

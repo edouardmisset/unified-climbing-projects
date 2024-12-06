@@ -1,6 +1,7 @@
 'use server'
 import type { Ascent } from '~/schema/ascent'
 import { AscentComponent } from '../ascent-component/ascent-component.tsx'
+import { AscentsAndDays } from '../ascents-and-days/ascents-and-days.tsx'
 
 export async function AscentsSummary({
   ascents,
@@ -18,11 +19,18 @@ export async function AscentsSummary({
   const numberOfSimilarAscents = similarAscents.length
   const numberOfDuplicateAscents = duplicateAscents.length
   const latestAscent = ascents.at(0) as Ascent
+  const numberOfDays = new Set(
+    ascents.map(({ date }) => date.toPlainDate().toString()),
+  ).size
   return (
     <div id="ascents">
-      <h2>
-        Ascents <sup>{ascents.length}</sup>
-      </h2>
+      <h2>Ascents</h2>
+      <p>
+        <AscentsAndDays
+          numberOfAscents={ascents.length}
+          numberOfDays={numberOfDays}
+        />
+      </p>
       <p>
         Latest ascent:{' '}
         <AscentComponent ascent={latestAscent} showGrade={true} />

@@ -16,9 +16,8 @@ export async function AreaSummary({
   const numberOfSimilarAreas = areaSimilar.length
   return (
     <div id="areas">
-      <h2>
-        Areas <sup>{areas.length}</sup>
-      </h2>
+      <h2>Areas</h2>
+      <p>{areas.length} areas visited</p>
       {numberOfDuplicateAreas > 0 && (
         <p>{numberOfDuplicateAreas} areas with duplicates</p>
       )}
