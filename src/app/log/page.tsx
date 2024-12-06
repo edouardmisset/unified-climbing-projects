@@ -13,7 +13,14 @@ import {
 import { type Grade, _GRADES } from '~/schema/ascent'
 
 import { GradeSlider } from '../_components/slider/slider.tsx'
-import { MAX_HEIGHT, MAX_RATING, MIN_HEIGHT, MIN_RATING } from './constants.ts'
+import {
+  MAX_HEIGHT,
+  MAX_RATING,
+  MAX_TRIES,
+  MIN_HEIGHT,
+  MIN_RATING,
+  MIN_TRIES,
+} from './constants.ts'
 import styles from './page.module.css'
 import {
   type AscentFormInput,
@@ -176,7 +183,8 @@ export default function Log(): React.JSX.Element {
           Tries
           <input
             {...register('tries')}
-            min={1}
+            min={MIN_TRIES}
+            max={MAX_TRIES}
             step={1}
             className={styles.input}
             id="tries"

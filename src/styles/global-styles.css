@@ -105,7 +105,10 @@ text {
 /* Invalid inputs */
 
 input:invalid {
-  outline: var(--border-size-2) solid var(--red-8);
+  outline-offset: var(--size-px-1);
+  outline-color: var(--red-8);
+  outline-style: solid;
+  outline-width: var(--border-size-2);
 }
 
 /** Intrinsic Container */
