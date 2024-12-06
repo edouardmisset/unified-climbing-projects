@@ -1,5 +1,3 @@
-'use server'
-
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
 
 const markerSize = 8

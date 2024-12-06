@@ -1,5 +1,3 @@
-'use server'
-
 import { api } from '~/trpc/server'
 import { AreaSummary } from './_components/areas-summary/areas-summary.tsx'
 import { AscentsSummary } from './_components/ascents-summary/ascents-summary.tsx'

@@ -1,5 +1,3 @@
-'use server'
-
 import { AscentPyramid } from '~/app/_components/ascents-pyramid/ascent-pyramid'
 import { api } from '~/trpc/server'
 

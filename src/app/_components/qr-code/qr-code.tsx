@@ -1,5 +1,3 @@
-'use server'
-
 import Image from 'next/image'
 import type React from 'react'
 import { cloneElement } from 'react'

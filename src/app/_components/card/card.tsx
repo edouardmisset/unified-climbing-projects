@@ -1,5 +1,3 @@
-'use server'
-
 import type React from 'react'
 
 import styles from './card.module.css'

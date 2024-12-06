@@ -1,4 +1,3 @@
-'use server'
 import type { Ascent } from '~/schema/ascent'
 import { AscentComponent } from '../ascent-component/ascent-component.tsx'
 import { AscentsAndDays } from '../ascents-and-days/ascents-and-days.tsx'

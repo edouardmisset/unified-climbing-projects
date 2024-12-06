@@ -1,5 +1,3 @@
-'use server'
-
 import styles from './year-grid.module.css'
 
 export async function DaysColumn({ year }: { year: number }) {

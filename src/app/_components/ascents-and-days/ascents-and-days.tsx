@@ -1,6 +1,4 @@
-'use server'
-
-export function AscentsAndDays({
+export async function AscentsAndDays({
   numberOfAscents,
   numberOfDays,
 }: {

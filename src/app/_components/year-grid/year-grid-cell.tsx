@@ -1,5 +1,3 @@
-'use server'
-
 import type { Temporal } from '@js-temporal/polyfill'
 
 import styles from './year-grid.module.css'

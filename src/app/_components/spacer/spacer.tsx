@@ -1,5 +1,3 @@
-'use server'
-
 /**
  *
  * @param size from 000 to 15

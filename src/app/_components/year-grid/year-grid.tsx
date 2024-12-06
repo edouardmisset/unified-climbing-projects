@@ -1,5 +1,3 @@
-'use server'
-
 import type { Temporal } from '@js-temporal/polyfill'
 import { DaysColumn } from './days-column.tsx'
 import { WeeksRow } from './weeks-row.tsx'
