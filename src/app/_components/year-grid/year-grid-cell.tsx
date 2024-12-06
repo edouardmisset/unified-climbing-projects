@@ -1,6 +1,8 @@
-import type { Temporal } from '@js-temporal/polyfill'
+import { Temporal } from '@js-temporal/polyfill'
 
 import styles from './year-grid.module.css'
+
+const today = Temporal.Now.plainDateTimeISO()
 
 export async function YearGridCell({
   date,
@@ -24,7 +26,11 @@ export async function YearGridCell({
         gridRow: date.dayOfWeek + 1,
         backgroundColor,
         color: foreColor,
+        outline: date.toPlainDate().equals(today.toPlainDate())
+          ? '2px solid var(--color-light)'
+          : 'none',
       }}
+      tabIndex={0}
     >
       {shortText}
     </i>

@@ -8,8 +8,8 @@
 
 .yearGrid {
   --gap: 1px;
-  --cell-color: hsla(0deg 0% 50% / 0.5);
-  --text-color: #000;
+  --cell-color: var(--gray-5, hsla(0deg 0% 50% / 0.5));
+  --text-color: var(--gray-10, black);
 
   --border-color: currentColor;
   --border-width: 1px;
@@ -28,14 +28,15 @@
 }
 
 .yearGridCell {
-  font-size: 0.5rem;
-
-  block-size: 1rem;
+  block-size: var(--size-3);
   aspect-ratio: 1 / 1;
+
+  font-size: var(--font-size-00);
+  display: grid;
+  place-items: center;
 
   color: var(--text-color, #000);
   background-color: var(--cell-color, hsla(0 0% 50% / 0.5));
-  text-align: center;
 
   border-width: var(--border-width, 1px);
   border-style: solid;
