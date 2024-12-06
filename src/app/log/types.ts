@@ -17,7 +17,7 @@ import {
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
 
-export const _1To9999RegEx = /^[1-9999]$/
+export const _1To9999RegEx = /^([1-9][0-9]{0,3})$/
 export const _0To100RegEx = /^0*(?:[1-9][0-9]?|100)$/
 export const _0To5RegEx = /^[0-5]$/
 
@@ -27,7 +27,6 @@ const optionalGradeToNumberSchema = gradeSchema
 const numberOfTriesSchema = z
   .string()
   .min(1)
-  .max(MAX_TRIES.toString().length)
   .refine(val => _1To9999RegEx.test(val), {
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
