@@ -20,8 +20,8 @@ export async function CragSummary({
     )
     .slice(0, 4)
     .map(([crag, count]) => {
-      const text = `${crag} (${count})`
-      return <li key={text}>{text}</li>
+      const text = `${count} - ${crag}`
+      return <span key={text}>{text}</span>
     })
   return (
     <div id="crags">
@@ -36,7 +36,7 @@ export async function CragSummary({
         <p>{numberOfSimilarCrags} crags with similar names</p>
       )}
       <p>Most climbed crags:</p>
-      <ol>{mostClimbedCrag}</ol>
+      <div>{mostClimbedCrag}</div>
     </div>
   )
 }
