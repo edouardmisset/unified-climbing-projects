@@ -132,7 +132,7 @@ export default function Log(): React.JSX.Element {
           />
         </label>
         <label htmlFor="climbingDiscipline" className={styles.label}>
-          Route, Boulder or Multi-Pitch
+          Climbing Discipline
           <select
             id="climbingDiscipline"
             className={styles.input}
