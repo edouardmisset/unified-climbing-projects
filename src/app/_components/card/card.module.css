@@ -7,7 +7,7 @@
 
   padding: var(--size-6);
 
-  border-radius: var(--radius-conditional-4);
+  border-radius: var(--radius-conditional-3);
 
   background-color: color-mix(in oklab, var(--indigo-4) 30%, transparent 70%);
 

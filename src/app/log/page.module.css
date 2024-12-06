@@ -13,7 +13,7 @@
   flex-direction: column;
   gap: 0.5em;
 
-  border-radius: var(--radius-conditional-4);
+  border-radius: var(--radius-conditional-3);
 
   overflow: scroll;
 
