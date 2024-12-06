@@ -21,7 +21,7 @@
   margin-inline: auto;
 
   padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
-  padding-block: clamp(var(--size-1), 5vw, var(--size-3));
+  padding-block: var(--size-fluid-2);
   background-color: var(--surface-1);
 }
 
