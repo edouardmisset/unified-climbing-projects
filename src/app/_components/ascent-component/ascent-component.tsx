@@ -1,5 +1,6 @@
 import type { Ascent } from '~/schema/ascent'
 
+import Link from 'next/link'
 import { createAscentTooltip } from '~/helpers/tooltips.ts'
 import styles from './ascent-component.module.css'
 
@@ -11,8 +12,8 @@ export function AscentComponent({
 
   // TODO: this should be a link sending to the ascent page (/ascents/:id) ?
   return (
-    <span title={tooltip} className={styles.span}>
+    <Link title={tooltip} className={styles.container} href={''}>
       {ascent.routeName} {showGrade ? `(${ascent.topoGrade})` : ''}
-    </span>
+    </Link>
   )
 }
