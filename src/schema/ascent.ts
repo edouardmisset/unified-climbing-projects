@@ -167,23 +167,23 @@ export const holdsFromGS = [
  * 'Positive' and Volume are a hold type that don't really exist in outdoor climbing.
  */
 export const holds = [
-  'Jug',
-  'Sloper',
-  'Pocket',
-  'Pinch',
   'Crimp',
+  'Jug',
+  'Pocket',
+  'Sloper',
+  'Pinch',
   'Crack',
   'Undercling',
 ] as const
 
-const profiles = [
-  'Dihedral',
-  'Slab',
+export const profiles = [
   'Vertical',
   'Overhang',
-  'Arête',
-  'Traverse',
+  'Slab',
   'Roof',
+  'Arête',
+  'Dihedral',
+  'Traverse',
 ] as const
 
 export const profileSchema = z.enum(profiles)

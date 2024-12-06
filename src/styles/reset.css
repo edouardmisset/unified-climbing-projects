@@ -116,7 +116,7 @@
 /* A elements that don't have a class get default styles */
 :where(a:not([class])) {
   text-decoration-skip-ink: auto;
-  text-underline-offset: 0.25em;
+  text-decoration-thickness: max(0.08em, 1px);
   color: currentColor;
 }
 

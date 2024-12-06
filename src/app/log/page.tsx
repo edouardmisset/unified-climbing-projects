@@ -10,7 +10,7 @@ import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters'
-import { type Grade, _GRADES } from '~/schema/ascent'
+import { type Grade, _GRADES, holds, profiles } from '~/schema/ascent'
 
 import { GradeSlider } from '../_components/slider/slider.tsx'
 import {
@@ -230,22 +230,35 @@ export default function Log(): React.JSX.Element {
             {...register('holds')}
             id="holds"
             className={styles.input}
-            placeholder="Hold types (crimps, jugs, underclings, pockets...)"
+            placeholder={`Hold types (${holds.slice(0, 3).join(', ')}, ...)`}
             title="Hold type"
             type="text"
+            list="hold-types"
           />
         </label>
+        <datalist id="hold-types">
+          {holds.map(hold => (
+            <option key={hold} value={hold} />
+          ))}
+        </datalist>
+
         <label htmlFor="profile" className={styles.label}>
           Profile
           <input
             {...register('profile')}
             id="profile"
             className={styles.input}
-            placeholder="Route's profile (vertical, slab, overhang...)"
+            placeholder={`Route's profile (${profiles.slice(0, 3).join(', ')}, ...)`}
             title="Profile of the route"
             type="text"
+            list="profile-types"
           />
         </label>
+        <datalist id="profile-types">
+          {profiles.map(profile => (
+            <option key={profile} value={profile} />
+          ))}
+        </datalist>
         <label htmlFor="height" className={styles.label}>
           Height (m)
           <input

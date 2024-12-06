@@ -1,10 +1,9 @@
 .span {
-  display: inline-block;
-
   font-family: var(--font-didone);
   font-size: var(--font-size-3);
   font-weight: var(--font-weight-9);
+
   background: var(--gradient-13);
-  background-clip: text;
   color: transparent;
+  background-clip: text;
 }
