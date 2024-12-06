@@ -102,6 +102,12 @@ text {
   white-space: pre;
 }
 
+/* Invalid inputs */
+
+input:invalid {
+  outline: var(--border-size-2) solid var(--red-8);
+}
+
 /** Intrinsic Container */
 .intrinsic-container {
   --container-max: 60ch;
