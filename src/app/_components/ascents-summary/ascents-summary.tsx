@@ -1,4 +1,4 @@
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
 import { AscentComponent } from '../ascent-component/ascent-component.tsx'
 import { AscentsAndDays } from '../ascents-and-days/ascents-and-days.tsx'
 
@@ -19,7 +19,9 @@ export async function AscentsSummary({
   const numberOfDuplicateAscents = duplicateAscents.length
   const latestAscent = ascents.at(0) as Ascent
   const numberOfDays = new Set(
-    ascents.map(({ date }) => date.toPlainDate().toString()),
+    ascents.map(({ date }) =>
+      parseISODateToTemporal(date).toPlainDate().toString(),
+    ),
   ).size
   return (
     <div id="ascents">

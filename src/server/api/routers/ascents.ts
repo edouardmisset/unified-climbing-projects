@@ -5,7 +5,11 @@ import { removeAccents, stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { boolean, number, string, z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
-import { type Ascent, climbingDisciplineSchema } from '~/schema/ascent'
+import {
+  type Ascent,
+  climbingDisciplineSchema,
+  parseISODateToTemporal,
+} from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
@@ -68,7 +72,7 @@ export const ascentsRouter = createTRPCRouter({
         {
           value: yearFilter,
           compare: (left: Ascent['date'], right: Ascent['date']) =>
-            left.equals(right),
+            parseISODateToTemporal(left).equals(parseISODateToTemporal(right)),
           key: 'date',
         },
         {
@@ -92,7 +96,11 @@ export const ascentsRouter = createTRPCRouter({
         ({ date: leftDate }, { date: rightDate }) =>
           leftDate === rightDate
             ? 0
-            : leftDate.until(rightDate).sign * -1 * (dateIsDescending ? -1 : 1),
+            : parseISODateToTemporal(leftDate).until(
+                parseISODateToTemporal(rightDate),
+              ).sign *
+              -1 *
+              (dateIsDescending ? -1 : 1),
       )
       const sortedAscents =
         sortFields === undefined

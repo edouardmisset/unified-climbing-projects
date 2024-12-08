@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type React from 'react'
 import { cloneElement } from 'react'
-import type { TemporalDateTime } from '~/types/generic'
+import type { StringDateTime } from '~/types/generic'
 import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
@@ -14,14 +14,14 @@ const imageEnd = gridSize - imageSize + 2
 type Obj = Record<string, unknown>
 
 type MainQRCodeProps<T extends Obj> = {
-  data: (TemporalDateTime & T)[]
+  data: (StringDateTime & T)[]
   children?: React.JSX.Element
 }
 
 type QRCodeProps<T extends Obj> = MainQRCodeProps<T> &
   (
     | {
-        itemRender: (item: TemporalDateTime & T) => React.ReactNode
+        itemRender: (item: StringDateTime & T) => React.ReactNode
       }
     | { field: keyof T }
   )

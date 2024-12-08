@@ -1,10 +1,9 @@
-import type { Temporal } from '@js-temporal/polyfill'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
   ascents.length > 0 && ascents[0] !== undefined
-    ? `Week # ${ascents[0].date.weekOfYear.toString()}
+    ? `Week # ${parseISODateToTemporal(ascents[0].date).weekOfYear.toString()}
 Ascents (${ascents.length}):
 ${ascents
   .map(
@@ -20,7 +19,7 @@ export const createTrainingBarCodeTooltip = (
   sessions: TrainingSession[],
 ): string =>
   sessions.length > 0 && sessions[0] !== undefined
-    ? `Week # ${sessions[0].date.weekOfYear.toString()}
+    ? `Week # ${parseISODateToTemporal(sessions[0].date).weekOfYear.toString()}
 # Training (${sessions.length}):
 ${sessions
   .map(
@@ -71,11 +70,14 @@ export const createTrainingQRTooltip = (
     volume,
   } = trainingSession
 
-  const localeDate = `📅 ${date.toLocaleString(undefined, {
-    day: 'numeric',
-    weekday: 'long',
-    month: 'long',
-  })}`
+  const localeDate = `📅 ${parseISODateToTemporal(date).toLocaleString(
+    undefined,
+    {
+      day: 'numeric',
+      weekday: 'long',
+      month: 'long',
+    },
+  )}`
   const cragEmoji = createCragEmoji({ gymCrag, climbingDiscipline })
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''
@@ -152,8 +154,8 @@ function createCragEmoji({
     : `\t${createClimbingDisciplineEmoji(climbingDiscipline)} ${gymCrag}`
 }
 
-export function formattedDate<T>(data: T & { date: Temporal.PlainDateTime }) {
-  return `📅 ${data.date.toLocaleString(undefined, {
+export function formattedDate<T>(data: T & { date: string }) {
+  return `📅 ${parseISODateToTemporal(data.date).toLocaleString(undefined, {
     day: 'numeric',
     weekday: 'long',
     month: 'long',

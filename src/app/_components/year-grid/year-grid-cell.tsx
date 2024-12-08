@@ -1,5 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill'
 
+import { parseISODateToTemporal } from '~/schema/ascent'
 import styles from './year-grid.module.css'
 
 const today = Temporal.Now.plainDateTimeISO()
@@ -11,22 +12,23 @@ export async function YearGridCell({
   foreColor,
   shortText,
 }: {
-  date: Temporal.PlainDateTime
+  date: string
   tooltip: string
   backgroundColor: string
   foreColor: string
   shortText?: string
 }) {
+  const temporal = parseISODateToTemporal(date)
   return (
     <i
       title={tooltip}
       className={styles.yearGridCell}
       style={{
-        gridColumn: date.weekOfYear + 1,
-        gridRow: date.dayOfWeek + 1,
+        gridColumn: temporal.weekOfYear + 1,
+        gridRow: temporal.dayOfWeek + 1,
         backgroundColor,
         color: foreColor,
-        outline: date.toPlainDate().equals(today.toPlainDate())
+        outline: temporal.toPlainDate().equals(today.toPlainDate())
           ? '2px solid var(--color-light)'
           : 'none',
       }}

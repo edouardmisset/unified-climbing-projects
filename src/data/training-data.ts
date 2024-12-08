@@ -1,28 +1,31 @@
-import type { TemporalDateTime } from '~/types/generic'
+import type { StringDateTime } from '~/types/generic'
 
+import { parseISODateToTemporal } from '~/schema/ascent.ts'
 import type { TrainingSession } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data.ts'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
 const getTrainingYears = (trainingSessions: TrainingSession[]) =>
-  [...new Set(trainingSessions.map(({ date }) => date.year))].reverse()
+  [
+    ...new Set(
+      trainingSessions.map(({ date }) => parseISODateToTemporal(date).year),
+    ),
+  ].reverse()
 
 const getTrainingCollection: (
   trainingSessions: TrainingSession[],
-) => Record<number, (TemporalDateTime & TrainingSession)[]> = (
+) => Record<number, (StringDateTime & TrainingSession)[]> = (
   trainingSessions: TrainingSession[],
 ) => createEmptyYearlyCollections(getTrainingYears(trainingSessions))
 
 export const getYearTraining = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
     (acc, trainingSession) => {
-      const {
-        date: { year },
-      } = trainingSession
+      const { year, dayOfYear } = parseISODateToTemporal(trainingSession.date)
 
       if (acc[year] === undefined) return acc
 
-      acc[year][trainingSession.date.dayOfYear - 1] = trainingSession
+      acc[year][dayOfYear - 1] = trainingSession
       return acc
     },
     { ...getTrainingCollection(trainingSessions) },
@@ -31,9 +34,7 @@ export const getYearTraining = (trainingSessions: TrainingSession[]) =>
 export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
     (accumulator, training) => {
-      const {
-        date: { year, weekOfYear },
-      } = training
+      const { year, weekOfYear } = parseISODateToTemporal(training.date)
 
       const weekTrainingSessions = accumulator[year]?.[weekOfYear]
 

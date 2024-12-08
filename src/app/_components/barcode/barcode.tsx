@@ -1,5 +1,6 @@
 import type React from 'react'
-import type { TemporalDateTime } from '~/types/generic'
+import { parseISODateToTemporal } from '~/schema/ascent'
+import type { StringDateTime } from '~/types/generic'
 
 export const minBarWidth = 4
 export const maxBarWidth = 2.5 * minBarWidth
@@ -7,14 +8,14 @@ export const maxBarWidth = 2.5 * minBarWidth
 type Obj = Record<string, unknown>
 
 type MainBarCodeProps<T extends Obj> = {
-  data: ((TemporalDateTime & T) | undefined)[][]
+  data: ((StringDateTime & T) | undefined)[][]
 }
 
 type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
   (
     | {
         itemRender: (
-          item: ((TemporalDateTime & T) | undefined)[],
+          item: ((StringDateTime & T) | undefined)[],
           index: number,
         ) => React.JSX.Element
       }
@@ -47,16 +48,23 @@ export default function Barcode<T extends Obj>(
       >
         {'itemRender' in props
           ? data.map(props.itemRender)
-          : data.map(elements => (
-              <span
-                key={elements[0]?.date.weekOfYear}
-                style={{
-                  backgroundColor: elements[0]?.[props.field]
-                    ? 'black'
-                    : 'white',
-                }}
-              />
-            ))}
+          : data.map((elements, index) => {
+              const firstElementDate = elements[0]?.date
+              return (
+                <span
+                  key={
+                    firstElementDate
+                      ? parseISODateToTemporal(firstElementDate).weekOfYear
+                      : index
+                  }
+                  style={{
+                    backgroundColor: elements[0]?.[props.field]
+                      ? 'black'
+                      : 'white',
+                  }}
+                />
+              )
+            })}
       </div>
     </div>
   )

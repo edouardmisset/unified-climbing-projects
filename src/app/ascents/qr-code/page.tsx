@@ -4,6 +4,7 @@ import { getYearAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
+import { parseISODateToTemporal } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 
 export default async function Page() {
@@ -33,8 +34,9 @@ export default async function Page() {
                     return (
                       <i
                         key={
-                          String(ascentDay.date.dayOfYear) +
-                          ascentDay.ascents?.[0]?.routeName
+                          String(
+                            parseISODateToTemporal(ascentDay.date).dayOfYear,
+                          ) + ascentDay.ascents?.[0]?.routeName
                         }
                         style={{
                           backgroundColor:

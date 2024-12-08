@@ -3,6 +3,7 @@ import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
+import { parseISODateToTemporal } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import type { TrainingSession } from '~/types/training'
 
@@ -24,8 +25,9 @@ export default async function Page() {
                 itemRender={(trainingSession: TrainingSession) => (
                   <i
                     key={
-                      String(trainingSession.date.dayOfYear) +
-                      trainingSession.date.toString()
+                      parseISODateToTemporal(
+                        trainingSession.date,
+                      ).dayOfYear.toString() + trainingSession.date
                     }
                     style={{
                       backgroundColor: convertSessionTypeToBackgroundColor(

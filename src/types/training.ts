@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill'
 import { number, string, z } from 'zod'
 
 const sessionTypeSchema = z.enum([
@@ -25,16 +24,7 @@ export const climbingDisciplineSchema = z.enum([
   'Multi-Pitch',
 ])
 export const trainingSessionSchema = z.object({
-  date: string()
-    .min(1)
-    .datetime()
-    .transform(stringDate => {
-      const d = new Date(stringDate)
-      return Temporal.PlainDateTime.from(
-        { day: d.getDate(), month: d.getMonth() + 1, year: d.getFullYear() },
-        { overflow: 'reject' },
-      )
-    }),
+  date: string().min(1).datetime(),
   sessionType: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
   anatomicalRegion: z.enum(['Ar', 'Fi', 'Ge']).optional(),

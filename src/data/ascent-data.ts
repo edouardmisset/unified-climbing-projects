@@ -1,29 +1,32 @@
 import { Temporal } from '@js-temporal/polyfill'
-import type { Ascent } from '~/schema/ascent'
-import type { TemporalDateTime } from '~/types/generic'
+import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
+import type { StringDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
 export const createYearList = <T extends Record<string, unknown>>(
-  data: (T & { date: Temporal.PlainDateTime })[],
-) => [...new Set(data.map(({ date }) => date.year))].reverse()
+  data: (T & { date: string })[],
+) =>
+  [
+    ...new Set(data.map(({ date }) => parseISODateToTemporal(date).year)),
+  ].reverse()
 
 const getAscentsCollection: (
   ascents: Ascent[],
-) => Record<number, (TemporalDateTime & { ascents?: Ascent[] })[]> = (
+) => Record<number, (StringDateTime & { ascents?: Ascent[] })[]> = (
   ascents: Ascent[],
 ) => createEmptyYearlyCollections(createYearList(ascents))
 
 export const getYearAscentPerDay = (ascents: Ascent[]) =>
   ascents.reduce(
     (acc, ascent) => {
-      const { date } = ascent
+      const date = parseISODateToTemporal(ascent.date)
       const { year, dayOfYear } = date
       const thisDay = acc[year]?.[dayOfYear - 1]
 
       if (acc[year] === undefined) return acc
 
       acc[year][dayOfYear - 1] = {
-        date,
+        date: date.toString(),
         ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
       }
       return acc
@@ -32,7 +35,7 @@ export const getYearAscentPerDay = (ascents: Ascent[]) =>
   )
 
 export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
-  data: (T & { date: Temporal.PlainDateTime })[],
+  data: (T & { date: string })[],
 ) =>
   Object.fromEntries(
     createYearList(data).map(year => {
@@ -48,9 +51,7 @@ export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
 export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>
   ascents.reduce(
     (accumulator, ascent) => {
-      const {
-        date: { year, weekOfYear },
-      } = ascent
+      const { year, weekOfYear } = parseISODateToTemporal(ascent.date)
 
       const weekAscents = accumulator[year]?.[weekOfYear]
 

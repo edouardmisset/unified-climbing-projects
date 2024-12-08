@@ -6,7 +6,12 @@ import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters'
-import { type Ascent, type Grade, ascentSchema } from '~/schema/ascent'
+import {
+  type Ascent,
+  type Grade,
+  ascentSchema,
+  parseISODateToTemporal,
+} from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
@@ -22,7 +27,11 @@ async function getFilteredAscents(
         ? true
         : ascent.climbingDiscipline === climbingDiscipline,
     )
-    .filter(ascent => (year === undefined ? true : ascent.date.year === year))
+    .filter(ascent =>
+      year === undefined
+        ? true
+        : parseISODateToTemporal(ascent.date).year === year,
+    )
 }
 
 export const gradesRouter = createTRPCRouter({

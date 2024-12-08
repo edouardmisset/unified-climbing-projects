@@ -1,11 +1,10 @@
-import type { Temporal } from '@js-temporal/polyfill'
 import { DaysColumn } from './days-column.tsx'
 import { WeeksRow } from './weeks-row.tsx'
 import { YearGridCell } from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
 
 type DayDescriptor = {
-  date: Temporal.PlainDateTime
+  date: string
   backgroundColor: string
   foreColor: string
   tooltip: string

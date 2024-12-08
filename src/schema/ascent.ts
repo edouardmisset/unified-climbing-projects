@@ -200,18 +200,7 @@ export const ascentSchema = z.object({
   comments: optionalStringSchema,
   crag: string().min(1),
   date: string() // ISO 8601 date format
-    .datetime()
-    .transform(stringDate => {
-      const d = new Date(stringDate)
-      return Temporal.PlainDateTime.from(
-        {
-          day: d.getDate(),
-          month: d.getMonth() + 1,
-          year: d.getFullYear(),
-        },
-        { overflow: 'reject' },
-      )
-    }),
+    .datetime(),
   region: optionalStringSchema,
   height: number().min(0).optional(),
   holds: holdsSchema.optional(),
@@ -225,3 +214,17 @@ export const ascentSchema = z.object({
   id: number().min(0),
 })
 export type Ascent = z.infer<typeof ascentSchema>
+
+export function parseISODateToTemporal(
+  stringDate: string,
+): Temporal.PlainDateTime {
+  const d = new Date(stringDate)
+  return Temporal.PlainDateTime.from(
+    {
+      day: d.getDate(),
+      month: d.getMonth() + 1,
+      year: d.getFullYear(),
+    },
+    { overflow: 'reject' },
+  )
+}

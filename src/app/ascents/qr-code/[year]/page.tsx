@@ -3,6 +3,7 @@ import { getYearAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
+import { parseISODateToTemporal } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 
 export default async function Page(props: {
@@ -33,7 +34,7 @@ export default async function Page(props: {
           const hardestAscent = ascentDay?.ascents?.at(0)
           return (
             <span
-              key={ascentDay.date.dayOfYear}
+              key={parseISODateToTemporal(ascentDay.date).dayOfYear}
               style={{
                 backgroundColor:
                   hardestAscent === undefined

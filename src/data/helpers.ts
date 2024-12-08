@@ -1,9 +1,9 @@
 import { Temporal } from '@js-temporal/polyfill'
-import type { TemporalDateTime } from '~/types/generic'
+import type { StringDateTime } from '~/types/generic'
 
 export function createEmptyYearlyCollections(
   listOfYears: number[],
-): Record<number, TemporalDateTime[]> {
+): Record<number, StringDateTime[]> {
   return Object.fromEntries(
     listOfYears.map(year => {
       const daysPerYear = Temporal.PlainDateTime.from({
@@ -21,7 +21,9 @@ export function createEmptyYearlyCollections(
               day: 1,
               month: 1,
               year,
-            }).add({ days: i }),
+            })
+              .add({ days: i })
+              .toString(),
           })),
       ]
     }),
