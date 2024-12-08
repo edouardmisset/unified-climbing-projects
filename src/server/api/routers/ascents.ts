@@ -172,4 +172,18 @@ export const ascentsRouter = createTRPCRouter({
         ...result.obj,
       }))
     }),
+  getById: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const ascents = await getAllAscents()
+      const foundAscent = ascents.find(ascent => ascent.id === input.id)
+      if (foundAscent === undefined) {
+        return { error: 'Not found' }
+      }
+      return foundAscent
+    }),
 })

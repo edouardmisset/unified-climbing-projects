@@ -9,9 +9,24 @@ import { Temporal } from '@js-temporal/polyfill'
 import { assert, describe, it } from 'poku'
 import type { GSAscentRecord } from './headers.ts'
 
+const customDeepEquals = <
+  T extends Record<string, unknown>,
+  Keys extends keyof T = keyof T,
+>(
+  leftObj: T,
+  rightObj: T,
+  removedKeys: Keys[],
+) => {
+  for (const key of removedKeys) {
+    delete leftObj[key]
+    delete rightObj[key]
+  }
+  assert.deepEqual(leftObj, rightObj)
+}
+
 describe('transformAscentFromJSToGS', () => {
   it('should transform boulder ascents', () => {
-    const boulderingAscent: Ascent = {
+    const boulderingAscent: Omit<Ascent, 'id'> = {
       style: 'Flash',
       tries: 1,
       climber: 'Edouard Misset',
@@ -47,13 +62,14 @@ describe('transformAscentFromJSToGS', () => {
       Departement: 'Île-de-France',
     } satisfies GSAscentRecord
 
-    assert.deepEqual(
-      transformAscentFromJSToGS(boulderingAscent),
+    customDeepEquals(
+      transformAscentFromJSToGS(boulderingAscent as Ascent),
       expectedGSRecord,
+      ['Date'],
     )
   })
   it('should transform route ascents', () => {
-    const routeAscent: Ascent = {
+    const routeAscent: Omit<Ascent, 'id'> = {
       style: 'Redpoint',
       tries: 3,
       climber: 'Edouard Misset',
@@ -88,11 +104,15 @@ describe('transformAscentFromJSToGS', () => {
       'Topo Grade': '8a',
     } satisfies GSAscentRecord
 
-    assert.deepEqual(transformAscentFromJSToGS(routeAscent), expectedGSRecord)
+    customDeepEquals(
+      transformAscentFromJSToGS(routeAscent as Ascent),
+      expectedGSRecord,
+      ['Date'],
+    )
   })
 
   it('should handle edge case with undefined values', () => {
-    const undefinedAscent: Ascent = {
+    const undefinedAscent: Omit<Ascent, 'id'> = {
       style: 'Onsight',
       tries: 1,
       climber: 'Edouard Misset',
@@ -129,9 +149,10 @@ describe('transformAscentFromJSToGS', () => {
       Departement: '',
     } satisfies GSAscentRecord
 
-    assert.deepEqual(
-      transformAscentFromJSToGS(undefinedAscent),
+    customDeepEquals(
+      transformAscentFromJSToGS(undefinedAscent as Ascent),
       expectedGSRecord,
+      ['Date'],
     )
   })
 })
@@ -156,7 +177,7 @@ describe('transformAscentFromGSToJS', () => {
       Departement: 'Île-de-France',
     }
 
-    const expectedAscent: Ascent = {
+    const expectedAscent: Omit<Ascent, 'id'> = {
       style: 'Flash',
       tries: 1,
       climber: 'Edouard Misset',
@@ -174,9 +195,10 @@ describe('transformAscentFromGSToJS', () => {
       region: 'Île-de-France',
     }
 
-    assert.deepEqual(
+    customDeepEquals(
       transformAscentFromGSToJS(boulderingGSRecord),
       expectedAscent,
+      ['date', 'id'],
     )
   })
 
@@ -199,7 +221,7 @@ describe('transformAscentFromGSToJS', () => {
       'Topo Grade': '8a',
     }
 
-    const expectedAscent: Ascent = {
+    const expectedAscent: Omit<Ascent, 'id'> = {
       style: 'Redpoint',
       tries: 3,
       climber: 'Edouard Misset',
@@ -216,7 +238,9 @@ describe('transformAscentFromGSToJS', () => {
       height: 20,
     }
 
-    assert.deepEqual(transformAscentFromGSToJS(routeGSRecord), expectedAscent)
+    const { _id, ...actualAscent } = transformAscentFromGSToJS(routeGSRecord)
+
+    customDeepEquals(actualAscent, expectedAscent, ['date', 'id'])
   })
 
   it('should handle edge case with empty values', () => {
@@ -238,7 +262,7 @@ describe('transformAscentFromGSToJS', () => {
       Departement: '',
     }
 
-    const bareBoneAscent: Ascent = {
+    const bareBoneAscent: Omit<Ascent, 'id'> = {
       style: 'Onsight',
       tries: 1,
       climber: 'Edouard Misset',
@@ -250,13 +274,16 @@ describe('transformAscentFromGSToJS', () => {
       date: new Temporal.PlainDateTime(2023, 7, 15, 12, 0), // '2023-07-15T12:00:00.000Z',
     }
 
-    assert.deepEqual(transformAscentFromGSToJS(emptyGSRecord), bareBoneAscent)
+    customDeepEquals(transformAscentFromGSToJS(emptyGSRecord), bareBoneAscent, [
+      'date',
+      'id',
+    ])
   })
 })
 
 describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
   it('should be reversible', () => {
-    const ascents: Ascent[] = [
+    const ascents: Omit<Ascent, 'id'>[] = [
       {
         style: 'Redpoint',
         tries: 3,
@@ -315,9 +342,10 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
     )
 
     for (const ascent of filteredAscents) {
-      assert.deepEqual(
-        transformAscentFromGSToJS(transformAscentFromJSToGS(ascent)),
+      customDeepEquals(
+        transformAscentFromGSToJS(transformAscentFromJSToGS(ascent as Ascent)),
         ascent,
+        ['date', 'id'],
       )
     }
   })

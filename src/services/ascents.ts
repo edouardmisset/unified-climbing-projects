@@ -18,7 +18,10 @@ export async function getAscentsFromDB(): Promise<Ascent[]> {
   const allAscentsSheet = await loadWorksheet('ascents')
   const rows = await allAscentsSheet.getRows()
 
-  const rawAscents = rows.map(row => transformAscentFromGSToJS(row.toObject()))
+  const rawAscents = rows.map((row, index) => ({
+    ...transformAscentFromGSToJS(row.toObject()),
+    id: index,
+  }))
 
   return ascentSchema.array().parse(rawAscents)
 }

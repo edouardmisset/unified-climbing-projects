@@ -222,5 +222,6 @@ export const ascentSchema = z.object({
   style: z.enum(ascentStyle),
   topoGrade: gradeSchema,
   tries: number().int().min(1),
+  id: number().min(0),
 })
 export type Ascent = z.infer<typeof ascentSchema>

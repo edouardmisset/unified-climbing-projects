@@ -35,7 +35,7 @@ export function transformAscentFromGSToJS(
   rawAscent: Record<string, string>,
 ): Record<string, string | number | boolean | Temporal.PlainDateTime> {
   const transformedAscent = Object.entries(rawAscent).reduce(
-    (acc, [key, value]) => {
+    (acc, [key, value], index) => {
       if (value === '') return acc
 
       const transformedKey =
@@ -51,6 +51,7 @@ export function transformAscentFromGSToJS(
           ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
         acc[transformedKey] = transform(value)
       }
+      acc.id = index
       return acc
     },
     {} as Record<string, string | number | boolean | Temporal.PlainDateTime>,
