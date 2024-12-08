@@ -1,9 +1,9 @@
+import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters.ts'
 import type { Ascent, Grade } from '~/schema/ascent'
-import { AscentComponent } from '../ascent-component/ascent-component.tsx'
 
 export async function GradeSummary({
   gradeAverage,

@@ -1,9 +1,9 @@
 'use client'
 
 import { useQueryState } from 'nuqs'
+import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
+import { AscentPyramid } from '~/app/_components/ascents-pyramid/ascent-pyramid'
 import { api } from '~/trpc/react'
-import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
-import { AscentPyramid } from '../ascents-pyramid/ascent-pyramid'
 
 export function Dashboard() {
   const [selectedYear] = useQueryState('year', {

@@ -1,6 +1,6 @@
+import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
+import { AscentsAndDays } from '~/app/_components/ascents-and-days/ascents-and-days'
 import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
-import { AscentComponent } from '../ascent-component/ascent-component.tsx'
-import { AscentsAndDays } from '../ascents-and-days/ascents-and-days.tsx'
 
 export async function AscentsSummary({
   ascents,

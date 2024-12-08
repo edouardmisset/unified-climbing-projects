@@ -12,7 +12,7 @@ import {
 } from '~/helpers/converters'
 import { type Grade, _GRADES, holds, profiles } from '~/schema/ascent'
 
-import { GradeSlider } from '../_components/slider/slider.tsx'
+import { GradeSlider } from '~/app/_components/slider/slider'
 import {
   MAX_HEIGHT,
   MAX_RATING,
