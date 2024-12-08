@@ -34,20 +34,21 @@ type CSVParsedData = {
  * @returns {Promise<CSVParsedData>} - A promise that resolves to an object containing the headers and the parsed data.
  */
 export async function fetchAndParseCSV(url: string): Promise<CSVParsedData> {
+  let response: Response
   try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-
-    const csv = await response.text()
-    const [headers = [''], ...data] = parse(csv)
-    return { headers, data }
+    response = await fetch(url)
   } catch (error) {
     // biome-ignore lint/suspicious/noConsole: <explanation>
-    console.error('An error occurred while fetching and parsing data:', error)
+    globalThis.console.error('An error occurred while fetching data:', error)
     throw error
   }
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const csv = await response.text()
+  const [headers = [''], ...data] = parse(csv)
+  return { headers, data }
 }
 
 /**
@@ -161,7 +162,8 @@ export async function processCsvDataFromUrl({
 
 /**
  * Backup ascent and training data from Google Sheets.
- * @returns {Promise<boolean>} - A promise that resolves to true if the backup was successful, and false otherwise.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the backup
+ * was successful, and false otherwise.
  */
 export async function backupAscentsAndTrainingFromGoogleSheets(): Promise<boolean> {
   try {

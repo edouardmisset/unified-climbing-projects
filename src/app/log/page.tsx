@@ -35,6 +35,7 @@ const climberAverageGrade: Grade = '7b' // TODO: get this from the api
 
 type GradeSetter = (value: number[]) => void
 
+// TODO: send the data to the API
 const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
   try {
     const _parsedData = ascentFormOutputSchema.parse(formData)
