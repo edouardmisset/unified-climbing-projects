@@ -1,5 +1,5 @@
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { getSeasonsAscentsPerWeek } from '~/data/ascent-data'
+import { getYearsAscentsPerWeek } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
@@ -12,7 +12,7 @@ export default async function Page(props: {
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscentsPerWeek = getSeasonsAscentsPerWeek(ascents)[year]
+  const selectedAscentsPerWeek = getYearsAscentsPerWeek(ascents)[year]
 
   if (selectedAscentsPerWeek === undefined)
     return <span>No Data found for this year</span>

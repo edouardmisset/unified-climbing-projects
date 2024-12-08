@@ -1,4 +1,4 @@
-import { getSeasonsTrainingPerWeek } from '~/data/training-data'
+import { getYearsTrainingPerWeek } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
@@ -11,7 +11,7 @@ export default async function Page(props: {
 
   const trainingSessions = await api.training.getAllTrainingSessions()
 
-  const selectedTraining = getSeasonsTrainingPerWeek(trainingSessions)[year]
+  const selectedTraining = getYearsTrainingPerWeek(trainingSessions)[year]
 
   if (selectedTraining === undefined) return <span>No Data</span>
 

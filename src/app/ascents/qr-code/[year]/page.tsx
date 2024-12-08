@@ -1,5 +1,5 @@
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { getSeasonAscentPerDay } from '~/data/ascent-data'
+import { getYearAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
@@ -12,7 +12,7 @@ export default async function Page(props: {
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscents = getSeasonAscentPerDay(ascents)[Number(year)]
+  const selectedAscents = getYearAscentPerDay(ascents)[Number(year)]
 
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>

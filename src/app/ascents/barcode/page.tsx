@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { createSeasons, getSeasonsAscentsPerWeek } from '~/data/ascent-data'
+import { createYearList, getYearsAscentsPerWeek } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
@@ -17,17 +17,17 @@ export default async function Page() {
         gap: '1rem',
       }}
     >
-      {Object.values(getSeasonsAscentsPerWeek(ascents))
-        .map((seasonAscents, i) => {
-          const seasons = createSeasons(ascents)
-          const year = seasons[seasons.length - 1 - i]?.toString() ?? ''
+      {Object.values(getYearsAscentsPerWeek(ascents))
+        .map((yearAscents, i) => {
+          const yearList = createYearList(ascents)
+          const year = yearList[yearList.length - 1 - i]?.toString() ?? ''
           return (
             <div key={year} className="flex-column w100">
               <h1 className="center-text">
                 <Link href={`/ascents/barcode/${year}`}>{year}</Link>
               </h1>
               <Barcode
-                data={seasonAscents}
+                data={yearAscents}
                 itemRender={(weeklyAscents, index) => {
                   const barWidth = weeklyAscents.length
 

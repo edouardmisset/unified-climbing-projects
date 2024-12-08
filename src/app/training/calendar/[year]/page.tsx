@@ -3,7 +3,7 @@ import { YearGrid } from '~/app/_components/year-grid/year-grid'
 import Color from 'colorjs.io'
 import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
-import { getSeasonTraining } from '~/data/training-data'
+import { getYearTraining } from '~/data/training-data'
 import {
   convertSessionTypeToBackgroundColor,
   convertSessionTypeToForeColor,
@@ -21,13 +21,13 @@ export default async function TrainingCalendar(props: {
   const trainingSessions = await api.training.getAllTrainingSessions()
 
   const numberYear = Number(year)
-  const yearSession = getSeasonTraining(trainingSessions)[numberYear]
+  const yearSession = getYearTraining(trainingSessions)[numberYear]
 
   const isDataPresentForPreviousYear = Boolean(
-    getSeasonTraining(trainingSessions)[numberYear - 1],
+    getYearTraining(trainingSessions)[numberYear - 1],
   )
   const isDataPresentForNextYear = Boolean(
-    getSeasonTraining(trainingSessions)[numberYear + 1],
+    getYearTraining(trainingSessions)[numberYear + 1],
   )
 
   const sessionsDescriptions =

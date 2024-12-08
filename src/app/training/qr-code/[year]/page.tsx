@@ -1,5 +1,5 @@
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { getSeasonTraining } from '~/data/training-data'
+import { getYearTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
@@ -13,7 +13,7 @@ export default async function Page(props: {
   const trainingSessions = await api.training.getAllTrainingSessions()
 
   const selectedTrainingSessions =
-    getSeasonTraining(trainingSessions)[Number(year)]
+    getYearTraining(trainingSessions)[Number(year)]
 
   if (selectedTrainingSessions === undefined)
     return <div>No data found for the year {year}</div>

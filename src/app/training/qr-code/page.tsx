@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { getSeasonTraining } from '~/data/training-data'
+import { getYearTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <section className="flex-column w100 ">
       <div className="qr-grid">
-        {Object.entries(getSeasonTraining(trainingSessions))
+        {Object.entries(getYearTraining(trainingSessions))
           .reverse()
           .map(([year, training]) => (
             <div key={year}>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { getSeasonAscentPerDay } from '~/data/ascent-data'
+import { getYearAscentPerDay } from '~/data/ascent-data'
 import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
@@ -12,7 +12,7 @@ export default async function Page() {
     <section className="flex-column w100">
       <h1 className="center-text">Ascents</h1>
       <div className="qr-grid">
-        {Object.entries(getSeasonAscentPerDay(ascents))
+        {Object.entries(getYearAscentPerDay(ascents))
           .reverse()
           .map(([year, ascents]) => {
             const sortedAscents = [...ascents].map(ascentDay => ({

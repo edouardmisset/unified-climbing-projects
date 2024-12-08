@@ -4,16 +4,16 @@ import type { TrainingSession } from '~/types/training'
 import { createEmptyBarcodeCollection } from './ascent-data.ts'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
-const getTrainingSeasons = (trainingSessions: TrainingSession[]) =>
+const getTrainingYears = (trainingSessions: TrainingSession[]) =>
   [...new Set(trainingSessions.map(({ date }) => date.year))].reverse()
 
 const getTrainingCollection: (
   trainingSessions: TrainingSession[],
 ) => Record<number, (TemporalDateTime & TrainingSession)[]> = (
   trainingSessions: TrainingSession[],
-) => createEmptyYearlyCollections(getTrainingSeasons(trainingSessions))
+) => createEmptyYearlyCollections(getTrainingYears(trainingSessions))
 
-export const getSeasonTraining = (trainingSessions: TrainingSession[]) =>
+export const getYearTraining = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
     (acc, trainingSession) => {
       const {
@@ -28,9 +28,7 @@ export const getSeasonTraining = (trainingSessions: TrainingSession[]) =>
     { ...getTrainingCollection(trainingSessions) },
   )
 
-export const getSeasonsTrainingPerWeek = (
-  trainingSessions: TrainingSession[],
-) =>
+export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
     (accumulator, training) => {
       const {

@@ -3,7 +3,7 @@ import type { Ascent } from '~/schema/ascent'
 import type { TemporalDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
-export const createSeasons = <T extends Record<string, unknown>>(
+export const createYearList = <T extends Record<string, unknown>>(
   data: (T & { date: Temporal.PlainDateTime })[],
 ) => [...new Set(data.map(({ date }) => date.year))].reverse()
 
@@ -11,9 +11,9 @@ const getAscentsCollection: (
   ascents: Ascent[],
 ) => Record<number, (TemporalDateTime & { ascents?: Ascent[] })[]> = (
   ascents: Ascent[],
-) => createEmptyYearlyCollections(createSeasons(ascents))
+) => createEmptyYearlyCollections(createYearList(ascents))
 
-export const getSeasonAscentPerDay = (ascents: Ascent[]) =>
+export const getYearAscentPerDay = (ascents: Ascent[]) =>
   ascents.reduce(
     (acc, ascent) => {
       const { date } = ascent
@@ -35,17 +35,17 @@ export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
   data: (T & { date: Temporal.PlainDateTime })[],
 ) =>
   Object.fromEntries(
-    createSeasons(data).map(season => {
+    createYearList(data).map(year => {
       const weeksPerYear = Temporal.PlainDate.from({
-        year: season,
+        year,
         month: 12,
         day: 31,
       }).weekOfYear
-      return [season, Array.from({ length: weeksPerYear }, (): T[] => [])]
+      return [year, Array.from({ length: weeksPerYear }, (): T[] => [])]
     }),
   )
 
-export const getSeasonsAscentsPerWeek = (ascents: Ascent[]) =>
+export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>
   ascents.reduce(
     (accumulator, ascent) => {
       const {

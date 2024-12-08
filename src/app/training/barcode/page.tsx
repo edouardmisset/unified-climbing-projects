@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { createSeasons } from '~/data/ascent-data'
-import { getSeasonsTrainingPerWeek } from '~/data/training-data'
+import { createYearList } from '~/data/ascent-data'
+import { getYearsTrainingPerWeek } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
@@ -19,9 +19,9 @@ export default async function Page() {
         gap: '1rem',
       }}
     >
-      {Object.values(getSeasonsTrainingPerWeek(trainingSessions))
-        .map((seasonTraining, i) => {
-          const trainingYear = createSeasons(trainingSessions)
+      {Object.values(getYearsTrainingPerWeek(trainingSessions))
+        .map((yearTraining, i) => {
+          const trainingYear = createYearList(trainingSessions)
           const year =
             trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
           return (
@@ -30,7 +30,7 @@ export default async function Page() {
                 <Link href={`/training/barcode/${year}`}>{year}</Link>
               </h1>
               <Barcode
-                data={seasonTraining}
+                data={yearTraining}
                 itemRender={(weeklyTraining, index) => {
                   const barWidth = weeklyTraining.length
 
