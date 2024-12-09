@@ -1,7 +1,6 @@
-import { frequency } from '@edouardmisset/array'
 import { average } from '@edouardmisset/math/average.ts'
 
-import { z } from 'zod'
+import { number, string, z } from 'zod'
 import {
   convertGradeToNumber,
   convertNumberToGrade,
@@ -36,18 +35,17 @@ async function getFilteredAscents({
   )
 }
 
+const climbingGradeInputSchema = z
+  .object({
+    'climbing-discipline': ascentSchema.shape.climbingDiscipline.optional(),
+    year: number().optional(),
+    style: ascentSchema.shape.style.optional(),
+  })
+  .optional()
+
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
-    .input(
-      z
-        .object({
-          'climbing-discipline':
-            ascentSchema.shape.climbingDiscipline.optional(),
-          year: z.number().optional(),
-          style: ascentSchema.shape.style.optional(),
-        })
-        .optional(),
-    )
+    .input(climbingGradeInputSchema)
     .query(async ({ input }) => {
       const {
         'climbing-discipline': climbingDiscipline,
@@ -62,15 +60,19 @@ export const gradesRouter = createTRPCRouter({
       return [...new Set(filteredGrades)].sort()
     }),
   getFrequency: publicProcedure
-    .input(
+    .input(climbingGradeInputSchema)
+    .output(
       z
         .object({
-          'climbing-discipline':
-            ascentSchema.shape.climbingDiscipline.optional(),
-          year: z.number().optional(),
-          style: ascentSchema.shape.style.optional(),
+          grade: ascentSchema.shape.topoGrade,
+          Onsight: number(),
+          OnsightColor: string(),
+          Flash: number(),
+          FlashColor: string(),
+          Redpoint: number(),
+          RedpointColor: string(),
         })
-        .optional(),
+        .array(),
     )
     .query(async ({ input }) => {
       const {
@@ -79,27 +81,49 @@ export const gradesRouter = createTRPCRouter({
         style,
       } = input ?? {}
 
-      const filteredGrades = (
-        await getFilteredAscents({ climbingDiscipline, year, style })
-      ).map(({ topoGrade }) => topoGrade)
+      const filteredAscents = await getFilteredAscents({
+        climbingDiscipline,
+        year,
+        style,
+      })
 
-      const gradeNumberTuple = Object.entries(frequency(filteredGrades)).map(
-        ([grade, count]) => [grade, count],
-      ) as [Grade, number][]
+      const sortedFilteredGrades = [
+        ...new Set(filteredAscents.map(({ topoGrade }) => topoGrade)),
+      ].sort()
 
-      return gradeNumberTuple.sort((a, b) => a[0].localeCompare(b[0]))
+      const gradeClimbingStylesCount = sortedFilteredGrades.map(grade => {
+        const filteredAscentsByGrade = filteredAscents.filter(
+          ({ topoGrade }) => topoGrade === grade,
+        )
+
+        return {
+          grade,
+          Onsight: filteredAscentsByGrade.filter(
+            ({ style }) => style === 'Onsight',
+          ).length,
+          OnsightColor: 'var(--green-5)',
+          Flash: filteredAscentsByGrade.filter(({ style }) => style === 'Flash')
+            .length,
+          FlashColor: 'var(--yellow-5)',
+          Redpoint: filteredAscentsByGrade.filter(
+            ({ style }) => style === 'Redpoint',
+          ).length,
+          RedpointColor: 'var(--red-5)',
+        }
+      })
+
+      return gradeClimbingStylesCount as {
+        grade: Grade
+        Onsight: number
+        OnsightColor: string
+        Flash: number
+        FlashColor: string
+        Redpoint: number
+        RedpointColor: string
+      }[]
     }),
   getAverage: publicProcedure
-    .input(
-      z
-        .object({
-          'climbing-discipline':
-            ascentSchema.shape.climbingDiscipline.optional(),
-          year: z.number().optional(),
-          style: ascentSchema.shape.style.optional(),
-        })
-        .optional(),
-    )
+    .input(climbingGradeInputSchema)
     .query(async ({ input }) => {
       const {
         'climbing-discipline': climbingDiscipline,

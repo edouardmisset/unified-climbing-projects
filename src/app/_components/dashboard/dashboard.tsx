@@ -34,15 +34,10 @@ export function Dashboard() {
 
   if (!(data && allAscents)) return <div>Loading...</div>
 
-  const gradeFrequency = data.map(([key, value]) => ({
-    grade: key,
-    number: value,
-  }))
-
   return (
     <>
       <AscentsFilterBar ascents={allAscents} />
-      <AscentPyramid gradeFrequency={gradeFrequency} />
+      <AscentPyramid gradeFrequency={data} />
     </>
   )
 }

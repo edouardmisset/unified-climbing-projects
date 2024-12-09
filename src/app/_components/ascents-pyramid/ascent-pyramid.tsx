@@ -24,13 +24,20 @@ const ascentPyramidTheme = {
     },
   },
 }
-const gradeAxisFormatter = {
-  format: (value: string) => (value.endsWith('+') ? value : `${value} `),
-}
 
 export function AscentPyramid({
   gradeFrequency,
-}: { gradeFrequency: { grade: Grade; number: number }[] }) {
+}: {
+  gradeFrequency: {
+    grade: Grade
+    Onsight: number
+    OnsightColor: string
+    Flash: number
+    FlashColor: string
+    Redpoint: number
+    RedpointColor: string
+  }[]
+}) {
   return (
     <>
       <p>Pyramid of Ascents</p>
@@ -43,22 +50,16 @@ export function AscentPyramid({
         <ResponsiveBar
           theme={ascentPyramidTheme}
           data={gradeFrequency}
-          keys={['number']}
+          keys={['Onsight', 'Flash', 'Redpoint']}
           indexBy="grade"
-          margin={{ right: 40, bottom: 40, left: 40 }}
+          margin={{ bottom: 40, left: 40, top: 20 }}
           padding={0.5}
-          layout="horizontal"
           enableGridY={false}
-          colors="var(--blue-8)"
+          // @ts-ignore
+          colors={({ id, data }) => data[`${id}Color`]}
           animate={true}
           enableLabel={false}
-          tooltipLabel={grade =>
-            `${grade.data.grade} => ${grade.data.number} ascents`
-          }
-          axisLeft={gradeAxisFormatter}
-          axisBottom={{
-            tickRotation: -90,
-          }}
+          motionConfig="slow"
         />
       </div>
     </>
