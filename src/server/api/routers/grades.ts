@@ -15,23 +15,25 @@ import {
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
-async function getFilteredAscents(
-  climbingDiscipline?: Ascent['climbingDiscipline'],
-  year?: number,
-): Promise<Ascent[]> {
+async function getFilteredAscents({
+  climbingDiscipline,
+  year,
+  style,
+}: {
+  climbingDiscipline?: Ascent['climbingDiscipline']
+  year?: number
+  style?: Ascent['style']
+} = {}): Promise<Ascent[]> {
   const ascents = await getAllAscents()
 
-  return ascents
-    .filter(ascent =>
-      climbingDiscipline === undefined
-        ? true
-        : ascent.climbingDiscipline === climbingDiscipline,
-    )
-    .filter(ascent =>
-      year === undefined
-        ? true
-        : parseISODateToTemporal(ascent.date).year === year,
-    )
+  return ascents.filter(
+    ascent =>
+      (climbingDiscipline === undefined ||
+        ascent.climbingDiscipline === climbingDiscipline) &&
+      (year === undefined ||
+        parseISODateToTemporal(ascent.date).year === year) &&
+      (style === undefined || ascent.style === style),
+  )
 }
 
 export const gradesRouter = createTRPCRouter({
@@ -42,14 +44,19 @@ export const gradesRouter = createTRPCRouter({
           'climbing-discipline':
             ascentSchema.shape.climbingDiscipline.optional(),
           year: z.number().optional(),
+          style: ascentSchema.shape.style.optional(),
         })
         .optional(),
     )
     .query(async ({ input }) => {
-      const { 'climbing-discipline': climbingDiscipline, year } = input ?? {}
+      const {
+        'climbing-discipline': climbingDiscipline,
+        year,
+        style,
+      } = input ?? {}
 
       const filteredGrades = (
-        await getFilteredAscents(climbingDiscipline, year)
+        await getFilteredAscents({ climbingDiscipline, year, style })
       ).map(({ topoGrade }) => topoGrade)
 
       return [...new Set(filteredGrades)].sort()
@@ -61,14 +68,19 @@ export const gradesRouter = createTRPCRouter({
           'climbing-discipline':
             ascentSchema.shape.climbingDiscipline.optional(),
           year: z.number().optional(),
+          style: ascentSchema.shape.style.optional(),
         })
         .optional(),
     )
     .query(async ({ input }) => {
-      const { 'climbing-discipline': climbingDiscipline, year } = input ?? {}
+      const {
+        'climbing-discipline': climbingDiscipline,
+        year,
+        style,
+      } = input ?? {}
 
       const filteredGrades = (
-        await getFilteredAscents(climbingDiscipline, year)
+        await getFilteredAscents({ climbingDiscipline, year, style })
       ).map(({ topoGrade }) => topoGrade)
 
       const gradeNumberTuple = Object.entries(frequency(filteredGrades)).map(
@@ -84,14 +96,19 @@ export const gradesRouter = createTRPCRouter({
           'climbing-discipline':
             ascentSchema.shape.climbingDiscipline.optional(),
           year: z.number().optional(),
+          style: ascentSchema.shape.style.optional(),
         })
         .optional(),
     )
     .query(async ({ input }) => {
-      const { 'climbing-discipline': climbingDiscipline, year } = input ?? {}
+      const {
+        'climbing-discipline': climbingDiscipline,
+        year,
+        style,
+      } = input ?? {}
 
       const filteredNumberGrades = (
-        await getFilteredAscents(climbingDiscipline, year)
+        await getFilteredAscents({ climbingDiscipline, year, style })
       ).map(({ topoGrade }) => convertGradeToNumber(topoGrade as Grade))
 
       return convertNumberToGrade(Math.round(average(filteredNumberGrades)))

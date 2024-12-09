@@ -136,12 +136,9 @@ export const gradeSchema = z.enum(_GRADES)
 export type Grade = z.infer<typeof gradeSchema>
 export type BoulderGrade = Uppercase<Grade>
 
-const ascentStyle = ['Onsight', 'Flash', 'Redpoint'] as const
-export const climbingDisciplineSchema = z.enum([
-  'Route',
-  'Boulder',
-  'Multi-Pitch',
-])
+export const ascentStyle = ['Onsight', 'Flash', 'Redpoint'] as const
+export const climbingDiscipline = ['Route', 'Boulder', 'Multi-Pitch'] as const
+export const climbingDisciplineSchema = z.enum(climbingDiscipline)
 
 export const holdsFromGS = [
   'Positive',

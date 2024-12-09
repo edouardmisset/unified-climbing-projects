@@ -1,7 +1,6 @@
 'use client'
 
 import { ResponsiveBar } from '@nivo/bar'
-import { roundToTen } from '~/helpers/tooltips'
 import type { Grade } from '~/schema/ascent'
 
 const ascentPyramidTheme = {
@@ -30,8 +29,8 @@ const gradeAxisFormatter = {
 }
 
 export function AscentPyramid({
-  grades,
-}: { grades: { grade: Grade; number: number }[] }) {
+  gradeFrequency,
+}: { gradeFrequency: { grade: Grade; number: number }[] }) {
   return (
     <>
       <p>Pyramid of Ascents</p>
@@ -43,14 +42,13 @@ export function AscentPyramid({
       >
         <ResponsiveBar
           theme={ascentPyramidTheme}
-          data={grades}
+          data={gradeFrequency}
           keys={['number']}
           indexBy="grade"
           margin={{ right: 40, bottom: 40, left: 40 }}
           padding={0.5}
           layout="horizontal"
           enableGridY={false}
-          maxValue={roundToTen(Math.max(...grades.map(grade => grade.number)))}
           colors="var(--blue-8)"
           animate={true}
           enableLabel={false}
