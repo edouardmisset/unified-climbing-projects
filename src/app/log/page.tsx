@@ -54,22 +54,18 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
   }
 }
 
-// TODO: get intelligent default values from the API
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 
 export default function Log(): React.JSX.Element {
-  const { data: averageGrade } = api.grades.getAverage.useQuery()
-  const { data: mostFrequentHeight } =
+  const { data: averageGrade = '7b' } = api.grades.getAverage.useQuery()
+  const { data: mostFrequentHeight = 20 } =
     api.ascents.getMostFrequentHeight.useQuery()
-  const { data: mostFrequentHold } = api.ascents.getMostFrequentHold.useQuery()
-  const { data: mostFrequentProfile } =
+  const { data: mostFrequentHold = 'Jug' } =
+    api.ascents.getMostFrequentHold.useQuery()
+  const { data: mostFrequentProfile = 'Vertical' } =
     api.ascents.getMostFrequentProfile.useQuery()
   const { data: averageRating = 3 } = api.ascents.getAverageRating.useQuery()
   const { data: averageTries = 1 } = api.ascents.getAverageTries.useQuery()
-
-  // const utils = api.useUtils()
-
-  // average tries per grade
 
   const defaultAscentToParse = {
     routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
@@ -105,7 +101,7 @@ export default function Log(): React.JSX.Element {
       : topoGradeOrNumber
 
   const handleTopoGradeChange: GradeSetter = ([value]) => {
-    const convertedAverageGrade = convertGradeToNumber(averageGrade ?? '1a')
+    const convertedAverageGrade = convertGradeToNumber(averageGrade)
     setValue(
       'topoGrade',
       convertNumberToGrade(
@@ -121,17 +117,12 @@ export default function Log(): React.JSX.Element {
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       ) as any,
     )
-
-    // refetch the average tries
-    // utils.ascents.getAverageTries.refetch({
-    //   grade: convertNumberToGrade(value ?? 0),
-    // })
   }
   const updatePersonalGradeChange: GradeSetter = ([value]) =>
     setValue(
       'personalGrade',
       convertNumberToGrade(
-        value ?? convertGradeToNumber(averageGrade ?? '1a'),
+        value ?? convertGradeToNumber(averageGrade),
         // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
       ) as any,
     )
@@ -265,7 +256,7 @@ export default function Log(): React.JSX.Element {
             {...register('profile')}
             id="profile"
             className={styles.input}
-            placeholder={`Route's profile (${profiles.slice(0, 3).join(', ')}, ...)`}
+            placeholder={`Route's profile (${profiles.slice(0, 2).join(', ')}, ...)`}
             title="Profile of the route"
             type="text"
             list="profile-types"
@@ -285,7 +276,7 @@ export default function Log(): React.JSX.Element {
             step={5}
             id="height"
             className={styles.input}
-            placeholder="Height of the route (not needed for boulders)"
+            placeholder="Height is not needed for boulders"
             title="Height of the route (does not apply for boulders)"
             type="number"
             inputMode="numeric"
