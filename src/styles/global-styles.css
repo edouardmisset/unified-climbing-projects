@@ -104,7 +104,7 @@ text {
 
 /* Invalid inputs */
 
-input:invalid {
+input:user-invalid {
   outline-offset: var(--size-px-1);
   outline-color: var(--red-8);
   outline-style: solid;
