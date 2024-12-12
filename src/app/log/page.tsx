@@ -83,7 +83,7 @@ export default function Log(): React.JSX.Element {
     climbingDiscipline: 'Route',
     profile: mostFrequentProfile,
     height: mostFrequentHeight,
-    rating: averageRating,
+    rating: Number(averageRating.toFixed(0)),
     tries: averageTries.toFixed(0),
   } satisfies AscentFormInput
 
