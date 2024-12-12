@@ -13,6 +13,7 @@ import {
 import { type Grade, _GRADES, holds, profiles } from '~/schema/ascent'
 
 import { GradeSlider } from '~/app/_components/slider/slider'
+import { api } from '~/trpc/react.tsx'
 import {
   MAX_HEIGHT,
   MAX_RATING,
@@ -20,22 +21,19 @@ import {
   MIN_HEIGHT,
   MIN_RATING,
   MIN_TRIES,
+  _0To5RegEx,
+  _0To100RegEx,
+  _1To9999RegEx,
 } from './constants.ts'
 import styles from './page.module.css'
 import {
   type AscentFormInput,
-  _0To5RegEx,
-  _0To100RegEx,
-  _1To9999RegEx,
   ascentFormInputSchema,
   ascentFormOutputSchema,
 } from './types.ts'
 
-const climberAverageGrade: Grade = '7b' // TODO: get this from the api
-
 type GradeSetter = (value: number[]) => void
 
-// TODO: send the data to the API
 const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
   try {
     const _parsedData = ascentFormOutputSchema.parse(formData)
@@ -59,23 +57,39 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
 // TODO: get intelligent default values from the API
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 
-const defaultAscentToParse = {
-  routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
-  crag: isDevelopmentEnv ? 'This_Is_A_Test_Crag' : '',
-  topoGrade: climberAverageGrade,
-  personalGrade: climberAverageGrade,
-  date: new Date(),
-  holds: 'Crimp',
-  climbingDiscipline: 'Route',
-  profile: 'Vertical',
-  height: isDevelopmentEnv ? 20 : undefined,
-  rating: isDevelopmentEnv ? 1 : undefined,
-  tries: '1',
-} satisfies AscentFormInput
-const defaultAscentFormValues =
-  ascentFormInputSchema.parse(defaultAscentToParse)
-
 export default function Log(): React.JSX.Element {
+  const [averageGrade] = api.grades.getAverage.useSuspenseQuery()
+  const [mostFrequentHeight] =
+    api.ascents.getMostFrequentHeight.useSuspenseQuery()
+  const [mostFrequentHold] = api.ascents.getMostFrequentHold.useSuspenseQuery()
+  const [mostFrequentProfile] =
+    api.ascents.getMostFrequentProfile.useSuspenseQuery()
+  const [averageRating] = api.ascents.getAverageRating.useSuspenseQuery()
+  const [averageTries] = api.ascents.getAverageTries.useSuspenseQuery({
+    grade: averageGrade,
+  })
+
+  // const utils = api.useUtils()
+
+  // average tries per grade
+
+  const defaultAscentToParse = {
+    routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
+    crag: isDevelopmentEnv ? 'This_Is_A_Test_Crag' : '',
+    topoGrade: averageGrade,
+    personalGrade: averageGrade,
+    date: new Date(),
+    holds: mostFrequentHold,
+    climbingDiscipline: 'Route',
+    profile: mostFrequentProfile,
+    height: mostFrequentHeight,
+    rating: averageRating,
+    tries: averageTries.toFixed(0),
+  } satisfies AscentFormInput
+
+  const defaultAscentFormValues =
+    ascentFormInputSchema.parse(defaultAscentToParse)
+
   const { handleSubmit, register, setValue, watch } = useForm({
     defaultValues: defaultAscentFormValues,
   })
@@ -84,7 +98,7 @@ export default function Log(): React.JSX.Element {
   const { ref: _unusedRef2, ...personalGradeRegister } =
     register('personalGrade')
 
-  const topoGradeOrNumber = watch('topoGrade') ?? climberAverageGrade
+  const topoGradeOrNumber = watch('topoGrade') ?? averageGrade
   const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
 
   const topoGrade =
@@ -93,10 +107,11 @@ export default function Log(): React.JSX.Element {
       : topoGradeOrNumber
 
   const handleTopoGradeChange: GradeSetter = ([value]) => {
+    const convertedAverageGrade = convertGradeToNumber(averageGrade)
     setValue(
       'topoGrade',
       convertNumberToGrade(
-        value ?? convertGradeToNumber(climberAverageGrade),
+        value ?? convertedAverageGrade,
         // biome-ignore lint/suspicious/noExplicitAny:
       ) as any,
     )
@@ -104,16 +119,21 @@ export default function Log(): React.JSX.Element {
     setValue(
       'personalGrade',
       convertNumberToGrade(
-        value ?? convertGradeToNumber(climberAverageGrade),
+        value ?? convertedAverageGrade,
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       ) as any,
     )
+
+    // refetch the average tries
+    // utils.ascents.getAverageTries.refetch({
+    //   grade: convertNumberToGrade(value ?? 0),
+    // })
   }
   const updatePersonalGradeChange: GradeSetter = ([value]) =>
     setValue(
       'personalGrade',
       convertNumberToGrade(
-        value ?? convertGradeToNumber(climberAverageGrade),
+        value ?? convertGradeToNumber(averageGrade),
         // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
       ) as any,
     )
@@ -202,7 +222,7 @@ export default function Log(): React.JSX.Element {
           </label>
           <GradeSlider
             {...topoGradeRegister}
-            value={[(topoGrade as Grade) || climberAverageGrade]}
+            value={[(topoGrade as Grade) || averageGrade]}
             onValueChange={handleTopoGradeChange}
             min={1}
             max={_GRADES.length}
@@ -216,7 +236,7 @@ export default function Log(): React.JSX.Element {
           </label>
           <GradeSlider
             {...personalGradeRegister}
-            value={[(personalGradeOrNumber as Grade) || climberAverageGrade]}
+            value={[(personalGradeOrNumber as Grade) || averageGrade]}
             onValueChange={updatePersonalGradeChange}
             min={1}
             max={_GRADES.length}
