@@ -34,7 +34,7 @@ export async function CragSummary({
         <p>{numberOfSimilarCrags} crags with similar names</p>
       )}
       <p>Most climbed crags:</p>
-      <div>{mostClimbedCrag}</div>
+      <div className="flex-column">{mostClimbedCrag}</div>
     </div>
   )
 }
