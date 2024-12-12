@@ -2,98 +2,12 @@
  * (https://moderncss.dev/12-modern-css-one-line-upgrades)
  */
 
-/** Stable Upgrade */
-
-/** Aspect Ratio */
-.aspect-ratio-hd {
-  aspect-ratio: 16 / 9;
-}
-
-.aspect-ratio-square {
-  aspect-ratio: 1;
-}
-
-/** object-fit */
-.cover-image {
-  object-fit: cover;
-  aspect-ratio: 1;
-
-  /* Optional: constrain image size */
-  max-block-size: 250px;
-}
-
-.scale-image {
-  object-fit: scale-down;
-  aspect-ratio: 1;
-
-  /* Optional: constrain image size */
-  max-block-size: 250px;
-}
-
-/** margin-inline */
-.center {
-  /* Before */
-  margin-left: auto;
-  margin-right: auto;
-
-  /* After */
-  margin-inline: auto;
-}
-
-/** Stable Enhancements */
-
-/** outline-offset */
-
-/* Reminder: 
-outlines are not computed as part of the element’s box size, so
-increasing the distance will not increase the amount of space an element
-occupies. This is similar to how box-shadow is rendered without impacting the
-element size as well. 
-*/
-.outline-offset {
-  outline: 2px dashed var(--blue-5);
-  outline-offset: var(--outline-offset, 0.5em);
-}
-
-/** scroll-margin-top/bottom */
-[id] {
-  /* Update --scroll-margin with JS if needed */
-  scroll-margin-top: var(--scroll-margin, 2rem);
-}
-
-/** color-scheme & accent-color */
-:root {
-  accent-color: var(--violet-4);
-}
-
-.dark-background {
-  color-scheme: dark;
-}
-
-.light-background {
-  color-scheme: light;
-}
-
-/** width: fit-content */
-.fit-content {
-  inline-size: fit-content;
-}
-
 /** Progressive Enhancements */
 
 /** overscroll-behavior */
 .sidebar,
 .article {
   overscroll-behavior: contain;
-}
-
-/** text-wrap */
-:is(h1, h2, h3, h4, .text-balance) {
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
 }
 
 /** scrollbar-gutter */
