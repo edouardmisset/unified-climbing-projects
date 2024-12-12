@@ -68,16 +68,26 @@
 .grades {
   --gap: 1rem;
 
-  display: grid;
-  grid-template-columns: repeat(
-      auto-fill,
-      minmax(15ch, calc(50% - (var(--gap) / 2)))
-    );
-  align-items: center;
-  grid-gap: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 
   & > span {
-    justify-self: end;
-    min-inline-size: var(--size-relative-15);
+    inline-size: 100%;
+  }
+
+  @media screen and (min-width: 640px) {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(15ch, calc(50% - (var(--gap) / 2)))
+      );
+    align-items: center;
+    grid-gap: var(--gap);
+
+    & > span {
+      justify-self: end;
+      inline-size: var(--size-relative-15);
+    }
   }
 }
