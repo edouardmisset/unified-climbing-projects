@@ -44,6 +44,8 @@
   text-size-adjust: 100%;
   animation-timing-function: cubic-bezier(0, 0.3, 0.1, 1);
   transition-timing-function: cubic-bezier(0, 0.3, 0.1, 1);
+  /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
+  interpolate-size: allow-keywords;
 }
 
 ::selection {
@@ -118,6 +120,13 @@
   text-decoration-skip-ink: auto;
   text-decoration-thickness: max(0.08em, 1px);
   color: currentColor;
+}
+
+/* Progressive enhancements */
+:where(textarea, select, input) {
+  @supports (field-sizing: content) {
+    field-sizing: content;
+  }
 }
 
 /**
