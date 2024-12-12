@@ -138,7 +138,7 @@
     position: relative;
     display: inline-flex;
   }
-  [title]:focus::after {
+  [title]:focus-visible::after {
     content: attr(title);
     position: absolute;
     top: 90%;

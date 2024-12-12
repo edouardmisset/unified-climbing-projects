@@ -36,7 +36,7 @@
   border-radius: var(--radius-conditional-3);
   font-size: 1rem;
   color: var(--text-2);
-  &:focus {
+  &:focus-visible {
     box-shadow: 0 0 0 2px var(--violet-3);
   }
   &:hover {
@@ -99,7 +99,7 @@
   border-radius: var(--radius-conditional-3);
   font-size: 1rem;
   line-height: 1;
-  &:focus {
+  &:focus-visible {
     box-shadow: 0 0 0 2px var(--violet-3);
   }
 }
