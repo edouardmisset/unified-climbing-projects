@@ -12,14 +12,13 @@ import {
   MAX_TRIES,
   MIN_HEIGHT,
   MIN_RATING,
+  _0To5RegEx,
+  _0To100RegEx,
+  _1To9999RegEx,
 } from './constants.ts'
 
 const futureDateErrorMessage =
   "Date should be in the past. We can't see in the future yet ;)"
-
-export const _1To9999RegEx = /^([1-9][0-9]{0,3})$/
-export const _0To100RegEx = /^0*(?:[1-9][0-9]?|100)$/
-export const _0To5RegEx = /^[0-5]$/
 
 const optionalGradeToNumberSchema = gradeSchema
   .transform(grade => convertGradeToNumber(grade))

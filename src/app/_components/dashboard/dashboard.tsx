@@ -21,7 +21,7 @@ export function Dashboard() {
 
   const [data] = api.grades.getFrequency.useSuspenseQuery({
     year: selectedYear === allVariable ? undefined : Number(selectedYear),
-    'climbing-discipline':
+    climbingDiscipline:
       selectedDiscipline === allVariable
         ? undefined
         : (selectedDiscipline as Ascent['climbingDiscipline']),
