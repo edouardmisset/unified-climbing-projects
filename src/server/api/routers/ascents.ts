@@ -1,5 +1,5 @@
 import { sortBy } from '@edouardmisset/array'
-import { validNumberWithFallback } from '@edouardmisset/math'
+import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents, stringEqualsCaseInsensitive } from '@edouardmisset/text'
 
 import fuzzySort from 'fuzzysort'
@@ -9,10 +9,17 @@ import {
   type Ascent,
   type Grade,
   climbingDisciplineSchema,
+  gradeSchema,
+  holdsSchema,
   parseISODateToTemporal,
+  profileSchema,
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
+import {
+  type OptionalAscentInput,
+  optionalAscentInputSchema,
+} from './grades.ts'
 
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure
@@ -24,7 +31,7 @@ export const ascentsRouter = createTRPCRouter({
           tries: number().optional(),
           crag: string().optional(),
           descending: boolean().optional(),
-          'climbing-discipline': climbingDisciplineSchema.optional(),
+          climbingDiscipline: climbingDisciplineSchema.optional(),
           sort: string().optional(),
         })
         .optional(),
@@ -36,7 +43,7 @@ export const ascentsRouter = createTRPCRouter({
         tries: numberOfTriesFilter,
         crag: cragFilter,
         descending: dateIsDescending,
-        'climbing-discipline': disciplineFilter,
+        climbingDiscipline: disciplineFilter,
         sort,
       } = input ?? {}
 
@@ -195,4 +202,96 @@ export const ascentsRouter = createTRPCRouter({
       }
       return foundAscent
     }),
+  getMostFrequentProfile: publicProcedure
+    .input(optionalAscentInputSchema)
+    .output(profileSchema)
+    .query(async ({ input }) => {
+      const filteredAscents = await getFilteredAscents(input)
+
+      return mostFrequentBy(filteredAscents, 'profile') ?? 'Vertical'
+    }),
+  getMostFrequentHold: publicProcedure
+    .input(optionalAscentInputSchema)
+    .output(holdsSchema)
+    .query(async ({ input }) => {
+      const filteredAscents = await getFilteredAscents(input)
+
+      return mostFrequentBy(filteredAscents, 'holds') ?? 'Crimp'
+    }),
+  getMostFrequentHeight: publicProcedure
+    .input(optionalAscentInputSchema)
+    .output(z.number())
+    .query(async ({ input }) => {
+      const filteredAscents = await getFilteredAscents(input)
+
+      return mostFrequentBy(filteredAscents, 'height') ?? -1
+    }),
+  getAverageRating: publicProcedure
+    .input(optionalAscentInputSchema)
+    .output(z.number().min(0))
+    .query(async ({ input }) => {
+      const filteredRatings = (await getFilteredAscents(input))
+        .map(({ rating }) => rating)
+        .filter(rating => rating !== undefined)
+
+      return average(filteredRatings) ?? -1
+    }),
+  getAverageTries: publicProcedure
+    .input(
+      optionalAscentInputSchema
+        .and(
+          z.object({
+            grade: gradeSchema.optional(),
+          }),
+        )
+        .optional(),
+    )
+    .output(z.number().min(1))
+    .query(async ({ input }) => {
+      const filteredTries = (await getFilteredAscents(input)).map(
+        ({ tries }) => tries,
+      )
+
+      return average(filteredTries) ?? -1
+    }),
 })
+
+export function mostFrequentBy<
+  Type extends Record<string, unknown>,
+  Key extends keyof Type,
+>(records: Type[], property: Key): Type[Key] | undefined {
+  const map = new Map<Key, number>()
+  let mostFrequent: Type[Key] | undefined
+  let highestCount = 0
+
+  for (const ascent of records) {
+    const { [property]: value } = ascent
+    if (value) {
+      const count = (map.get(property) ?? 0) + 1
+      map.set(property, count)
+      if (count > highestCount) {
+        highestCount = count
+        mostFrequent = value
+      }
+    }
+  }
+  return mostFrequent
+}
+
+export async function getFilteredAscents(
+  input?: OptionalAscentInput & { grade?: Grade },
+): Promise<Ascent[]> {
+  const { style, year, climbingDiscipline, grade } = input ?? {}
+  const ascents = await getAllAscents()
+
+  return ascents.filter(
+    ascent =>
+      (grade === undefined ||
+        stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
+      (climbingDiscipline === undefined ||
+        ascent.climbingDiscipline === climbingDiscipline) &&
+      (year === undefined ||
+        parseISODateToTemporal(ascent.date).year === year) &&
+      (style === undefined || ascent.style === style),
+  )
+}
