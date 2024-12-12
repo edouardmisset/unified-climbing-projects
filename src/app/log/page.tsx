@@ -58,16 +58,14 @@ const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 
 export default function Log(): React.JSX.Element {
-  const [averageGrade] = api.grades.getAverage.useSuspenseQuery()
-  const [mostFrequentHeight] =
-    api.ascents.getMostFrequentHeight.useSuspenseQuery()
-  const [mostFrequentHold] = api.ascents.getMostFrequentHold.useSuspenseQuery()
-  const [mostFrequentProfile] =
-    api.ascents.getMostFrequentProfile.useSuspenseQuery()
-  const [averageRating] = api.ascents.getAverageRating.useSuspenseQuery()
-  const [averageTries] = api.ascents.getAverageTries.useSuspenseQuery({
-    grade: averageGrade,
-  })
+  const { data: averageGrade } = api.grades.getAverage.useQuery()
+  const { data: mostFrequentHeight } =
+    api.ascents.getMostFrequentHeight.useQuery()
+  const { data: mostFrequentHold } = api.ascents.getMostFrequentHold.useQuery()
+  const { data: mostFrequentProfile } =
+    api.ascents.getMostFrequentProfile.useQuery()
+  const { data: averageRating = 3 } = api.ascents.getAverageRating.useQuery()
+  const { data: averageTries = 1 } = api.ascents.getAverageTries.useQuery()
 
   // const utils = api.useUtils()
 
@@ -107,7 +105,7 @@ export default function Log(): React.JSX.Element {
       : topoGradeOrNumber
 
   const handleTopoGradeChange: GradeSetter = ([value]) => {
-    const convertedAverageGrade = convertGradeToNumber(averageGrade)
+    const convertedAverageGrade = convertGradeToNumber(averageGrade ?? '1a')
     setValue(
       'topoGrade',
       convertNumberToGrade(
@@ -133,7 +131,7 @@ export default function Log(): React.JSX.Element {
     setValue(
       'personalGrade',
       convertNumberToGrade(
-        value ?? convertGradeToNumber(averageGrade),
+        value ?? convertGradeToNumber(averageGrade ?? '1a'),
         // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
       ) as any,
     )
