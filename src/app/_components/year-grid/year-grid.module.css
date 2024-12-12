@@ -1,7 +1,6 @@
 .gridHeader {
   background-color: transparent !important;
-  color: #fff !important;
-  color: light-dark(#000, #fff) !important;
+  color: var(--text-1) !important;
   border: none !important;
   font-variant-numeric: tabular-nums;
 }
@@ -9,7 +8,7 @@
 .yearGrid {
   --gap: 1px;
   --cell-color: var(--gray-5, hsla(0deg 0% 50% / 0.5));
-  --text-color: var(--gray-10, black);
+  --text-color: var(--text-1, black);
 
   --border-color: currentColor;
   --border-width: 1px;
