@@ -7,7 +7,7 @@ import {
   Sub,
   Trigger,
 } from '@radix-ui/react-navigation-menu'
-import NextLink from 'next/link'
+import { Link as NextLink } from 'next-view-transitions'
 import type React from 'react'
 
 import styles from './navigation.module.css'

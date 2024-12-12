@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
 import { createYearList } from '~/data/ascent-data'
 import { getYearsTrainingPerWeek } from '~/data/training-data'

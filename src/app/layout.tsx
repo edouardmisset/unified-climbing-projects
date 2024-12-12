@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { TRPCReactProvider } from '~/trpc/react'
 
@@ -33,23 +34,25 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body className={styles.body}>
-        <TRPCReactProvider>
-          <NuqsAdapter>
-            <header className={styles.header}>
-              <Navigation />
-            </header>
-            <main className={styles.main}>{children}</main>
-            <footer className={styles.footer}>
-              <p>@edouardmisset 2024-{new Date().getFullYear()}</p>
-            </footer>
-          </NuqsAdapter>
-        </TRPCReactProvider>
-        <SpeedInsights />
-        <Analytics />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning={true}>
+        <body className={styles.body}>
+          <TRPCReactProvider>
+            <NuqsAdapter>
+              <header className={styles.header}>
+                <Navigation />
+              </header>
+              <main className={styles.main}>{children}</main>
+              <footer className={styles.footer}>
+                <p>@edouardmisset 2024-{new Date().getFullYear()}</p>
+              </footer>
+            </NuqsAdapter>
+          </TRPCReactProvider>
+          <SpeedInsights />
+          <Analytics />
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }
 

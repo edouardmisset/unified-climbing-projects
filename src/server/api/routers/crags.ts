@@ -11,10 +11,12 @@ import { getAllAscents } from '~/services/ascents'
 
 export const cragsRouter = createTRPCRouter({
   getAllCrags: publicProcedure.query(async () => {
+    console.time('all crags')
     const validCrags = await getValidCrags()
 
     const sortedCrags = [...new Set(validCrags)].sort()
 
+    console.timeEnd('all crags')
     return sortedCrags
   }),
   getFrequency: publicProcedure.query(async () => {

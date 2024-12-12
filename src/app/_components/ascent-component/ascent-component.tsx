@@ -1,6 +1,6 @@
 import type { Ascent } from '~/schema/ascent'
 
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { createAscentTooltip } from '~/helpers/tooltips.ts'
 import styles from './ascent-component.module.css'
 

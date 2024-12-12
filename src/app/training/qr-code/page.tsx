@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearTraining } from '~/data/training-data'
 import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
