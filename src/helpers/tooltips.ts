@@ -1,4 +1,8 @@
-import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
+import {
+  type Ascent,
+  type Grade,
+  parseISODateToTemporal,
+} from '~/schema/ascent'
 import type { TrainingSession } from '~/types/training'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
@@ -233,8 +237,8 @@ function formatGrade({
   personalGrade,
   showDetails = true,
 }: {
-  topoGrade: Ascent['topoGrade']
-  personalGrade?: Ascent['personalGrade']
+  topoGrade: Grade
+  personalGrade?: Grade
   showDetails?: boolean
 }) {
   if (topoGrade === undefined) {

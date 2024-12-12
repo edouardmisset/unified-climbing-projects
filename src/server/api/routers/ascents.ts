@@ -7,6 +7,7 @@ import { boolean, number, string, z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
   type Ascent,
+  type Grade,
   climbingDisciplineSchema,
   parseISODateToTemporal,
 } from '~/schema/ascent'
@@ -51,7 +52,7 @@ export const ascentsRouter = createTRPCRouter({
       const filters = [
         {
           value: gradeFilter,
-          compare: (left: Ascent['topoGrade'], right: Ascent['topoGrade']) =>
+          compare: (left: Grade, right: Grade) =>
             stringEqualsCaseInsensitive(left, right),
           key: 'topoGrade',
         },

@@ -35,7 +35,7 @@ async function getFilteredAscents({
   )
 }
 
-const climbingGradeInputSchema = z
+const optionalAscentInputSchema = z
   .object({
     'climbing-discipline': ascentSchema.shape.climbingDiscipline.optional(),
     year: number().optional(),
@@ -43,9 +43,21 @@ const climbingGradeInputSchema = z
   })
   .optional()
 
+const gradeDescriptionSchema = z.object({
+  grade: ascentSchema.shape.topoGrade,
+  Onsight: number(),
+  OnsightColor: string(),
+  Flash: number(),
+  FlashColor: string(),
+  Redpoint: number(),
+  RedpointColor: string(),
+})
+
+export type GradeDescription = z.infer<typeof gradeDescriptionSchema>
+
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
-    .input(climbingGradeInputSchema)
+    .input(optionalAscentInputSchema)
     .query(async ({ input }) => {
       const {
         'climbing-discipline': climbingDiscipline,
@@ -60,20 +72,8 @@ export const gradesRouter = createTRPCRouter({
       return [...new Set(filteredGrades)].sort()
     }),
   getFrequency: publicProcedure
-    .input(climbingGradeInputSchema)
-    .output(
-      z
-        .object({
-          grade: ascentSchema.shape.topoGrade,
-          Onsight: number(),
-          OnsightColor: string(),
-          Flash: number(),
-          FlashColor: string(),
-          Redpoint: number(),
-          RedpointColor: string(),
-        })
-        .array(),
-    )
+    .input(optionalAscentInputSchema)
+    .output(gradeDescriptionSchema.array())
     .query(async ({ input }) => {
       const {
         'climbing-discipline': climbingDiscipline,
@@ -123,7 +123,7 @@ export const gradesRouter = createTRPCRouter({
       }[]
     }),
   getAverage: publicProcedure
-    .input(climbingGradeInputSchema)
+    .input(optionalAscentInputSchema)
     .query(async ({ input }) => {
       const {
         'climbing-discipline': climbingDiscipline,
