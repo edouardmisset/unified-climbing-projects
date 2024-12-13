@@ -20,7 +20,15 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
     return transformTrainingSessionFromGSToJS(row.toObject())
   })
 
-  return trainingSessionSchema.array().parse(rawTrainingSessions)
+  const parsedTrainingSession = trainingSessionSchema
+    .array()
+    .safeParse(rawTrainingSessions)
+
+  if (!parsedTrainingSession.success) {
+    globalThis.console.error(parsedTrainingSession.error)
+    return []
+  }
+  return parsedTrainingSession.data
 }
 
 export async function getAllTrainingSessions(options?: {

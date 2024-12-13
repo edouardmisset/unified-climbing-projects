@@ -99,7 +99,15 @@ const transformClimbingDisciplineGSToJS: TransformFunctionGSToJS = value =>
  * @returns {string} - The filtered climbing hold type.
  */
 const transformHoldsGSToJS: TransformFunctionGSToJS = value => {
-  const hold = holdsFomGSSchema.parse(value)
+  const parsedValue = holdsFomGSSchema.safeParse(value)
+
+  if (!parsedValue.success) {
+    globalThis.console.error(parsedValue.error)
+    return ''
+  }
+
+  const { data: hold } = parsedValue
+
   if (hold === 'Positive' || hold === 'Volume') return 'Sloper'
   if (hold === 'Mono' || hold === 'Bi') return 'Pocket'
   if (hold === 'Various') return 'Crimp'

@@ -8,6 +8,7 @@ import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
   type Ascent,
   type Grade,
+  ascentSchema,
   climbingDisciplineSchema,
   gradeSchema,
   holdsSchema,
@@ -15,7 +16,7 @@ import {
   profileSchema,
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { getAllAscents } from '~/services/ascents'
+import { addAscent, getAllAscents } from '~/services/ascents'
 import {
   type OptionalAscentInput,
   optionalAscentInputSchema,
@@ -253,6 +254,17 @@ export const ascentsRouter = createTRPCRouter({
       )
 
       return average(filteredTries) ?? -1
+    }),
+  addOne: publicProcedure
+    .input(ascentSchema.omit({ id: true }))
+    .query(async ({ input }) => {
+      try {
+        addAscent(input)
+        return true
+      } catch (error) {
+        console.error(error)
+        return false
+      }
     }),
 })
 

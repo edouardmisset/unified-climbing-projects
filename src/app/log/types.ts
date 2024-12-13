@@ -30,7 +30,6 @@ const numberOfTriesSchema = z
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
   .transform(st => Number(st))
-  .optional()
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
   tries: numberOfTriesSchema.transform(num => num?.toString()),

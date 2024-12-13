@@ -23,7 +23,13 @@ export async function getAscentsFromDB(): Promise<Ascent[]> {
     id: index,
   }))
 
-  return ascentSchema.array().parse(rawAscents)
+  const parsedAscents = ascentSchema.array().safeParse(rawAscents)
+
+  if (!parsedAscents.success) {
+    globalThis.console.error(parsedAscents.error)
+    return []
+  }
+  return parsedAscents.data
 }
 
 const { getCache, setCache } = createCache<Ascent[]>()
@@ -42,7 +48,7 @@ export async function getAllAscents(options?: { refresh?: boolean }): Promise<
   return cachedData
 }
 
-export async function addAscent(ascent: Ascent): Promise<void> {
+export async function addAscent(ascent: Omit<Ascent, 'id'>): Promise<void> {
   const manualAscentsSheet = await loadWorksheet('ascents', { edit: true })
 
   await manualAscentsSheet.addRow(transformAscentFromJSToGS(ascent))

@@ -62,7 +62,9 @@ export function transformAscentFromGSToJS(
 
 // Key = JS ascent object's key
 // Header = Google Sheet's ascent's header
-export function transformAscentFromJSToGS(ascent: Ascent): GSAscentRecord {
+export function transformAscentFromJSToGS(
+  ascent: Omit<Ascent, 'id'>,
+): GSAscentRecord {
   return ASCENT_HEADERS.reduce((accumulator, header) => {
     const key = TRANSFORMED_ASCENT_HEADER_NAMES[header]
 
