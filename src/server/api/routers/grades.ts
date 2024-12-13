@@ -5,7 +5,7 @@ import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters'
-import { type Grade, ascentSchema } from '~/schema/ascent'
+import { type Grade, ascentSchema, gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents } from './ascents.ts'
 
@@ -91,5 +91,23 @@ export const gradesRouter = createTRPCRouter({
       )
 
       return convertNumberToGrade(Math.round(average(filteredNumberGrades)))
+    }),
+  getMinMax: publicProcedure
+    .input(optionalAscentInputSchema)
+    .output(z.tuple([gradeSchema, gradeSchema]))
+    .query(async ({ input }) => {
+      const filteredAscents = await getFilteredAscents(input)
+
+      const filteredNumberGrades = filteredAscents.map(({ topoGrade }) =>
+        convertGradeToNumber(topoGrade),
+      )
+
+      const lowestGrade = convertNumberToGrade(
+        Math.min(...filteredNumberGrades),
+      )
+      const highestGrade = convertNumberToGrade(
+        Math.max(...filteredNumberGrades),
+      )
+      return [lowestGrade, highestGrade]
     }),
 })

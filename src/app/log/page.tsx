@@ -38,9 +38,18 @@ import { type AscentFormInput, ascentFormInputSchema } from './types.ts'
 type GradeSetter = (value: number[]) => void
 
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
+const numberOfGrades = _GRADES.length
+const numberOfGradesBelowMinimum = 6
+const numberOfGradesAboveMaximum = 3
 
 export default function Log(): React.JSX.Element {
   const { data: averageGrade = '7b' } = api.grades.getAverage.useQuery()
+  const {
+    data: [minGrade, maxGrade] = [
+      convertNumberToGrade(1),
+      convertNumberToGrade(numberOfGrades),
+    ],
+  } = api.grades.getMinMax.useQuery()
   const { data: mostFrequentHeight = 20 } =
     api.ascents.getMostFrequentHeight.useQuery()
   const { data: mostFrequentHold = 'Jug' } =
@@ -127,6 +136,15 @@ export default function Log(): React.JSX.Element {
     return setValue('style', parsedVal.data)
   }
   const styleValue = watch('style')
+
+  const adjustedMinGrade = Math.max(
+    convertGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
+    1,
+  )
+  const adjustedMaxGrade = Math.min(
+    convertGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
+    numberOfGrades,
+  )
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
@@ -230,8 +248,8 @@ export default function Log(): React.JSX.Element {
             {...topoGradeRegister}
             value={[(topoGrade as Grade) || averageGrade]}
             onValueChange={handleTopoGradeChange}
-            min={1}
-            max={_GRADES.length}
+            min={adjustedMinGrade}
+            max={adjustedMaxGrade}
             step={1}
           />
           <label htmlFor="personalGrade" className={styles.label}>
@@ -244,8 +262,8 @@ export default function Log(): React.JSX.Element {
             {...personalGradeRegister}
             value={[(personalGradeOrNumber as Grade) || averageGrade]}
             onValueChange={updatePersonalGradeChange}
-            min={1}
-            max={_GRADES.length}
+            min={adjustedMinGrade}
+            max={adjustedMaxGrade}
             step={1}
           />
         </div>
