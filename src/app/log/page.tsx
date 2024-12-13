@@ -12,6 +12,7 @@ import {
   type Grade,
   _GRADES,
   ascentStyleSchema,
+  climbingDiscipline,
   holds,
   profiles,
 } from '~/schema/ascent'
@@ -119,6 +120,12 @@ export default function Log(): React.JSX.Element {
       ) as any,
     )
 
+  const handleStyleChange = (val: unknown) => {
+    const parsedVal = ascentStyleSchema.safeParse(val)
+    if (!parsedVal.success) return
+
+    return setValue('style', parsedVal.data)
+  }
   const styleValue = watch('style')
   return (
     <div className={styles.container}>
@@ -144,12 +151,12 @@ export default function Log(): React.JSX.Element {
         <label htmlFor="routeName" className={styles.label}>
           Route Name
           <input
+            {...register('routeName')}
             required={true}
             type="text"
             className={styles.input}
             id="routeName"
             autoComplete="off"
-            {...register('routeName')}
             placeholder="The name of the route or boulder climbed"
             title="Route Name"
           />
@@ -157,23 +164,25 @@ export default function Log(): React.JSX.Element {
         <label htmlFor="climbingDiscipline" className={styles.label}>
           Climbing Discipline
           <select
+            {...register('climbingDiscipline')}
             id="climbingDiscipline"
             className={styles.input}
-            {...register('climbingDiscipline')}
             title="Route, Boulder or Multi-Pitch"
           >
-            <option value="Route">Route</option>
-            <option value="Boulder">Boulder</option>
-            <option value="Multi-Pitch">Multi-Pitch</option>
+            {climbingDiscipline.map(discipline => {
+              const unavailableDiscipline = ['Multi-Pitch']
+              if (unavailableDiscipline.includes(discipline)) return null
+              return <option key={discipline} value={discipline} />
+            })}
           </select>
         </label>
         <label htmlFor="crag" className={styles.label}>
           Crag
           <input
+            {...register('crag')}
             required={true}
             id="crag"
             className={styles.input}
-            {...register('crag')}
             placeholder="The name of the crag"
             title="Crag Name"
             type="text"
@@ -182,9 +191,9 @@ export default function Log(): React.JSX.Element {
         <label htmlFor="area" className={styles.label}>
           Area
           <input
+            {...register('area')}
             id="area"
             className={styles.input}
-            {...register('area')}
             placeholder="The name of the crag's sector (or area)"
             title="Crag's area"
             type="text"
@@ -208,12 +217,7 @@ export default function Log(): React.JSX.Element {
             />
             <ClimbingStyleToggleGroup
               display={Number(numberOfTries) === 1}
-              onValueChange={(val: unknown) => {
-                const parsedVal = ascentStyleSchema.safeParse(val)
-                if (!parsedVal.success) return
-
-                return setValue('style', parsedVal.data)
-              }}
+              onValueChange={handleStyleChange}
               value={styleValue}
             />
           </div>
