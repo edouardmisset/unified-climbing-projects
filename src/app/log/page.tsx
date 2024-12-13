@@ -1,19 +1,25 @@
 'use client'
 
 import type React from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
-import type Zod from 'zod'
-import { fromZodError } from 'zod-validation-error'
+import { useForm } from 'react-hook-form'
 
 import { env } from '~/env'
 import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters'
-import { type Grade, _GRADES, holds, profiles } from '~/schema/ascent'
+import {
+  type Grade,
+  _GRADES,
+  ascentStyleSchema,
+  holds,
+  profiles,
+} from '~/schema/ascent'
 
 import { GradeSlider } from '~/app/_components/slider/slider'
 import { api } from '~/trpc/react.tsx'
+import { ClimbingStyleToggleGroup } from '../_components/toggle-group/toggle-group.tsx'
+import { onSubmit } from './actions.ts'
 import {
   MAX_HEIGHT,
   MAX_RATING,
@@ -26,33 +32,9 @@ import {
   _1To9999RegEx,
 } from './constants.ts'
 import styles from './page.module.css'
-import {
-  type AscentFormInput,
-  ascentFormInputSchema,
-  ascentFormOutputSchema,
-} from './types.ts'
+import { type AscentFormInput, ascentFormInputSchema } from './types.ts'
 
 type GradeSetter = (value: number[]) => void
-
-const onSubmit: SubmitHandler<Record<string, unknown>> = formData => {
-  try {
-    const _parsedData = ascentFormOutputSchema.parse(formData)
-    // biome-ignore lint/suspicious/noConsole: WIP
-    // biome-ignore lint/suspicious/noConsoleLog: WIP
-    globalThis.console.log(_parsedData)
-    // TODO: send data to the api...
-    // If the data is sent to my Google Sheet's DB, we need to make some
-    // transformations (personalGrade => 'My Grade', department lookup, climber,
-    // etc.)
-  } catch (error) {
-    const zErrors = fromZodError(error as Zod.ZodError)
-
-    for (const _detail of zErrors.details) {
-      // biome-ignore lint/suspicious/noConsole: WIP
-      globalThis.console.error(_detail)
-    }
-  }
-}
 
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 
@@ -79,14 +61,25 @@ export default function Log(): React.JSX.Element {
     height: mostFrequentHeight,
     rating: Number(averageRating.toFixed(0)),
     tries: averageTries.toFixed(0),
+    style: 'Redpoint',
   } satisfies AscentFormInput
 
   const defaultAscentFormValues =
-    ascentFormInputSchema.parse(defaultAscentToParse)
+    ascentFormInputSchema.safeParse(defaultAscentToParse)
 
-  const { handleSubmit, register, setValue, watch } = useForm({
-    defaultValues: defaultAscentFormValues,
-  })
+  if (!defaultAscentFormValues.success) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
+    globalThis.console.log(defaultAscentFormValues.error)
+  }
+
+  const { data: defaultAscent } = defaultAscentFormValues
+
+  const { handleSubmit, register, setValue, watch, reset, getValues } = useForm(
+    {
+      defaultValues: defaultAscent,
+    },
+  )
 
   const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
   const { ref: _unusedRef2, ...personalGradeRegister } =
@@ -94,6 +87,7 @@ export default function Log(): React.JSX.Element {
 
   const topoGradeOrNumber = watch('topoGrade') ?? averageGrade
   const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
+  const numberOfTries = watch('tries') ?? averageTries
 
   const topoGrade =
     typeof topoGradeOrNumber === 'number'
@@ -126,10 +120,18 @@ export default function Log(): React.JSX.Element {
         // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
       ) as any,
     )
+
+  const styleValue = watch('style')
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <form
+        onSubmit={handleSubmit(data => {
+          onSubmit(data)
+          reset()
+        }, console.error)}
+        className={styles.form}
+      >
         <label htmlFor="date" className={styles.label}>
           Date
           <input
@@ -191,19 +193,31 @@ export default function Log(): React.JSX.Element {
         </label>
         <label htmlFor="tries" className={styles.label}>
           Tries
-          <input
-            {...register('tries')}
-            min={MIN_TRIES}
-            max={MAX_TRIES}
-            step={1}
-            className={styles.input}
-            id="tries"
-            placeholder="1"
-            title="Number of tries"
-            type="number"
-            inputMode="numeric"
-            pattern={_1To9999RegEx.source}
-          />
+          <div className={styles.tries}>
+            <input
+              {...register('tries')}
+              required={true}
+              min={MIN_TRIES}
+              max={MAX_TRIES}
+              step={1}
+              id="tries"
+              placeholder="1"
+              title="Number of tries"
+              type="number"
+              inputMode="numeric"
+              pattern={_1To9999RegEx.source}
+            />
+            <ClimbingStyleToggleGroup
+              display={Number(numberOfTries) === 1}
+              onValueChange={(val: unknown) => {
+                const parsedVal = ascentStyleSchema.safeParse(val)
+                if (!parsedVal.success) return
+
+                return setValue('style', parsedVal.data)
+              }}
+              value={styleValue}
+            />
+          </div>
         </label>
         <div className={styles.grades}>
           <label htmlFor="topoGrade" className={styles.label}>

@@ -39,8 +39,25 @@
 }
 
 .input {
-  margin-block-start: 0.5em;
-  padding: var(--size-1);
+  @media screen and (min-width: 640px) {
+    margin-block-start: 0.5em;
+    padding: var(--size-1);
+    min-inline-size: var(--size-relative-15);
+  }
+  @supports (field-sizing: content) {
+    field-sizing: content;
+  }
+}
+
+.tries {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: var(--size-3);
+  justify-content: space-between;
+
+  & > input {
+    min-inline-size: var(--size-fluid-7);
+  }
 
   @media screen and (min-width: 640px) {
     margin-block-start: 0.5em;
