@@ -8,10 +8,14 @@
 
 .List {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+
   background-color: var(--surface-1);
   border-radius: var(--radius-conditional-3);
+  border-top-right-radius: initial;
+  border-top-left-radius: initial;
   list-style: none;
+  white-space: pre;
   margin: 0;
   padding: 0;
   &[data-orientation='vertical'] {
@@ -79,14 +83,6 @@
   @media only screen and (min-width: 640px) {
     inline-size: auto;
   }
-}
-
-.List {
-  display: flex;
-  margin: 0;
-  gap: var(--size-2);
-  list-style: none;
-  white-space: pre;
 }
 
 .ListItemLink {
