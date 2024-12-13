@@ -17,6 +17,7 @@ import {
   profiles,
 } from '~/schema/ascent'
 
+import type { ChangeEventHandler } from 'react'
 import { GradeSlider } from '~/app/_components/slider/slider'
 import { api } from '~/trpc/react.tsx'
 import { ClimbingStyleToggleGroup } from '../_components/toggle-group/toggle-group.tsx'
@@ -50,14 +51,6 @@ export default function Log(): React.JSX.Element {
       convertNumberToGrade(numberOfGrades),
     ],
   } = api.grades.getMinMax.useQuery()
-  const { data: mostFrequentHeight = 20 } =
-    api.ascents.getMostFrequentHeight.useQuery()
-  const { data: mostFrequentHold = 'Jug' } =
-    api.ascents.getMostFrequentHold.useQuery()
-  const { data: mostFrequentProfile = 'Vertical' } =
-    api.ascents.getMostFrequentProfile.useQuery()
-  const { data: averageRating = 3 } = api.ascents.getAverageRating.useQuery()
-  const { data: averageTries = 1 } = api.ascents.getAverageTries.useQuery()
 
   const defaultAscentToParse = {
     routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
@@ -65,12 +58,8 @@ export default function Log(): React.JSX.Element {
     topoGrade: averageGrade,
     personalGrade: averageGrade,
     date: new Date(),
-    holds: mostFrequentHold,
     climbingDiscipline: 'Route',
-    profile: mostFrequentProfile,
-    height: mostFrequentHeight,
-    rating: Number(averageRating.toFixed(0)),
-    tries: averageTries.toFixed(0),
+    tries: '1',
     style: 'Redpoint',
   } satisfies AscentFormInput
 
@@ -92,10 +81,12 @@ export default function Log(): React.JSX.Element {
   const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
   const { ref: _unusedRef2, ...personalGradeRegister } =
     register('personalGrade')
+  const { onChange: handleTriesChangeRegister, ...triesRegister } =
+    register('tries')
 
   const topoGradeOrNumber = watch('topoGrade') ?? averageGrade
   const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
-  const numberOfTries = watch('tries') ?? averageTries
+  const numberOfTries = watch('tries') ?? '1'
 
   const topoGrade =
     typeof topoGradeOrNumber === 'number'
@@ -145,6 +136,18 @@ export default function Log(): React.JSX.Element {
     convertGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
     numberOfGrades,
   )
+  const handleTriesChange: ChangeEventHandler<HTMLInputElement> = event => {
+    // Reset the style value to 'Redpoint' when the number of tries is greater than 1
+    if (Number(event.target.value) > 1) {
+      setValue('style', 'Redpoint')
+    }
+    // By default set the style value to 'Onsight' when the number of tries is equal to 1
+    if (Number(event.target.value) === 1) {
+      setValue('style', 'Onsight')
+    }
+    return handleTriesChangeRegister(event)
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
@@ -190,7 +193,11 @@ export default function Log(): React.JSX.Element {
             {climbingDiscipline.map(discipline => {
               const unavailableDiscipline = ['Multi-Pitch']
               if (unavailableDiscipline.includes(discipline)) return null
-              return <option key={discipline} value={discipline} />
+              return (
+                <option key={discipline} value={discipline}>
+                  {discipline}
+                </option>
+              )
             })}
           </select>
         </label>
@@ -221,7 +228,8 @@ export default function Log(): React.JSX.Element {
           Tries
           <div className={styles.tries}>
             <input
-              {...register('tries')}
+              {...triesRegister}
+              onChange={handleTriesChange}
               required={true}
               min={MIN_TRIES}
               max={MAX_TRIES}
