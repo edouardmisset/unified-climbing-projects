@@ -138,6 +138,7 @@ export default function Log(): React.JSX.Element {
             className={styles.input}
             type="date"
             title="Date"
+            max={new Date().toISOString().split('T')[0]}
           />
         </label>
         <label htmlFor="routeName" className={styles.label}>
