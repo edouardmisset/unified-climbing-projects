@@ -75,11 +75,9 @@ export default function Log(): React.JSX.Element {
 
   const { data: defaultAscent } = defaultAscentFormValues
 
-  const { handleSubmit, register, setValue, watch, reset, getValues } = useForm(
-    {
-      defaultValues: defaultAscent,
-    },
-  )
+  const { handleSubmit, register, setValue, watch, reset } = useForm({
+    defaultValues: defaultAscent,
+  })
 
   const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
   const { ref: _unusedRef2, ...personalGradeRegister } =

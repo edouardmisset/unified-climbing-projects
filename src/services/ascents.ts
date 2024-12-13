@@ -26,6 +26,7 @@ export async function getAscentsFromDB(): Promise<Ascent[]> {
   const parsedAscents = ascentSchema.array().safeParse(rawAscents)
 
   if (!parsedAscents.success) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedAscents.error)
     return []
   }

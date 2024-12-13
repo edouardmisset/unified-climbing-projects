@@ -1,10 +1,15 @@
-import { datification, stringifyDate } from '@edouardmisset/date'
+import { stringifyDate } from '@edouardmisset/date'
 import { string, z } from 'zod'
 import {
   convertGradeToNumber,
   convertNumberToGrade,
 } from '~/helpers/converters'
-import { gradeSchema, holdsSchema, profileSchema } from '~/schema/ascent'
+import {
+  ascentStyleSchema,
+  gradeSchema,
+  holdsSchema,
+  profileSchema,
+} from '~/schema/ascent'
 import { climbingDisciplineSchema } from '~/types/training'
 import {
   MAX_HEIGHT,
@@ -16,9 +21,6 @@ import {
   _0To100RegEx,
   _1To9999RegEx,
 } from './constants.ts'
-
-const futureDateErrorMessage =
-  "Date should be in the past. We can't see in the future yet ;)"
 
 const optionalGradeToNumberSchema = gradeSchema
   .transform(grade => convertGradeToNumber(grade))
@@ -33,6 +35,7 @@ const numberOfTriesSchema = z
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
   tries: numberOfTriesSchema.transform(num => num?.toString()),
+  style: ascentStyleSchema.optional(),
   topoGrade: optionalGradeToNumberSchema,
   personalGrade: optionalGradeToNumberSchema,
   routeName: z.string().optional(),
@@ -40,12 +43,7 @@ export const ascentFormInputSchema = z.object({
   crag: z.string().optional(), // pick from a look up in DB
   date: z.date().transform(date => stringifyDate(date)),
   holds: holdsSchema.optional(),
-  height: z
-    .number()
-    .min(0)
-    .max(MAX_HEIGHT)
-    .transform(val => String(val))
-    .optional(),
+  height: z.number().min(0).max(MAX_HEIGHT).transform(String).optional(),
   rating: z
     .number()
     .min(0)
@@ -68,18 +66,13 @@ const numberGradeToGradeSchema = z
 export const ascentFormOutputSchema = z.object({
   area: z.string().optional(),
   tries: numberOfTriesSchema,
+  style: ascentStyleSchema.optional().default('Redpoint'),
   topoGrade: numberGradeToGradeSchema,
   personalGrade: numberGradeToGradeSchema,
   routeName: z.string().trim(),
   climbingDiscipline: climbingDisciplineSchema,
   crag: z.string().min(1).trim(),
-  date: z
-    .string() // yyyy-mm-dd
-    .date()
-    .transform(dateString => datification(dateString))
-    .refine(date => date <= new Date(), {
-      message: futureDateErrorMessage,
-    }),
+  date: z.string().transform(s => new Date(s).toISOString()), // yyyy-mm-dd
   holds: holdsSchema.optional(),
   height: z
     .string()

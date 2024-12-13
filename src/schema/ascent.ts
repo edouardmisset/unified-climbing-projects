@@ -183,6 +183,7 @@ export const profiles = [
   'Traverse',
 ] as const
 
+export const ascentStyleSchema = z.enum(ascentStyle)
 export const profileSchema = z.enum(profiles)
 export const holdsFomGSSchema = z.enum(holdsFromGS)
 export const holdsSchema = z.enum(holds)
@@ -196,8 +197,7 @@ export const ascentSchema = z.object({
   climbingDiscipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
   crag: string().min(1),
-  date: string() // ISO 8601 date format
-    .datetime(),
+  date: string(), // ISO 8601 date format
   region: optionalStringSchema,
   height: number().min(0).optional(),
   holds: holdsSchema.optional(),
@@ -205,7 +205,7 @@ export const ascentSchema = z.object({
   profile: profileSchema.optional(),
   rating: number().int().min(0).max(5).optional(),
   routeName: string().min(1).or(number()).transform(String).default('No Name'),
-  style: z.enum(ascentStyle),
+  style: ascentStyleSchema,
   topoGrade: gradeSchema,
   tries: number().int().min(1),
   id: number().min(0),

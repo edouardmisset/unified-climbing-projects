@@ -25,6 +25,7 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
     .safeParse(rawTrainingSessions)
 
   if (!parsedTrainingSession.success) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedTrainingSession.error)
     return []
   }
