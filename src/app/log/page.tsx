@@ -60,7 +60,7 @@ export default function Log(): React.JSX.Element {
     date: new Date(),
     climbingDiscipline: 'Route',
     tries: '1',
-    style: 'Redpoint',
+    style: 'Onsight',
   } satisfies AscentFormInput
 
   const defaultAscentFormValues =
