@@ -24,6 +24,7 @@
     "@nivo/core": "^0.88.0",
     "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/react-toggle-group": "^1.1.1",
     "@std/csv": "npm:@jsr/std__csv",
     "@std/dotenv": "npm:@jsr/std__dotenv",
     "@std/text": "npm:@jsr/std__text@^1",
