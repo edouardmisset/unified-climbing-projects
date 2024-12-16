@@ -9,21 +9,3 @@
 .article {
   overscroll-behavior: contain;
 }
-
-/** scrollbar-gutter */
-
-/* Consider which element this applies to... */
-
-/* From https://moderncss.dev/12-modern-css-one-line-upgrades/#scrollbar-gutter
-In some scenarios, the appearance or disappearance of scrollbars can cause an
-unwanted layout shift. For example, when a dialog overlay is displayed and the
-background page adds overflow: hidden to prevent scrolling, causing a shift from
-removing the no longer needed scrollbars.
-The modern CSS property scrollbar-gutter enables a reservation of space for
-scrollbars in the layout, which prevents that undesirable shift. When there’s no
-need for a scrollbar, the browser will still paint a gutter as extra space
-created in addition to any padding on the scroll container. 
-*/
-.container {
-  scrollbar-gutter: stable both-edges;
-}
