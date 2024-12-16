@@ -1,4 +1,3 @@
-import { postRouter } from '~/server/api/routers/post'
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc'
 import { areasRouter } from './routers/areas.ts'
 import { ascentsRouter } from './routers/ascents.ts'
@@ -17,7 +16,6 @@ export const appRouter = createTRPCRouter({
   crags: cragsRouter,
   grades: gradesRouter,
   training: trainingRouter,
-  post: postRouter,
 })
 
 // export type definition of API
