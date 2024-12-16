@@ -1,9 +1,8 @@
-import Barcode, { maxBarWidth } from '~/app/_components/barcode/barcode'
+import Barcode from '~/app/_components/barcode/barcode'
 import { getYearsAscentsPerWeek } from '~/data/ascent-data'
-import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
+import { ascentsBarcodeRender } from '../helpers.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -26,44 +25,7 @@ export default async function Page(props: {
   return (
     <section className="w100">
       <h1 className="section-header">{year}</h1>
-      <Barcode
-        data={sortedAscents}
-        itemRender={(weeklyAscents, index) => {
-          if (weeklyAscents === undefined) return <span key={index} />
-
-          const barWidth = weeklyAscents.length
-
-          // Sort week's ascents by ascending grades
-          const filteredWeeklyAscents = weeklyAscents.filter(
-            ascent => ascent !== undefined,
-          )
-          filteredWeeklyAscents.sort((a, b) => -1 * sortByDescendingGrade(a, b))
-
-          // Colorize bars
-          const backgroundGradient =
-            weeklyAscents.length === 1
-              ? convertGradeToBackgroundColor(weeklyAscents[0]?.topoGrade)
-              : `linear-gradient(${filteredWeeklyAscents
-                  .map(ascent =>
-                    convertGradeToBackgroundColor(ascent.topoGrade),
-                  )
-                  .join(', ')})`
-
-          return (
-            <span
-              key={(weeklyAscents[0]?.date ?? index).toString()}
-              style={{
-                display: 'block',
-                blockSize: '100%',
-                inlineSize: barWidth,
-                maxInlineSize: maxBarWidth,
-                background: backgroundGradient,
-              }}
-              title={createAscentBarCodeTooltip(filteredWeeklyAscents)}
-            />
-          )
-        }}
-      />
+      <Barcode data={sortedAscents} itemRender={ascentsBarcodeRender} />
     </section>
   )
 }

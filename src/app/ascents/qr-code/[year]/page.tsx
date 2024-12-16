@@ -1,10 +1,8 @@
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearAscentPerDay } from '~/data/ascent-data'
-import { convertGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { createAscentsQRTooltip } from '~/helpers/tooltips'
-import { parseISODateToTemporal } from '~/schema/ascent'
 import { api } from '~/trpc/server'
+import { ascentsQRCodeRender } from '../helpers.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -28,28 +26,7 @@ export default async function Page(props: {
   return (
     <section className="flex-column w100">
       <h1 className="section-header">{year}</h1>
-      <QRCode
-        data={sortedAscents}
-        itemRender={ascentDay => {
-          const hardestAscent = ascentDay?.ascents?.at(0)
-          return (
-            <span
-              key={parseISODateToTemporal(ascentDay.date).dayOfYear}
-              style={{
-                backgroundColor:
-                  hardestAscent === undefined
-                    ? 'white'
-                    : convertGradeToBackgroundColor(hardestAscent.topoGrade),
-              }}
-              title={
-                ascentDay?.ascents
-                  ? createAscentsQRTooltip(ascentDay.ascents)
-                  : ''
-              }
-            />
-          )
-        }}
-      />
+      <QRCode data={sortedAscents} itemRender={ascentsQRCodeRender} />
     </section>
   )
 }

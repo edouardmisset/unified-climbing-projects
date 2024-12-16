@@ -1,5 +1,5 @@
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/schema/training'
 import { convertGradeToNumber } from './converters.ts'
 
 export const sortByDescendingGrade = (

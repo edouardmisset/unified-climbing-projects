@@ -1,7 +1,7 @@
 import type { StringDateTime } from '~/types/generic'
 
 import { parseISODateToTemporal } from '~/schema/ascent.ts'
-import type { TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/schema/training'
 import { createEmptyBarcodeCollection } from './ascent-data.ts'
 import { createEmptyYearlyCollections } from './helpers.ts'
 

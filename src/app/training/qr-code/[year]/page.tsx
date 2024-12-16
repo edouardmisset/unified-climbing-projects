@@ -1,10 +1,7 @@
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearTraining } from '~/data/training-data'
-import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
-import { createTrainingQRTooltip } from '~/helpers/tooltips'
-import { parseISODateToTemporal } from '~/schema/ascent'
 import { api } from '~/trpc/server'
-import type { TrainingSession } from '~/types/training'
+import { trainingSessionsQRCodeRender } from '../helpers.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -24,17 +21,7 @@ export default async function Page(props: {
       <h1 className="section-header">{year}</h1>
       <QRCode
         data={selectedTrainingSessions}
-        itemRender={(trainingSession: TrainingSession) => (
-          <i
-            key={parseISODateToTemporal(trainingSession.date).dayOfYear}
-            style={{
-              backgroundColor: convertSessionTypeToBackgroundColor(
-                trainingSession.sessionType,
-              ).toString(),
-            }}
-            title={createTrainingQRTooltip(trainingSession)}
-          />
-        )}
+        itemRender={trainingSessionsQRCodeRender}
       />
     </section>
   )

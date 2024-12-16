@@ -1,6 +1,6 @@
 import type { Temporal } from '@js-temporal/polyfill'
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/schema/training'
 import { removeObjectExtendedNullishValues } from '../remove-undefined-values.ts'
 import { sortKeys } from '../sort-keys.ts'
 import {

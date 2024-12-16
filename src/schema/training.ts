@@ -1,5 +1,4 @@
 import { number, string, z } from 'zod'
-import { climbingDisciplineSchema } from '~/types/training'
 
 const sessionTypeSchema = z.enum([
   'En',
@@ -19,6 +18,12 @@ const sessionTypeSchema = z.enum([
 ])
 
 const percentSchema = number().min(0).max(100)
+
+export const climbingDisciplineSchema = z.enum([
+  'Route',
+  'Boulder',
+  'Multi-Pitch',
+])
 
 const anatomicalRegion = ['Ar', 'Fi', 'Ge'] as const
 const energySystem = ['AA', 'AL', 'AE'] as const

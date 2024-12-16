@@ -10,7 +10,7 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import { climbingDisciplineSchema } from '~/types/training'
+import { climbingDisciplineSchema } from '~/schema/training'
 import {
   MAX_HEIGHT,
   MAX_RATING,

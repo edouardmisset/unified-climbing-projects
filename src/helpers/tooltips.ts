@@ -3,7 +3,7 @@ import {
   type Grade,
   parseISODateToTemporal,
 } from '~/schema/ascent'
-import type { TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/schema/training'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
   ascents.length > 0 && ascents[0] !== undefined

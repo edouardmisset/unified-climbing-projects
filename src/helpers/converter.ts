@@ -1,6 +1,6 @@
 import Color from 'colorjs.io'
 import type { Grade } from '~/schema/ascent'
-import type { TrainingSession } from '~/types/training'
+import type { TrainingSession } from '~/schema/training'
 
 const lightness = '0.7'
 const chroma = '0.15'
