@@ -1,3 +1,4 @@
+import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { createCache } from '~/helpers/cache'
 import { transformTrainingSessionFromGSToJS } from '~/helpers/transformers/transformers'
 import { type TrainingSession, trainingSessionSchema } from '~/types/training'
@@ -13,12 +14,23 @@ const { getCache, setCache } = createCache<TrainingSession[]>()
  * @returns A promise that resolves to an array of TrainingSessions objects.
  */
 async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
-  const allTrainingSessionsSheet = await loadWorksheet('training')
-  const rows = await allTrainingSessionsSheet.getRows()
+  let rows:
+    | undefined
+    | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
 
-  const rawTrainingSessions = rows.map(row => {
-    return transformTrainingSessionFromGSToJS(row.toObject())
-  })
+  try {
+    const allTrainingSessionsSheet = await loadWorksheet('training')
+    rows = await allTrainingSessionsSheet.getRows()
+  } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    globalThis.console.error(error)
+  }
+
+  if (rows === undefined) return []
+
+  const rawTrainingSessions = rows.map(row =>
+    transformTrainingSessionFromGSToJS(row.toObject()),
+  )
 
   const parsedTrainingSession = trainingSessionSchema
     .array()

@@ -1,3 +1,4 @@
+import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { createCache } from '~/helpers/cache'
 import {
   transformAscentFromGSToJS,
@@ -15,8 +16,19 @@ import { loadWorksheet } from './google-sheets.ts'
  * representing a validated ascent record.
  */
 export async function getAscentsFromDB(): Promise<Ascent[]> {
-  const allAscentsSheet = await loadWorksheet('ascents')
-  const rows = await allAscentsSheet.getRows()
+  let rows:
+    | undefined
+    | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
+
+  try {
+    const allAscentsSheet = await loadWorksheet('ascents')
+    rows = await allAscentsSheet.getRows()
+  } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    globalThis.console.error(error)
+  }
+
+  if (rows === undefined) return []
 
   const rawAscents = rows.map((row, index) => ({
     ...transformAscentFromGSToJS(row.toObject()),
