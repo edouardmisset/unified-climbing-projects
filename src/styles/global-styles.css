@@ -118,6 +118,8 @@ input:user-valid {
   outline-width: var(--border-size-1);
 }
 
+/* Utility classes */
+
 /** Intrinsic Container */
 .intrinsic-container {
   --container-max: 60ch;
@@ -125,4 +127,15 @@ input:user-valid {
 
   inline-size: min(100% - var(--margin, 3rem), var(--container-max, 60ch));
   margin-inline: auto;
+}
+
+/*  It hides the <span> visually without stopping it from being read out in screen readers. */
+.visually-hidden {
+  clip-path: inset(100%);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
