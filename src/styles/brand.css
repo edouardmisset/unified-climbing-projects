@@ -3,7 +3,7 @@
  */
 
 :where(html) {
-  /* --brand: your-brand-color-here; */
+  --brand: var(--violet-6);
 
   scrollbar-color: var(--scrollthumb-color) transparent;
   accent-color: var(--brand, var(--link));
