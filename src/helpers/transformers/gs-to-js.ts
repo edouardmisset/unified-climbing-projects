@@ -102,7 +102,6 @@ const transformHoldsGSToJS: TransformFunctionGSToJS = value => {
   const parsedValue = holdsFomGSSchema.safeParse(value)
 
   if (!parsedValue.success) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedValue.error)
     return ''
   }

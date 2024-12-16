@@ -11,16 +11,18 @@ export const onSubmit: SubmitHandler<
   const parsedFormData = ascentFormOutputSchema.safeParse(formData)
 
   if (!parsedFormData.success) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedFormData.error)
     return
   }
 
   const { data: form } = parsedFormData
 
-  api.ascents.addOne({
+  const ascentInGSFormat = {
     ...form,
     date: stringifyDate(new Date(form.date)),
-  })
-  return
+  }
+
+  api.ascents.addOne(ascentInGSFormat)
+
+  return ascentInGSFormat
 }

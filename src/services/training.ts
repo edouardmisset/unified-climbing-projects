@@ -22,7 +22,6 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
     const allTrainingSessionsSheet = await loadWorksheet('training')
     rows = await allTrainingSessionsSheet.getRows()
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(error)
   }
 
@@ -37,7 +36,6 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
     .safeParse(rawTrainingSessions)
 
   if (!parsedTrainingSession.success) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedTrainingSession.error)
     return []
   }

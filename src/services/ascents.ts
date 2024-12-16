@@ -24,7 +24,6 @@ export async function getAscentsFromDB(): Promise<Ascent[]> {
     const allAscentsSheet = await loadWorksheet('ascents')
     rows = await allAscentsSheet.getRows()
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(error)
   }
 
@@ -38,7 +37,6 @@ export async function getAscentsFromDB(): Promise<Ascent[]> {
   const parsedAscents = ascentSchema.array().safeParse(rawAscents)
 
   if (!parsedAscents.success) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error(parsedAscents.error)
     return []
   }

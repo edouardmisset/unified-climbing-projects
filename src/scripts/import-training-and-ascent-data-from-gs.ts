@@ -38,7 +38,6 @@ export async function fetchAndParseCSV(url: string): Promise<CSVParsedData> {
   try {
     response = await fetch(url)
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     globalThis.console.error('An error occurred while fetching data:', error)
     throw error
   }

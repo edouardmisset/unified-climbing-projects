@@ -24,8 +24,7 @@ const handler = (req: NextRequest) =>
     onError:
       env.NODE_ENV === 'development'
         ? ({ path, error }) => {
-            // biome-ignore lint/suspicious/noConsole: ok for dev env
-            console.error(
+            globalThis.console.error(
               `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`,
             )
           }

@@ -27,7 +27,9 @@
       "all": true,
       "suspicious": {
         "noReactSpecificProps": "off",
-        "useAwait": "off"
+        "useAwait": "off",
+        "noConsole": "off",
+        "noConsoleLog": "off"
       },
       "style": {
         "noDefaultExport": "off",

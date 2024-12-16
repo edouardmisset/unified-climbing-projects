@@ -66,8 +66,6 @@ export default function Log(): React.JSX.Element {
     ascentFormInputSchema.safeParse(defaultAscentToParse)
 
   if (!defaultAscentFormValues.success) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     globalThis.console.log(defaultAscentFormValues.error)
   }
 

@@ -70,8 +70,6 @@ await writeFile(
   JSON.stringify(subset, null, 2),
 )
 
-// biome-ignore lint/suspicious/noConsole: <explanation>
-// biome-ignore lint/suspicious/noConsoleLog: <explanation>
 globalThis.console.log(
   `Sampled ${subset.length} entries from the original data.`,
 )

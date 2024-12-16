@@ -262,7 +262,6 @@ export const ascentsRouter = createTRPCRouter({
         addAscent(input)
         return true
       } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: <explanation>
         globalThis.console.error(error)
         return false
       }
