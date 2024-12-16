@@ -1,5 +1,5 @@
 import { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { convertGradeToBackgroundColor } from '~/helpers/converter'
+import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
@@ -21,9 +21,9 @@ export function ascentsBarcodeRender(
   // Colorize bars
   const backgroundGradient =
     weeklyAscents.length === 1
-      ? convertGradeToBackgroundColor(weeklyAscents[0]?.topoGrade)
+      ? fromGradeToBackgroundColor(weeklyAscents[0]?.topoGrade)
       : `linear-gradient(${filteredWeeklyAscents
-          .map(ascent => convertGradeToBackgroundColor(ascent.topoGrade))
+          .map(ascent => fromGradeToBackgroundColor(ascent.topoGrade))
           .join(', ')})`
 
   return (

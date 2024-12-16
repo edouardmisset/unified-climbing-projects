@@ -4,10 +4,7 @@ import type React from 'react'
 import { useForm } from 'react-hook-form'
 
 import { env } from '~/env'
-import {
-  convertGradeToNumber,
-  convertNumberToGrade,
-} from '~/helpers/converters'
+import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
   type Ascent,
   type Grade,
@@ -49,8 +46,8 @@ export default function Log(): React.JSX.Element {
   const { data: averageGrade = '7b' } = api.grades.getAverage.useQuery()
   const {
     data: [minGrade, maxGrade] = [
-      convertNumberToGrade(1),
-      convertNumberToGrade(numberOfGrades),
+      fromNumberToGrade(1),
+      fromNumberToGrade(numberOfGrades),
     ],
   } = api.grades.getMinMax.useQuery()
 
@@ -92,23 +89,23 @@ export default function Log(): React.JSX.Element {
 
   const topoGrade =
     typeof topoGradeOrNumber === 'number'
-      ? convertNumberToGrade(topoGradeOrNumber)
+      ? fromNumberToGrade(topoGradeOrNumber)
       : topoGradeOrNumber
 
   const handleTopoGradeChange: GradeSetter = ([value]) => {
-    const convertedAverageGrade = convertGradeToNumber(averageGrade)
+    const averageNumberGrade = fromGradeToNumber(averageGrade)
     setValue(
       'topoGrade',
-      convertNumberToGrade(
-        value ?? convertedAverageGrade,
+      fromNumberToGrade(
+        value ?? averageNumberGrade,
         // biome-ignore lint/suspicious/noExplicitAny:
       ) as any,
     )
 
     setValue(
       'personalGrade',
-      convertNumberToGrade(
-        value ?? convertedAverageGrade,
+      fromNumberToGrade(
+        value ?? averageNumberGrade,
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       ) as any,
     )
@@ -116,8 +113,8 @@ export default function Log(): React.JSX.Element {
   const updatePersonalGradeChange: GradeSetter = ([value]) =>
     setValue(
       'personalGrade',
-      convertNumberToGrade(
-        value ?? convertGradeToNumber(averageGrade),
+      fromNumberToGrade(
+        value ?? fromGradeToNumber(averageGrade),
         // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
       ) as any,
     )
@@ -131,11 +128,11 @@ export default function Log(): React.JSX.Element {
   const styleValue = watch('style')
 
   const adjustedMinGrade = Math.max(
-    convertGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
+    fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
     1,
   )
   const adjustedMaxGrade = Math.min(
-    convertGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
+    fromGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
     numberOfGrades,
   )
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = event => {
@@ -292,7 +289,7 @@ export default function Log(): React.JSX.Element {
           <label htmlFor="personalGrade" className={styles.label}>
             Personal Grade{' '}
             {typeof personalGradeOrNumber === 'number'
-              ? convertNumberToGrade(personalGradeOrNumber)
+              ? fromNumberToGrade(personalGradeOrNumber)
               : personalGradeOrNumber}
           </label>
           <GradeSlider

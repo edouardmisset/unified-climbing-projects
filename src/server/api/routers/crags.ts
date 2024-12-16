@@ -2,7 +2,7 @@ import { frequency } from '@edouardmisset/array'
 import { mapObject } from '@edouardmisset/object'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import { z } from 'zod'
-import { convertGradeToNumber } from '~/helpers/converters'
+import { fromGradeToNumber } from '~/helpers/converters'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
 import type { Ascent, Grade } from '~/schema/ascent'
@@ -59,12 +59,10 @@ export const cragsRouter = createTRPCRouter({
         for (const { topoGrade } of listOfAscentsInCrag) {
           if (weightedByGrade) {
             const hightestGradeNumber = Math.max(
-              ...ascents.map(({ topoGrade }) =>
-                convertGradeToNumber(topoGrade),
-              ),
+              ...ascents.map(({ topoGrade }) => fromGradeToNumber(topoGrade)),
             )
             cragTotal +=
-              convertGradeToNumber(topoGrade as Grade) / hightestGradeNumber
+              fromGradeToNumber(topoGrade as Grade) / hightestGradeNumber
           } else cragTotal++
         }
 

@@ -1,4 +1,4 @@
-import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
+import { fromSessionTypeToBackgroundColor } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { parseISODateToTemporal } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -11,7 +11,7 @@ export function trainingSessionsQRCodeRender(trainingSession: TrainingSession) {
         trainingSession.date
       }
       style={{
-        backgroundColor: convertSessionTypeToBackgroundColor(
+        backgroundColor: fromSessionTypeToBackgroundColor(
           trainingSession.sessionType,
         ).toString(),
       }}

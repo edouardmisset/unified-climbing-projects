@@ -1,4 +1,4 @@
-import { convertGradeToBackgroundColor } from '~/helpers/converter'
+import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
 import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
@@ -14,7 +14,7 @@ export function ascentsQRCodeRender(
         backgroundColor:
           hardestAscent === undefined
             ? 'white'
-            : convertGradeToBackgroundColor(hardestAscent.topoGrade),
+            : fromGradeToBackgroundColor(hardestAscent.topoGrade),
       }}
       title={
         ascentDay?.ascents ? createAscentsQRTooltip(ascentDay.ascents) : ''

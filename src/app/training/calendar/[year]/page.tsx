@@ -5,8 +5,8 @@ import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
 import { getYearTraining } from '~/data/training-data'
 import {
-  convertSessionTypeToBackgroundColor,
-  convertSessionTypeToForeColor,
+  fromSessionTypeToBackgroundColor,
+  fromSessionTypeToForeColor,
   getTrainingSessionColorVariant,
 } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
@@ -37,7 +37,7 @@ export default async function TrainingCalendar(props: {
         sessionType === undefined
           ? 'hsla(0deg 0% 100% / 0.3)'
           : getTrainingSessionColorVariant(
-              new Color(convertSessionTypeToBackgroundColor(sessionType)).to(
+              new Color(fromSessionTypeToBackgroundColor(sessionType)).to(
                 'oklch',
               ),
               session?.intensity ?? 65,
@@ -47,7 +47,7 @@ export default async function TrainingCalendar(props: {
         date,
         backgroundColor,
         tooltip: createTrainingQRTooltip(session),
-        foreColor: convertSessionTypeToForeColor(sessionType).toString(),
+        foreColor: fromSessionTypeToForeColor(sessionType).toString(),
         shortText: sessionType,
       }
     }) ?? []

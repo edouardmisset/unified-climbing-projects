@@ -1,6 +1,6 @@
 import { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { convertSessionTypeToBackgroundColor } from '~/helpers/converter'
-import { convertSessionTypeToSortOrder } from '~/helpers/sorter'
+import { fromSessionTypeToBackgroundColor } from '~/helpers/converter'
+import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDateTime } from '~/types/generic'
@@ -14,24 +14,21 @@ export function trainingSessionsBarcodeRender(
   // Sort week's training by ascending grades
   const filteredWeeklyTraining = weeklyTraining
     .filter(training => training !== undefined)
-    .sort(({ sessionType: aType }, { sessionType: bType }) => {
-      if (aType === undefined || bType === undefined) return 0
-
-      return (
-        convertSessionTypeToSortOrder(bType) -
-        convertSessionTypeToSortOrder(aType)
-      )
-    })
+    .sort(({ sessionType: aType }, { sessionType: bType }) =>
+      aType === undefined || bType === undefined
+        ? 0
+        : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
+    )
 
   // Colorize bars
   const backgroundGradient =
     weeklyTraining.length === 1
-      ? convertSessionTypeToBackgroundColor(
+      ? fromSessionTypeToBackgroundColor(
           weeklyTraining[0]?.sessionType,
         ).toString()
       : `linear-gradient(${filteredWeeklyTraining
-          .map(training =>
-            convertSessionTypeToBackgroundColor(training?.sessionType),
+          .map(({ sessionType }) =>
+            fromSessionTypeToBackgroundColor(sessionType),
           )
           .join(', ')})`
 

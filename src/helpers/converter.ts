@@ -37,7 +37,7 @@ const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   St: staminaColor,
 }
 
-export const convertSessionTypeToBackgroundColor = (
+export const fromSessionTypeToBackgroundColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
   sessionType === undefined
@@ -75,7 +75,7 @@ export const getTrainingSessionColorVariant = (
   )
 }
 
-export const convertSessionTypeToForeColor = (
+export const fromSessionTypeToForeColor = (
   sessionType: TrainingSession['sessionType'],
 ): Color =>
   new Color(
@@ -111,7 +111,5 @@ const ASCENT_GRADE_TO_COLOR: Partial<Record<Grade, string>> = {
   '8c+': new Color(color8a.darken(5 * darkeningCoefficient)).toString(),
 }
 
-export const convertGradeToBackgroundColor = (
-  grade: Grade | undefined,
-): string =>
+export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>
   grade === undefined ? 'black' : (ASCENT_GRADE_TO_COLOR[grade] ?? 'black')

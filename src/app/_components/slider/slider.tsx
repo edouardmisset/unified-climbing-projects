@@ -8,7 +8,7 @@ import {
   Track,
 } from '@radix-ui/react-slider'
 import type React from 'react'
-import { convertGradeToNumber } from '~/helpers/converters'
+import { fromGradeToNumber } from '~/helpers/converters'
 import type { Grade } from '~/schema/ascent'
 import styles from './slider.module.css'
 
@@ -25,14 +25,14 @@ export function GradeSlider(
       ? [0]
       : typeof defaultValue[0] === 'number'
         ? (defaultValue as number[])
-        : (defaultValue as Grade[]).map(df => convertGradeToNumber(df))
+        : (defaultValue as Grade[]).map(df => fromGradeToNumber(df))
 
   const numberValue =
     value === undefined
       ? [0]
       : typeof value[0] === 'number'
         ? (value as number[])
-        : (value as Grade[]).map(df => convertGradeToNumber(df))
+        : (value as Grade[]).map(df => fromGradeToNumber(df))
 
   return (
     <Root

@@ -1,9 +1,6 @@
 import { stringifyDate } from '@edouardmisset/date'
 import { string, z } from 'zod'
-import {
-  convertGradeToNumber,
-  convertNumberToGrade,
-} from '~/helpers/converters'
+import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
   ascentStyleSchema,
   gradeSchema,
@@ -23,7 +20,7 @@ import {
 } from './constants.ts'
 
 const optionalGradeToNumberSchema = gradeSchema
-  .transform(grade => convertGradeToNumber(grade))
+  .transform(grade => fromGradeToNumber(grade))
   .optional()
 const numberOfTriesSchema = z
   .string()
@@ -60,7 +57,7 @@ const numberGradeToGradeSchema = z
   .number()
   .or(string())
   .transform(stringOrNumberGrade =>
-    convertNumberToGrade(Number(stringOrNumberGrade)),
+    fromNumberToGrade(Number(stringOrNumberGrade)),
   )
 
 export const ascentFormOutputSchema = z.object({
