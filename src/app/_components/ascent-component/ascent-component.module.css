@@ -8,4 +8,6 @@
   background-clip: text;
 
   text-decoration: none;
+
+  text-wrap: nowrap;
 }
