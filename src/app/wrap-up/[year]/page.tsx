@@ -6,69 +6,89 @@ import { Card } from '~/app/_components/card/card'
 import { fromGradeToNumber } from '~/helpers/converters'
 import { sortNumericalValues } from '~/helpers/sort-values.ts'
 import type { Ascent } from '~/schema/ascent'
+import type { TrainingSession } from '~/schema/training'
 import { api } from '~/trpc/server'
+
+async function fetchData(year: number) {
+  const [trainingSessions, ascents] = await Promise.all([
+    api.training.getAllTrainingSessions(),
+    api.ascents.getAllAscents({ year }),
+  ])
+  return { trainingSessions, ascents }
+}
+
+function getFilteredAscents(ascents: Ascent[], style: Ascent['style']) {
+  return ascents.filter(ascent => ascent.style === style).length
+}
+
+function filterByDiscipline(
+  ascents: Ascent[],
+  discipline: Ascent['climbingDiscipline'],
+) {
+  return ascents.filter(ascent => ascent.climbingDiscipline === discipline)
+}
+
+function getHardestAscent(ascents: Ascent[]) {
+  return ascents.reduce(
+    (prev, current) =>
+      fromGradeToNumber(prev?.topoGrade ?? '1a') >
+      fromGradeToNumber(current.topoGrade)
+        ? prev
+        : current,
+    ascents[0] as Ascent,
+  )
+}
+
+function getMostFrequentDate(ascents: Ascent[]) {
+  const ascentsByDate = frequency(ascents.map(({ date }) => date))
+  const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
+    ascending: false,
+  })
+  return Object.entries(sortedAscentsByDate)[0] ?? ['', 0]
+}
+
+function getDaysOutside(trainingSessions: TrainingSession[], year: number) {
+  return trainingSessions.filter(
+    session =>
+      session.sessionType === 'Out' &&
+      new Date(session.date).getFullYear() === year,
+  ).length
+}
+
+function getMostFrequentCrag(ascents: Ascent[]) {
+  const sortedCrags = sortNumericalValues(
+    frequency(ascents.map(({ crag }) => crag)),
+    { ascending: false },
+  )
+  return {
+    numberOfCrags: objectSize(sortedCrags),
+    mostFrequentCrag: Object.keys(sortedCrags)[0],
+  }
+}
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
   const year = Number((await props.params).year)
+  const { trainingSessions, ascents } = await fetchData(year)
 
-  const trainingSessions = await api.training.getAllTrainingSessions()
-  const ascents = await api.ascents.getAllAscents({ year })
+  const onsightAscents = getFilteredAscents(ascents, 'Onsight')
+  const flashAscents = getFilteredAscents(ascents, 'Flash')
+  const redpointAscents = getFilteredAscents(ascents, 'Redpoint')
 
-  const onsightAscents = ascents.filter(
-    ({ style }) => style === 'Onsight',
-  ).length
-  const flashAscents = ascents.filter(({ style }) => style === 'Flash').length
-  const redpointAscents = ascents.filter(
-    ({ style }) => style === 'Redpoint',
-  ).length
+  const boulders = filterByDiscipline(ascents, 'Boulder')
+  const routes = filterByDiscipline(ascents, 'Route')
 
-  const boulders = ascents.filter(
-    ({ climbingDiscipline }) => climbingDiscipline === 'Boulder',
-  )
-  const routes = ascents.filter(
-    ({ climbingDiscipline }) => climbingDiscipline === 'Route',
-  )
-
-  const hardestRoute = routes.reduce(
-    (prev, current) =>
-      fromGradeToNumber(prev?.topoGrade ?? '1a') >
-      fromGradeToNumber(current.topoGrade)
-        ? prev
-        : current,
-    ascents[0] as Ascent,
-  )
-  const hardestBoulder = boulders.reduce(
-    (prev, current) =>
-      fromGradeToNumber(prev?.topoGrade ?? '1a') >
-      fromGradeToNumber(current.topoGrade)
-        ? prev
-        : current,
-    ascents[0] as Ascent,
-  )
+  const hardestRoute = getHardestAscent(routes)
+  const hardestBoulder = getHardestAscent(boulders)
 
   const totalHeight = sum(routes.map(({ height }) => height ?? 0))
 
-  const ascentsByDate = frequency(ascents.map(({ date }) => date))
-  const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
-    ascending: false,
-  })
-  const [mostAscentDate = '', mostAscent = 0] =
-    Object.entries(sortedAscentsByDate)[0] ?? []
+  const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
 
-  const daysOutside = trainingSessions.filter(
-    trainingSession =>
-      trainingSession.sessionType === 'Out' &&
-      new Date(trainingSession.date).getFullYear() === year,
-  ).length
+  const daysOutside = getDaysOutside(trainingSessions, year)
 
-  const sortedCrags = sortNumericalValues(
-    frequency(ascents.map(({ crag }) => crag)),
-    { ascending: false },
-  )
-  const numberOfCrags = objectSize(sortedCrags)
-  const mostFrequentCrag = Object.keys(sortedCrags)[0]
+  const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
 
   return (
     <section className="w100">
@@ -103,7 +123,7 @@ export default async function Page(props: {
           <h2>Hardest</h2>
           <p>
             Your hardest route was{' '}
-            <AscentComponent ascent={hardestRoute} showGrade={true} />, and your
+            <AscentComponent ascent={hardestRoute} showGrade={true} /> and your
             hardest boulder{' '}
             <AscentComponent ascent={hardestBoulder} showGrade={true} />
           </p>
