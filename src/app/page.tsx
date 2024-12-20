@@ -8,31 +8,7 @@ import styles from './index.module.css'
 
 const searchedRouteName = 'no'
 
-export default async function Home() {
-  // Areas
-  const areasPromise = api.areas.getAllAreas()
-  const areaDuplicatesPromise = api.areas.getDuplicates()
-  const areaSimilarPromise = api.areas.getSimilar()
-  const areaFrequencyPromise = api.areas.getFrequency()
-  // Crags
-  const cragsPromise = api.crags.getAllCrags()
-  const cragDuplicatesPromise = api.crags.getDuplicate()
-  const cragSimilarPromise = api.crags.getSimilar()
-  const cragFrequencyPromise = api.crags.getFrequency()
-  // Ascents
-  const ascentsPromise = api.ascents.getAllAscents({
-    descending: true,
-  })
-  const duplicateAscentsPromise = api.ascents.getDuplicates()
-  const similarAscentsPromise = api.ascents.getSimilar()
-  const searchedAscentsPromise = api.ascents.search({
-    query: searchedRouteName,
-  })
-  // Grades
-  const gradesPromise = api.grades.getAllGrades()
-  const gradeAveragePromise = api.grades.getAverage()
-  const gradeFrequencyPromise = api.grades.getFrequency()
-
+async function fetchClimbingData() {
   const [
     areas,
     areaDuplicates,
@@ -50,22 +26,63 @@ export default async function Home() {
     gradeAverage,
     gradeFrequency,
   ] = await Promise.all([
-    areasPromise,
-    areaDuplicatesPromise,
-    areaSimilarPromise,
-    areaFrequencyPromise,
-    cragsPromise,
-    cragDuplicatesPromise,
-    cragSimilarPromise,
-    cragFrequencyPromise,
-    ascentsPromise,
-    duplicateAscentsPromise,
-    similarAscentsPromise,
-    searchedAscentsPromise,
-    gradesPromise,
-    gradeAveragePromise,
-    gradeFrequencyPromise,
+    api.areas.getAllAreas(),
+    api.areas.getDuplicates(),
+    api.areas.getSimilar(),
+    api.areas.getFrequency(),
+    api.crags.getAllCrags(),
+    api.crags.getDuplicate(),
+    api.crags.getSimilar(),
+    api.crags.getFrequency(),
+    api.ascents.getAllAscents({
+      descending: true,
+    }),
+    api.ascents.getDuplicates(),
+    api.ascents.getSimilar(),
+    api.ascents.search({
+      query: searchedRouteName,
+    }),
+    api.grades.getAllGrades(),
+    api.grades.getAverage(),
+    api.grades.getFrequency(),
   ])
+  return {
+    areas,
+    areaDuplicates,
+    areaSimilar,
+    areaFrequency,
+    crags,
+    cragDuplicates,
+    cragSimilar,
+    cragFrequency,
+    ascents,
+    duplicateAscents,
+    similarAscents,
+    searchedAscents,
+    grades,
+    gradeAverage,
+    gradeFrequency,
+  }
+}
+
+export default async function Home() {
+  const {
+    areas,
+    areaDuplicates,
+    areaSimilar,
+    areaFrequency,
+    crags,
+    cragDuplicates,
+    cragSimilar,
+    cragFrequency,
+    ascents,
+    duplicateAscents,
+    similarAscents,
+    searchedAscents,
+    grades,
+    gradeAverage,
+    gradeFrequency,
+  } = await fetchClimbingData()
 
   return (
     <div className={styles.container}>
