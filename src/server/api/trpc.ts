@@ -81,15 +81,14 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 
   if (t._config.isDev) {
     // artificial delay in dev
-    const waitMs = Math.floor(Math.random() * 400) + 100
+    const waitMs = Math.floor(Math.random() * 200) + 50
     await new Promise(resolve => setTimeout(resolve, waitMs))
   }
 
   const result = await next()
 
   const end = Date.now()
-  // biome-ignore lint/suspicious/noConsoleLog: <explanation>
-  // biome-ignore lint/suspicious/noConsole: <explanation>
+
   globalThis.console.log(`[TRPC] ${path} took ${end - start}ms to execute`)
 
   return result
