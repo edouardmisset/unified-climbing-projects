@@ -129,6 +129,10 @@
   }
 }
 
+:where(b) {
+  font-weight: var(--font-weight-7);
+}
+
 /**
  * Display the tooltip (title) for mobile devices.
  * This is a barebone implementation and should be further customized.
