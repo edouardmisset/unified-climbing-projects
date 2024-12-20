@@ -57,48 +57,22 @@ export const ascentsRouter = createTRPCRouter({
 
       const sortFields = transformFields(sort)
 
-      const filters = [
-        {
-          value: gradeFilter,
-          compare: (left: Grade, right: Grade) =>
-            stringEqualsCaseInsensitive(left, right),
-          key: 'topoGrade',
-        },
-        {
-          value: numberOfTriesFilter,
-          compare: (left: Ascent['tries'], right: Ascent['tries']) =>
-            left === right,
-          key: 'tries',
-        },
-        {
-          value: disciplineFilter,
-          compare: (
-            left: Ascent['climbingDiscipline'],
-            right: Ascent['climbingDiscipline'],
-          ) => left === right,
-          key: 'climbingDiscipline',
-        },
-        {
-          value: yearFilter,
-          compare: (left: Ascent['date'], right: Ascent['date']) =>
-            parseISODateToTemporal(left).equals(parseISODateToTemporal(right)),
-          key: 'date',
-        },
-        {
-          value: cragFilter,
-          compare: (a: Ascent['crag'], b: Ascent['crag']) =>
-            stringEqualsCaseInsensitive(a, b),
-          key: 'crag',
-        },
-      ]
-
       const ascents = await getAllAscents()
-      const filteredAscents = ascents.filter(ascent =>
-        filters.every(
-          ({ value, compare, key }) =>
-            // @ts-ignore
-            value === undefined || compare(ascent[key], value),
-        ),
+      const filteredAscents = ascents.filter(
+        ({ date, crag, climbingDiscipline, tries, topoGrade }) =>
+          (cragFilter === undefined ? true : crag === cragFilter) &&
+          (disciplineFilter === undefined
+            ? true
+            : climbingDiscipline === disciplineFilter) &&
+          (numberOfTriesFilter === undefined
+            ? true
+            : tries === numberOfTriesFilter) &&
+          (gradeFilter === undefined
+            ? true
+            : stringEqualsCaseInsensitive(topoGrade, gradeFilter as string)) &&
+          (yearFilter === undefined
+            ? true
+            : new Date(date).getFullYear() === yearFilter),
       )
 
       const dateSortedAscents = filteredAscents.sort(
