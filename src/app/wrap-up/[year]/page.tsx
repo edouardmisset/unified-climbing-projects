@@ -1,9 +1,9 @@
-import { frequency } from '@edouardmisset/array'
 import { sum } from '@edouardmisset/math'
 import { objectSize } from '@edouardmisset/object'
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { Card } from '~/app/_components/card/card'
 import { fromGradeToNumber } from '~/helpers/converters'
+import { frequencyBy } from '~/helpers/frequency-by'
 import { sortNumericalValues } from '~/helpers/sort-values.ts'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -17,15 +17,17 @@ async function fetchData(year: number) {
   return { trainingSessions, ascents }
 }
 
-function getFilteredAscents(ascents: Ascent[], style: Ascent['style']) {
-  return ascents.filter(ascent => ascent.style === style).length
+function getFilteredAscents(ascents: Ascent[], ascentStyle: Ascent['style']) {
+  return ascents.filter(({ style }) => style === ascentStyle).length
 }
 
 function filterByDiscipline(
   ascents: Ascent[],
   discipline: Ascent['climbingDiscipline'],
 ) {
-  return ascents.filter(ascent => ascent.climbingDiscipline === discipline)
+  return ascents.filter(
+    ({ climbingDiscipline }) => climbingDiscipline === discipline,
+  )
 }
 
 function getHardestAscent(ascents: Ascent[]) {
@@ -40,7 +42,7 @@ function getHardestAscent(ascents: Ascent[]) {
 }
 
 function getMostFrequentDate(ascents: Ascent[]) {
-  const ascentsByDate = frequency(ascents.map(({ date }) => date))
+  const ascentsByDate = frequencyBy(ascents, 'date')
   const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
     ascending: false,
   })
@@ -56,10 +58,8 @@ function getDaysOutside(trainingSessions: TrainingSession[], year: number) {
 }
 
 function getMostFrequentCrag(ascents: Ascent[]) {
-  const sortedCrags = sortNumericalValues(
-    frequency(ascents.map(({ crag }) => crag)),
-    { ascending: false },
-  )
+  const sortedCrags = frequencyBy(ascents, 'crag', { ascending: false })
+
   return {
     numberOfCrags: objectSize(sortedCrags),
     mostFrequentCrag: Object.keys(sortedCrags)[0],
