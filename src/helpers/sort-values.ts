@@ -18,8 +18,9 @@
  */
 export function sortNumericalValues<Obj extends Record<string, number>>(
   obj: Obj,
-  ascending = true,
+  options?: { ascending: boolean },
 ): Obj {
+  const { ascending = true } = options ?? {}
   return Object.fromEntries(
     Object.entries(obj).sort(
       ([, leftValue], [, rightValue]) =>

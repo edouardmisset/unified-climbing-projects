@@ -29,10 +29,9 @@ export const cragsRouter = createTRPCRouter({
   getFrequency: publicProcedure.query(async () => {
     const validCrags = await getValidCrags()
 
-    const sortedCragsByFrequency = sortNumericalValues(
-      frequency(validCrags),
-      false,
-    )
+    const sortedCragsByFrequency = sortNumericalValues(frequency(validCrags), {
+      ascending: false,
+    })
 
     return sortedCragsByFrequency
   }),
@@ -71,7 +70,7 @@ export const cragsRouter = createTRPCRouter({
 
       const sortedCragsByNumber = sortNumericalValues(
         weightedByGradeAndSortedCrags,
-        false,
+        { ascending: false },
       )
 
       const mostSuccessfulCrags: Record<string, number> = Object.fromEntries(

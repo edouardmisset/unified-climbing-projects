@@ -26,10 +26,9 @@ export const areasRouter = createTRPCRouter({
   }),
   // Get all known areas sorted by frequency
   getFrequency: publicProcedure.query(() => {
-    const sortedAreasByFrequency = sortNumericalValues(
-      frequency(validAreas),
-      false,
-    )
+    const sortedAreasByFrequency = sortNumericalValues(frequency(validAreas), {
+      ascending: false,
+    })
     return sortedAreasByFrequency
   }),
   // Get all known areas that are similar
