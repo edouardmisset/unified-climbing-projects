@@ -5,7 +5,8 @@ import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filte
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/react'
-import { AscentPyramid } from '../ascents-pyramid/ascent-pyramid.tsx'
+import { AscentsPerYearByGrade } from '../graphs/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx'
+import { AscentPyramid } from '../graphs/ascents-pyramid/ascent-pyramid.tsx'
 import { ALL_VALUE } from './constants.ts'
 import styles from './dashboard.module.css'
 
@@ -80,6 +81,9 @@ export function Dashboard() {
       <div className={styles.container}>
         <div className={styles.item}>
           <AscentPyramid ascents={filteredAscents} />
+        </div>
+        <div className={styles.item}>
+          <AscentsPerYearByGrade ascents={filteredAscents} />
         </div>
       </div>
     </>

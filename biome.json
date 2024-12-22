@@ -35,6 +35,9 @@
         "noDefaultExport": "off",
         "useNamingConvention": "off",
         "useBlockStatements": "off"
+      },
+      "correctness": {
+        "useImportExtensions": "off"
       }
     }
   },

@@ -3,28 +3,7 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { getGradeFrequency } from '~/helpers/get-grade-frequency'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
-
-const ascentPyramidTheme = {
-  background: 'var(--surface-1)',
-  text: {
-    fill: 'var(--text-1)',
-  },
-  tooltip: {
-    container: {
-      background: 'var(--surface-2)',
-    },
-  },
-  axis: {
-    ticks: {
-      text: {
-        fill: 'var(--text-2)',
-        fontFamily: 'monospace',
-        fontStyle: 'normal',
-        fontSize: 'var(--size-fluid-1)',
-      },
-    },
-  },
-}
+import { ascentPyramidTheme } from '../constants'
 
 export function AscentPyramid({
   ascents,
