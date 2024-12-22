@@ -1,0 +1,21 @@
+.container {
+  --width: 400px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--width), 1fr));
+  gap: 1rem;
+
+  max-inline-size: 100%;
+}
+
+.item {
+  inline-size: clamp(300px, 50vw, var(--width));
+  block-size: clamp(300px, 50vw, var(--width));
+
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    flex: 1;
+  }
+}
