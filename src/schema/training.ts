@@ -1,4 +1,5 @@
 import { number, string, z } from 'zod'
+import { climbingDisciplineSchema } from './ascent.ts'
 
 const sessionTypeSchema = z.enum([
   'En',
@@ -18,12 +19,6 @@ const sessionTypeSchema = z.enum([
 ])
 
 const percentSchema = number().min(0).max(100)
-
-export const climbingDisciplineSchema = z.enum([
-  'Route',
-  'Boulder',
-  'Multi-Pitch',
-])
 
 const ANATOMICAL_REGION = ['Ar', 'Fi', 'Ge'] as const
 const ENERGY_SYSTEM = ['AA', 'AL', 'AE'] as const

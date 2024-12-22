@@ -2,15 +2,32 @@ import { average } from '@edouardmisset/math/average.ts'
 
 import { number, string, z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
-import { type Grade, _GRADES, ascentSchema, gradeSchema } from '~/schema/ascent'
+import { filterAscents } from '~/helpers/filter-ascents'
+import { getGradeFrequency } from '~/helpers/get-grade-frequency.ts'
+import {
+  type Grade,
+  _GRADES,
+  ascentSchema,
+  ascentStyleSchema,
+  climbingDisciplineSchema,
+  gradeSchema,
+  holdsSchema,
+  profileSchema,
+} from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { getFilteredAscents } from './ascents.ts'
+import { getAllAscents } from '~/services/ascents'
 
 export const optionalAscentInputSchema = z
   .object({
-    climbingDiscipline: ascentSchema.shape.climbingDiscipline.optional(),
+    climbingDiscipline: climbingDisciplineSchema.optional(),
+    crag: ascentSchema.shape.crag.optional(),
+    grade: gradeSchema.optional(),
+    height: ascentSchema.shape.height.optional(),
+    holds: holdsSchema.optional(),
+    profile: profileSchema.optional(),
+    style: ascentStyleSchema.optional(),
+    tries: ascentSchema.shape.tries.optional(),
     year: number().optional(),
-    style: ascentSchema.shape.style.optional(),
   })
   .optional()
 export type OptionalAscentInput = z.infer<typeof optionalAscentInputSchema>
@@ -43,40 +60,7 @@ export const gradesRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      const sortedFilteredGrades = [
-        ...new Set(filteredAscents.map(({ topoGrade }) => topoGrade)),
-      ].sort()
-
-      const gradeClimbingStylesCount = sortedFilteredGrades.map(grade => {
-        const filteredAscentsByGrade = filteredAscents.filter(
-          ({ topoGrade }) => topoGrade === grade,
-        )
-
-        return {
-          grade,
-          Onsight: filteredAscentsByGrade.filter(
-            ({ style }) => style === 'Onsight',
-          ).length,
-          OnsightColor: 'var(--green-5)',
-          Flash: filteredAscentsByGrade.filter(({ style }) => style === 'Flash')
-            .length,
-          FlashColor: 'var(--yellow-5)',
-          Redpoint: filteredAscentsByGrade.filter(
-            ({ style }) => style === 'Redpoint',
-          ).length,
-          RedpointColor: 'var(--red-5)',
-        }
-      })
-
-      return gradeClimbingStylesCount as {
-        grade: Grade
-        Onsight: number
-        OnsightColor: string
-        Flash: number
-        FlashColor: string
-        Redpoint: number
-        RedpointColor: string
-      }[]
+      return getGradeFrequency(filteredAscents)
     }),
   getAverage: publicProcedure
     .input(optionalAscentInputSchema)
@@ -107,3 +91,8 @@ export const gradesRouter = createTRPCRouter({
       return [lowestGrade, highestGrade]
     }),
 })
+
+export async function getFilteredAscents(input?: OptionalAscentInput) {
+  const ascents = await getAllAscents()
+  return filterAscents(ascents, input)
+}

@@ -3,41 +3,42 @@
 import { useQueryState } from 'nuqs'
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
 import { AscentPyramid } from '~/app/_components/ascents-pyramid/ascent-pyramid'
+import { filterAscents } from '~/helpers/filter-ascents.ts'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/react'
-
-const allVariable = 'all'
+import { ALL_VARIABLE } from './constants.ts'
 
 export function Dashboard() {
   const [selectedYear] = useQueryState('year', {
-    defaultValue: allVariable,
+    defaultValue: ALL_VARIABLE,
   })
   const [selectedDiscipline] = useQueryState('discipline', {
-    defaultValue: allVariable,
+    defaultValue: ALL_VARIABLE,
   })
   const [selectedStyle] = useQueryState('style', {
-    defaultValue: allVariable,
+    defaultValue: ALL_VARIABLE,
   })
 
-  const [data] = api.grades.getFrequency.useSuspenseQuery({
-    year: selectedYear === allVariable ? undefined : Number(selectedYear),
+  const [allAscents] = api.ascents.getAllAscents.useSuspenseQuery()
+
+  if (!allAscents) return <div>Loading...</div>
+
+  const filteredAscents = filterAscents(allAscents, {
+    year: selectedYear === ALL_VARIABLE ? undefined : Number(selectedYear),
     climbingDiscipline:
-      selectedDiscipline === allVariable
+      selectedDiscipline === ALL_VARIABLE
         ? undefined
         : (selectedDiscipline as Ascent['climbingDiscipline']),
     style:
-      selectedStyle === allVariable
+      selectedStyle === ALL_VARIABLE
         ? undefined
         : (selectedStyle as Ascent['style']),
   })
-  const [allAscents] = api.ascents.getAllAscents.useSuspenseQuery()
-
-  if (!(data && allAscents)) return <div>Loading...</div>
 
   return (
     <>
       <AscentsFilterBar ascents={allAscents} />
-      <AscentPyramid gradeFrequency={data} />
+      <AscentPyramid ascents={filteredAscents} />
     </>
   )
 }

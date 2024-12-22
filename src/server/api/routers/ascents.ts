@@ -1,14 +1,15 @@
 import { sortBy } from '@edouardmisset/array'
 import { average, validNumberWithFallback } from '@edouardmisset/math'
-import { removeAccents, stringEqualsCaseInsensitive } from '@edouardmisset/text'
+import { removeAccents } from '@edouardmisset/text'
 
 import fuzzySort from 'fuzzysort'
 import { boolean, number, string, z } from 'zod'
+import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
   type Ascent,
-  type Grade,
   ascentSchema,
+  ascentStyleSchema,
   climbingDisciplineSchema,
   gradeSchema,
   holdsSchema,
@@ -17,23 +18,21 @@ import {
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
-import {
-  type OptionalAscentInput,
-  optionalAscentInputSchema,
-} from './grades.ts'
+import { getFilteredAscents, optionalAscentInputSchema } from './grades.ts'
 
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure
     .input(
       z
         .object({
-          'topo-grade': string().optional(),
-          year: number().optional(),
-          tries: number().optional(),
-          crag: string().optional(),
-          descending: boolean().optional(),
+          'topo-grade': gradeSchema.optional(),
           climbingDiscipline: climbingDisciplineSchema.optional(),
+          crag: ascentSchema.shape.crag.optional(),
+          descending: boolean().optional(),
           sort: string().optional(),
+          style: ascentStyleSchema.optional(),
+          tries: ascentSchema.shape.tries.optional(),
+          year: number().optional(),
         })
         .optional(),
     )
@@ -46,6 +45,7 @@ export const ascentsRouter = createTRPCRouter({
         descending: dateIsDescending,
         climbingDiscipline: disciplineFilter,
         sort,
+        style: styleFilter,
       } = input ?? {}
 
       const transformFields = (
@@ -58,22 +58,14 @@ export const ascentsRouter = createTRPCRouter({
       const sortFields = transformFields(sort)
 
       const ascents = await getAllAscents()
-      const filteredAscents = ascents.filter(
-        ({ date, crag, climbingDiscipline, tries, topoGrade }) =>
-          (cragFilter === undefined ? true : crag === cragFilter) &&
-          (disciplineFilter === undefined
-            ? true
-            : climbingDiscipline === disciplineFilter) &&
-          (numberOfTriesFilter === undefined
-            ? true
-            : tries === numberOfTriesFilter) &&
-          (gradeFilter === undefined
-            ? true
-            : stringEqualsCaseInsensitive(topoGrade, gradeFilter as string)) &&
-          (yearFilter === undefined
-            ? true
-            : new Date(date).getFullYear() === yearFilter),
-      )
+      const filteredAscents = filterAscents(ascents, {
+        grade: gradeFilter,
+        year: yearFilter,
+        tries: numberOfTriesFilter,
+        crag: cragFilter,
+        climbingDiscipline: disciplineFilter,
+        style: styleFilter,
+      })
 
       const dateSortedAscents = filteredAscents.sort(
         ({ date: leftDate }, { date: rightDate }) =>
@@ -212,15 +204,7 @@ export const ascentsRouter = createTRPCRouter({
       return average(filteredRatings) ?? -1
     }),
   getAverageTries: publicProcedure
-    .input(
-      optionalAscentInputSchema
-        .and(
-          z.object({
-            grade: gradeSchema.optional(),
-          }),
-        )
-        .optional(),
-    )
+    .input(optionalAscentInputSchema)
     .output(z.number().min(1))
     .query(async ({ input }) => {
       const filteredTries = (await getFilteredAscents(input)).map(
@@ -262,22 +246,4 @@ export function mostFrequentBy<
     }
   }
   return mostFrequent
-}
-
-export async function getFilteredAscents(
-  input?: OptionalAscentInput & { grade?: Grade },
-): Promise<Ascent[]> {
-  const { style, year, climbingDiscipline, grade } = input ?? {}
-  const ascents = await getAllAscents()
-
-  return ascents.filter(
-    ascent =>
-      (grade === undefined ||
-        stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
-      (climbingDiscipline === undefined ||
-        ascent.climbingDiscipline === climbingDiscipline) &&
-      (year === undefined ||
-        parseISODateToTemporal(ascent.date).year === year) &&
-      (style === undefined || ascent.style === style),
-  )
 }

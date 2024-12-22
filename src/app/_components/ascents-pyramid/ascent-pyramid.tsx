@@ -1,7 +1,8 @@
 'use client'
 
 import { ResponsiveBar } from '@nivo/bar'
-import type { Grade } from '~/schema/ascent'
+import { getGradeFrequency } from '~/helpers/get-grade-frequency'
+import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 
 const ascentPyramidTheme = {
   background: 'var(--surface-1)',
@@ -26,42 +27,33 @@ const ascentPyramidTheme = {
 }
 
 export function AscentPyramid({
-  gradeFrequency,
+  ascents,
 }: {
-  gradeFrequency: {
-    grade: Grade
-    Onsight: number
-    OnsightColor: string
-    Flash: number
-    FlashColor: string
-    Redpoint: number
-    RedpointColor: string
-  }[]
+  ascents: Ascent[]
 }) {
+  const gradeFrequency = getGradeFrequency(ascents)
+
   return (
-    <>
-      <p>Pyramid of Ascents</p>
-      <div
-        style={{
-          minInlineSize: '375px',
-          blockSize: '375px',
-        }}
-      >
-        <ResponsiveBar
-          theme={ascentPyramidTheme}
-          data={gradeFrequency}
-          keys={['Onsight', 'Flash', 'Redpoint']}
-          indexBy="grade"
-          margin={{ bottom: 40, left: 40, top: 20 }}
-          padding={0.5}
-          enableGridY={false}
-          // @ts-ignore
-          colors={({ id, data }) => data[`${id}Color`]}
-          animate={true}
-          enableLabel={false}
-          motionConfig="slow"
-        />
-      </div>
-    </>
+    <div
+      style={{
+        minInlineSize: '375px',
+        blockSize: '400px',
+      }}
+    >
+      <ResponsiveBar
+        theme={ascentPyramidTheme}
+        data={gradeFrequency}
+        keys={ASCENT_STYLE}
+        indexBy="grade"
+        margin={{ bottom: 40, left: 40, top: 20 }}
+        padding={0.5}
+        enableGridY={false}
+        // @ts-ignore
+        colors={({ id, data }) => data[`${id}Color`]}
+        enableLabel={false}
+        motionConfig="slow"
+      />
+      <legend className="super-center">Pyramid of Ascents</legend>
+    </div>
   )
 }
