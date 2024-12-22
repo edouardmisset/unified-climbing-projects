@@ -2,5 +2,6 @@
   position: sticky;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: var(--size-3);
 }

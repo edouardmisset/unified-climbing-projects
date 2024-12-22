@@ -3,6 +3,7 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { getGradeFrequency } from '~/helpers/get-grade-frequency'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
+import styles from './ascent-pyramid.module.css'
 
 const ascentPyramidTheme = {
   background: 'var(--surface-1)',
@@ -34,12 +35,7 @@ export function AscentPyramid({
   const gradeFrequency = getGradeFrequency(ascents)
 
   return (
-    <div
-      style={{
-        minInlineSize: '375px',
-        blockSize: '400px',
-      }}
-    >
+    <div className={styles.container}>
       <ResponsiveBar
         theme={ascentPyramidTheme}
         data={gradeFrequency}

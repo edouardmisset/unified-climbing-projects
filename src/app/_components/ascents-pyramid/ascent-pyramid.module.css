@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  flex: 1;
+
+  max-block-size: 800px;
+  max-inline-size: 800px;
+
+  & > div {
+    flex: 1;
+  }
+}

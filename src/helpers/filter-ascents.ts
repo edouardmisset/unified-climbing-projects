@@ -14,6 +14,7 @@ export function filterAscents(
     height,
     holds,
     profile,
+    rating,
     style,
     tries,
     year,
@@ -33,6 +34,7 @@ export function filterAscents(
       (year === undefined || isDateInYear(ascent.date, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&
+      (rating === undefined || ascent.rating === rating) &&
       (height === undefined || ascent.height === height) &&
       (holds === undefined || ascent.holds === holds) &&
       (tries === undefined || ascent.tries === tries) &&

@@ -28,6 +28,7 @@ export const optionalAscentInputSchema = z
     style: ascentStyleSchema.optional(),
     tries: ascentSchema.shape.tries.optional(),
     year: number().optional(),
+    rating: ascentSchema.shape.rating.optional(),
   })
   .optional()
 export type OptionalAscentInput = z.infer<typeof optionalAscentInputSchema>
