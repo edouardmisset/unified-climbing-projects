@@ -2,7 +2,7 @@
   --width: 400px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--width), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
   gap: 1rem;
 
   max-inline-size: 100%;

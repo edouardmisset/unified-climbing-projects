@@ -81,18 +81,6 @@ export function Dashboard() {
         <div className={styles.item}>
           <AscentPyramid ascents={filteredAscents} />
         </div>
-        <div className={styles.item}>
-          <AscentPyramid ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <AscentPyramid ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <AscentPyramid ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <AscentPyramid ascents={filteredAscents} />
-        </div>
       </div>
     </>
   )
