@@ -4,7 +4,7 @@ import { capitalize } from '@edouardmisset/text'
 import { useQueryState } from 'nuqs'
 import type { ChangeEventHandler } from 'react'
 import { createYearList } from '~/data/ascent-data'
-import { type Ascent, ascentStyle, climbingDiscipline } from '~/schema/ascent'
+import { ASCENT_STYLE, type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import styles from './ascent-filter-bar.module.css'
 
 const allValue = 'all'
@@ -66,7 +66,7 @@ export default function AscentsFilterBar({ ascents }: { ascents: Ascent[] }) {
           defaultValue={selectedStyle}
         >
           <option value={allValue}>{allText}</option>
-          {ascentStyle.map(style => (
+          {ASCENT_STYLE.map(style => (
             <option key={style} value={style}>
               {style}
             </option>
@@ -82,7 +82,7 @@ export default function AscentsFilterBar({ ascents }: { ascents: Ascent[] }) {
           defaultValue={selectedDiscipline}
         >
           <option value={allValue}>{allText}</option>
-          {climbingDiscipline.map(discipline => (
+          {CLIMBING_DISCIPLINE.map(discipline => (
             <option key={discipline} value={discipline}>
               {discipline}
             </option>

@@ -7,12 +7,12 @@ import { env } from '~/env'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
   type Ascent,
+  CLIMBING_DISCIPLINE,
   type Grade,
+  HOLDS,
+  PROFILES,
   _GRADES,
   ascentStyleSchema,
-  climbingDiscipline,
-  holds,
-  profiles,
 } from '~/schema/ascent'
 
 import type { ChangeEventHandler } from 'react'
@@ -151,7 +151,7 @@ export default function Log(): React.JSX.Element {
   const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
     'Multi-Pitch',
   ])
-  const disciplines = climbingDiscipline.filter(
+  const disciplines = CLIMBING_DISCIPLINE.filter(
     d => !unavailableDiscipline.has(d),
   )
 
@@ -307,13 +307,13 @@ export default function Log(): React.JSX.Element {
             enterKeyHint="next"
             id="holds"
             list="hold-types"
-            placeholder={`Hold types (${holds.slice(0, 3).join(', ')}, ...)`}
+            placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
             title="The main hold type in the route or in the crux section"
             type="text"
           />
         </label>
         <datalist id="hold-types">
-          {holds.map(hold => (
+          {HOLDS.map(hold => (
             <option key={hold} value={hold} />
           ))}
         </datalist>
@@ -326,13 +326,13 @@ export default function Log(): React.JSX.Element {
             enterKeyHint="next"
             id="profile"
             list="profile-types"
-            placeholder={`Route's profile (${profiles.slice(0, 2).join(', ')}, ...)`}
+            placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
             title="The main profile of the route or in the crux section"
             type="text"
           />
         </label>
         <datalist id="profile-types">
-          {profiles.map(profile => (
+          {PROFILES.map(profile => (
             <option key={profile} value={profile} />
           ))}
         </datalist>

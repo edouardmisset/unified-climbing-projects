@@ -3,7 +3,7 @@ import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
 } from '~/helpers/transformers/transformers'
-import { type Ascent, holds, holdsFromGS } from '~/schema/ascent'
+import { type Ascent, HOLDS, HOLDS_FROM_GS } from '~/schema/ascent'
 
 import { Temporal } from '@js-temporal/polyfill'
 import { assert, describe, it } from 'poku'
@@ -338,7 +338,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
     const filteredAscents = ascents.filter(
       ascent =>
         ascent.holds === undefined ||
-        setDifference([...holds], [...holdsFromGS]).includes(ascent.holds),
+        setDifference([...HOLDS], [...HOLDS_FROM_GS]).includes(ascent.holds),
     )
 
     for (const ascent of filteredAscents) {

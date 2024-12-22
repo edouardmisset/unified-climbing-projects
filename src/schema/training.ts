@@ -25,15 +25,15 @@ export const climbingDisciplineSchema = z.enum([
   'Multi-Pitch',
 ])
 
-const anatomicalRegion = ['Ar', 'Fi', 'Ge'] as const
-const energySystem = ['AA', 'AL', 'AE'] as const
+const ANATOMICAL_REGION = ['Ar', 'Fi', 'Ge'] as const
+const ENERGY_SYSTEM = ['AA', 'AL', 'AE'] as const
 
 export const trainingSessionSchema = z.object({
-  anatomicalRegion: z.enum(anatomicalRegion).optional(),
+  anatomicalRegion: z.enum(ANATOMICAL_REGION).optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: string().optional(),
   date: string(),
-  energySystem: z.enum(energySystem).optional(),
+  energySystem: z.enum(ENERGY_SYSTEM).optional(),
   gymCrag: string().optional(),
   intensity: percentSchema.optional(),
   load: percentSchema.optional(),

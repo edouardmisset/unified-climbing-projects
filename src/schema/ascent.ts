@@ -136,11 +136,11 @@ export const gradeSchema = z.enum(_GRADES)
 export type Grade = z.infer<typeof gradeSchema>
 export type BoulderGrade = Uppercase<Grade>
 
-export const ascentStyle = ['Onsight', 'Flash', 'Redpoint'] as const
-export const climbingDiscipline = ['Route', 'Boulder', 'Multi-Pitch'] as const
-export const climbingDisciplineSchema = z.enum(climbingDiscipline)
+export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
+export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
+export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
-export const holdsFromGS = [
+export const HOLDS_FROM_GS = [
   'Positive',
   'Jug',
   'Sloper',
@@ -163,7 +163,7 @@ export const holdsFromGS = [
  *
  * 'Positive' and Volume are a hold type that don't really exist in outdoor climbing.
  */
-export const holds = [
+export const HOLDS = [
   'Crimp',
   'Jug',
   'Pocket',
@@ -173,7 +173,7 @@ export const holds = [
   'Undercling',
 ] as const
 
-export const profiles = [
+export const PROFILES = [
   'Vertical',
   'Overhang',
   'Slab',
@@ -183,10 +183,10 @@ export const profiles = [
   'Traverse',
 ] as const
 
-export const ascentStyleSchema = z.enum(ascentStyle)
-export const profileSchema = z.enum(profiles)
-export const holdsFomGSSchema = z.enum(holdsFromGS)
-export const holdsSchema = z.enum(holds)
+export const ascentStyleSchema = z.enum(ASCENT_STYLE)
+export const profileSchema = z.enum(PROFILES)
+export const holdsFomGSSchema = z.enum(HOLDS_FROM_GS)
+export const holdsSchema = z.enum(HOLDS)
 const optionalStringSchema = string().optional()
 
 export const ascentSchema = z.object({

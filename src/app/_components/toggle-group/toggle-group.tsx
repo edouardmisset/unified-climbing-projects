@@ -1,6 +1,6 @@
 import { Item, Root } from '@radix-ui/react-toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list'
-import { ascentStyle } from '~/schema/ascent'
+import { ASCENT_STYLE } from '~/schema/ascent'
 import styles from './toggle-group.module.css'
 
 type ClimbingStyleToggleGroup = {
@@ -17,7 +17,7 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
 
   return (
     <Root
-      aria-label={`Climbing style (${disjunctiveListFormatter(ascentStyle)}). Default is "Redpoint" if number of tries is greater than 1.`}
+      aria-label={`Climbing style (${disjunctiveListFormatter(ASCENT_STYLE)}). Default is "Redpoint" if number of tries is greater than 1.`}
       className={styles.Group}
       defaultValue="Redpoint"
       onValueChange={onValueChange}
