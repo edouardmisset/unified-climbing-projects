@@ -6,7 +6,7 @@
   flex: 1;
 
   max-block-size: 800px;
-  max-inline-size: 800px;
+  inline-size: clamp(300px, 80vw, 800px);
 
   & > div {
     flex: 1;

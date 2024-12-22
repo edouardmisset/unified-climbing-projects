@@ -29,8 +29,7 @@ export function AscentSelect({
         defaultValue={selectedOption}
       >
         <option value={ALL_VALUE}>
-          {capitalize(ALL_VALUE)}{' '}
-          <small>{addParenthesis(options.length)}</small>
+          {capitalize(ALL_VALUE)} {addParenthesis(options.length)}
         </option>
         {options.map(option => (
           <option key={option} value={option}>
