@@ -1,16 +1,18 @@
 .container {
-  --width: 400px;
+  --min-width: 330px;
+  --max-width: 400px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--width), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--max-width), 1fr));
+  justify-items: center;
   gap: 1rem;
 
   max-inline-size: 100%;
 }
 
 .item {
-  inline-size: clamp(300px, 50vw, var(--width));
-  block-size: clamp(300px, 50vw, var(--width));
+  inline-size: clamp(var(--min-width), 50vw, var(--max-width));
+  block-size: clamp(var(--min-width), 50vw, var(--max-width));
 
   display: flex;
   flex-direction: column;
