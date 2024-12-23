@@ -10,7 +10,7 @@ export function RoutesVsBouldersPerYear({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveBar
         data={data}
         theme={ascentPyramidTheme}
-        keys={['routes', 'boulders']}
+        keys={['boulders', 'routes']}
         groupMode="grouped"
         indexBy="year"
         margin={{ bottom: 40, left: 40, top: 20 }}

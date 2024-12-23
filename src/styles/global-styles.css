@@ -98,12 +98,20 @@ nav a {
   inline-size: 100%;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.select-none {
+  user-select: none;
+}
+
 text {
   white-space: pre;
 }
 
 /* Invalid inputs */
-input:user-invalid {
+:where(form) :user-invalid {
   outline-offset: var(--size-px-1);
   outline-color: var(--red-8);
   outline-style: solid;
@@ -111,7 +119,7 @@ input:user-invalid {
 }
 
 /* Valid inputs */
-input:user-valid {
+:where(form) :user-valid {
   outline-offset: var(--size-px-1);
   outline-color: var(--green-8);
   outline-style: solid;

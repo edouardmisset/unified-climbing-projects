@@ -1,0 +1,13 @@
+.container {
+  max-block-size: 80svh;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+}
+
+.tbody {
+  overflow: auto;
+}
