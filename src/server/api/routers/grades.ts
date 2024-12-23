@@ -3,7 +3,6 @@ import { average } from '@edouardmisset/math/average.ts'
 import { number, string, z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { filterAscents } from '~/helpers/filter-ascents'
-import { getGradeFrequency } from '~/helpers/get-grade-frequency.ts'
 import {
   type Grade,
   _GRADES,
@@ -54,14 +53,6 @@ export const gradesRouter = createTRPCRouter({
       const filteredGrades = filteredAscents.map(({ topoGrade }) => topoGrade)
 
       return [...new Set(filteredGrades)].sort()
-    }),
-  getFrequency: publicProcedure
-    .input(optionalAscentInputSchema)
-    .output(gradeDescriptionSchema.array())
-    .query(async ({ input }) => {
-      const filteredAscents = await getFilteredAscents(input)
-
-      return getGradeFrequency(filteredAscents)
     }),
   getAverage: publicProcedure
     .input(optionalAscentInputSchema)

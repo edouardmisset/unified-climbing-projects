@@ -10,7 +10,9 @@ type GradeFrequency = {
   RedpointColor: string
 }[]
 
-export function getGradeFrequency(filteredAscents: Ascent[]): GradeFrequency {
+export function getGradeFrequencyAndColors(
+  filteredAscents: Ascent[],
+): GradeFrequency {
   const sortedFilteredGrades = [
     ...new Set(filteredAscents.map(({ topoGrade }) => topoGrade)),
   ].sort()

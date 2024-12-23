@@ -1,3 +1,4 @@
+import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 
 export const getAscentsByStyle = (ascents: Ascent[]) => {
@@ -18,9 +19,3 @@ export const getAscentsByStyle = (ascents: Ascent[]) => {
 const fromAscentStyleToBackgroundColor = (ascentStyle: Ascent['style']) => {
   return ASCENT_STYLE_TO_COLOR[ascentStyle] ?? 'var(--gray-5)'
 }
-
-const ASCENT_STYLE_TO_COLOR: Record<Ascent['style'], string> = {
-  Onsight: 'var(--green-4)',
-  Flash: 'var(--yellow-4)',
-  Redpoint: 'var(--red-4)',
-} as const

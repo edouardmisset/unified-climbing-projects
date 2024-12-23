@@ -36,13 +36,13 @@ export default async function TrainingCalendar(props: {
       const backgroundColor =
         sessionType === undefined
           ? 'hsla(0deg 0% 100% / 0.3)'
-          : getTrainingSessionColorVariant(
-              new Color(fromSessionTypeToBackgroundColor(sessionType)).to(
-                'oklch',
-              ),
-              session?.intensity ?? 65,
-              session?.volume ?? 65,
-            ).toString()
+          : getTrainingSessionColorVariant({
+              color: new Color(
+                fromSessionTypeToBackgroundColor(sessionType),
+              ).to('oklch'),
+              intensityPercent: session?.intensity ?? 65,
+              volumePercent: session?.volume ?? 65,
+            }).toString()
       return {
         date,
         backgroundColor,

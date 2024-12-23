@@ -1,7 +1,7 @@
 'use client'
 
 import { ResponsiveBar } from '@nivo/bar'
-import { getGradeFrequency } from '~/helpers/get-grade-frequency'
+import { getGradeFrequencyAndColors } from '~/app/_components/graphs/ascents-pyramid/get-grade-frequency'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { ascentPyramidTheme } from '../constants'
 
@@ -10,7 +10,7 @@ export function AscentPyramid({
 }: {
   ascents: Ascent[]
 }) {
-  const gradeFrequency = getGradeFrequency(ascents)
+  const gradeFrequency = getGradeFrequencyAndColors(ascents)
 
   return (
     <>

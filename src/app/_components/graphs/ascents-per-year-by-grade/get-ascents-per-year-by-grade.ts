@@ -1,6 +1,6 @@
+import { fromGradeToBackgroundColor } from '~/helpers/converter'
+import { isDateInYear } from '~/helpers/is-date-in-year'
 import { type Ascent, _GRADES } from '~/schema/ascent'
-import { fromGradeToBackgroundColor } from './converter.ts'
-import { isDateInYear } from './is-date-in-year'
 
 export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number

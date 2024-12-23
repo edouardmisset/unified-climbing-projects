@@ -1,16 +1,13 @@
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters.ts'
 import type { Ascent, Grade } from '~/schema/ascent'
-import type { GradeDescription } from '~/server/api/routers/grades'
 
 export async function GradeSummary({
   gradeAverage,
-  gradeFrequency,
   grades,
   ascents,
 }: {
   gradeAverage: Grade
-  gradeFrequency: GradeDescription[]
   grades: Grade[]
   ascents: Ascent[]
 }) {
@@ -22,14 +19,10 @@ export async function GradeSummary({
     ascent => ascent.topoGrade === highestGrade,
   )
 
-  const ascentsInTheHardestDegree = gradeFrequency
-    .filter(gradeDescription =>
-      String(gradeDescription.grade).startsWith(String(highestDegree)),
-    )
-    .reduce(
-      (acc, { Flash, Onsight, Redpoint }) => acc + (Flash + Onsight + Redpoint),
-      0,
-    )
+  const ascentsInTheHardestDegree = ascents.filter(({ topoGrade }) =>
+    topoGrade.startsWith(highestDegree.toString()),
+  ).length
+
   return (
     <div id="grades">
       <h2>Grades</h2>

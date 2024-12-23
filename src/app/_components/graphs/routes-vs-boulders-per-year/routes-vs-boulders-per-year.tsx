@@ -1,17 +1,17 @@
 import { ResponsiveBar } from '@nivo/bar'
-import { type Ascent, _GRADES } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import { ascentPyramidTheme } from '../constants'
-import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
+import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
-export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
-  const ascentsPerYearByGrade = getAscentsPerYearByGrade(ascents)
-
+export function RoutesVsBouldersPerYear({ ascents }: { ascents: Ascent[] }) {
+  const data = getRoutesVsBouldersPerYear(ascents)
   return (
     <>
       <ResponsiveBar
+        data={data}
         theme={ascentPyramidTheme}
-        data={ascentsPerYearByGrade}
-        keys={_GRADES}
+        keys={['routes', 'boulders']}
+        groupMode="grouped"
         indexBy="year"
         margin={{ bottom: 40, left: 40, top: 20 }}
         padding={0.5}
@@ -21,7 +21,7 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
         enableLabel={false}
         motionConfig="slow"
       />
-      <legend className="super-center">Ascents Per Year By Grade</legend>
+      <legend className="super-center">Routes vs. Boulders per Year</legend>
     </>
   )
 }

@@ -8,6 +8,8 @@ import { api } from '~/trpc/react'
 import { AscentsByStyle } from '../graphs/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerYearByGrade } from '../graphs/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx'
 import { AscentPyramid } from '../graphs/ascents-pyramid/ascent-pyramid.tsx'
+import { RoutesVsBouldersPerYear } from '../graphs/routes-vs-boulders-per-year/routes-vs-boulders-per-year.tsx'
+import { RoutesVsBoulders } from '../graphs/routes-vs-boulders/routes-vs-boulders.tsx'
 import { ALL_VALUE } from './constants.ts'
 import styles from './dashboard.module.css'
 
@@ -88,6 +90,12 @@ export function Dashboard() {
         </div>
         <div className={styles.item}>
           <AscentsByStyle ascents={filteredAscents} />
+        </div>
+        <div className={styles.item}>
+          <RoutesVsBoulders ascents={filteredAscents} />
+        </div>
+        <div className={styles.item}>
+          <RoutesVsBouldersPerYear ascents={filteredAscents} />
         </div>
       </div>
     </>

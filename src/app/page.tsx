@@ -24,7 +24,6 @@ async function fetchClimbingData() {
     searchedAscents,
     grades,
     gradeAverage,
-    gradeFrequency,
   ] = await Promise.all([
     api.areas.getAllAreas(),
     api.areas.getDuplicates(),
@@ -44,7 +43,6 @@ async function fetchClimbingData() {
     }),
     api.grades.getAllGrades(),
     api.grades.getAverage(),
-    api.grades.getFrequency(),
   ])
   return {
     areas,
@@ -61,7 +59,6 @@ async function fetchClimbingData() {
     searchedAscents,
     grades,
     gradeAverage,
-    gradeFrequency,
   }
 }
 
@@ -81,7 +78,6 @@ export default async function Home() {
     searchedAscents,
     grades,
     gradeAverage,
-    gradeFrequency,
   } = await fetchClimbingData()
 
   return (
@@ -108,7 +104,6 @@ export default async function Home() {
         <Card>
           <GradeSummary
             gradeAverage={gradeAverage}
-            gradeFrequency={gradeFrequency}
             grades={grades}
             ascents={ascents}
           />
