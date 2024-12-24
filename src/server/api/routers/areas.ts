@@ -13,8 +13,6 @@ async function getValidAreas(): Promise<NonNullable<Ascent['area']>[]> {
     .filter(area => area !== undefined)
 }
 
-const validAreas = await getValidAreas()
-
 // Get all known areas from the ascents
 export const areasRouter = createTRPCRouter({
   // Get all known areas
@@ -25,22 +23,25 @@ export const areasRouter = createTRPCRouter({
     return sortedAreas
   }),
   // Get all known areas sorted by frequency
-  getFrequency: publicProcedure.query(() => {
-    const sortedAreasByFrequency = sortNumericalValues(frequency(validAreas), {
-      ascending: false,
-    })
+  getFrequency: publicProcedure.query(async () => {
+    const sortedAreasByFrequency = sortNumericalValues(
+      frequency(await getValidAreas()),
+      {
+        ascending: false,
+      },
+    )
     return sortedAreasByFrequency
   }),
   // Get all known areas that are similar
-  getDuplicates: publicProcedure.query(() => {
-    const duplicateAreas = findSimilar(validAreas)
+  getDuplicates: publicProcedure.query(async () => {
+    const duplicateAreas = findSimilar(await getValidAreas())
 
     return duplicateAreas
   }),
   // Get all known areas that are similar
-  getSimilar: publicProcedure.query(() => {
+  getSimilar: publicProcedure.query(async () => {
     const similarAreas = Array.from(
-      groupSimilarStrings(validAreas, 3).entries(),
+      groupSimilarStrings(await getValidAreas(), 3).entries(),
     )
 
     return similarAreas

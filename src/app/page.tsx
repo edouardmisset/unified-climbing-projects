@@ -9,10 +9,6 @@ const searchedRouteName = 'no'
 
 async function fetchClimbingData() {
   const [
-    areas,
-    areaDuplicates,
-    areaSimilar,
-    areaFrequency,
     crags,
     cragDuplicates,
     cragSimilar,
@@ -24,10 +20,6 @@ async function fetchClimbingData() {
     grades,
     gradeAverage,
   ] = await Promise.all([
-    api.areas.getAllAreas(),
-    api.areas.getDuplicates(),
-    api.areas.getSimilar(),
-    api.areas.getFrequency(),
     api.crags.getAllCrags(),
     api.crags.getDuplicate(),
     api.crags.getSimilar(),
@@ -44,10 +36,6 @@ async function fetchClimbingData() {
     api.grades.getAverage(),
   ])
   return {
-    areas,
-    areaDuplicates,
-    areaSimilar,
-    areaFrequency,
     crags,
     cragDuplicates,
     cragSimilar,
@@ -63,10 +51,6 @@ async function fetchClimbingData() {
 
 export default async function Home() {
   const {
-    areas,
-    areaDuplicates,
-    areaSimilar,
-    areaFrequency,
     crags,
     cragDuplicates,
     cragSimilar,
