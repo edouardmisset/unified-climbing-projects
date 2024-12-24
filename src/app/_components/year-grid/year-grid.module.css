@@ -35,6 +35,11 @@
   border-color: var(--border-color, currentColor);
 }
 
+.emptyGridCell {
+  background-color: transparent;
+  border: none;
+}
+
 .gridHeader {
   background-color: transparent;
   color: var(--text-1);

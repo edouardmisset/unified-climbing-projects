@@ -1,43 +1,23 @@
-import { nonCalendarColumnCount } from './constants'
-import { getISOWeeksInYear, isFirstDayInFirstISOWeek } from './helpers'
 import styles from './year-grid.module.css'
 
-export async function WeeksRow({ year }: { year: number }) {
-  const weeksInYear = getISOWeeksInYear(year)
+export async function WeeksRow({ columnCount }: { columnCount: number }) {
+  const columns = Array.from({ length: columnCount }, (_, i) => i)
 
-  const isMondayInFirstWeek = isFirstDayInFirstISOWeek(year)
-  const isFirstWeekStart = isMondayInFirstWeek ? 0 : 1
-  const weeksArray = Array.from({
-    length: weeksInYear + isFirstWeekStart + nonCalendarColumnCount,
-  })
+  console.log(columns, columns.length)
 
-  return weeksArray.map((_, index) => {
-    if (index === 0) return null
-
-    if (index === 1 && !isMondayInFirstWeek) {
-      return (
-        <div
-          key={`week-53-${year - 1}`}
-          className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
-          style={{
-            gridColumn: index + nonCalendarColumnCount,
-          }}
-        >
-          53
-        </div>
-      )
-    }
+  return columns.map(columnNumber => {
+    if (columnNumber === 0)
+      return <i className={`super-center ${styles.firstCell}`} />
 
     return (
       <div
-        // biome-ignore lint/suspicious/noArrayIndexKey: don't know how to do better
-        key={`${index}-week`}
+        key={`${columnNumber}-column`}
         className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
         style={{
-          gridColumn: index + nonCalendarColumnCount,
+          gridColumn: columnNumber + 1,
         }}
       >
-        {index - 1}
+        {columnNumber}
       </div>
     )
   })

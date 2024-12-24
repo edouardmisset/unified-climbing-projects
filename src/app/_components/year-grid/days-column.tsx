@@ -1,10 +1,6 @@
-import { nonCalendarRowCount } from './constants'
 import styles from './year-grid.module.css'
 
-const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-for (let index = 0; index < nonCalendarRowCount; index++) {
-  weekDays.unshift('')
-}
+const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 export async function DaysColumn() {
   return weekDays.map((day, index) => {
