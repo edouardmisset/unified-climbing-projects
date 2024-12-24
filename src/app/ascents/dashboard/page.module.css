@@ -6,4 +6,7 @@
   gap: var(--size-3);
 
   inline-size: 100%;
+
+  overflow: scroll;
+  max-height: 90vh;
 }
