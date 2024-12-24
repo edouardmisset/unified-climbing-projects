@@ -5,5 +5,5 @@
   align-items: center;
   gap: var(--size-3);
 
-  max-inline-size: 100%;
+  inline-size: 100%;
 }
