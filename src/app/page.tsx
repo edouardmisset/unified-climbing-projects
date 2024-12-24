@@ -1,5 +1,4 @@
 import { api } from '~/trpc/server'
-import { AreaSummary } from './_components/areas-summary/areas-summary.tsx'
 import { AscentsSummary } from './_components/ascents-summary/ascents-summary.tsx'
 import { Card } from './_components/card/card.tsx'
 import { CragSummary } from './_components/crags-summary/crags-summary.tsx'
@@ -106,14 +105,6 @@ export default async function Home() {
             gradeAverage={gradeAverage}
             grades={grades}
             ascents={ascents}
-          />
-        </Card>
-        <Card>
-          <AreaSummary
-            areaDuplicates={areaDuplicates}
-            areaFrequency={areaFrequency}
-            areaSimilar={areaSimilar}
-            areas={areas}
           />
         </Card>
       </div>
