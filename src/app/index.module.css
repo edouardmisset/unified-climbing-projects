@@ -50,12 +50,6 @@
   padding-block-end: var(--size-fluid-1);
 }
 
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 @media (min-width: 640px) {
   .container {
     max-inline-size: 640px;

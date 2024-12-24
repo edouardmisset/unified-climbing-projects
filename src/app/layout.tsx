@@ -26,6 +26,7 @@ import '~/styles/zindex.css'
 import { Navigation } from './_components/navigation/navigation.tsx'
 
 import type React from 'react'
+import { Footer } from './_components/footer/footer.tsx'
 import styles from './index.module.css'
 
 export default function RootLayout({
@@ -43,9 +44,7 @@ export default function RootLayout({
                 <Navigation />
               </header>
               <main className={styles.main}>{children}</main>
-              <footer className={styles.footer}>
-                <p>@edouardmisset 2024-{new Date().getFullYear()}</p>
-              </footer>
+              <Footer />
             </NuqsAdapter>
           </TRPCReactProvider>
           <SpeedInsights />
