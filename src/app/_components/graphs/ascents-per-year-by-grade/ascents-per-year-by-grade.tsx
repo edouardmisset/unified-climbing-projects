@@ -20,6 +20,9 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
         colors={({ id, data }) => data[`${id}Color`]}
         enableLabel={false}
         motionConfig="slow"
+        axisBottom={{
+          format: year => `'${year.toString().slice(2)}`,
+        }}
       />
       <legend className="super-center">Ascents Per Year By Grade</legend>
     </>

@@ -20,6 +20,9 @@ export function RoutesVsBouldersPerYear({ ascents }: { ascents: Ascent[] }) {
         colors={({ id, data }) => data[`${id}Color`]}
         enableLabel={false}
         motionConfig="slow"
+        axisBottom={{
+          format: year => `'${year.toString().slice(2)}`,
+        }}
       />
       <legend className="super-center">Routes vs. Boulders per Year</legend>
     </>
