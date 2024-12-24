@@ -1,36 +1,72 @@
-import { Temporal } from '@js-temporal/polyfill'
+import { nonCalendarColumnCount, nonCalendarRowCount } from './constants'
+import {
+  datesEqual,
+  getWeek,
+  isDateInFirstWeek,
+  isFirstDayInFirstISOWeek,
+} from './helpers'
 
-import { parseISODateToTemporal } from '~/schema/ascent'
 import styles from './year-grid.module.css'
 
-const today = Temporal.Now.plainDateTimeISO()
-
 export async function YearGridCell({
-  date,
+  stringDate,
   tooltip,
   backgroundColor,
   foreColor,
   shortText,
 }: {
-  date: string
+  stringDate: string
   tooltip: string
   backgroundColor: string
   foreColor: string
   shortText?: string
 }) {
-  const temporal = parseISODateToTemporal(date)
+  const date = new Date(stringDate)
+  const isToday = datesEqual(new Date(stringDate), new Date())
+
+  // 1 is Monday, ..., 6 is Saturday, 7 is Sunday
+  const weekdayIndex = date.getDay()
+
+  const isMondayInFirstWeek = isFirstDayInFirstISOWeek(date.getFullYear())
+
+  const isSunday = weekdayIndex === 0
+  const correctedWeekDay = isSunday ? 7 : weekdayIndex
+
+  const gridRow = correctedWeekDay + nonCalendarRowCount
+
+  if (date.getMonth() === 0 && isDateInFirstWeek(date)) {
+    return (
+      <i
+        title={tooltip}
+        className={styles.yearGridCell}
+        style={{
+          gridColumn: 1 + nonCalendarColumnCount,
+          gridRow,
+          backgroundColor,
+          color: foreColor,
+          outline: isToday ? '2px solid var(--color-light)' : 'none',
+        }}
+        tabIndex={0}
+      >
+        {shortText}
+      </i>
+    )
+  }
+
   return (
     <i
       title={tooltip}
       className={styles.yearGridCell}
       style={{
-        gridColumn: temporal.weekOfYear + 1,
-        gridRow: temporal.dayOfWeek + 1,
+        gridColumn:
+          getWeek(date) +
+          (isMondayInFirstWeek ? 0 : 1) +
+          (isSunday ? -0 : 0) +
+          nonCalendarColumnCount,
+        gridRow,
         backgroundColor,
         color: foreColor,
-        outline: temporal.toPlainDate().equals(today.toPlainDate())
-          ? '2px solid var(--color-light)'
-          : 'none',
+        outline: isToday ? '2px solid var(--color-light)' : 'none',
       }}
       tabIndex={0}
     >
