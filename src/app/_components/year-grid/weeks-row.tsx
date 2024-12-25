@@ -7,6 +7,7 @@ export async function WeeksRow({ columns }: { columns: number[] }) {
 
     const hasExtraColumn = columns[1] === 53
 
+    // Adjust the grid column based on the presence of an extra column and the current index
     const adjustedGridColumn =
       hasExtraColumn && index === 1
         ? 2
@@ -14,7 +15,6 @@ export async function WeeksRow({ columns }: { columns: number[] }) {
 
     return (
       <div
-        // biome-ignore lint/suspicious/noArrayIndexKey: We need to differentiate the two 53 columns, so we use the index as the key
         // biome-ignore lint/suspicious/noArrayIndexKey: We need to differentiate the two 53 columns, so we use the index as the key
         key={`W${columnNumber}-${index}column`}
         className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}

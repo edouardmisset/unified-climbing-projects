@@ -49,16 +49,6 @@ export async function YearGrid({
     }),
   )
 
-  console.log('🚀 ~ YearGrid:', {
-    year,
-    weeksInYear: displayedNumberOfWeeks,
-    firstDayOfYear: firstDayOfYear.toString(),
-    firstDayIndex,
-    numberOfDaysFromLastMondayTo1stJanuary,
-    columns,
-    daysInYear: getNumberOfDaysInYear(year),
-  })
-
   return (
     <div
       className={styles.yearGrid}
