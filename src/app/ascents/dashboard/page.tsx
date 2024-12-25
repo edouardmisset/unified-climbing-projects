@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className={styles.container}>
       <h1>Dashboard</h1>
-      <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <Dashboard />
       </Suspense>
     </div>

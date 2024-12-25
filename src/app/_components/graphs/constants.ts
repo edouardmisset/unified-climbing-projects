@@ -16,7 +16,7 @@ export const ascentPyramidTheme: Theme = {
         fill: 'var(--text-2)',
         fontFamily: 'monospace',
         fontStyle: 'normal',
-        fontSize: 'var(--size-fluid-1)',
+        fontSize: 'var(--font-size-1)',
       },
     },
   },

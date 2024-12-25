@@ -45,9 +45,10 @@ export function Dashboard() {
     defaultValue: ALL_VALUE,
   })
 
-  const [allAscents] = api.ascents.getAllAscents.useSuspenseQuery()
+  const [allAscents, { isLoading }] =
+    api.ascents.getAllAscents.useSuspenseQuery()
 
-  if (!allAscents) return <div>Loading...</div>
+  if (!allAscents || isLoading) return <div>Loading...</div>
 
   const filteredAscents = filterAscents(allAscents, {
     year: selectedYear === ALL_VALUE ? undefined : Number(selectedYear),
