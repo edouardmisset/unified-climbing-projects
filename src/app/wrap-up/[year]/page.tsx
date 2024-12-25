@@ -1,12 +1,13 @@
 import { sum } from '@edouardmisset/math'
-import { objectSize } from '@edouardmisset/object'
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { Card } from '~/app/_components/card/card'
-import { fromGradeToNumber } from '~/helpers/converters'
-import { frequencyBy } from '~/helpers/frequency-by'
-import { sortNumericalValues } from '~/helpers/sort-values.ts'
-import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { getMostFrequentDate } from '~/helpers/date'
+import {
+  filterAscents,
+  getHardestAscent,
+  getMostFrequentCrag,
+} from '~/helpers/filter-ascents'
+import { filterTrainingSessions } from '~/helpers/filter-training'
 import { api } from '~/trpc/server'
 
 async function fetchData(year: number) {
@@ -17,67 +18,22 @@ async function fetchData(year: number) {
   return { trainingSessions, ascents }
 }
 
-function getFilteredAscents(ascents: Ascent[], ascentStyle: Ascent['style']) {
-  return ascents.filter(({ style }) => style === ascentStyle).length
-}
-
-function filterByDiscipline(
-  ascents: Ascent[],
-  discipline: Ascent['climbingDiscipline'],
-) {
-  return ascents.filter(
-    ({ climbingDiscipline }) => climbingDiscipline === discipline,
-  )
-}
-
-function getHardestAscent(ascents: Ascent[]) {
-  return ascents.reduce(
-    (prev, current) =>
-      fromGradeToNumber(prev?.topoGrade ?? '1a') >
-      fromGradeToNumber(current.topoGrade)
-        ? prev
-        : current,
-    ascents[0] as Ascent,
-  )
-}
-
-function getMostFrequentDate(ascents: Ascent[]) {
-  const ascentsByDate = frequencyBy(ascents, 'date')
-  const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
-    ascending: false,
-  })
-  return Object.entries(sortedAscentsByDate)[0] ?? ['', 0]
-}
-
-function getDaysOutside(trainingSessions: TrainingSession[], year: number) {
-  return trainingSessions.filter(
-    session =>
-      session.sessionType === 'Out' &&
-      new Date(session.date).getFullYear() === year,
-  ).length
-}
-
-function getMostFrequentCrag(ascents: Ascent[]) {
-  const sortedCrags = frequencyBy(ascents, 'crag', { ascending: false })
-
-  return {
-    numberOfCrags: objectSize(sortedCrags),
-    mostFrequentCrag: Object.keys(sortedCrags)[0],
-  }
-}
-
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
   const year = Number((await props.params).year)
   const { trainingSessions, ascents } = await fetchData(year)
 
-  const onsightAscents = getFilteredAscents(ascents, 'Onsight')
-  const flashAscents = getFilteredAscents(ascents, 'Flash')
-  const redpointAscents = getFilteredAscents(ascents, 'Redpoint')
+  const onsightAscents = filterAscents(ascents, {
+    style: 'Onsight',
+  })
+  const flashAscents = filterAscents(ascents, { style: 'Flash' })
+  const redpointAscents = filterAscents(ascents, {
+    style: 'Redpoint',
+  })
 
-  const boulders = filterByDiscipline(ascents, 'Boulder')
-  const routes = filterByDiscipline(ascents, 'Route')
+  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
+  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
 
   const hardestRoute = getHardestAscent(routes)
   const hardestBoulder = getHardestAscent(boulders)
@@ -86,7 +42,10 @@ export default async function Page(props: {
 
   const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
 
-  const daysOutside = getDaysOutside(trainingSessions, year)
+  const daysOutside = filterTrainingSessions(trainingSessions, {
+    year,
+    sessionType: 'Out',
+  }).length
 
   const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
 
@@ -115,8 +74,9 @@ export default async function Page(props: {
         <Card>
           <h2>Hard Sends</h2>
           <p>
-            You Onsighted <b>{onsightAscents}</b>, Flashed <b>{flashAscents}</b>
-            , and Redpointed <b>{redpointAscents}</b> routes and boulders.
+            You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
+            <b>{flashAscents.length}</b>, and Redpointed{' '}
+            <b>{redpointAscents.length}</b> routes and boulders.
           </p>
         </Card>
         <Card>

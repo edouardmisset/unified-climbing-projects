@@ -1,3 +1,6 @@
+import { frequencyBy } from './frequency-by'
+import { sortNumericalValues } from './sort-values'
+
 const localeIdentifier = 'en-US'
 
 const MILLISECONDS_IN_WEEK = 604_800_000
@@ -77,4 +80,14 @@ export const getDayOfYear = (date: Date): number => {
 
 export const isLeftDateBefore = (leftDate: Date, rightDate: Date) => {
   return leftDate < rightDate
+}
+
+export function getMostFrequentDate<
+  Type extends { date: string; [k: string]: string | number },
+>(data: Type[]): [string, number] {
+  const ascentsByDate = frequencyBy(data, 'date')
+  const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
+    ascending: false,
+  })
+  return (Object.entries(sortedAscentsByDate)[0] ?? ['', 0]) as [string, number]
 }
