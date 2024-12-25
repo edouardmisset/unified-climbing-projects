@@ -9,8 +9,6 @@ export function AscentComponent({
   showGrade = false,
 }: { ascent: Ascent; showGrade?: boolean }) {
   const tooltip = createAscentTooltip(ascent)
-
-  // TODO: this should be a link sending to the ascent page (/ascents/:id) ?
   return (
     <Link
       title={tooltip}

@@ -1,6 +1,7 @@
 import { average, sum } from '@edouardmisset/math'
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { Card } from '~/app/_components/card/card'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { getMostFrequentDate } from '~/helpers/date'
 import {
@@ -9,6 +10,7 @@ import {
   getMostFrequentCrag,
 } from '~/helpers/filter-ascents'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 
 async function fetchData(year: number) {
@@ -18,6 +20,8 @@ async function fetchData(year: number) {
   ])
   return { trainingSessions, ascents }
 }
+
+const fallbackBoulderHeight = 2
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -39,7 +43,9 @@ export default async function Page(props: {
   const hardestRoute = getHardestAscent(routes)
   const hardestBoulder = getHardestAscent(boulders)
 
-  const totalHeight = sum(routes.map(({ height }) => height ?? 0))
+  const totalHeight = sum(
+    ascents.map(({ height }) => height ?? fallbackBoulderHeight),
+  )
 
   const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
 
@@ -61,65 +67,73 @@ export default async function Page(props: {
     ),
   )
 
+  const mostRecentAscent = ascents.at(0) as Ascent
+
+  const highestDegree = Math.max(
+    ...ascents.map(({ topoGrade }) => Number(topoGrade[0])),
+  )
+
+  const ascentsInTheHardestDegree = ascents.filter(({ topoGrade }) =>
+    topoGrade.startsWith(highestDegree.toString()),
+  ).length
+
   return (
-    <section className="w100">
-      <h1 className="section-header">{year}</h1>
-      <div
-        style={{
-          display: 'grid',
-          gap: '1rem',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
-        }}
-      >
-        <Card>
-          <h2>Days outside</h2>
-          <p>
-            You climbed <b>{ascents.length}</b> ascents in <b>{daysOutside}</b>{' '}
-            days!
-          </p>
-          <p>
-            Your best day was the{' '}
-            <b>{new Date(mostAscentDate).toDateString()}</b> where you climbed{' '}
-            <b>{mostAscent}</b> ascents!
-          </p>
-        </Card>
-        <Card>
-          <h2>Hard Sends</h2>
-          <p>
-            You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
-            <b>{flashAscents.length}</b>, and Redpointed{' '}
-            <b>{redpointAscents.length}</b> routes and boulders.
-          </p>
-          <p>
-            Your average grade was <b>{averageRouteGrade}</b> for routes and{' '}
-            <b>{averageBoulderGrade}</b> for boulders.
-          </p>
-        </Card>
-        <Card>
-          <h2>Hardest</h2>
-          <p>
-            Your hardest route was{' '}
-            <AscentComponent ascent={hardestRoute} showGrade={true} /> and your
-            hardest boulder{' '}
-            <AscentComponent ascent={hardestBoulder} showGrade={true} />
-          </p>
-        </Card>
-        <Card>
-          <h2>Vertical Milestone</h2>
-          <p>
-            You climbed <b>{routes.length}</b> routes and{' '}
-            <b>{boulders.length}</b> boulders for a total of{' '}
-            <b>{totalHeight}</b> meters!
-          </p>
-        </Card>
-        <Card>
-          <h2>Favorite Spot</h2>
-          <p>
-            You climbed in <b>{numberOfCrags}</b> different crags and you went
-            to <b>{mostFrequentCrag}</b> the most!
-          </p>
-        </Card>
-      </div>
-    </section>
+    <GridLayout title={year}>
+      <Card>
+        <h2>Days outside</h2>
+        <p>
+          You climbed <b>{ascents.length}</b> ascents in <b>{daysOutside}</b>{' '}
+          days.
+        </p>
+        <p>
+          Your best day was the <b>{new Date(mostAscentDate).toDateString()}</b>{' '}
+          where you climbed <b>{mostAscent}</b> ascents.
+        </p>
+      </Card>
+      <Card>
+        <h2>Ascents</h2>
+        <p>
+          Your last ascent was{' '}
+          <AscentComponent ascent={mostRecentAscent} showGrade={true} />
+        </p>
+        <p>
+          You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
+          <b>{flashAscents.length}</b>, and Redpointed{' '}
+          <b>{redpointAscents.length}</b> routes and boulders.
+        </p>
+        <p>
+          Your average grade was <b>{averageRouteGrade}</b> for routes and{' '}
+          <b>{averageBoulderGrade}</b> for boulders.
+        </p>
+      </Card>
+      <Card>
+        <h2>Hardest Sends</h2>
+        <p>
+          Your hardest route was{' '}
+          <AscentComponent ascent={hardestRoute} showGrade={true} /> and your
+          hardest boulder{' '}
+          <AscentComponent ascent={hardestBoulder} showGrade={true} />
+        </p>
+        <p>
+          You made <b>{ascentsInTheHardestDegree}</b> climbs in the{' '}
+          <b>{highestDegree}</b>
+          <sup>th</sup> degree.
+        </p>
+      </Card>
+      <Card>
+        <h2>Vertical Milestone</h2>
+        <p>
+          You climbed <b>{routes.length}</b> routes and <b>{boulders.length}</b>{' '}
+          boulders for a total of <b>{totalHeight}</b> meters.
+        </p>
+      </Card>
+      <Card>
+        <h2>Favorite Crag</h2>
+        <p>
+          You visited <b>{numberOfCrags}</b> different crags and you went to{' '}
+          <b>{mostFrequentCrag}</b> the most.
+        </p>
+      </Card>
+    </GridLayout>
   )
 }

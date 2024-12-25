@@ -5,7 +5,7 @@ export default function GridLayout({
   title,
 }: {
   children: ReactNode
-  title: string
+  title: string | number
 }) {
   return (
     <section className="flex-column w100 ">
