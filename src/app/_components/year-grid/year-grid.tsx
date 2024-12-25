@@ -21,18 +21,18 @@ export async function YearGrid({
   dayCollection: DayDescriptor[]
 }) {
   const weeksInYear = getISOWeeksInYear(year)
-  const firstDayOfYear = new Date(year, 0, 1)
-  const isFirstMondayInFirstWeek = firstDayOfYear.getDay() === 1
-  const prependWeek53 = firstDayOfYear.getDay() <= 3
+  const firstDayOfYear = new Date(year, 0, 1, 12)
+  const firstDayIndex = firstDayOfYear.getUTCDay()
+  const isFirstDayOfTheYearAMonday = firstDayIndex === 1
+  const prependWeek53 = firstDayIndex <= 3
 
   const numberOfColumns = 1 + weeksInYear + (prependWeek53 ? 1 : 0)
 
-  const numberOfDaysFrom1stJanuaryToFirstMonday = isFirstMondayInFirstWeek
-    ? 0
-    : firstDayOfYear.getDay() - 1
+  const numberOfDaysFromLastMondayTo1stJanuary =
+    firstDayIndex === 0 ? 6 : firstDayIndex - 1
 
-  const optionalAdditionalDays = Array.from(
-    { length: numberOfDaysFrom1stJanuaryToFirstMonday },
+  const emptyDays = Array.from(
+    { length: numberOfDaysFromLastMondayTo1stJanuary },
     (_, index): DayDescriptor => ({
       date: '',
       tooltip: '',
@@ -43,9 +43,11 @@ export async function YearGrid({
   )
 
   console.log('🚀 ~ YearGrid:', {
-    weeksInYear,
     year,
-    firstDayOfYearDate: firstDayOfYear,
+    weeksInYear,
+    firstDayOfYear: firstDayOfYear.toString(),
+    firstDayIndex,
+    numberOfDaysFromLastMondayTo1stJanuary,
   })
 
   return (
@@ -57,27 +59,25 @@ export async function YearGrid({
     >
       <DaysColumn />
       <WeeksRow columnCount={numberOfColumns} />
-      {(isFirstMondayInFirstWeek
-        ? dayCollection
-        : [...optionalAdditionalDays, ...dayCollection]
-      ).map(({ date, tooltip, backgroundColor, foreColor, shortText = '' }) =>
-        date === '' ? (
-          <i
-            key={shortText}
-            className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-          />
-        ) : (
-          isDateInYear(date, year) && (
-            <YearGridCell
-              key={date.toString()}
-              stringDate={date}
-              tooltip={tooltip}
-              backgroundColor={backgroundColor}
-              foreColor={foreColor}
-              shortText={shortText}
+      {[...emptyDays, ...dayCollection].map(
+        ({ date, tooltip, backgroundColor, foreColor, shortText = '' }) =>
+          date === '' ? (
+            <i
+              key={shortText}
+              className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
             />
-          )
-        ),
+          ) : (
+            isDateInYear(date, year) && (
+              <YearGridCell
+                key={date.toString()}
+                stringDate={date}
+                tooltip={tooltip}
+                backgroundColor={backgroundColor}
+                foreColor={foreColor}
+                shortText={shortText}
+              />
+            )
+          ),
       )}
     </div>
   )
