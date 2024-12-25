@@ -1,3 +1,4 @@
+import { validNumberWithFallback } from '@edouardmisset/math'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearAscentPerDay } from '~/data/ascent-data'
 import { sortByDescendingGrade } from '~/helpers/sorter'
@@ -7,11 +8,14 @@ import { ascentsQRCodeRender } from '../helpers.tsx'
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const { year } = await props.params
+  const year = validNumberWithFallback(
+    (await props.params).year,
+    new Date().getFullYear(),
+  )
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscents = getYearAscentPerDay(ascents)[Number(year)]
+  const selectedAscents = getYearAscentPerDay(ascents)[year]
 
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>

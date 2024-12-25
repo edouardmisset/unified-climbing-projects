@@ -1,4 +1,4 @@
-import { average, sum } from '@edouardmisset/math'
+import { average, sum, validNumberWithFallback } from '@edouardmisset/math'
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { Card } from '~/app/_components/card/card'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
@@ -26,7 +26,11 @@ const fallbackBoulderHeight = 2
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const year = Number((await props.params).year)
+  const year = validNumberWithFallback(
+    (await props.params).year,
+    new Date().getFullYear(),
+  )
+
   const { trainingSessions, ascents } = await fetchData(year)
 
   const onsightAscents = filterAscents(ascents, {

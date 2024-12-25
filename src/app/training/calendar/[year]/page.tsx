@@ -1,5 +1,6 @@
 import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
+import { validNumberWithFallback } from '@edouardmisset/math'
 import Color from 'colorjs.io'
 import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
@@ -16,18 +17,20 @@ import styles from './page.module.css'
 export default async function TrainingCalendar(props: {
   params: Promise<{ year: string }>
 }) {
-  const { year } = await props.params
+  const year = validNumberWithFallback(
+    (await props.params).year,
+    new Date().getFullYear(),
+  )
 
   const trainingSessions = await api.training.getAllTrainingSessions()
 
-  const numberYear = Number(year)
-  const yearSession = getYearTraining(trainingSessions)[numberYear]
+  const yearSession = getYearTraining(trainingSessions)[year]
 
   const isDataPresentForPreviousYear = Boolean(
-    getYearTraining(trainingSessions)[numberYear - 1],
+    getYearTraining(trainingSessions)[year - 1],
   )
   const isDataPresentForNextYear = Boolean(
-    getYearTraining(trainingSessions)[numberYear + 1],
+    getYearTraining(trainingSessions)[year + 1],
   )
 
   const sessionsDescriptions =
@@ -67,7 +70,7 @@ export default async function TrainingCalendar(props: {
       <Spacer size={3} />
       <div className={styles.container}>
         <YearNavigationButton
-          currentYear={numberYear}
+          currentYear={year}
           nextOrPrevious="previous"
           enabled={isDataPresentForPreviousYear}
         />
@@ -76,11 +79,11 @@ export default async function TrainingCalendar(props: {
           <span>No record</span>
         ) : (
           <div className={styles.calendarContainer}>
-            <YearGrid year={numberYear} dayCollection={sessionsDescriptions} />
+            <YearGrid year={year} dayCollection={sessionsDescriptions} />
           </div>
         )}
         <YearNavigationButton
-          currentYear={numberYear}
+          currentYear={year}
           nextOrPrevious="next"
           enabled={isDataPresentForNextYear}
         />
