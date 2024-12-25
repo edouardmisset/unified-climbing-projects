@@ -15,7 +15,7 @@ import { api } from '~/trpc/server'
 
 async function fetchData(year: number) {
   const [trainingSessions, ascents] = await Promise.all([
-    api.training.getAllTrainingSessions(),
+    api.training.getAllTrainingSessions({ year }),
     api.ascents.getAllAscents({ year }),
   ])
   return { trainingSessions, ascents }
@@ -32,6 +32,8 @@ export default async function Page(props: {
   )
 
   const { trainingSessions, ascents } = await fetchData(year)
+
+  // ASCENTS
 
   const onsightAscents = filterAscents(ascents, {
     style: 'Onsight',
@@ -52,11 +54,6 @@ export default async function Page(props: {
   )
 
   const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
-
-  const daysOutside = filterTrainingSessions(trainingSessions, {
-    year,
-    sessionType: 'Out',
-  }).length
 
   const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
 
@@ -80,6 +77,12 @@ export default async function Page(props: {
   const ascentsInTheHardestDegree = ascents.filter(({ topoGrade }) =>
     topoGrade.startsWith(highestDegree.toString()),
   ).length
+
+  // TRAINING
+
+  const daysOutside = filterTrainingSessions(trainingSessions, {
+    sessionType: 'Out',
+  }).length
 
   return (
     <GridLayout title={year}>
@@ -119,7 +122,7 @@ export default async function Page(props: {
           <AscentComponent ascent={hardestBoulder} showGrade={true} />
         </p>
         <p>
-          You made <b>{ascentsInTheHardestDegree}</b> climbs in the{' '}
+          You climbed <b>{ascentsInTheHardestDegree}</b> routes in the{' '}
           <b>{highestDegree}</b>
           <sup>th</sup> degree.
         </p>
