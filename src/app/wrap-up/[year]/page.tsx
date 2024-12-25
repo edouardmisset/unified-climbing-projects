@@ -1,6 +1,7 @@
-import { sum } from '@edouardmisset/math'
+import { average, sum } from '@edouardmisset/math'
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { Card } from '~/app/_components/card/card'
+import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { getMostFrequentDate } from '~/helpers/date'
 import {
   filterAscents,
@@ -49,6 +50,17 @@ export default async function Page(props: {
 
   const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
 
+  const averageRouteGrade = fromNumberToGrade(
+    Math.round(
+      average(...routes.map(({ topoGrade }) => fromGradeToNumber(topoGrade))),
+    ),
+  )
+  const averageBoulderGrade = fromNumberToGrade(
+    Math.round(
+      average(...boulders.map(({ topoGrade }) => fromGradeToNumber(topoGrade))),
+    ),
+  )
+
   return (
     <section className="w100">
       <h1 className="section-header">{year}</h1>
@@ -77,6 +89,10 @@ export default async function Page(props: {
             You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
             <b>{flashAscents.length}</b>, and Redpointed{' '}
             <b>{redpointAscents.length}</b> routes and boulders.
+          </p>
+          <p>
+            Your average grade was <b>{averageRouteGrade}</b> for routes and{' '}
+            <b>{averageBoulderGrade}</b> for boulders.
           </p>
         </Card>
         <Card>
