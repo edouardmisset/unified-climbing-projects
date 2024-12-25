@@ -9,14 +9,15 @@ export default async function Page() {
 
   return (
     <section className="flex-column w100 ">
-      <div className="qr-grid">
+      <h1 className="center-text">Training</h1>
+      <div className="grid">
         {Object.entries(getYearTraining(trainingSessions))
           .reverse()
           .map(([year, training]) => (
             <div key={year}>
-              <h3 className="center-text">
+              <h2 className="center-text">
                 <Link href={`/training/qr-code/${year}`}>{year}</Link>
-              </h3>
+              </h2>
               <QRCode
                 data={training}
                 itemRender={trainingSessionsQRCodeRender}

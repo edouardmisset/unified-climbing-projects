@@ -9,32 +9,28 @@ export default async function Page() {
   const trainingSessions = await api.training.getAllTrainingSessions()
 
   return (
-    <section
-      className="w100"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-        gap: '1rem',
-      }}
-    >
-      {Object.values(getYearsTrainingPerWeek(trainingSessions))
-        .map((yearTraining, i) => {
-          const trainingYear = createYearList(trainingSessions)
-          const year =
-            trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
-          return (
-            <div key={year} className="flex-column w100">
-              <h1 className="center-text">
-                <Link href={`/training/barcode/${year}`}>{year}</Link>
-              </h1>
-              <Barcode
-                data={yearTraining}
-                itemRender={trainingSessionsBarcodeRender}
-              />
-            </div>
-          )
-        })
-        .reverse()}
+    <section className="w100">
+      <h1 className="center-text">Training</h1>
+      <div className="grid">
+        {Object.values(getYearsTrainingPerWeek(trainingSessions))
+          .map((yearTraining, i) => {
+            const trainingYear = createYearList(trainingSessions)
+            const year =
+              trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
+            return (
+              <div key={year} className="flex-column w100">
+                <h2 className="center-text">
+                  <Link href={`/training/barcode/${year}`}>{year}</Link>
+                </h2>
+                <Barcode
+                  data={yearTraining}
+                  itemRender={trainingSessionsBarcodeRender}
+                />
+              </div>
+            )
+          })
+          .reverse()}
+      </div>
     </section>
   )
 }

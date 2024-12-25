@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <section className="flex-column w100">
       <h1 className="center-text">Ascents</h1>
-      <div className="qr-grid">
+      <div className="grid">
         {Object.entries(getYearAscentPerDay(ascents))
           .reverse()
           .map(([year, ascents]) => {
