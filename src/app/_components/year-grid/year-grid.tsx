@@ -1,6 +1,6 @@
 import { isDateInYear } from '~/helpers/is-date-in-year.ts'
 import { DaysColumn } from './days-column.tsx'
-import { getISOWeeksInYear } from './helpers.ts'
+import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
 import { YearGridCell } from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
@@ -20,13 +20,20 @@ export async function YearGrid({
   year: number
   dayCollection: DayDescriptor[]
 }) {
-  const weeksInYear = getISOWeeksInYear(year)
+  const displayedNumberOfWeeks = Math.ceil(
+    (getNumberOfDaysInYear(year) + 1) / 7,
+  )
   const firstDayOfYear = new Date(year, 0, 1, 12)
   const firstDayIndex = firstDayOfYear.getUTCDay()
-  const isFirstDayOfTheYearAMonday = firstDayIndex === 1
-  const prependWeek53 = firstDayIndex <= 3
+  const prependWeek53 = firstDayIndex >= 4 || firstDayIndex === 0
 
-  const numberOfColumns = 1 + weeksInYear + (prependWeek53 ? 1 : 0)
+  const numberOfColumns = 1 + displayedNumberOfWeeks + (prependWeek53 ? 1 : 0)
+
+  const columns = [
+    0,
+    ...(prependWeek53 ? [53] : []),
+    ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
+  ]
 
   const numberOfDaysFromLastMondayTo1stJanuary =
     firstDayIndex === 0 ? 6 : firstDayIndex - 1
@@ -44,10 +51,12 @@ export async function YearGrid({
 
   console.log('🚀 ~ YearGrid:', {
     year,
-    weeksInYear,
+    weeksInYear: displayedNumberOfWeeks,
     firstDayOfYear: firstDayOfYear.toString(),
     firstDayIndex,
     numberOfDaysFromLastMondayTo1stJanuary,
+    columns,
+    daysInYear: getNumberOfDaysInYear(year),
   })
 
   return (
@@ -58,7 +67,7 @@ export async function YearGrid({
       }}
     >
       <DaysColumn />
-      <WeeksRow columnCount={numberOfColumns} />
+      <WeeksRow columns={columns} />
       {[...emptyDays, ...dayCollection].map(
         ({ date, tooltip, backgroundColor, foreColor, shortText = '' }) =>
           date === '' ? (

@@ -45,14 +45,21 @@ export function getWeek(date: Date): number {
  * @returns {number} The number of ISO weeks in the year.
  */
 export function getISOWeeksInYear(year: number): number {
-  const fourthJan = new Date(year, 0, 4)
-  const fourthJanDay = fourthJan.getDay()
-  const firstThursday = fourthJanDay <= 4 ? fourthJanDay : fourthJanDay - 7
+  const fourthJanuary = new Date(year, 0, 4, 12).getDay()
+  const firstThursday = fourthJanuary <= 4 ? fourthJanuary : fourthJanuary - 7
   const firstWeekStart = new Date(year, 0, 4 - firstThursday)
-  const lastDayOfYear = new Date(year, 11, 31)
+  const lastDayOfYear = new Date(year, 11, 31, 12)
   const daysInYear =
     (lastDayOfYear.getTime() - firstWeekStart.getTime()) / (1000 * 60 * 60 * 24)
   return Math.ceil((daysInYear + 1) / 7)
+}
+
+export function getNumberOfDaysInYear(year: number): number {
+  return (
+    (new Date(year + 1, 0, 1, 12).getTime() -
+      new Date(year, 0, 1, 12).getTime()) /
+    (1000 * 60 * 60 * 24)
+  )
 }
 
 /**
