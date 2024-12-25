@@ -7,7 +7,6 @@ import { trainingSessionsBarcodeRender } from './helpers.tsx'
 
 export default async function Page() {
   const trainingSessions = await api.training.getAllTrainingSessions()
-
   return (
     <section className="w100">
       <h1 className="center-text">Training</h1>

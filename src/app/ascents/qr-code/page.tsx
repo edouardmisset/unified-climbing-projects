@@ -14,14 +14,14 @@ export default async function Page() {
         {Object.entries(getYearAscentPerDay(ascents))
           .reverse()
           .map(([year, ascents]) => {
-            const sortedAscents = [...ascents].map(ascentDay => ({
+            const sortedAscents = ascents.map(ascentDay => ({
               ...ascentDay,
               ascents: ascentDay?.ascents
-                ? ascentDay.ascents.sort(sortByDescendingGrade)
+                ? ascentDay.ascents.toSorted(sortByDescendingGrade)
                 : undefined,
             }))
             return (
-              <div key={`ascents in ${year}`}>
+              <div key={year}>
                 <h2 className="center-text">
                   <Link href={`/ascents/qr-code/${year}`}>{year}</Link>
                 </h2>
