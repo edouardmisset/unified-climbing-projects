@@ -19,7 +19,6 @@
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
     "@edouardmisset/object": "npm:@jsr/edouardmisset__object@^4.0.1",
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text@^4.0.0",
-    "@js-temporal/polyfill": "^0.4.4",
     "@nivo/bar": "^0.88.0",
     "@nivo/core": "^0.88.0",
     "@nivo/pie": "^0.88.0",

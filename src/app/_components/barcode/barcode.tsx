@@ -1,5 +1,5 @@
 import type React from 'react'
-import { parseISODateToTemporal } from '~/schema/ascent'
+import { getWeek } from '~/helpers/date'
 import type { StringDateTime } from '~/types/generic'
 
 export const minBarWidth = 4
@@ -54,7 +54,7 @@ export default function Barcode<T extends Obj>(
                 <span
                   key={
                     firstElementDate
-                      ? parseISODateToTemporal(firstElementDate).weekOfYear
+                      ? getWeek(new Date(firstElementDate))
                       : index
                   }
                   style={{

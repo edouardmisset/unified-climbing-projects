@@ -1,4 +1,3 @@
-import { Temporal } from '@js-temporal/polyfill'
 import { number, string, z } from 'zod'
 
 export const _GRADES = [
@@ -211,17 +210,3 @@ export const ascentSchema = z.object({
   id: number().min(0),
 })
 export type Ascent = z.infer<typeof ascentSchema>
-
-export function parseISODateToTemporal(
-  stringDate: string,
-): Temporal.PlainDateTime {
-  const d = new Date(stringDate)
-  return Temporal.PlainDateTime.from(
-    {
-      day: d.getDate(),
-      month: d.getMonth() + 1,
-      year: d.getFullYear(),
-    },
-    { overflow: 'reject' },
-  )
-}

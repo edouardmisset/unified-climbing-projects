@@ -1,6 +1,6 @@
 import { AscentComponent } from '~/app/_components/ascent-component/ascent-component'
 import { AscentsAndDays } from '~/app/_components/ascents-and-days/ascents-and-days'
-import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 
 export async function AscentsSummary({
   ascents,
@@ -18,10 +18,9 @@ export async function AscentsSummary({
   const numberOfSimilarAscents = similarAscents.length
   const numberOfDuplicateAscents = duplicateAscents.length
   const latestAscent = ascents.at(0) as Ascent
+  // FIXME this is not correct if ascents have different times
   const numberOfDays = new Set(
-    ascents.map(({ date }) =>
-      parseISODateToTemporal(date).toPlainDate().toString(),
-    ),
+    ascents.map(({ date }) => new Date(date).toString()),
   ).size
   return (
     <div id="ascents">

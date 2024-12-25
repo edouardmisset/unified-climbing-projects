@@ -1,13 +1,10 @@
-import {
-  type Ascent,
-  type Grade,
-  parseISODateToTemporal,
-} from '~/schema/ascent'
+import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
+import { type DATE_TIME_OPTIONS, formatDateTime, getWeeksInYear } from './date'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
   ascents.length > 0 && ascents[0] !== undefined
-    ? `Week # ${parseISODateToTemporal(ascents[0].date).weekOfYear.toString()}
+    ? `Week # ${getWeeksInYear(new Date(ascents[0].date).getFullYear())}
 Ascents (${ascents.length}):
 ${ascents
   .map(
@@ -23,7 +20,7 @@ export const createTrainingBarCodeTooltip = (
   sessions: TrainingSession[],
 ): string =>
   sessions.length > 0 && sessions[0] !== undefined
-    ? `Week # ${parseISODateToTemporal(sessions[0].date).weekOfYear.toString()}
+    ? `Week # ${getWeeksInYear(new Date(sessions[0].date).getFullYear())}
 # Training (${sessions.length}):
 ${sessions
   .map(
@@ -44,7 +41,7 @@ export const createAscentsQRTooltip = (ascents: Ascent[]): string => {
     ascent => ascent.climbingDiscipline === 'Route',
   )
 
-  return `${formattedDate(ascents[0])}
+  return `${formatDateProperty(ascents[0])}
 ${
   isMultipleAscents
     ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
@@ -65,7 +62,6 @@ export const createTrainingQRTooltip = (
     anatomicalRegion,
     climbingDiscipline,
     comments,
-    date,
     energySystem,
     gymCrag,
     intensity,
@@ -74,14 +70,7 @@ export const createTrainingQRTooltip = (
     volume,
   } = trainingSession
 
-  const localeDate = `📅 ${parseISODateToTemporal(date).toLocaleString(
-    undefined,
-    {
-      day: 'numeric',
-      weekday: 'long',
-      month: 'long',
-    },
-  )}`
+  const localeDate = formatDateProperty(trainingSession)
   const cragEmoji = createCragEmoji({ gymCrag, climbingDiscipline })
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''
@@ -158,12 +147,11 @@ function createCragEmoji({
     : `\t${createClimbingDisciplineEmoji(climbingDiscipline)} ${gymCrag}`
 }
 
-export function formattedDate<T>(data: T & { date: string }) {
-  return `📅 ${parseISODateToTemporal(data.date).toLocaleString(undefined, {
-    day: 'numeric',
-    weekday: 'long',
-    month: 'long',
-  })}`
+export function formatDateProperty<T>(
+  data: T & { date: string },
+  options: keyof typeof DATE_TIME_OPTIONS = 'fullDateTime',
+) {
+  return `📅 ${formatDateTime(new Date(data.date), options)}`
 }
 
 export const createAscentTooltip = (
@@ -187,7 +175,7 @@ export const createAscentTooltip = (
     style,
   } = ascent
 
-  return `${formattedDate(ascent)}
+  return `${formatDateProperty(ascent)}
 
 ${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrade({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers(style, tries, { showDetails })}
 

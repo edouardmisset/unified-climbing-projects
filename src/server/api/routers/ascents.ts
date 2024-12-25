@@ -4,6 +4,7 @@ import { removeAccents } from '@edouardmisset/text'
 
 import fuzzySort from 'fuzzysort'
 import { boolean, number, string, z } from 'zod'
+import { isLeftDateBefore } from '~/helpers/date.ts'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
@@ -13,7 +14,6 @@ import {
   climbingDisciplineSchema,
   gradeSchema,
   holdsSchema,
-  parseISODateToTemporal,
   profileSchema,
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -68,14 +68,14 @@ export const ascentsRouter = createTRPCRouter({
       })
 
       const dateSortedAscents = filteredAscents.sort(
-        ({ date: leftDate }, { date: rightDate }) =>
-          leftDate === rightDate
-            ? 0
-            : parseISODateToTemporal(leftDate).until(
-                parseISODateToTemporal(rightDate),
-              ).sign *
-              -1 *
-              (dateIsDescending ? -1 : 1),
+        ({ date: leftDate }, { date: rightDate }) => {
+          if (leftDate === rightDate) return 0
+          return (
+            (isLeftDateBefore(new Date(leftDate), new Date(rightDate))
+              ? 1
+              : -1) * (dateIsDescending ? 1 : -1)
+          )
+        },
       )
       const sortedAscents =
         sortFields === undefined

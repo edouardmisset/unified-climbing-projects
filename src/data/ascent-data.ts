@@ -1,14 +1,14 @@
 import { Temporal } from '@js-temporal/polyfill'
-import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
+import { getWeek } from '~/app/_components/year-grid/helpers.ts'
+import { getDayOfYear } from '~/helpers/date.ts'
+import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
 export const createYearList = <T extends Record<string, unknown>>(
   data: (T & { date: string })[],
 ) =>
-  [
-    ...new Set(data.map(({ date }) => parseISODateToTemporal(date).year)),
-  ].reverse()
+  [...new Set(data.map(({ date }) => new Date(date).getFullYear()))].reverse()
 
 const getAscentsCollection: (
   ascents: Ascent[],
@@ -19,8 +19,10 @@ const getAscentsCollection: (
 export const getYearAscentPerDay = (ascents: Ascent[]) =>
   ascents.reduce(
     (acc, ascent) => {
-      const date = parseISODateToTemporal(ascent.date)
-      const { year, dayOfYear } = date
+      const date = new Date(ascent.date)
+      const year = date.getFullYear()
+      const dayOfYear = getDayOfYear(date)
+
       const thisDay = acc[year]?.[dayOfYear - 1]
 
       if (acc[year] === undefined) return acc
@@ -51,7 +53,9 @@ export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
 export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>
   ascents.reduce(
     (accumulator, ascent) => {
-      const { year, weekOfYear } = parseISODateToTemporal(ascent.date)
+      const date = new Date(ascent.date)
+      const year = date.getFullYear()
+      const weekOfYear = getWeek(date)
 
       const weekAscents = accumulator[year]?.[weekOfYear]
 

@@ -1,6 +1,7 @@
 import type { StringDateTime } from '~/types/generic'
 
-import { parseISODateToTemporal } from '~/schema/ascent.ts'
+import { getWeek } from '~/app/_components/year-grid/helpers.ts'
+import { getDayOfYear } from '~/helpers/date.ts'
 import type { TrainingSession } from '~/schema/training'
 import { createEmptyBarcodeCollection } from './ascent-data.ts'
 import { createEmptyYearlyCollections } from './helpers.ts'
@@ -8,7 +9,7 @@ import { createEmptyYearlyCollections } from './helpers.ts'
 const getTrainingYears = (trainingSessions: TrainingSession[]) =>
   [
     ...new Set(
-      trainingSessions.map(({ date }) => parseISODateToTemporal(date).year),
+      trainingSessions.map(({ date }) => new Date(date).getFullYear()),
     ),
   ].reverse()
 
@@ -21,7 +22,9 @@ const getTrainingCollection: (
 export const getYearTraining = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
     (acc, trainingSession) => {
-      const { year, dayOfYear } = parseISODateToTemporal(trainingSession.date)
+      const date = new Date(trainingSession.date)
+      const year = date.getFullYear()
+      const dayOfYear = getDayOfYear(date)
 
       if (acc[year] === undefined) return acc
 
@@ -33,16 +36,18 @@ export const getYearTraining = (trainingSessions: TrainingSession[]) =>
 
 export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
-    (accumulator, training) => {
-      const { year, weekOfYear } = parseISODateToTemporal(training.date)
+    (accumulator, trainingSession) => {
+      const date = new Date(trainingSession.date)
+      const year = date.getFullYear()
+      const weekOfYear = getWeek(date)
 
       const weekTrainingSessions = accumulator[year]?.[weekOfYear]
 
       if (accumulator[year] === undefined) return accumulator
 
       accumulator[year][weekOfYear] = weekTrainingSessions
-        ? [...weekTrainingSessions, training]
-        : [training]
+        ? [...weekTrainingSessions, trainingSession]
+        : [trainingSession]
 
       return accumulator
     },

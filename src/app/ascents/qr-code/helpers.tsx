@@ -1,6 +1,6 @@
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
-import { type Ascent, parseISODateToTemporal } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 
 export function ascentsQRCodeRender(
@@ -9,7 +9,7 @@ export function ascentsQRCodeRender(
   const hardestAscent = ascentDay?.ascents?.at(0)
   return (
     <span
-      key={parseISODateToTemporal(ascentDay.date).dayOfYear}
+      key={ascentDay.date}
       style={{
         backgroundColor:
           hardestAscent === undefined
