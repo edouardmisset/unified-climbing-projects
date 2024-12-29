@@ -1,7 +1,7 @@
 import type { TrainingSession } from '~/schema/training'
 
 export const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
-  Exclude<TrainingSession['sessionType'], undefined>,
+  NonNullable<TrainingSession['sessionType']>,
   string
 > = {
   Out: 'var(--outdoor)',
@@ -26,7 +26,7 @@ export const SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
 }
 
 export const SESSION_TYPE_TO_CLASS_NAME: Record<
-  Exclude<TrainingSession['sessionType'], undefined>,
+  NonNullable<TrainingSession['sessionType']>,
   string
 > = {
   Out: 'outdoor',

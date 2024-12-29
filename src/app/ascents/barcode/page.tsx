@@ -6,9 +6,7 @@ import { api } from '~/trpc/server'
 import { ascentsBarcodeRender } from './helpers.tsx'
 
 export default async function Page() {
-  const ascents = await api.ascents.getAllAscents({
-    descending: true,
-  })
+  const ascents = await api.ascents.getAllAscents()
   return (
     <GridLayout title="Ascents">
       {Object.values(getYearsAscentsPerWeek(ascents))

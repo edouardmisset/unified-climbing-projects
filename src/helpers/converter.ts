@@ -37,10 +37,7 @@ export const TRAINING_SESSION_TYPE_TO_STRING = {
   SE: 'endurance',
   Sk: 'stamina',
   St: 'stamina',
-} as const satisfies Record<
-  Exclude<TrainingSession['sessionType'], undefined>,
-  string
->
+} as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
 
 function fromSessionTypeToString(
   sessionType: TrainingSession['sessionType'],

@@ -1,14 +1,12 @@
-import { sortBy } from '@edouardmisset/array'
 import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 
 import fuzzySort from 'fuzzysort'
-import { boolean, number, string, z } from 'zod'
+import { number, string, z } from 'zod'
 import { isLeftDateBefore } from '~/helpers/date.ts'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
-  type Ascent,
   ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
@@ -18,7 +16,11 @@ import {
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
-import { getFilteredAscents } from './grades.ts'
+
+export async function getFilteredAscents(filters?: OptionalAscentFilter) {
+  const ascents = await getAllAscents()
+  return filterAscents(ascents, filters)
+}
 
 export const optionalAscentFilterSchema = z
   .object({
@@ -38,74 +40,19 @@ export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure
-    .input(
-      z
-        .object({
-          'topo-grade': gradeSchema.optional(),
-          climbingDiscipline: climbingDisciplineSchema.optional(),
-          crag: ascentSchema.shape.crag.optional(),
-          descending: boolean().optional(),
-          sort: string().optional(),
-          style: ascentStyleSchema.optional(),
-          tries: ascentSchema.shape.tries.optional(),
-          year: number().optional(),
-        })
-        .optional(),
-    )
+    .input(optionalAscentFilterSchema)
+    .output(ascentSchema.array())
     .query(async ({ input }) => {
-      const {
-        'topo-grade': gradeFilter,
-        year: yearFilter,
-        tries: numberOfTriesFilter,
-        crag: cragFilter,
-        descending: dateIsDescending,
-        climbingDiscipline: disciplineFilter,
-        sort,
-        style: styleFilter,
-      } = input ?? {}
+      const filteredAscents = await getFilteredAscents(input)
 
-      const transformFields = (
-        fields: string | undefined,
-      ): (keyof Ascent)[] | undefined =>
-        fields === undefined
-          ? undefined
-          : (fields.split(',').reverse() as (keyof Ascent)[])
-
-      const sortFields = transformFields(sort)
-
-      const ascents = await getAllAscents()
-      const filteredAscents = filterAscents(ascents, {
-        grade: gradeFilter,
-        year: yearFilter,
-        tries: numberOfTriesFilter,
-        crag: cragFilter,
-        climbingDiscipline: disciplineFilter,
-        style: styleFilter,
-      })
-
-      const dateSortedAscents = filteredAscents.sort(
+      return filteredAscents.toSorted(
         ({ date: leftDate }, { date: rightDate }) => {
           if (leftDate === rightDate) return 0
-          return (
-            (isLeftDateBefore(new Date(leftDate), new Date(rightDate))
-              ? 1
-              : -1) * (dateIsDescending ? 1 : -1)
-          )
+          return isLeftDateBefore(new Date(leftDate), new Date(rightDate))
+            ? 1
+            : -1
         },
       )
-      const sortedAscents =
-        sortFields === undefined
-          ? dateSortedAscents
-          : sortFields.reduce((previouslySortedAscents, sortField) => {
-              const ascending = !sortField.startsWith('-')
-              const field = ascending
-                ? sortField
-                : (sortField.slice(1) as keyof Ascent)
-
-              return sortBy(previouslySortedAscents, field, ascending)
-            }, dateSortedAscents)
-
-      return sortedAscents
     }),
   getDuplicates: publicProcedure.query(async () => {
     const ascentMap = new Map<string, number>()

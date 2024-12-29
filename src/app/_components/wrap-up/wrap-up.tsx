@@ -19,7 +19,7 @@ import { AscentComponent } from '../ascent-component/ascent-component'
 async function fetchData(year?: number) {
   const [trainingSessions, ascents] = await Promise.all([
     api.training.getAllTrainingSessions({ year }),
-    api.ascents.getAllAscents({ year, descending: true }),
+    api.ascents.getAllAscents({ year }),
   ])
   return { trainingSessions, ascents }
 }
