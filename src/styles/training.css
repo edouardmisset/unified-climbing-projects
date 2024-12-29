@@ -1,0 +1,55 @@
+:where(:root) {
+  --endurance-low: var(--orange-2);
+  --endurance: var(--orange-5);
+  --endurance-high: var(--orange-9);
+
+  --other-training-low: var(--gray-2);
+  --other-training: var(--gray-5);
+  --other-training-high: var(--gray-7);
+
+  --outdoor-low: var(--green-2);
+  --outdoor: var(--green-5);
+  --outdoor-high: var(--green-9);
+
+  --stamina-low: var(--blue-2);
+  --stamina: var(--blue-5);
+  --stamina-high: var(--blue-9);
+
+  --strength-low: var(--red-2);
+  --strength: var(--red-5);
+  --strength-high: var(--red-9);
+
+  --tapered-low: var(--violet-2);
+  --tapered: var(--violet-5);
+  --tapered-high: var(--violet-9);
+}
+
+.endurance {
+  background-color: var(--endurance);
+  color: var(--orange-11);
+}
+
+.other-training {
+  background-color: var(--other-training);
+  color: var(--gray-11);
+}
+
+.outdoor {
+  background-color: var(--outdoor);
+  color: var(--green-11);
+}
+
+.stamina {
+  background-color: var(--stamina);
+  color: var(--blue-11);
+}
+
+.strength {
+  background-color: var(--strength);
+  color: var(--red-11);
+}
+
+.tapered {
+  background-color: var(--tapered);
+  color: var(--violet-11);
+}

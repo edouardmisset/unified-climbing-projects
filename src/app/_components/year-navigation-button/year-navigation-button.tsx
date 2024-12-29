@@ -1,4 +1,5 @@
 import { Link } from 'next-view-transitions'
+import styles from './year-navigation-button.module.css'
 
 export async function YearNavigationButton({
   currentYear,
@@ -14,17 +15,7 @@ export async function YearNavigationButton({
     nextOrPrevious === 'next' ? currentYear + 1 : currentYear - 1
   return (
     <Link
-      className="btn"
-      style={{
-        background:
-          'radial-gradient(circle, var(--surface-2) 25%, transparent 50%)',
-        border: 'none',
-        borderRadius: '100vw',
-        boxShadow: 'none',
-        inlineSize: 'var(--size-9)',
-        blockSize: 'var(--size-9)',
-        marginBlock: 'auto',
-      }}
+      className={`btn ${styles.button}`}
       href={`./${targetYear}`}
       title={targetYear?.toString() ?? ''}
     >

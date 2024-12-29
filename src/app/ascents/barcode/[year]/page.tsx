@@ -16,10 +16,10 @@ export default async function Page(props: {
   if (selectedAscentsPerWeek === undefined)
     return <span>No Data found for this year</span>
 
-  const sortedAscents = [...selectedAscentsPerWeek].map(ascentWeek =>
+  const sortedAscents = selectedAscentsPerWeek.map(ascentWeek =>
     ascentWeek
       ?.filter(ascent => ascent !== undefined)
-      ?.sort(sortByDescendingGrade),
+      ?.toSorted((a, b) => sortByDescendingGrade(a, b)),
   )
 
   return (

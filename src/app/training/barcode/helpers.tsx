@@ -1,5 +1,8 @@
 import { maxBarWidth } from '~/app/_components/barcode/barcode'
-import { fromSessionTypeToBackgroundColor } from '~/helpers/converter'
+import {
+  fromSessionTypeToBackgroundColor,
+  fromSessionTypeToClassName,
+} from '~/helpers/converter'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
@@ -21,20 +24,21 @@ export function trainingSessionsBarcodeRender(
     )
 
   // Colorize bars
-  const backgroundGradient =
-    weeklyTraining.length === 1
-      ? fromSessionTypeToBackgroundColor(
-          weeklyTraining[0]?.sessionType,
-        ).toString()
-      : `linear-gradient(${filteredWeeklyTraining
-          .map(({ sessionType }) =>
-            fromSessionTypeToBackgroundColor(sessionType),
-          )
-          .join(', ')})`
+  const isSingleWeekTraining = weeklyTraining.length === 1
+  const backgroundGradient = isSingleWeekTraining
+    ? undefined
+    : `linear-gradient(${filteredWeeklyTraining
+        .map(({ sessionType }) => fromSessionTypeToBackgroundColor(sessionType))
+        .join(', ')})`
 
   return (
     <span
       key={(filteredWeeklyTraining[0]?.date ?? index).toString()}
+      className={
+        isSingleWeekTraining
+          ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)
+          : undefined
+      }
       style={{
         display: 'block',
         blockSize: '100%',

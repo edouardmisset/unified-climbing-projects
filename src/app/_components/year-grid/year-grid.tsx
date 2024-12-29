@@ -7,8 +7,8 @@ import styles from './year-grid.module.css'
 
 type DayDescriptor = {
   date: string
-  backgroundColor: string
-  foreColor: string
+  backgroundColor?: string
+  foreColor?: string
   tooltip: string
   shortText?: string
 }
@@ -43,8 +43,6 @@ export async function YearGrid({
     (_, index): DayDescriptor => ({
       date: '',
       tooltip: '',
-      backgroundColor: '',
-      foreColor: '',
       shortText: index.toString(),
     }),
   )

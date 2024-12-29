@@ -30,8 +30,10 @@ ${sessions
   .join('\n')}`
     : ''
 
-export const createAscentsQRTooltip = (ascents: Ascent[]): string => {
-  if (ascents[0] === undefined) {
+export const createAscentsQRTooltip = (
+  ascents: Ascent[] | undefined,
+): string => {
+  if (ascents === undefined || ascents[0] === undefined) {
     return ''
   }
 
@@ -70,7 +72,7 @@ export const createTrainingQRTooltip = (
     volume,
   } = trainingSession
 
-  const localeDate = formatDateProperty(trainingSession)
+  const localeDate = formatDateProperty(trainingSession, 'longDate')
   const cragEmoji = createCragEmoji({ gymCrag, climbingDiscipline })
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''

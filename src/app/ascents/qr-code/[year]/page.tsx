@@ -23,7 +23,7 @@ export default async function Page(props: {
   const sortedAscents = [...selectedAscents].map(ascentDay => ({
     ...ascentDay,
     ascents: ascentDay?.ascents
-      ? ascentDay.ascents.sort(sortByDescendingGrade)
+      ? ascentDay.ascents.toSorted((a, b) => sortByDescendingGrade(a, b))
       : undefined,
   }))
 

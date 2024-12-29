@@ -29,10 +29,7 @@
   color: var(--text-1, #000);
   background-color: var(--cell-color, hsla(0 0% 50% / 0.5));
 
-  border-width: var(--border-width, 1px);
-  border-style: solid;
   border-radius: var(--radius-1, 2px);
-  border-color: var(--border-color, currentColor);
 }
 
 .emptyGridCell {

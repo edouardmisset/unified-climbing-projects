@@ -11,8 +11,8 @@ export async function YearGridCell({
 }: {
   stringDate: string
   tooltip: string
-  backgroundColor: string
-  foreColor: string
+  backgroundColor: string | undefined
+  foreColor: string | undefined
   shortText?: string
 }) {
   const date = new Date(stringDate)

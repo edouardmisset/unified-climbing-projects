@@ -1,0 +1,9 @@
+.button {
+  background: radial-gradient(circle, var(--surface-2) 25%, transparent 50%);
+  border: none;
+  border-radius: 100vw;
+  box-shadow: none;
+  inline-size: var(--size-9);
+  block-size: var(--size-9);
+  margin-block: auto;
+}
