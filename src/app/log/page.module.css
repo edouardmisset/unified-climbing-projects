@@ -44,9 +44,6 @@
     padding: var(--size-1);
     min-inline-size: var(--size-relative-15);
   }
-  @supports (field-sizing: content) {
-    field-sizing: content;
-  }
 }
 
 .tries {
