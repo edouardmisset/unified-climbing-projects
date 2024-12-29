@@ -18,7 +18,23 @@ import {
 } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
-import { getFilteredAscents, optionalAscentInputSchema } from './grades.ts'
+import { getFilteredAscents } from './grades.ts'
+
+export const optionalAscentFilterSchema = z
+  .object({
+    climbingDiscipline: climbingDisciplineSchema.optional(),
+    crag: ascentSchema.shape.crag.optional(),
+    grade: gradeSchema.optional(),
+    height: ascentSchema.shape.height.optional(),
+    holds: holdsSchema.optional(),
+    profile: profileSchema.optional(),
+    style: ascentStyleSchema.optional(),
+    tries: ascentSchema.shape.tries.optional(),
+    year: number().optional(),
+    rating: ascentSchema.shape.rating.optional(),
+  })
+  .optional()
+export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
 export const ascentsRouter = createTRPCRouter({
   getAllAscents: publicProcedure
@@ -170,7 +186,7 @@ export const ascentsRouter = createTRPCRouter({
       return foundAscent
     }),
   getMostFrequentProfile: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(profileSchema)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
@@ -178,7 +194,7 @@ export const ascentsRouter = createTRPCRouter({
       return mostFrequentBy(filteredAscents, 'profile') ?? 'Vertical'
     }),
   getMostFrequentHold: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(holdsSchema)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
@@ -186,7 +202,7 @@ export const ascentsRouter = createTRPCRouter({
       return mostFrequentBy(filteredAscents, 'holds') ?? 'Crimp'
     }),
   getMostFrequentHeight: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(z.number())
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
@@ -194,7 +210,7 @@ export const ascentsRouter = createTRPCRouter({
       return mostFrequentBy(filteredAscents, 'height') ?? -1
     }),
   getAverageRating: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(z.number().min(0))
     .query(async ({ input }) => {
       const filteredRatings = (await getFilteredAscents(input))
@@ -204,7 +220,7 @@ export const ascentsRouter = createTRPCRouter({
       return average(filteredRatings) ?? -1
     }),
   getAverageTries: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(z.number().min(1))
     .query(async ({ input }) => {
       const filteredTries = (await getFilteredAscents(input)).map(

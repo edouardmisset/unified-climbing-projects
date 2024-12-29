@@ -1,14 +1,14 @@
 import { objectSize } from '@edouardmisset/object'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { Ascent } from '~/schema/ascent'
-import type { OptionalAscentInput } from '~/server/api/routers/grades'
+import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { fromGradeToNumber } from './converters.ts'
 import { frequencyBy } from './frequency-by.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 
 export function filterAscents(
   ascents: Ascent[],
-  filters?: OptionalAscentInput,
+  filters?: OptionalAscentFilter,
 ): Ascent[] {
   const {
     climbingDiscipline,

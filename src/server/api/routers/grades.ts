@@ -3,34 +3,13 @@ import { average } from '@edouardmisset/math/average.ts'
 import { number, string, z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { filterAscents } from '~/helpers/filter-ascents'
-import {
-  type Grade,
-  _GRADES,
-  ascentSchema,
-  ascentStyleSchema,
-  climbingDisciplineSchema,
-  gradeSchema,
-  holdsSchema,
-  profileSchema,
-} from '~/schema/ascent'
+import { type Grade, _GRADES, ascentSchema, gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
-
-export const optionalAscentInputSchema = z
-  .object({
-    climbingDiscipline: climbingDisciplineSchema.optional(),
-    crag: ascentSchema.shape.crag.optional(),
-    grade: gradeSchema.optional(),
-    height: ascentSchema.shape.height.optional(),
-    holds: holdsSchema.optional(),
-    profile: profileSchema.optional(),
-    style: ascentStyleSchema.optional(),
-    tries: ascentSchema.shape.tries.optional(),
-    year: number().optional(),
-    rating: ascentSchema.shape.rating.optional(),
-  })
-  .optional()
-export type OptionalAscentInput = z.infer<typeof optionalAscentInputSchema>
+import {
+  type OptionalAscentFilter,
+  optionalAscentFilterSchema,
+} from './ascents'
 
 const gradeDescriptionSchema = z.object({
   grade: ascentSchema.shape.topoGrade,
@@ -46,7 +25,7 @@ export type GradeDescription = z.infer<typeof gradeDescriptionSchema>
 
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
@@ -55,7 +34,7 @@ export const gradesRouter = createTRPCRouter({
       return [...new Set(filteredGrades)].sort()
     }),
   getAverage: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
@@ -66,7 +45,7 @@ export const gradesRouter = createTRPCRouter({
       return fromNumberToGrade(Math.round(average(filteredNumberGrades)))
     }),
   getMinMax: publicProcedure
-    .input(optionalAscentInputSchema)
+    .input(optionalAscentFilterSchema)
     .output(z.tuple([gradeSchema, gradeSchema]))
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
@@ -84,7 +63,7 @@ export const gradesRouter = createTRPCRouter({
     }),
 })
 
-export async function getFilteredAscents(input?: OptionalAscentInput) {
+export async function getFilteredAscents(input?: OptionalAscentFilter) {
   const ascents = await getAllAscents()
   return filterAscents(ascents, input)
 }
