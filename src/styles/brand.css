@@ -12,14 +12,6 @@
   background-color: var(--surface-1);
 }
 
-:where(a[href]) {
-  color: var(--brand, var(--link));
-
-  &:where(:visited) {
-    color: var(--link-visited);
-  }
-}
-
 :focus-visible {
   outline-color: var(--brand, var(--link));
 }

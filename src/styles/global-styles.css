@@ -1,7 +1,7 @@
 /* Components */
 
 nav a {
-  --link-color: white;
+  --link-color: var(--gray-0);
   --linear-gradient: linear-gradient(
     to right,
     var(--violet-0),

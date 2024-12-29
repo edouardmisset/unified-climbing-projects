@@ -1,6 +1,6 @@
 .yearGrid {
   --gap: 1px;
-  --cell-color: var(--gray-5, hsla(0deg 0% 50% / 0.5));
+  --cell-color: hsla(0, 0%, 70%, 0.7);
   --text-color: var(--text-1, black);
 
   --border-color: currentColor;

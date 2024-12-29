@@ -1,17 +1,19 @@
 import type React from 'react'
-import { getWeek } from '~/helpers/date'
 import type { StringDateTime } from '~/types/generic'
+
+import { getWeek } from '~/helpers/date'
+import styles from './barcode.module.css'
 
 export const minBarWidth = 4
 export const maxBarWidth = 2.5 * minBarWidth
 
-type Obj = Record<string, unknown>
+type Object_ = Record<string, unknown>
 
-type MainBarCodeProps<T extends Obj> = {
+type MainBarCodeProps<T extends Object_> = {
   data: ((StringDateTime & T) | undefined)[][]
 }
 
-type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
+type BarCodeProps<T extends Object_> = MainBarCodeProps<T> &
   (
     | {
         itemRender: (
@@ -22,50 +24,30 @@ type BarCodeProps<T extends Obj> = MainBarCodeProps<T> &
     | { field: keyof T }
   )
 
-export default function Barcode<T extends Obj>(
+export default function Barcode<T extends Object_>(
   props: BarCodeProps<T>,
 ): React.JSX.Element {
   const { data = [] } = props
+
   return (
-    <div
-      className="flex-column center gap"
-      style={{
-        maxBlockSize: '100%',
-        inlineSize: '100%',
-      }}
-    >
-      <div
-        className="flex-row space-between"
-        style={{
-          inlineSize: 'clamp(25ch, 5vw, 80ch)',
-          background: 'white',
-
-          gap: minBarWidth,
-
-          padding: `3% ${1.5 * minBarWidth}px 4%`,
-          aspectRatio: '3 / 2',
-        }}
-      >
-        {'itemRender' in props
-          ? data.map(props.itemRender)
-          : data.map((elements, index) => {
-              const firstElementDate = elements[0]?.date
-              return (
-                <span
-                  key={
-                    firstElementDate
-                      ? getWeek(new Date(firstElementDate))
-                      : index
-                  }
-                  style={{
-                    backgroundColor: elements[0]?.[props.field]
-                      ? 'black'
-                      : 'white',
-                  }}
-                />
-              )
-            })}
-      </div>
+    <div className={styles.barcode}>
+      {'itemRender' in props
+        ? data.map(props.itemRender)
+        : data.map((elements, index) => {
+            const firstElementDate = elements[0]?.date
+            return (
+              <span
+                key={
+                  firstElementDate ? getWeek(new Date(firstElementDate)) : index
+                }
+                style={{
+                  backgroundColor: elements[0]?.[props.field]
+                    ? 'black'
+                    : 'white',
+                }}
+              />
+            )
+          })}
     </div>
   )
 }

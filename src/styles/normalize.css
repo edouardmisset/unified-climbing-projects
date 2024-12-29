@@ -5,7 +5,7 @@
 :where(html) {
   --brand: var(--violet-4);
   --link: var(--indigo-7);
-  --link-visited: var(--purple-7);
+  --link-visited: var(--indigo-5);
   --text-1: var(--gray-12);
   --text-2: var(--gray-7);
   --surface-1: var(--gray-0);
@@ -63,7 +63,7 @@
 @media (prefers-color-scheme: dark) {
   :where(html) {
     --link: var(--indigo-3);
-    --link-visited: var(--purple-3);
+    --link-visited: var(--indigo-2);
     --text-1: var(--gray-1);
     --text-2: var(--gray-4);
     --surface-1: var(--gray-9);
@@ -77,7 +77,7 @@
   }
 }
 :where(a[href]) {
-  color: var(--brand, var(--link));
+  color: var(--link);
 }
 :where(a[href]):where(:visited) {
   color: var(--link-visited);

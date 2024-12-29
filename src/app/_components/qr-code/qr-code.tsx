@@ -8,8 +8,8 @@ import styles from './qr-code.module.css'
 
 const gridSize = 25
 const imageSize = 9
-const imageStart = (gridSize - imageSize) / 2 + 1
-const imageEnd = gridSize - imageSize + 2
+const imageStart = (gridSize - imageSize) / 2 + 1 // 9
+const imageEnd = gridSize - imageSize + 2 // 18
 
 type Obj = Record<string, unknown>
 
@@ -38,41 +38,21 @@ export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
     />
   )
   return (
-    <div
-      className={styles.qrcode}
-      style={{
-        display: 'grid',
-        gridTemplate: `repeat(${gridSize}, 1fr) / repeat(${gridSize}, 1fr)`,
-        minInlineSize: 50,
-        maxInlineSize: 400,
-        minBlockSize: 50,
-        maxBlockSize: 400,
-        backgroundColor: 'white',
-        padding: '1rem',
-        marginInline: 'auto',
-      }}
-    >
+    <div className={styles.qrcode}>
       {/* Square markers */}
       <Marker placement="TopLeft" />
       <Marker placement="TopRight" />
       <Marker placement="BottomLeft" />
 
       {/* Image at the center of the QR Code */}
-      {cloneElement(image, {
-        style: {
-          gridArea: `${imageStart} / ${imageStart} / ${imageEnd} / ${imageEnd}`,
-          blockSize: '100%',
-          inlineSize: '100%',
-          padding: '1rem',
-        },
-      })}
+      {cloneElement(image, { className: styles.image })}
 
       {/* Data */}
       {'itemRender' in props
         ? data.map(props.itemRender)
         : data.map(element => (
             <i
-              key={element.date.toString()}
+              key={element.date}
               style={{
                 backgroundColor: element[props.field] ? 'black' : 'white',
               }}
