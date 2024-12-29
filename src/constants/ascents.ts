@@ -39,3 +39,5 @@ export const ASCENT_GRADE_TO_COLOR: Partial<Record<Grade, string>> = {
   '8c': 'var(--8c)',
   '8c+': 'var(--8c_)',
 }
+
+export const DEFAULT_BOULDER_HEIGHT = 2

@@ -8,8 +8,8 @@ import styles from './qr-code.module.css'
 
 const gridSize = 25
 const imageSize = 9
-const imageStart = (gridSize - imageSize) / 2 + 1 // 9
-const imageEnd = gridSize - imageSize + 2 // 18
+const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
+const _imageEnd = gridSize - imageSize + 2 // 18
 
 type Obj = Record<string, unknown>
 

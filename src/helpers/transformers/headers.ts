@@ -56,8 +56,6 @@ export const TRANSFORMED_ASCENT_KEYS = invert(TRANSFORMED_ASCENT_HEADER_NAMES)
 /**
  * !The order of the headers matters. For this reason we define the headers in
  * the right order in a separate array.
- *
- * TODO
  */
 export const TRAINING_HEADERS = [
   'Date',

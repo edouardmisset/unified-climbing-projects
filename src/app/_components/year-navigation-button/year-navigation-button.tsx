@@ -1,3 +1,4 @@
+import { isValidNumber } from '@edouardmisset/math'
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import styles from './year-navigation-button.module.css'
@@ -11,7 +12,8 @@ export async function YearNavigationButton({
   nextOrPrevious: 'next' | 'previous'
   enabled: boolean
 }) {
-  if (!enabled) return <span />
+  if (!(enabled && isValidNumber(currentYear))) return <span />
+
   const targetYear =
     nextOrPrevious === 'next' ? currentYear + 1 : currentYear - 1
   return (
