@@ -1,4 +1,3 @@
-import type { Temporal } from '@js-temporal/polyfill'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { removeObjectExtendedNullishValues } from '../remove-undefined-values.ts'
@@ -33,7 +32,7 @@ import {
  */
 export function transformAscentFromGSToJS(
   rawAscent: Record<string, string>,
-): Record<string, string | number | boolean | Temporal.PlainDateTime> {
+): Record<string, string | number | boolean> {
   const transformedAscent = Object.entries(rawAscent).reduce(
     (acc, [key, value], index) => {
       if (value === '') return acc
@@ -54,7 +53,7 @@ export function transformAscentFromGSToJS(
       acc.id = index
       return acc
     },
-    {} as Record<string, string | number | boolean | Temporal.PlainDateTime>,
+    {} as Record<string, string | number | boolean>,
   )
 
   return sortKeys(removeObjectExtendedNullishValues(transformedAscent))
@@ -97,7 +96,7 @@ export function transformAscentFromJSToGS(
 
 export function transformTrainingSessionFromGSToJS(
   rawTrainingSession: Record<string, string>,
-): Record<string, string | number | boolean | Temporal.PlainDateTime> {
+): Record<string, string | number | boolean> {
   const transformedTraining = Object.entries(rawTrainingSession).reduce(
     (acc, [key, value]) => {
       if (value === '') return acc
@@ -113,7 +112,7 @@ export function transformTrainingSessionFromGSToJS(
 
       return acc
     },
-    {} as Record<string, string | number | boolean | Temporal.PlainDateTime>,
+    {} as Record<string, string | number | boolean>,
   )
 
   return sortKeys(removeObjectExtendedNullishValues(transformedTraining))

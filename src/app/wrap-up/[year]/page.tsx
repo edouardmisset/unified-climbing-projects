@@ -13,6 +13,8 @@ import { filterTrainingSessions } from '~/helpers/filter-training'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 
+// TODO REFACTOR THIS TO USE IT IN HOME PAGE
+
 async function fetchData(year: number) {
   const [trainingSessions, ascents] = await Promise.all([
     api.training.getAllTrainingSessions({ year }),

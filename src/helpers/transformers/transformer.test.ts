@@ -5,7 +5,6 @@ import {
 } from '~/helpers/transformers/transformers'
 import { type Ascent, HOLDS, HOLDS_FROM_GS } from '~/schema/ascent'
 
-import { Temporal } from '@js-temporal/polyfill'
 import { assert, describe, it } from 'poku'
 import type { GSAscentRecord } from './headers.ts'
 
@@ -35,7 +34,7 @@ describe('transformAscentFromJSToGS', () => {
       topoGrade: '6a',
       area: 'Le Cul de Chien',
       routeName: 'La Marie Rose',
-      date: new Temporal.PlainDateTime(2024, 10, 30, 12, 0).toString(),
+      date: new Date(2024, 9, 30, 12, 0).toString(), // 2024-10-30T12:00:00.000Z
       rating: 5,
       comments: 'Great climb!',
       profile: 'Overhang',
@@ -78,7 +77,7 @@ describe('transformAscentFromJSToGS', () => {
       topoGrade: '8a',
       area: 'Secteur 13',
       routeName: 'Bonobo',
-      date: new Temporal.PlainDateTime(2022, 5, 10, 12, 0).toString(), // 2022-05-10T12:00:00.000Z
+      date: new Date(2022, 4, 10, 12, 0).toString(), // 2022-05-10T12:00:00.000Z
       profile: 'Overhang',
       holds: 'Pinch',
       personalGrade: '7a',
@@ -121,7 +120,7 @@ describe('transformAscentFromJSToGS', () => {
       topoGrade: '7b+',
       area: 'Berlin',
       routeName: 'Biographie',
-      date: new Temporal.PlainDateTime(2023, 7, 15, 8, 0).toString(), // 2023-07-15T08:00:00.000Z
+      date: new Date(2023, 6, 15, 8, 0).toString(), // 2023-07-15T08:00:00.000Z
       profile: undefined,
       holds: undefined,
       personalGrade: undefined,
@@ -186,7 +185,7 @@ describe('transformAscentFromGSToJS', () => {
       topoGrade: '6a',
       area: 'Le Cul de Chien',
       routeName: 'La Marie Rose',
-      date: new Temporal.PlainDateTime(2024, 10, 30, 12, 0).toString(), // '2024-10-30T12:00:00.000Z',
+      date: new Date(2024, 9, 30, 12, 0).toString(), // '2024-10-30T12:00:00.000Z',
       rating: 5,
       comments: 'Great climb!',
       profile: 'Overhang',
@@ -230,7 +229,7 @@ describe('transformAscentFromGSToJS', () => {
       topoGrade: '8a',
       area: 'Secteur 13',
       routeName: 'Bonobo',
-      date: new Temporal.PlainDateTime(2022, 5, 10, 12, 0).toString(), // 2022-05-10T12:00:00.000Z
+      date: new Date(2022, 4, 10, 12, 0).toString(), // 2022-05-10T12:00:00.000Z
       profile: 'Overhang',
       holds: 'Pinch',
       personalGrade: '7a',
@@ -271,7 +270,7 @@ describe('transformAscentFromGSToJS', () => {
       topoGrade: '7b+',
       area: 'Berlin',
       routeName: 'Biographie',
-      date: new Temporal.PlainDateTime(2023, 7, 15, 12, 0).toString(), // '2023-07-15T12:00:00.000Z',
+      date: new Date(2023, 6, 15, 12, 0).toString(), // '2023-07-15T12:00:00.000Z',
     }
 
     customDeepEquals(transformAscentFromGSToJS(emptyGSRecord), bareBoneAscent, [
@@ -293,7 +292,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         topoGrade: '8a',
         area: 'Secteur 13',
         routeName: 'Bonobo',
-        date: new Temporal.PlainDateTime(2022, 5, 10, 12, 0).toString(),
+        date: new Date(2022, 4, 10, 12, 0).toString(),
         profile: 'Overhang',
         holds: 'Pinch',
         personalGrade: '7a',
@@ -309,7 +308,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         topoGrade: '7b+',
         area: 'Berlin',
         routeName: 'Biographie',
-        date: new Temporal.PlainDateTime(2023, 7, 15, 12, 0).toString(),
+        date: new Date(2023, 6, 15, 12, 0).toString(),
       },
       {
         style: 'Flash',
@@ -320,7 +319,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
         topoGrade: '6a',
         area: 'Le Cul de Chien',
         routeName: 'La Marie Rose',
-        date: new Temporal.PlainDateTime(2024, 10, 30, 12, 0).toString(),
+        date: new Date(2024, 9, 30, 12, 0).toString(),
         rating: 5,
         comments: 'Great climb!',
         profile: 'Overhang',

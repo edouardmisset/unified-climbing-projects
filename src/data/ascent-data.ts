@@ -1,6 +1,5 @@
-import { Temporal } from '@js-temporal/polyfill'
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
-import { getDayOfYear } from '~/helpers/date.ts'
+import { getDayOfYear, getWeeksInYear } from '~/helpers/date.ts'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
@@ -40,14 +39,10 @@ export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
   data: (T & { date: string })[],
 ) =>
   Object.fromEntries(
-    createYearList(data).map(year => {
-      const weeksPerYear = Temporal.PlainDate.from({
-        year,
-        month: 12,
-        day: 31,
-      }).weekOfYear
-      return [year, Array.from({ length: weeksPerYear }, (): T[] => [])]
-    }),
+    createYearList(data).map(year => [
+      year,
+      Array.from({ length: getWeeksInYear(year) }, (): T[] => []),
+    ]),
   )
 
 export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>

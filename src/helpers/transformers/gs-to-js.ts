@@ -1,5 +1,4 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { Temporal } from '@js-temporal/polyfill'
 import { holdsFomGSSchema } from '~/schema/ascent'
 import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 
@@ -10,9 +9,7 @@ import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
  * ---------------------------------------------
  */
 
-type TransformFunctionGSToJS = (
-  value: string,
-) => string | number | Temporal.PlainDateTime
+type TransformFunctionGSToJS = (value: string) => string | number
 
 /**
  * Transforms a value to a string.
@@ -28,9 +25,9 @@ const transformToStringGSToJS: TransformFunctionGSToJS = value => String(value)
  */
 const transformDateGSToJS = (value: string): string => {
   const [day, month, year] = value.split('/')
-  return `${new Temporal.PlainDateTime(
+  return `${new Date(
     Number(year),
-    Number(month),
+    Number(month) - 1,
     Number(day),
     12,
     0,

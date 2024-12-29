@@ -5,7 +5,6 @@ import { SHEETS_INFO } from '~/services/google-sheets'
 
 // biome-ignore lint/correctness/noNodejsModules: ???
 import { writeFile } from 'node:fs/promises'
-import type { Temporal } from '@js-temporal/polyfill'
 import {
   TRANSFORM_FUNCTIONS_GS_TO_JS,
   transformTriesGSToJS,
@@ -81,12 +80,12 @@ ${JSON.stringify(transformedHeaderNames)}`,
  *
  * @param {CSVData} csvData - The 2D data array.
  * @param {CSVHeaders} headers - The replaced headers.
- * @returns {Record<string, string | number | boolean | Temporal.PlainDateTime>[]} - The transformed data array.
+ * @returns {Record<string, string | number | boolean>[]} - The transformed data array.
  */
 export function transformClimbingData(
   csvData: CSVData,
   headers: CSVHeaders,
-): Record<string, string | number | boolean | Temporal.PlainDateTime>[] {
+): Record<string, string | number | boolean>[] {
   return csvData
     .map(rowOfStrings =>
       headers.reduce(
@@ -109,10 +108,7 @@ export function transformClimbingData(
 
           return acc
         },
-        {} as Record<
-          CSVHeaders[number],
-          string | number | boolean | Temporal.PlainDateTime
-        >,
+        {} as Record<CSVHeaders[number], string | number | boolean>,
       ),
     )
     .map(item => removeObjectExtendedNullishValues(item))
@@ -122,11 +118,11 @@ export function transformClimbingData(
 /**
  * Writes the data to a file.
  * @param {string} fileName - The name of the file.
- * @param {Record<string, string | number | boolean | Temporal.PlainDateTime>[]} data - The data to write.
+ * @param {Record<string, string | number | boolean>[]} data - The data to write.
  */
 async function writeDataToFile(
   fileName: string,
-  data: Record<string, string | number | boolean | Temporal.PlainDateTime>[],
+  data: Record<string, string | number | boolean>[],
 ): Promise<void> {
   await writeFile(
     `${backupFilePath}${fileName}`,

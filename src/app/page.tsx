@@ -19,8 +19,5 @@ async function fetchClimbingData() {
 export default async function Home() {
   const { ascents, grades, gradeAverage } = await fetchClimbingData()
 
-  
-
-
   return <GridLayout title="All time">Hi</GridLayout>
 }

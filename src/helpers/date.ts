@@ -28,6 +28,13 @@ export const DATE_TIME_OPTIONS = {
   },
 } as const satisfies Record<string, Intl.DateTimeFormatOptions>
 
+/**
+ * Formats the provided date using the specified date time options.
+ *
+ * @param {Date} date - The date to format
+ * @param {keyof typeof DATE_TIME_OPTIONS} [options='fullDateTime'] - The format option key from DATE_TIME_OPTIONS
+ * @returns {string} The formatted date string
+ */
 export const formatDateTime = (
   date: Date,
   options: keyof typeof DATE_TIME_OPTIONS = 'fullDateTime',
@@ -51,6 +58,15 @@ export const getWeek = (date: Date): number => {
   )
 }
 
+/**
+ * Returns the number of weeks in the specified year.
+ *
+ * This function calculates the difference in weeks between the
+ * first Monday of the given year and the first Monday of the next year.
+ *
+ * @param {number} year - The year to evaluate
+ * @returns {number} The number of weeks in the specified year
+ */
 export const getWeeksInYear = (year: number): number => {
   const firstMondayThisYear = new Date(
     +year,
@@ -70,6 +86,23 @@ export const getWeeksInYear = (year: number): number => {
   )
 }
 
+/**
+ * Returns the number of days in the specified year.
+ *
+ * @param {number} year - The year to evaluate
+ * @returns {number} The number of days in the specified year
+ */
+export const getDaysInYear = (year: number): number => {
+  const isLeap = new Date(year, 1, 29).getMonth() === 1
+  return isLeap ? 366 : 365
+}
+
+/**
+ * Returns the day of the year (1-based index) for the specified date.
+ *
+ * @param {Date} date - The date to evaluate
+ * @returns {number} The day of the year
+ */
 export const getDayOfYear = (date: Date): number => {
   const newDate = new Date(date)
   return Math.floor(
@@ -82,9 +115,17 @@ export const isLeftDateBefore = (leftDate: Date, rightDate: Date) => {
   return leftDate < rightDate
 }
 
-export function getMostFrequentDate<
-  Type extends { date: string; [k: string]: string | number },
->(data: Type[]): [string, number] {
+/**
+ * Returns the most frequent date from an array of objects containing a date field.
+ *
+ * @template Type
+ * @param {Type[]} data - The array of objects that contain a 'date' string field
+ * @returns {[string, number]} A tuple where the first element is the date and
+ * the second element is the frequency
+ */
+export function getMostFrequentDate<Type extends { date: string }>(
+  data: Type[],
+): [string, number] {
   const ascentsByDate = frequencyBy(data, 'date')
   const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
     ascending: false,

@@ -37,7 +37,7 @@ export default function Barcode<T extends Obj>(
       <div
         className="flex-row space-between"
         style={{
-          inlineSize: 'clamp(30ch, 50%, 80ch)',
+          inlineSize: 'clamp(25ch, 5vw, 80ch)',
           background: 'white',
 
           gap: minBarWidth,
