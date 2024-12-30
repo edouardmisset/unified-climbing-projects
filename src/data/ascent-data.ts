@@ -4,10 +4,13 @@ import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
-export const createYearList = <T extends Record<string, unknown>>(
+export function createYearList<T extends Record<string, unknown>>(
   data: (T & { date: string })[],
-) =>
-  [...new Set(data.map(({ date }) => new Date(date).getFullYear()))].reverse()
+) {
+  return [
+    ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
+  ].sort((a, b) => b - a)
+}
 
 const getAscentsCollection: (
   ascents: Ascent[],
@@ -15,8 +18,8 @@ const getAscentsCollection: (
   ascents: Ascent[],
 ) => createEmptyYearlyCollections(createYearList(ascents))
 
-export const getYearAscentPerDay = (ascents: Ascent[]) =>
-  ascents.reduce(
+export function getYearAscentPerDay(ascents: Ascent[]) {
+  return ascents.reduce(
     (acc, ascent) => {
       const date = new Date(ascent.date)
       const year = date.getFullYear()
@@ -34,19 +37,21 @@ export const getYearAscentPerDay = (ascents: Ascent[]) =>
     },
     { ...getAscentsCollection(ascents) },
   )
+}
 
-export const createEmptyBarcodeCollection = <T extends Record<string, unknown>>(
+export function createEmptyBarcodeCollection<T extends Record<string, unknown>>(
   data: (T & { date: string })[],
-) =>
-  Object.fromEntries(
+) {
+  return Object.fromEntries(
     createYearList(data).map(year => [
       year,
       Array.from({ length: getWeeksInYear(year) }, (): T[] => []),
     ]),
   )
+}
 
-export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>
-  ascents.reduce(
+export function getYearsAscentsPerWeek(ascents: Ascent[]) {
+  return ascents.reduce(
     (accumulator, ascent) => {
       const date = new Date(ascent.date)
       const year = date.getFullYear()
@@ -64,3 +69,4 @@ export const getYearsAscentsPerWeek = (ascents: Ascent[]) =>
     },
     { ...createEmptyBarcodeCollection<Ascent>(ascents) },
   )
+}
