@@ -1,10 +1,9 @@
 import { Card } from '../card/card'
 import GridLayout from '../grid-layout/grid-layout'
 
-import { average, sum } from '@edouardmisset/math'
+import { sum } from '@edouardmisset/math/sum.ts'
 
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
-import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { getMostFrequentDate } from '~/helpers/date'
 import {
   filterAscents,
@@ -12,6 +11,7 @@ import {
   getMostFrequentCrag,
 } from '~/helpers/filter-ascents'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { getAverageGrade } from '~/helpers/get-average-grade'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentComponent } from '../ascent-component/ascent-component'
@@ -40,8 +40,9 @@ export default async function WrapUp({ year }: { year?: number }) {
   const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
   const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
 
-  const hardestRoute = getHardestAscent(routes)
-  const hardestBoulder = getHardestAscent(boulders)
+  const hardestRoute = routes.length > 0 ? getHardestAscent(routes) : undefined
+  const hardestBoulder =
+    boulders.length > 0 ? getHardestAscent(boulders) : undefined
 
   const totalHeight = sum(
     ascents.map(({ height }) => height ?? DEFAULT_BOULDER_HEIGHT),
@@ -51,16 +52,8 @@ export default async function WrapUp({ year }: { year?: number }) {
 
   const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
 
-  const averageRouteGrade = fromNumberToGrade(
-    Math.round(
-      average(...routes.map(({ topoGrade }) => fromGradeToNumber(topoGrade))),
-    ),
-  )
-  const averageBoulderGrade = fromNumberToGrade(
-    Math.round(
-      average(...boulders.map(({ topoGrade }) => fromGradeToNumber(topoGrade))),
-    ),
-  )
+  const averageRouteGrade = getAverageGrade(routes)
+  const averageBoulderGrade = getAverageGrade(boulders)
 
   const mostRecentAscent = ascents.at(0) as Ascent
 
@@ -110,10 +103,16 @@ export default async function WrapUp({ year }: { year?: number }) {
       <Card>
         <h2>Hardest Sends</h2>
         <p>
-          Your hardest route was{' '}
-          <AscentComponent ascent={hardestRoute} showGrade={true} /> and your
-          hardest boulder{' '}
-          <AscentComponent ascent={hardestBoulder} showGrade={true} />
+          {hardestRoute
+            ? ` Your hardest route was 
+          ${<AscentComponent ascent={hardestRoute} showGrade={true} />}`
+            : ''}
+        </p>
+        <p>
+          {hardestBoulder
+            ? `Your hardest boulder was
+          ${<AscentComponent ascent={hardestBoulder} showGrade={true} />}`
+            : ''}
         </p>
         <p>
           You climbed <b>{ascentsInTheHardestDegree}</b> routes in the{' '}
