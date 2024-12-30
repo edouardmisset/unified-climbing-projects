@@ -3,7 +3,7 @@
  * ---------------------------------------------
  */
 
-import { invert } from '@edouardmisset/object'
+import { invert } from '@edouardmisset/object/invert.ts'
 
 /**
  * !The order of the headers matters. For this reason we define the headers in

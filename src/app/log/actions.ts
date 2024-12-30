@@ -1,6 +1,6 @@
 'use server'
 
-import { stringifyDate } from '@edouardmisset/date'
+import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import type { SubmitHandler } from 'react-hook-form'
 import { api } from '~/trpc/server.ts'
 import { ascentFormOutputSchema } from './types.ts'

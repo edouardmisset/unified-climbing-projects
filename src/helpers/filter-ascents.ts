@@ -1,5 +1,5 @@
-import { objectSize } from '@edouardmisset/object'
-import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
+import { objectSize } from '@edouardmisset/object/object-size.ts'
+import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import type { Ascent } from '~/schema/ascent'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { fromGradeToNumber } from './converters.ts'

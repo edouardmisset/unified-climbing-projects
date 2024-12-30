@@ -1,4 +1,4 @@
-import { frequency } from '@edouardmisset/array'
+import { frequency } from '@edouardmisset/array/count-by.ts'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
 

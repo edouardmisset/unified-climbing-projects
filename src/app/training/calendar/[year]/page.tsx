@@ -1,6 +1,6 @@
 import { YearGrid } from '~/app/_components/year-grid/year-grid'
 
-import { validNumberWithFallback } from '@edouardmisset/math'
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
 import { getYearTraining } from '~/data/training-data'

@@ -1,5 +1,6 @@
-import { average, validNumberWithFallback } from '@edouardmisset/math'
-import { removeAccents } from '@edouardmisset/text'
+import { average } from '@edouardmisset/math/average.ts'
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
+import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
 
 import fuzzySort from 'fuzzysort'
 import { number, string, z } from 'zod'

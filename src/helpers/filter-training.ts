@@ -1,4 +1,4 @@
-import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
+import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import type { TrainingSession } from '~/schema/training.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 

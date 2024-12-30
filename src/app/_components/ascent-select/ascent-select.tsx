@@ -1,4 +1,4 @@
-import { capitalize } from '@edouardmisset/text'
+import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
 import { addParenthesis } from '~/helpers/add-parenthesis.ts'
 import { ALL_VALUE } from '../dashboard/constants.ts'

@@ -1,4 +1,4 @@
-import { isValidNumber } from '@edouardmisset/math'
+import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import type { ReactNode } from 'react'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 

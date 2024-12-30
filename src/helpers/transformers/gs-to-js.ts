@@ -1,4 +1,4 @@
-import { isValidNumber } from '@edouardmisset/math'
+import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { holdsFomGSSchema } from '~/schema/ascent'
 import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 

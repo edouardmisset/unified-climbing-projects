@@ -1,4 +1,4 @@
-import { validNumberWithFallback } from '@edouardmisset/math'
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearTraining } from '~/data/training-data'
 import { api } from '~/trpc/server'

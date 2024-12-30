@@ -1,4 +1,4 @@
-import { invert } from '@edouardmisset/object'
+import { invert } from '@edouardmisset/object/invert.ts'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 
 export const NUMBER_TO_GRADE = invert(GRADE_TO_NUMBER)

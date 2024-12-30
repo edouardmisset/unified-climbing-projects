@@ -1,4 +1,4 @@
-import { validNumberWithFallback } from '@edouardmisset/math'
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearAscentPerDay } from '~/data/ascent-data'
 import { sortByDescendingGrade } from '~/helpers/sorter'

@@ -1,4 +1,4 @@
-import { validNumberWithFallback } from '@edouardmisset/math'
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import WrapUp from '~/app/_components/wrap-up/wrap-up'
 
 export default async function Page(props: {

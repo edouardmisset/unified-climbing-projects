@@ -1,4 +1,4 @@
-import { stringifyDate } from '@edouardmisset/date'
+import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { string, z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
