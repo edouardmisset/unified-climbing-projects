@@ -12,7 +12,7 @@
 
   display: grid;
   grid-template: repeat(25, 1fr) / repeat(25, 1fr);
-  gap: 4px;
+  gap: 2px;
 
   background-color: var(--bg-color);
 
