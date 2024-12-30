@@ -184,10 +184,10 @@
   touch-action: manipulation;
 }
 :where(a):where([href]) {
-  text-decoration-color: var(--indigo-2);
+  text-decoration-color: var(--link-color);
 }
 :where(a):where([href]):where(:visited) {
-  text-decoration-color: var(--purple-2);
+  text-decoration-color: var(--link-visited);
 }
 :where(a):where(:not(:hover)) {
   text-decoration: inherit;
