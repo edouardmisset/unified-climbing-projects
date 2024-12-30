@@ -15,6 +15,7 @@ import { getAverageGrade } from '~/helpers/get-average-grade'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentComponent } from '../ascent-component/ascent-component'
+import { ALL_TIME } from './constants'
 
 async function fetchData(year?: number) {
   const [trainingSessions, ascents] = await Promise.all([
@@ -72,7 +73,7 @@ export default async function WrapUp({ year }: { year?: number }) {
   }).length
 
   return (
-    <GridLayout title={year ?? 'All Time'}>
+    <GridLayout title={year ?? ALL_TIME}>
       <Card>
         <h2>Days outside</h2>
         <p>
