@@ -6,10 +6,12 @@ import { createEmptyYearlyCollections } from './helpers.ts'
 
 export function createYearList<T extends Record<string, unknown>>(
   data: (T & { date: string })[],
+  options?: { descending?: boolean },
 ) {
+  const { descending = true } = options ?? {}
   return [
     ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
-  ].sort((a, b) => b - a)
+  ].sort((a, b) => b - a * (descending ? 1 : -1))
 }
 
 const getAscentsCollection: (

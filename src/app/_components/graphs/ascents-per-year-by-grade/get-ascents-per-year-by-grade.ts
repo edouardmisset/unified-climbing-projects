@@ -1,4 +1,5 @@
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
+import { getAscentsYears } from '~/helpers/get-ascents-years'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import { type Ascent, _GRADES } from '~/schema/ascent'
 
@@ -6,9 +7,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number | string
 }[] {
-  const sortedYears = [
-    ...new Set(ascents.map(({ date }) => new Date(date).getFullYear())),
-  ].sort()
+  const sortedYears = getAscentsYears(ascents)
 
   return sortedYears.map(year => {
     const filteredAscentsByYear = ascents.filter(({ date }) =>
