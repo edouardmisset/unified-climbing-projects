@@ -16,14 +16,15 @@ export default async function Marker({
 
   return (
     <>
-      {Array.from({ length: numberOfSquareInMarker })
-        .fill(undefined)
-        .map((_, index) => {
+      {Array.from({ length: numberOfSquareInMarker }, (_, index) => index).map(
+        index => {
+          const remainingMarkerSize = markerSize - index
+
           const rowStart = index <= 1 ? startingRow : startingRow * index
           const columnStart =
             index <= 1 ? startingColumn : startingColumn * index
-          const columnEnd = startingColumn * (markerSize - index)
-          const rowEnd = startingRow * (markerSize - index)
+          const columnEnd = startingColumn * remainingMarkerSize
+          const rowEnd = startingRow * remainingMarkerSize
 
           const gridArea = `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`
           return (
@@ -36,7 +37,8 @@ export default async function Marker({
               }}
             />
           )
-        })}
+        },
+      )}
     </>
   )
 }
