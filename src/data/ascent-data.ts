@@ -67,6 +67,6 @@ export function getYearsAscentsPerWeek(ascents: Ascent[]) {
 
       return accumulator
     },
-    { ...createEmptyBarcodeCollection<Ascent>(ascents) },
+    { ...createEmptyBarcodeCollection(ascents) },
   )
 }

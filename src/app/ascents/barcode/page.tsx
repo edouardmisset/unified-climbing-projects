@@ -10,10 +10,9 @@ export default async function Page() {
   return (
     <GridLayout title="Ascents">
       {Object.values(getYearsAscentsPerWeek(ascents))
-        .reverse()
         .map((yearAscents, i) => {
           const yearList = createYearList(ascents)
-          const year = yearList[yearList.length - 1 - i]?.toString() ?? ''
+          const year = yearList[yearList.length - 1 - i] ?? ''
           return (
             <div key={year} className="flex-column w100">
               <h2 className="center-text">
@@ -22,7 +21,8 @@ export default async function Page() {
               <Barcode data={yearAscents} itemRender={ascentsBarcodeRender} />
             </div>
           )
-        })}
+        })
+        .reverse()}
     </GridLayout>
   )
 }

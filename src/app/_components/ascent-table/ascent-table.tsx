@@ -45,7 +45,7 @@ export function AscentTable({ ascents }: { ascents: Ascent[] }) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const table = useReactTable({
-    data: [...ascents].reverse() ?? fallback,
+    data: ascents.toReversed() ?? fallback,
     columns,
     getCoreRowModel: getCoreRowModel(),
     enableFilters: true,

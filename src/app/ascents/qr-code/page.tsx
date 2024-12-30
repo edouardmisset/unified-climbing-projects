@@ -11,7 +11,7 @@ export default async function Page() {
   return (
     <GridLayout title="Ascents">
       {Object.entries(getYearAscentPerDay(ascents))
-        .reverse()
+        .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, ascents]) => {
           const sortedAscents = ascents.map(ascentDay => ({
             ...ascentDay,

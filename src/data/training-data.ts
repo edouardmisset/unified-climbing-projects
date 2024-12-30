@@ -11,7 +11,7 @@ const getTrainingYears = (trainingSessions: TrainingSession[]) =>
     ...new Set(
       trainingSessions.map(({ date }) => new Date(date).getFullYear()),
     ),
-  ].reverse()
+  ].sort((a, b) => b - a)
 
 const getTrainingCollection: (
   trainingSessions: TrainingSession[],

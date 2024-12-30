@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <GridLayout title="Training">
       {Object.entries(getYearTraining(trainingSessions))
-        .reverse()
+        .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, training]) => (
           <div key={year}>
             <h2 className="center-text">
