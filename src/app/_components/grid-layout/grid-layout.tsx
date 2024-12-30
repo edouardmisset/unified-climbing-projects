@@ -2,6 +2,7 @@ import { isValidNumber } from '@edouardmisset/math'
 import type { ReactNode } from 'react'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 
+import { YEAR_OF_FIRST_ASCENT } from './constants'
 import styles from './grid-layout.module.css'
 
 export default async function GridLayout({
@@ -19,15 +20,15 @@ export default async function GridLayout({
           <YearNavigationButton
             currentYear={titleIsValidNumber ? title : Number.NaN}
             nextOrPrevious="previous"
-            enabled={titleIsValidNumber}
+            enabled={titleIsValidNumber && YEAR_OF_FIRST_ASCENT < title}
           />
         )}
-        <h1 className="center-text">{title}</h1>
+        <h1 className="center-text w100">{title}</h1>
         {titleIsValidNumber && (
           <YearNavigationButton
             currentYear={titleIsValidNumber ? title : Number.NaN}
             nextOrPrevious="next"
-            enabled={titleIsValidNumber}
+            enabled={titleIsValidNumber && title < new Date().getFullYear()}
           />
         )}
       </div>
