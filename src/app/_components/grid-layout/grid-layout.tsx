@@ -16,11 +16,18 @@ export default async function GridLayout({
   return (
     <section className="flex-column w100 ">
       <div className={styles.header}>
-        {titleIsValidNumber && (
+        {titleIsValidNumber ? (
           <YearNavigationButton
             currentYear={titleIsValidNumber ? title : Number.NaN}
             nextOrPrevious="previous"
             enabled={titleIsValidNumber && YEAR_OF_FIRST_ASCENT < title}
+          />
+        ) : (
+          <YearNavigationButton
+            currentYear={new Date().getFullYear() + 1}
+            nextOrPrevious="previous"
+            enabled={true}
+            path="/wrap-up"
           />
         )}
         <h1 className="center-text w100">{title}</h1>

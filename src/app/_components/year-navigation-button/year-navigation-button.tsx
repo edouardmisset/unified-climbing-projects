@@ -7,10 +7,12 @@ export async function YearNavigationButton({
   currentYear,
   nextOrPrevious,
   enabled,
+  path = '',
 }: {
   currentYear: number
   nextOrPrevious: 'next' | 'previous'
   enabled: boolean
+  path?: string
 }) {
   if (!(enabled && isValidNumber(currentYear))) return <span />
 
@@ -19,7 +21,7 @@ export async function YearNavigationButton({
   return (
     <Link
       className={`btn ${styles.button}`}
-      href={`./${targetYear}`}
+      href={`.${path}/${targetYear}`}
       title={targetYear?.toString() ?? ''}
     >
       {nextOrPrevious === 'next' ? (
