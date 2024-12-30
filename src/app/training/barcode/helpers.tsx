@@ -1,4 +1,4 @@
-import { maxBarWidth } from '~/app/_components/barcode/barcode'
+import { maxBarWidth } from '~/app/_components/barcode/constants'
 import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
