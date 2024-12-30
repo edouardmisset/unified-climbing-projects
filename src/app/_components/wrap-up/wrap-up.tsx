@@ -103,18 +103,18 @@ export default async function WrapUp({ year }: { year?: number }) {
       </Card>
       <Card>
         <h2>Hardest Sends</h2>
-        <p>
-          {hardestRoute
-            ? ` Your hardest route was 
-          ${<AscentComponent ascent={hardestRoute} showGrade={true} />}`
-            : ''}
-        </p>
-        <p>
-          {hardestBoulder
-            ? `Your hardest boulder was
-          ${<AscentComponent ascent={hardestBoulder} showGrade={true} />}`
-            : ''}
-        </p>
+        {hardestRoute === undefined ? null : (
+          <p>
+            Your hardest route was{' '}
+            <AscentComponent ascent={hardestRoute} showGrade={true} />
+          </p>
+        )}
+        {hardestBoulder === undefined ? null : (
+          <p>
+            Your hardest boulder was{' '}
+            <AscentComponent ascent={hardestBoulder} showGrade={true} />
+          </p>
+        )}
         <p>
           You climbed <b>{ascentsInTheHardestDegree}</b> routes in the{' '}
           <b>{highestDegree}</b>
