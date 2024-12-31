@@ -12,7 +12,6 @@ import {
 } from '~/helpers/filter-ascents'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { getAverageGrade } from '~/helpers/get-average-grade'
-import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentComponent } from '../ascent-component/ascent-component'
 import { ALL_TIME } from './constants'
@@ -46,8 +45,12 @@ export default async function WrapUp({ year }: { year?: number }) {
     boulders.length > 0 ? getHardestAscent(boulders) : undefined
 
   const totalHeight = sum(
-    ascents.map(({ height }) => height ?? DEFAULT_BOULDER_HEIGHT),
+    ...routes.map(({ height }) => height ?? 0),
+    ...boulders.map(({ height }) => height ?? DEFAULT_BOULDER_HEIGHT),
   )
+  const formattedTotalHeight = new Intl.NumberFormat('fr', {
+    useGrouping: true,
+  }).format(totalHeight)
 
   const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
 
@@ -56,7 +59,7 @@ export default async function WrapUp({ year }: { year?: number }) {
   const averageRouteGrade = getAverageGrade(routes)
   const averageBoulderGrade = getAverageGrade(boulders)
 
-  const mostRecentAscent = ascents.at(0) as Ascent
+  const mostRecentAscent = ascents.at(0)
 
   const highestDegree = Math.max(
     ...ascents.map(({ topoGrade }) => Number(topoGrade[0])),
@@ -87,10 +90,12 @@ export default async function WrapUp({ year }: { year?: number }) {
       </Card>
       <Card>
         <h2>Ascents</h2>
-        <p>
-          Your last ascent was{' '}
-          <AscentComponent ascent={mostRecentAscent} showGrade={true} />
-        </p>
+        {mostRecentAscent !== undefined && (
+          <p>
+            Your last ascent was{' '}
+            <AscentComponent ascent={mostRecentAscent} showGrade={true} />
+          </p>
+        )}
         <p>
           You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
           <b>{flashAscents.length}</b>, and Redpointed{' '}
@@ -125,7 +130,7 @@ export default async function WrapUp({ year }: { year?: number }) {
         <h2>Vertical Milestone</h2>
         <p>
           You climbed <b>{routes.length}</b> routes and <b>{boulders.length}</b>{' '}
-          boulders for a total of <b>{totalHeight}</b> meters.
+          boulders for a total of <b>{formattedTotalHeight}</b> meters.
         </p>
       </Card>
       <Card>

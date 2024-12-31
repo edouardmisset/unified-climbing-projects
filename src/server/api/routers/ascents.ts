@@ -4,10 +4,10 @@ import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
 
 import fuzzySort from 'fuzzysort'
 import { number, string, z } from 'zod'
-import { isLeftDateBefore } from '~/helpers/date.ts'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
+  type Ascent,
   ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
@@ -18,7 +18,9 @@ import {
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
 
-export async function getFilteredAscents(filters?: OptionalAscentFilter) {
+export async function getFilteredAscents(
+  filters?: OptionalAscentFilter,
+): Promise<Ascent[]> {
   const ascents = await getAllAscents()
   return filterAscents(ascents, filters)
 }
@@ -46,13 +48,8 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      return filteredAscents.toSorted(
-        ({ date: leftDate }, { date: rightDate }) => {
-          if (leftDate === rightDate) return 0
-          return isLeftDateBefore(new Date(leftDate), new Date(rightDate))
-            ? 1
-            : -1
-        },
+      return filteredAscents.sort(({ date: leftDate }, { date: rightDate }) =>
+        new Date(leftDate) < new Date(rightDate) ? 1 : -1,
       )
     }),
   getDuplicates: publicProcedure.query(async () => {

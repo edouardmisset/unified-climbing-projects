@@ -12,8 +12,8 @@ type CreateCacheOutput<T> = {
 }
 
 // Create cache expiry duration
-const tenMinutesInMs = 60 * 60 * 1000
-const defaultCacheExpiryDurationInMs = tenMinutesInMs
+const oneHourInMs = 60 * 60 * 1000
+const defaultCacheExpiryDurationInMs = oneHourInMs
 
 export function createCache<T>(options?: {
   expiryDurationInMs?: number

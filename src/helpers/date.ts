@@ -111,10 +111,6 @@ export const getDayOfYear = (date: Date): number => {
   )
 }
 
-export const isLeftDateBefore = (leftDate: Date, rightDate: Date) => {
-  return leftDate < rightDate
-}
-
 /**
  * Returns the most frequent date from an array of objects containing a date field.
  *
