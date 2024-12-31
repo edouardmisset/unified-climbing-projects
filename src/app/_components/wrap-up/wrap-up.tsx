@@ -1,10 +1,7 @@
-import { Card } from '../card/card'
-import GridLayout from '../grid-layout/grid-layout'
-
 import { sum } from '@edouardmisset/math/sum.ts'
 
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
-import { getMostFrequentDate } from '~/helpers/date'
+import { formatDateTime, getMostFrequentDate } from '~/helpers/date'
 import {
   filterAscents,
   getHardestAscent,
@@ -14,6 +11,8 @@ import { filterTrainingSessions } from '~/helpers/filter-training'
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { api } from '~/trpc/server'
 import { AscentComponent } from '../ascent-component/ascent-component'
+import { Card } from '../card/card'
+import GridLayout from '../grid-layout/grid-layout'
 import { ALL_TIME } from './constants'
 
 async function fetchData(year?: number) {
@@ -26,6 +25,20 @@ async function fetchData(year?: number) {
 
 export default async function WrapUp({ year }: { year?: number }) {
   const { trainingSessions, ascents } = await fetchData(year)
+
+  if (ascents.length === 0) {
+    return (
+      <GridLayout title={year ?? ALL_TIME}>
+        <Card>
+          <h2>No ascents</h2>
+          <p>
+            You haven't logged any ascents yet. Go climb some routes and
+            boulders!
+          </p>
+        </Card>
+      </GridLayout>
+    )
+  }
 
   // ASCENTS
 
@@ -83,10 +96,13 @@ export default async function WrapUp({ year }: { year?: number }) {
           You climbed <b>{ascents.length}</b> ascents in <b>{daysOutside}</b>{' '}
           days.
         </p>
-        <p>
-          Your best day was the <b>{new Date(mostAscentDate).toDateString()}</b>{' '}
-          where you climbed <b>{mostAscent}</b> ascents.
-        </p>
+        {mostAscentDate !== '' && (
+          <p>
+            Your best day was the{' '}
+            <b>{formatDateTime(new Date(mostAscentDate), 'longDate')}</b> where
+            you climbed <b>{mostAscent}</b> ascents.
+          </p>
+        )}
       </Card>
       <Card>
         <h2>Ascents</h2>
