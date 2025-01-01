@@ -7,7 +7,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number | string
 }[] {
-  const sortedYears = getAscentsYears(ascents)
+  const sortedYears = getAscentsYears(ascents, { descending: false })
 
   return sortedYears.map(year => {
     const filteredAscentsByYear = ascents.filter(({ date }) =>

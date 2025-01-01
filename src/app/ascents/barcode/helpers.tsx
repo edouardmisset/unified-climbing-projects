@@ -14,7 +14,6 @@ export function ascentsBarcodeRender(
 ) {
   const barWidth = weeklyAscents.length
 
-  // Sort week's ascents by ascending grades
   const filteredWeeklyAscents = weeklyAscents.filter(
     ascent => ascent !== undefined,
   )

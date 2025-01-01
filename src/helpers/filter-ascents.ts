@@ -6,6 +6,16 @@ import { fromGradeToNumber } from './converters.ts'
 import { frequencyBy } from './frequency-by.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 
+/**
+ * Filters the provided ascents based on the given filter criteria.
+ *
+ * NB: `undefined` is pass through. Meaning that if a filter is `undefined`, no
+ * ascents will be filtered out based on that criteria.
+ *
+ * @param {Ascent[]} ascents - The array of ascents to filter.
+ * @param {OptionalAscentFilter} [filters] - An optional set of filter criteria.
+ * @returns {Ascent[]} - The filtered array of ascents.
+ */
 export function filterAscents(
   ascents: Ascent[],
   filters?: OptionalAscentFilter,
