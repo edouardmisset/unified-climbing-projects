@@ -151,7 +151,7 @@ function createCragEmoji({
 
 export function formatDateProperty<T>(
   data: T & { date: string },
-  options: keyof typeof DATE_TIME_OPTIONS = 'fullDateTime',
+  options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
 ) {
   return `📅 ${formatDateTime(new Date(data.date), options)}`
 }
