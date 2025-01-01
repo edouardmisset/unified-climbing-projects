@@ -10,6 +10,7 @@ import {
 import { Link as NextLink } from 'next-view-transitions'
 import type React from 'react'
 
+import { api } from '~/trpc/server'
 import styles from './navigation.module.css'
 
 const Link = async ({
@@ -27,7 +28,8 @@ const Link = async ({
 }
 
 export async function Navigation() {
-  const thisYear = new Date().getFullYear()
+  const latestSession = await api.training.getLatestTrainingSession()
+  const latestSessionYear = new Date(latestSession.date).getFullYear()
 
   return (
     <Root className={styles.Root}>
@@ -55,7 +57,7 @@ export async function Navigation() {
                   <Link href={'/ascents/barcode'}>🧗 Barcode</Link>
                 </Item>
                 <Item value="calendar">
-                  <Link href={`/ascents/calendar/${thisYear}`}>
+                  <Link href={`/ascents/calendar/${latestSessionYear}`}>
                     🧗 Calendar
                   </Link>
                 </Item>
@@ -77,7 +79,7 @@ export async function Navigation() {
                   <Link href={'/training/barcode'}>💪 Barcode</Link>
                 </Item>
                 <Item className={styles.Item} value="calendar">
-                  <Link href={`/training/calendar/${thisYear}`}>
+                  <Link href={`/training/calendar/${latestSession}`}>
                     💪 Calendar
                   </Link>
                 </Item>
