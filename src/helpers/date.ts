@@ -7,22 +7,23 @@ const MILLISECONDS_IN_WEEK = 604_800_000
 const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
 
 export const DATE_TIME_OPTIONS = {
-  fullDateTime: {
-    dateStyle: 'full',
+  longDateTime: {
+    dateStyle: 'long',
     timeStyle: 'medium',
   },
   shortDateTime: {
-    weekday: 'short',
-    hour: 'numeric',
+    dateStyle: 'short',
+    timeStyle: 'short',
   },
   shortDate: {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
+    dateStyle: 'short',
+  },
+  mediumDate: {
+    dateStyle: 'medium',
   },
   longDate: {
-    weekday: 'long',
-    month: 'long',
+    weekday: 'short',
+    month: 'short',
     day: 'numeric',
     year: 'numeric',
   },
@@ -37,7 +38,7 @@ export const DATE_TIME_OPTIONS = {
  */
 export const formatDateTime = (
   date: Date,
-  options: keyof typeof DATE_TIME_OPTIONS = 'fullDateTime',
+  options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
 ): string => {
   return new Intl.DateTimeFormat(
     localeIdentifier,

@@ -61,7 +61,7 @@ export default async function WrapUp({ year }: { year?: number }) {
     ...routes.map(({ height }) => height ?? 0),
     ...boulders.map(({ height }) => height ?? DEFAULT_BOULDER_HEIGHT),
   )
-  const formattedTotalHeight = new Intl.NumberFormat('fr', {
+  const formattedTotalHeight = new Intl.NumberFormat('fr-FR', {
     useGrouping: true,
   }).format(totalHeight)
 
@@ -99,8 +99,10 @@ export default async function WrapUp({ year }: { year?: number }) {
         {mostAscentDate !== '' && (
           <p>
             Your best day was the{' '}
-            <b>{formatDateTime(new Date(mostAscentDate), 'longDate')}</b> where
-            you climbed <b>{mostAscent}</b> ascents.
+            <span>
+              <b>{formatDateTime(new Date(mostAscentDate), 'longDate')}</b>
+            </span>{' '}
+            where you climbed <b>{mostAscent}</b> ascents.
           </p>
         )}
       </Card>
