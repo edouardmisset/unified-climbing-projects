@@ -29,21 +29,6 @@ export function Dashboard() {
   const [selectedGrade] = useQueryState('grade', {
     defaultValue: ALL_VALUE,
   })
-  const [selectedProfile] = useQueryState('profile', {
-    defaultValue: ALL_VALUE,
-  })
-  const [selectedHolds] = useQueryState('holds', {
-    defaultValue: ALL_VALUE,
-  })
-  const [selectedHeight] = useQueryState('height', {
-    defaultValue: ALL_VALUE,
-  })
-  const [selectedTries] = useQueryState('tries', {
-    defaultValue: ALL_VALUE,
-  })
-  const [selectedRating] = useQueryState('rating', {
-    defaultValue: ALL_VALUE,
-  })
 
   const [allAscents, { isLoading }] =
     api.ascents.getAllAscents.useSuspenseQuery()
@@ -66,17 +51,6 @@ export function Dashboard() {
       selectedGrade === ALL_VALUE
         ? undefined
         : (selectedGrade as Ascent['topoGrade']),
-    profile:
-      selectedProfile === ALL_VALUE
-        ? undefined
-        : (selectedProfile as Ascent['profile']),
-    holds:
-      selectedHolds === ALL_VALUE
-        ? undefined
-        : (selectedHolds as Ascent['holds']),
-    height: selectedHeight === ALL_VALUE ? undefined : Number(selectedHeight),
-    tries: selectedTries === ALL_VALUE ? undefined : Number(selectedTries),
-    rating: selectedRating === ALL_VALUE ? undefined : Number(selectedRating),
   })
 
   return (
