@@ -20,7 +20,7 @@ export function AscentSelect({
 }: AscentSelectProps) {
   const titleWithFallback = title ?? capitalize(name)
   return (
-    <label className="flex-column" htmlFor={name}>
+    <label className="flex-column center" htmlFor={name}>
       {capitalize(name)}
       <select
         id={name}
