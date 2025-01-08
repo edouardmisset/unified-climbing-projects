@@ -57,11 +57,7 @@ export const ascentsRouter = createTRPCRouter({
     const ascents = await getAllAscents()
 
     for (const ascent of ascents) {
-      const { routeName, crag, topoGrade } = ascent as {
-        routeName: string
-        crag: string
-        topoGrade: string
-      }
+      const { routeName, crag, topoGrade } = ascent
       // We ignore the "+" in the topoGrade in case it was logged inconsistently
       const key = [routeName, topoGrade.replace('+', ''), crag]
         .map(string => removeAccents(string.toLocaleLowerCase()))

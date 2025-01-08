@@ -1,7 +1,7 @@
 import type { ChangeEventHandler } from 'react'
 
-export function createChangeHandler(
-  setter: (value: string) => void,
+export function createChangeHandler<T>(
+  setter: (value: T) => void,
 ): ChangeEventHandler<HTMLSelectElement> {
-  return event => setter(event.target.value)
+  return event => setter(event.target.value as unknown as T)
 }

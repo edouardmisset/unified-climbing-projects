@@ -1,10 +1,18 @@
 'use client'
 
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { useQueryState } from 'nuqs'
 import { createYearList } from '~/data/ascent-data'
-import { ASCENT_STYLE, type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import {
+  ASCENT_STYLE,
+  type Ascent,
+  CLIMBING_DISCIPLINE,
+  ascentStyleSchema,
+  climbingDisciplineSchema,
+} from '~/schema/ascent'
 import { AscentSelect } from '../ascent-select/ascent-select.tsx'
 import { ALL_VALUE } from '../dashboard/constants.ts'
+import type { OrAll } from '../dashboard/types.ts'
 import styles from './ascent-filter-bar.module.css'
 import { createChangeHandler } from './helpers.ts'
 
@@ -17,19 +25,34 @@ export default function AscentsFilterBar({
     ...new Set(allAscents.map(({ crag }) => crag)),
   ].sort()
 
-  const [selectedYear, setSelectedYear] = useQueryState('year', {
+  const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
+    parse: value =>
+      value === ALL_VALUE
+        ? ALL_VALUE
+        : validNumberWithFallback(value, ALL_VALUE).toString(),
   })
-  const [selectedStyle, setSelectedStyle] = useQueryState('style', {
+  const [selectedDiscipline, setSelectedDiscipline] = useQueryState<
+    OrAll<Ascent['climbingDiscipline']>
+  >('discipline', {
     defaultValue: ALL_VALUE,
+    parse: value =>
+      value === ALL_VALUE ? ALL_VALUE : climbingDisciplineSchema.parse(value),
   })
-  const [selectedDiscipline, setSelectedDiscipline] = useQueryState(
-    'discipline',
-    { defaultValue: ALL_VALUE },
+  const [selectedStyle, setSelectedStyle] = useQueryState<
+    OrAll<Ascent['style']>
+  >('style', {
+    defaultValue: ALL_VALUE,
+    parse: value =>
+      value === ALL_VALUE ? ALL_VALUE : ascentStyleSchema.parse(value),
+  })
+  const [selectedCrag, setSelectedCrag] = useQueryState<OrAll<Ascent['crag']>>(
+    'crag',
+    {
+      defaultValue: ALL_VALUE,
+      parse: value => (value === ALL_VALUE ? ALL_VALUE : value),
+    },
   )
-  const [selectedCrag, setSelectedCrag] = useQueryState('crag', {
-    defaultValue: ALL_VALUE,
-  })
 
   const handleYearChange = createChangeHandler(setSelectedYear)
   const handleStyleChange = createChangeHandler(setSelectedStyle)
