@@ -25,14 +25,16 @@ export function GradeSlider(
       ? [0]
       : typeof defaultValue[0] === 'number'
         ? (defaultValue as number[])
-        : (defaultValue as Grade[]).map(df => fromGradeToNumber(df))
+        : (defaultValue as Grade[]).map(defaultVal =>
+            fromGradeToNumber(defaultVal),
+          )
 
   const numberValue =
     value === undefined
       ? [0]
       : typeof value[0] === 'number'
         ? (value as number[])
-        : (value as Grade[]).map(df => fromGradeToNumber(df))
+        : (value as Grade[]).map(val => fromGradeToNumber(val))
 
   return (
     <Root

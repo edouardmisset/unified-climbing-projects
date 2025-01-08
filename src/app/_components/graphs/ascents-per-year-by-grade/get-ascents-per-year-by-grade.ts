@@ -1,4 +1,5 @@
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
+import { filterAscents } from '~/helpers/filter-ascents'
 import { getAscentsYears } from '~/helpers/get-ascents-years'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import { type Ascent, _GRADES } from '~/schema/ascent'
@@ -14,19 +15,21 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
       isDateInYear(date, year),
     )
 
-    const yearGradeFrequency = _GRADES.reduce(
-      (acc, grade) => {
-        const filteredAscentsByGrade = filteredAscentsByYear.filter(
-          ({ topoGrade }) => topoGrade === grade,
-        )
+    const yearGradeFrequencyParts = _GRADES.map(grade => {
+      const count = filterAscents(filteredAscentsByYear, {
+        grade,
+      }).length
 
-        acc[grade] = filteredAscentsByGrade.length
-        acc[`${grade}Color`] = fromGradeToBackgroundColor(grade)
+      return {
+        [grade]: count,
+        [`${grade}Color`]: fromGradeToBackgroundColor(grade),
+      }
+    })
 
-        return acc
-      },
-      {} as { [key: string]: number | string },
-    )
+    // Merges all objects from `yearGradeFrequencyParts` into one object,
+    // combining all properties and overriding duplicates with the last
+    // occurrence.
+    const yearGradeFrequency = Object.assign({}, ...yearGradeFrequencyParts)
 
     return {
       year,
