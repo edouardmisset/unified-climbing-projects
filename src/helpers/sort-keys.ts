@@ -21,8 +21,9 @@
  */
 export function sortKeys<Obj extends Record<string, unknown>>(
   obj: Obj,
-  ascending = true,
+  options?: { ascending?: boolean },
 ): Obj {
+  const { ascending = true } = options ?? {}
   return Object.fromEntries(
     Object.entries(obj).sort(
       ([leftKey], [rightKey]) =>

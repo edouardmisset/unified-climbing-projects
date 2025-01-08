@@ -2,7 +2,7 @@ import { average } from '@edouardmisset/math/average.ts'
 
 import { number, string, z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
-import { type Grade, _GRADES, ascentSchema, gradeSchema } from '~/schema/ascent'
+import { _GRADES, ascentSchema, gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
 
@@ -34,7 +34,7 @@ export const gradesRouter = createTRPCRouter({
       const filteredAscents = await getFilteredAscents(input)
 
       const filteredNumberGrades = filteredAscents.map(({ topoGrade }) =>
-        fromGradeToNumber(topoGrade as Grade),
+        fromGradeToNumber(topoGrade),
       )
 
       return fromNumberToGrade(Math.round(average(filteredNumberGrades)))

@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { fromGradeToNumber } from '~/helpers/converters'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { sortNumericalValues } from '~/helpers/sort-values'
-import type { Ascent, Grade } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
@@ -60,8 +60,7 @@ export const cragsRouter = createTRPCRouter({
             const hightestGradeNumber = Math.max(
               ...ascents.map(({ topoGrade }) => fromGradeToNumber(topoGrade)),
             )
-            cragTotal +=
-              fromGradeToNumber(topoGrade as Grade) / hightestGradeNumber
+            cragTotal += fromGradeToNumber(topoGrade) / hightestGradeNumber
           } else cragTotal++
         }
 

@@ -1,6 +1,6 @@
 import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, ascentSchema } from '~/schema/ascent'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { fromGradeToNumber } from './converters.ts'
 import { frequencyBy } from './frequency-by.ts'
@@ -65,7 +65,7 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
 
   if (!hardestAscent) {
     globalThis.console.error('No ascent found')
-    return ascents[0] as Ascent
+    return ascentSchema.parse(ascents[0])
   }
 
   return hardestAscent
