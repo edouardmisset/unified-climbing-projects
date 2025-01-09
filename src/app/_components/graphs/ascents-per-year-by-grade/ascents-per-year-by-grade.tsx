@@ -17,7 +17,7 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
         padding={0.5}
         enableGridY={false}
         // @ts-ignore
-        colors={({ id, data }) => data[`${id}Color`]}
+        colors={({ id: grade, data }) => data[`${grade}Color`]}
         enableLabel={false}
         motionConfig="slow"
         axisBottom={{

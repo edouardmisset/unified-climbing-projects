@@ -6,11 +6,11 @@ import { type Ascent, _GRADES } from '~/schema/ascent'
 
 export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
-  [grade: string]: number | string
+  [grade: string]: number
 }[] {
-  const sortedYears = getAscentsYears(ascents, { descending: false })
+  const descendingYears = getAscentsYears(ascents, { descending: false })
 
-  return sortedYears.map(year => {
+  const ascentsFrequencyByYear = descendingYears.map(year => {
     const filteredAscentsByYear = ascents.filter(({ date }) =>
       isDateInYear(date, year),
     )
@@ -36,4 +36,6 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
       ...yearGradeFrequency,
     }
   })
+
+  return ascentsFrequencyByYear
 }
