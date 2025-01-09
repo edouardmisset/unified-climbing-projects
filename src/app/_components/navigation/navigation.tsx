@@ -79,7 +79,7 @@ export async function Navigation() {
                   <Link href={'/training/barcode'}>💪 Barcode</Link>
                 </Item>
                 <Item className={styles.Item} value="calendar">
-                  <Link href={`/training/calendar/${latestSession}`}>
+                  <Link href={`/training/calendar/${latestSessionYear}`}>
                     💪 Calendar
                   </Link>
                 </Item>
