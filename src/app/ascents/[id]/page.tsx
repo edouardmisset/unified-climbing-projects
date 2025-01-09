@@ -1,10 +1,6 @@
+import { isError } from '~/helpers/is-error'
 import { createAscentTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
-
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const isError = (data: any): data is { error: string } => {
-  return 'error' in data
-}
 
 export default async function Page({
   params,
@@ -16,7 +12,7 @@ export default async function Page({
   const data = await api.ascents.getById({ id: Number(id) })
 
   if (isError(data)) {
-    return <div>Not found</div>
+    return <div>{data.error}</div>
   }
 
   return (

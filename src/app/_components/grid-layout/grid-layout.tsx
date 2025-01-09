@@ -1,7 +1,8 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import type { ReactNode } from 'react'
+import { type ReactNode, Suspense } from 'react'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 
+import { Loader } from '../loader/loader'
 import { ALL_TIME } from '../wrap-up/constants'
 import { YEAR_OF_FIRST_ASCENT } from './constants'
 import styles from './grid-layout.module.css'
@@ -40,7 +41,9 @@ export default async function GridLayout({
           />
         )}
       </div>
-      <div className="grid">{children}</div>
+      <Suspense fallback={<Loader />}>
+        <div className="grid">{children}</div>
+      </Suspense>
     </section>
   )
 }

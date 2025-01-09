@@ -15,6 +15,7 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
+import { errorSchema } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
 
@@ -118,11 +119,12 @@ export const ascentsRouter = createTRPCRouter({
         id: z.number(),
       }),
     )
+    .output(ascentSchema.or(errorSchema))
     .query(async ({ input }) => {
       const ascents = await getAllAscents()
-      const foundAscent = ascents.find(ascent => ascent.id === input.id)
+      const foundAscent = ascents.find(({ id }) => id === input.id)
       if (foundAscent === undefined) {
-        return { error: 'Not found' }
+        return { error: `Ascent ${input.id} not found` }
       }
       return foundAscent
     }),

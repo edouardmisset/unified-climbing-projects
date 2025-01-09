@@ -16,29 +16,36 @@ import GridLayout from '../grid-layout/grid-layout'
 import { ALL_TIME } from './constants'
 
 async function fetchData(year?: number) {
-  const [trainingSessions, ascents] = await Promise.all([
+  const [trainingSessionsPromise, ascentsPromise] = await Promise.allSettled([
     api.training.getAllTrainingSessions({ year }),
     api.ascents.getAllAscents({ year }),
   ])
-  return { trainingSessions, ascents }
+  return { trainingSessionsPromise, ascentsPromise }
 }
 
 export default async function WrapUp({ year }: { year?: number }) {
-  const { trainingSessions, ascents } = await fetchData(year)
+  const { trainingSessionsPromise, ascentsPromise } = await fetchData(year)
 
-  if (ascents.length === 0) {
+  if (
+    ascentsPromise.status === 'rejected' ||
+    trainingSessionsPromise.status === 'rejected' ||
+    ascentsPromise.value.length === 0 ||
+    trainingSessionsPromise.value.length === 0
+  ) {
     return (
       <GridLayout title={year ?? ALL_TIME}>
         <Card>
-          <h2>No ascents</h2>
+          <h2>No Data</h2>
           <p>
-            You haven't logged any ascents yet. Go climb some routes and
-            boulders!
+            You haven't logged any data yet. Go climb some routes and train!
           </p>
         </Card>
       </GridLayout>
     )
   }
+
+  const ascents = ascentsPromise.value
+  const trainingSessions = trainingSessionsPromise.value
 
   // ASCENTS
 
