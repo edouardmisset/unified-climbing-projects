@@ -12,4 +12,6 @@
   background-color: color-mix(in oklab, var(--indigo-4) 30%, transparent 70%);
 
   box-shadow: 0 0 var(--size-2) rgba(0, 0, 0, 0.1);
+
+  overflow: hidden;
 }
