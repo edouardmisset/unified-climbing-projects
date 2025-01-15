@@ -13,7 +13,7 @@ export default async function Page() {
   )
 }
 
-export async function BarcodeByYear() {
+async function BarcodeByYear() {
   const ascents = await api.ascents.getAllAscents()
 
   return Object.values(getYearsAscentsPerWeek(ascents))
