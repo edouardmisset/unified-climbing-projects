@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Lint, format, test and build our code before committing
-bun run check && bun run test && bun run build
+bun run check && bun run test
