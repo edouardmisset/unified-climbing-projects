@@ -2,7 +2,7 @@ import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.t
 import type { TrainingSession } from '~/schema/training.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 
-export type OptionalTrainingInput = Partial<
+type OptionalTrainingInput = Partial<
   Omit<TrainingSession, 'date' | 'comments'>
 > & {
   year?: number

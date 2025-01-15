@@ -38,49 +38,11 @@ export function getWeek(date: Date): number {
       : 1
 }
 
-/**
- * Gets the number of ISO weeks in a given year.
- *
- * @param {number} year - The year for which to get the number of ISO weeks.
- * @returns {number} The number of ISO weeks in the year.
- */
-export function getISOWeeksInYear(year: number): number {
-  const fourthJanuary = new Date(year, 0, 4, 12).getDay()
-  const firstThursday = fourthJanuary <= 4 ? fourthJanuary : fourthJanuary - 7
-  const firstWeekStart = new Date(year, 0, 4 - firstThursday)
-  const lastDayOfYear = new Date(year, 11, 31, 12)
-  const daysInYear =
-    (lastDayOfYear.getTime() - firstWeekStart.getTime()) / (1000 * 60 * 60 * 24)
-  return Math.ceil((daysInYear + 1) / 7)
-}
-
 export function getNumberOfDaysInYear(year: number): number {
   return (
     (new Date(year + 1, 0, 1, 12).getTime() -
       new Date(year, 0, 1, 12).getTime()) /
     (1000 * 60 * 60 * 24)
-  )
-}
-
-/**
- * Checks if the first day of the year is in the first ISO week of the year.
- *
- * @param {number} year - The year to check.
- * @returns {boolean} True if the first day of the year is in the first ISO week, false otherwise.
- */
-export function isFirstDayInFirstISOWeek(year: number): boolean {
-  const firstDayOfYear = new Date(year, 0, 1)
-  const fourthJan = new Date(year, 0, 4)
-  const dayOfWeek = fourthJan.getDay()
-  const firstISOWeekStart = new Date(
-    year,
-    0,
-    4 - (dayOfWeek <= 4 ? dayOfWeek - 1 : dayOfWeek - 8),
-  )
-  return (
-    firstDayOfYear >= firstISOWeekStart &&
-    firstDayOfYear <
-      new Date(firstISOWeekStart.getTime() + 7 * 24 * 60 * 60 * 1000)
   )
 }
 

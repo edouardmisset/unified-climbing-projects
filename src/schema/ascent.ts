@@ -133,7 +133,6 @@ export const GRADE_TO_NUMBER = {
 export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
-export type BoulderGrade = Uppercase<Grade>
 
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const

@@ -1,4 +1,4 @@
-export type Cache<T> =
+type Cache<T> =
   | {
       data: T
       timestamp: number

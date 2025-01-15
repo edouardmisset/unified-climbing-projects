@@ -8,7 +8,7 @@
 import type { ClimbingAttempt } from './gs-to-js.ts'
 import type { JSAscentKeys, JSTrainingKeys } from './headers.ts'
 
-export type TransformFunctionJSToGS = (value: string) => string
+type TransformFunctionJSToGS = (value: string) => string
 
 /**
  * Transforms an ISO date string to "DD/MM/YYYY" format.

@@ -1,22 +1,10 @@
 import { average } from '@edouardmisset/math/average.ts'
 
-import { number, string, z } from 'zod'
+import { z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
-import { _GRADES, ascentSchema, gradeSchema } from '~/schema/ascent'
+import { _GRADES, gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
-
-const gradeDescriptionSchema = z.object({
-  grade: ascentSchema.shape.topoGrade,
-  Onsight: number(),
-  OnsightColor: string(),
-  Flash: number(),
-  FlashColor: string(),
-  Redpoint: number(),
-  RedpointColor: string(),
-})
-
-export type GradeDescription = z.infer<typeof gradeDescriptionSchema>
 
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure

@@ -185,7 +185,7 @@ export const ascentsRouter = createTRPCRouter({
     }),
 })
 
-export function mostFrequentBy<
+function mostFrequentBy<
   Type extends Record<string, unknown>,
   Key extends keyof Type,
 >(records: Type[], property: Key): Type[Key] | undefined {

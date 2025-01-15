@@ -3,8 +3,6 @@
  * ---------------------------------------------
  */
 
-import { invert } from '@edouardmisset/object/invert.ts'
-
 /**
  * !The order of the headers matters. For this reason we define the headers in
  * the right order in a separate array.
@@ -51,8 +49,6 @@ export type JSAscentKeys =
 
 export type GSAscentRecord = Record<GSAscentKeys, string>
 
-export const TRANSFORMED_ASCENT_KEYS = invert(TRANSFORMED_ASCENT_HEADER_NAMES)
-
 /**
  * !The order of the headers matters. For this reason we define the headers in
  * the right order in a separate array.
@@ -88,10 +84,3 @@ export type JSTrainingKeys =
   (typeof TRANSFORMED_TRAINING_HEADER_NAMES)[GSTrainingKeys]
 
 export type GSTrainingRecord = Record<GSTrainingKeys, string>
-
-/**
- * NB: there is one more key (`style`) in the JS object than in the GS headers
- */
-export const TRANSFORMED_TRAINING_KEYS = invert(
-  TRANSFORMED_TRAINING_HEADER_NAMES,
-)

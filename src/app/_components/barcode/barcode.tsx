@@ -1,8 +1,9 @@
 import type React from 'react'
 
 import { getWeek } from '~/helpers/date'
+import type { Object_ } from '~/types/generic'
 import styles from './barcode.module.css'
-import type { BarCodeProps, Object_ } from './types'
+import type { BarCodeProps } from './types'
 
 export default function Barcode<T extends Object_>(
   props: BarCodeProps<T>,

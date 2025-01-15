@@ -11,12 +11,12 @@
     "reset": "rm -rf node_modules bun.lockb && bun install",
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
-    "test": "bun poku --platform=bun"
+    "test": "bun poku --platform=bun",
+    "knip": "clear && knip"
   },
   "dependencies": {
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^4.0.1",
-    "@edouardmisset/date": "npm:@jsr/edouardmisset__date",
-    "@edouardmisset/function": "npm:@jsr/edouardmisset__function@^4.0.0",
+    "@edouardmisset/date": "npm:@jsr/edouardmisset__date@^4.0.0",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
     "@edouardmisset/object": "npm:@jsr/edouardmisset__object@^4.0.1",
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text@^4.0.0",
@@ -27,7 +27,6 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@std/csv": "npm:@jsr/std__csv",
-    "@std/dotenv": "npm:@jsr/std__dotenv",
     "@std/text": "npm:@jsr/std__text@^1",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.50.0",
@@ -49,19 +48,18 @@
     "react-hook-form": "^7.51.5",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
-    "zod": "^3.23.3",
-    "zod-validation-error": "^3.3.0"
+    "zod": "^3.23.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@total-typescript/ts-reset": "^0.5.1",
-    "@types/eslint": "^8.56.10",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.17.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "cspell": "^8.17.2",
+    "knip": "^5.42.1",
     "poku": "^2.7.1",
-    "typescript": "^5.5.3"
+    "typescript": "^5.7.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"

@@ -22,7 +22,7 @@ export function fromSessionTypeToClassName(
     : SESSION_TYPE_TO_CLASS_NAME[sessionType]
 }
 
-export const TRAINING_SESSION_TYPE_TO_STRING = {
+const TRAINING_SESSION_TYPE_TO_STRING = {
   Out: 'outdoor',
   Ta: 'tapered',
   Co: 'other-training',

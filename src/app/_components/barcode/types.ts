@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react'
-import type { StringDateTime } from '~/types/generic'
-
-export type Object_ = Record<string, unknown>
+import type { Object_, StringDateTime } from '~/types/generic'
 
 type MainBarCodeProps<T extends Object_> = {
   data: ((StringDateTime & T) | undefined)[][]

@@ -15,7 +15,7 @@ import { loadWorksheet } from './google-sheets.ts'
  * @returns A promise that resolves to an array of Ascent objects, each
  * representing a validated ascent record.
  */
-export async function getAscentsFromDB(): Promise<Ascent[]> {
+async function getAscentsFromDB(): Promise<Ascent[]> {
   let rows:
     | undefined
     | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>

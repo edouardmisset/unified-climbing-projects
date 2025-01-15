@@ -43,7 +43,7 @@ export const createAscentsQRTooltip = (
     ascent => ascent.climbingDiscipline === 'Route',
   )
 
-  return `${formatDateProperty(ascents[0])}
+  return `${formatDateInTooltip(ascents[0])}
 ${
   isMultipleAscents
     ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
@@ -72,7 +72,7 @@ export const createTrainingQRTooltip = (
     volume,
   } = trainingSession
 
-  const localeDate = formatDateProperty(trainingSession, 'longDate')
+  const localeDate = formatDateInTooltip(trainingSession, 'longDate')
   const cragEmoji = createCragEmoji({ gymCrag, climbingDiscipline })
   const sessionText = sessionType ? ` (${sessionType})` : ''
   const volumeText = volume ? `Volume: ${volume}%` : ''
@@ -94,7 +94,7 @@ export const createTrainingQRTooltip = (
 const roundTo = (powerOfTen: number) => (numberToRound: number) =>
   Math.round(numberToRound / powerOfTen) * powerOfTen
 
-export const roundToTen = roundTo(10)
+const roundToTen = roundTo(10)
 
 function createEnergySystemEmoji(
   energySystem: TrainingSession['energySystem'],
@@ -149,7 +149,7 @@ function createCragEmoji({
     : `\t${createClimbingDisciplineEmoji(climbingDiscipline)} ${gymCrag}`
 }
 
-export function formatDateProperty<T>(
+function formatDateInTooltip<T>(
   data: T & { date: string },
   options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
 ) {
@@ -177,7 +177,7 @@ export const createAscentTooltip = (
     style,
   } = ascent
 
-  return `${formatDateProperty(ascent)}
+  return `${formatDateInTooltip(ascent)}
 
 ${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrade({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers(style, tries, { showDetails })}
 
