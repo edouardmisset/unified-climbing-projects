@@ -15,6 +15,7 @@
     "knip": "clear && knip"
   },
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-alpha.5",
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^4.0.1",
     "@edouardmisset/date": "npm:@jsr/edouardmisset__date@^4.0.0",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",

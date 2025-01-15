@@ -1,4 +1,5 @@
 .body {
+  isolation: isolate;
   display: flex;
   flex-direction: column;
 

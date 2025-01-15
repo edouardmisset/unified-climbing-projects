@@ -1,5 +1,6 @@
 'use client'
 
+// TODO: Replace radix-ui with base-ui
 import {
   Range,
   Root,
