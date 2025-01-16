@@ -1,4 +1,5 @@
 .button {
+  color: var(--text-1);
   background: radial-gradient(circle, var(--surface-2) 25%, transparent 50%);
   border: none;
   border-radius: 100vw;
