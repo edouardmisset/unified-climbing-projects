@@ -12,6 +12,7 @@
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix --cache 'src/**/*.css'",
+    "commitlint": "commitlint --edit",
     "test": "bun poku --platform=bun",
     "knip": "clear && knip"
   },
@@ -53,6 +54,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.7",
