@@ -1,18 +1,13 @@
 .container {
   display: block;
-
   max-inline-size: var(--size-14);
-
   font-family: var(--font-didone);
   font-size: var(--font-size-3);
   font-weight: var(--font-weight-9);
-
   background: var(--gradient-13);
   color: transparent;
   background-clip: text;
-
   text-decoration: none;
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

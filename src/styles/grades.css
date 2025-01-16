@@ -1,8 +1,9 @@
 /*
- * NB: The classes are named cannot start with a numbers. Therefore, the
- * classes are named prepended with an underscore and pluses are replaced with underscores.
- */
+* NB: The classes are named cannot start with a numbers. Therefore, the
+* classes are named prepended with an underscore and pluses are replaced with underscores.
+*/
 
+/* stylelint-disable custom-property-empty-line-before */
 :where(:root) {
   --6a: var(--yellow-2);
   --6a_: var(--yellow-4);
@@ -29,18 +30,23 @@
 ._6a {
   background-color: var(--_6a);
 }
+
 ._6a_ {
   background-color: var(--yellow-4);
 }
+
 ._6b {
   background-color: var(--yellow-6);
 }
+
 ._6b_ {
   background-color: var(--yellow-8);
 }
+
 ._6c {
   background-color: var(--yellow-10);
 }
+
 ._6c_ {
   background-color: var(--yellow-12);
 }
@@ -48,18 +54,23 @@
 ._7a {
   background-color: var(--green-2);
 }
+
 ._7a_ {
   background-color: var(--green-4);
 }
+
 ._7b {
   background-color: var(--green-6);
 }
+
 ._7b_ {
   background-color: var(--green-8);
 }
+
 ._7c {
   background-color: var(--green-10);
 }
+
 ._7c_ {
   background-color: var(--green-12);
 }
@@ -67,18 +78,23 @@
 ._8a {
   background-color: var(--blue-2);
 }
+
 ._8a_ {
   background-color: var(--blue-4);
 }
+
 ._8b {
   background-color: var(--blue-6);
 }
+
 ._8b_ {
   background-color: var(--blue-8);
 }
+
 ._8c {
   background-color: var(--blue-10);
 }
+
 ._8c_ {
   background-color: var(--blue-12);
 }

@@ -2,13 +2,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   inline-size: clamp(25ch, 60vw, 100%);
   background: var(--gray-0);
-
   padding: 3% 6px 4%; /* WTF ??? Magic values much ? */
-
   aspect-ratio: 3 / 2;
-
   margin-inline: auto;
 }

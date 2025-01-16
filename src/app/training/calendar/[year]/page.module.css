@@ -1,6 +1,5 @@
 .container {
   inline-size: 100%;
-
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-between;
@@ -12,7 +11,8 @@
     rotate: -90deg;
   }
 }
-@media (min-width: 640px) {
+
+@media (width >= 640px) {
   .container {
     flex-direction: row;
 
@@ -29,7 +29,7 @@
   padding-block: var(--size-2);
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .calendarContainer {
     overflow-x: auto;
   }

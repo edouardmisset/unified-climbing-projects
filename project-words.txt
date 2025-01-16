@@ -11,6 +11,7 @@ NuqsAdapter
 Onsight
 poku
 Redpoint
+stylelintcache
 topoGrade
 toutes
 traiter

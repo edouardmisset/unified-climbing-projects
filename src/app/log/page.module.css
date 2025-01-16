@@ -1,7 +1,6 @@
 .container {
   max-block-size: calc(100% - var(--size-11));
   inline-size: 100%;
-
   display: flex;
   flex-direction: column;
   gap: var(--size-3);
@@ -12,14 +11,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-
   border-radius: var(--radius-conditional-3);
-
   overflow: scroll;
-
   inline-size: clamp(15ch, 75ch, 100%);
   margin-inline: auto;
-
   padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
   padding-block: var(--size-fluid-2);
   background-color: var(--surface-1);
@@ -29,7 +24,7 @@
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: 640px) {
+  @media screen and (width >= 640px) {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,7 +34,7 @@
 }
 
 .input {
-  @media screen and (min-width: 640px) {
+  @media screen and (width >= 640px) {
     margin-block-start: 0.5em;
     padding: var(--size-1);
     min-inline-size: var(--size-relative-15);
@@ -56,11 +51,12 @@
     min-inline-size: var(--size-fluid-7);
   }
 
-  @media screen and (min-width: 640px) {
+  @media screen and (width >= 640px) {
     margin-block-start: 0.5em;
     padding: var(--size-1);
     min-inline-size: var(--size-relative-15);
   }
+
   @supports (field-sizing: content) {
     field-sizing: content;
   }
@@ -68,6 +64,7 @@
 
 .textarea {
   min-inline-size: 70%;
+
   @supports (field-sizing: content) {
     field-sizing: content;
   }
@@ -90,7 +87,7 @@
     inline-size: 100%;
   }
 
-  @media screen and (min-width: 640px) {
+  @media screen and (width >= 640px) {
     display: grid;
     grid-template-columns: repeat(
         auto-fill,

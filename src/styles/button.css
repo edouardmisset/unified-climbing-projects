@@ -17,6 +17,7 @@
   --g-11: 216 16% 6%;
   --g-12: 210 40% 2%;
 }
+
 :where(
     .btn,
     button,
@@ -40,6 +41,7 @@
   --_ink-shadow: var(--_ink-shadow-light);
   --_icon-size: var(--size-relative-7);
   --_icon-color: var(--_accent, var(--link));
+
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   align-items: center;
@@ -61,6 +63,7 @@
   transition: border-color 0.5s var(--ease-3);
   user-select: none;
 }
+
 @media (prefers-color-scheme: dark) {
   :where(
       .btn,
@@ -74,6 +77,7 @@
     --_ink-shadow: var(--_ink-shadow-dark);
   }
 }
+
 @media (prefers-reduced-motion: no-preference) {
   :where(
       .btn,
@@ -86,6 +90,7 @@
       outline-offset 145ms var(--ease-4);
   }
 }
+
 :where(
     .btn,
     button,
@@ -93,9 +98,11 @@
   )[disabled] {
   --_bg: none;
   --_text: var(--gray-6);
+
   box-shadow: var(--shadow-1);
   cursor: not-allowed;
 }
+
 @media (prefers-color-scheme: dark) {
   :where(
       .btn,
@@ -105,14 +112,17 @@
     --_text: var(--gray-5);
   }
 }
+
 :where(
     .btn,
     button,
     input:is([type='button'], [type='submit'], [type='reset'])
   ):where(:not(:active):hover) {
   --_highlight-size: var(--size-2);
+
   transition-duration: 0.25s;
 }
+
 :where(.btn, button, input:is([type='button'], [type='submit'], [type='reset']))
   > :where(svg) {
   block-size: var(--_icon-size);
@@ -120,33 +130,40 @@
   flex-shrink: 0;
   inline-size: var(--_icon-size);
 }
+
 :where(.btn, button, input:is([type='button'], [type='submit'], [type='reset']))
   > :where(svg > *) {
   stroke: var(--_icon-color);
   stroke-width: var(--border-size-2);
 }
+
 :where([type='submit'], form button:not([type], [disabled])) {
   --_text: var(--_accent, var(--link));
 }
+
 :where([type='reset']) {
   --_text: var(--red-6);
   --_border: var(--red-3);
 }
+
 :where([type='reset']):focus-visible {
   outline-color: var(--red-6);
 }
+
 @media (prefers-color-scheme: dark) {
   :where([type='reset']) {
     --_text: var(--red-2);
     --_border: var(--surface-3);
   }
 }
+
 :where([type='submit'], [type='reset'], form button:not([type])):is(
     :hover,
     :focus-visible
   ):not([disabled]) {
-  --_border: currentColor;
+  --_border: currentcolor;
 }
+
 :where(input[type='file']) {
   align-self: flex-start;
   border: var(--border-size-1) solid var(--surface-2);
@@ -157,11 +174,13 @@
   max-inline-size: 100%;
   padding: 0;
 }
+
 :where(input[type='file'])::-webkit-file-upload-button,
 :where(input[type='file'])::file-selector-button {
   cursor: pointer;
   margin-inline-end: var(--size-relative-6);
 }
+
 @media (prefers-color-scheme: dark) {
   :where([disabled]),
   :where([type='reset']),

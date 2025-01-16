@@ -1,3 +1,4 @@
+/* stylelint-disable custom-property-empty-line-before */
 :where(:root) {
   --endurance-low: var(--orange-2);
   --endurance: var(--orange-5);

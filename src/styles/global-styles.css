@@ -11,6 +11,7 @@ nav a {
     var(--violet-8),
     var(--violet-10)
   );
+
   color: var(--link-color);
   text-decoration: none;
   font-weight: 300;
@@ -91,7 +92,6 @@ nav a {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
   padding: 1rem;
 }
 
@@ -114,17 +114,13 @@ text {
 /* Invalid inputs */
 :where(form) :user-invalid {
   outline-offset: var(--size-px-1);
-  outline-color: var(--red-8);
-  outline-style: solid;
-  outline-width: var(--border-size-2);
+  outline: var(--red-8) solid var(--border-size-2);
 }
 
 /* Valid inputs */
 :where(form) :user-valid {
   outline-offset: var(--size-px-1);
-  outline-color: var(--green-8);
-  outline-style: solid;
-  outline-width: var(--border-size-1);
+  outline: var(--green-8) solid var(--border-size-1);
 }
 
 /* Utility classes */

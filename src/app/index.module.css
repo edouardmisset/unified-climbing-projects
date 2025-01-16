@@ -2,9 +2,7 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-
   min-block-size: 100svh;
-
   background: linear-gradient(
     to bottom,
     var(--gray-10) 0,
@@ -17,15 +15,13 @@
   inline-size: 100%;
   block-size: 100%;
   margin-inline: auto;
-
   flex: 1;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  @media (min-width: 640px) {
+  @media (width >= 640px) {
     inline-size: calc(100% - var(--size-9));
   }
 }
@@ -49,31 +45,31 @@
   padding-block-end: var(--size-fluid-1);
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .container {
     max-inline-size: 640px;
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .container {
     max-inline-size: 768px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .container {
     max-inline-size: 1024px;
   }
 }
 
-@media (min-width: 1280px) {
+@media (width >= 1280px) {
   .container {
     max-inline-size: 1280px;
   }
 }
 
-@media (min-width: 1536px) {
+@media (width >= 1536px) {
   .container {
     max-inline-size: 1536px;
   }
