@@ -3,4 +3,4 @@
 # We lint the message, lint then format our code and finally test it before committing
 # https://www.conventionalcommits.org/en/v1.0.0/#summary
 
-# bunx --no -- commitlint --edit ${1}
+bun run commitlint ${1}
