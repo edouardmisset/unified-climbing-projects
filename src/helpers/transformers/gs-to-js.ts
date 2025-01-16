@@ -25,13 +25,13 @@ const transformToStringGSToJS: TransformFunctionGSToJS = value => String(value)
  */
 const transformDateGSToJS = (value: string): string => {
   const [day, month, year] = value.split('/')
-  return `${new Date(
+  return new Date(
     Number(year),
     Number(month) - 1,
     Number(day),
     12,
     0,
-  ).toString()}Z`
+  ).toISOString()
 }
 
 /**
