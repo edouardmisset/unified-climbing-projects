@@ -1,7 +1,6 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { TRPCReactProvider } from '~/trpc/react'
 
 import '~/styles/reset.css'
@@ -31,7 +30,9 @@ import type React from 'react'
 import { Footer } from './_components/footer/footer.tsx'
 import styles from './index.module.css'
 
-export default function RootLayout({
+export const fetchCache = 'default-cache'
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -41,13 +42,11 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning={true}>
         <body className={styles.body}>
           <TRPCReactProvider>
-            <NuqsAdapter>
-              <header className={styles.header}>
-                <Navigation />
-              </header>
-              <main className={styles.main}>{children}</main>
-              <Footer />
-            </NuqsAdapter>
+            <header className={styles.header}>
+              <Navigation />
+            </header>
+            <main className={styles.main}>{children}</main>
+            <Footer />
           </TRPCReactProvider>
           <SpeedInsights />
           <Analytics />
