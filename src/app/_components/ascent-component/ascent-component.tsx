@@ -14,6 +14,7 @@ export function AscentComponent({
       title={tooltip}
       className={styles.container}
       href={`/ascents/${ascent.id}`}
+      prefetch={true}
     >
       {ascent.routeName} {showGrade ? `(${ascent.topoGrade})` : ''}
     </Link>

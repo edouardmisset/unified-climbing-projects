@@ -20,7 +20,7 @@ const Link = async ({
 }: { children: React.ReactNode; href: string }) => {
   return (
     <NavLink className={styles.ListItemLink} asChild={true}>
-      <NextLink href={href} {...props}>
+      <NextLink href={href} {...props} prefetch={true}>
         {children}
       </NextLink>
     </NavLink>

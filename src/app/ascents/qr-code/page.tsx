@@ -24,7 +24,9 @@ export default async function Page() {
           return (
             <div key={year}>
               <h2 className="center-text">
-                <Link href={`/ascents/qr-code/${year}`}>{year}</Link>
+                <Link href={`/ascents/qr-code/${year}`} prefetch={true}>
+                  {year}
+                </Link>
               </h2>
               <QRCode data={sortedAscents} itemRender={ascentsQRCodeRender} />
             </div>

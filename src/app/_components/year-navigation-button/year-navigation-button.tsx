@@ -23,6 +23,7 @@ export async function YearNavigationButton({
       className={`btn ${styles.button}`}
       href={`.${path}/${targetYear}`}
       title={targetYear?.toString() ?? ''}
+      prefetch={true}
     >
       {nextOrPrevious === 'next' ? (
         <ArrowRightCircleIcon />

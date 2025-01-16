@@ -14,7 +14,9 @@ export default async function Page() {
         .map(([year, training]) => (
           <div key={year}>
             <h2 className="center-text">
-              <Link href={`/training/qr-code/${year}`}>{year}</Link>
+              <Link href={`/training/qr-code/${year}`} prefetch={true}>
+                {year}
+              </Link>
             </h2>
             <QRCode data={training} itemRender={trainingSessionsQRCodeRender} />
           </div>

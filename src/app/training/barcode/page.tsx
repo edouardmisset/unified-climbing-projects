@@ -18,7 +18,9 @@ export default async function Page() {
           return (
             <div key={year} className="flex-column w100">
               <h2 className="center-text">
-                <Link href={`/training/barcode/${year}`}>{year}</Link>
+                <Link href={`/training/barcode/${year}`} prefetch={true}>
+                  {year}
+                </Link>
               </h2>
               <Barcode
                 data={yearTraining}

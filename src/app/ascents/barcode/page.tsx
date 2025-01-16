@@ -23,7 +23,9 @@ async function BarcodeByYear() {
       return (
         <div key={year} className="flex-column w100">
           <h2 className="center-text">
-            <Link href={`/ascents/barcode/${year}`}>{year}</Link>
+            <Link href={`/ascents/barcode/${year}`} prefetch={true}>
+              {year}
+            </Link>
           </h2>
           <Barcode data={yearAscents} itemRender={ascentsBarcodeRender} />
         </div>
