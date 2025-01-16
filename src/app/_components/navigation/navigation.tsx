@@ -5,7 +5,7 @@ import type React from 'react'
 
 import { Menu } from '@base-ui-components/react/menu'
 
-import { ChevronDownIcon } from 'lucide-react'
+import { MenuIcon } from 'lucide-react'
 import { api } from '~/trpc/react'
 import styles from './navigation.module.css'
 
@@ -22,12 +22,18 @@ const Link = ({
 }
 
 export function Navigation() {
+  const { data: latestSession } =
     api.training.getLatestTrainingSession.useQuery()
+  const latestSessionYear = new Date(
+    latestSession?.date ?? Date.now().toString(),
+  ).getFullYear()
 
   return (
     <Menu.Root openOnHover={true}>
       <Menu.Trigger className={styles.Button}>
-        Menu <ChevronDownIcon className={styles.ButtonIcon} />
+        <MenuIcon
+        //  className={styles.ButtonIcon}
+        />
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Positioner className={styles.Positioner} sideOffset={8}>
