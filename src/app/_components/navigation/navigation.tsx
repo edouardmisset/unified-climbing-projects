@@ -22,9 +22,7 @@ const Link = ({
 }
 
 export function Navigation() {
-  const [latestSession] =
-    api.training.getLatestTrainingSession.useSuspenseQuery()
-  const latestSessionYear = new Date(latestSession.date).getFullYear()
+    api.training.getLatestTrainingSession.useQuery()
 
   return (
     <Menu.Root openOnHover={true}>
