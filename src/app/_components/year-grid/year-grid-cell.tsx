@@ -26,7 +26,7 @@ export async function YearGridCell({
         style={{
           backgroundColor,
           color: foreColor,
-          outline: isToday ? '2px solid var(--color-light)' : 'none',
+          outline: isToday ? '2px solid var(--text-1)' : 'none',
         }}
         tabIndex={0}
       >
@@ -42,7 +42,7 @@ export async function YearGridCell({
       style={{
         backgroundColor,
         color: foreColor,
-        outline: isToday ? '2px solid var(--color-light)' : 'none',
+        outline: isToday ? '2px solid var(--text-1)' : 'none',
       }}
       tabIndex={0}
     >

@@ -16,19 +16,6 @@
   --gray-10: hsl(214deg 14% 10%);
   --gray-11: hsl(216deg 16% 6%);
   --gray-12: hsl(210deg 40% 2%);
-  --stone-0: hsl(200deg 27% 98%);
-  --stone-1: hsl(210deg 18% 96%);
-  --stone-2: hsl(210deg 11% 93%);
-  --stone-3: hsl(192deg 9% 89%);
-  --stone-4: hsl(197deg 8% 83%);
-  --stone-5: hsl(202deg 5% 71%);
-  --stone-6: hsl(200deg 3% 60%);
-  --stone-7: hsl(180deg 2% 50%);
-  --stone-8: hsl(160deg 1% 41%);
-  --stone-9: hsl(90deg 1% 31%);
-  --stone-10: hsl(60deg 3% 22%);
-  --stone-11: hsl(60deg 6% 14%);
-  --stone-12: hsl(60deg 6% 7%);
   --red-0: hsl(0deg 100% 98%);
   --red-1: hsl(0deg 100% 95%);
   --red-2: hsl(0deg 100% 89%);
@@ -224,19 +211,6 @@
   --sand-10: hsl(44deg 11% 20%);
   --sand-11: hsl(60deg 6% 14%);
   --sand-12: hsl(60deg 6% 7%);
-  --camo-0: hsl(66deg 71% 95%);
-  --camo-1: hsl(64deg 69% 77%);
-  --camo-2: hsl(65deg 69% 59%);
-  --camo-3: hsl(65deg 61% 51%);
-  --camo-4: hsl(63deg 61% 46%);
-  --camo-5: hsl(60deg 62% 41%);
-  --camo-6: hsl(59deg 65% 36%);
-  --camo-7: hsl(56deg 67% 33%);
-  --camo-8: hsl(54deg 70% 29%);
-  --camo-9: hsl(54deg 69% 25%);
-  --camo-10: hsl(53deg 69% 22%);
-  --camo-11: hsl(53deg 69% 18%);
-  --camo-12: hsl(52deg 69% 13%);
   --jungle-0: hsl(74deg 98% 84%);
   --jungle-1: hsl(74deg 79% 78%);
   --jungle-2: hsl(74deg 68% 71%);
@@ -250,4 +224,22 @@
   --jungle-10: hsl(73deg 91% 26%);
   --jungle-11: hsl(73deg 91% 21%);
   --jungle-12: hsl(73deg 90% 16%);
+}
+
+/** Base-UI Theme */
+
+:where(:root) {
+  --color-blue: var(--blue-5);
+  --color-red: var(--red-5);
+  --color-gray-50: light-dark(var(--gray-0), var(--gray-10));
+  --color-gray-100: light-dark(var(--gray-1), var(--gray-9));
+  --color-gray-200: light-dark(var(--gray-2), var(--gray-8));
+  --color-gray-300: light-dark(var(--gray-3), var(--gray-7));
+  --color-gray-400: light-dark(var(--gray-4), var(--gray-6));
+  --color-gray-500: light-dark(var(--gray-5), var(--gray-5));
+  --color-gray-600: light-dark(var(--gray-6), var(--gray-4));
+  --color-gray-700: light-dark(var(--gray-7), var(--gray-3));
+  --color-gray-800: light-dark(var(--gray-8), var(--gray-2));
+  --color-gray-900: light-dark(var(--gray-9), var(--gray-1));
+  --color-gray-950: light-dark(var(--gray-10), var(--gray-0));
 }

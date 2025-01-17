@@ -20,7 +20,7 @@ export async function YearNavigationButton({
     nextOrPrevious === 'next' ? currentYear + 1 : currentYear - 1
   return (
     <Link
-      className={`btn ${styles.button}`}
+      className={styles.button}
       href={`.${path}/${targetYear}`}
       title={targetYear?.toString() ?? ''}
       prefetch={true}

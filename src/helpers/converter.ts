@@ -75,7 +75,8 @@ export function getSessionTypeColorVariant({
   const isOneComponentBelowThreshold =
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
-  const convertedSessionType = fromSessionTypeToString(sessionType)
+  const convertedSessionType =
+    fromSessionTypeToString(sessionType) ?? 'other-training'
   if (isOneComponentBelowThreshold) return `var(--${convertedSessionType}-low)`
 
   if (isOneComponentAboveThreshold) return `var(--${convertedSessionType}-high)`
@@ -88,7 +89,7 @@ export function fromSessionTypeToForeColor(
 ): string {
   return sessionType === undefined
     ? 'var(--text-1)'
-    : `hsl(from var(--${fromSessionTypeToString(sessionType)}) h s 20%)`
+    : `hsl(from var(--${fromSessionTypeToString(sessionType) ?? 'other-training'}) h s 20%)`
 }
 
 export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>

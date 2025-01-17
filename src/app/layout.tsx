@@ -5,7 +5,6 @@ import { TRPCReactProvider } from '~/trpc/react'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
-import '~/styles/brand.css'
 import '~/styles/animation.css'
 import '~/styles/aspects.css'
 import '~/styles/border.css'
@@ -17,12 +16,8 @@ import '~/styles/gradients.css'
 import '~/styles/shadows.css'
 import '~/styles/zindex.css'
 
-import '~/styles/base-ui-theme.css'
-
 import '~/styles/reset.css'
-import '~/styles/normalize.css'
 
-import '~/styles/quick-upgrades.css'
 import '~/styles/global-styles.css'
 
 import '~/styles/grades.css'
