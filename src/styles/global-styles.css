@@ -3,7 +3,7 @@
 nav a {
   --link-color: var(--gray-0);
   --linear-gradient: linear-gradient(
-    to right,
+    to right in oklab,
     var(--violet-0),
     var(--violet-2),
     var(--violet-4),

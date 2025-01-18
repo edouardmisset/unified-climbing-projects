@@ -18,14 +18,14 @@ export function ascentsBarcodeRender(
     ascent => ascent !== undefined,
   )
 
-  const sortedFilteredWeeklyAscents = filteredWeeklyAscents.toSorted((a, b) =>
-    sortByDescendingGrade(a, b),
+  const weeklyAscentsByDescendingGrade = filteredWeeklyAscents.toSorted(
+    (a, b) => sortByDescendingGrade(a, b),
   )
 
   // Colorize bars
   const isSingleAscent = weeklyAscents.length === 1
-  const backgroundGradient = `linear-gradient(${sortedFilteredWeeklyAscents
-    .map(ascent => fromGradeToBackgroundColor(ascent.topoGrade))
+  const backgroundGradient = `linear-gradient(to bottom in oklab, ${weeklyAscentsByDescendingGrade
+    .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
     .join(', ')})`
 
   return (
@@ -39,7 +39,7 @@ export function ascentsBarcodeRender(
         maxInlineSize: maxBarWidth,
         background: isSingleAscent ? undefined : backgroundGradient,
       }}
-      title={createAscentBarCodeTooltip(sortedFilteredWeeklyAscents)}
+      title={createAscentBarCodeTooltip(weeklyAscentsByDescendingGrade)}
     />
   )
 }

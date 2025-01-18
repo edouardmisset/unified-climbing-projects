@@ -27,7 +27,7 @@ export function trainingSessionsBarcodeRender(
   const isSingleWeekTraining = weeklyTraining.length === 1
   const backgroundGradient = isSingleWeekTraining
     ? undefined
-    : `linear-gradient(${filteredWeeklyTraining
+    : `linear-gradient(to bottom in oklab, ${filteredWeeklyTraining
         .map(({ sessionType }) => fromSessionTypeToBackgroundColor(sessionType))
         .join(', ')})`
 
