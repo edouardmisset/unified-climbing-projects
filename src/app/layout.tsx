@@ -18,7 +18,7 @@ import '~/styles/zindex.css'
 
 import '~/styles/reset.css'
 
-import '~/styles/global-styles.css'
+import '~/styles/utilities.css'
 
 import '~/styles/grades.css'
 import '~/styles/training.css'
