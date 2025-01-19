@@ -31,7 +31,7 @@ export default async function TrainingCalendar(props: {
   const sessionsDescriptions =
     yearSession?.map(session => {
       const { date, sessionType } = session
-      const { backgroundColor, foreColor } = getSessionTypeColors({
+      const backgroundColor = getSessionTypeColors({
         sessionType,
         intensityPercent: session?.intensity,
         volumePercent: session?.volume,
@@ -40,7 +40,6 @@ export default async function TrainingCalendar(props: {
         date,
         backgroundColor,
         tooltip: createTrainingQRTooltip(session),
-        foreColor,
         shortText: sessionType,
       }
     }) ?? []

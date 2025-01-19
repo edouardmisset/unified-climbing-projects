@@ -65,12 +65,9 @@ export function getSessionTypeColors({
   sessionType: TrainingSession['sessionType']
   intensityPercent?: number
   volumePercent?: number
-}): { backgroundColor: string; foreColor: string } {
-  if (sessionType === undefined)
-    return {
-      backgroundColor: '--cell-color',
-      foreColor: 'var(--text-1)',
-    }
+}): string {
+  if (sessionType === undefined) return 'var(--cell-color)'
+
   const upperThreshold = 80
   const lowerThreshold = 50
 
@@ -83,26 +80,14 @@ export function getSessionTypeColors({
   const convertedSessionType =
     fromSessionTypeToString(sessionType) ?? 'other-training'
   if (isOneComponentBelowThreshold) {
-    const lowBackgroundColor = `var(--${convertedSessionType}-low)`
-    return {
-      backgroundColor: lowBackgroundColor,
-      foreColor: `color-mix(in oklab, ${lowBackgroundColor} 50%, black)`,
-    }
+    return `var(--${convertedSessionType}-low)`
   }
 
   if (isOneComponentAboveThreshold) {
-    const highBackgroundColor = `var(--${convertedSessionType}-high)`
-    return {
-      backgroundColor: highBackgroundColor,
-      foreColor: `color-mix(in oklab, ${highBackgroundColor} 20%, white)`,
-    }
+    return `var(--${convertedSessionType}-high)`
   }
 
-  const backgroundColor = `var(--${convertedSessionType})`
-  return {
-    backgroundColor,
-    foreColor: `color-mix(in oklab, ${backgroundColor} 20%, black)`,
-  }
+  return `var(--${convertedSessionType})`
 }
 
 export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>
@@ -111,5 +96,5 @@ export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>
 export const fromGradeToClassName = (
   grade?: Ascent['topoGrade'],
 ): string | undefined => {
-  return grade === undefined ? undefined : `_${grade.replaceAll('+', '_')}`
+  return grade && `_${grade.replaceAll('+', '_')}`
 }
