@@ -26,12 +26,12 @@ export function getGradeFrequencyAndColors(
         grade,
         Onsight: filterAscents(filteredAscentsByGrade, { style: 'Onsight' })
           .length,
-        OnsightColor: 'var(--green-5)',
+        OnsightColor: 'var(--onsight)',
         Flash: filterAscents(filteredAscentsByGrade, { style: 'Flash' }).length,
-        FlashColor: 'var(--yellow-5)',
+        FlashColor: 'var(--flash)',
         Redpoint: filterAscents(filteredAscentsByGrade, { style: 'Redpoint' })
           .length,
-        RedpointColor: 'var(--red-5)',
+        RedpointColor: 'var(--redpoint)',
       }
     },
   )

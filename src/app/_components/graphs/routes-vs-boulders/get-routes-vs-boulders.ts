@@ -1,3 +1,4 @@
+import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 
@@ -13,8 +14,8 @@ export function getRoutesVsBoulders(ascents: Ascent[]) {
           label: climbingDiscipline,
           value: filteredAscentsCount,
           color:
-            climbingDiscipline === 'Route' ? 'var(--blue-6)' : 'var(--red-6)',
+            CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
         }
       : undefined
-  }).filter(Boolean)
+  }).filter(val => val !== undefined)
 }

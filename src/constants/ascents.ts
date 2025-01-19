@@ -1,18 +1,18 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR: Record<Ascent['style'], string> = {
-  Onsight: 'var(--green-5)',
-  Flash: 'var(--yellow-5)',
-  Redpoint: 'var(--red-5)',
+  Onsight: 'var(--onsight)',
+  Flash: 'var(--flash)',
+  Redpoint: 'var(--redpoint)',
 } as const
 
 export const CLIMBING_DISCIPLINE_TO_COLOR: Record<
   Ascent['climbingDiscipline'],
   string
 > = {
-  'Multi-Pitch': 'var(--choco-3)',
-  Boulder: 'var(--red-3)',
-  Route: 'var(--blue-3)',
+  'Multi-Pitch': 'var(--multi-pitch)',
+  Boulder: 'var(--boulder)',
+  Route: 'var(--route)',
 } as const
 
 /**

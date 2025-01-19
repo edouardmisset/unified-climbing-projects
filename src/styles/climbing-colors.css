@@ -1,0 +1,201 @@
+/*
+* NB: CSS classes cannot start with a numbers. Therefore, they prepended with an
+* underscore. Furthermore, pluses ("+") are replaced with underscores.
+*/
+
+/* stylelint-disable custom-property-empty-line-before */
+:where(:root) {
+  /* GRADES */
+  --6a: var(--yellow-2);
+  --6a_: var(--yellow-4);
+  --6b: var(--yellow-6);
+  --6b_: var(--yellow-8);
+  --6c: var(--yellow-10);
+  --6c_: var(--yellow-12);
+
+  --7a: var(--green-2);
+  --7a_: var(--green-4);
+  --7b: var(--green-6);
+  --7b_: var(--green-8);
+  --7c: var(--green-10);
+  --7c_: var(--green-12);
+
+  --8a: var(--blue-2);
+  --8a_: var(--blue-4);
+  --8b: var(--blue-6);
+  --8b_: var(--blue-8);
+  --8c: var(--blue-10);
+  --8c_: var(--blue-12);
+
+  /* TRAINING */
+  --endurance-low: var(--orange-1);
+  --endurance: var(--orange-5);
+  --endurance-high: var(--orange-9);
+
+  --other-training-low: var(--gray-1);
+  --other-training: var(--gray-5);
+  --other-training-high: var(--gray-7);
+
+  --outdoor-low: var(--green-1);
+  --outdoor: var(--green-5);
+  --outdoor-high: var(--green-9);
+
+  --stamina-low: var(--indigo-1);
+  --stamina: var(--indigo-5);
+  --stamina-high: var(--indigo-9);
+
+  --strength-low: var(--red-1);
+  --strength: var(--red-5);
+  --strength-high: var(--red-9);
+
+  --tapered-low: var(--violet-1);
+  --tapered: var(--violet-5);
+  --tapered-high: var(--violet-9);
+
+  /* DISCIPLINE */
+  --boulder: var(--pink-4);
+  --route: var(--cyan-4);
+  --multi-pitch: var(--choco-4);
+
+  /* STYLE */
+  --onsight: var(--jungle-6);
+  --flash: var(--brown-6);
+  --redpoint: var(--red-6);
+}
+
+/* GRADES */
+._6a {
+  background-color: var(--_6a);
+}
+
+._6a_ {
+  background-color: var(--6a_);
+}
+
+._6b {
+  background-color: var(--6b);
+}
+
+._6b_ {
+  background-color: var(--6b_);
+}
+
+._6c {
+  background-color: var(--6c);
+}
+
+._6c_ {
+  background-color: var(--6c_);
+}
+
+._7a {
+  background-color: var(--7a);
+}
+
+._7a_ {
+  background-color: var(--7a_);
+}
+
+._7b {
+  background-color: var(--7b);
+}
+
+._7b_ {
+  background-color: var(--7b_);
+}
+
+._7c {
+  background-color: var(--7c);
+}
+
+._7c_ {
+  background-color: var(--7c_);
+}
+
+._8a {
+  background-color: var(--8a);
+}
+
+._8a_ {
+  background-color: var(--8a_);
+}
+
+._8b {
+  background-color: var(--8b);
+}
+
+._8b_ {
+  background-color: var(--8b_);
+}
+
+._8c {
+  background-color: var(--8c);
+}
+
+._8c_ {
+  background-color: var(--8c_);
+}
+
+/* TRAINING */
+
+.endurance {
+  background-color: var(--endurance);
+  color: color-mix(in oklab, var(--endurance) 50%, black 50%);
+}
+
+.other-training {
+  background-color: var(--other-training);
+  color: color-mix(in oklab, var(--other-training) 50%, black 50%);
+}
+
+.outdoor {
+  background-color: var(--outdoor);
+  color: color-mix(in oklab, var(--outdoor) 50%, black 50%);
+}
+
+.stamina {
+  background-color: var(--stamina);
+  color: color-mix(in oklab, var(--stamina) 50%, black 50%);
+}
+
+.strength {
+  background-color: var(--strength);
+  color: color-mix(in oklab, var(--strength) 50%, black 50%);
+}
+
+.tapered {
+  background-color: var(--tapered);
+  color: color-mix(in oklab, var(--tapered) 50%, black 50%);
+}
+
+/* DISCIPLINE */
+.boulder {
+  background-color: var(--boulder);
+  color: color-mix(in oklab, var(--boulder) 50%, black 50%);
+}
+
+.route {
+  background-color: var(--route);
+  color: color-mix(in oklab, var(--route) 50%, black 50%);
+}
+
+.multi-pitch {
+  background-color: var(--multi-pitch);
+  color: color-mix(in oklab, var(--multi-pitch) 50%, black 50%);
+}
+
+/* STYLE */
+.onsight {
+  background-color: var(--onsight);
+  color: color-mix(in oklab, var(--onsight) 50%, black 50%);
+}
+
+.flash {
+  background-color: var(--flash);
+  color: color-mix(in oklab, var(--flash) 50%, black 50%);
+}
+
+.redpoint {
+  background-color: var(--redpoint);
+  color: color-mix(in oklab, var(--redpoint) 50%, black 50%);
+}

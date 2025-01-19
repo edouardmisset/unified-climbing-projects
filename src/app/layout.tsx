@@ -16,12 +16,11 @@ import '~/styles/gradients.css'
 import '~/styles/shadows.css'
 import '~/styles/zindex.css'
 
+import '~/styles/climbing-colors.css'
+
 import '~/styles/reset.css'
 
 import '~/styles/utilities.css'
-
-import '~/styles/grades.css'
-import '~/styles/training.css'
 
 import { Navigation } from './_components/navigation/navigation.tsx'
 
