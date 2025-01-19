@@ -31,9 +31,7 @@ export function Navigation() {
   return (
     <Menu.Root openOnHover={true}>
       <Menu.Trigger className={styles.Button}>
-        <MenuIcon
-        //  className={styles.ButtonIcon}
-        />
+        <MenuIcon />
       </Menu.Trigger>
       <Menu.Portal>
         <Menu.Positioner className={styles.Positioner} sideOffset={8}>
@@ -50,35 +48,41 @@ export function Navigation() {
             <Menu.Separator className={styles.Separator} />
             <Menu.Group>
               <Menu.GroupLabel className={styles.GroupLabel}>
-                Ascents
+                🧗 Ascents 🧗
               </Menu.GroupLabel>
+              {/* TODO: FIX THE TABLE. USE ANOTHER LIB */}
+              {/* <Menu.Item className={styles.Item}>
+                <Link href={'/ascents'}>Table</Link>
+              </Menu.Item> */}
               <Menu.Item className={styles.Item}>
-                <Link href={'/ascents'}>🧗 Table</Link>
+                <Link href={'/ascents/dashboard'}>Dashboard</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/dashboard'}>🧗 Dashboard</Link>
+                <Link href={`/ascents/calendar/${latestSessionYear}`}>
+                  Calendar
+                </Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/qr-code'}>🧗 QR</Link>
+                <Link href={'/ascents/qr-code'}>QR</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/barcode'}>🧗 Barcode</Link>
+                <Link href={'/ascents/barcode'}>Barcode</Link>
               </Menu.Item>
             </Menu.Group>
             <Menu.Separator className={styles.Separator} />
             <Menu.Group>
               <Menu.GroupLabel className={styles.GroupLabel}>
-                Training
+                💪 Training 💪
               </Menu.GroupLabel>
               <Menu.Item className={styles.Item}>
-                <Link href={'/training/qr-code'}>💪 QR</Link>
+                <Link href={'/training/qr-code'}>QR</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/training/barcode'}>💪 Barcode</Link>
+                <Link href={'/training/barcode'}>Barcode</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
                 <Link href={`/training/calendar/${latestSessionYear}`}>
-                  💪 Calendar
+                  Calendar
                 </Link>
               </Menu.Item>
             </Menu.Group>
