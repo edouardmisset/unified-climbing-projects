@@ -106,3 +106,24 @@ text {
   white-space: nowrap;
   width: 1px;
 }
+
+.contrast-color {
+  /* Fallback for browsers that don't support RCS */
+  color: white;
+  text-shadow: 0 0 0.05em black, 0 0 0.05em black, 0 0 0.05em black, 0 0 0.05em
+    black;
+
+  @supports (color: oklch(from red l c h)) {
+    --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
+
+    color: oklch(from var(--color) var(--l) 0 h);
+    text-shadow: none;
+  }
+
+  /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
+  @supports (color: contrast-color(red)) {
+    /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
+    color: contrast-color(var(--color));
+    text-shadow: none;
+  }
+}

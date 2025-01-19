@@ -1,49 +1,32 @@
-import { datesEqual, isDateInFirstWeek } from './helpers'
+import { type CSSProperties, useMemo } from 'react'
+import { datesEqual } from './helpers'
 
 import styles from './year-grid.module.css'
 
-export async function YearGridCell({
-  stringDate,
-  tooltip,
-  backgroundColor,
-  foreColor,
-  shortText,
-}: {
+export async function YearGridCell(props: {
   stringDate: string
   tooltip: string
   backgroundColor: string | undefined
-  foreColor: string | undefined
   shortText?: string
 }) {
-  const date = new Date(stringDate)
-  const isToday = datesEqual(new Date(stringDate), new Date())
+  const { stringDate, tooltip: title, backgroundColor, shortText = '' } = props
 
-  if (date.getMonth() === 0 && isDateInFirstWeek(date)) {
-    return (
-      <i
-        title={tooltip}
-        className={styles.yearGridCell}
-        style={{
-          backgroundColor,
-          color: foreColor,
-          outline: isToday ? '2px solid var(--text-1)' : 'none',
-        }}
-        tabIndex={0}
-      >
-        {shortText}
-      </i>
-    )
-  }
+  const cellStyle: CSSProperties = useMemo(
+    () => ({
+      backgroundColor,
+      outline: datesEqual(new Date(stringDate), new Date())
+        ? '2px solid var(--text-1)'
+        : 'none',
+      '--color': backgroundColor,
+    }),
+    [backgroundColor, stringDate],
+  )
 
   return (
     <i
-      title={tooltip}
-      className={styles.yearGridCell}
-      style={{
-        backgroundColor,
-        color: foreColor,
-        outline: isToday ? '2px solid var(--text-1)' : 'none',
-      }}
+      title={title}
+      className={`${styles.yearGridCell} contrast-color`}
+      style={cellStyle}
       tabIndex={0}
     >
       {shortText}

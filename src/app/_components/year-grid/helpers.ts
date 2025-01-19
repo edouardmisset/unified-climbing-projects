@@ -45,12 +45,3 @@ export function getNumberOfDaysInYear(year: number): number {
     (1000 * 60 * 60 * 24)
   )
 }
-
-export const isDateInFirstWeek = (date: Date): boolean => {
-  const firstDayOfYear = new Date(date.getFullYear(), 0, 1)
-  const firstWeekMonday = new Date(
-    firstDayOfYear.getTime() +
-      (8 - firstDayOfYear.getDay()) * 24 * 60 * 60 * 1000,
-  )
-  return date >= firstDayOfYear && date < firstWeekMonday
-}

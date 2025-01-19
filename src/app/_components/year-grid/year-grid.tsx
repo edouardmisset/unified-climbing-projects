@@ -8,7 +8,6 @@ import styles from './year-grid.module.css'
 type DayDescriptor = {
   date: string
   backgroundColor?: string
-  foreColor?: string
   tooltip: string
   shortText?: string
 }
@@ -57,7 +56,7 @@ export async function YearGrid({
       <DaysColumn />
       <WeeksRow columns={columns} />
       {[...emptyDays, ...dayCollection].map(
-        ({ date, tooltip, backgroundColor, foreColor, shortText = '' }) =>
+        ({ date, tooltip, backgroundColor, shortText = '' }) =>
           date === '' ? (
             <i
               key={shortText}
@@ -70,7 +69,6 @@ export async function YearGrid({
                 stringDate={date}
                 tooltip={tooltip}
                 backgroundColor={backgroundColor}
-                foreColor={foreColor}
                 shortText={shortText}
               />
             )

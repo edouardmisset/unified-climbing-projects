@@ -19,7 +19,6 @@
   font-size: var(--font-size-00);
   display: grid;
   place-items: center;
-  color: var(--text-1, #000);
   background-color: var(--cell-color);
   border-radius: var(--radius-1, 2px);
   font-weight: var(--font-weight-7);
