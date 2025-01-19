@@ -13,11 +13,11 @@ export async function YearGridCell(props: {
 
   const cellStyle: CSSProperties = useMemo(
     () => ({
+      '--color': backgroundColor,
       backgroundColor,
       outline: datesEqual(new Date(stringDate), new Date())
         ? '2px solid var(--text-1)'
         : 'none',
-      '--color': backgroundColor,
     }),
     [backgroundColor, stringDate],
   )
@@ -27,7 +27,6 @@ export async function YearGridCell(props: {
       title={title}
       className={`${styles.yearGridCell} contrast-color`}
       style={cellStyle}
-      tabIndex={0}
     >
       {shortText}
     </i>
