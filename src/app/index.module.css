@@ -52,10 +52,6 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.header {
-  padding-block-end: var(--size-fluid-1);
-}
-
 @media (width >= 640px) {
   .container {
     max-inline-size: 640px;

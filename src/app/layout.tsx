@@ -40,7 +40,7 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning={true}>
         <body className={styles.body}>
           <TRPCReactProvider>
-            <header className={styles.header}>
+            <header>
               <Navigation />
             </header>
             <main className={styles.main}>{children}</main>
