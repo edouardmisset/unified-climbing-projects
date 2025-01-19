@@ -48,15 +48,16 @@ function fromSessionTypeToString(
 }
 
 /**
- * Returns a CSS color name variant based on intensity/volume thresholds.
+ * Returns an object with backgroundColor and foreColor based on session type,
+ * intensityPercent, and volumePercent thresholds.
  *
  * @param {Object} params - The parameters object
- * @param {string} params.baseColor - The base color (CSS color name)
- * @param {number} params.intensityPercent - The current intensity percentage
- * @param {number} params.volumePercent - The current volume percentage
- * @returns {string} The resulting CSS color variant
+ * @param {TrainingSession['sessionType']} params.sessionType - The type of the training session
+ * @param {number} [params.intensityPercent=65] - The current intensity percentage
+ * @param {number} [params.volumePercent=65] - The current volume percentage
+ * @returns {{ backgroundColor: string; foreColor: string }} The resulting color configuration
  */
-export function getSessionTypeColorVariant({
+export function getSessionTypeColors({
   sessionType,
   intensityPercent = 65,
   volumePercent = 65,
@@ -64,8 +65,12 @@ export function getSessionTypeColorVariant({
   sessionType: TrainingSession['sessionType']
   intensityPercent?: number
   volumePercent?: number
-}): string | undefined {
-  if (sessionType === undefined) return undefined
+}): { backgroundColor: string; foreColor: string } {
+  if (sessionType === undefined)
+    return {
+      backgroundColor: '--cell-color',
+      foreColor: 'var(--text-1)',
+    }
   const upperThreshold = 80
   const lowerThreshold = 50
 
@@ -77,19 +82,27 @@ export function getSessionTypeColorVariant({
 
   const convertedSessionType =
     fromSessionTypeToString(sessionType) ?? 'other-training'
-  if (isOneComponentBelowThreshold) return `var(--${convertedSessionType}-low)`
+  if (isOneComponentBelowThreshold) {
+    const lowBackgroundColor = `var(--${convertedSessionType}-low)`
+    return {
+      backgroundColor: lowBackgroundColor,
+      foreColor: `color-mix(in oklab, ${lowBackgroundColor} 50%, black)`,
+    }
+  }
 
-  if (isOneComponentAboveThreshold) return `var(--${convertedSessionType}-high)`
+  if (isOneComponentAboveThreshold) {
+    const highBackgroundColor = `var(--${convertedSessionType}-high)`
+    return {
+      backgroundColor: highBackgroundColor,
+      foreColor: `color-mix(in oklab, ${highBackgroundColor} 20%, white)`,
+    }
+  }
 
-  return `var(--${convertedSessionType})`
-}
-
-export function fromSessionTypeToForeColor(
-  sessionType: TrainingSession['sessionType'],
-): string {
-  return sessionType === undefined
-    ? 'var(--text-1)'
-    : `hsl(from var(--${fromSessionTypeToString(sessionType) ?? 'other-training'}) h s 20%)`
+  const backgroundColor = `var(--${convertedSessionType})`
+  return {
+    backgroundColor,
+    foreColor: `color-mix(in oklab, ${backgroundColor} 20%, black)`,
+  }
 }
 
 export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>

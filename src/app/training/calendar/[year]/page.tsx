@@ -4,10 +4,7 @@ import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { Spacer } from '~/app/_components/spacer/spacer'
 import { YearNavigationButton } from '~/app/_components/year-navigation-button/year-navigation-button'
 import { getYearTraining } from '~/data/training-data'
-import {
-  fromSessionTypeToForeColor,
-  getSessionTypeColorVariant,
-} from '~/helpers/converter'
+import { getSessionTypeColors } from '~/helpers/converter'
 import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
 import styles from './page.module.css'
@@ -34,7 +31,7 @@ export default async function TrainingCalendar(props: {
   const sessionsDescriptions =
     yearSession?.map(session => {
       const { date, sessionType } = session
-      const backgroundColor = getSessionTypeColorVariant({
+      const { backgroundColor, foreColor } = getSessionTypeColors({
         sessionType,
         intensityPercent: session?.intensity,
         volumePercent: session?.volume,
@@ -43,7 +40,7 @@ export default async function TrainingCalendar(props: {
         date,
         backgroundColor,
         tooltip: createTrainingQRTooltip(session),
-        foreColor: fromSessionTypeToForeColor(sessionType).toString(),
+        foreColor,
         shortText: sessionType,
       }
     }) ?? []
@@ -52,14 +49,7 @@ export default async function TrainingCalendar(props: {
 
   return (
     <>
-      <h1
-        className="center-text"
-        style={{
-          marginInline: 'auto',
-        }}
-      >
-        Training in {year}
-      </h1>
+      <h1 className="center-text">Training in {year}</h1>
       <Spacer size={3} />
       <div className={styles.container}>
         <YearNavigationButton

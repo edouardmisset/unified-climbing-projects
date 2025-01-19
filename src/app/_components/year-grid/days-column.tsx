@@ -10,9 +10,9 @@ export async function DaysColumn() {
         className={`${styles.yearGridCell} ${styles.firstCell}`}
       />
     ) : (
-      <i key={day} className={`flex-row center ${styles.firstColumn}`}>
+      <span key={day} className={`flex-row center ${styles.firstColumn}`}>
         {day}
-      </i>
+      </span>
     )
   })
 }
