@@ -20,7 +20,7 @@ export default async function Page(props: {
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>
 
-  const sortedAscents = [...selectedAscents].map(ascentDay => ({
+  const sortedAscents = selectedAscents.map(ascentDay => ({
     ...ascentDay,
     ascents: ascentDay?.ascents
       ? ascentDay.ascents.toSorted((a, b) => sortByDescendingGrade(a, b))

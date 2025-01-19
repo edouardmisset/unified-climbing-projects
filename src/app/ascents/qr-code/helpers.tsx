@@ -9,8 +9,7 @@ export function ascentsQRCodeRender(
 ) {
   const { ascents, date } = ascentDay
 
-  const hardestAscent =
-    ascents === undefined ? undefined : getHardestAscent(ascents)
+  const hardestAscent = ascents && getHardestAscent(ascents)
   return (
     <span
       key={date}

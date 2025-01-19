@@ -133,13 +133,13 @@ export default async function WrapUp({ year }: { year?: number }) {
       </Card>
       <Card>
         <h2>Hardest Sends</h2>
-        {hardestRoute === undefined ? null : (
+        {hardestRoute && (
           <p>
             Your hardest route was{' '}
             <AscentComponent ascent={hardestRoute} showGrade={true} />
           </p>
         )}
-        {hardestBoulder === undefined ? null : (
+        {hardestBoulder && (
           <p>
             Your hardest boulder was{' '}
             <AscentComponent ascent={hardestBoulder} showGrade={true} />
