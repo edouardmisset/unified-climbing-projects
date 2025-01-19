@@ -5,7 +5,7 @@ import { WeeksRow } from './weeks-row.tsx'
 import { YearGridCell } from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
 
-type DayDescriptor = {
+export type DayDescriptor = {
   date: string
   backgroundColor?: string
   tooltip: string
@@ -56,10 +56,11 @@ export async function YearGrid({
       <DaysColumn />
       <WeeksRow columns={columns} />
       {[...emptyDays, ...dayCollection].map(
-        ({ date, tooltip, backgroundColor, shortText = '' }) =>
+        ({ date, tooltip, backgroundColor, shortText = '' }, index) =>
           date === '' ? (
             <i
-              key={shortText}
+              // biome-ignore lint/suspicious/noArrayIndexKey: It's hard to do better here
+              key={shortText + index}
               className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
             />
           ) : (

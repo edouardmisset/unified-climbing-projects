@@ -19,7 +19,9 @@ const getTrainingCollection: (
   trainingSessions: TrainingSession[],
 ) => createEmptyYearlyCollections(getTrainingYears(trainingSessions))
 
-export const getYearTraining = (trainingSessions: TrainingSession[]) =>
+export const getYearTraining = (
+  trainingSessions: TrainingSession[],
+): Record<number, TrainingSession[]> =>
   trainingSessions.reduce(
     (acc, trainingSession) => {
       const date = new Date(trainingSession.date)
