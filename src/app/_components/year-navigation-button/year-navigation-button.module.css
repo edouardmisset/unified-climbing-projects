@@ -1,3 +1,4 @@
 .button {
   color: var(--text-1);
+  padding: var(--size-3);
 }
