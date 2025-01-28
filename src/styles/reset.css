@@ -122,7 +122,6 @@
   max-inline-size: 100%;
   block-size: auto;
   display: block;
-  vertical-align: middle;
   font-style: italic;
 }
 
@@ -568,10 +567,6 @@ not to see them */
 
 :where(dialog)::backdrop {
   backdrop-filter: blur(25px);
-}
-
-:where(html[\:has\(dialog\[open\]\)]) {
-  overflow: hidden;
 }
 
 :where(html:has(dialog[open])) {
