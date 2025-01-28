@@ -1,6 +1,11 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { type DATE_TIME_OPTIONS, formatDateTime, getWeeksInYear } from './date'
+import {
+  type DATE_TIME_OPTIONS,
+  formatDateTime,
+  getWeek,
+  getWeeksInYear,
+} from './date'
 
 export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
   ascents.length > 0 && ascents[0] !== undefined
@@ -20,7 +25,7 @@ export const createTrainingBarCodeTooltip = (
   sessions: TrainingSession[],
 ): string =>
   sessions.length > 0 && sessions[0] !== undefined
-    ? `Week # ${getWeeksInYear(new Date(sessions[0].date).getFullYear())}
+    ? `Week # ${getWeek(new Date(sessions[0].date))}
 # Training (${sessions.length}):
 ${sessions
   .map(
