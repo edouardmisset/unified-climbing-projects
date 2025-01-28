@@ -24,7 +24,7 @@
 }
 
 .gap {
-  gap: 1rem;
+  gap: var(--size-3);
 }
 
 .space-evenly {
@@ -41,7 +41,7 @@
 
 .section-header {
   max-inline-size: 100%;
-  padding-block-end: 1rem;
+  padding-block-end: var(--size-3);
   text-align: center;
   text-wrap: balance;
 }
@@ -52,9 +52,9 @@
 
 .grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--size-3);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  padding: 1rem;
+  padding: var(--size-3);
 }
 
 .w100 {
