@@ -1,6 +1,9 @@
 .Group {
+  --base-color: var(--accent);
+  --back-color: color-mix(in oklab, var(--base-color) 70%, white);
+
   display: inline-flex;
-  background-color: var(--violet-6);
+  background-color: var(--back-color);
   border-radius: 4px;
   box-shadow: 0 2px 10px var(--gray-7);
 }
@@ -12,7 +15,6 @@
   font-weight: unset;
   box-shadow: unset;
   background-color: var(--surface-4);
-  color: var(--violet-11);
   block-size: var(--size-7);
   inline-size: fit-content;
   padding-inline: var(--size-2);
@@ -33,18 +35,17 @@
   }
 
   &:hover {
-    background-color: var(--violet-3);
+    background-color: var(--back-color);
   }
 
   &[data-state='on'] {
-    background-color: var(--violet-5);
-    color: var(--violet-11);
+    background-color: var(--base-color);
   }
 }
 
 .Item:focus-visible,
 .Item:active {
   position: relative;
-  outline: var(--border-size-2) solid var(--violet-3);
+  outline: var(--border-size-2) solid var(--base-color);
   outline-offset: var(--border-size-2);
 }

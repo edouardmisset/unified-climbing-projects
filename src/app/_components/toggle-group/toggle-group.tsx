@@ -27,7 +27,7 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
       <Item
         aria-hidden={isOnsightDisable}
         aria-label="Onsight"
-        className={styles.Item}
+        className={`contrast-color ${styles.Item}`}
         // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
@@ -50,7 +50,7 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
       </Item>
       <Item
         aria-label="Flash"
-        className={styles.Item}
+        className={`contrast-color ${styles.Item}`}
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >

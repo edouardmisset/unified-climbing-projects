@@ -20,6 +20,7 @@ import { GradeSlider } from '~/app/_components/slider/slider'
 import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
 import { Loader } from '../_components/loader/loader.tsx'
+import { Spacer } from '../_components/spacer/spacer.tsx'
 import { ClimbingStyleToggleGroup } from '../_components/toggle-group/toggle-group.tsx'
 import { onSubmit } from './actions.ts'
 import {
@@ -391,10 +392,15 @@ export default function Log(): React.JSX.Element {
               id="comments"
               placeholder="Feelings, partners, betas..."
               spellCheck={true}
-              title="Comments: Feelings, partners, betas..."
+              title="Feelings, partners, betas..."
             />
           </label>
-          <input type="submit" value="Send 📮" />
+          <Spacer size={3} />
+          <input
+            type="submit"
+            value="Send 📮"
+            className={`contrast-color ${styles.submit}`}
+          />
         </form>
       </Suspense>
     </div>
