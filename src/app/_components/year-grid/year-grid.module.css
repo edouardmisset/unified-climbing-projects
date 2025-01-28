@@ -46,6 +46,9 @@
 }
 
 .firstColumn {
+  position: sticky;
+  inset-inline-start: 0;
+  background-color: var(--surface-3);
   grid-column: 1 / 2;
   min-inline-size: 4ch;
   line-height: 1;

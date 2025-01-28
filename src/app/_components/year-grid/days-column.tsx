@@ -10,7 +10,14 @@ export async function DaysColumn() {
         className={`${styles.yearGridCell} ${styles.firstCell}`}
       />
     ) : (
-      <span key={day} className={`flex-row center ${styles.firstColumn}`}>
+      <span
+        key={day}
+        className={`contrast-color ${styles.firstColumn}`}
+        title={day}
+        style={
+          index % 2 === 0 ? { backgroundColor: 'var(--surface-4)' } : undefined
+        }
+      >
         {day}
       </span>
     )
