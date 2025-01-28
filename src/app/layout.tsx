@@ -25,6 +25,7 @@ import '~/styles/utilities.css'
 import { Navigation } from './_components/navigation/navigation.tsx'
 
 import type React from 'react'
+import { env } from '~/env.js'
 import styles from './index.module.css'
 
 export const fetchCache = 'default-cache'
@@ -36,6 +37,11 @@ export default async function RootLayout({
 }) {
   return (
     <ViewTransitions>
+      <head>
+        {env.NEXT_PUBLIC_ENV === 'development' && (
+          <script src="//unpkg.com/react-scan/dist/auto.global.js" />
+        )}
+      </head>
       <html lang="en" suppressHydrationWarning={true}>
         <body className={styles.body}>
           <TRPCReactProvider>
