@@ -61,6 +61,8 @@ export default function AscentsFilterBar({
 
   return (
     <div className={styles.container}>
+      <div className={styles.backdrop} />
+      <div className={styles.backdropEdge} />
       <AscentSelect
         handleChange={handleDisciplineChange}
         name="discipline"

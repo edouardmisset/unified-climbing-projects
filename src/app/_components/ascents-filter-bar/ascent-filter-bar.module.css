@@ -1,8 +1,61 @@
 .container {
+  --transparent-background: color-mix(
+    in oklch,
+    var(--surface-3) 10%,
+    transparent
+  );
+
   position: sticky;
   inset: 0;
+  inline-size: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   gap: var(--size-3);
+  z-index: var(--layer-2);
+  padding-block: var(--size-3);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  height: 200%;
+  background: var(--transparent-background);
+  pointer-events: none;
+  backdrop-filter: blur(var(--size-3));
+  mask-image: linear-gradient(to bottom, black 0, black 50%, transparent 50%);
+}
+
+.backdropEdge {
+  /* Set this to whatever you want for the edge thickness: */
+  --thickness: var(--size-1);
+
+  position: absolute;
+  inset: 0;
+
+  /*
+      Only a few pixels will be visible, but we’ll
+      set the height by 100% to include nearby elements.
+    */
+  height: 100%;
+
+  /*
+      Shift down by 100% of its own height, so that the
+      edge stacks underneath the main <header>:
+    */
+  transform: translateY(100%);
+  background: var(--transparent-background);
+  backdrop-filter: blur(var(--size-2)) brightness(120%);
+  pointer-events: none;
+
+  /*
+      We mask out everything aside from the first few
+      pixels, specified by the --thickness variable:
+    */
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black var(--thickness),
+    transparent var(--thickness)
+  );
 }

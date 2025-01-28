@@ -2,6 +2,7 @@ import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
 import { addParenthesis } from '~/helpers/add-parenthesis.ts'
 import { ALL_VALUE } from '../dashboard/constants.ts'
+import styles from './ascent-select.module.css'
 
 interface AscentSelectProps {
   handleChange: ChangeEventHandler<HTMLSelectElement>
@@ -20,7 +21,7 @@ export function AscentSelect({
 }: AscentSelectProps) {
   const titleWithFallback = title ?? capitalize(name)
   return (
-    <label className="flex-column center" htmlFor={name}>
+    <label className={styles.container} htmlFor={name}>
       {capitalize(name)}
       <select
         id={name}
