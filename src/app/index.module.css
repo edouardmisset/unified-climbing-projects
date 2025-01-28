@@ -5,8 +5,8 @@
   block-size: 100svh;
   background: linear-gradient(
     to bottom in oklch,
-    var(--gray-10) 0,
-    var(--violet-12) 70%,
+    var(--gray-11) 0,
+    var(--violet-12) 80%,
     var(--violet-8)
   );
 }
