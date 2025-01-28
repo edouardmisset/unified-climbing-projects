@@ -7,6 +7,7 @@ import './src/env.js'
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
+    reactCompiler: true,
     staleTimes: {
       dynamic: 30,
       static: 180,
