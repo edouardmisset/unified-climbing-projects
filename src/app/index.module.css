@@ -4,7 +4,7 @@
   flex-direction: column;
   block-size: 100svh;
   background: linear-gradient(
-    to bottom in oklab,
+    to bottom in oklch,
     var(--gray-10) 0,
     var(--violet-12) 70%,
     var(--violet-8)
@@ -14,7 +14,7 @@
 @media (prefers-color-scheme: light) {
   .body {
     background: linear-gradient(
-      to bottom in oklab,
+      to bottom in oklch,
       var(--gray-1) 0%,
       var(--violet-3) 80%,
       var(--violet-5)

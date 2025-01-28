@@ -1,6 +1,6 @@
 .container {
-  --_light-background: color-mix(in oklab, var(--accent) 10%, transparent);
-  --_dark-background: color-mix(in oklab, var(--accent) 20%, transparent);
+  --_light-background: color-mix(in oklch, var(--accent) 10%, transparent);
+  --_dark-background: color-mix(in oklch, var(--accent) 20%, transparent);
 
   inline-size: 100%;
   block-size: 100%;
