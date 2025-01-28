@@ -39,6 +39,10 @@
     margin-block-start: 0;
     min-inline-size: var(--size-relative-15);
   }
+
+  &:is([type='number']) {
+    text-align: end;
+  }
 }
 
 .tries {
