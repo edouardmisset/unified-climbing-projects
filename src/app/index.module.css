@@ -2,7 +2,7 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  min-block-size: 100svh;
+  block-size: 100svh;
   background: linear-gradient(
     to bottom in oklab,
     var(--gray-10) 0,
