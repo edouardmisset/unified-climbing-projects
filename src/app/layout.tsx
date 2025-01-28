@@ -37,6 +37,9 @@ export default async function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning={true}>
+        <head>
+          <script src="//unpkg.com/react-scan/dist/auto.global.js" />
+        </head>
         <body className={styles.body}>
           <TRPCReactProvider>
             <Navigation />
