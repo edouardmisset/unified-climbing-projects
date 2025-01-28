@@ -20,7 +20,7 @@ export function GradeSlider(
     value?: Grade[] | SliderProps['value']
   } & React.RefAttributes<HTMLSpanElement>,
 ) {
-  const { name ,defaultValue, value, ...otherProps } = props
+  const { name, defaultValue, value, ...otherProps } = props
 
   const numberDefaultValue = useMemo(
     () => convertGradeToNumber(defaultValue),

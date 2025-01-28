@@ -8,14 +8,13 @@ import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
   type Ascent,
   CLIMBING_DISCIPLINE,
-  type Grade,
   HOLDS,
   PROFILES,
   _GRADES,
   ascentStyleSchema,
 } from '~/schema/ascent'
 
-import { type ChangeEventHandler, Suspense } from 'react'
+import { type ChangeEventHandler, Suspense, useCallback, useMemo } from 'react'
 import { GradeSlider } from '~/app/_components/slider/slider'
 import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
@@ -44,13 +43,19 @@ const numberOfGrades = _GRADES.length
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
+const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
+  'Multi-Pitch',
+])
+
 export default function Log(): React.JSX.Element {
-  const { data: averageGrade = '7b' } = api.grades.getAverage.useQuery()
+  const { data: averageGrade = '7b', isLoading: isAverageGradeLoading } =
+    api.grades.getAverage.useQuery()
   const {
     data: [minGrade, maxGrade] = [
       fromNumberToGrade(1),
       fromNumberToGrade(numberOfGrades),
     ],
+    isLoading: isGradesLoading,
   } = api.grades.getMinMax.useQuery()
 
   const defaultAscentToParse = {
@@ -92,40 +97,56 @@ export default function Log(): React.JSX.Element {
       ? fromNumberToGrade(topoGradeOrNumber)
       : topoGradeOrNumber
 
-  const handleTopoGradeChange: GradeSetter = ([value]) => {
-    const averageNumberGrade = fromGradeToNumber(averageGrade)
-    setValue(
-      'topoGrade',
-      fromNumberToGrade(
-        value ?? averageNumberGrade,
-        // biome-ignore lint/suspicious/noExplicitAny:
-      ) as any,
-    )
+  const personalGrade =
+    typeof personalGradeOrNumber === 'number'
+      ? fromNumberToGrade(personalGradeOrNumber)
+      : personalGradeOrNumber
 
-    setValue(
-      'personalGrade',
-      fromNumberToGrade(
-        value ?? averageNumberGrade,
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      ) as any,
-    )
-  }
-  const updatePersonalGradeChange: GradeSetter = ([value]) =>
-    setValue(
-      'personalGrade',
-      fromNumberToGrade(
-        value ?? fromGradeToNumber(averageGrade),
-        // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
-      ) as any,
-    )
+  const handleTopoGradeChange: GradeSetter = useCallback(
+    ([value]) => {
+      const averageNumberGrade = fromGradeToNumber(averageGrade)
+      setValue(
+        'topoGrade',
+        fromNumberToGrade(
+          value ?? averageNumberGrade,
+          // biome-ignore lint/suspicious/noExplicitAny:
+        ) as any,
+      )
 
-  const handleStyleChange = (val: unknown) => {
-    const parsedVal = ascentStyleSchema.safeParse(val)
-    if (!parsedVal.success) return
+      setValue(
+        'personalGrade',
+        fromNumberToGrade(
+          value ?? averageNumberGrade,
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        ) as any,
+      )
+    },
+    [setValue, averageGrade],
+  )
+  const updatePersonalGradeChange: GradeSetter = useCallback(
+    ([value]) =>
+      setValue(
+        'personalGrade',
+        fromNumberToGrade(
+          value ?? fromGradeToNumber(averageGrade),
+          // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
+        ) as any,
+      ),
+    [setValue, averageGrade],
+  )
 
-    return setValue('style', parsedVal.data)
-  }
+  const handleStyleChange = useCallback(
+    (val: unknown) => {
+      const parsedVal = ascentStyleSchema.safeParse(val)
+      if (!parsedVal.success) return
+
+      return setValue('style', parsedVal.data)
+    },
+    [setValue],
+  )
+
   const styleValue = watch('style')
+  const isOnsightDisable = watch('climbingDiscipline') === 'Boulder'
 
   const adjustedMinGrade = Math.max(
     fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
@@ -135,31 +156,36 @@ export default function Log(): React.JSX.Element {
     fromGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
     numberOfGrades,
   )
-  const handleTriesChange: ChangeEventHandler<HTMLInputElement> = event => {
-    // Reset the style value to 'Redpoint' when the number of tries is greater than 1
-    if (Number(event.target.value) > 1) {
-      setValue('style', 'Redpoint')
-    }
-    // By default set the style value to 'Onsight' when the number of tries is equal to 1
-    if (Number(event.target.value) === 1) {
-      if (isOnsightDisable) {
-        setValue('style', 'Flash')
-      } else {
-        setValue('style', 'Onsight')
+  const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    event => {
+      // Reset the style value to 'Redpoint' when the number of tries is greater than 1
+      if (Number(event.target.value) > 1) {
+        setValue('style', 'Redpoint')
       }
-    }
-    return handleTriesChangeRegister(event)
-  }
-  const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
-    'Multi-Pitch',
-  ])
-  const disciplines = CLIMBING_DISCIPLINE.filter(
-    d => !unavailableDiscipline.has(d),
+      // By default set the style value to 'Onsight' when the number of tries is equal to 1
+      if (Number(event.target.value) === 1) {
+        if (isOnsightDisable) {
+          setValue('style', 'Flash')
+        } else {
+          setValue('style', 'Onsight')
+        }
+      }
+      return handleTriesChangeRegister(event)
+    },
+    [handleTriesChangeRegister, isOnsightDisable, setValue],
+  )
+
+  const disciplines = useMemo(
+    () => CLIMBING_DISCIPLINE.filter(d => !unavailableDiscipline.has(d)),
+    [],
   )
 
   const climbingDisciplineFormattedList = disjunctiveListFormatter(disciplines)
 
-  const isOnsightDisable = watch('climbingDiscipline') === 'Boulder'
+  if (isAverageGradeLoading || isGradesLoading) {
+    return <Loader />
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
@@ -281,21 +307,18 @@ export default function Log(): React.JSX.Element {
             </label>
             <GradeSlider
               {...topoGradeRegister}
-              value={[(topoGrade as Grade) || averageGrade]}
+              value={[topoGrade]}
               onValueChange={handleTopoGradeChange}
               min={adjustedMinGrade}
               max={adjustedMaxGrade}
               step={1}
             />
             <label htmlFor="personalGrade" className={styles.label}>
-              Personal Grade{' '}
-              {typeof personalGradeOrNumber === 'number'
-                ? fromNumberToGrade(personalGradeOrNumber)
-                : personalGradeOrNumber}
+              Personal Grade {personalGrade}
             </label>
             <GradeSlider
               {...personalGradeRegister}
-              value={[(personalGradeOrNumber as Grade) || averageGrade]}
+              value={[personalGrade]}
               onValueChange={updatePersonalGradeChange}
               min={adjustedMinGrade}
               max={adjustedMaxGrade}
@@ -320,7 +343,6 @@ export default function Log(): React.JSX.Element {
               <option key={hold} value={hold} />
             ))}
           </datalist>
-
           <label htmlFor="profile" className={styles.label}>
             Profile
             <input
