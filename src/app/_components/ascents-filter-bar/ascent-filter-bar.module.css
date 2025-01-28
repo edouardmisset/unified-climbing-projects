@@ -12,7 +12,7 @@
   flex-flow: row wrap;
   justify-content: center;
   gap: var(--size-3);
-  z-index: var(--layer-2);
+  z-index: calc(var(--layer-important) - 1);
   padding-block: var(--size-3);
 }
 
