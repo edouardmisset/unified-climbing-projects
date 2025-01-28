@@ -73,29 +73,6 @@ text {
   white-space: pre;
 }
 
-/* Invalid inputs */
-:where(form) :user-invalid {
-  outline-offset: var(--size-px-1);
-  outline: var(--red-8) solid var(--border-size-2);
-}
-
-/* Valid inputs */
-:where(form) :user-valid {
-  outline-offset: var(--size-px-1);
-  outline: var(--green-8) solid var(--border-size-1);
-}
-
-/* Utility classes */
-
-/** Intrinsic Container */
-.intrinsic-container {
-  --container-max: 60ch;
-  --margin: 3rem;
-
-  inline-size: min(100% - var(--margin, 3rem), var(--container-max, 60ch));
-  margin-inline: auto;
-}
-
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
 .visually-hidden {
   clip-path: inset(100%);
