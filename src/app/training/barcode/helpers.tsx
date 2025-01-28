@@ -1,4 +1,3 @@
-import { maxBarWidth } from '~/app/_components/barcode/constants'
 import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
@@ -8,13 +7,15 @@ import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDateTime } from '~/types/generic'
 
+import styles from '~/app/_components/barcode/barcode.module.css'
+
 export function trainingSessionsBarcodeRender(
   weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[],
   index: number,
 ) {
-  const barWidth = weeklyTraining.length
+  const numberOfTraining = weeklyTraining.length
 
-  // Sort week's training by ascending grades
+  // Sort week's training by session type
   const filteredWeeklyTraining = weeklyTraining
     .filter(training => training !== undefined)
     .sort(({ sessionType: aType }, { sessionType: bType }) =>
@@ -23,28 +24,25 @@ export function trainingSessionsBarcodeRender(
         : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
     )
 
-  // Colorize bars
-  const isSingleWeekTraining = weeklyTraining.length === 1
-  const backgroundGradient = isSingleWeekTraining
-    ? undefined
-    : `linear-gradient(to bottom in oklab, ${filteredWeeklyTraining
-        .map(({ sessionType }) => fromSessionTypeToBackgroundColor(sessionType))
-        .join(', ')})`
+  const isSingleWeekTraining = weeklyTraining.length <= 1
 
   return (
     <span
       key={(filteredWeeklyTraining[0]?.date ?? index).toString()}
-      className={
+      className={`${
         isSingleWeekTraining
           ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)
-          : undefined
-      }
+          : ''
+      } ${styles.bar}`}
       style={{
-        display: 'block',
-        blockSize: '100%',
-        width: barWidth,
-        maxWidth: maxBarWidth,
-        background: backgroundGradient,
+        inlineSize: `${numberOfTraining / 2}%`,
+        background: isSingleWeekTraining
+          ? undefined
+          : `linear-gradient(to bottom in oklch, ${filteredWeeklyTraining
+              .map(({ sessionType }) =>
+                fromSessionTypeToBackgroundColor(sessionType),
+              )
+              .join(', ')})`,
       }}
       title={createTrainingBarCodeTooltip(filteredWeeklyTraining)}
     />

@@ -1,4 +1,3 @@
-import { maxBarWidth } from '~/app/_components/barcode/constants'
 import {
   fromGradeToBackgroundColor,
   fromGradeToClassName,
@@ -8,36 +7,33 @@ import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 
+import styles from '~/app/_components/barcode/barcode.module.css'
+
 export function ascentsBarcodeRender(
   weeklyAscents: ((StringDateTime & Ascent) | undefined)[],
   index: number,
 ) {
-  const barWidth = weeklyAscents.length
+  const numberOfAscents = weeklyAscents.length
 
-  const filteredWeeklyAscents = weeklyAscents.filter(
-    ascent => ascent !== undefined,
-  )
+  const weeklyAscentsByDescendingGrade = weeklyAscents
+    .filter(ascent => ascent !== undefined)
+    .sort((a, b) => sortByDescendingGrade(a, b))
 
-  const weeklyAscentsByDescendingGrade = filteredWeeklyAscents.toSorted(
-    (a, b) => sortByDescendingGrade(a, b),
-  )
-
-  // Colorize bars
-  const isSingleAscent = weeklyAscents.length === 1
-  const backgroundGradient = `linear-gradient(to bottom in oklab, ${weeklyAscentsByDescendingGrade
-    .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
-    .join(', ')})`
+  const isSingleAscent = weeklyAscents.length <= 1
 
   return (
     <span
       key={(weeklyAscents[0]?.date ?? index).toString()}
-      className={`bar ${
+      className={`${
         isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
-      }`}
+      } ${styles.bar}`}
       style={{
-        inlineSize: barWidth,
-        maxInlineSize: maxBarWidth,
-        background: isSingleAscent ? undefined : backgroundGradient,
+        inlineSize: `${numberOfAscents / 2}%`,
+        background: isSingleAscent
+          ? undefined
+          : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
+              .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
+              .join(', ')})`,
       }}
       title={createAscentBarCodeTooltip(weeklyAscentsByDescendingGrade)}
     />
