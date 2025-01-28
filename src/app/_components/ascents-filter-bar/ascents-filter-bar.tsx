@@ -21,10 +21,6 @@ export default function AscentsFilterBar({
 }: { allAscents: Ascent[] }) {
   const yearList = createYearList(allAscents)
 
-  const KNOWN_CRAG_LIST = [
-    ...new Set(allAscents.map(({ crag }) => crag)),
-  ].sort()
-
   const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
     parse: value =>
@@ -46,18 +42,10 @@ export default function AscentsFilterBar({
     parse: value =>
       value === ALL_VALUE ? ALL_VALUE : ascentStyleSchema.parse(value),
   })
-  const [selectedCrag, setSelectedCrag] = useQueryState<OrAll<Ascent['crag']>>(
-    'crag',
-    {
-      defaultValue: ALL_VALUE,
-      parse: value => (value === ALL_VALUE ? ALL_VALUE : value),
-    },
-  )
 
   const handleYearChange = createChangeHandler(setSelectedYear)
   const handleStyleChange = createChangeHandler(setSelectedStyle)
   const handleDisciplineChange = createChangeHandler(setSelectedDiscipline)
-  const handleCragChange = createChangeHandler(setSelectedCrag)
 
   return (
     <div className={styles.container}>
@@ -82,12 +70,6 @@ export default function AscentsFilterBar({
         name="year"
         options={yearList}
         selectedOption={selectedYear}
-      />
-      <AscentSelect
-        handleChange={handleCragChange}
-        name="crag"
-        options={KNOWN_CRAG_LIST}
-        selectedOption={selectedCrag}
       />
     </div>
   )
