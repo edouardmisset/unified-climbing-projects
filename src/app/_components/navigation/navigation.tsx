@@ -30,7 +30,7 @@ export function Navigation() {
 
   return (
     <Menu.Root openOnHover={true}>
-      <Menu.Trigger className={styles.Button}>
+      <Menu.Trigger className={styles.Button} aria-label="navigation">
         <MenuIcon />
       </Menu.Trigger>
       <Menu.Portal>
