@@ -23,7 +23,7 @@ ${ascents
 
 export const createTrainingBarCodeTooltip = (
   sessions: TrainingSession[],
-): string =>
+): string | undefined =>
   sessions.length > 0 && sessions[0] !== undefined
     ? `Week # ${getWeek(new Date(sessions[0].date))}
 # Training (${sessions.length}):
@@ -33,7 +33,7 @@ ${sessions
       `${createClimbingDisciplineEmoji(climbingDiscipline)} ${sessionType} (${gymCrag}) - ${load === undefined ? '' : roundToTen(load)}%`,
   )
   .join('\n')}`
-    : ''
+    : undefined
 
 export const createAscentsQRTooltip = (
   ascents: Ascent[] | undefined,
