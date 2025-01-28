@@ -9,8 +9,9 @@ import {
   Track,
 } from '@radix-ui/react-slider'
 import type React from 'react'
-import { fromGradeToNumber } from '~/helpers/converters'
+import { useMemo } from 'react'
 import type { Grade } from '~/schema/ascent'
+import { convertGradeToNumber } from './helpers'
 import styles from './slider.module.css'
 
 export function GradeSlider(
@@ -19,35 +20,26 @@ export function GradeSlider(
     value?: Grade[] | SliderProps['value']
   } & React.RefAttributes<HTMLSpanElement>,
 ) {
-  const { defaultValue, value } = props
+  const { name ,defaultValue, value, ...otherProps } = props
 
-  const numberDefaultValue =
-    defaultValue === undefined
-      ? [0]
-      : typeof defaultValue[0] === 'number'
-        ? (defaultValue as number[])
-        : (defaultValue as Grade[]).map(defaultVal =>
-            fromGradeToNumber(defaultVal),
-          )
+  const numberDefaultValue = useMemo(
+    () => convertGradeToNumber(defaultValue),
+    [defaultValue],
+  )
 
-  const numberValue =
-    value === undefined
-      ? [0]
-      : typeof value[0] === 'number'
-        ? (value as number[])
-        : (value as Grade[]).map(val => fromGradeToNumber(val))
+  const numberValue = useMemo(() => convertGradeToNumber(value), [value])
 
   return (
     <Root
       className={styles.SliderRoot}
-      {...props}
+      {...otherProps}
       value={numberValue}
       defaultValue={numberDefaultValue}
     >
       <Track className={styles.SliderTrack}>
         <Range className={styles.SliderRange} />
       </Track>
-      <Thumb className={styles.SliderThumb} />
+      <Thumb className={styles.SliderThumb} aria-label={name} />
     </Root>
   )
 }
