@@ -11,10 +11,9 @@ export default async function Page() {
   return (
     <GridLayout title="Training">
       {Object.values(getYearsTrainingPerWeek(trainingSessions))
-        .map((yearTraining, i) => {
+        .map((yearTraining, index) => {
           const trainingYear = createYearList(trainingSessions)
-          const year =
-            trainingYear[trainingYear.length - 1 - i]?.toString() ?? ''
+          const year = trainingYear[index] ?? ''
           return (
             <div key={year} className="flex-column w100">
               <h2 className="center-text">
