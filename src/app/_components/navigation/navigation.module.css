@@ -1,3 +1,9 @@
+.Header {
+  position: absolute;
+  right: 0;
+  z-index: var(--layer-important);
+}
+
 .Button {
   box-sizing: border-box;
   display: flex;
@@ -44,6 +50,7 @@
 }
 
 .Positioner {
+  z-index: var(--layer-important);
   outline: 0;
 }
 

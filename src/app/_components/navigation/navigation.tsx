@@ -29,67 +29,69 @@ export function Navigation() {
   ).getFullYear()
 
   return (
-    <Menu.Root openOnHover={true}>
-      <Menu.Trigger className={styles.Button} aria-label="navigation">
-        <MenuIcon />
-      </Menu.Trigger>
-      <Menu.Portal>
-        <Menu.Positioner className={styles.Positioner} sideOffset={8}>
-          <Menu.Popup className={styles.Popup}>
-            <Menu.Arrow className={styles.Arrow}>
-              <ArrowSvg />
-            </Menu.Arrow>
-            <Menu.Item className={styles.Item}>
-              <Link href="/">🏠 Home</Link>
-            </Menu.Item>
-            <Menu.Item className={styles.Item}>
-              <Link href={'/log'}>📋 Log</Link>
-            </Menu.Item>
-            <Menu.Separator className={styles.Separator} />
-            <Menu.Group>
-              <Menu.GroupLabel className={styles.GroupLabel}>
-                🧗 Ascents 🧗
-              </Menu.GroupLabel>
-              {/* TODO: FIX THE TABLE. USE ANOTHER LIB */}
-              {/* <Menu.Item className={styles.Item}>
-                <Link href={'/ascents'}>Table</Link>
-              </Menu.Item> */}
+    <header className={styles.Header}>
+      <Menu.Root openOnHover={true}>
+        <Menu.Trigger className={styles.Button} aria-label="navigation">
+          <MenuIcon />
+        </Menu.Trigger>
+        <Menu.Portal>
+          <Menu.Positioner className={styles.Positioner} sideOffset={8}>
+            <Menu.Popup className={styles.Popup}>
+              <Menu.Arrow className={styles.Arrow}>
+                <ArrowSvg />
+              </Menu.Arrow>
               <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/dashboard'}>Dashboard</Link>
+                <Link href="/">🏠 Home</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={`/ascents/calendar/${latestSessionYear}`}>
-                  Calendar
-                </Link>
+                <Link href={'/log'}>📋 Log</Link>
               </Menu.Item>
-              <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/qr-code'}>QR</Link>
-              </Menu.Item>
-              <Menu.Item className={styles.Item}>
-                <Link href={'/ascents/barcode'}>Barcode</Link>
-              </Menu.Item>
-            </Menu.Group>
-            <Menu.Separator className={styles.Separator} />
-            <Menu.Group>
-              <Menu.GroupLabel className={styles.GroupLabel}>
-                💪 Training 💪
-              </Menu.GroupLabel>
-              <Menu.Item className={styles.Item}>
-                <Link href={'/training/qr-code'}>QR</Link>
-              </Menu.Item>
-              <Menu.Item className={styles.Item}>
-                <Link href={'/training/barcode'}>Barcode</Link>
-              </Menu.Item>
-              <Menu.Item className={styles.Item}>
-                <Link href={`/training/calendar/${latestSessionYear}`}>
-                  Calendar
-                </Link>
-              </Menu.Item>
-            </Menu.Group>
-          </Menu.Popup>
-        </Menu.Positioner>
-      </Menu.Portal>
-    </Menu.Root>
+              <Menu.Separator className={styles.Separator} />
+              <Menu.Group>
+                <Menu.GroupLabel className={styles.GroupLabel}>
+                  🧗 Ascents 🧗
+                </Menu.GroupLabel>
+                {/* TODO: FIX THE TABLE. USE ANOTHER LIB */}
+                {/* <Menu.Item className={styles.Item}>
+                  <Link href={'/ascents'}>Table</Link>
+                </Menu.Item> */}
+                <Menu.Item className={styles.Item}>
+                  <Link href={'/ascents/dashboard'}>Dashboard</Link>
+                </Menu.Item>
+                <Menu.Item className={styles.Item}>
+                  <Link href={`/ascents/calendar/${latestSessionYear}`}>
+                    Calendar
+                  </Link>
+                </Menu.Item>
+                <Menu.Item className={styles.Item}>
+                  <Link href={'/ascents/qr-code'}>QR</Link>
+                </Menu.Item>
+                <Menu.Item className={styles.Item}>
+                  <Link href={'/ascents/barcode'}>Barcode</Link>
+                </Menu.Item>
+              </Menu.Group>
+              <Menu.Separator className={styles.Separator} />
+              <Menu.Group>
+                <Menu.GroupLabel className={styles.GroupLabel}>
+                  💪 Training 💪
+                </Menu.GroupLabel>
+                <Menu.Item className={styles.Item}>
+                  <Link href={'/training/qr-code'}>QR</Link>
+                </Menu.Item>
+                <Menu.Item className={styles.Item}>
+                  <Link href={'/training/barcode'}>Barcode</Link>
+                </Menu.Item>
+                <Menu.Item className={styles.Item}>
+                  <Link href={`/training/calendar/${latestSessionYear}`}>
+                    Calendar
+                  </Link>
+                </Menu.Item>
+              </Menu.Group>
+            </Menu.Popup>
+          </Menu.Positioner>
+        </Menu.Portal>
+      </Menu.Root>
+    </header>
   )
 }
 

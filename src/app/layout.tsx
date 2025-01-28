@@ -25,7 +25,6 @@ import '~/styles/utilities.css'
 import { Navigation } from './_components/navigation/navigation.tsx'
 
 import type React from 'react'
-import { Footer } from './_components/footer/footer.tsx'
 import styles from './index.module.css'
 
 export const fetchCache = 'default-cache'
@@ -40,11 +39,8 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning={true}>
         <body className={styles.body}>
           <TRPCReactProvider>
-            <header>
-              <Navigation />
-            </header>
+            <Navigation />
             <main className={styles.main}>{children}</main>
-            <Footer />
           </TRPCReactProvider>
           <SpeedInsights />
           <Analytics />
