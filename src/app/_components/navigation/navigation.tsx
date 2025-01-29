@@ -31,7 +31,11 @@ export function Navigation() {
   return (
     <header className={styles.Header}>
       <Menu.Root openOnHover={true}>
-        <Menu.Trigger className={styles.Button} aria-label="navigation">
+        <Menu.Trigger
+          className={styles.Button}
+          aria-label="navigation"
+          tabIndex={0}
+        >
           <MenuIcon />
         </Menu.Trigger>
         <Menu.Portal>
