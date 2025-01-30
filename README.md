@@ -10,6 +10,8 @@ is my playground for these experiments.
 - [ ] Merge QR-Code pages and Barcode pages for training and ascents into one
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code).
+  - [ ] Opening a QR-code or Barcode should open a modal with the code, not a
+    new page.
 - [ ] Add auth (Clerk)
 - [ ] Add database (Postgres)
  -[ ] Attach database to UI
