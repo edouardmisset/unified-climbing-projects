@@ -1,20 +1,11 @@
 {
-  "cSpell.words": [
-    "Departement",
-    "nuqs",
-    "onsight",
-    "onsighted",
-    "qrcode",
-    "redpoint",
-    "redpointed",
-    "Undercling",
-    "underclings"
-  ],
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit",
+    "source.fixAll.biome": "explicit",
+    "source.addMissingImports.ts": "explicit",
     "source.organizeImports.biome": "explicit",
-    "source.fixAll.biome": "explicit"
   },
+  "editor.formatOnSave": true,
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -26,6 +17,11 @@
   },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[css]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": "explicit"
+    }
   },
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#af7414",

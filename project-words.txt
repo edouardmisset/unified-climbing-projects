@@ -1,5 +1,6 @@
 choco
 combinatoires
+Departement
 différentes
 droite
 Edouard
@@ -8,12 +9,18 @@ gauche
 Misset
 nuqs
 NuqsAdapter
+onsight
 Onsight
+onsighted
 poku
+qrcode
+redpoint
 Redpoint
+redpointed
 stylelintcache
 topoGrade
 toutes
 traiter
 Undercling
+underclings
 zindex
