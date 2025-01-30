@@ -9,9 +9,24 @@ const config = {
   experimental: {
     reactCompiler: true,
     staleTimes: {
-      dynamic: 30,
-      static: 180,
+      // in seconds
+      dynamic: 5 * 60,
+      static: 30 * 60,
     },
+  },
+  reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=600, stale-while-revalidate=59',
+          },
+        ],
+      },
+    ]
   },
 }
 
