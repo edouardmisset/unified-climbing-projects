@@ -1,9 +1,8 @@
 # Climbing App
 
-This is my pet project: climbing app 🤓.
-⚠️ It's a work in progress.
-I like to explore new technologies, new frameworks, new libraries. This project
-is my playground for these experiments.
+This is my pet project: climbing app 🤓.  
+⚠️ It's a work in progress.  
+I like to explore new technologies, new frameworks, new libraries. This project is my playground for these experiments.
 
 ## TODO
 
