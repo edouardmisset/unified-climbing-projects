@@ -17,7 +17,7 @@ export default async function GridLayout({
   const titleIsValidNumber = isValidNumber(title)
   return (
     <section className="flex-column w100 ">
-      <div className={styles.header}>
+      <div className={`${styles.header} ${styles.patagonia}`}>
         {titleIsValidNumber ? (
           <YearNavigationButton
             currentYear={titleIsValidNumber ? title : Number.NaN}

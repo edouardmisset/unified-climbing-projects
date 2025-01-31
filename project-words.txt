@@ -13,11 +13,13 @@ NuqsAdapter
 onsight
 Onsight
 onsighted
+patagonia
 poku
 qrcode
 redpoint
 Redpoint
 redpointed
+ruffwear
 stylelintcache
 topoGrade
 toutes
