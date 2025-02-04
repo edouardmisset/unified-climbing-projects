@@ -6,6 +6,7 @@ I like to explore new technologies, new frameworks, new libraries. This project 
 
 ## TODO
 
+- [ ] Redo ascent list table with another library (react-table?)
 - [ ] Merge QR-Code pages and Barcode pages for training and ascents into one
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code).  
