@@ -146,8 +146,8 @@
 }
 
 /* Progressive enhancements */
-:where(textarea, select, input) {
-  @supports (field-sizing: content) {
+@supports (field-sizing: content) {
+  :where(textarea, select, input) {
     field-sizing: content;
   }
 }

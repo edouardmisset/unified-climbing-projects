@@ -15,7 +15,6 @@ import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-table.module.css'
 
 declare module '@tanstack/react-table' {
-  // biome-ignore lint/correctness/noUnusedVariables: allows us to define custom properties for our columns
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: 'text' | 'range' | 'select'
   }

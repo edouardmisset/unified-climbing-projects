@@ -24,20 +24,9 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "all": true,
-      "suspicious": {
-        "noReactSpecificProps": "off",
-        "useAwait": "off",
-        "noConsole": "off",
-        "noConsoleLog": "off"
-      },
-      "style": {
-        "noDefaultExport": "off",
-        "useNamingConvention": "off",
-        "useBlockStatements": "off"
-      },
-      "correctness": {
-        "useImportExtensions": "off"
+      "recommended": true,
+      "nursery": {
+        "useStrictMode": "warn"
       }
     }
   },

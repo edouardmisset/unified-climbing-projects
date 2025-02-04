@@ -1,4 +1,3 @@
-// biome-ignore lint/correctness/noNodejsModules: ???
 import { writeFile } from 'node:fs/promises'
 import backup from './ascent-data.json' with { type: 'json' }
 
