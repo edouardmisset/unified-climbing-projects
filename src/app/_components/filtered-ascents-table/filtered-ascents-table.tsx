@@ -1,5 +1,6 @@
 'use client'
 
+import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
 import { api } from '~/trpc/react'
 import { AscentTable } from '../ascent-table/ascent-table'
@@ -12,7 +13,8 @@ export function FilteredAscentTable() {
 
   const filteredAscents = useAscentsFilter(allAscents)
 
-  if (!allAscents || isLoading) return <Loader />
+  if (isLoading) return <Loader />
+  if (!allAscents) return <NotFound />
 
   return (
     <>

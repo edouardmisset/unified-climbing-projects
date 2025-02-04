@@ -1,6 +1,7 @@
 'use client'
 
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
+import NotFound from '~/app/not-found.tsx'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { api } from '~/trpc/react'
 import { AscentsByStyle } from '../graphs/ascents-by-style/ascents-by-style.tsx'
@@ -17,7 +18,8 @@ export function Dashboard() {
 
   const filteredAscents = useAscentsFilter(allAscents)
 
-  if (!allAscents || isLoading) return <Loader />
+  if (isLoading) return <Loader />
+  if (!allAscents) return <NotFound />
 
   return (
     <>
