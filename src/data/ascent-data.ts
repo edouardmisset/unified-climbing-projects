@@ -4,8 +4,8 @@ import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
-export function createYearList<T extends Record<string, unknown>>(
-  data: (T & { date: string })[],
+export function createYearList<T extends StringDateTime>(
+  data: T[],
   options?: { descending?: boolean },
 ) {
   const { descending = true } = options ?? {}

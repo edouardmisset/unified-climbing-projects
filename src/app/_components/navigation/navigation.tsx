@@ -55,10 +55,9 @@ export function Navigation() {
                 <Menu.GroupLabel className={styles.GroupLabel}>
                   🧗 Ascents 🧗
                 </Menu.GroupLabel>
-                {/* TODO: FIX THE TABLE. USE ANOTHER LIB */}
-                {/* <Menu.Item className={styles.Item}>
+                <Menu.Item className={styles.Item}>
                   <Link href={'/ascents'}>Table</Link>
-                </Menu.Item> */}
+                </Menu.Item>
                 <Menu.Item className={styles.Item}>
                   <Link href={'/ascents/dashboard'}>Dashboard</Link>
                 </Menu.Item>

@@ -19,7 +19,7 @@ import { createChangeHandler } from './helpers.ts'
 export default function AscentsFilterBar({
   allAscents,
 }: { allAscents: Ascent[] }) {
-  const yearList = createYearList(allAscents)
+  const yearList = createYearList(allAscents, { descending: false })
 
   const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
