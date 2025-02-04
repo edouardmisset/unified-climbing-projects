@@ -18,6 +18,7 @@ export const cragsRouter = createTRPCRouter({
         })
         .optional(),
     )
+    .output(z.string().array())
     .query(async ({ input }) => {
       const { sorted = true } = input ?? {}
       const validCrags = await getValidCrags()
@@ -26,7 +27,7 @@ export const cragsRouter = createTRPCRouter({
 
       return sorted ? uniqueCrags.sort() : uniqueCrags
     }),
-  getFrequency: publicProcedure.query(async () => {
+  getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
     const validCrags = await getValidCrags()
 
     const sortedCragsByFrequency = sortNumericalValues(frequency(validCrags), {
@@ -41,6 +42,7 @@ export const cragsRouter = createTRPCRouter({
         'weight-by-grade': z.boolean().optional(),
       }),
     )
+    .output(z.record(z.number()))
     .query(async ({ input }) => {
       const { 'weight-by-grade': weightedByGrade } = input
 
@@ -103,22 +105,26 @@ export const cragsRouter = createTRPCRouter({
         Number((val / highestScore).toFixed(1)),
       )
     }),
-  getDuplicate: publicProcedure.query(async () => {
-    const validCrags = await getValidCrags()
+  getDuplicate: publicProcedure
+    .output(z.record(z.string().array()).array())
+    .query(async () => {
+      const validCrags = await getValidCrags()
 
-    const similarCrags = findSimilar(validCrags)
+      const similarCrags = findSimilar(validCrags)
 
-    return similarCrags
-  }),
+      return similarCrags
+    }),
 
-  getSimilar: publicProcedure.query(async () => {
-    const validCrags = await getValidCrags()
-    const similarCrags = Array.from(
-      groupSimilarStrings(validCrags, 2).entries(),
-    )
+  getSimilar: publicProcedure
+    .output(z.tuple([z.string(), z.string().array()]).array())
+    .query(async () => {
+      const validCrags = await getValidCrags()
+      const similarCrags = Array.from(
+        groupSimilarStrings(validCrags, 2).entries(),
+      )
 
-    return similarCrags
-  }),
+      return similarCrags
+    }),
 })
 
 async function getValidCrags(): Promise<Ascent['crag'][]> {

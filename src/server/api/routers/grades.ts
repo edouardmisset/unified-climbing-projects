@@ -9,6 +9,7 @@ import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
     .input(optionalAscentFilterSchema)
+    .output(gradeSchema.array())
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
@@ -18,6 +19,7 @@ export const gradesRouter = createTRPCRouter({
     }),
   getAverage: publicProcedure
     .input(optionalAscentFilterSchema)
+    .output(gradeSchema)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 

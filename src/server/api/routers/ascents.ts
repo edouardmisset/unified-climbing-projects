@@ -53,7 +53,7 @@ export const ascentsRouter = createTRPCRouter({
         new Date(leftDate) < new Date(rightDate) ? 1 : -1,
       )
     }),
-  getDuplicates: publicProcedure.query(async () => {
+  getDuplicates: publicProcedure.output(z.string().array()).query(async () => {
     const ascentMap = new Map<string, number>()
     const ascents = await getAllAscents()
 
@@ -73,17 +73,19 @@ export const ascentsRouter = createTRPCRouter({
 
     return duplicateAscents
   }),
-  getSimilar: publicProcedure.query(async () => {
-    const ascents = await getAllAscents()
-    const similarAscents = Array.from(
-      groupSimilarStrings(
-        ascents.map(({ routeName }) => routeName),
-        2,
-      ).entries(),
-    )
+  getSimilar: publicProcedure
+    .output(z.tuple([z.string(), z.string().array()]).array())
+    .query(async () => {
+      const ascents = await getAllAscents()
+      const similarAscents = Array.from(
+        groupSimilarStrings(
+          ascents.map(({ routeName }) => routeName),
+          2,
+        ).entries(),
+      )
 
-    return similarAscents
-  }),
+      return similarAscents
+    }),
   search: publicProcedure
     .input(
       z.object({
@@ -93,6 +95,16 @@ export const ascentsRouter = createTRPCRouter({
           .optional()
           .transform(val => validNumberWithFallback(val, 100)),
       }),
+    )
+    .output(
+      ascentSchema
+        .merge(
+          z.object({
+            highlight: string(),
+            target: string(),
+          }),
+        )
+        .array(),
     )
     .query(async ({ input }) => {
       const { query, limit } = input
@@ -174,6 +186,7 @@ export const ascentsRouter = createTRPCRouter({
     }),
   addOne: publicProcedure
     .input(ascentSchema.omit({ id: true }))
+    .output(z.boolean())
     .query(async ({ input }) => {
       try {
         addAscent(input)
