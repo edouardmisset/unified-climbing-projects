@@ -1,7 +1,7 @@
 .Header {
   position: absolute;
   right: 0;
-  z-index: var(--layer-important);
+  z-index: var(--layer-3);
 }
 
 .Button {
@@ -50,7 +50,7 @@
 }
 
 .Positioner {
-  z-index: var(--layer-important);
+  z-index: var(--layer-3);
   outline: 0;
 }
 
