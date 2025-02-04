@@ -8,13 +8,12 @@ import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
 import { Loader } from '../loader/loader'
 
 export function FilteredAscentTable() {
-  const [allAscents, { isLoading }] =
-    api.ascents.getAllAscents.useSuspenseQuery()
-
-  const filteredAscents = useAscentsFilter(allAscents)
+  const { data: allAscents, isLoading } = api.ascents.getAllAscents.useQuery()
 
   if (isLoading) return <Loader />
   if (!allAscents) return <NotFound />
+
+  const filteredAscents = useAscentsFilter(allAscents)
 
   return (
     <>

@@ -1,7 +1,7 @@
 'use client'
 
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
-import NotFound from '~/app/not-found.tsx'
+import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { api } from '~/trpc/react'
 import { AscentsByStyle } from '../graphs/ascents-by-style/ascents-by-style.tsx'
@@ -13,13 +13,13 @@ import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
 export function Dashboard() {
-  const [allAscents, { isLoading }] =
-    api.ascents.getAllAscents.useSuspenseQuery()
-
-  const filteredAscents = useAscentsFilter(allAscents)
+  const { data: allAscents, isLoading } = api.ascents.getAllAscents.useQuery()
 
   if (isLoading) return <Loader />
+
   if (!allAscents) return <NotFound />
+
+  const filteredAscents = useAscentsFilter(allAscents)
 
   return (
     <>
