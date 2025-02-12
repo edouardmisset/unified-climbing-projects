@@ -8,7 +8,6 @@ import '~/styles/colors.css'
 import '~/styles/animation.css'
 import '~/styles/aspects.css'
 import '~/styles/border.css'
-import '~/styles/button.css'
 import '~/styles/durations.css'
 import '~/styles/easing.css'
 import '~/styles/fonts.css'
@@ -19,6 +18,8 @@ import '~/styles/zindex.css'
 import '~/styles/climbing-colors.css'
 
 import '~/styles/reset.css'
+
+import '~/styles/button.css'
 
 import '~/styles/utilities.css'
 

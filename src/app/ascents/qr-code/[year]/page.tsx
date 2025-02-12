@@ -3,7 +3,7 @@ import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearAscentPerDay } from '~/data/ascent-data'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
-import { ascentsQRCodeRender } from '../helpers.tsx'
+import { ascentsQRCodeRender } from '../../../../helpers/ascents-qr-code-helpers.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -30,7 +30,7 @@ export default async function Page(props: {
   return (
     <section className="flex-column w100">
       <h1 className="section-header">{year}</h1>
-      <QRCode data={sortedAscents} itemRender={ascentsQRCodeRender} />
+      <QRCode allData={sortedAscents} dotRender={ascentsQRCodeRender} />
     </section>
   )
 }

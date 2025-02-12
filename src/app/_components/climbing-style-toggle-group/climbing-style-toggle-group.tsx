@@ -1,7 +1,7 @@
 import { Item, Root } from '@radix-ui/react-toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list'
 import { ASCENT_STYLE } from '~/schema/ascent'
-import styles from './toggle-group.module.css'
+import styles from './climbing-style-toggle-group.module.css'
 
 type ClimbingStyleToggleGroup = {
   display: boolean

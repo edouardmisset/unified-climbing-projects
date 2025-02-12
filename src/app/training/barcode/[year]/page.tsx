@@ -1,7 +1,7 @@
 import Barcode from '~/app/_components/barcode/barcode'
 import { getYearsTrainingPerWeek } from '~/data/training-data'
 import { api } from '~/trpc/server'
-import { trainingSessionsBarcodeRender } from '../helpers.tsx'
+import { trainingSessionsBarcodeRender } from '../../../../helpers/training-barcode-helpers.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -18,8 +18,8 @@ export default async function Page(props: {
     <section className="w100">
       <h1 className="section-header">{year}</h1>
       <Barcode
-        data={selectedTraining}
-        itemRender={trainingSessionsBarcodeRender}
+        yearData={selectedTraining}
+        barRender={trainingSessionsBarcodeRender}
       />
     </section>
   )

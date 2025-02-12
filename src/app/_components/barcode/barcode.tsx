@@ -1,34 +1,24 @@
 import type React from 'react'
 
-import { getWeek } from '~/helpers/date'
-import type { Object_ } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
+import type { GenericBarcodeByYearProps } from '../generic-barcode-by-year/generic-barcode-by-year'
 import styles from './barcode.module.css'
-import type { BarCodeProps } from './types'
 
-export default function Barcode<T extends Object_>(
-  props: BarCodeProps<T>,
+type BarcodeProps<T extends StringDate, WeeklyData = T[] | undefined> = Pick<
+  GenericBarcodeByYearProps<T>,
+  'barRender'
+> & {
+  yearData: WeeklyData[]
+}
+
+export default function Barcode<T extends StringDate>(
+  props: BarcodeProps<T>,
 ): React.JSX.Element {
-  const { data = [] } = props
+  const { yearData, barRender } = props
 
   return (
     <div className={styles.barcode}>
-      {'itemRender' in props
-        ? data.map(props.itemRender)
-        : data.map((elements, index) => {
-            const firstElementDate = elements[0]?.date
-            return (
-              <span
-                key={
-                  firstElementDate ? getWeek(new Date(firstElementDate)) : index
-                }
-                style={{
-                  backgroundColor: elements[0]?.[props.field]
-                    ? 'black'
-                    : 'white',
-                }}
-              />
-            )
-          })}
+      {yearData.map(item => barRender(item))}
     </div>
   )
 }

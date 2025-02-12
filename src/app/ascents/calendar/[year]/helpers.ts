@@ -4,10 +4,10 @@ import { formatDateTime } from '~/helpers/date'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 export function fromAscentsToCalendarEntries(
-  yearlyAscents?: (StringDateTime & {
+  yearlyAscents?: (StringDate & {
     ascents?: Ascent[]
   })[],
 ): DayDescriptor[] {

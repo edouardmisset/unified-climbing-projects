@@ -5,13 +5,12 @@ import {
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 import styles from '~/app/_components/barcode/barcode.module.css'
 
 export function trainingSessionsBarcodeRender(
-  weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[],
-  index: number,
+  weeklyTraining: ((StringDate & TrainingSession) | undefined)[],
 ) {
   const numberOfTraining = weeklyTraining.length
 
@@ -24,11 +23,13 @@ export function trainingSessionsBarcodeRender(
         : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
     )
 
+  if (filteredWeeklyTraining[0] === undefined) return <span />
+
   const isSingleWeekTraining = weeklyTraining.length <= 1
 
   return (
     <span
-      key={(filteredWeeklyTraining[0]?.date ?? index).toString()}
+      key={filteredWeeklyTraining[0].date}
       className={`${
         isSingleWeekTraining
           ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)

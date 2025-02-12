@@ -1,4 +1,4 @@
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
 import { getDayOfYear } from '~/helpers/date.ts'
@@ -15,14 +15,14 @@ const getTrainingYears = (trainingSessions: TrainingSession[]) =>
 
 const getTrainingCollection: (
   trainingSessions: TrainingSession[],
-) => Record<number, (StringDateTime & TrainingSession)[]> = (
+) => Record<number, (StringDate & TrainingSession)[]> = (
   trainingSessions: TrainingSession[],
 ) => createEmptyYearlyCollections(getTrainingYears(trainingSessions))
 
-export const getYearTraining = (
+export function getYearTraining(
   trainingSessions: TrainingSession[],
-): Record<number, TrainingSession[]> =>
-  trainingSessions.reduce(
+): Record<number, TrainingSession[]> {
+  return trainingSessions.reduce(
     (acc, trainingSession) => {
       const date = new Date(trainingSession.date)
       const year = date.getFullYear()
@@ -35,6 +35,7 @@ export const getYearTraining = (
     },
     { ...getTrainingCollection(trainingSessions) },
   )
+}
 
 export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(

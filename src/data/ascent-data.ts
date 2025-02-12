@@ -1,10 +1,10 @@
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
 import { getDayOfYear, getWeeksInYear } from '~/helpers/date.ts'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 import { createEmptyYearlyCollections } from './helpers.ts'
 
-export function createYearList<T extends StringDateTime>(
+export function createYearList<T extends StringDate>(
   data: T[],
   options?: { descending?: boolean },
 ) {
@@ -14,35 +14,42 @@ export function createYearList<T extends StringDateTime>(
   ].sort((a, b) => a - b * (descending ? -1 : 1))
 }
 
-const getAscentsCollection: (
-  ascents: Ascent[],
-) => Record<number, (StringDateTime & { ascents?: Ascent[] })[]> = (
-  ascents: Ascent[],
-) => createEmptyYearlyCollections(createYearList(ascents))
+function getAscentsCollection(ascents: Ascent[]): Record<number, StringDate[]> {
+  return createEmptyYearlyCollections(createYearList(ascents))
+}
 
-export function getYearAscentPerDay(ascents: Ascent[]) {
+export function getYearAscentPerDay(
+  ascents: Ascent[],
+): Record<number, (StringDate & { ascents: Ascent[] })[]> {
   return ascents.reduce(
     (acc, ascent) => {
       const date = new Date(ascent.date)
       const year = date.getFullYear()
       const dayOfYear = getDayOfYear(date)
+      const currentYear = acc[year]
 
-      const thisDay = acc[year]?.[dayOfYear - 1]
+      if (currentYear === undefined) return acc
 
-      if (acc[year] === undefined) return acc
+      const currentDay = currentYear[dayOfYear - 1]
 
-      acc[year][dayOfYear - 1] = {
+      currentYear[dayOfYear - 1] = {
         date: date.toString(),
-        ascents: [...(thisDay?.ascents ? [...thisDay.ascents] : []), ascent],
+        ascents: [
+          ...(currentDay?.ascents ? [...currentDay.ascents] : []),
+          ascent,
+        ],
       }
       return acc
     },
-    { ...getAscentsCollection(ascents) },
+    getAscentsCollection(ascents) as Record<
+      number,
+      (StringDate & { ascents: Ascent[] })[]
+    >,
   )
 }
 
 export function createEmptyBarcodeCollection<T extends Record<string, unknown>>(
-  data: (T & { date: string })[],
+  data: (T & StringDate)[],
 ) {
   return Object.fromEntries(
     createYearList(data).map(year => [
@@ -58,14 +65,13 @@ export function getYearsAscentsPerWeek(ascents: Ascent[]) {
       const date = new Date(ascent.date)
       const year = date.getFullYear()
       const weekOfYear = getWeek(date)
+      const thisYear = accumulator[year]
 
-      const weekAscents = accumulator[year]?.[weekOfYear]
+      if (thisYear === undefined) return accumulator
 
-      if (accumulator[year] === undefined) return accumulator
+      const weekAscents = thisYear[weekOfYear]
 
-      accumulator[year][weekOfYear] = weekAscents
-        ? [...weekAscents, ascent]
-        : [ascent]
+      thisYear[weekOfYear] = weekAscents ? [...weekAscents, ascent] : [ascent]
 
       return accumulator
     },

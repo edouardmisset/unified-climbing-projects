@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import type React from 'react'
 import { cloneElement } from 'react'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
+import type { QrCodeListProps } from '../generic-qr-code-by-year/generic-qr-code-by-year.tsx'
 import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
@@ -11,23 +12,16 @@ const imageSize = 9
 const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
 const _imageEnd = gridSize - imageSize + 2 // 18
 
-type Obj = Record<string, unknown>
-
-type MainQRCodeProps<T extends Obj> = {
-  data: (StringDateTime & T)[]
+type QRCodeProps<T extends StringDate> = Pick<
+  QrCodeListProps<T>,
+  'dotRender'
+> & {
   children?: React.JSX.Element
+  yearData: (T[] | undefined)[]
 }
 
-type QRCodeProps<T extends Obj> = MainQRCodeProps<T> &
-  (
-    | {
-        itemRender: (item: StringDateTime & T) => React.ReactNode
-      }
-    | { field: keyof T }
-  )
-
-export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
-  const { data, children } = props
+export default function QRCode<T extends StringDate>(props: QRCodeProps<T>) {
+  const { yearData, children, dotRender } = props
   const image = children ?? (
     <Image
       alt="emoji of a person climbing"
@@ -48,16 +42,7 @@ export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
       {cloneElement(image, { className: styles.image })}
 
       {/* Data */}
-      {'itemRender' in props
-        ? data.map(props.itemRender)
-        : data.map(element => (
-            <i
-              key={element.date}
-              style={{
-                backgroundColor: element[props.field] ? 'black' : 'white',
-              }}
-            />
-          ))}
+      {yearData.map(item => dotRender(item))}
     </div>
   )
 }

@@ -6,8 +6,8 @@ I like to explore new technologies, new frameworks, new libraries. This project 
 
 ## TODO
 
-- [x] Redo ascent list table with another library (react-table?)
-- [ ] Merge QR-Code pages and Barcode pages for training and ascents into one
+- [x] Redo ascents table with another library (react-table?)
+- [x] Merge QR-Code pages and Barcode pages for training and ascents into one
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code).  
 - [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.  

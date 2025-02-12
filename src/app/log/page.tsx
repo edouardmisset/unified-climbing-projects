@@ -16,12 +16,12 @@ import {
 
 import { type ChangeEventHandler, Suspense, useCallback, useMemo } from 'react'
 import { GradeSlider } from '~/app/_components/slider/slider'
-import { disjunctiveListFormatter } from '~/helpers/list.ts'
-import { api } from '~/trpc/react.tsx'
-import { Loader } from '../_components/loader/loader.tsx'
-import { Spacer } from '../_components/spacer/spacer.tsx'
-import { ClimbingStyleToggleGroup } from '../_components/toggle-group/toggle-group.tsx'
-import { onSubmit } from './actions.ts'
+import { disjunctiveListFormatter } from '~/helpers/list'
+import { api } from '~/trpc/react'
+import { ClimbingStyleToggleGroup } from '../_components/climbing-style-toggle-group/climbing-style-toggle-group'
+import { Loader } from '../_components/loader/loader'
+import { Spacer } from '../_components/spacer/spacer'
+import { onSubmit } from './actions'
 import {
   MAX_HEIGHT,
   MAX_RATING,
@@ -32,9 +32,9 @@ import {
   _0To5RegEx,
   _0To100RegEx,
   _1To9999RegEx,
-} from './constants.ts'
+} from './constants'
 import styles from './page.module.css'
-import { type AscentFormInput, ascentFormInputSchema } from './types.ts'
+import { type AscentFormInput, ascentFormInputSchema } from './types'
 
 type GradeSetter = (value: number[]) => void
 

@@ -6,7 +6,7 @@ const numberOfSquareInMarker = 4
 const leftRegEx = /left/i
 const topRegEx = /top/i
 
-export default async function Marker({
+export default function Marker({
   placement,
 }: {
   placement: MarkerPlacement

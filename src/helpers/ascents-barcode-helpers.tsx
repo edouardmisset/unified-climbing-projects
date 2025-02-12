@@ -5,13 +5,12 @@ import {
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 import styles from '~/app/_components/barcode/barcode.module.css'
 
 export function ascentsBarcodeRender(
-  weeklyAscents: ((StringDateTime & Ascent) | undefined)[],
-  index: number,
+  weeklyAscents: ((StringDate & Ascent) | undefined)[],
 ) {
   const numberOfAscents = weeklyAscents.length
 
@@ -19,11 +18,13 @@ export function ascentsBarcodeRender(
     .filter(ascent => ascent !== undefined)
     .sort((a, b) => sortByDescendingGrade(a, b))
 
+  if (weeklyAscents[0] === undefined) return <span />
+
   const isSingleAscent = weeklyAscents.length <= 1
 
   return (
     <span
-      key={(weeklyAscents[0]?.date ?? index).toString()}
+      key={weeklyAscents[0].date}
       className={`${
         isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
       } ${styles.bar}`}

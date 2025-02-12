@@ -2,10 +2,10 @@ import { fromGradeToClassName } from '~/helpers/converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 export function ascentsQRCodeRender(
-  ascentDay: { ascents?: Ascent[] } & StringDateTime,
+  ascentDay: { ascents?: Ascent[] } & StringDate,
 ) {
   const { ascents, date } = ascentDay
 

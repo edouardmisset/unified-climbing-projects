@@ -1,9 +1,9 @@
 import { getDaysInYear } from '~/helpers/date'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 export function createEmptyYearlyCollections(
   listOfYears: number[],
-): Record<number, StringDateTime[]> {
+): Record<number, StringDate[]> {
   return Object.fromEntries(
     listOfYears.map(year => {
       const daysPerYear = getDaysInYear(year)
