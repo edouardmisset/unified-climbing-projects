@@ -10,10 +10,10 @@ import { Loader } from '../loader/loader'
 export function FilteredAscentTable() {
   const { data: allAscents, isLoading } = api.ascents.getAllAscents.useQuery()
 
+  const filteredAscents = useAscentsFilter(allAscents ?? [])
+
   if (isLoading) return <Loader />
   if (!allAscents) return <NotFound />
-
-  const filteredAscents = useAscentsFilter(allAscents)
 
   return (
     <>
