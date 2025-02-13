@@ -20,6 +20,7 @@ export function AscentSelect({
   title,
 }: AscentSelectProps) {
   const titleWithFallback = title ?? capitalize(name)
+
   return (
     <label className={styles.container} htmlFor={name}>
       {capitalize(name)}

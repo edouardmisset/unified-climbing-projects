@@ -11,7 +11,7 @@ export function createYearList<T extends StringDateTime>(
   const { descending = true } = options ?? {}
   return [
     ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
-  ].sort((a, b) => a - b * (descending ? -1 : 1))
+  ].sort((a, b) => (a - b) * (descending ? -1 : 1))
 }
 
 const getAscentsCollection: (
