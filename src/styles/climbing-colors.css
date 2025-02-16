@@ -47,9 +47,9 @@
   --stamina: var(--indigo-5);
   --stamina-high: var(--indigo-9);
 
-  --strength-low: var(--red-1);
-  --strength: var(--red-5);
-  --strength-high: var(--red-9);
+  --strength-low: var(--pink-1);
+  --strength: var(--pink-5);
+  --strength-high: var(--pink-9);
 
   --tapered-low: var(--violet-1);
   --tapered: var(--violet-5);
@@ -61,9 +61,9 @@
   --multi-pitch: var(--choco-4);
 
   /* STYLE */
-  --onsight: var(--jungle-6);
-  --flash: var(--brown-6);
-  --redpoint: var(--red-6);
+  --onsight: var(--teal-5);
+  --flash: var(--yellow-5);
+  --redpoint: var(--red-5);
 }
 
 /* GRADES */
