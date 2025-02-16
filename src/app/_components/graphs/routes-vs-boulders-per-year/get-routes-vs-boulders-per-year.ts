@@ -1,9 +1,9 @@
-import { getAscentsYears } from '~/helpers/get-ascents-years'
+import { createYearList } from '~/data/ascent-data'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import type { Ascent } from '~/schema/ascent'
 
 export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
-  const years = getAscentsYears(ascents)
+  const years = createYearList(ascents, { descending: false })
 
   return years.map(year => {
     const ascentsInYear = ascents.filter(({ date }) => isDateInYear(date, year))

@@ -1,16 +1,27 @@
-'use client'
-
-import { ResponsiveBar } from '@nivo/bar'
-import { getGradeFrequencyAndColors } from '~/app/_components/graphs/ascents-pyramid/get-grade-frequency'
+import { type ComputedDatum, ResponsiveBar } from '@nivo/bar'
+import type { OrdinalColorScaleConfig } from '@nivo/colors'
+import { useMemo } from 'react'
+import {
+  type GradeFrequency,
+  getGradeFrequencyAndColors,
+} from '~/app/_components/graphs/ascents-pyramid/get-grade-frequency'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { ascentPyramidTheme } from '../constants'
+
+const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
+  id,
+  data,
+}) => String(data[`${id}Color` as keyof typeof data])
 
 export function AscentPyramid({
   ascents,
 }: {
   ascents: Ascent[]
 }) {
-  const gradeFrequency = getGradeFrequencyAndColors(ascents)
+  const gradeFrequency = useMemo(
+    () => getGradeFrequencyAndColors(ascents),
+    [ascents],
+  )
 
   return (
     <>
@@ -23,7 +34,7 @@ export function AscentPyramid({
         padding={0.5}
         enableGridY={false}
         // @ts-ignore
-        colors={({ id, data }) => data[`${id}Color`]}
+        colors={colors}
         enableLabel={false}
         motionConfig="slow"
       />

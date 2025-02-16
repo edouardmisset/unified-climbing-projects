@@ -1,4 +1,8 @@
+import type { AxisProps } from '@nivo/axes'
+import type { OrdinalColorScaleConfig } from '@nivo/colors'
 import type { Theme } from '@nivo/core'
+import type { ComputedDatum } from '@nivo/pie'
+import type { ClimbingDisciplineMetric } from './types'
 
 export const ascentPyramidTheme: Theme = {
   background: 'var(--surface-1)',
@@ -21,3 +25,27 @@ export const ascentPyramidTheme: Theme = {
     },
   },
 }
+
+export const DEFAULT_GRAPH_MARGIN = { bottom: 40, left: 40, top: 20 }
+export const DEFAULT_PIE_MARGIN = {
+  top: 20,
+  right: 100,
+  bottom: 20,
+  left: 100,
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: This comes from the Nivo library
+export const axisBottom: AxisProps<any> = {
+  format: year => `'${year.toString().slice(2)}`,
+}
+
+export const graphColorGetter: OrdinalColorScaleConfig<
+  ComputedDatum<{
+    [grade: string]: number
+    year: number
+  }>
+> = ({ id: grade, data }) => String(data[`${grade}Color`])
+
+export const pieColorsGetter: OrdinalColorScaleConfig<
+  Omit<ComputedDatum<ClimbingDisciplineMetric>, 'fill' | 'color' | 'arc'>
+> = ({ data }) => data.color

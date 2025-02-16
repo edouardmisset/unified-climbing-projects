@@ -1,6 +1,6 @@
+import { createYearList } from '~/data/ascent-data'
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { filterAscents } from '~/helpers/filter-ascents'
-import { getAscentsYears } from '~/helpers/get-ascents-years'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import { type Ascent, _GRADES } from '~/schema/ascent'
 
@@ -8,7 +8,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number
 }[] {
-  const descendingYears = getAscentsYears(ascents, { descending: false })
+  const descendingYears = createYearList(ascents, { descending: false })
 
   const ascentsFrequencyByYear = descendingYears.map(year => {
     const filteredAscentsByYear = ascents.filter(({ date }) =>

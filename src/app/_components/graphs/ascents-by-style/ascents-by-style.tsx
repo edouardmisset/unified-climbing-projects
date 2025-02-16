@@ -1,23 +1,23 @@
 import { ResponsivePie } from '@nivo/pie'
+import { useMemo } from 'react'
 import { getAscentsByStyle } from '~/app/_components/graphs/ascents-by-style/get-ascents-by-style'
 import type { Ascent } from '~/schema/ascent'
-import { ascentPyramidTheme } from '../constants'
+import { DEFAULT_PIE_MARGIN, ascentPyramidTheme } from '../constants'
 
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
-  const data = getAscentsByStyle(ascents)
-  const numberOfAscents = ascents.length
+  const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
   return (
     <>
       <ResponsivePie
         data={data}
-        theme={{ ...ascentPyramidTheme }}
+        theme={ascentPyramidTheme}
         colors={({ data }) => data.color}
-        margin={{ top: 20, right: 100, bottom: 20, left: 100 }}
+        margin={DEFAULT_PIE_MARGIN}
         motionConfig="slow"
         animate={true}
         innerRadius={0.5}
         arcLabel={data =>
-          `${data.value} (${Math.round((data.value / numberOfAscents) * 100)}%)`
+          `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
         }
         arcLabelsTextColor="var(--surface-1)"
       />

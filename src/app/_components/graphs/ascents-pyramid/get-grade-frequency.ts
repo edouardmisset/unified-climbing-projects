@@ -1,7 +1,7 @@
 import { filterAscents } from '~/helpers/filter-ascents'
 import type { Ascent, Grade } from '~/schema/ascent'
 
-type GradeFrequency = {
+export type GradeFrequency = {
   grade: Grade
   Onsight: number
   OnsightColor: string
