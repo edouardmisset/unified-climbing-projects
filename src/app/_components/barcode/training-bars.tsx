@@ -7,12 +7,15 @@ import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDateTime } from '~/types/generic'
 
-import styles from '~/app/_components/barcode/barcode.module.css'
+import styles from './barcode.module.css'
 
-export function trainingSessionsBarcodeRender(
-  weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[],
-  index: number,
-) {
+type TrainingBarsProps = {
+  weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[]
+}
+
+export function TrainingBars({
+  weeklyTraining,
+}: TrainingBarsProps) {
   const numberOfTraining = weeklyTraining.length
 
   // Sort week's training by session type
@@ -28,7 +31,6 @@ export function trainingSessionsBarcodeRender(
 
   return (
     <span
-      key={(filteredWeeklyTraining[0]?.date ?? index).toString()}
       className={`${
         isSingleWeekTraining
           ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)

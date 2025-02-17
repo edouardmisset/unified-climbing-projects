@@ -1,9 +1,9 @@
 import { Link } from 'next-view-transitions'
 import Barcode from '~/app/_components/barcode/barcode'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
-import { createYearList, getYearsAscentsPerWeek } from '~/data/ascent-data'
+import { getYearsAscentsPerWeek } from '~/data/ascent-data'
 import { api } from '~/trpc/server'
-import { ascentsBarcodeRender } from './helpers.tsx'
+import { AscentsBars } from '../../_components/barcode/ascents-bars.tsx'
 
 export default async function Page() {
   return (
@@ -16,20 +16,23 @@ export default async function Page() {
 async function BarcodeByYear() {
   const ascents = await api.ascents.getAllAscents()
 
-  return Object.values(getYearsAscentsPerWeek(ascents))
-    .map((yearAscents, i) => {
-      const yearList = createYearList(ascents)
-      const year = yearList[yearList.length - 1 - i] ?? ''
-      return (
-        <div key={year} className="flex-column w100">
-          <h2 className="center-text">
-            <Link href={`/ascents/barcode/${year}`} prefetch={true}>
-              {year}
-            </Link>
-          </h2>
-          <Barcode data={yearAscents} itemRender={ascentsBarcodeRender} />
-        </div>
-      )
-    })
-    .reverse()
+  return Object.entries(getYearsAscentsPerWeek(ascents))
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, yearAscents]) => (
+      <div key={year} className="flex-column w100">
+        <h2 className="center-text">
+          <Link href={`/ascents/barcode/${year}`} prefetch={true}>
+            {year}
+          </Link>
+        </h2>
+        <Barcode>
+          {yearAscents.map(weeklyAscents => (
+            <AscentsBars
+              key={weeklyAscents[0]?.date}
+              weeklyAscents={weeklyAscents}
+            />
+          ))}
+        </Barcode>
+      </div>
+    ))
 }

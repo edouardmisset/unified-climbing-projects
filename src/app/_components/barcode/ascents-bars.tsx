@@ -7,12 +7,13 @@ import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
 
-import styles from '~/app/_components/barcode/barcode.module.css'
+import styles from './barcode.module.css'
 
-export function ascentsBarcodeRender(
-  weeklyAscents: ((StringDateTime & Ascent) | undefined)[],
-  index: number,
-) {
+type AscentsBarsProps = {
+  weeklyAscents: ((StringDateTime & Ascent) | undefined)[]
+}
+
+export function AscentsBars({ weeklyAscents }: AscentsBarsProps) {
   const numberOfAscents = weeklyAscents.length
 
   const weeklyAscentsByDescendingGrade = weeklyAscents
@@ -23,7 +24,6 @@ export function ascentsBarcodeRender(
 
   return (
     <span
-      key={(weeklyAscents[0]?.date ?? index).toString()}
       className={`${
         isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
       } ${styles.bar}`}

@@ -59,9 +59,9 @@ export function getYearsAscentsPerWeek(ascents: Ascent[]) {
       const year = date.getFullYear()
       const weekOfYear = getWeek(date)
 
-      const weekAscents = accumulator[year]?.[weekOfYear]
-
       if (accumulator[year] === undefined) return accumulator
+
+      const weekAscents = accumulator[year][weekOfYear]
 
       accumulator[year][weekOfYear] = weekAscents
         ? [...weekAscents, ascent]
