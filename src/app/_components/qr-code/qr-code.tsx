@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import type React from 'react'
-import { cloneElement } from 'react'
+import { type ReactNode, cloneElement } from 'react'
 import type { StringDateTime } from '~/types/generic'
 import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
@@ -11,32 +11,11 @@ const imageSize = 9
 const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
 const _imageEnd = gridSize - imageSize + 2 // 18
 
-type Obj = Record<string, unknown>
+export default async function QRCode(props: {
+  children?: ReactNode
+}) {
+  const { children } = props
 
-type MainQRCodeProps<T extends Obj> = {
-  data: (StringDateTime & T)[]
-  children?: React.JSX.Element
-}
-
-type QRCodeProps<T extends Obj> = MainQRCodeProps<T> &
-  (
-    | {
-        itemRender: (item: StringDateTime & T) => React.ReactNode
-      }
-    | { field: keyof T }
-  )
-
-export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
-  const { data, children } = props
-  const image = children ?? (
-    <Image
-      alt="emoji of a person climbing"
-      src={climberImagePath}
-      width={120}
-      height={120}
-      priority={true}
-    />
-  )
   return (
     <div className={styles.qrcode}>
       {/* Square markers */}
@@ -45,19 +24,17 @@ export default async function QRCode<T extends Obj>(props: QRCodeProps<T>) {
       <Marker placement="BottomLeft" />
 
       {/* Image at the center of the QR Code */}
-      {cloneElement(image, { className: styles.image })}
+      <Image
+        alt="emoji of a person climbing"
+        src={climberImagePath}
+        className={styles.image}
+        width={120}
+        height={120}
+        priority={true}
+      />
 
       {/* Data */}
-      {'itemRender' in props
-        ? data.map(props.itemRender)
-        : data.map(element => (
-            <i
-              key={element.date}
-              style={{
-                backgroundColor: element[props.field] ? 'black' : 'white',
-              }}
-            />
-          ))}
+      {children}
     </div>
   )
 }

@@ -55,7 +55,6 @@
   position: relative;
   inline-size: 100%;
   background: var(--patagonia-gradient);
-  overflow: hidden;
 
   &::before {
     content: '';

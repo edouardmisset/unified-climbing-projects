@@ -13,9 +13,7 @@ type TrainingBarsProps = {
   weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[]
 }
 
-export function TrainingBars({
-  weeklyTraining,
-}: TrainingBarsProps) {
+export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
   const numberOfTraining = weeklyTraining.length
 
   // Sort week's training by session type

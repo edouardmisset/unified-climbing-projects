@@ -1,8 +1,8 @@
+import { AscentsBar } from '~/app/_components/barcode/ascents-bar.tsx'
 import Barcode from '~/app/_components/barcode/barcode'
 import { getYearsAscentsPerWeek } from '~/data/ascent-data'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
-import { AscentsBars } from '../../../_components/barcode/ascents-bars.tsx'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
@@ -26,9 +26,9 @@ export default async function Page(props: {
     <section className="w100">
       <h1 className="section-header">{year}</h1>
       <Barcode>
-        {sortedAscents.map(weeklyAscents => (
-          <AscentsBars
-            key={weeklyAscents[0]?.date}
+        {sortedAscents.map((weeklyAscents, index) => (
+          <AscentsBar
+            key={weeklyAscents[0]?.date ?? index}
             weeklyAscents={weeklyAscents}
           />
         ))}

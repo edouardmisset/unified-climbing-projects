@@ -1,15 +1,16 @@
 .barcode {
   --inline-padding: 4%;
+  --bg-color: var(--gray-0);
 
+  inline-size: 100%;
+  max-inline-size: var(--size-content-2);
+  aspect-ratio: 2 / 1;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  inline-size: clamp(25ch, 60vw, 100%);
-  max-inline-size: 60ch;
-  background: var(--gray-0);
+  background-color: var(--bg-color);
   padding-inline: var(--inline-padding);
   padding-block: 2%;
-  aspect-ratio: 2 / 1;
   margin-inline: auto;
 }
 

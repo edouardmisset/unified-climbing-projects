@@ -187,7 +187,7 @@ export default function Log(): React.JSX.Element {
   }
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <h1 className={styles.title}>Congrats 🎉</h1>
       <span className="visually-hidden" aria-describedby="form-description">
         Form to log a climbing ascent
@@ -425,6 +425,6 @@ export default function Log(): React.JSX.Element {
           />
         </form>
       </Suspense>
-    </div>
+    </section>
   )
 }

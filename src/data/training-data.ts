@@ -13,28 +13,31 @@ const getTrainingYears = (trainingSessions: TrainingSession[]) =>
     ),
   ].sort((a, b) => b - a)
 
-const getTrainingCollection: (
+const getTrainingCollection = (
   trainingSessions: TrainingSession[],
-) => Record<number, (StringDateTime & TrainingSession)[]> = (
-  trainingSessions: TrainingSession[],
-) => createEmptyYearlyCollections(getTrainingYears(trainingSessions))
+): Record<number, TrainingSession[][]> =>
+  createEmptyYearlyCollections<TrainingSession>(
+    getTrainingYears(trainingSessions),
+  )
 
 export const getYearTraining = (
   trainingSessions: TrainingSession[],
-): Record<number, TrainingSession[]> =>
-  trainingSessions.reduce(
-    (acc, trainingSession) => {
-      const date = new Date(trainingSession.date)
-      const year = date.getFullYear()
-      const dayOfYear = getDayOfYear(date)
+): Record<number, TrainingSession[][]> =>
+  trainingSessions.reduce((accumulator, trainingSession) => {
+    const date = new Date(trainingSession.date)
+    const year = date.getFullYear()
+    const dayOfYear = getDayOfYear(date) - 1
 
-      if (acc[year] === undefined) return acc
+    if (accumulator[year] === undefined) return accumulator
 
-      acc[year][dayOfYear - 1] = trainingSession
-      return acc
-    },
-    { ...getTrainingCollection(trainingSessions) },
-  )
+    const currentDayTraining = accumulator[year][dayOfYear]
+
+    accumulator[year][dayOfYear] = [
+      ...(currentDayTraining !== undefined ? currentDayTraining : []),
+      trainingSession,
+    ]
+    return accumulator
+  }, getTrainingCollection(trainingSessions))
 
 export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(

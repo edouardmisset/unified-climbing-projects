@@ -16,7 +16,7 @@ export default async function GridLayout({
 }) {
   const titleIsValidNumber = isValidNumber(title)
   return (
-    <section className="flex-column w100 ">
+    <section className="flex-column w100 h100">
       <div className={`${styles.header} ${styles.patagonia}`}>
         {titleIsValidNumber ? (
           <YearNavigationButton

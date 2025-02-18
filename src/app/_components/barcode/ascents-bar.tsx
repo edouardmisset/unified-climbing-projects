@@ -13,7 +13,7 @@ type AscentsBarsProps = {
   weeklyAscents: ((StringDateTime & Ascent) | undefined)[]
 }
 
-export function AscentsBars({ weeklyAscents }: AscentsBarsProps) {
+export function AscentsBar({ weeklyAscents }: AscentsBarsProps) {
   const numberOfAscents = weeklyAscents.length
 
   const weeklyAscentsByDescendingGrade = weeklyAscents

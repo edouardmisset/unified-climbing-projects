@@ -8,12 +8,13 @@
 .qrcode {
   --bg-color: var(--gray-0);
 
+  inline-size: 100%;
+  max-inline-size: var(--size-content-2);
   aspect-ratio: 1;
   display: grid;
   grid-template: repeat(25, 1fr) / repeat(25, 1fr);
   gap: 2px;
   background-color: var(--bg-color);
-  margin-inline: auto;
 }
 
 .image {

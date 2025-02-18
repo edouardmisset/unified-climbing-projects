@@ -38,7 +38,7 @@ export default async function DataCalendar<
         {header} in {year}
       </h1>
       <Spacer size={3} />
-      <div className={styles.container}>
+      <div className={styles.navContainer}>
         <YearNavigationButton
           currentYear={year}
           nextOrPrevious="previous"

@@ -1,10 +1,10 @@
 import { Link } from 'next-view-transitions'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
+import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot.tsx'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { getYearAscentPerDay } from '~/data/ascent-data'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
-import { ascentsQRCodeRender } from './helpers.tsx'
 
 export default async function Page() {
   const ascents = await api.ascents.getAllAscents()
@@ -12,15 +12,12 @@ export default async function Page() {
     <GridLayout title="Ascents">
       {Object.entries(getYearAscentPerDay(ascents))
         .sort(([a], [b]) => Number(b) - Number(a))
-        .map(([year, ascents]) => {
-          const sortedAscents = ascents.map(ascentDay => ({
-            ...ascentDay,
-            ascents: ascentDay?.ascents
-              ? ascentDay.ascents.toSorted((a, b) =>
-                  sortByDescendingGrade(a, b),
-                )
-              : undefined,
-          }))
+        .map(([year, yearlyAscents]) => {
+          if (yearlyAscents === undefined) return <span>Unexpected error </span>
+
+          const sortedAscents = yearlyAscents.map(ascents =>
+            ascents.toSorted((a, b) => sortByDescendingGrade(a, b)),
+          )
           return (
             <div key={year}>
               <h2 className="center-text">
@@ -28,7 +25,14 @@ export default async function Page() {
                   {year}
                 </Link>
               </h2>
-              <QRCode data={sortedAscents} itemRender={ascentsQRCodeRender} />
+              <QRCode>
+                {sortedAscents.map((ascents, index) => (
+                  <AscentsQRDot
+                    ascents={ascents}
+                    key={ascents[0]?.date ?? index}
+                  />
+                ))}
+              </QRCode>
             </div>
           )
         })}

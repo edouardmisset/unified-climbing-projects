@@ -1,19 +1,14 @@
 import { getDaysInYear } from '~/helpers/date'
-import type { StringDateTime } from '~/types/generic'
+import type { Ascent } from '~/schema/ascent'
+import type { TrainingSession } from '~/schema/training'
 
-export function createEmptyYearlyCollections(
+export function createEmptyYearlyCollections<T = Ascent | TrainingSession>(
   listOfYears: number[],
-): Record<number, StringDateTime[]> {
+): Record<number, T[][]> {
   return Object.fromEntries(
-    listOfYears.map(year => {
-      const daysPerYear = getDaysInYear(year)
-
-      return [
-        year,
-        Array.from({ length: daysPerYear }).map((_, i) => ({
-          date: new Date(year, 0, i + 1).toString(),
-        })),
-      ]
-    }),
+    listOfYears.map(year => [
+      year,
+      Array.from({ length: getDaysInYear(year) }).map(() => [] as T[]),
+    ]),
   )
 }

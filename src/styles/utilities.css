@@ -14,8 +14,11 @@
   flex-direction: column;
 }
 
-.center {
+.justify-center {
   justify-content: center;
+}
+
+.align-center {
   align-items: center;
 }
 
@@ -24,7 +27,7 @@
 }
 
 .gap {
-  gap: var(--size-3);
+  gap: var(--size-fluid-2);
 }
 
 .space-evenly {
@@ -41,7 +44,7 @@
 
 .section-header {
   max-inline-size: 100%;
-  padding-block-end: var(--size-3);
+  padding-block-end: var(--size-fluid-2);
   text-align: center;
   text-wrap: balance;
 }
@@ -51,14 +54,20 @@
 }
 
 .grid {
+  --min: 300px;
+
   display: grid;
-  gap: var(--size-3);
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  padding: var(--size-3);
+  gap: var(--size-fluid-2);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+  padding: var(--size-fluid-2);
 }
 
 .w100 {
   inline-size: 100%;
+}
+
+.h100 {
+  block-size: 100%;
 }
 
 .cursor-pointer {
@@ -90,7 +99,7 @@ text {
   text-shadow: 0 0 0.05em black, 0 0 0.05em black, 0 0 0.05em black, 0 0 0.05em
     black;
 
-  @supports (color: oklch(from red l c h)) {
+  @supports (color: oklch(from lightblue l c h)) {
     --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
 
     color: oklch(from var(--color) var(--l) 0 h);
@@ -98,7 +107,7 @@ text {
   }
 
   /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
-  @supports (color: contrast-color(red)) {
+  @supports (color: contrast-color(lightblue)) {
     /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
     color: contrast-color(var(--color));
     text-shadow: none;

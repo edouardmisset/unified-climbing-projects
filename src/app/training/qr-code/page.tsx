@@ -1,9 +1,9 @@
 import { Link } from 'next-view-transitions'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
 import QRCode from '~/app/_components/qr-code/qr-code'
+import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot.tsx'
 import { getYearTraining } from '~/data/training-data'
 import { api } from '~/trpc/server'
-import { trainingSessionsQRCodeRender } from './helpers.tsx'
 
 export default async function Page() {
   const trainingSessions = await api.training.getAllTrainingSessions()
@@ -11,14 +11,21 @@ export default async function Page() {
     <GridLayout title="Training">
       {Object.entries(getYearTraining(trainingSessions))
         .sort(([a], [b]) => Number(b) - Number(a))
-        .map(([year, training]) => (
+        .map(([year, yearlyTraining]) => (
           <div key={year}>
             <h2 className="center-text">
               <Link href={`/training/qr-code/${year}`} prefetch={true}>
                 {year}
               </Link>
             </h2>
-            <QRCode data={training} itemRender={trainingSessionsQRCodeRender} />
+            <QRCode>
+              {yearlyTraining.map((trainingSessions, index) => (
+                <TrainingsQRDot
+                  trainingSessions={trainingSessions}
+                  key={trainingSessions[0]?.date ?? index}
+                />
+              ))}
+            </QRCode>
           </div>
         ))}
     </GridLayout>

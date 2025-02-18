@@ -1,9 +1,9 @@
 import { Link } from 'next-view-transitions'
+import { AscentsBar } from '~/app/_components/barcode/ascents-bar.tsx'
 import Barcode from '~/app/_components/barcode/barcode'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
 import { getYearsAscentsPerWeek } from '~/data/ascent-data'
 import { api } from '~/trpc/server'
-import { AscentsBars } from '../../_components/barcode/ascents-bars.tsx'
 
 export default async function Page() {
   return (
@@ -26,9 +26,9 @@ async function BarcodeByYear() {
           </Link>
         </h2>
         <Barcode>
-          {yearAscents.map(weeklyAscents => (
-            <AscentsBars
-              key={weeklyAscents[0]?.date}
+          {yearAscents.map((weeklyAscents, index) => (
+            <AscentsBar
+              key={weeklyAscents[0]?.date ?? index}
               weeklyAscents={weeklyAscents}
             />
           ))}

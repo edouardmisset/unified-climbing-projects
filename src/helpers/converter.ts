@@ -90,11 +90,14 @@ export function getSessionTypeColors({
   return `var(--${convertedSessionType})`
 }
 
-export const fromGradeToBackgroundColor = (grade: Grade | undefined): string =>
-  grade === undefined ? 'black' : (ASCENT_GRADE_TO_COLOR[grade] ?? 'black')
+export function fromGradeToBackgroundColor(grade: Grade | undefined): string {
+  return grade === undefined
+    ? 'black'
+    : (ASCENT_GRADE_TO_COLOR[grade] ?? 'black')
+}
 
-export const fromGradeToClassName = (
+export function fromGradeToClassName(
   grade?: Ascent['topoGrade'],
-): string | undefined => {
+): string | undefined {
   return grade && `_${grade.replaceAll('+', '_')}`
 }
