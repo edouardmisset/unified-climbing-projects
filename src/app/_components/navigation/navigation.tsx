@@ -50,6 +50,9 @@ export function Navigation() {
               <Menu.Item className={styles.Item}>
                 <Link href={'/log'}>📋 Log</Link>
               </Menu.Item>
+              <Menu.Item className={styles.Item}>
+                <Link href={'/visualization'}>🖼️ Visualization</Link>
+              </Menu.Item>
               <Menu.Separator className={styles.Separator} />
               <Menu.Group>
                 <Menu.GroupLabel className={styles.GroupLabel}>
@@ -66,24 +69,12 @@ export function Navigation() {
                     Calendar
                   </Link>
                 </Menu.Item>
-                <Menu.Item className={styles.Item}>
-                  <Link href={'/ascents/qr-code'}>QR</Link>
-                </Menu.Item>
-                <Menu.Item className={styles.Item}>
-                  <Link href={'/ascents/barcode'}>Barcode</Link>
-                </Menu.Item>
               </Menu.Group>
               <Menu.Separator className={styles.Separator} />
               <Menu.Group>
                 <Menu.GroupLabel className={styles.GroupLabel}>
                   💪 Training 💪
                 </Menu.GroupLabel>
-                <Menu.Item className={styles.Item}>
-                  <Link href={'/training/qr-code'}>QR</Link>
-                </Menu.Item>
-                <Menu.Item className={styles.Item}>
-                  <Link href={'/training/barcode'}>Barcode</Link>
-                </Menu.Item>
                 <Menu.Item className={styles.Item}>
                   <Link href={`/training/calendar/${latestSessionYear}`}>
                     Calendar
