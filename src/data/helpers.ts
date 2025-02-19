@@ -24,7 +24,7 @@ type YearlyDaysCollection<T> = {
 }
 
 /** Initially, the array of data is empty */
-export function initializeYearlyDataDaysCollection<
+function initializeYearlyDataDaysCollection<
   T extends StringDate = TrainingSession | Ascent,
 >(
   data: T[],
