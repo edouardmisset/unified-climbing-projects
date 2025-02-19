@@ -7,18 +7,18 @@ export function fromTrainingSessionsToCalendarEntries(
   trainingSessions?: TrainingSession[],
 ): DayDescriptor[] {
   return (
-    trainingSessions?.map(data => {
-      const { date, sessionType } = data
+    trainingSessions?.map(session => {
+      const { date, sessionType, intensity, volume } = session
       const backgroundColor = getSessionTypeColors({
         sessionType,
-        intensityPercent: data?.intensity,
-        volumePercent: data?.volume,
+        intensityPercent: intensity,
+        volumePercent: volume,
       })
 
       return {
         date,
         backgroundColor,
-        tooltip: createTrainingQRTooltip(data),
+        tooltip: createTrainingQRTooltip(session),
         shortText: sessionType ?? '',
       }
     }) ?? []

@@ -25,12 +25,12 @@ export default async function DataCalendar<
   const yearlyData = dataTransformationFunction(data)
   const dataInSelectedYear = yearlyData[year]
 
+  if (dataInSelectedYear === undefined) return <p>Year not found</p>
+
   const isDataPresentForPreviousYear = Boolean(yearlyData[year - 1])
   const isDataPresentForNextYear = Boolean(yearlyData[year + 1])
 
   const calendarEntries = fromDataToCalendarEntries(dataInSelectedYear)
-
-  if (dataInSelectedYear === undefined) return <div>Year not found</div>
 
   return (
     <>
