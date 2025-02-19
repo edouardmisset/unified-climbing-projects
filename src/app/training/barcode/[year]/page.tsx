@@ -1,6 +1,6 @@
 import Barcode from '~/app/_components/barcode/barcode'
 import { TrainingBar } from '~/app/_components/barcode/training-bar.tsx'
-import { getYearsTrainingPerWeek } from '~/data/training-data'
+import { getYearsDataPerWeek } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function Page(props: {
@@ -10,7 +10,7 @@ export default async function Page(props: {
 
   const trainingSessions = await api.training.getAllTrainingSessions()
 
-  const selectedTraining = getYearsTrainingPerWeek(trainingSessions)[year]
+  const selectedTraining = getYearsDataPerWeek(trainingSessions)[year]
 
   if (selectedTraining === undefined) return <span>No Data</span>
 

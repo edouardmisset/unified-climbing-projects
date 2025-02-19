@@ -1,7 +1,7 @@
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot.tsx'
-import { groupTrainingDaysByYear } from '~/data/training-data'
+import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function Page(props: {
@@ -14,8 +14,7 @@ export default async function Page(props: {
 
   const trainingSessions = await api.training.getAllTrainingSessions()
 
-  const selectedTrainingSessions =
-    groupTrainingDaysByYear(trainingSessions)[year]
+  const selectedTrainingSessions = groupDataDaysByYear(trainingSessions)[year]
 
   if (selectedTrainingSessions === undefined)
     return <div>No data found for the year {year}</div>

@@ -1,7 +1,8 @@
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot.tsx'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { groupAscentDaysByYear } from '~/data/ascent-data'
+import { groupDataDaysByYear } from '~/data/helpers'
+
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
 
@@ -15,7 +16,7 @@ export default async function Page(props: {
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscents = groupAscentDaysByYear(ascents)[year]
+  const selectedAscents = groupDataDaysByYear(ascents)[year]
 
   if (selectedAscents === undefined)
     return <div>No data found for the year {year}</div>

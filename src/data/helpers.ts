@@ -1,4 +1,9 @@
-import { getDayOfYear, getDaysInYear, getWeeksInYear } from '~/helpers/date'
+import {
+  getDayOfYear,
+  getDaysInYear,
+  getWeek,
+  getWeeksInYear,
+} from '~/helpers/date'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDateTime } from '~/types/generic'
@@ -36,16 +41,12 @@ export const createYearlyDataDaysCollection = <
   T extends StringDateTime = TrainingSession | Ascent,
 >(
   data: T[],
-): { [year: number]: T[][] } =>
+): YearlyDaysCollection<T> =>
   createEmptyYearlyDaysCollection<T>(createYearList(data))
 
 export function groupDataDaysByYear<
   T extends StringDateTime = Ascent | TrainingSession,
->(
-  ascents: T[],
-): {
-  [year: number]: T[][]
-} {
+>(ascents: T[]): YearlyDaysCollection<T> {
   return ascents.reduce((accumulator, ascent) => {
     const date = new Date(ascent.date)
     const year = date.getFullYear()
@@ -72,5 +73,28 @@ export function createEmptyBarcodeCollection<T extends Record<string, unknown>>(
       year,
       Array.from({ length: getWeeksInYear(year) }, (): T[] => []),
     ]),
+  )
+}
+
+export function getYearsDataPerWeek<
+  T extends StringDateTime = Ascent | TrainingSession,
+>(data: T[]) {
+  return data.reduce(
+    (accumulator, item) => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
+      const weekOfYear = getWeek(date)
+
+      if (accumulator[year] === undefined) return accumulator
+
+      const itemsInWeek = accumulator[year][weekOfYear]
+
+      accumulator[year][weekOfYear] = itemsInWeek
+        ? [...itemsInWeek, item]
+        : [item]
+
+      return accumulator
+    },
+    { ...createEmptyBarcodeCollection(data) },
   )
 }

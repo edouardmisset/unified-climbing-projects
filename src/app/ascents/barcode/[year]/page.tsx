@@ -1,6 +1,6 @@
 import { AscentsBar } from '~/app/_components/barcode/ascents-bar.tsx'
 import Barcode from '~/app/_components/barcode/barcode'
-import { getYearsAscentsPerWeek } from '~/data/ascent-data'
+import { getYearsDataPerWeek } from '~/data/helpers'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
 
@@ -11,7 +11,7 @@ export default async function Page(props: {
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscentsPerWeek = getYearsAscentsPerWeek(ascents)[year]
+  const selectedAscentsPerWeek = getYearsDataPerWeek(ascents)[year]
 
   if (selectedAscentsPerWeek === undefined)
     return <span>No Data found for this year</span>
