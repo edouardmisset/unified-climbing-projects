@@ -4,34 +4,32 @@ import { formatDateTime } from '~/helpers/date'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { createAscentsQRTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
 
 export function fromAscentsToCalendarEntries(
-  yearlyAscents?: (StringDateTime & {
-    ascents?: Ascent[]
-  })[],
+  year: number,
+  ascentsArray?: Ascent[][],
 ): DayDescriptor[] {
   return (
-    yearlyAscents?.map(ascentDay => {
-      const { date, ascents } = ascentDay
+    ascentsArray?.map((ascents, index) => {
+      const firstAscent = ascents[0]
 
-      if (ascents === undefined)
+      if (firstAscent === undefined || ascents === undefined) {
+        const date = new Date(year, 0, index + 1, 12).toISOString()
         return {
           date,
           shortText: '',
           tooltip: formatDateTime(new Date(date), 'shortDate'),
         }
+      }
 
-      const hardestAscent = getHardestAscent(ascents)
-
-      const backgroundColor = fromGradeToBackgroundColor(
-        hardestAscent.topoGrade,
-      )
+      const { date } = firstAscent
+      const { topoGrade } = getHardestAscent(ascents)
+      const backgroundColor = fromGradeToBackgroundColor(topoGrade)
       return {
         date,
         backgroundColor,
-        tooltip: createAscentsQRTooltip(ascentDay.ascents),
-        shortText: hardestAscent.topoGrade,
+        tooltip: createAscentsQRTooltip(ascents),
+        shortText: topoGrade,
       }
     }) ?? []
   )

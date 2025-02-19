@@ -8,9 +8,9 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number
 }[] {
-  const descendingYears = createYearList(ascents, { descending: false })
+  const ascendingYears = createYearList(ascents, { descending: false })
 
-  const ascentsFrequencyByYear = descendingYears.map(year => {
+  const ascentsFrequencyByYear = ascendingYears.map(year => {
     const filteredAscentsByYear = ascents.filter(({ date }) =>
       isDateInYear(date, year),
     )

@@ -1,6 +1,6 @@
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import DataCalendar from '~/app/_components/data-calendar/data-calendar'
-import { groupAscentDaysByYear } from '~/data/ascent-data'
+import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 import { fromAscentsToCalendarEntries } from './helpers'
 
@@ -18,7 +18,7 @@ export default async function AscentCalendar(props: {
     <DataCalendar
       year={year}
       data={allAscents}
-      dataTransformationFunction={groupAscentDaysByYear}
+      dataTransformationFunction={groupDataDaysByYear}
       header="Ascents"
       fromDataToCalendarEntries={fromAscentsToCalendarEntries}
     />

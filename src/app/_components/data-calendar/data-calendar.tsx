@@ -5,14 +5,14 @@ import { YearNavigationButton } from '../year-navigation-button/year-navigation-
 import styles from './data-calendar.module.css'
 
 export default async function DataCalendar<
-  T,
-  U extends (T & StringDateTime)[],
+  Data,
+  DataArray extends (Data & StringDateTime)[],
 >(props: {
   year: number
-  data: U
-  dataTransformationFunction: (input: U) => { [year: number]: T[] }
+  data: DataArray
+  dataTransformationFunction: (input: DataArray) => { [year: number]: Data[][] }
   header: string
-  fromDataToCalendarEntries: (data?: T[]) => DayDescriptor[]
+  fromDataToCalendarEntries: (year: number, data?: Data[][]) => DayDescriptor[]
 }) {
   const {
     year,
@@ -30,7 +30,7 @@ export default async function DataCalendar<
   const isDataPresentForPreviousYear = Boolean(yearlyData[year - 1])
   const isDataPresentForNextYear = Boolean(yearlyData[year + 1])
 
-  const calendarEntries = fromDataToCalendarEntries(dataInSelectedYear)
+  const calendarEntries = fromDataToCalendarEntries(year, dataInSelectedYear)
 
   return (
     <>

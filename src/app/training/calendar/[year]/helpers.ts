@@ -4,11 +4,22 @@ import { createTrainingQRTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 
 export function fromTrainingSessionsToCalendarEntries(
-  trainingSessions?: TrainingSession[],
+  year: number,
+  trainingSessionsArray?: TrainingSession[][],
 ): DayDescriptor[] {
   return (
-    trainingSessions?.map(session => {
-      const { date, sessionType, intensity, volume } = session
+    trainingSessionsArray?.map((sessions, index) => {
+      const firstSession = sessions[0]
+
+      if (firstSession === undefined) {
+        return {
+          date: new Date(year, 0, index + 1, 12).toISOString(),
+          shortText: '',
+          tooltip: '',
+        }
+      }
+
+      const { date, sessionType, intensity, volume } = firstSession
       const backgroundColor = getSessionTypeColors({
         sessionType,
         intensityPercent: intensity,
@@ -18,7 +29,7 @@ export function fromTrainingSessionsToCalendarEntries(
       return {
         date,
         backgroundColor,
-        tooltip: createTrainingQRTooltip(session),
+        tooltip: createTrainingQRTooltip(firstSession),
         shortText: sessionType ?? '',
       }
     }) ?? []
