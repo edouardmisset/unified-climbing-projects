@@ -11,7 +11,7 @@ I like to explore new technologies, new frameworks, new libraries. This project 
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code).  
 - [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.  
-- [ ] Add auth (Clerk)
+- [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
 - [ ] Attach database to UI
 - [ ] Add ORM (Drizzle)
