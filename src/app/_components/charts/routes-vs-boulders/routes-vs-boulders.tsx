@@ -2,11 +2,8 @@ import type { PropertyAccessor } from '@nivo/core'
 import { type ComputedDatum, ResponsivePie } from '@nivo/pie'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
-import {
-  DEFAULT_PIE_MARGIN,
-  ascentPyramidTheme,
-  pieColorsGetter,
-} from '../constants'
+import { ChartContainer } from '../chart-container/chart-container'
+import { DEFAULT_PIE_MARGIN, pieColorsGetter, theme } from '../constants'
 import type { ClimbingDisciplineMetric } from '../types'
 import { getRoutesVsBoulders } from './get-routes-vs-boulders'
 
@@ -23,10 +20,10 @@ export function RoutesVsBoulders({ ascents }: { ascents: Ascent[] }) {
     `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
 
   return (
-    <>
+    <ChartContainer caption="Routes vs. Boulders">
       <ResponsivePie
         data={routesVsBoulders}
-        theme={ascentPyramidTheme}
+        theme={theme}
         margin={DEFAULT_PIE_MARGIN}
         motionConfig="slow"
         animate={true}
@@ -35,7 +32,6 @@ export function RoutesVsBoulders({ ascents }: { ascents: Ascent[] }) {
         arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
       />
-      <legend className="super-center">Routes vs. Boulders</legend>
-    </>
+    </ChartContainer>
   )
 }

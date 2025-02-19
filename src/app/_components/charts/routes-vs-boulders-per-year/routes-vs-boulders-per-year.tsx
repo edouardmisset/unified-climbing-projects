@@ -1,11 +1,12 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
+import { ChartContainer } from '../chart-container/chart-container'
 import {
-  DEFAULT_GRAPH_MARGIN,
-  ascentPyramidTheme,
+  DEFAULT_CHART_MARGIN,
   axisBottom,
-  graphColorGetter,
+  chartColorGetter,
+  theme,
 } from '../constants'
 import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
@@ -15,23 +16,22 @@ export function RoutesVsBouldersPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getRoutesVsBouldersPerYear(ascents), [ascents])
 
   return (
-    <>
+    <ChartContainer caption="Routes vs. Boulders per Year">
       <ResponsiveBar
         data={data}
-        theme={ascentPyramidTheme}
+        theme={theme}
         keys={discipline}
         groupMode="grouped"
         indexBy="year"
-        margin={DEFAULT_GRAPH_MARGIN}
+        margin={DEFAULT_CHART_MARGIN}
         padding={0.5}
         enableGridY={false}
         // @ts-ignore
-        colors={graphColorGetter}
+        colors={chartColorGetter}
         enableLabel={false}
         motionConfig="slow"
         axisBottom={axisBottom}
       />
-      <legend className="super-center">Routes vs. Boulders per Year</legend>
-    </>
+    </ChartContainer>
   )
 }

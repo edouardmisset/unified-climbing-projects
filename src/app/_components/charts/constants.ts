@@ -4,7 +4,7 @@ import type { Theme } from '@nivo/core'
 import type { ComputedDatum } from '@nivo/pie'
 import type { ClimbingDisciplineMetric } from './types'
 
-export const ascentPyramidTheme: Theme = {
+export const theme: Theme = {
   background: 'var(--surface-1)',
   text: {
     fill: 'var(--text-1)',
@@ -26,7 +26,7 @@ export const ascentPyramidTheme: Theme = {
   },
 }
 
-export const DEFAULT_GRAPH_MARGIN = { bottom: 40, left: 40, top: 20 }
+export const DEFAULT_CHART_MARGIN = { bottom: 40, left: 40, top: 20 }
 export const DEFAULT_PIE_MARGIN = {
   top: 20,
   right: 100,
@@ -39,7 +39,7 @@ export const axisBottom: AxisProps<any> = {
   format: year => `'${year.toString().slice(2)}`,
 }
 
-export const graphColorGetter: OrdinalColorScaleConfig<
+export const chartColorGetter: OrdinalColorScaleConfig<
   ComputedDatum<{
     [grade: string]: number
     year: number
