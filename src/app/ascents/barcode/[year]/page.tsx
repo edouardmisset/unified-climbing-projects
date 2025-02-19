@@ -1,17 +1,18 @@
+import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { AscentsBar } from '~/app/_components/barcode/ascents-bar.tsx'
 import Barcode from '~/app/_components/barcode/barcode'
-import { getYearsDataPerWeek } from '~/data/helpers'
+import { groupDataWeeksByYear } from '~/data/helpers'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
 
 export default async function Page(props: {
   params: Promise<{ year: string }>
 }) {
-  const { year } = await props.params
+  const year = validNumberWithFallback((await props.params).year, -1)
 
   const ascents = await api.ascents.getAllAscents()
 
-  const selectedAscentsPerWeek = getYearsDataPerWeek(ascents)[year]
+  const selectedAscentsPerWeek = groupDataWeeksByYear(ascents)[year]
 
   if (selectedAscentsPerWeek === undefined)
     return <span>No Data found for this year</span>
