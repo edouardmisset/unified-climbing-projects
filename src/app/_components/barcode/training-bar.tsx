@@ -5,12 +5,12 @@ import {
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 import styles from './barcode.module.css'
 
 type TrainingBarsProps = {
-  weeklyTraining: ((StringDateTime & TrainingSession) | undefined)[]
+  weeklyTraining: ((StringDate & TrainingSession) | undefined)[]
 }
 
 export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {

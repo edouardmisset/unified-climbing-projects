@@ -5,12 +5,12 @@ import {
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
 import styles from './barcode.module.css'
 
 type AscentsBarsProps = {
-  weeklyAscents: ((StringDateTime & Ascent) | undefined)[]
+  weeklyAscents: ((StringDate & Ascent) | undefined)[]
 }
 
 export function AscentsBar({ weeklyAscents }: AscentsBarsProps) {

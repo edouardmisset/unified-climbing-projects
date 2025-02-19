@@ -6,11 +6,12 @@ import {
 } from '~/helpers/date'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 
-export function createYearList<
-  T extends StringDateTime = TrainingSession | Ascent,
->(data: T[], options?: { descending?: boolean }) {
+export function createYearList<T extends StringDate = TrainingSession | Ascent>(
+  data: T[],
+  options?: { descending?: boolean },
+) {
   const { descending = true } = options ?? {}
   return [
     ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
@@ -24,7 +25,7 @@ type YearlyDaysCollection<T> = {
 
 /** Initially, the array of data is empty */
 export function initializeYearlyDataDaysCollection<
-  T extends StringDateTime = TrainingSession | Ascent,
+  T extends StringDate = TrainingSession | Ascent,
 >(
   data: T[],
   getFractionInYear: (year: number) => number,
@@ -44,7 +45,7 @@ export function initializeYearlyDataDaysCollection<
 }
 
 export function groupDataDaysByYear<
-  T extends StringDateTime = Ascent | TrainingSession,
+  T extends StringDate = Ascent | TrainingSession,
 >(data: T[]): YearlyDaysCollection<T> {
   return groupDataByYear(data, {
     // We want the index to be 0-based to index into an array
@@ -54,7 +55,7 @@ export function groupDataDaysByYear<
 }
 
 export function groupDataWeeksByYear<
-  T extends StringDateTime = Ascent | TrainingSession,
+  T extends StringDate = Ascent | TrainingSession,
 >(data: T[]): YearlyDaysCollection<T> {
   return groupDataByYear(data, {
     getIndex: getWeekNumber,
@@ -67,7 +68,7 @@ type GroupDataByYearOptions = {
   getFractionInYear: (year: number) => number
 }
 
-function groupDataByYear<T extends StringDateTime = Ascent | TrainingSession>(
+function groupDataByYear<T extends StringDate = Ascent | TrainingSession>(
   data: T[],
   options: GroupDataByYearOptions,
 ): YearlyDaysCollection<T> {

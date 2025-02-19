@@ -1,4 +1,4 @@
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 import { Spacer } from '../spacer/spacer'
 import { type DayDescriptor, YearGrid } from '../year-grid/year-grid'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
@@ -6,7 +6,7 @@ import styles from './data-calendar.module.css'
 
 export default async function DataCalendar<
   Data,
-  DataArray extends (Data & StringDateTime)[],
+  DataArray extends (Data & StringDate)[],
 >(props: {
   year: number
   data: DataArray

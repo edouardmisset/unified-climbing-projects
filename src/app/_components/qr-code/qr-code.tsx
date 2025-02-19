@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type React from 'react'
 import { type ReactNode, cloneElement } from 'react'
-import type { StringDateTime } from '~/types/generic'
+import type { StringDate } from '~/types/generic'
 import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
