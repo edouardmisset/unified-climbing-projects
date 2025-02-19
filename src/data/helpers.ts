@@ -1,7 +1,7 @@
 import {
   getDayOfYear,
   getDaysInYear,
-  getWeek,
+  getWeekNumber,
   getWeeksInYear,
 } from '~/helpers/date'
 import type { Ascent } from '~/schema/ascent'
@@ -83,7 +83,7 @@ export function getYearsDataPerWeek<
     (accumulator, item) => {
       const date = new Date(item.date)
       const year = date.getFullYear()
-      const weekOfYear = getWeek(date)
+      const weekOfYear = getWeekNumber(date)
 
       if (accumulator[year] === undefined) return accumulator
 

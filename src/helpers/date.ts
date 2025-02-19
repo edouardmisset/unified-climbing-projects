@@ -46,7 +46,7 @@ export const formatDateTime = (
   ).format(date)
 }
 
-export const getWeek = (date: Date): number => {
+export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
   const startOfYear = new Date(date.getFullYear(), 0, 1)
   startOfYear.setDate(
@@ -70,15 +70,15 @@ export const getWeek = (date: Date): number => {
  */
 export const getWeeksInYear = (year: number): number => {
   const firstMondayThisYear = new Date(
-    +year,
+    year,
     0,
-    5 - (new Date(+year, 0, 4).getDay() || 7),
+    5 - (new Date(year, 0, 4).getDay() || 7),
   )
 
   const firstMondayNextYear = new Date(
-    +year + 1,
+    year + 1,
     0,
-    5 - (new Date(+year + 1, 0, 4).getDay() || 7),
+    5 - (new Date(year + 1, 0, 4).getDay() || 7),
   )
 
   return (
