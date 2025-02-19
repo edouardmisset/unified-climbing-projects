@@ -10,7 +10,7 @@ export default async function DataCalendar<
 >(props: {
   year: number
   data: U
-  dataTransformationFunction: (input: U) => Record<number, T[]>
+  dataTransformationFunction: (input: U) => { [year: number]: T[] }
   header: string
   fromDataToCalendarEntries: (data?: T[]) => DayDescriptor[]
 }) {

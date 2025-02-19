@@ -34,11 +34,11 @@ export async function YearGrid({
     ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
   ]
 
-  const numberOfDaysFromLastMondayTo1stJanuary =
+  const numberOfDaysFromPreviousMondayTo1stJanuary =
     firstDayIndex === 0 ? 6 : firstDayIndex - 1
 
   const emptyDays = Array.from(
-    { length: numberOfDaysFromLastMondayTo1stJanuary },
+    { length: numberOfDaysFromPreviousMondayTo1stJanuary },
     (_, index): DayDescriptor => ({
       date: '',
       tooltip: '',
@@ -59,8 +59,7 @@ export async function YearGrid({
         ({ date, tooltip, backgroundColor, shortText = '' }, index) =>
           date === '' ? (
             <i
-              // biome-ignore lint/suspicious/noArrayIndexKey: It's hard to do better here
-              key={shortText + index}
+              key={shortText || index}
               className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
             />
           ) : (
