@@ -22,7 +22,9 @@ export const onSubmit: SubmitHandler<
     date: stringifyDate(new Date(form.date)),
   }
 
-  api.ascents.addOne(ascentInGSFormat)
+  await api.ascents.addOne(ascentInGSFormat)
+
+  globalThis.console.log('Ascent added successfully:', ascentInGSFormat)
 
   return ascentInGSFormat
 }

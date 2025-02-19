@@ -189,7 +189,7 @@ export const ascentsRouter = createTRPCRouter({
     .output(z.boolean())
     .query(async ({ input }) => {
       try {
-        addAscent(input)
+        await addAscent(input)
         return true
       } catch (error) {
         globalThis.console.error(error)
