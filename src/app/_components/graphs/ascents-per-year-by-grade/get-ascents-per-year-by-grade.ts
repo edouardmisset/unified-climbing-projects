@@ -1,4 +1,4 @@
-import { createYearList } from '~/data/ascent-data'
+import { createYearList } from '~/data/helpers'
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { isDateInYear } from '~/helpers/is-date-in-year'

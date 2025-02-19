@@ -1,4 +1,4 @@
-import { createYearList } from '~/data/ascent-data'
+import { createYearList } from '~/data/helpers'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import type { Ascent } from '~/schema/ascent'
 

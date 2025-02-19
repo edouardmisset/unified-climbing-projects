@@ -1,5 +1,4 @@
 import {
-  calculateDayOfYear,
   getDayOfYear,
   getDaysInYear,
   getWeekNumber,
@@ -34,8 +33,11 @@ export function initializeYearlyDataDaysCollection<
   const yearlyDataCollections: YearlyDaysCollection<T> = {}
 
   for (const year of years) {
+    // number of weeks or days in a year
+    const fractionsInYear = getFractionInYear(year)
+
     yearlyDataCollections[year] = Array.from({
-      length: getFractionInYear(year),
+      length: fractionsInYear,
     }).map(() => [] as T[])
   }
   return yearlyDataCollections
@@ -71,19 +73,24 @@ function groupDataByYear<T extends StringDateTime = Ascent | TrainingSession>(
 ): YearlyDaysCollection<T> {
   const { getIndex, getFractionInYear } = options
 
-  const groups = initializeYearlyDataDaysCollection(data, getFractionInYear)
+  const groupedItemByYear = initializeYearlyDataDaysCollection(
+    data,
+    getFractionInYear,
+  )
 
-  return data.reduce((accumulator, item) => {
+  for (const item of data) {
     const date = new Date(item.date)
     const year = date.getFullYear()
     const index = getIndex(date)
 
-    if (accumulator[year] === undefined) return accumulator
+    if (
+      groupedItemByYear[year] === undefined ||
+      groupedItemByYear[year][index] === undefined
+    )
+      continue
 
-    const itemsInGroup = accumulator[year][index]
-    accumulator[year][index] =
-      itemsInGroup === undefined ? [item] : [...itemsInGroup, item]
+    groupedItemByYear[year][index].push(item)
+  }
 
-    return accumulator
-  }, groups)
+  return groupedItemByYear
 }

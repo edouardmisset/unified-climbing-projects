@@ -2,7 +2,7 @@
 
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { useQueryState } from 'nuqs'
-import { createYearList } from '~/data/ascent-data'
+import { createYearList } from '~/data/helpers.ts'
 import {
   ASCENT_STYLE,
   type Ascent,
