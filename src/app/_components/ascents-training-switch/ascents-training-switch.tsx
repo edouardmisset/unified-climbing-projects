@@ -8,7 +8,7 @@ export function AscentsTrainingSwitch({
 }) {
   return (
     <div className={styles.Container}>
-      <label htmlFor="ascents-training-switch">Show Training</label>
+      <label htmlFor="ascents-training-switch">Ascent</label>
       <Switch.Root
         className={styles.Switch}
         onCheckedChange={toggle}
@@ -16,6 +16,7 @@ export function AscentsTrainingSwitch({
       >
         <Switch.Thumb className={styles.Thumb} />
       </Switch.Root>
+      <span>Training</span>
     </div>
   )
 }

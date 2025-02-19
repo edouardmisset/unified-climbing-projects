@@ -53,7 +53,7 @@ export default function Visualisation() {
   }
 
   const controls = (
-    <div className={`flex-row space-between ${styles.header}`}>
+    <div className={`flex-row space-between gap ${styles.header}`}>
       <VisualizationToggleGroup
         onValueChange={handleQrCodeOrBarcodeChange}
         values={visualizations}
