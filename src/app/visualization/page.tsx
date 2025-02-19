@@ -1,23 +1,19 @@
 'use client'
 
 import { Link } from 'next-view-transitions'
-import { useState } from 'react'
-import { getYearAscentPerDay, getYearsAscentsPerWeek } from '~/data/ascent-data'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { getYearTraining, getYearsTrainingPerWeek } from '~/data/training-data'
+import { type ReactNode, useState } from 'react'
+import Barcode from '~/app/_components/barcode/barcode'
+import { groupDataDaysByYear, groupDataWeeksByYear } from '~/data/helpers'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/react'
-import { ascentsBarcodeRender } from '../../helpers/ascents-barcode-helpers'
-import { ascentsQRCodeRender } from '../../helpers/ascents-qr-code-helpers'
-import { trainingSessionsBarcodeRender } from '../../helpers/training-barcode-helpers'
-import { trainingSessionsQRCodeRender } from '../../helpers/training-qr-code-helpers'
 import { AscentsTrainingSwitch } from '../_components/ascents-training-switch/ascents-training-switch'
-import { GenericBarcodeByYear } from '../_components/generic-barcode-by-year/generic-barcode-by-year'
-import { GenericQrCodeByYear } from '../_components/generic-qr-code-by-year/generic-qr-code-by-year'
+import { AscentsBar } from '../_components/barcode/ascents-bar'
+import { TrainingBar } from '../_components/barcode/training-bar'
 import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
 import { AscentsQRDot } from '../_components/qr-code/ascents-qr-dot'
 import QRCode from '../_components/qr-code/qr-code'
+import { TrainingsQRDot } from '../_components/qr-code/trainings-qr-dot'
 import VisualizationToggleGroup from '../_components/visualization-toggle-group/visualization-toggle-group'
 import NotFound from '../not-found'
 import {
@@ -56,11 +52,20 @@ export default function Visualisation() {
     setQrCodeOrBarcode(selectedVisualization)
   }
 
-  let content = undefined
+  const controls = (
+    <div className={`flex-row space-between padding ${styles.header}`}>
+      <VisualizationToggleGroup
+        onValueChange={handleQrCodeOrBarcodeChange}
+        values={visualizations}
+      />
+      <AscentsTrainingSwitch toggle={toggleAscentsOrTraining} />
+    </div>
+  )
 
+  let content: ReactNode = undefined
   if (ascentsOrTraining === 'Ascents' && qrCodeOrBarcode === 'QR Code') {
     content = (
-      <GridLayout title="Ascents">
+      <GridLayout title="Ascents" additionalContent={controls}>
         {Object.entries(groupDataDaysByYear(ascents))
           .sort(([a], [b]) => Number(b) - Number(a))
           .map(([year, yearlyAscents]) => {
@@ -92,36 +97,81 @@ export default function Visualisation() {
     )
   } else if (ascentsOrTraining === 'Ascents' && qrCodeOrBarcode === 'Barcode') {
     content = (
-      <GenericBarcodeByYear
-        allData={ascents}
-        getYearData={getYearsAscentsPerWeek}
-        linkPrefix="ascents"
-        barRender={ascentsBarcodeRender}
-      />
+      <GridLayout title="Ascents" additionalContent={controls}>
+        {Object.entries(groupDataWeeksByYear(ascents))
+          .sort(([a], [b]) => Number(b) - Number(a))
+          .map(([year, yearAscents]) => (
+            <div key={year} className="flex-column w100">
+              <h2 className="center-text">
+                <Link href={`/ascents/barcode/${year}`} prefetch={true}>
+                  {year}
+                </Link>
+              </h2>
+              <Barcode>
+                {yearAscents.map((weeklyAscents, index) => (
+                  <AscentsBar
+                    key={weeklyAscents[0]?.date ?? index}
+                    weeklyAscents={weeklyAscents}
+                  />
+                ))}
+              </Barcode>
+            </div>
+          ))}
+      </GridLayout>
     )
   } else if (
     ascentsOrTraining === 'Training' &&
     qrCodeOrBarcode === 'QR Code'
   ) {
     content = (
-      <GenericQrCodeByYear
-        allData={trainingSessions}
-        getYearData={getYearTraining}
-        dotRender={trainingSessionsQRCodeRender}
-        linkPrefix="training"
-      />
+      <GridLayout title="Training" additionalContent={controls}>
+        {Object.entries(groupDataDaysByYear(trainingSessions))
+          .sort(([a], [b]) => Number(b) - Number(a))
+          .map(([year, yearlyTraining]) => (
+            <div key={year}>
+              <h2 className="center-text">
+                <Link href={`/training/qr-code/${year}`} prefetch={true}>
+                  {year}
+                </Link>
+              </h2>
+              <QRCode>
+                {yearlyTraining.map((trainingSessions, index) => (
+                  <TrainingsQRDot
+                    trainingSessions={trainingSessions}
+                    key={trainingSessions[0]?.date ?? index}
+                  />
+                ))}
+              </QRCode>
+            </div>
+          ))}
+      </GridLayout>
     )
   } else if (
     ascentsOrTraining === 'Training' &&
     qrCodeOrBarcode === 'Barcode'
   ) {
     content = (
-      <GenericBarcodeByYear
-        allData={trainingSessions}
-        getYearData={getYearsTrainingPerWeek}
-        linkPrefix="training"
-        barRender={trainingSessionsBarcodeRender}
-      />
+      <GridLayout title="Training" additionalContent={controls}>
+        {Object.entries(groupDataWeeksByYear(trainingSessions))
+          .sort(([a], [b]) => Number(b) - Number(a))
+          .map(([year, yearTraining]) => (
+            <div key={year} className="flex-column w100">
+              <h2 className="center-text">
+                <Link href={`/training/barcode/${year}`} prefetch={true}>
+                  {year}
+                </Link>
+              </h2>
+              <Barcode>
+                {yearTraining.map((weeklyTraining, index) => (
+                  <TrainingBar
+                    key={weeklyTraining[0]?.date ?? index}
+                    weeklyTraining={weeklyTraining}
+                  />
+                ))}
+              </Barcode>
+            </div>
+          ))}
+      </GridLayout>
     )
   }
 
@@ -129,19 +179,5 @@ export default function Visualisation() {
     return <NotFound />
   }
 
-  return (
-    <div className={'w100 flex-column'}>
-      {/* Header with Visualization, Title (Ascents or Training), switch */}
-      <div className={`flex-row space-between ${styles.header}`}>
-        <VisualizationToggleGroup
-          onValueChange={handleQrCodeOrBarcodeChange}
-          values={visualizations}
-        />
-        <h1>{ascentsOrTraining}</h1>
-        <AscentsTrainingSwitch toggle={toggleAscentsOrTraining} />
-      </div>
-      {/* Main Content: QR Codes, Barcodes, etc. */}
-      {content}
-    </div>
-  )
+  return <div className={'w100 flex-column'}>{content}</div>
 }

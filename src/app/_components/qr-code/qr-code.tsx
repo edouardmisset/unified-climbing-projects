@@ -1,7 +1,5 @@
 import Image from 'next/image'
-import type React from 'react'
-import { type ReactNode, cloneElement } from 'react'
-import type { StringDate } from '~/types/generic'
+import type { ReactNode } from 'react'
 import Marker from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
@@ -11,7 +9,7 @@ const imageSize = 9
 const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
 const _imageEnd = gridSize - imageSize + 2 // 18
 
-export default async function QRCode(props: {
+export default function QRCode(props: {
   children?: ReactNode
 }) {
   const { children } = props

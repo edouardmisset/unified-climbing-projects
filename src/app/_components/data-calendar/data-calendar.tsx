@@ -40,7 +40,7 @@ export default async function DataCalendar<
       <Spacer size={3} />
       <div className={styles.navContainer}>
         <YearNavigationButton
-          currentYear={year}
+          selectedYear={year}
           nextOrPrevious="previous"
           enabled={isDataPresentForPreviousYear}
         />
@@ -52,7 +52,7 @@ export default async function DataCalendar<
           </div>
         )}
         <YearNavigationButton
-          currentYear={year}
+          selectedYear={year}
           nextOrPrevious="next"
           enabled={isDataPresentForNextYear}
         />

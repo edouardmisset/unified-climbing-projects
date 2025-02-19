@@ -7,40 +7,48 @@ import { ALL_TIME } from '../wrap-up/constants'
 import { YEAR_OF_FIRST_ASCENT } from './constants'
 import styles from './grid-layout.module.css'
 
-export default async function GridLayout({
+export default function GridLayout({
   children,
   title,
+  additionalContent,
 }: {
   children: ReactNode
-  title: string | number
+  title: ReactNode
+  additionalContent?: ReactNode
 }) {
   const titleIsValidNumber = isValidNumber(title)
+
+  const beforeTitle = titleIsValidNumber ? (
+    <YearNavigationButton
+      selectedYear={titleIsValidNumber ? title : Number.NaN}
+      nextOrPrevious="previous"
+      enabled={YEAR_OF_FIRST_ASCENT < title}
+    />
+  ) : title === ALL_TIME ? (
+    <YearNavigationButton
+      selectedYear={new Date().getFullYear() + 1}
+      nextOrPrevious="previous"
+      enabled={true}
+      path="/wrap-up"
+    />
+  ) : null
+
+  const afterTitle = titleIsValidNumber && (
+    <YearNavigationButton
+      selectedYear={titleIsValidNumber ? title : Number.NaN}
+      nextOrPrevious="next"
+      enabled={title < new Date().getFullYear()}
+    />
+  )
+
   return (
     <section className="flex-column w100 h100">
       <div className={`${styles.header} ${styles.patagonia}`}>
-        {titleIsValidNumber ? (
-          <YearNavigationButton
-            currentYear={titleIsValidNumber ? title : Number.NaN}
-            nextOrPrevious="previous"
-            enabled={titleIsValidNumber && YEAR_OF_FIRST_ASCENT < title}
-          />
-        ) : title === ALL_TIME ? (
-          <YearNavigationButton
-            currentYear={new Date().getFullYear() + 1}
-            nextOrPrevious="previous"
-            enabled={true}
-            path="/wrap-up"
-          />
-        ) : null}
+        {beforeTitle}
         <h1 className="center-text w100">{title}</h1>
-        {titleIsValidNumber && (
-          <YearNavigationButton
-            currentYear={titleIsValidNumber ? title : Number.NaN}
-            nextOrPrevious="next"
-            enabled={titleIsValidNumber && title < new Date().getFullYear()}
-          />
-        )}
+        {afterTitle}
       </div>
+      {additionalContent}
       <Suspense fallback={<Loader />}>
         <div className="grid">{children}</div>
       </Suspense>
