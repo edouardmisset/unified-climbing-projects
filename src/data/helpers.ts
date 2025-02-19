@@ -41,25 +41,25 @@ export function initializeYearlyDataDaysCollection<
 
 export function groupDataDaysByYear<
   T extends StringDateTime = Ascent | TrainingSession,
->(ascents: T[]): YearlyDaysCollection<T> {
-  return ascents.reduce(
-    (accumulator, ascent) => {
-      const date = new Date(ascent.date)
+>(data: T[]): YearlyDaysCollection<T> {
+  return data.reduce(
+    (accumulator, item) => {
+      const date = new Date(item.date)
       const year = date.getFullYear()
       const dayOfYear = getDayOfYear(date) - 1
 
       if (accumulator[year] === undefined) return accumulator
 
-      const currentDayData = accumulator[year][dayOfYear]
+      const currentDayItem = accumulator[year][dayOfYear]
 
       accumulator[year][dayOfYear] = [
-        ...(currentDayData !== undefined ? currentDayData : []),
-        ascent,
+        ...(currentDayItem !== undefined ? currentDayItem : []),
+        item,
       ]
 
       return accumulator
     },
-    initializeYearlyDataDaysCollection(ascents, getDaysInYear),
+    initializeYearlyDataDaysCollection(data, getDaysInYear),
   )
 }
 
@@ -82,6 +82,6 @@ export function groupDataWeeksByYear<
 
       return accumulator
     },
-    { ...initializeYearlyDataDaysCollection(data, getWeeksInYear) },
+    initializeYearlyDataDaysCollection(data, getWeeksInYear),
   )
 }
