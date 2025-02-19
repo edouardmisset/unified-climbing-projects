@@ -1,4 +1,5 @@
 import {
+  calculateDayOfYear,
   getDayOfYear,
   getDaysInYear,
   getWeekNumber,
@@ -17,6 +18,7 @@ export function createYearList<
   ].sort((a, b) => (a - b) * (descending ? -1 : 1))
 }
 
+/** Note that the array of data of type T can represent a **week or a day** of data. */
 type YearlyDaysCollection<T> = {
   [year: number]: T[][]
 }
@@ -42,46 +44,46 @@ export function initializeYearlyDataDaysCollection<
 export function groupDataDaysByYear<
   T extends StringDateTime = Ascent | TrainingSession,
 >(data: T[]): YearlyDaysCollection<T> {
-  return data.reduce(
-    (accumulator, item) => {
-      const date = new Date(item.date)
-      const year = date.getFullYear()
-      const dayOfYear = getDayOfYear(date) - 1
-
-      if (accumulator[year] === undefined) return accumulator
-
-      const currentDayItem = accumulator[year][dayOfYear]
-
-      accumulator[year][dayOfYear] = [
-        ...(currentDayItem !== undefined ? currentDayItem : []),
-        item,
-      ]
-
-      return accumulator
-    },
-    initializeYearlyDataDaysCollection(data, getDaysInYear),
-  )
+  return groupDataByYear(data, {
+    // We want the index to be 0-based to index into an array
+    getIndex: date => getDayOfYear(date) - 1,
+    getFractionInYear: getDaysInYear,
+  })
 }
 
 export function groupDataWeeksByYear<
   T extends StringDateTime = Ascent | TrainingSession,
->(data: T[]) {
-  return data.reduce(
-    (accumulator, item) => {
-      const date = new Date(item.date)
-      const year = date.getFullYear()
-      const weekOfYear = getWeekNumber(date)
+>(data: T[]): YearlyDaysCollection<T> {
+  return groupDataByYear(data, {
+    getIndex: getWeekNumber,
+    getFractionInYear: getWeeksInYear,
+  })
+}
 
-      if (accumulator[year] === undefined) return accumulator
+type GroupDataByYearOptions = {
+  getIndex: (date: Date) => number
+  getFractionInYear: (year: number) => number
+}
 
-      const itemsInWeek = accumulator[year][weekOfYear]
+function groupDataByYear<T extends StringDateTime = Ascent | TrainingSession>(
+  data: T[],
+  options: GroupDataByYearOptions,
+): YearlyDaysCollection<T> {
+  const { getIndex, getFractionInYear } = options
 
-      accumulator[year][weekOfYear] = itemsInWeek
-        ? [...itemsInWeek, item]
-        : [item]
+  const groups = initializeYearlyDataDaysCollection(data, getFractionInYear)
 
-      return accumulator
-    },
-    initializeYearlyDataDaysCollection(data, getWeeksInYear),
-  )
+  return data.reduce((accumulator, item) => {
+    const date = new Date(item.date)
+    const year = date.getFullYear()
+    const index = getIndex(date)
+
+    if (accumulator[year] === undefined) return accumulator
+
+    const itemsInGroup = accumulator[year][index]
+    accumulator[year][index] =
+      itemsInGroup === undefined ? [item] : [...itemsInGroup, item]
+
+    return accumulator
+  }, groups)
 }
