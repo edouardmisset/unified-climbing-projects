@@ -1,15 +1,10 @@
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
 import { getDayOfYear } from '~/helpers/date.ts'
 import type { TrainingSession } from '~/schema/training'
-import { createEmptyBarcodeCollection, createYearList } from './ascent-data.ts'
-import { createEmptyYearlyDaysCollection } from './helpers.ts'
-
-const createYearlyTrainingDaysCollection = (
-  trainingSessions: TrainingSession[],
-): { [year: number]: TrainingSession[][] } =>
-  createEmptyYearlyDaysCollection<TrainingSession>(
-    createYearList(trainingSessions),
-  )
+import { createEmptyBarcodeCollection } from './ascent-data.ts'
+import {
+  createYearlyDataDaysCollection
+} from './helpers.ts'
 
 export function groupTrainingDaysByYear(trainingSessions: TrainingSession[]): {
   [year: number]: TrainingSession[][]
@@ -30,7 +25,7 @@ export function groupTrainingDaysByYear(trainingSessions: TrainingSession[]): {
       ]
       return accumulator
     },
-    createYearlyTrainingDaysCollection(trainingSessions),
+    createYearlyDataDaysCollection(trainingSessions),
   )
   return groupedTrainingSessionsByYear
 }
