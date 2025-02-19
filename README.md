@@ -1,8 +1,9 @@
 # Climbing App
 
-This is my pet project: climbing app 🤓.  
+This is my pet project: climbing app 🤓🐕.  
 ⚠️ It's a work in progress.  
-I like to explore new technologies, new frameworks, new libraries. This project is my playground for these experiments.
+I like to explore new technologies, new frameworks, new libraries. This project
+is my playground for these experiments.  
 
 ## TODO
 
@@ -16,7 +17,7 @@ I like to explore new technologies, new frameworks, new libraries. This project 
 - [ ] Attach database to UI
 - [ ] Add ORM (Drizzle)
 - [ ] Change communication between front and back from tRPC to RSC for better
-  performance (better caching)
+  performance (better caching) ?
 - [ ] Add tests (visual non-regression tests for graphs, calendars, QR-codes,
   Barcodes, etc.)
 - [ ] Add CI/CD

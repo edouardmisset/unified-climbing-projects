@@ -42,7 +42,7 @@ export default function GridLayout({
   )
 
   return (
-    <section className="flex-column w100 h100">
+    <section className="flex-column gap w100 h100">
       <div className={`${styles.header} ${styles.patagonia}`}>
         {beforeTitle}
         <h1 className="center-text w100">{title}</h1>

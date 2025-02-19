@@ -1,7 +1,11 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
+import type React from 'react'
+import { env } from '~/env.js'
 import { TRPCReactProvider } from '~/trpc/react'
+import { Navigation } from './_components/navigation/navigation.tsx'
+import styles from './index.module.css'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -21,12 +25,6 @@ import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 
 import '~/styles/utilities.css'
-
-import { Navigation } from './_components/navigation/navigation.tsx'
-
-import type React from 'react'
-import { env } from '~/env.js'
-import styles from './index.module.css'
 
 export const fetchCache = 'default-cache'
 
