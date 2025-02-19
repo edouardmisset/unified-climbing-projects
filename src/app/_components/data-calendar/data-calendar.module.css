@@ -10,10 +10,8 @@
   & > :first-child {
     rotate: -90deg;
   }
-}
 
-@media (width >= 640px) {
-  .container {
+  @media (width >= 640px) {
     flex-direction: row;
 
     & > :last-child,
