@@ -1,8 +1,8 @@
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
 import { getDayOfYear, getWeeksInYear } from '~/helpers/date.ts'
-import { type Ascent, ascentSchema } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import type { StringDateTime } from '~/types/generic'
-import { createEmptyYearlyCollections } from './helpers.ts'
+import { createEmptyYearlyDaysCollection } from './helpers.ts'
 
 export function createYearList<T extends StringDateTime>(
   data: T[],
@@ -16,11 +16,12 @@ export function createYearList<T extends StringDateTime>(
 
 /** Initially, the array of ascents is empty */
 const getAscentsCollection = (ascents: Ascent[]): Record<number, Ascent[][]> =>
-  createEmptyYearlyCollections<Ascent>(createYearList(ascents))
+  createEmptyYearlyDaysCollection<Ascent>(createYearList(ascents))
 
-export function getYearAscentPerDay(
-  ascents: Ascent[],
-): Record<number, Ascent[][]> {
+type AscentsInDay = Ascent[]
+export function getYearAscentPerDay(ascents: Ascent[]): {
+  [year: number]: AscentsInDay[]
+} {
   return ascents.reduce((accumulator, ascent) => {
     const date = new Date(ascent.date)
     const year = date.getFullYear()
