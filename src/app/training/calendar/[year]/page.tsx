@@ -1,5 +1,6 @@
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import DataCalendar from '~/app/_components/data-calendar/data-calendar'
+import { groupDataDaysByYear } from '~/data/helpers'
 import { groupTrainingDaysByYear } from '~/data/training-data'
 import { api } from '~/trpc/server'
 import { fromTrainingSessionsToCalendarEntries } from './helpers'
@@ -18,7 +19,7 @@ export default async function TrainingCalendar(props: {
     <DataCalendar
       year={year}
       data={trainingSessions}
-      dataTransformationFunction={groupTrainingDaysByYear}
+      dataTransformationFunction={groupDataDaysByYear}
       header="Training"
       fromDataToCalendarEntries={fromTrainingSessionsToCalendarEntries}
     />

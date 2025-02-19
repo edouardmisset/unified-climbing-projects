@@ -1,4 +1,4 @@
-import { getDaysInYear } from '~/helpers/date'
+import { getDayOfYear, getDaysInYear, getWeeksInYear } from '~/helpers/date'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDateTime } from '~/types/generic'
@@ -38,3 +38,39 @@ export const createYearlyDataDaysCollection = <
   data: T[],
 ): { [year: number]: T[][] } =>
   createEmptyYearlyDaysCollection<T>(createYearList(data))
+
+export function groupDataDaysByYear<
+  T extends StringDateTime = Ascent | TrainingSession,
+>(
+  ascents: T[],
+): {
+  [year: number]: T[][]
+} {
+  return ascents.reduce((accumulator, ascent) => {
+    const date = new Date(ascent.date)
+    const year = date.getFullYear()
+    const dayOfYear = getDayOfYear(date) - 1
+
+    if (accumulator[year] === undefined) return accumulator
+
+    const currentDayData = accumulator[year][dayOfYear]
+
+    accumulator[year][dayOfYear] = [
+      ...(currentDayData !== undefined ? currentDayData : []),
+      ascent,
+    ]
+
+    return accumulator
+  }, createYearlyDataDaysCollection(ascents))
+}
+
+export function createEmptyBarcodeCollection<T extends Record<string, unknown>>(
+  data: (T & { date: string })[],
+) {
+  return Object.fromEntries(
+    createYearList(data).map(year => [
+      year,
+      Array.from({ length: getWeeksInYear(year) }, (): T[] => []),
+    ]),
+  )
+}

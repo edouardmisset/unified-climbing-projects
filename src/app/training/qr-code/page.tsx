@@ -2,14 +2,14 @@ import { Link } from 'next-view-transitions'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot.tsx'
-import { groupTrainingDaysByYear } from '~/data/training-data'
+import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function Page() {
   const trainingSessions = await api.training.getAllTrainingSessions()
   return (
     <GridLayout title="Training">
-      {Object.entries(groupTrainingDaysByYear(trainingSessions))
+      {Object.entries(groupDataDaysByYear(trainingSessions))
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (
           <div key={year}>

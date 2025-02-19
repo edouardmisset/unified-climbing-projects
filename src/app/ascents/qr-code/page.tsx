@@ -2,7 +2,7 @@ import { Link } from 'next-view-transitions'
 import GridLayout from '~/app/_components/grid-layout/grid-layout.tsx'
 import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot.tsx'
 import QRCode from '~/app/_components/qr-code/qr-code'
-import { getYearAscentPerDay } from '~/data/ascent-data'
+import { groupDataDaysByYear } from '~/data/helpers'
 import { sortByDescendingGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
 
@@ -10,7 +10,7 @@ export default async function Page() {
   const ascents = await api.ascents.getAllAscents()
   return (
     <GridLayout title="Ascents">
-      {Object.entries(getYearAscentPerDay(ascents))
+      {Object.entries(groupDataDaysByYear(ascents))
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {
           if (yearlyAscents === undefined) return <span>Unexpected error </span>
