@@ -7,11 +7,11 @@ type YearlyDaysCollection<T> = {
 }
 
 export function createEmptyYearlyDaysCollection<T = Ascent | TrainingSession>(
-  listOfYears: number[],
+  years: number[],
 ): YearlyDaysCollection<T> {
   const yearlyCollections: YearlyDaysCollection<T> = {}
 
-  for (const year of listOfYears) {
+  for (const year of years) {
     yearlyCollections[year] = Array.from({ length: getDaysInYear(year) }).map(
       () => [] as T[],
     )

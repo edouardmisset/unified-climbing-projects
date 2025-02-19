@@ -15,7 +15,9 @@ export function createYearList<T extends StringDateTime>(
 }
 
 /** Initially, the array of ascents is empty */
-const getAscentsCollection = (ascents: Ascent[]): Record<number, Ascent[][]> =>
+const createYearlyAscentsDaysCollection = (
+  ascents: Ascent[],
+): { [year: number]: Ascent[][] } =>
   createEmptyYearlyDaysCollection<Ascent>(createYearList(ascents))
 
 type AscentsInDay = Ascent[]
@@ -37,7 +39,7 @@ export function getYearAscentPerDay(ascents: Ascent[]): {
     ]
 
     return accumulator
-  }, getAscentsCollection(ascents))
+  }, createYearlyAscentsDaysCollection(ascents))
 }
 
 export function createEmptyBarcodeCollection<T extends Record<string, unknown>>(

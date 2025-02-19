@@ -1,43 +1,39 @@
-import type { StringDateTime } from '~/types/generic'
-
 import { getWeek } from '~/app/_components/year-grid/helpers.ts'
 import { getDayOfYear } from '~/helpers/date.ts'
 import type { TrainingSession } from '~/schema/training'
-import { createEmptyBarcodeCollection } from './ascent-data.ts'
+import { createEmptyBarcodeCollection, createYearList } from './ascent-data.ts'
 import { createEmptyYearlyDaysCollection } from './helpers.ts'
 
-const getTrainingYears = (trainingSessions: TrainingSession[]) =>
-  [
-    ...new Set(
-      trainingSessions.map(({ date }) => new Date(date).getFullYear()),
-    ),
-  ].sort((a, b) => b - a)
-
-const getTrainingCollection = (
+const createYearlyTrainingDaysCollection = (
   trainingSessions: TrainingSession[],
-): Record<number, TrainingSession[][]> =>
+): { [year: number]: TrainingSession[][] } =>
   createEmptyYearlyDaysCollection<TrainingSession>(
-    getTrainingYears(trainingSessions),
+    createYearList(trainingSessions),
   )
 
-export const getYearTraining = (
-  trainingSessions: TrainingSession[],
-): Record<number, TrainingSession[][]> =>
-  trainingSessions.reduce((accumulator, trainingSession) => {
-    const date = new Date(trainingSession.date)
-    const year = date.getFullYear()
-    const dayOfYear = getDayOfYear(date) - 1
+export function groupTrainingDaysByYear(trainingSessions: TrainingSession[]): {
+  [year: number]: TrainingSession[][]
+} {
+  const groupedTrainingSessionsByYear = trainingSessions.reduce(
+    (accumulator, trainingSession) => {
+      const date = new Date(trainingSession.date)
+      const year = date.getFullYear()
+      const dayOfYear = getDayOfYear(date) - 1
 
-    if (accumulator[year] === undefined) return accumulator
+      if (accumulator[year] === undefined) return accumulator
 
-    const currentDayTraining = accumulator[year][dayOfYear]
+      const currentDayTraining = accumulator[year][dayOfYear]
 
-    accumulator[year][dayOfYear] = [
-      ...(currentDayTraining !== undefined ? currentDayTraining : []),
-      trainingSession,
-    ]
-    return accumulator
-  }, getTrainingCollection(trainingSessions))
+      accumulator[year][dayOfYear] = [
+        ...(currentDayTraining === undefined ? [] : currentDayTraining),
+        trainingSession,
+      ]
+      return accumulator
+    },
+    createYearlyTrainingDaysCollection(trainingSessions),
+  )
+  return groupedTrainingSessionsByYear
+}
 
 export const getYearsTrainingPerWeek = (trainingSessions: TrainingSession[]) =>
   trainingSessions.reduce(
