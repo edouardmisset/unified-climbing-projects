@@ -3,7 +3,12 @@ import { type ComputedDatum, ResponsivePie } from '@nivo/pie'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_PIE_MARGIN, pieColorsGetter, theme } from '../constants'
+import {
+  DEFAULT_PIE_MARGIN,
+  defaultMotionConfig,
+  pieColorsGetter,
+  theme,
+} from '../constants'
 import type { ClimbingDisciplineMetric } from '../types'
 import { getRoutesVsBoulders } from './get-routes-vs-boulders'
 
@@ -28,7 +33,7 @@ export function RoutesVsBoulders({
         data={routesVsBoulders}
         theme={theme}
         margin={DEFAULT_PIE_MARGIN}
-        motionConfig="slow"
+        motionConfig={defaultMotionConfig}
         animate={true}
         innerRadius={0.5}
         colors={pieColorsGetter}

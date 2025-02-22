@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_PIE_MARGIN, theme } from '../constants'
+import { DEFAULT_PIE_MARGIN, defaultMotionConfig, theme } from '../constants'
 
 export function AscentsByStyle({
   ascents,
@@ -17,7 +17,7 @@ export function AscentsByStyle({
         theme={theme}
         colors={({ data }) => data.color}
         margin={DEFAULT_PIE_MARGIN}
-        motionConfig="slow"
+        motionConfig={defaultMotionConfig}
         animate={true}
         innerRadius={0.5}
         arcLabel={data =>

@@ -6,6 +6,7 @@ import {
   DEFAULT_CHART_MARGIN,
   chartColorGetter,
   defaultBarChartPadding,
+  defaultMotionConfig,
   numberOfAscentsAxisLeft,
   theme,
   yearAxisBottom,
@@ -37,7 +38,7 @@ export function RoutesVsBouldersPerYear({
         // @ts-ignore
         colors={chartColorGetter}
         enableLabel={false}
-        motionConfig="slow"
+        motionConfig={defaultMotionConfig}
         axisBottom={yearAxisBottom}
         axisLeft={numberOfAscentsAxisLeft}
       />

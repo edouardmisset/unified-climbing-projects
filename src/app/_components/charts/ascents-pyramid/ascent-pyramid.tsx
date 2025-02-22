@@ -10,6 +10,7 @@ import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
   defaultBarChartPadding,
+  defaultMotionConfig,
   gradesBottomAxis,
   numberOfAscentsAxisLeft,
   theme,
@@ -45,7 +46,7 @@ export function AscentPyramid({
         // @ts-ignore
         colors={colors}
         enableLabel={false}
-        motionConfig="slow"
+        motionConfig={defaultMotionConfig}
         axisLeft={numberOfAscentsAxisLeft}
         axisBottom={gradesBottomAxis}
       />

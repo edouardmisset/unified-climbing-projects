@@ -41,6 +41,10 @@ export const DEFAULT_PIE_MARGIN = {
 
 export const defaultBarChartPadding = 0.3
 
+// Motion
+
+export const defaultMotionConfig = 'slow'
+
 // Colors
 
 export const chartColorGetter: OrdinalColorScaleConfig<
