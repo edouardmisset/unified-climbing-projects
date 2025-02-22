@@ -7,7 +7,12 @@ import {
   getGradeFrequencyAndColors,
 } from '../ascents-pyramid/get-grade-frequency'
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_CHART_MARGIN, theme } from '../constants'
+import {
+  DEFAULT_CHART_MARGIN,
+  gradesBottomAxis,
+  numberOfAscentsAxisLeft,
+  theme,
+} from '../constants'
 
 const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
   id,
@@ -40,6 +45,8 @@ export function AscentPyramid({
         colors={colors}
         enableLabel={false}
         motionConfig="slow"
+        axisLeft={numberOfAscentsAxisLeft}
+        axisBottom={gradesBottomAxis}
       />
     </ChartContainer>
   )

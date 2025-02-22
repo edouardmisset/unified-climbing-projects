@@ -27,7 +27,9 @@ export const theme: Theme = {
   },
 }
 
-export const DEFAULT_CHART_MARGIN = { bottom: 50, left: 50, top: 20, right: 20 }
+// Margins
+
+export const DEFAULT_CHART_MARGIN = { bottom: 50, left: 60, top: 20, right: 20 }
 export const DEFAULT_PIE_MARGIN = {
   top: 20,
   right: 100,
@@ -35,10 +37,7 @@ export const DEFAULT_PIE_MARGIN = {
   left: 100,
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: This comes from the Nivo library
-export const axisBottom: AxisProps<any> = {
-  format: year => `'${year.toString().slice(2)}`,
-}
+// Colors
 
 export const chartColorGetter: OrdinalColorScaleConfig<
   ComputedDatum<{
@@ -51,19 +50,36 @@ export const pieColorsGetter: OrdinalColorScaleConfig<
   Omit<ComputedDatum<ClimbingDisciplineMetric>, 'fill' | 'color' | 'arc'>
 > = ({ data }) => data.color
 
-export const gradesBottomAxis: AxisProps = {
-  legend: 'Grades',
-  legendOffset: 40,
-  legendPosition: 'middle',
-}
+// Scales
+
 export const lineXScale: ScaleSpec = { type: 'point' }
 export const lineYScale: ScaleSpec = {
   type: 'linear',
   min: 0,
   max: 'auto',
 }
-export const countAxisLeft: AxisProps = {
-  legend: 'Count',
+
+// Axis
+
+export const numberOfTriesAxisLeft: AxisProps = {
+  legend: '# Tries',
   legendOffset: -40,
+  legendPosition: 'middle',
+}
+export const numberOfAscentsAxisLeft: AxisProps = {
+  legend: '# Ascents',
+  legendOffset: -50,
+  legendPosition: 'middle',
+}
+// biome-ignore lint/suspicious/noExplicitAny: This comes from the Nivo library
+export const yearAxisBottom: AxisProps<any> = {
+  format: year => `'${year.toString().slice(2)}`,
+  legend: 'Year',
+  legendOffset: 40,
+  legendPosition: 'middle',
+}
+export const gradesBottomAxis: AxisProps = {
+  legend: 'Grades',
+  legendOffset: 40,
   legendPosition: 'middle',
 }

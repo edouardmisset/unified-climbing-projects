@@ -8,10 +8,10 @@ import type { Ascent, Grade } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
-  countAxisLeft,
   gradesBottomAxis,
   lineXScale,
   lineYScale,
+  numberOfTriesAxisLeft,
   theme,
 } from '../constants'
 import styles from './tries-by-grades.module.css'
@@ -90,10 +90,11 @@ export function TriesByGrade({
         data={data}
         margin={DEFAULT_CHART_MARGIN}
         curve="natural"
+        enableGridX={false}
         xScale={lineXScale}
         yScale={lineYScale}
         axisBottom={gradesBottomAxis}
-        axisLeft={countAxisLeft}
+        axisLeft={numberOfTriesAxisLeft}
         pointSize={8}
         colors={colors}
         theme={theme}
@@ -108,6 +109,7 @@ export function TriesByGrade({
 const Tooltip = ({ point }: PointTooltipProps) => (
   <div className={styles.tooltip}>
     <strong>{point.data.xFormatted}</strong>{' '}
-    {capitalize(point.serieId.toString())} # of tries: {point.data.yFormatted}
+    {capitalize(point.serieId.toString())} # of tries:{' '}
+    <strong>{point.data.yFormatted}</strong>
   </div>
 )

@@ -4,9 +4,10 @@ import type { Ascent } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
-  axisBottom,
   chartColorGetter,
+  numberOfAscentsAxisLeft,
   theme,
+  yearAxisBottom,
 } from '../constants'
 import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
@@ -36,7 +37,8 @@ export function RoutesVsBouldersPerYear({
         colors={chartColorGetter}
         enableLabel={false}
         motionConfig="slow"
-        axisBottom={axisBottom}
+        axisBottom={yearAxisBottom}
+        axisLeft={numberOfAscentsAxisLeft}
       />
     </ChartContainer>
   )

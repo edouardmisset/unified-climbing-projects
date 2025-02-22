@@ -4,9 +4,10 @@ import { type Ascent, _GRADES } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
-  axisBottom,
   chartColorGetter,
+  numberOfAscentsAxisLeft,
   theme,
+  yearAxisBottom,
 } from '../constants'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
@@ -33,7 +34,8 @@ export function AscentsPerYearByGrade({
         colors={chartColorGetter}
         enableLabel={false}
         motionConfig="slow"
-        axisBottom={axisBottom}
+        axisBottom={yearAxisBottom}
+        axisLeft={numberOfAscentsAxisLeft}
       />
     </ChartContainer>
   )
