@@ -66,9 +66,9 @@
   --redpoint: var(--red-5);
 
   /* TRIES */
-  --max-tries: var(--pink-10);
-  --average-tries: var(--pink-5);
-  --min-tries: var(--pink-2);
+  --max-tries: var(--pink-7);
+  --average-tries: var(--pink-4);
+  --min-tries: var(--pink-1);
 }
 
 /* GRADES */
