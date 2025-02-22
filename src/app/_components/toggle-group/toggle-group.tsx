@@ -1,11 +1,12 @@
-import { Item, Root } from '@radix-ui/react-toggle-group'
+import { Toggle } from '@base-ui-components/react/toggle'
+import { ToggleGroup } from '@base-ui-components/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import styles from './toggle-group.module.css'
 
 type ClimbingStyleToggleGroup = {
   display: boolean
-  onValueChange: (value: string) => void
+  onValueChange: (groupValue: string[], event: Event) => void
   value?: string
   isOnsightDisable: boolean
 }
@@ -16,18 +17,17 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
   if (!display) return null
 
   return (
-    <Root
+    <ToggleGroup
       aria-label={`Climbing style (${disjunctiveListFormatter(ASCENT_STYLE)}). Default is "Redpoint" if number of tries is greater than 1.`}
-      className={styles.Group}
-      defaultValue="Redpoint"
+      className={styles.Panel}
+      defaultValue={['Redpoint']}
       onValueChange={onValueChange}
-      type="single"
-      value={isOnsightDisable ? 'Flash' : value}
+      value={isOnsightDisable ? ['Flash'] : [value]}
     >
-      <Item
+      <Toggle
         aria-hidden={isOnsightDisable}
         aria-label="Onsight"
-        className={`contrast-color ${styles.Item}`}
+        className={`contrast-color ${styles.Button}`}
         // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
@@ -47,15 +47,15 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
         }
       >
         Onsight
-      </Item>
-      <Item
+      </Toggle>
+      <Toggle
         aria-label="Flash"
-        className={`contrast-color ${styles.Item}`}
+        className={`contrast-color ${styles.Button}`}
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >
         Flash
-      </Item>
-    </Root>
+      </Toggle>
+    </ToggleGroup>
   )
 }

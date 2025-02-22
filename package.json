@@ -17,7 +17,7 @@
     "knip": "clear && knip"
   },
   "dependencies": {
-    "@base-ui-components/react": "^1.0.0-alpha.5",
+    "@base-ui-components/react": "^1.0.0-alpha.6",
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^4.0.2",
     "@edouardmisset/date": "npm:@jsr/edouardmisset__date@^4.0.1",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
@@ -28,8 +28,6 @@
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
-    "@radix-ui/react-slider": "^1.2.2",
-    "@radix-ui/react-toggle-group": "^1.1.1",
     "@std/csv": "npm:@jsr/std__csv",
     "@std/text": "npm:@jsr/std__text@^1.0.10",
     "@t3-oss/env-nextjs": "^0.11.1",

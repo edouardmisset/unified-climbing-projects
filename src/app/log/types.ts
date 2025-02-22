@@ -1,13 +1,12 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { string, z } from 'zod'
-import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
+import { fromNumberToGrade } from '~/helpers/converters'
 import {
   ascentStyleSchema,
-  gradeSchema,
+  climbingDisciplineSchema,
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import { climbingDisciplineSchema } from '~/schema/ascent'
 import {
   MAX_HEIGHT,
   MAX_RATING,
@@ -19,9 +18,7 @@ import {
   _1To9999RegEx,
 } from './constants.ts'
 
-const optionalGradeToNumberSchema = gradeSchema
-  .transform(grade => fromGradeToNumber(grade))
-  .optional()
+const optionalNumberGradeSchema = z.number().optional()
 const numberOfTriesSchema = z
   .string()
   .min(1)
@@ -33,8 +30,8 @@ export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
   tries: numberOfTriesSchema.transform(num => num?.toString()),
   style: ascentStyleSchema.optional(),
-  topoGrade: optionalGradeToNumberSchema,
-  personalGrade: optionalGradeToNumberSchema,
+  topoGrade: optionalNumberGradeSchema,
+  personalGrade: optionalNumberGradeSchema,
   routeName: z.string().optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
   crag: z.string().optional(), // pick from a look up in DB

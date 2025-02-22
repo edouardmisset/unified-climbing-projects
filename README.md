@@ -16,7 +16,8 @@ is my playground for these experiments.
     training and ascents.
 - [x] Clicking a QR-code or Barcode should open a modal with the code, not a new page.
 - [x] Add chart showing the average (min and max) number of tries per grade.
-- [ ] Switch all third party components to base-ui.
+- [x] Switch all radix-ui components to base-ui.
+  - [ ] Bonus: Redo the styles of the slider and the group toggle in the log page.
 - [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
 - [ ] Add ORM (Drizzle)

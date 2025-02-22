@@ -36,7 +36,11 @@ import {
 import styles from './page.module.css'
 import { type AscentFormInput, ascentFormInputSchema } from './types.ts'
 
-type GradeSetter = (value: number[]) => void
+type HandleGradeSliderChange = (
+  value: number | number[],
+  event: Event,
+  activeThumbIndex: number,
+) => void
 
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 const numberOfGrades = _GRADES.length
@@ -48,8 +52,10 @@ const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
 ])
 
 export default function Log(): React.JSX.Element {
-  const { data: averageGrade = '7b', isLoading: isAverageGradeLoading } =
+  const { data, isLoading: isAverageGradeLoading } =
     api.grades.getAverage.useQuery()
+  const averageGrade = fromGradeToNumber(data ?? '7b')
+
   const {
     data: [minGrade, maxGrade] = [
       fromNumberToGrade(1),
@@ -88,59 +94,37 @@ export default function Log(): React.JSX.Element {
   const { onChange: handleTriesChangeRegister, ...triesRegister } =
     register('tries')
 
-  const topoGradeOrNumber = watch('topoGrade') ?? averageGrade
-  const personalGradeOrNumber = watch('personalGrade') ?? topoGradeOrNumber
+  const numberTopoGrade = watch('topoGrade') ?? averageGrade
+  const personalNumberGrade = watch('personalGrade') ?? numberTopoGrade
   const numberOfTries = watch('tries') ?? '1'
 
-  const topoGrade =
-    typeof topoGradeOrNumber === 'number'
-      ? fromNumberToGrade(topoGradeOrNumber)
-      : topoGradeOrNumber
+  const handleTopoGradeChange: HandleGradeSliderChange = useCallback(
+    value => {
+      const val = (typeof value === 'number' ? value : value[0]) ?? averageGrade
+      setValue('topoGrade', val)
 
-  const personalGrade =
-    typeof personalGradeOrNumber === 'number'
-      ? fromNumberToGrade(personalGradeOrNumber)
-      : personalGradeOrNumber
-
-  const handleTopoGradeChange: GradeSetter = useCallback(
-    ([value]) => {
-      const averageNumberGrade = fromGradeToNumber(averageGrade)
-      setValue(
-        'topoGrade',
-        fromNumberToGrade(
-          value ?? averageNumberGrade,
-          // biome-ignore lint/suspicious/noExplicitAny:
-        ) as any,
-      )
-
-      setValue(
-        'personalGrade',
-        fromNumberToGrade(
-          value ?? averageNumberGrade,
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        ) as any,
-      )
+      setValue('personalGrade', val)
     },
     [setValue, averageGrade],
   )
-  const updatePersonalGradeChange: GradeSetter = useCallback(
-    ([value]) =>
-      setValue(
-        'personalGrade',
-        fromNumberToGrade(
-          value ?? fromGradeToNumber(averageGrade),
-          // biome-ignore lint/suspicious/noExplicitAny: needs to be "polymorphic"
-        ) as any,
-      ),
+  const updatePersonalGradeChange: HandleGradeSliderChange = useCallback(
+    value => {
+      const val = (typeof value === 'number' ? value : value[0]) ?? averageGrade
+      setValue('personalGrade', val)
+    },
     [setValue, averageGrade],
   )
 
   const handleStyleChange = useCallback(
-    (val: unknown) => {
-      const parsedVal = ascentStyleSchema.safeParse(val)
+    (val: string[]) => {
+      const parsedVal = ascentStyleSchema.array().safeParse(val)
       if (!parsedVal.success) return
 
-      return setValue('style', parsedVal.data)
+      const parsedClimbData = parsedVal.data[0]
+
+      return parsedClimbData === undefined
+        ? undefined
+        : setValue('style', parsedClimbData)
     },
     [setValue],
   )
@@ -201,7 +185,17 @@ export default function Log(): React.JSX.Element {
           name="ascent-form"
           spellCheck={false}
           onSubmit={handleSubmit(data => {
-            onSubmit(data)
+            onSubmit({
+              ...data,
+              topoGrade:
+                data?.topoGrade === undefined
+                  ? undefined
+                  : fromNumberToGrade(data.topoGrade),
+              personalGrade:
+                data?.personalGrade === undefined
+                  ? undefined
+                  : fromNumberToGrade(data.personalGrade),
+            })
             reset()
           }, console.error)}
         >
@@ -303,22 +297,27 @@ export default function Log(): React.JSX.Element {
           </label>
           <div className={styles.grades}>
             <label htmlFor="topoGrade" className={styles.label}>
-              Topo Grade {topoGrade}
+              <span>
+                Topo Grade <strong>{fromNumberToGrade(numberTopoGrade)}</strong>
+              </span>
             </label>
             <GradeSlider
               {...topoGradeRegister}
-              value={[topoGrade]}
+              value={numberTopoGrade}
               onValueChange={handleTopoGradeChange}
               min={adjustedMinGrade}
               max={adjustedMaxGrade}
               step={1}
             />
             <label htmlFor="personalGrade" className={styles.label}>
-              Personal Grade {personalGrade}
+              <span>
+                Personal Grade{' '}
+                <strong>{fromNumberToGrade(personalNumberGrade)}</strong>
+              </span>
             </label>
             <GradeSlider
               {...personalGradeRegister}
-              value={[personalGrade]}
+              value={personalNumberGrade}
               onValueChange={updatePersonalGradeChange}
               min={adjustedMinGrade}
               max={adjustedMaxGrade}
