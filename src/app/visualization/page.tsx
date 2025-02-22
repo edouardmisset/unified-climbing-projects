@@ -9,6 +9,7 @@ import { api } from '~/trpc/react'
 import { AscentsTrainingSwitch } from '../_components/ascents-training-switch/ascents-training-switch'
 import { AscentsBar } from '../_components/barcode/ascents-bar'
 import { TrainingBar } from '../_components/barcode/training-bar'
+import CodeModal from '../_components/code-dialog/code-dialog'
 import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
 import { AscentsQRDot } from '../_components/qr-code/ascents-qr-dot'
@@ -78,9 +79,19 @@ export default function Visualisation() {
             return (
               <div key={year}>
                 <h2 className="center-text">
-                  <Link href={`/ascents/qr-code/${year}`} prefetch={true}>
-                    {year}
-                  </Link>
+                  <CodeModal
+                    title={year}
+                    content={
+                      <QRCode>
+                        {sortedAscents.map((ascents, index) => (
+                          <AscentsQRDot
+                            ascents={ascents}
+                            key={ascents[0]?.date ?? index}
+                          />
+                        ))}
+                      </QRCode>
+                    }
+                  />
                 </h2>
                 <QRCode>
                   {sortedAscents.map((ascents, index) => (
@@ -103,9 +114,19 @@ export default function Visualisation() {
           .map(([year, yearAscents]) => (
             <div key={year} className="flex-column w100">
               <h2 className="center-text">
-                <Link href={`/ascents/barcode/${year}`} prefetch={true}>
-                  {year}
-                </Link>
+                <CodeModal
+                  title={year}
+                  content={
+                    <Barcode>
+                      {yearAscents.map((ascents, index) => (
+                        <AscentsBar
+                          key={ascents[0]?.date ?? index}
+                          weeklyAscents={ascents}
+                        />
+                      ))}
+                    </Barcode>
+                  }
+                />
               </h2>
               <Barcode>
                 {yearAscents.map((weeklyAscents, index) => (
@@ -130,9 +151,19 @@ export default function Visualisation() {
           .map(([year, yearlyTraining]) => (
             <div key={year}>
               <h2 className="center-text">
-                <Link href={`/training/qr-code/${year}`} prefetch={true}>
-                  {year}
-                </Link>
+                <CodeModal
+                  title={year}
+                  content={
+                    <QRCode>
+                      {yearlyTraining.map((trainingSessions, index) => (
+                        <TrainingsQRDot
+                          trainingSessions={trainingSessions}
+                          key={trainingSessions[0]?.date ?? index}
+                        />
+                      ))}
+                    </QRCode>
+                  }
+                />
               </h2>
               <QRCode>
                 {yearlyTraining.map((trainingSessions, index) => (
@@ -157,9 +188,19 @@ export default function Visualisation() {
           .map(([year, yearTraining]) => (
             <div key={year} className="flex-column w100">
               <h2 className="center-text">
-                <Link href={`/training/barcode/${year}`} prefetch={true}>
-                  {year}
-                </Link>
+                <CodeModal
+                  title={year}
+                  content={
+                    <Barcode>
+                      {yearTraining.map((weeklyTraining, index) => (
+                        <TrainingBar
+                          key={weeklyTraining[0]?.date ?? index}
+                          weeklyTraining={weeklyTraining}
+                        />
+                      ))}
+                    </Barcode>
+                  }
+                />
               </h2>
               <Barcode>
                 {yearTraining.map((weeklyTraining, index) => (
