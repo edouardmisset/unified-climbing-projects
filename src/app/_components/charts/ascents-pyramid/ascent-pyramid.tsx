@@ -7,7 +7,7 @@ import {
   getGradeFrequencyAndColors,
 } from '../ascents-pyramid/get-grade-frequency'
 import { ChartContainer } from '../chart-container/chart-container'
-import { theme } from '../constants'
+import { DEFAULT_CHART_MARGIN, theme } from '../constants'
 
 const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
   id,
@@ -31,7 +31,7 @@ export function AscentPyramid({
         data={gradeFrequency}
         keys={ASCENT_STYLE}
         indexBy="grade"
-        margin={{ bottom: 40, left: 40, top: 20 }}
+        margin={DEFAULT_CHART_MARGIN}
         padding={0.5}
         enableGridY={false}
         // @ts-ignore

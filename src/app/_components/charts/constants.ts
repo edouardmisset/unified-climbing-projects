@@ -26,7 +26,7 @@ export const theme: Theme = {
   },
 }
 
-export const DEFAULT_CHART_MARGIN = { bottom: 40, left: 40, top: 20 }
+export const DEFAULT_CHART_MARGIN = { bottom: 40, left: 50, top: 20, right: 20 }
 export const DEFAULT_PIE_MARGIN = {
   top: 20,
   right: 100,
