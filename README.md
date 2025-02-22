@@ -11,7 +11,12 @@ is my playground for these experiments.
 - [x] Merge QR-Code pages and Barcode pages for training and ascents into one
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code).  
+  - [ ] Bonus: add the calendars  
+  - [ ] Bonus 2: refactor the components to use the same code for both
+    training and ascents.  
 - [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.  
+- [ ] Add chart showing the average (min and max) number of tries per grade.  
+- [ ] Switch all third party components to base-ui.  
 - [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
 - [ ] Attach database to UI
