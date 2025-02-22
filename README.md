@@ -15,7 +15,7 @@ is my playground for these experiments.
   - [ ] Bonus 2: refactor the components to use the same code for both
     training and ascents.  
 - [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.  
-- [ ] Add chart showing the average (min and max) number of tries per grade.  
+- [x] Add chart showing the average (min and max) number of tries per grade.  
 - [ ] Switch all third party components to base-ui.  
 - [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
