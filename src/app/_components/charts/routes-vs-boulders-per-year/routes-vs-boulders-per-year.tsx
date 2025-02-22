@@ -12,11 +12,17 @@ import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
 const discipline = ['boulders', 'routes']
 
-export function RoutesVsBouldersPerYear({ ascents }: { ascents: Ascent[] }) {
+export function RoutesVsBouldersPerYear({
+  ascents,
+  className,
+}: { ascents: Ascent[]; className?: string }) {
   const data = useMemo(() => getRoutesVsBouldersPerYear(ascents), [ascents])
 
   return (
-    <ChartContainer caption="Routes vs. Boulders per Year">
+    <ChartContainer
+      caption="Routes vs. Boulders per Year"
+      className={className}
+    >
       <ResponsiveBar
         data={data}
         theme={theme}

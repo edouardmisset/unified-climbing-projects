@@ -82,10 +82,6 @@
   user-select: none;
 }
 
-text {
-  white-space: pre;
-}
-
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
 .visually-hidden {
   clip-path: inset(100%);

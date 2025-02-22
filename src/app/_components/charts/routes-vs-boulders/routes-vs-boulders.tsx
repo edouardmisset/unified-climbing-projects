@@ -7,7 +7,10 @@ import { DEFAULT_PIE_MARGIN, pieColorsGetter, theme } from '../constants'
 import type { ClimbingDisciplineMetric } from '../types'
 import { getRoutesVsBoulders } from './get-routes-vs-boulders'
 
-export function RoutesVsBoulders({ ascents }: { ascents: Ascent[] }) {
+export function RoutesVsBoulders({
+  ascents,
+  className,
+}: { ascents: Ascent[]; className?: string }) {
   const routesVsBoulders = useMemo(
     () => getRoutesVsBoulders(ascents),
     [ascents],
@@ -20,7 +23,7 @@ export function RoutesVsBoulders({ ascents }: { ascents: Ascent[] }) {
     `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
 
   return (
-    <ChartContainer caption="Routes vs. Boulders">
+    <ChartContainer caption="Routes vs. Boulders" className={className}>
       <ResponsivePie
         data={routesVsBoulders}
         theme={theme}

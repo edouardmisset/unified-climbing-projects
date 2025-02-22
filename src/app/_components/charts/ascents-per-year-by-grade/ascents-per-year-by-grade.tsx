@@ -10,14 +10,17 @@ import {
 } from '../constants'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
-export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
+export function AscentsPerYearByGrade({
+  ascents,
+  className,
+}: { ascents: Ascent[]; className?: string }) {
   const ascentsPerYearByGrade = useMemo(
     () => getAscentsPerYearByGrade(ascents),
     [ascents],
   )
 
   return (
-    <ChartContainer caption="Ascents Per Year By Grade">
+    <ChartContainer caption="Ascents Per Year By Grade" className={className}>
       <ResponsiveBar
         theme={theme}
         data={ascentsPerYearByGrade}

@@ -659,3 +659,11 @@ not to see them */
   padding-block: var(--size-1);
   padding-inline: var(--size-3);
 }
+
+:where(text) {
+  white-space: pre;
+}
+
+:where(strong) {
+  font-weight: var(--font-weight-7);
+}

@@ -5,10 +5,13 @@ import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
 import { ChartContainer } from '../chart-container/chart-container'
 import { DEFAULT_PIE_MARGIN, theme } from '../constants'
 
-export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
+export function AscentsByStyle({
+  ascents,
+  className,
+}: { ascents: Ascent[]; className?: string }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
   return (
-    <ChartContainer caption="Ascent By Style">
+    <ChartContainer caption="Ascent By Style" className={className}>
       <ResponsivePie
         data={data}
         theme={theme}

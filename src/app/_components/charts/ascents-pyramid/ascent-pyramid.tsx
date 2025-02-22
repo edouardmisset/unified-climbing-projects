@@ -16,8 +16,10 @@ const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
 
 export function AscentPyramid({
   ascents,
+  className,
 }: {
   ascents: Ascent[]
+  className?: string
 }) {
   const gradeFrequency = useMemo(
     () => getGradeFrequencyAndColors(ascents),
@@ -25,7 +27,7 @@ export function AscentPyramid({
   )
 
   return (
-    <ChartContainer caption="Ascent Pyramid">
+    <ChartContainer caption="Ascent Pyramid" className={className}>
       <ResponsiveBar
         theme={theme}
         data={gradeFrequency}

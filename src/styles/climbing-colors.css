@@ -64,6 +64,11 @@
   --onsight: var(--teal-5);
   --flash: var(--yellow-5);
   --redpoint: var(--red-5);
+
+  /* TRIES */
+  --max-tries: var(--pink-10);
+  --average-tries: var(--pink-5);
+  --min-tries: var(--pink-2);
 }
 
 /* GRADES */

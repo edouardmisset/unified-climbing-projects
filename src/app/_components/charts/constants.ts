@@ -2,6 +2,7 @@ import type { AxisProps } from '@nivo/axes'
 import type { OrdinalColorScaleConfig } from '@nivo/colors'
 import type { Theme } from '@nivo/core'
 import type { ComputedDatum } from '@nivo/pie'
+import type { ScaleSpec } from '@nivo/scales'
 import type { ClimbingDisciplineMetric } from './types'
 
 export const theme: Theme = {
@@ -26,7 +27,7 @@ export const theme: Theme = {
   },
 }
 
-export const DEFAULT_CHART_MARGIN = { bottom: 40, left: 50, top: 20, right: 20 }
+export const DEFAULT_CHART_MARGIN = { bottom: 50, left: 50, top: 20, right: 20 }
 export const DEFAULT_PIE_MARGIN = {
   top: 20,
   right: 100,
@@ -49,3 +50,20 @@ export const chartColorGetter: OrdinalColorScaleConfig<
 export const pieColorsGetter: OrdinalColorScaleConfig<
   Omit<ComputedDatum<ClimbingDisciplineMetric>, 'fill' | 'color' | 'arc'>
 > = ({ data }) => data.color
+
+export const gradesBottomAxis: AxisProps = {
+  legend: 'Grades',
+  legendOffset: 40,
+  legendPosition: 'middle',
+}
+export const lineXScale: ScaleSpec = { type: 'point' }
+export const lineYScale: ScaleSpec = {
+  type: 'linear',
+  min: 0,
+  max: 'auto',
+}
+export const countAxisLeft: AxisProps = {
+  legend: 'Count',
+  legendOffset: -40,
+  legendPosition: 'middle',
+}

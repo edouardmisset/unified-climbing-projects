@@ -9,6 +9,7 @@ import { AscentsPerYearByGrade } from '../charts/ascents-per-year-by-grade/ascen
 import { AscentPyramid } from '../charts/ascents-pyramid/ascent-pyramid.tsx'
 import { RoutesVsBouldersPerYear } from '../charts/routes-vs-boulders-per-year/routes-vs-boulders-per-year.tsx'
 import { RoutesVsBoulders } from '../charts/routes-vs-boulders/routes-vs-boulders.tsx'
+import { TriesByGrade } from '../charts/tries-by-grade/tries-by-grade.tsx'
 import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
@@ -25,21 +26,18 @@ export function Dashboard() {
     <>
       <AscentsFilterBar allAscents={allAscents} />
       <div className={styles.container}>
-        <div className={styles.item}>
-          <AscentPyramid ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <AscentsPerYearByGrade ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <AscentsByStyle ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <RoutesVsBoulders ascents={filteredAscents} />
-        </div>
-        <div className={styles.item}>
-          <RoutesVsBouldersPerYear ascents={filteredAscents} />
-        </div>
+        <AscentPyramid ascents={filteredAscents} className={styles.item} />
+        <AscentsPerYearByGrade
+          ascents={filteredAscents}
+          className={styles.item}
+        />
+        <AscentsByStyle ascents={filteredAscents} className={styles.item} />
+        <RoutesVsBoulders ascents={filteredAscents} className={styles.item} />
+        <RoutesVsBouldersPerYear
+          ascents={filteredAscents}
+          className={styles.item}
+        />
+        <TriesByGrade ascents={filteredAscents} className={styles.item} />
       </div>
     </>
   )
