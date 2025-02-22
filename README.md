@@ -10,21 +10,19 @@ is my playground for these experiments.
 - [x] Redo ascents table with another library (react-table?)
 - [x] Merge QR-Code pages and Barcode pages for training and ascents into one
   page. Use a switch to change from training to ascents. Use a button-group to
-  change visualisation type (barcode or QR-code).  
-  - [ ] Bonus: add the calendars  
+  change visualisation type (barcode or QR-code).
+  - [ ] Bonus: add the calendars
   - [ ] Bonus 2: refactor the components to use the same code for both
-    training and ascents.  
-- [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.  
-- [x] Add chart showing the average (min and max) number of tries per grade.  
-- [ ] Switch all third party components to base-ui.  
+    training and ascents.
+- [ ] Clicking a QR-code or Barcode should open a modal with the code, not a new page.
+- [x] Add chart showing the average (min and max) number of tries per grade.
+- [ ] Switch all third party components to base-ui.
 - [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
-- [ ] Attach database to UI
 - [ ] Add ORM (Drizzle)
-- [ ] Change communication between front and back from tRPC to RSC for better
-  performance (better caching) ?
-- [ ] Add tests (visual non-regression tests for graphs, calendars, QR-codes,
-  Barcodes, etc.)
+- [x] Improve caching mechanisms for better performances (`createCache`, `use cache`, ...)
+- [ ] ? Change communication between front and back from tRPC to RSC for better performance (better caching) ?
+- [ ] Add tests (visual non-regression tests for graphs, calendars, QR-codes, Barcodes, etc.)
 - [ ] Add CI/CD
 - [ ] Add error management (w/ Sentry)
 - [ ] Analytics (posthog)
