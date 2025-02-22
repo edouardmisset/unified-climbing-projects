@@ -37,6 +37,10 @@ export const DEFAULT_PIE_MARGIN = {
   left: 100,
 }
 
+// Padding
+
+export const defaultBarChartPadding = 0.3
+
 // Colors
 
 export const chartColorGetter: OrdinalColorScaleConfig<

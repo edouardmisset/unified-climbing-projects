@@ -5,6 +5,7 @@ import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
   chartColorGetter,
+  defaultBarChartPadding,
   numberOfAscentsAxisLeft,
   theme,
   yearAxisBottom,
@@ -28,7 +29,7 @@ export function AscentsPerYearByGrade({
         keys={_GRADES}
         indexBy="year"
         margin={DEFAULT_CHART_MARGIN}
-        padding={0.5}
+        padding={defaultBarChartPadding}
         enableGridY={false}
         // @ts-ignore
         colors={chartColorGetter}

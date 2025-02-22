@@ -9,6 +9,7 @@ import {
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
+  defaultBarChartPadding,
   gradesBottomAxis,
   numberOfAscentsAxisLeft,
   theme,
@@ -39,7 +40,7 @@ export function AscentPyramid({
         keys={ASCENT_STYLE}
         indexBy="grade"
         margin={DEFAULT_CHART_MARGIN}
-        padding={0.5}
+        padding={defaultBarChartPadding}
         enableGridY={false}
         // @ts-ignore
         colors={colors}
