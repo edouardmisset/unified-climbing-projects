@@ -2,20 +2,35 @@ import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 
-export function getRoutesVsBoulders(ascents: Ascent[]) {
-  return CLIMBING_DISCIPLINE.map(climbingDiscipline => {
-    const filteredAscentsCount = filterAscents(ascents, {
-      climbingDiscipline,
-    }).length
+type RouteVsBoulder = {
+  id: Ascent['climbingDiscipline']
+  label: Ascent['climbingDiscipline']
+  value: number
+  color: string
+}[]
 
-    return filteredAscentsCount > 0
-      ? {
-          id: climbingDiscipline,
-          label: climbingDiscipline,
-          value: filteredAscentsCount,
-          color:
-            CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
-        }
-      : undefined
-  }).filter(val => val !== undefined)
+export function getRoutesVsBoulders(ascents: Ascent[]): RouteVsBoulder {
+  if (ascents.length === 0) return []
+
+  const initialValue: RouteVsBoulder = CLIMBING_DISCIPLINE.map(
+    climbingDiscipline => ({
+      id: climbingDiscipline,
+      label: climbingDiscipline,
+      value: 0,
+      color:
+        CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
+    }),
+  )
+
+  return ascents
+    .reduce((acc, { climbingDiscipline }) => {
+      const disciplineData = acc.find(({ id }) => id === climbingDiscipline)
+
+      if (!disciplineData) return acc
+
+      disciplineData.value += 1
+
+      return acc
+    }, initialValue)
+    .filter(({ value }) => value > 0)
 }

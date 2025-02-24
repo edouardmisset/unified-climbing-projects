@@ -1,4 +1,6 @@
+import { createGradeScale } from '~/helpers/create-grade-scale'
 import { filterAscents } from '~/helpers/filter-ascents'
+import { minMaxGrades } from '~/helpers/min-max-grades'
 import type { Ascent, Grade } from '~/schema/ascent'
 
 export type GradeFrequency = {
@@ -11,30 +13,43 @@ export type GradeFrequency = {
   RedpointColor: string
 }[]
 
-export function getGradeFrequencyAndColors(
-  filteredAscents: Ascent[],
-): GradeFrequency {
-  const sortedFilteredGrades = [
-    ...new Set(filteredAscents.map(({ topoGrade }) => topoGrade)),
-  ].sort()
+export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
+  if (ascents.length === 0) {
+    return []
+  }
+  // TODO: maybe refactor these two functions into one ? and pass Ascent[] as
+  // argument ?
+  const grades = createGradeScale(...minMaxGrades(ascents))
 
-  const gradeClimbingStylesCount: GradeFrequency = sortedFilteredGrades.map(
-    grade => {
-      const filteredAscentsByGrade = filterAscents(filteredAscents, { grade })
+  const gradeClimbingStylesCount: GradeFrequency = grades.map(grade => {
+    const initialStyleFrequency: Record<Ascent['style'], number> = {
+      Onsight: 0,
+      Flash: 0,
+      Redpoint: 0,
+    }
 
-      return {
-        grade,
-        Onsight: filterAscents(filteredAscentsByGrade, { style: 'Onsight' })
-          .length,
-        OnsightColor: 'var(--onsight)',
-        Flash: filterAscents(filteredAscentsByGrade, { style: 'Flash' }).length,
-        FlashColor: 'var(--flash)',
-        Redpoint: filterAscents(filteredAscentsByGrade, { style: 'Redpoint' })
-          .length,
-        RedpointColor: 'var(--redpoint)',
-      }
-    },
-  )
+    const { Flash, Onsight, Redpoint } = ascents.reduce(
+      (acc, { topoGrade, style }) => {
+        if (topoGrade !== grade) {
+          return acc
+        }
+
+        acc[style] += 1
+        return acc
+      },
+      initialStyleFrequency,
+    )
+
+    return {
+      grade,
+      Onsight,
+      OnsightColor: 'var(--onsight)',
+      Flash,
+      FlashColor: 'var(--flash)',
+      Redpoint,
+      RedpointColor: 'var(--redpoint)',
+    }
+  })
 
   return gradeClimbingStylesCount
 }

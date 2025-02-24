@@ -20,6 +20,7 @@ redpoint
 Redpoint
 redpointed
 ruffwear
+Serie
 stylelintcache
 topoGrade
 toutes

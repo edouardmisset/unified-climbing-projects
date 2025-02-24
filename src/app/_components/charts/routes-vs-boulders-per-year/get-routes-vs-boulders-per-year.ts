@@ -6,21 +6,21 @@ export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
   const years = createYearList(ascents, { descending: false })
 
   return years.map(year => {
-    const ascentsInYear = ascents.filter(({ date }) => isDateInYear(date, year))
+    const { Boulder, Route } = ascents.reduce(
+      (acc, { date, climbingDiscipline }) => {
+        if (!isDateInYear(date, year)) return acc
 
-    const routes = ascentsInYear.filter(
-      ({ climbingDiscipline }) => climbingDiscipline === 'Route',
-    ).length
-
-    const boulders = ascentsInYear.filter(
-      ({ climbingDiscipline }) => climbingDiscipline === 'Boulder',
-    ).length
+        acc[climbingDiscipline] = (acc[climbingDiscipline] ?? 0) + 1
+        return acc
+      },
+      {} as Record<Ascent['climbingDiscipline'], number>,
+    )
 
     return {
       year,
-      boulders,
+      boulders: Boulder,
       bouldersColor: 'var(--boulder)',
-      routes,
+      routes: Route,
       routesColor: 'var(--route)',
     }
   })

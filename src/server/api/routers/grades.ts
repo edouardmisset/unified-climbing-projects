@@ -2,6 +2,7 @@ import { average } from '@edouardmisset/math/average.ts'
 
 import { z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
+import { minMaxGrades } from '~/helpers/min-max-grades'
 import { _GRADES, gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
@@ -34,16 +35,6 @@ export const gradesRouter = createTRPCRouter({
     .output(z.tuple([gradeSchema, gradeSchema]))
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
-
-      if (filteredAscents.length === 0)
-        return [fromNumberToGrade(1), fromNumberToGrade(_GRADES.length)]
-
-      const filteredNumberGrades = filteredAscents.map(({ topoGrade }) =>
-        fromGradeToNumber(topoGrade),
-      )
-
-      const lowestGrade = fromNumberToGrade(Math.min(...filteredNumberGrades))
-      const highestGrade = fromNumberToGrade(Math.max(...filteredNumberGrades))
-      return [lowestGrade, highestGrade]
+      return minMaxGrades(filteredAscents)
     }),
 })

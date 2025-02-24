@@ -1,41 +1,44 @@
 import { createYearList } from '~/data/helpers'
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
+import { createGradeScale } from '~/helpers/create-grade-scale'
 import { filterAscents } from '~/helpers/filter-ascents'
-import { isDateInYear } from '~/helpers/is-date-in-year'
-import { type Ascent, _GRADES } from '~/schema/ascent'
+import { minMaxGrades } from '~/helpers/min-max-grades'
+import type { Ascent } from '~/schema/ascent'
 
 export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number
 }[] {
-  const ascendingYears = createYearList(ascents, { descending: false })
+  const years = createYearList(ascents, { descending: false })
 
-  const ascentsFrequencyByYear = ascendingYears.map(year => {
-    const filteredAscentsByYear = ascents.filter(({ date }) =>
-      isDateInYear(date, year),
-    )
+  return years.map(year => {
+    const ascentsForYear = filterAscents(ascents, { year })
 
-    const yearGradeFrequencyParts = _GRADES.map(grade => {
-      const count = filterAscents(filteredAscentsByYear, {
-        grade,
-      }).length
-
-      return {
-        [grade]: count,
-        [`${grade}Color`]: fromGradeToBackgroundColor(grade),
-      }
-    })
-
-    // Merges all objects from `yearGradeFrequencyParts` into one object,
-    // combining all properties and overriding duplicates with the last
-    // occurrence.
-    const yearGradeFrequency = Object.assign({}, ...yearGradeFrequencyParts)
-
-    return {
-      year,
-      ...yearGradeFrequency,
+    if (ascentsForYear.length === 0) {
+      return { year }
     }
-  })
 
-  return ascentsFrequencyByYear
+    const gradeScale = createGradeScale(...minMaxGrades(ascentsForYear))
+
+    const frequency: Record<string, string | number> = {}
+
+    for (const grade of gradeScale) {
+      frequency[grade] = 0
+      frequency[`${grade}Color`] = fromGradeToBackgroundColor(grade)
+    }
+
+    // Calculate frequency counts in a single pass over the ascents
+    for (const { topoGrade } of ascentsForYear) {
+      if (
+        frequency?.[topoGrade] === undefined ||
+        typeof frequency[topoGrade] !== 'number'
+      ) {
+        continue
+      }
+
+      frequency[topoGrade] += 1
+    }
+
+    return { year, ...frequency }
+  })
 }
