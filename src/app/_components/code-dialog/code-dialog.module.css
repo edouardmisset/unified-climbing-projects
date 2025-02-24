@@ -77,6 +77,6 @@
 
 .Actions {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   gap: var(--size-fluid-1);
 }

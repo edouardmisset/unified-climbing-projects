@@ -152,7 +152,7 @@
   }
 }
 
-:where(b) {
+:where(b, strong) {
   font-weight: var(--font-weight-7);
 }
 
@@ -238,12 +238,6 @@ not to see them */
 
 :focus-visible {
   outline-color: var(--brand, var(--link));
-}
-
-*,
-::after,
-::before {
-  box-sizing: border-box;
 }
 
 :where(:not(dialog)) {
@@ -662,8 +656,4 @@ not to see them */
 
 :where(text) {
   white-space: pre;
-}
-
-:where(strong) {
-  font-weight: var(--font-weight-7);
 }
