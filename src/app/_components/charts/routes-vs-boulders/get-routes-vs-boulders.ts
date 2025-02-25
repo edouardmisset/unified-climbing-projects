@@ -1,5 +1,4 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
-import { filterAscents } from '~/helpers/filter-ascents'
 import { type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 
 type RouteVsBoulder = {

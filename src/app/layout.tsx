@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
@@ -9,6 +10,7 @@ import styles from './index.module.css'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
+
 import '~/styles/animation.css'
 import '~/styles/aspects.css'
 import '~/styles/border.css'
@@ -40,16 +42,18 @@ export default async function RootLayout({
           <script src="//unpkg.com/react-scan/dist/auto.global.js" />
         )}
       </head>
-      <html lang="en" suppressHydrationWarning={true}>
-        <body className={styles.body}>
-          <TRPCReactProvider>
-            <Navigation />
-            <main className={styles.main}>{children}</main>
-          </TRPCReactProvider>
-          <SpeedInsights />
-          <Analytics />
-        </body>
-      </html>
+      <ClerkProvider>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className={styles.body}>
+            <TRPCReactProvider>
+              <Navigation />
+              <main className={styles.main}>{children}</main>
+            </TRPCReactProvider>
+            <SpeedInsights />
+            <Analytics />
+          </body>
+        </html>
+      </ClerkProvider>
     </ViewTransitions>
   )
 }

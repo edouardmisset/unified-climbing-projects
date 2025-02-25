@@ -1,6 +1,4 @@
 'use client'
-
-import { Link } from 'next-view-transitions'
 import { type ReactNode, useState } from 'react'
 import Barcode from '~/app/_components/barcode/barcode'
 import { groupDataDaysByYear, groupDataWeeksByYear } from '~/data/helpers'

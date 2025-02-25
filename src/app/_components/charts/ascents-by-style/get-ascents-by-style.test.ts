@@ -1,7 +1,7 @@
 import { assert, describe, it } from 'poku'
 import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
-import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { ascentSchema } from '~/schema/ascent'
 import { getAscentsByStyle } from './get-ascents-by-style'
 
 describe('getAscentsByStyle', () => {

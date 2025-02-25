@@ -2,7 +2,7 @@ import { assert, describe, it } from 'poku'
 import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json' with {
   type: 'json',
 }
-import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { ascentSchema } from '~/schema/ascent'
 import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
 describe('getRoutesVsBouldersPerYear', () => {

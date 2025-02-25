@@ -1,5 +1,4 @@
 import { createGradeScale } from '~/helpers/create-grade-scale'
-import { filterAscents } from '~/helpers/filter-ascents'
 import { minMaxGrades } from '~/helpers/min-max-grades'
 import type { Ascent, Grade } from '~/schema/ascent'
 

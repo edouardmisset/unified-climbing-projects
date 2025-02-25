@@ -3,7 +3,7 @@ import { average } from '@edouardmisset/math/average.ts'
 import { z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import { minMaxGrades } from '~/helpers/min-max-grades'
-import { _GRADES, gradeSchema } from '~/schema/ascent'
+import { gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
 

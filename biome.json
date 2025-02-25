@@ -27,6 +27,10 @@
       "recommended": true,
       "nursery": {
         "useStrictMode": "warn"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn"
       }
     }
   },
