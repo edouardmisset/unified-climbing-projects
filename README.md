@@ -18,6 +18,10 @@ is my playground for these experiments.
 - [x] Add chart showing the average (min and max) number of tries per grade.
 - [x] Switch all radix-ui components to base-ui.
   - [ ] Bonus: Redo the styles of the slider and the group toggle in the log page.
+- [ ] Use [HeatJS](https://www.william-troup.com/heat-js/examples/index.html) to
+  display the calendars (training and ascents). Also take the opportunity to
+  stash my component somewhere and also improve it using the best practice found
+  in HeatJS.
 - [ ] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
 - [ ] Add ORM (Drizzle)
