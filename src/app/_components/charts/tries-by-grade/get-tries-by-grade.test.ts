@@ -1,12 +1,8 @@
 import { assert, describe, it } from 'poku'
-import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json' with {
-  type: 'json',
-}
-import { ascentSchema } from '~/schema/ascent'
+import { sampleAscents } from '~/backup/sample-data'
 import { getTriesByGrade } from './get-tries-by-grade'
 
 describe('getTriesByGrade', () => {
-  const testAscents = ascentSchema.array().parse(sampleAscents)
   it('should return empty array for empty input', () => {
     const result = getTriesByGrade([])
     assert.deepEqual(result, [])
@@ -141,7 +137,7 @@ describe('getTriesByGrade', () => {
         color: 'var(--max-tries)',
       },
     ]
-    const result = getTriesByGrade(testAscents)
+    const result = getTriesByGrade(sampleAscents)
     assert.deepEqual(result, expected)
   })
 })

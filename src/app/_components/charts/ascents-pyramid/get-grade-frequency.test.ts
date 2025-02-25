@@ -1,12 +1,8 @@
 import { assert, describe, it } from 'poku'
-import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json' with {
-  type: 'json',
-}
-import { ascentSchema } from '~/schema/ascent'
+import { sampleAscents } from '~/backup/sample-data'
 import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
 describe('getGradeFrequencyAndColors', () => {
-  const testAscents = ascentSchema.array().parse(sampleAscents)
   it('should return empty array for empty input', () => {
     const result = getGradeFrequencyAndColors([])
     assert.deepEqual(result, [])
@@ -70,7 +66,7 @@ describe('getGradeFrequencyAndColors', () => {
       },
     ]
     const resultFor7Degree = getGradeFrequencyAndColors(
-      testAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
+      sampleAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
     )
     assert.deepEqual(resultFor7Degree, expected)
   })

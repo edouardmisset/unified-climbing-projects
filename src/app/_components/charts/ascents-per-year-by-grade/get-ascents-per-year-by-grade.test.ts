@@ -1,12 +1,8 @@
 import { assert, describe, it } from 'poku'
-import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json' with {
-  type: 'json',
-}
-import { ascentSchema } from '~/schema/ascent'
+import { sampleAscents } from '~/backup/sample-data'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
 describe('getAscentsPerYearByGrade', () => {
-  const testAscents = ascentSchema.array().parse(sampleAscents)
   it('should return empty array for empty input', () => {
     const result = getAscentsPerYearByGrade([])
     assert.deepEqual(result, [])
@@ -35,7 +31,7 @@ describe('getAscentsPerYearByGrade', () => {
       },
     ]
     const result = getAscentsPerYearByGrade(
-      testAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
+      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
     )
     assert.deepEqual(result, expected)
   })
