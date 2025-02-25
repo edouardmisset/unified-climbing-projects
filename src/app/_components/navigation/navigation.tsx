@@ -5,13 +5,7 @@ import type React from 'react'
 
 import { Menu } from '@base-ui-components/react/menu'
 
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from '@clerk/nextjs'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react'
 import { api } from '~/trpc/react'
 import styles from './navigation.module.css'
@@ -34,8 +28,6 @@ export function Navigation() {
   const latestSessionYear = new Date(
     latestSession?.date ?? Date.now().toString(),
   ).getFullYear()
-
-  const { isSignedIn, isLoaded } = useUser()
 
   return (
     <header className={styles.Header}>
