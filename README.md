@@ -22,7 +22,7 @@ is my playground for these experiments.
   display the calendars (training and ascents). Also take the opportunity to
   stash my component somewhere and also improve it using the best practice found
   in HeatJS.
-- [ ] Add auth (Clerk) and protect the `/log` route
+- [x] Add auth (Clerk) and protect the `/log` route
 - [ ] Add database (Postgres)
 - [ ] Add ORM (Drizzle)
 - [x] Improve caching mechanisms for better performances (`createCache`, `use cache`, ...)
