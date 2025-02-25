@@ -1,5 +1,5 @@
 import { assert, describe, it } from 'poku'
-import { sampleAscents } from '~/backup/sample-data'
+import { sampleAscents } from '~/backup/sample-ascents'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
 describe('getAscentsPerYearByGrade', () => {

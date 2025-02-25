@@ -1,5 +1,5 @@
 import { assert, describe, it } from 'poku'
-import { sampleAscents } from '~/backup/sample-data'
+import { sampleAscents } from '~/backup/sample-ascents'
 import { getRoutesVsBoulders } from './get-routes-vs-boulders'
 
 describe('getRoutesVsBoulders', () => {
