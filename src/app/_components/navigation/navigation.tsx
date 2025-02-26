@@ -62,7 +62,10 @@ export function Navigation() {
                 <Link href="/">🏠 Home</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/log'}>📋 Log</Link>
+                <Link href={'/log-ascent'}>📋 Log Ascent</Link>
+              </Menu.Item>
+              <Menu.Item className={styles.Item}>
+                <Link href={'/log-training'}>📋 Log Training</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
                 <Link href={'/visualization'}>🖼️ Visualization</Link>
