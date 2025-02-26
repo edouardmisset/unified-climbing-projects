@@ -1,10 +1,10 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 /**
  *
  * @param size from 0 to 15
  */
-export function Spacer({ size = 3 }: { size?: number }) {
+function SpacerComponent({ size = 3 }: { size?: number }) {
   const blockSize = useMemo(
     () => ({
       blockSize: `var(--size-${size})`,
@@ -13,3 +13,5 @@ export function Spacer({ size = 3 }: { size?: number }) {
   )
   return <div style={blockSize} />
 }
+
+export const Spacer = memo(SpacerComponent)
