@@ -18,6 +18,7 @@ is my playground for these experiments.
 - [x] Add auth (Clerk) and protect the `/log` route
 
 </details>
+</br>
 
 - [ ] Use [parallel
   routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)
@@ -60,6 +61,7 @@ is my playground for these experiments.
 - [x] Use [react compiler](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler)
 
 </details>
+</br>
 
 - [ ] Investigate the viability of changing the communication between front and
   back from `tRPC` to `RSC` for better performances
@@ -71,6 +73,7 @@ is my playground for these experiments.
 <summary><strong>DONE</strong></summary>
 
 </details>
+</br>
 
 - [ ] Redo the styles of the slider and the group toggle in the log page
 - [ ] Style the sign-in button & User Avatar button
@@ -90,15 +93,16 @@ is my playground for these experiments.
   page. Use a switch to change from training to ascents. Use a button-group to
   change visualisation type (barcode or QR-code)
 - [x] Switch all radix-ui components to base-ui
+- [x] ~~Use [HeatJS](https://www.william-troup.com/heat-js/examples/index.html) to
+  display the calendars (training and ascents). Also take the opportunity to
+  stash my component somewhere and also improve it using the best practice found
+  in HeatJS~~
 
 </details>
+</br>
 
 - [ ] Add the calendars (ascents and training) to the Visualization page
 - [ ] Refactor the code of the Visualization page
-- [ ] Use [HeatJS](https://www.william-troup.com/heat-js/examples/index.html) to
-  display the calendars (training and ascents). Also take the opportunity to
-  stash my component somewhere and also improve it using the best practice found
-  in HeatJS
 - [ ] Refactor the form components. This needs to be more legible and
 maintainable
 
@@ -113,6 +117,7 @@ maintainable
 - [x] Add unit tests for the `Google Sheets` to `JS` transformer functions
 
 </details>
+</br>
 
 - [ ] Add visual non-regression tests for the following components: `graphs`,
   `calendars`, `QR-codes`, `Barcodes`, etc.
