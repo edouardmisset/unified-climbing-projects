@@ -12,7 +12,7 @@ import {
   ascentStyleSchema,
 } from '~/schema/ascent'
 
-import { type ChangeEventHandler, Suspense, useCallback, useMemo } from 'react'
+import { type ChangeEventHandler, useCallback, useMemo } from 'react'
 import { GradeSlider } from '~/app/_components/slider/slider'
 import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
@@ -169,259 +169,251 @@ export default function Form() {
   }
 
   return (
-    <section className={styles.container}>
-      <h1 className={styles.title}>Congrats 🎉</h1>
-      <span className="visually-hidden" aria-describedby="form-description">
-        Form to log a climbing ascent
-      </span>
-      <Suspense fallback={<Loader />}>
-        <form
-          aria-describedby="form-description"
+    <form
+      aria-describedby="form-description"
+      autoComplete="off"
+      autoCorrect="off"
+      className={styles.form}
+      name="ascent-form"
+      spellCheck={false}
+      onSubmit={handleSubmit(data => {
+        onSubmit({
+          ...data,
+          topoGrade:
+            data?.topoGrade === undefined
+              ? undefined
+              : fromNumberToGrade(data.topoGrade),
+          personalGrade:
+            data?.personalGrade === undefined
+              ? undefined
+              : fromNumberToGrade(data.personalGrade),
+        })
+        reset()
+      }, console.error)}
+    >
+      <label htmlFor="date" className={styles.label}>
+        Date
+        <input
+          {...register('date')}
+          // biome-ignore lint/a11y/noAutofocus: It would be nice to always start filling the form from here...
+          autoFocus={true}
+          className={styles.input}
+          enterKeyHint="next"
+          id="date"
+          max={new Date().toISOString().split('T')[0]}
+          required={true}
+          title="Date"
+          type="date"
+        />
+      </label>
+      <label htmlFor="routeName" className={styles.label}>
+        Route Name
+        <input
+          {...register('routeName')}
+          autoCapitalize="on"
           autoComplete="off"
-          autoCorrect="off"
-          className={styles.form}
-          name="ascent-form"
-          spellCheck={false}
-          onSubmit={handleSubmit(data => {
-            onSubmit({
-              ...data,
-              topoGrade:
-                data?.topoGrade === undefined
-                  ? undefined
-                  : fromNumberToGrade(data.topoGrade),
-              personalGrade:
-                data?.personalGrade === undefined
-                  ? undefined
-                  : fromNumberToGrade(data.personalGrade),
-            })
-            reset()
-          }, console.error)}
+          className={styles.input}
+          id="routeName"
+          placeholder="The name of the route or boulder climbed (use `N/A` for routes without name)"
+          required={true}
+          title="Route Name"
+          type="text"
+        />
+      </label>
+      <label htmlFor="climbingDiscipline" className={styles.label}>
+        Climbing Discipline
+        <select
+          {...register('climbingDiscipline')}
+          className={styles.input}
+          id="climbingDiscipline"
+          title={climbingDisciplineFormattedList}
         >
-          <label htmlFor="date" className={styles.label}>
-            Date
-            <input
-              {...register('date')}
-              // biome-ignore lint/a11y/noAutofocus: It would be nice to always start filling the form from here...
-              autoFocus={true}
-              className={styles.input}
-              enterKeyHint="next"
-              id="date"
-              max={new Date().toISOString().split('T')[0]}
-              required={true}
-              title="Date"
-              type="date"
-            />
-          </label>
-          <label htmlFor="routeName" className={styles.label}>
-            Route Name
-            <input
-              {...register('routeName')}
-              autoCapitalize="on"
-              autoComplete="off"
-              className={styles.input}
-              id="routeName"
-              placeholder="The name of the route or boulder climbed (use `N/A` for routes without name)"
-              required={true}
-              title="Route Name"
-              type="text"
-            />
-          </label>
-          <label htmlFor="climbingDiscipline" className={styles.label}>
-            Climbing Discipline
-            <select
-              {...register('climbingDiscipline')}
-              className={styles.input}
-              id="climbingDiscipline"
-              title={climbingDisciplineFormattedList}
-            >
-              {disciplines.map(discipline => (
-                <option key={discipline} value={discipline}>
-                  {discipline}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="crag" className={styles.label}>
-            Crag
-            <input
-              {...register('crag')}
-              autoCapitalize="on"
-              className={styles.input}
-              enterKeyHint="next"
-              id="crag"
-              placeholder="The name of the crag"
-              required={true}
-              title="Crag Name"
-              type="text"
-            />
-          </label>
-          <label htmlFor="area" className={styles.label}>
-            Area
-            <input
-              {...register('area')}
-              className={styles.input}
-              enterKeyHint="next"
-              id="area"
-              placeholder="The name of the crag's sector (or area)"
-              title="Crag's area"
-              type="text"
-            />
-          </label>
-          <label htmlFor="tries" className={styles.label}>
-            Tries & Style
-            <div className={styles.tries}>
-              <input
-                {...triesRegister}
-                onChange={handleTriesChange}
-                required={true}
-                min={MIN_TRIES}
-                max={MAX_TRIES}
-                step={1}
-                id="tries"
-                placeholder="1"
-                title="Number of tries"
-                type="number"
-                inputMode="numeric"
-                pattern={_1To9999RegEx.source}
-                enterKeyHint="next"
-              />
-              <ClimbingStyleToggleGroup
-                display={Number(numberOfTries) === 1}
-                onValueChange={handleStyleChange}
-                value={styleValue}
-                isOnsightDisable={isOnsightDisable}
-              />
-            </div>
-          </label>
-          <div className={styles.grades}>
-            <label htmlFor="topoGrade" className={styles.label}>
-              <span>
-                Topo Grade <strong>{fromNumberToGrade(numberTopoGrade)}</strong>
-              </span>
-            </label>
-            <GradeSlider
-              {...topoGradeRegister}
-              value={numberTopoGrade}
-              onValueChange={handleTopoGradeChange}
-              min={adjustedMinGrade}
-              max={adjustedMaxGrade}
-              step={1}
-            />
-            <label htmlFor="personalGrade" className={styles.label}>
-              <span>
-                Personal Grade{' '}
-                <strong>{fromNumberToGrade(personalNumberGrade)}</strong>
-              </span>
-            </label>
-            <GradeSlider
-              {...personalGradeRegister}
-              value={personalNumberGrade}
-              onValueChange={updatePersonalGradeChange}
-              min={adjustedMinGrade}
-              max={adjustedMaxGrade}
-              step={1}
-            />
-          </div>
-          <label htmlFor="holds" className={styles.label}>
-            Holds
-            <input
-              {...register('holds')}
-              className={styles.input}
-              enterKeyHint="next"
-              id="holds"
-              list="hold-types"
-              placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
-              title="The main hold type in the route or in the crux section"
-              type="text"
-            />
-          </label>
-          <datalist id="hold-types">
-            {HOLDS.map(hold => (
-              <option key={hold} value={hold} />
-            ))}
-          </datalist>
-          <label htmlFor="profile" className={styles.label}>
-            Profile
-            <input
-              {...register('profile')}
-              className={styles.input}
-              enterKeyHint="next"
-              id="profile"
-              list="profile-types"
-              placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
-              title="The main profile of the route or in the crux section"
-              type="text"
-            />
-          </label>
-          <datalist id="profile-types">
-            {PROFILES.map(profile => (
-              <option key={profile} value={profile} />
-            ))}
-          </datalist>
-          <label htmlFor="height" className={styles.label}>
-            Height (m)
-            <input
-              {...register('height')}
-              className={styles.input}
-              // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
-              disabled={watch('climbingDiscipline') === 'Boulder'}
-              enterKeyHint="next"
-              id="height"
-              inputMode="numeric"
-              max={MAX_HEIGHT}
-              min={MIN_HEIGHT}
-              pattern={_0To100RegEx.source}
-              placeholder="Height in meters (not needed for boulders)"
-              step={5}
-              title="Height of the route in meters (does not apply for boulders)"
-              style={
-                watch('climbingDiscipline') === 'Boulder'
-                  ? {
-                      cursor: 'not-allowed',
-                    }
-                  : undefined
-              }
-              type="number"
-            />
-          </label>
-          <label htmlFor="rating" className={styles.label}>
-            Rating
-            <input
-              {...register('rating')}
-              className={styles.input}
-              enterKeyHint="next"
-              id="rating"
-              inputMode="numeric"
-              max={MAX_RATING}
-              min={MIN_RATING}
-              pattern={_0To5RegEx.source}
-              placeholder={`${MAX_RATING} ⭐️`}
-              step={1}
-              title={`Route / Boulder rating (on a ${MAX_RATING} stars system)`}
-              type="number"
-            />
-          </label>
-          <label htmlFor="comments" className={styles.label}>
-            Comments
-            <textarea
-              {...register('comments')}
-              autoComplete="off"
-              className={`${styles.input} ${styles.textarea}`}
-              enterKeyHint="send"
-              id="comments"
-              placeholder="Feelings, partners, betas..."
-              spellCheck={true}
-              title="Feelings, partners, betas..."
-            />
-          </label>
-          <Spacer size={3} />
+          {disciplines.map(discipline => (
+            <option key={discipline} value={discipline}>
+              {discipline}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label htmlFor="crag" className={styles.label}>
+        Crag
+        <input
+          {...register('crag')}
+          autoCapitalize="on"
+          className={styles.input}
+          enterKeyHint="next"
+          id="crag"
+          placeholder="The name of the crag"
+          required={true}
+          title="Crag Name"
+          type="text"
+        />
+      </label>
+      <label htmlFor="area" className={styles.label}>
+        Area
+        <input
+          {...register('area')}
+          className={styles.input}
+          enterKeyHint="next"
+          id="area"
+          placeholder="The name of the crag's sector (or area)"
+          title="Crag's area"
+          type="text"
+        />
+      </label>
+      <label htmlFor="tries" className={styles.label}>
+        Tries & Style
+        <div className={styles.tries}>
           <input
-            type="submit"
-            value="Send 📮"
-            className={`contrast-color ${styles.submit}`}
+            {...triesRegister}
+            onChange={handleTriesChange}
+            required={true}
+            min={MIN_TRIES}
+            max={MAX_TRIES}
+            step={1}
+            id="tries"
+            placeholder="1"
+            title="Number of tries"
+            type="number"
+            inputMode="numeric"
+            pattern={_1To9999RegEx.source}
+            enterKeyHint="next"
           />
-        </form>
-      </Suspense>
-    </section>
+          <ClimbingStyleToggleGroup
+            display={Number(numberOfTries) === 1}
+            onValueChange={handleStyleChange}
+            value={styleValue}
+            isOnsightDisable={isOnsightDisable}
+          />
+        </div>
+      </label>
+      <div className={styles.grades}>
+        <label htmlFor="topoGrade" className={styles.label}>
+          <span>
+            Topo Grade <strong>{fromNumberToGrade(numberTopoGrade)}</strong>
+          </span>
+        </label>
+        <GradeSlider
+          {...topoGradeRegister}
+          value={numberTopoGrade}
+          onValueChange={handleTopoGradeChange}
+          min={adjustedMinGrade}
+          max={adjustedMaxGrade}
+          step={1}
+        />
+        <label htmlFor="personalGrade" className={styles.label}>
+          <span>
+            Personal Grade{' '}
+            <strong>{fromNumberToGrade(personalNumberGrade)}</strong>
+          </span>
+        </label>
+        <GradeSlider
+          {...personalGradeRegister}
+          value={personalNumberGrade}
+          onValueChange={updatePersonalGradeChange}
+          min={adjustedMinGrade}
+          max={adjustedMaxGrade}
+          step={1}
+        />
+      </div>
+      <label htmlFor="holds" className={styles.label}>
+        Holds
+        <input
+          {...register('holds')}
+          className={styles.input}
+          enterKeyHint="next"
+          id="holds"
+          list="hold-types"
+          placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
+          title="The main hold type in the route or in the crux section"
+          type="text"
+        />
+      </label>
+      <datalist id="hold-types">
+        {HOLDS.map(hold => (
+          <option key={hold} value={hold} />
+        ))}
+      </datalist>
+      <label htmlFor="profile" className={styles.label}>
+        Profile
+        <input
+          {...register('profile')}
+          className={styles.input}
+          enterKeyHint="next"
+          id="profile"
+          list="profile-types"
+          placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
+          title="The main profile of the route or in the crux section"
+          type="text"
+        />
+      </label>
+      <datalist id="profile-types">
+        {PROFILES.map(profile => (
+          <option key={profile} value={profile} />
+        ))}
+      </datalist>
+      <label htmlFor="height" className={styles.label}>
+        Height (m)
+        <input
+          {...register('height')}
+          className={styles.input}
+          // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
+          disabled={watch('climbingDiscipline') === 'Boulder'}
+          enterKeyHint="next"
+          id="height"
+          inputMode="numeric"
+          max={MAX_HEIGHT}
+          min={MIN_HEIGHT}
+          pattern={_0To100RegEx.source}
+          placeholder="Height in meters (not needed for boulders)"
+          step={5}
+          title="Height of the route in meters (does not apply for boulders)"
+          style={
+            watch('climbingDiscipline') === 'Boulder'
+              ? {
+                  cursor: 'not-allowed',
+                }
+              : undefined
+          }
+          type="number"
+        />
+      </label>
+      <label htmlFor="rating" className={styles.label}>
+        Rating
+        <input
+          {...register('rating')}
+          className={styles.input}
+          enterKeyHint="next"
+          id="rating"
+          inputMode="numeric"
+          max={MAX_RATING}
+          min={MIN_RATING}
+          pattern={_0To5RegEx.source}
+          placeholder={`${MAX_RATING} ⭐️`}
+          step={1}
+          title={`Route / Boulder rating (on a ${MAX_RATING} stars system)`}
+          type="number"
+        />
+      </label>
+      <label htmlFor="comments" className={styles.label}>
+        Comments
+        <textarea
+          {...register('comments')}
+          autoComplete="off"
+          className={`${styles.input} ${styles.textarea}`}
+          enterKeyHint="send"
+          id="comments"
+          placeholder="Feelings, partners, betas..."
+          spellCheck={true}
+          title="Feelings, partners, betas..."
+        />
+      </label>
+      <Spacer size={3} />
+      <input
+        type="submit"
+        value="Send 📮"
+        className={`contrast-color ${styles.submit}`}
+      />
+    </form>
   )
 }
