@@ -38,6 +38,7 @@
     "@trpc/server": "^11.0.0-rc.446",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "babel-plugin-react-compiler": "^19.0.0-beta-e1e972c-20250221",
     "fuzzysort": "^3.1.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",

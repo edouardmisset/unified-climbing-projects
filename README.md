@@ -57,13 +57,13 @@ is my playground for these experiments.
 
 - [x] Improve caching mechanisms for better performances (`createCache`,
   Vercel's fluid computing, ...)
+- [x] Use [react compiler](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler)
 
 </details>
 
 - [ ] Investigate the viability of changing the communication between front and
   back from `tRPC` to `RSC` for better performances
 - [ ] Memoize costly functions (like data transformations).
-- [ ] Use [react compiler](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler)
 
 ### Style
 
