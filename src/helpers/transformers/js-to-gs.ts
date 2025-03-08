@@ -75,14 +75,6 @@ export const transformTriesJSToGS = ({
 const transformSessionTypeJSToGS = (sessionType: string): string =>
   sessionType === 'Out' ? 'Ex' : sessionType
 
-/**
- * Transforms a climbing discipline string.
- * @param {string} discipline - The climbing discipline string to transform.
- * @returns {string} - The transformed climbing discipline.
- */
-const transformClimbingDisciplineJSToGS = (discipline: string): string =>
-  discipline === 'Boulder' ? 'Bouldering' : discipline
-
 type TransformFunctionMappingJSToGS = Partial<
   Record<JSAscentKeys | JSTrainingKeys, TransformFunctionJSToGS>
 >
@@ -92,7 +84,6 @@ export const TRANSFORM_FUNCTIONS_JS_TO_GS = {
   height: transformHeightJSToGS,
   rating: transformRatingJSToGS,
   sessionType: transformSessionTypeJSToGS,
-  climbingDiscipline: transformClimbingDisciplineJSToGS,
   // You need to catch the case for the `style` property not being mapped to
   // anything
 } satisfies TransformFunctionMappingJSToGS

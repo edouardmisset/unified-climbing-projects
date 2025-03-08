@@ -27,8 +27,8 @@ import {
   MIN_HEIGHT,
   MIN_RATING,
   MIN_TRIES,
-  _0To5RegEx,
   _0To100RegEx,
+  _1To5RegEx,
   _1To9999RegEx,
 } from '../constants.ts'
 import styles from '../page.module.css'
@@ -67,6 +67,8 @@ export default function Form() {
     crag: isDevelopmentEnv ? 'This_Is_A_Test_Crag' : '',
     topoGrade: averageGrade,
     personalGrade: averageGrade,
+    holds: 'Crimp',
+    profile: 'Vertical',
     date: new Date(),
     climbingDiscipline: 'Route',
     tries: '1',
@@ -228,6 +230,7 @@ export default function Form() {
         <input
           {...register('crag')}
           autoCapitalize="on"
+          autoComplete="on"
           className={styles.input}
           enterKeyHint="next"
           id="crag"
@@ -241,6 +244,7 @@ export default function Form() {
         Area
         <input
           {...register('area')}
+          autoComplete="on"
           className={styles.input}
           enterKeyHint="next"
           id="area"
@@ -313,6 +317,7 @@ export default function Form() {
           id="holds"
           list="hold-types"
           placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
+          required
           title="The main hold type in the route or in the crux section"
           type="text"
         />
@@ -331,6 +336,7 @@ export default function Form() {
           id="profile"
           list="profile-types"
           placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
+          required
           title="The main profile of the route or in the crux section"
           type="text"
         />
@@ -376,8 +382,8 @@ export default function Form() {
           inputMode="numeric"
           max={MAX_RATING}
           min={MIN_RATING}
-          pattern={_0To5RegEx.source}
-          placeholder={`${MAX_RATING} ⭐️`}
+          pattern={_1To5RegEx.source}
+          placeholder={`${MAX_RATING - 1} ⭐️`}
           step={1}
           title={`Route / Boulder rating (on a ${MAX_RATING} stars system)`}
           type="number"

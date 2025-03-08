@@ -83,14 +83,6 @@ const transformSessionTypeGSToJS: TransformFunctionGSToJS = value =>
   value === 'Ex' ? 'Out' : value
 
 /**
- * Transforms a climbing discipline string.
- * @param {string} value - The climbing discipline string to transform.
- * @returns {string} - The transformed climbing discipline.
- */
-const transformClimbingDisciplineGSToJS: TransformFunctionGSToJS = value =>
-  value === 'Bouldering' ? 'Boulder' : value
-
-/**
  * Filter out climbing hold from Google Sheets schema to JS.
  * @param {string} value - The climbing hold string to transform.
  * @returns {string} - The filtered climbing hold type.
@@ -134,6 +126,5 @@ export const TRANSFORM_FUNCTIONS_GS_TO_JS = {
   rating: transformRatingGSToJS,
   routeName: transformToStringGSToJS,
   sessionType: transformSessionTypeGSToJS,
-  climbingDiscipline: transformClimbingDisciplineGSToJS,
   default: defaultTransformGSToJS,
 } as const satisfies TransformFunctionMappingGSToJS

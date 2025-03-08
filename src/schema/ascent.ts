@@ -190,17 +190,17 @@ const optionalStringSchema = string().optional()
 export const ascentSchema = z.object({
   area: string().or(number()).transform(String).optional(),
   climber: string()
-    .transform(_ => 'Edouard Misset')
+    .transform(() => 'Edouard Misset')
     .optional(),
   climbingDiscipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
   crag: string().min(1),
   date: string(), // ISO 8601 date format
   region: optionalStringSchema,
-  height: number().min(0).optional(),
+  height: number().int().min(0).optional(),
   holds: holdsSchema.optional(),
-  personalGrade: gradeSchema.optional(),
   profile: profileSchema.optional(),
+  personalGrade: gradeSchema.optional(),
   rating: number().int().min(0).max(5).optional(),
   routeName: string().min(1).or(number()).transform(String).default('No Name'),
   style: ascentStyleSchema,
