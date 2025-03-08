@@ -177,17 +177,7 @@ export default function Form() {
       name="ascent-form"
       spellCheck={false}
       onSubmit={handleSubmit(data => {
-        onSubmit({
-          ...data,
-          topoGrade:
-            data?.topoGrade === undefined
-              ? undefined
-              : fromNumberToGrade(data.topoGrade),
-          personalGrade:
-            data?.personalGrade === undefined
-              ? undefined
-              : fromNumberToGrade(data.personalGrade),
-        })
+        onSubmit(data)
         reset()
       }, console.error)}
     >
@@ -195,8 +185,6 @@ export default function Form() {
         Date
         <input
           {...register('date')}
-          // biome-ignore lint/a11y/noAutofocus: It would be nice to always start filling the form from here...
-          autoFocus={true}
           className={styles.input}
           enterKeyHint="next"
           id="date"

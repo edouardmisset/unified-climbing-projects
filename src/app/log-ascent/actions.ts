@@ -26,5 +26,5 @@ export const onSubmit: SubmitHandler<
 
   globalThis.console.log('Ascent added successfully:', ascentInGSFormat)
 
-  return ascentInGSFormat
+  return parsedFormData
 }
