@@ -5,8 +5,9 @@ import { useQueryState } from 'nuqs'
 import { createYearList } from '~/data/helpers.ts'
 import {
   ASCENT_STYLE,
+  AVAILABLE_CLIMBING_DISCIPLINE,
   type Ascent,
-  CLIMBING_DISCIPLINE,
+  ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
 } from '~/schema/ascent'
@@ -21,6 +22,15 @@ export default function AscentsFilterBar({
 }: { allAscents: Ascent[] }) {
   const yearList = createYearList(allAscents, { descending: true })
 
+  const cragList = [...new Set(allAscents.map(({ crag }) => crag))].sort(
+    (a, b) => a.localeCompare(b),
+  )
+
+  const [selectedCrag, setSelectedCrag] = useQueryState<OrAll<string>>('crag', {
+    defaultValue: ALL_VALUE,
+    parse: value =>
+      value === ALL_VALUE ? ALL_VALUE : ascentSchema.shape.crag.parse(value),
+  })
   const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
     parse: value =>
@@ -46,15 +56,16 @@ export default function AscentsFilterBar({
   const handleYearChange = createChangeHandler(setSelectedYear)
   const handleStyleChange = createChangeHandler(setSelectedStyle)
   const handleDisciplineChange = createChangeHandler(setSelectedDiscipline)
+  const handleCragChange = createChangeHandler(setSelectedCrag)
 
   return (
-    <div className={styles.container}>
+    <search className={styles.container}>
       <div className={styles.backdrop} />
       <div className={styles.backdropEdge} />
       <AscentSelect
         handleChange={handleDisciplineChange}
         name="discipline"
-        options={CLIMBING_DISCIPLINE}
+        options={AVAILABLE_CLIMBING_DISCIPLINE}
         selectedOption={selectedDiscipline}
         title="Climbing Discipline"
       />
@@ -71,6 +82,12 @@ export default function AscentsFilterBar({
         options={yearList}
         selectedOption={selectedYear}
       />
-    </div>
+      <AscentSelect
+        handleChange={handleCragChange}
+        name="crag"
+        options={cragList}
+        selectedOption={selectedCrag}
+      />
+    </search>
   )
 }

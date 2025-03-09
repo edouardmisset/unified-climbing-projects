@@ -4,15 +4,14 @@ import { useForm } from 'react-hook-form'
 import { env } from '~/env'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
 import {
-  type Ascent,
-  CLIMBING_DISCIPLINE,
+  AVAILABLE_CLIMBING_DISCIPLINE,
   HOLDS,
   PROFILES,
   _GRADES,
   ascentStyleSchema,
 } from '~/schema/ascent'
 
-import { type ChangeEventHandler, useCallback, useMemo } from 'react'
+import { type ChangeEventHandler, useCallback } from 'react'
 import { GradeSlider } from '~/app/_components/slider/slider'
 import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
@@ -44,10 +43,6 @@ const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 const numberOfGrades = _GRADES.length
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
-
-const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
-  'Multi-Pitch',
-])
 
 export default function AscentForm() {
   const { data, isLoading: isAverageGradeLoading } =
@@ -159,12 +154,9 @@ export default function AscentForm() {
     [handleTriesChangeRegister, isOnsightDisable, setValue],
   )
 
-  const disciplines = useMemo(
-    () => CLIMBING_DISCIPLINE.filter(d => !unavailableDiscipline.has(d)),
-    [],
+  const climbingDisciplineFormattedList = disjunctiveListFormatter(
+    AVAILABLE_CLIMBING_DISCIPLINE,
   )
-
-  const climbingDisciplineFormattedList = disjunctiveListFormatter(disciplines)
 
   if (isAverageGradeLoading || isGradesLoading) {
     return <Loader />
@@ -218,7 +210,7 @@ export default function AscentForm() {
           id="climbingDiscipline"
           title={climbingDisciplineFormattedList}
         >
-          {disciplines.map(discipline => (
+          {AVAILABLE_CLIMBING_DISCIPLINE.map(discipline => (
             <option key={discipline} value={discipline}>
               {discipline}
             </option>

@@ -1,10 +1,9 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
-import { addParenthesis } from '~/helpers/add-parenthesis.ts'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import styles from './ascent-select.module.css'
 
-interface AscentSelectProps {
+type AscentSelectProps = {
   handleChange: ChangeEventHandler<HTMLSelectElement>
   selectedOption: string
   options: string[] | number[] | readonly string[]
@@ -12,32 +11,39 @@ interface AscentSelectProps {
   title?: string
 }
 
-export function AscentSelect({
-  handleChange,
-  selectedOption,
-  options,
-  name,
-  title,
-}: AscentSelectProps) {
-  const titleWithFallback = title ?? capitalize(name)
+export function AscentSelect(props: AscentSelectProps) {
+  const {
+    handleChange,
+    selectedOption,
+    options,
+    name,
+    title = capitalize(name),
+  } = props
 
   return (
-    <label className={styles.container} htmlFor={name}>
+    <label className={styles.label} htmlFor={name} title={title}>
       {capitalize(name)}
       <select
         id={name}
-        title={titleWithFallback}
+        title={selectedOption === ALL_VALUE ? title : selectedOption}
         onChange={handleChange}
-        defaultValue={selectedOption}
+        value={selectedOption}
+        className={styles.select}
       >
-        <option value={ALL_VALUE}>
-          {capitalize(ALL_VALUE)} {addParenthesis(options.length)}
-        </option>
-        {options.map(option => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
+        <option value={ALL_VALUE}>{capitalize(ALL_VALUE)}</option>
+        {options.map(option => {
+          const optionString =
+            option.toString().split(' (')[0] || option.toString()
+          return (
+            <option
+              key={optionString}
+              value={optionString}
+              title={optionString}
+            >
+              {option}
+            </option>
+          )
+        })}
       </select>
     </label>
   )
