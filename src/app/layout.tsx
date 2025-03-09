@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import type React from 'react'
 import { env } from '~/env.js'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -42,18 +43,20 @@ export default async function RootLayout({
           <script src="//unpkg.com/react-scan/dist/auto.global.js" />
         )}
       </head>
-      <ClerkProvider>
-        <html lang="en" suppressHydrationWarning={true}>
-          <body className={styles.body}>
-            <TRPCReactProvider>
-              <Navigation />
-              <main className={styles.main}>{children}</main>
-            </TRPCReactProvider>
-            <SpeedInsights />
-            <Analytics />
-          </body>
-        </html>
-      </ClerkProvider>
+      <NuqsAdapter>
+        <ClerkProvider>
+          <html lang="en" suppressHydrationWarning={true}>
+            <body className={styles.body}>
+              <TRPCReactProvider>
+                <Navigation />
+                <main className={styles.main}>{children}</main>
+              </TRPCReactProvider>
+              <SpeedInsights />
+              <Analytics />
+            </body>
+          </html>
+        </ClerkProvider>
+      </NuqsAdapter>
     </ViewTransitions>
   )
 }

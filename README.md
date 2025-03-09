@@ -97,11 +97,11 @@ is my playground for these experiments.
   display the calendars (training and ascents). Also take the opportunity to
   stash my component somewhere and also improve it using the best practice found
   in HeatJS~~
+- [x] Add the calendars (ascents and training) to the Visualization page
 
 </details>
 </br>
 
-- [ ] Add the calendars (ascents and training) to the Visualization page
 - [ ] Refactor the code of the Visualization page
 - [ ] Refactor the form components. This needs to be more legible and
 maintainable

@@ -12,7 +12,7 @@ export type DayDescriptor = {
   shortText?: string
 }
 
-export async function YearGrid({
+export function YearGrid({
   dayCollection,
   year,
 }: {
@@ -45,6 +45,7 @@ export async function YearGrid({
       shortText: index.toString(),
     }),
   )
+  const allDayCollection = [...emptyDays, ...dayCollection]
 
   return (
     <div
@@ -55,7 +56,7 @@ export async function YearGrid({
     >
       <DaysColumn />
       <WeeksRow columns={columns} />
-      {[...emptyDays, ...dayCollection].map(
+      {allDayCollection.map(
         ({ date, tooltip, backgroundColor, shortText = '' }, index) =>
           date === '' ? (
             <i

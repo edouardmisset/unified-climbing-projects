@@ -3,7 +3,7 @@ import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from 'lucide-react'
 import { Link } from 'next-view-transitions'
 import styles from './year-navigation-button.module.css'
 
-export async function YearNavigationButton({
+export function YearNavigationButton({
   selectedYear,
   nextOrPrevious,
   enabled,

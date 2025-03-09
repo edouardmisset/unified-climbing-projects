@@ -3,8 +3,10 @@ import styles from './ascents-training-switch.module.css'
 
 export function AscentsTrainingSwitch({
   toggle,
+  isTraining,
 }: {
   toggle: () => void
+  isTraining: boolean
 }) {
   return (
     <div className={styles.Container}>
@@ -13,6 +15,7 @@ export function AscentsTrainingSwitch({
         className={styles.Switch}
         onCheckedChange={toggle}
         id="ascents-training-switch"
+        checked={isTraining}
       >
         <Switch.Thumb className={styles.Thumb} />
       </Switch.Root>

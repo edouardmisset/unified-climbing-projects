@@ -9,15 +9,17 @@ import styles from './visualization-toggle-group.module.css'
 type VisualizationToggleGroupProps = {
   values?: readonly VisualizationType[]
   onValueChange: (groupValue: unknown[], event: Event) => void
+  selectedVisualization: VisualizationType
 }
 
 export default function VisualizationToggleGroup({
   values = visualizations,
   onValueChange,
+  selectedVisualization,
 }: VisualizationToggleGroupProps) {
   return (
     <ToggleGroup
-      defaultValue={[values[0]]}
+      value={[selectedVisualization]}
       className={styles.Panel}
       onValueChange={onValueChange}
     >

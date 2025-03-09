@@ -1,62 +1,34 @@
 import type { StringDate } from '~/types/generic'
-import { Spacer } from '../spacer/spacer'
 import { type DayDescriptor, YearGrid } from '../year-grid/year-grid'
-import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 import styles from './data-calendar.module.css'
 
-export default async function DataCalendar<
-  Data,
-  DataArray extends (Data & StringDate)[],
->(props: {
+type DataCalendarProps<DataArray extends (Data & StringDate)[], Data> = {
   year: number
   data: DataArray
-  dataTransformationFunction: (input: DataArray) => { [year: number]: Data[][] }
-  header: string
+  dataTransformationFunction: (input: DataArray) => {
+    [year: number]: Data[][]
+  }
   fromDataToCalendarEntries: (year: number, data?: Data[][]) => DayDescriptor[]
-}) {
-  const {
-    year,
-    data,
-    dataTransformationFunction,
-    header,
-    fromDataToCalendarEntries,
-  } = props
+}
+
+export default function DataCalendar<
+  Data,
+  DataArray extends (Data & StringDate)[],
+>(props: DataCalendarProps<DataArray, Data>) {
+  const { year, data, dataTransformationFunction, fromDataToCalendarEntries } =
+    props
 
   const yearlyData = dataTransformationFunction(data)
   const dataInSelectedYear = yearlyData[year]
 
   if (dataInSelectedYear === undefined) return <p>Year not found</p>
-
-  const isDataPresentForPreviousYear = Boolean(yearlyData[year - 1])
-  const isDataPresentForNextYear = Boolean(yearlyData[year + 1])
+  if (dataInSelectedYear.length === 0) return <p>No record</p>
 
   const calendarEntries = fromDataToCalendarEntries(year, dataInSelectedYear)
 
   return (
-    <>
-      <h1 className="center-text">
-        {header} in {year}
-      </h1>
-      <Spacer size={3} />
-      <div className={styles.navContainer}>
-        <YearNavigationButton
-          selectedYear={year}
-          nextOrPrevious="previous"
-          enabled={isDataPresentForPreviousYear}
-        />
-        {dataInSelectedYear.length === 0 ? (
-          <span>No record</span>
-        ) : (
-          <div className={styles.calendarContainer}>
-            <YearGrid year={year} dayCollection={calendarEntries} />
-          </div>
-        )}
-        <YearNavigationButton
-          selectedYear={year}
-          nextOrPrevious="next"
-          enabled={isDataPresentForNextYear}
-        />
-      </div>
-    </>
+    <div className={styles.calendarContainer}>
+      <YearGrid year={year} dayCollection={calendarEntries} />
+    </div>
   )
 }

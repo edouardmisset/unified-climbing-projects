@@ -2,7 +2,7 @@ import styles from './year-grid.module.css'
 
 const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-export async function DaysColumn() {
+export function DaysColumn() {
   return weekDays.map((day, index) => {
     return index === 0 ? (
       <i

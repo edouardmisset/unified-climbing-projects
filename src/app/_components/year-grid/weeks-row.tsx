@@ -1,6 +1,6 @@
 import styles from './year-grid.module.css'
 
-export async function WeeksRow({ columns }: { columns: number[] }) {
+export function WeeksRow({ columns }: { columns: number[] }) {
   return columns.map((columnNumber, index) => {
     if (columnNumber === 0)
       return <i className={`super-center ${styles.firstCell}`} />

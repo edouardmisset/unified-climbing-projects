@@ -3,7 +3,7 @@ import { datesEqual } from './helpers'
 
 import styles from './year-grid.module.css'
 
-export async function YearGridCell(props: {
+export function YearGridCell(props: {
   stringDate: string
   tooltip: string
   backgroundColor: string | undefined

@@ -7,7 +7,6 @@ import { Menu } from '@base-ui-components/react/menu'
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react'
-import { api } from '~/trpc/react'
 import styles from './navigation.module.css'
 
 const Link = ({
@@ -23,12 +22,6 @@ const Link = ({
 }
 
 export function Navigation() {
-  const { data: latestSession } =
-    api.training.getLatestTrainingSession.useQuery()
-  const latestSessionYear = new Date(
-    latestSession?.date ?? Date.now().toString(),
-  ).getFullYear()
-
   return (
     <header className={styles.Header}>
       <Menu.Root openOnHover={true}>
@@ -81,22 +74,12 @@ export function Navigation() {
                 <Menu.Item className={styles.Item}>
                   <Link href={'/ascents/dashboard'}>Dashboard</Link>
                 </Menu.Item>
-                <Menu.Item className={styles.Item}>
-                  <Link href={`/ascents/calendar/${latestSessionYear}`}>
-                    Calendar
-                  </Link>
-                </Menu.Item>
               </Menu.Group>
               <Menu.Separator className={styles.Separator} />
               <Menu.Group>
                 <Menu.GroupLabel className={styles.GroupLabel}>
                   💪 Training 💪
                 </Menu.GroupLabel>
-                <Menu.Item className={styles.Item}>
-                  <Link href={`/training/calendar/${latestSessionYear}`}>
-                    Calendar
-                  </Link>
-                </Menu.Item>
               </Menu.Group>
             </Menu.Popup>
           </Menu.Positioner>
