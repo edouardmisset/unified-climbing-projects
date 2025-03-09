@@ -49,7 +49,7 @@ const unavailableDiscipline: Set<Ascent['climbingDiscipline']> = new Set([
   'Multi-Pitch',
 ])
 
-export default function Form() {
+export default function AscentForm() {
   const { data, isLoading: isAverageGradeLoading } =
     api.grades.getAverage.useQuery()
   const averageGrade = fromGradeToNumber(data ?? '7b')
