@@ -382,7 +382,7 @@ not to see them */
 
 :where(select) {
   padding-block: 0.75ch;
-  padding-inline: var(--size-relative-4) 0;
+  padding-inline-start: var(--size-relative-4);
 }
 
 :where(
