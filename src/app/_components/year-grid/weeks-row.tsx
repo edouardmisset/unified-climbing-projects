@@ -3,7 +3,7 @@ import styles from './year-grid.module.css'
 export function WeeksRow({ columns }: { columns: number[] }) {
   return columns.map((columnNumber, index) => {
     if (columnNumber === 0)
-      return <i className={`super-center ${styles.firstCell}`} />
+      return <i key={0} className={`super-center ${styles.firstCell}`} />
 
     const hasExtraColumn = columns[1] === 53
 
@@ -14,7 +14,7 @@ export function WeeksRow({ columns }: { columns: number[] }) {
         : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
 
     return (
-      <div
+      <i
         // biome-ignore lint/suspicious/noArrayIndexKey: We need to differentiate the two 53 columns, so we use the index as the key
         key={`W${columnNumber}-${index}column`}
         className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
@@ -23,7 +23,7 @@ export function WeeksRow({ columns }: { columns: number[] }) {
         }}
       >
         {columnNumber}
-      </div>
+      </i>
     )
   })
 }

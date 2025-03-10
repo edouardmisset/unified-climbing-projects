@@ -10,7 +10,7 @@ export function DaysColumn() {
         className={`${styles.yearGridCell} ${styles.firstCell}`}
       />
     ) : (
-      <span
+      <i
         key={day}
         className={`contrast-color ${styles.firstColumn}`}
         title={day}
@@ -19,7 +19,7 @@ export function DaysColumn() {
         }
       >
         {day}
-      </span>
+      </i>
     )
   })
 }
