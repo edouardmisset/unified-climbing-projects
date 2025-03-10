@@ -3,7 +3,8 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import type React from 'react'
+import { type ReactNode, Suspense } from 'react'
+import { Loader } from '~/app/_components/loader/loader'
 import { env } from '~/env.js'
 import { TRPCReactProvider } from '~/trpc/react'
 import { Navigation } from './_components/navigation/navigation.tsx'
@@ -34,7 +35,7 @@ export const fetchCache = 'default-cache'
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <ViewTransitions>
@@ -43,26 +44,29 @@ export default async function RootLayout({
           <script src="//unpkg.com/react-scan/dist/auto.global.js" />
         )}
       </head>
-      <NuqsAdapter>
-        <ClerkProvider>
-          <html lang="en" suppressHydrationWarning={true}>
-            <body className={styles.body}>
+      <ClerkProvider>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className={styles.body}>
+            <Suspense fallback={<Loader />}>
               <TRPCReactProvider>
-                <Navigation />
-                <main className={styles.main}>{children}</main>
+                <NuqsAdapter>
+                  <Navigation />
+                  <main className={styles.main}>{children}</main>
+                </NuqsAdapter>
               </TRPCReactProvider>
-              <SpeedInsights />
-              <Analytics />
-            </body>
-          </html>
-        </ClerkProvider>
-      </NuqsAdapter>
+            </Suspense>
+            <SpeedInsights />
+            <Analytics />
+          </body>
+        </html>
+      </ClerkProvider>
     </ViewTransitions>
   )
 }
 
 export const metadata = {
   title: 'Unified Climbing Projects',
-  description: 'Collection of Climbing Visualization pages',
+  description:
+    'Collection of Climbing Visualization pages, charts and summaries',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }

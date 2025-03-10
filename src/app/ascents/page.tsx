@@ -1,4 +1,3 @@
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
 import { FilteredAscentTable } from '../_components/filtered-ascents-table/filtered-ascents-table'
 import { Loader } from '../_components/loader/loader'
@@ -9,9 +8,7 @@ export default async function Page() {
     <div className={styles.container}>
       <h1 className="super-center">Ascents</h1>
       <Suspense fallback={<Loader />}>
-        <NuqsAdapter>
-          <FilteredAscentTable />
-        </NuqsAdapter>
+        <FilteredAscentTable />
       </Suspense>
     </div>
   )
