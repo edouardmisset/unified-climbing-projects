@@ -21,7 +21,7 @@
   background-color: transparent;
   background-image: linear-gradient(
     to right,
-    var(--color-gray-700) 35%,
+    var(--accent) 35%,
     var(--color-gray-200) 65%
   );
   background-size: 6.5rem 100%;
@@ -53,7 +53,7 @@
     outline-color: hsl(0deg 0% 100% / 15%);
     background-image: linear-gradient(
       to right,
-      var(--color-gray-500) 35%,
+      var(--accent) 35%,
       var(--color-gray-200) 65%
     );
 
