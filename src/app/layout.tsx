@@ -48,6 +48,7 @@ export default async function RootLayout({
       <ClerkProvider
         appearance={{
           baseTheme: dark,
+          variables: { colorPrimary: 'hsl(255deg 93% 72%)' },
         }}
       >
         <html lang="en" suppressHydrationWarning={true}>
