@@ -72,11 +72,13 @@ is my playground for these experiments.
 <details>
 <summary><strong>DONE</strong></summary>
 
+- [x] Redo the styles of the group toggle in the ascent log page
+- [x] Style the sign-in button & User Avatar button
+
 </details>
 </br>
 
-- [ ] Redo the styles of the slider and the group toggle in the log page
-- [ ] Style the sign-in button & User Avatar button
+- [ ] Redo the styles of the slider of the ascent log page
 - [ ] Style the QR/Barcode buttons & the `<dialog>` elements (in the
   Visualization page)
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)

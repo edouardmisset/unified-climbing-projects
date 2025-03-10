@@ -149,6 +149,13 @@
   }
 }
 
+.UserContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-inline: var(--size-3);
+  margin-block: var(--size-2);
+}
+
 .Separator {
   margin: 0.375rem 1rem;
   height: 1px;

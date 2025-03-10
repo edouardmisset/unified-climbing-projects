@@ -27,7 +27,7 @@ export function Navigation() {
               <Menu.Item
                 className={styles.Item}
                 render={(_props, _state) => (
-                  <div>
+                  <div className={styles.UserContainer}>
                     <SignedOut>
                       <SignInButton />
                     </SignedOut>
