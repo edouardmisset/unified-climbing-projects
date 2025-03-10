@@ -1,4 +1,5 @@
 import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
@@ -44,7 +45,11 @@ export default async function RootLayout({
           <script src="//unpkg.com/react-scan/dist/auto.global.js" />
         )}
       </head>
-      <ClerkProvider>
+      <ClerkProvider
+        appearance={{
+          baseTheme: dark,
+        }}
+      >
         <html lang="en" suppressHydrationWarning={true}>
           <body className={styles.body}>
             <Suspense fallback={<Loader />}>

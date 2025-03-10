@@ -19,6 +19,7 @@
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.6",
     "@clerk/nextjs": "^6.12.0",
+    "@clerk/themes": "^2.2.20",
     "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^4.0.2",
     "@edouardmisset/date": "npm:@jsr/edouardmisset__date@^4.0.1",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
