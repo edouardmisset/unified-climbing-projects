@@ -7,25 +7,26 @@
   font-size: var(--font-size-fluid-2);
   line-height: 1.5;
   user-select: none;
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: light-dark(var(--color-gray-100), var(--color-gray-900));
-      color: light-dark(var(--color-gray-900), var(--color-gray-100));
-    }
-  }
-
-  &:active {
-    background-color: light-dark(var(--color-gray-100), var(--color-gray-900));
-    color: light-dark(var(--color-gray-900), var(--color-gray-100));
-  }
+  text-shadow: none;
 
   &:focus-visible {
-    outline: 2px solid var(--accent-color);
+    outline: 2px solid var(--accent);
     outline-offset: -1px;
   }
 
-  transition: color 150ms ease, background-color 150ms ease;
+  @media (hover: hover) {
+    &:hover:not([data-close='true']) {
+      background: var(--gradient-1);
+      color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &:active:not([data-close='true']) {
+    background: var(--gradient-1);
+    color: transparent;
+    background-clip: text;
+  }
 }
 
 .Backdrop {

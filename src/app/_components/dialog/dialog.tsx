@@ -17,7 +17,9 @@ export default function Dialog({
             render={content}
           />
           <div className={styles.Actions}>
-            <BaseDialog.Close className={styles.Button}>Close</BaseDialog.Close>
+            <BaseDialog.Close className={styles.Button} data-close="true">
+              Close
+            </BaseDialog.Close>
           </div>
         </BaseDialog.Popup>
       </BaseDialog.Portal>

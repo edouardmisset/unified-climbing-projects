@@ -74,13 +74,13 @@ is my playground for these experiments.
 
 - [x] Redo the styles of the group toggle in the ascent log page
 - [x] Style the sign-in button & User Avatar button
+- [x] Style the QR/Barcode buttons & the `<dialog>` elements (in the
+  Visualization page)
 
 </details>
 </br>
 
 - [ ] Redo the styles of the slider of the ascent log page
-- [ ] Style the QR/Barcode buttons & the `<dialog>` elements (in the
-  Visualization page)
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
 - [ ] Update the `ascents/:id` page to display a card with the ascent's details
@@ -125,4 +125,4 @@ maintainable
   `calendars`, `QR-codes`, `Barcodes`, etc.
 - [ ] Add unit tests for the functions in the `src/helpers` folder
 - [ ] Add smoke tests for the main pages (`/`, `Dashboard`, `Log`,
-  `Visualisation`, `Calendar`, `Ascent`, `Ascents/:id`)
+  `Visualisation`, `Ascent`, `Ascents/:id`)
