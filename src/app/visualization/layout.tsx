@@ -2,9 +2,9 @@
 
 import { useQueryState } from 'nuqs'
 import type { ReactNode } from 'react'
-import { AscentsTrainingSwitch } from '../_components/ascents-training-switch/ascents-training-switch'
-import GridLayout from '../_components/grid-layout/grid-layout'
-import VisualizationToggleGroup from '../_components/visualization-toggle-group/visualization-toggle-group'
+import AscentsTrainingSwitch from '~/app/_components/ascents-training-switch/ascents-training-switch'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
+import ToggleGroup from '~/app/_components/toggle-group/toggle-group'
 import {
   type AscentsOrTrainingType,
   type VisualizationType,
@@ -31,12 +31,10 @@ export default function Layout({ children }: { children: ReactNode }) {
     setAscentOrTraining(state => (state === 'Ascents' ? 'Training' : 'Ascents'))
 
   const handleQrCodeOrBarcodeChange = (value: unknown[]) => {
-    const selectedVisualization = value[0] as VisualizationType
-    if (!visualizations.includes(selectedVisualization)) {
-      return
-    }
+    const result = visualizationSchema.safeParse(value[0])
+    if (!result.success) return
 
-    setVisualizationType(selectedVisualization)
+    setVisualizationType(result.data)
   }
 
   return (
@@ -45,10 +43,10 @@ export default function Layout({ children }: { children: ReactNode }) {
         title="Visualization"
         additionalContent={
           <div className={`flex-row space-between gap ${styles.header}`}>
-            <VisualizationToggleGroup
+            <ToggleGroup
               onValueChange={handleQrCodeOrBarcodeChange}
               values={visualizations}
-              selectedVisualization={selectedVisualization}
+              selectedValue={selectedVisualization}
             />
             <AscentsTrainingSwitch
               toggle={toggleAscentsOrTraining}
