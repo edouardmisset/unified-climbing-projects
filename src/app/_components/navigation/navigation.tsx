@@ -26,7 +26,7 @@ export function Navigation() {
               </Menu.Arrow>
               <Menu.Item
                 className={styles.Item}
-                render={(props, state) => (
+                render={(_props, _state) => (
                   <div>
                     <SignedOut>
                       <SignInButton />
