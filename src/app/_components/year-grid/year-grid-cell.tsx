@@ -1,9 +1,9 @@
-import { type CSSProperties, useMemo } from 'react'
+import { type CSSProperties, memo, useMemo } from 'react'
 import { datesEqual } from './helpers'
 
 import styles from './year-grid.module.css'
 
-export function YearGridCell(props: {
+function YearGridCell(props: {
   stringDate: string
   tooltip: string
   backgroundColor: string | undefined
@@ -32,3 +32,5 @@ export function YearGridCell(props: {
     </i>
   )
 }
+
+export default memo(YearGridCell)

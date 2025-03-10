@@ -1,8 +1,9 @@
+import { useMemo } from 'react'
 import { isDateInYear } from '~/helpers/is-date-in-year.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
-import { YearGridCell } from './year-grid-cell.tsx'
+import YearGridCell from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
 
 export type DayDescriptor = {
@@ -37,16 +38,23 @@ export function YearGrid({
   const numberOfDaysFromPreviousMondayTo1stJanuary =
     firstDayIndex === 0 ? 6 : firstDayIndex - 1
 
-  const emptyDays = Array.from(
-    { length: numberOfDaysFromPreviousMondayTo1stJanuary },
-    (_, index): DayDescriptor => ({
-      date: '',
-      tooltip: '',
-      shortText: index.toString(),
-    }),
+  const emptyDays = useMemo(
+    () =>
+      Array.from(
+        { length: numberOfDaysFromPreviousMondayTo1stJanuary },
+        (_, index): DayDescriptor => ({
+          date: '',
+          tooltip: '',
+          shortText: index.toString(),
+        }),
+      ),
+    [numberOfDaysFromPreviousMondayTo1stJanuary],
   )
-  const allDayCollection = [...emptyDays, ...dayCollection]
 
+  const allDayCollection = useMemo(
+    () => [...emptyDays, ...dayCollection],
+    [emptyDays, dayCollection],
+  )
   return (
     <div
       className={styles.yearGrid}
