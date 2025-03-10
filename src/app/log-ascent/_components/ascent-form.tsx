@@ -12,12 +12,12 @@ import {
 } from '~/schema/ascent'
 
 import { type ChangeEventHandler, useCallback } from 'react'
+import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
+import { Loader } from '~/app/_components/loader/loader.tsx'
 import { GradeSlider } from '~/app/_components/slider/slider'
+import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
-import { Loader } from '../../_components/loader/loader.tsx'
-import { Spacer } from '../../_components/spacer/spacer.tsx'
-import { ClimbingStyleToggleGroup } from '../../_components/toggle-group/toggle-group.tsx'
 import { onSubmit } from '../actions.ts'
 import {
   MAX_HEIGHT,
