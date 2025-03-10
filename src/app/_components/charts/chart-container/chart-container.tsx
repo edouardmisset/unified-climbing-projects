@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, memo } from 'react'
 import styles from './chart-container.module.css'
 
-export function ChartContainer({
+function ChartContainer({
   children,
   className,
   caption,
@@ -13,3 +13,5 @@ export function ChartContainer({
     </figure>
   )
 }
+
+export default memo(ChartContainer)

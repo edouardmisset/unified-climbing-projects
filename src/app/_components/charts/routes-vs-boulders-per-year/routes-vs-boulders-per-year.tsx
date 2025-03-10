@@ -1,7 +1,7 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
-import { ChartContainer } from '../chart-container/chart-container'
+import ChartContainer from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
   chartColorGetter,
