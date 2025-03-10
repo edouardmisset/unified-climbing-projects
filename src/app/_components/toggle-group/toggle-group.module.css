@@ -9,11 +9,11 @@
 }
 
 .Button {
+  inline-size: var(--size-relative-12);
+  block-size: var(--size-7);
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--size-relative-12);
-  block-size: 2rem;
   padding-inline: var(--size-2);
   margin: 0;
   outline: 0;
