@@ -1,25 +1,11 @@
 'use client'
 
-import { Link as NextLink } from 'next-view-transitions'
-import type React from 'react'
-
 import { Menu } from '@base-ui-components/react/menu'
-
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react'
+import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button'
+import Link from '../link/link'
 import styles from './navigation.module.css'
-
-const Link = ({
-  href,
-  children,
-  ...props
-}: { children: React.ReactNode; href: string }) => {
-  return (
-    <NextLink href={href} {...props} prefetch={true} className={styles.Link}>
-      {children}
-    </NextLink>
-  )
-}
 
 export function Navigation() {
   return (
@@ -40,16 +26,16 @@ export function Navigation() {
               </Menu.Arrow>
               <Menu.Item
                 className={styles.Item}
-                render={
-                  <>
+                render={(props, state) => (
+                  <div>
                     <SignedOut>
                       <SignInButton />
                     </SignedOut>
                     <SignedIn>
                       <UserButton />
                     </SignedIn>
-                  </>
-                }
+                  </div>
+                )}
               />
               <Menu.Item className={styles.Item}>
                 <Link href="/">🏠 Home</Link>

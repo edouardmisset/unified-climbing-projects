@@ -155,12 +155,6 @@
   background-color: var(--color-gray-200);
 }
 
-.Link {
-  inline-size: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
 .GroupLabel {
   cursor: default;
   user-select: none;
