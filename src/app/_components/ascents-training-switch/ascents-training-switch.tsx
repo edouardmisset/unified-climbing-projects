@@ -1,4 +1,5 @@
 import { Switch } from '@base-ui-components/react/switch'
+import { memo } from 'react'
 import styles from './ascents-training-switch.module.css'
 
 export function AscentsTrainingSwitch({
@@ -23,3 +24,5 @@ export function AscentsTrainingSwitch({
     </div>
   )
 }
+
+export default memo(AscentsTrainingSwitch)
