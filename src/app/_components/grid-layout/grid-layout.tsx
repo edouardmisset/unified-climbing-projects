@@ -20,7 +20,7 @@ export default function GridLayout({
 
   const beforeTitle = titleIsValidNumber ? (
     <YearNavigationButton
-      selectedYear={titleIsValidNumber ? title : Number.NaN}
+      selectedYear={title}
       nextOrPrevious="previous"
       enabled={YEAR_OF_FIRST_ASCENT < title}
     />
@@ -35,7 +35,7 @@ export default function GridLayout({
 
   const afterTitle = titleIsValidNumber && (
     <YearNavigationButton
-      selectedYear={titleIsValidNumber ? title : Number.NaN}
+      selectedYear={title}
       nextOrPrevious="next"
       enabled={title < new Date().getFullYear()}
     />
