@@ -42,5 +42,6 @@
 
   &[data-pressed] {
     background-color: var(--accent);
+    color: var(--color-gray-950);
   }
 }
