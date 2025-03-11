@@ -8,6 +8,15 @@ type OptionalTrainingInput = Partial<
   year?: number
 }
 
+/**
+ * Filters an array of training sessions based on the provided criteria.
+ *
+ * @param {TrainingSession[]} trainingSessions - The array of training sessions
+ * to filter.
+ * @param {OptionalTrainingInput} [filters] - An optional object containing
+ * filtering criteria.
+ * @returns {TrainingSession[]} The filtered array of training sessions.
+ */
 export function filterTrainingSessions(
   trainingSessions: TrainingSession[],
   filters?: OptionalTrainingInput,

@@ -123,9 +123,12 @@ export const getDayOfYear = (date: Date): number => {
 export function getMostFrequentDate<Type extends { date: string }>(
   data: Type[],
 ): [string, number] {
-  const ascentsByDate = frequencyBy(data, 'date')
-  const sortedAscentsByDate = sortNumericalValues(ascentsByDate, {
+  const dateFrequency = frequencyBy(data, 'date')
+  const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
     ascending: false,
   })
-  return (Object.entries(sortedAscentsByDate)[0] ?? ['', 0]) as [string, number]
+  return (Object.entries(sortedDateByFrequency)[0] ?? ['', 0]) as [
+    string,
+    number,
+  ]
 }
