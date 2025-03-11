@@ -117,12 +117,12 @@ maintainable
   to refactor the code to improve performance or readability without breaking
   the app
 - [x] Add unit tests for the `Google Sheets` to `JS` transformer functions
+- [x] Add unit tests for the functions in the `src/helpers` folder
 
 </details>
 </br>
 
 - [ ] Add visual non-regression tests for the following components: `graphs`,
   `calendars`, `QR-codes`, `Barcodes`, etc.
-- [ ] Add unit tests for the functions in the `src/helpers` folder
 - [ ] Add smoke tests for the main pages (`/`, `Dashboard`, `Log`,
   `Visualisation`, `Ascent`, `Ascents/:id`)

@@ -13,7 +13,8 @@
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix --cache 'src/**/*.css'",
-    "test": "bun poku --reporter=dot",
+    "test": "bun poku --reporter=dot ./src",
+    "test:watch": "bun run test --watch",
     "knip": "clear && knip"
   },
   "dependencies": {
