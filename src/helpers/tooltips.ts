@@ -1,65 +1,29 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
+import { addParenthesis } from './add-parenthesis'
 import { type DATE_TIME_OPTIONS, formatDateTime, getWeekNumber } from './date'
+import { roundToTen } from './math'
 
-export const createAscentBarCodeTooltip = (ascents: Ascent[]): string =>
-  ascents.length > 0 && ascents[0] !== undefined
-    ? `Week # ${getWeekNumber(new Date(ascents[0].date))}
-Ascents (${ascents.length}):
-${ascents
-  .map(
-    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${climbingDiscipline === 'Boulder' ? '🪨' : ''}${
-        climbingDiscipline === 'Route' ? '🧗' : ''
-      } ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
-    : ''
+// TRAINING
 
-export const createTrainingBarCodeTooltip = (
+export function createTrainingBarCodeTooltip(
   sessions: TrainingSession[],
-): string | undefined =>
-  sessions.length > 0 && sessions[0] !== undefined
+): string | undefined {
+  return sessions.length > 0 && sessions[0] !== undefined
     ? `Week # ${getWeekNumber(new Date(sessions[0].date))}
 # Training (${sessions.length}):
 ${sessions
   .map(
     ({ sessionType, climbingDiscipline, gymCrag, load }) =>
-      `${createClimbingDisciplineEmoji(climbingDiscipline)} ${sessionType} (${gymCrag}) - ${load === undefined ? '' : roundToTen(load)}%`,
+      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${sessionType} (${gymCrag}) - ${load === undefined ? '' : roundToTen(load)}%`,
   )
   .join('\n')}`
     : undefined
-
-export const createAscentsQRTooltip = (
-  ascents: Ascent[] | undefined,
-): string => {
-  if (ascents === undefined || ascents[0] === undefined) {
-    return ''
-  }
-
-  const ascentsCount = ascents.length
-  const isMultipleAscents = ascentsCount > 1
-  const includeRoute = ascents.some(
-    ascent => ascent.climbingDiscipline === 'Route',
-  )
-
-  return `${formatDateInTooltip(ascents[0])}
-${
-  isMultipleAscents
-    ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
-    : ''
-}
-${ascents
-  .map(
-    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
 }
 
-export const createTrainingQRTooltip = (
+export function createTrainingQRTooltip(
   trainingSession: TrainingSession,
-): string => {
+): string {
   const {
     anatomicalRegion,
     climbingDiscipline,
@@ -73,14 +37,24 @@ export const createTrainingQRTooltip = (
   } = trainingSession
 
   const localeDate = formatDateInTooltip(trainingSession, 'longDate')
-  const cragEmoji = createCragEmoji({ gymCrag, climbingDiscipline })
+  const cragEmoji = formatCragAndDiscipline({
+    gymCrag,
+    climbingDiscipline,
+  })
   const sessionText = sessionType ? ` (${sessionType})` : ''
-  const volumeText = volume ? `Volume: ${volume}%` : ''
-  const intensityText = intensity ? `Intensity: ${intensity}%` : ''
-  const loadText = load ? `Load: ${roundToTen(load)}%` : ''
-  const commentText = comments ? `💬 “${comments}”` : ''
-  const anatomicalRegionEmoji = createAnatomicalRegionEmoji(anatomicalRegion)
-  const energySystemEmoji = createEnergySystemEmoji(energySystem)
+  const volumeText = volume === undefined ? '' : `Volume: ${volume}%`
+  const intensityText =
+    intensity === undefined ? '' : `Intensity: ${intensity}%`
+  const loadText = load === undefined ? '' : `Load: ${roundToTen(load)}%`
+  const commentText = formatComments(comments)
+  const anatomicalRegionEmoji =
+    anatomicalRegion === undefined
+      ? ''
+      : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`
+  const energySystemEmoji =
+    energySystem === undefined
+      ? ''
+      : `| ${fromEnergySystemToEmoji(energySystem)}`
 
   return [
     `${localeDate} ${cragEmoji} ${sessionText}`,
@@ -91,75 +65,12 @@ export const createTrainingQRTooltip = (
     .join('\n\n')
 }
 
-const roundTo = (powerOfTen: number) => (numberToRound: number) =>
-  Math.round(numberToRound / powerOfTen) * powerOfTen
+// ASCENT
 
-const roundToTen = roundTo(10)
-
-function createEnergySystemEmoji(
-  energySystem: TrainingSession['energySystem'],
-) {
-  return energySystem === undefined
-    ? ''
-    : `| ${
-        energySystem === 'AA'
-          ? '🔥'
-          : energySystem === 'AL'
-            ? '🪫'
-            : energySystem === 'AE'
-              ? '🫀'
-              : ''
-      }`
-}
-
-function createAnatomicalRegionEmoji(
-  anatomicalRegion: TrainingSession['anatomicalRegion'],
-) {
-  return anatomicalRegion === undefined
-    ? ''
-    : `| ${
-        anatomicalRegion === 'Ar'
-          ? '💪'
-          : anatomicalRegion === 'Fi'
-            ? '🖐️'
-            : anatomicalRegion === 'Ge'
-              ? '🦵'
-              : ''
-      }`
-}
-
-function createClimbingDisciplineEmoji(
-  climbingDiscipline: TrainingSession['climbingDiscipline'],
-) {
-  return climbingDiscipline === 'Boulder'
-    ? '🪨'
-    : climbingDiscipline === 'Route'
-      ? '🧗'
-      : climbingDiscipline === 'Multi-Pitch'
-        ? '⛰️'
-        : ''
-}
-
-function createCragEmoji({
-  gymCrag,
-  climbingDiscipline,
-}: Pick<TrainingSession, 'gymCrag' | 'climbingDiscipline'>) {
-  return gymCrag === undefined
-    ? ''
-    : `\t${createClimbingDisciplineEmoji(climbingDiscipline)} ${gymCrag}`
-}
-
-function formatDateInTooltip<T>(
-  data: T & { date: string },
-  options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
-) {
-  return `📅 ${formatDateTime(new Date(data.date), options)}`
-}
-
-export const createAscentTooltip = (
+export function createAscentTooltip(
   ascent: Ascent,
   options?: { showDetails?: boolean },
-): string => {
+): string {
   const { showDetails = true } = options ?? {}
   const {
     climbingDiscipline,
@@ -179,7 +90,7 @@ export const createAscentTooltip = (
 
   return `${formatDateInTooltip(ascent)}
 
-${createClimbingDisciplineEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrade({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers(style, tries, { showDetails })}
+${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrades({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers({ style, tries, options: { showDetails } })}
 
 ${
   showDetails
@@ -196,14 +107,123 @@ ${
 }`
 }
 
+export function createAscentBarCodeTooltip(ascents: Ascent[]): string {
+  return ascents.length > 0 && ascents[0] !== undefined
+    ? `Week # ${getWeekNumber(new Date(ascents[0].date))}
+Ascents (${ascents.length}):
+${ascents
+  .map(
+    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
+  )
+  .join('\n')}`
+    : ''
+}
+
+export function createAscentsQRTooltip(ascents: Ascent[] | undefined): string {
+  if (ascents === undefined || ascents[0] === undefined) {
+    return ''
+  }
+
+  const ascentsCount = ascents.length
+  const isMultipleAscents = ascentsCount > 1
+  const includeRoute = ascents.some(
+    ascent => ascent.climbingDiscipline === 'Route',
+  )
+
+  return `${formatDateInTooltip(ascents[0])}
+${
+  isMultipleAscents
+    ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
+    : ''
+}
+${ascents
+  .map(
+    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
+  )
+  .join('\n')}`
+}
+
+// EMOJIS
+
+type emoji = string
+
+const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], emoji> = {
+  Onsight: '👁️',
+  Flash: '🔦',
+  Redpoint: '🔴',
+}
+
+function fromAscentStyleToEmoji(style: Ascent['style']): emoji {
+  return style === undefined
+    ? ASCENT_STYLE_TO_EMOJI.Redpoint
+    : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
+}
+
+const ENERGY_SYSTEM_TO_EMOJI: Record<
+  Exclude<TrainingSession['energySystem'], undefined>,
+  emoji
+> = {
+  AA: '🔥',
+  AL: '🪫',
+  AE: '🫀',
+}
+
+function fromEnergySystemToEmoji(
+  energySystem: TrainingSession['energySystem'],
+): emoji | '' {
+  return energySystem === undefined
+    ? ''
+    : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
+}
+
+const ANATOMICAL_REGION_TO_EMOJI: Record<
+  Exclude<TrainingSession['anatomicalRegion'], undefined>,
+  emoji
+> = {
+  Ar: '💪',
+  Fi: '🖐️',
+  Ge: '🦵',
+}
+
+function fromAnatomicalRegionToEmoji(
+  anatomicalRegion: TrainingSession['anatomicalRegion'],
+): emoji | '' {
+  return anatomicalRegion === undefined
+    ? ''
+    : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
+}
+
+const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
+  NonNullable<TrainingSession['climbingDiscipline']>,
+  emoji
+> = {
+  Boulder: '🪨',
+  Route: '🧗',
+  'Multi-Pitch': '⛰️',
+}
+
+function fromClimbingDisciplineToEmoji(
+  climbingDiscipline: TrainingSession['climbingDiscipline'],
+): emoji | '' {
+  return climbingDiscipline === undefined
+    ? ''
+    : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')
+}
+
+// FORMATTERS
+
 function formatComments(
   comments: Ascent['comments'] | TrainingSession['comments'],
 ) {
   return comments ? `💬 “${comments}”` : ''
 }
+
 function formatHeight(height: Ascent['height']) {
   return height ? `📏 ${height}m` : ''
 }
+
 function formatHolds(holds: Ascent['holds']) {
   return holds ? `✊ ${holds}` : ''
 }
@@ -217,12 +237,23 @@ function formatCragAndArea(
 
   return `📍 ${crag}${showDetails && area ? ` > ${area}` : ''}`
 }
+
+function formatCragAndDiscipline({
+  gymCrag,
+  climbingDiscipline,
+}: Pick<TrainingSession, 'gymCrag' | 'climbingDiscipline'>): emoji {
+  return gymCrag === undefined
+    ? ''
+    : `\t${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${gymCrag}`
+}
+
 function formatRating(rating: Ascent['rating']) {
   return rating === undefined
     ? ''
     : Array.from({ length: rating }, () => '⭐').join('')
 }
-function formatGrade({
+
+function formatGrades({
   topoGrade,
   personalGrade,
   showDetails = true,
@@ -238,7 +269,7 @@ function formatGrade({
   const maybePersonalGrade =
     personalGrade === undefined || personalGrade === topoGrade || !showDetails
       ? ''
-      : `(${personalGrade})`
+      : addParenthesis(personalGrade)
 
   return `⚡︎ ${topoGrade} ${maybePersonalGrade}`.trim()
 }
@@ -247,27 +278,25 @@ function formatProfile(profile: Ascent['profile']) {
   return profile ? `📐 ${profile}` : ''
 }
 
-const enOrdinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' })
-const suffixes = new Map([
-  ['one', 'st'],
-  ['two', 'nd'],
-  ['few', 'rd'],
-  ['other', 'th'],
-])
-const formatOrdinals = (number_: number) => {
-  const rule = enOrdinalRules.select(number_)
-  const suffix = suffixes.get(rule)
-  return `${number_}${suffix}`
+function formatDateInTooltip<T>(
+  data: T & { date: string },
+  options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
+) {
+  return `📅 ${formatDateTime(new Date(data.date), options)}`
 }
 
-function formatStyleAndTriers(
-  style: Ascent['style'],
-  tries: Ascent['tries'],
-  options?: { showDetails?: boolean },
-) {
+function formatStyleAndTriers({
+  style,
+  tries,
+  options,
+}: {
+  style: Ascent['style']
+  tries: Ascent['tries']
+  options?: { showDetails?: boolean }
+}) {
   const { showDetails = false } = options ?? {}
 
-  const styleEmoji = style === 'Onsight' ? '👁️' : style === 'Flash' ? '🔦' : '🔴'
+  const styleEmoji = fromAscentStyleToEmoji(style)
   const styleText = showDetails ? style : ''
 
   const triesText = tries > 1 ? `(${formatOrdinals(tries)})` : ''
@@ -275,4 +304,17 @@ function formatStyleAndTriers(
   return [styleEmoji, styleText, triesText]
     .filter(string => string !== '')
     .join(' ')
+}
+
+const englishOrdinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' })
+const suffixes = new Map([
+  ['one', 'st'],
+  ['two', 'nd'],
+  ['few', 'rd'],
+  ['other', 'th'],
+])
+function formatOrdinals(number_: number) {
+  const rule = englishOrdinalRules.select(number_)
+  const suffix = suffixes.get(rule)
+  return `${number_}${suffix}`
 }

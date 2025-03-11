@@ -2,7 +2,7 @@ import { Switch } from '@base-ui-components/react/switch'
 import { memo } from 'react'
 import styles from './ascents-training-switch.module.css'
 
-export function AscentsTrainingSwitch({
+function AscentsTrainingSwitch({
   toggle,
   isTraining,
 }: {
