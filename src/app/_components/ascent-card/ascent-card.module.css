@@ -1,0 +1,64 @@
+.card {
+  --surface: var(--surface-3);
+  --text: var(--text-1);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+
+  max-inline-size: var(--size-content-2);
+  aspect-ratio: 2.5 / 3.5;
+
+  background-color: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-3);
+
+  overflow: auto;
+}
+
+.header {
+  --surface: var(--surface-1);
+  --text: var(--text-1);
+
+  position: sticky;
+  inset: 0;
+  background-color: var(--surface);
+  color: var(--text);
+  padding-block: var(--size-3);
+  padding-inline: var(--size-3);
+
+  box-shadow: var(--shadow-2);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+
+  padding-inline: var(--size-3);
+  padding-block-end: var(--size-3);
+}
+
+.details {
+  --direction: column;
+
+  display: flex;
+  flex-flow: var(--direction) wrap;
+  justify-content: space-between;
+  column-gap: var(--size-3);
+}
+
+.detailsItem {
+  white-space: nowrap;
+}
+
+.placeAndTime {
+  --direction: row;
+
+  display: flex;
+  flex-direction: var(--direction);
+  justify-content: space-between;
+  column-gap: var(--size-3);
+}

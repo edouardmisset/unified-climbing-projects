@@ -204,7 +204,7 @@ const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
   'Multi-Pitch': '⛰️',
 }
 
-function fromClimbingDisciplineToEmoji(
+export function fromClimbingDisciplineToEmoji(
   climbingDiscipline: TrainingSession['climbingDiscipline'],
 ): emoji | '' {
   return climbingDiscipline === undefined
@@ -214,21 +214,21 @@ function fromClimbingDisciplineToEmoji(
 
 // FORMATTERS
 
-function formatComments(
+export function formatComments(
   comments: Ascent['comments'] | TrainingSession['comments'],
 ) {
   return comments ? `💬 “${comments}”` : ''
 }
 
-function formatHeight(height: Ascent['height']) {
+export function formatHeight(height: Ascent['height']) {
   return height ? `📏 ${height}m` : ''
 }
 
-function formatHolds(holds: Ascent['holds']) {
+export function formatHolds(holds: Ascent['holds']) {
   return holds ? `✊ ${holds}` : ''
 }
 
-function formatCragAndArea(
+export function formatCragAndArea(
   crag: Ascent['crag'],
   area: Ascent['area'],
   options?: { showDetails?: boolean },
@@ -247,7 +247,7 @@ function formatCragAndDiscipline({
     : `\t${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${gymCrag}`
 }
 
-function formatRating(rating: Ascent['rating']) {
+export function formatRating(rating: Ascent['rating']) {
   return rating === undefined
     ? ''
     : Array.from({ length: rating }, () => '⭐').join('')
@@ -274,18 +274,18 @@ function formatGrades({
   return `⚡︎ ${topoGrade} ${maybePersonalGrade}`.trim()
 }
 
-function formatProfile(profile: Ascent['profile']) {
+export function formatProfile(profile: Ascent['profile']) {
   return profile ? `📐 ${profile}` : ''
 }
 
-function formatDateInTooltip<T>(
+export function formatDateInTooltip<T>(
   data: T & { date: string },
   options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
 ) {
   return `📅 ${formatDateTime(new Date(data.date), options)}`
 }
 
-function formatStyleAndTriers({
+export function formatStyleAndTriers({
   style,
   tries,
   options,
@@ -299,7 +299,12 @@ function formatStyleAndTriers({
   const styleEmoji = fromAscentStyleToEmoji(style)
   const styleText = showDetails ? style : ''
 
-  const triesText = tries > 1 ? `(${formatOrdinals(tries)})` : ''
+  const triesText =
+    tries > 1
+      ? showDetails
+        ? `(${tries} tries)`
+        : `(${formatOrdinals(tries)})`
+      : ''
 
   return [styleEmoji, styleText, triesText]
     .filter(string => string !== '')

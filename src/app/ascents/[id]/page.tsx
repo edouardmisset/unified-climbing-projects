@@ -1,5 +1,5 @@
+import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
 import { isError } from '~/helpers/is-error'
-import { createAscentTooltip } from '~/helpers/tooltips'
 import { api } from '~/trpc/server'
 
 export default async function Page({
@@ -9,21 +9,15 @@ export default async function Page({
 }) {
   const id = (await params).id
 
-  const data = await api.ascents.getById({ id: Number(id) })
+  const ascent = await api.ascents.getById({ id: Number(id) })
 
-  if (isError(data)) {
-    return <div>{data.error}</div>
+  if (isError(ascent)) {
+    return <div>{ascent.error}</div>
   }
 
   return (
-    <div>
-      <h1>{data?.routeName}</h1>
-      {createAscentTooltip(data, { showDetails: true })
-        .split('\n')
-        .filter(line => line !== '')
-        .map(line => (
-          <p key={line}>{line}</p>
-        ))}
+    <div className="super-center w100 h100">
+      <AscentCard ascent={ascent} />
     </div>
   )
 }
