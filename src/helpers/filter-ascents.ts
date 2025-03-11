@@ -1,6 +1,6 @@
 import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import { type Ascent, ascentSchema } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { frequencyBy } from './frequency-by.ts'
 import { fromGradeToNumber } from './grade-converter.ts'
@@ -56,19 +56,19 @@ export function filterAscents(
 }
 
 export function getHardestAscent(ascents: Ascent[]): Ascent {
-  const maxNumberGrade = Math.max(
-    ...ascents.map(({ topoGrade }) => fromGradeToNumber(topoGrade)),
-  )
-  const hardestAscent = ascents.find(
-    ({ topoGrade }) => fromGradeToNumber(topoGrade) === maxNumberGrade,
-  )
+  return ascents.reduce(
+    (hardestAscent, currentAscent) => {
+      const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
+      const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
 
-  if (!hardestAscent) {
-    globalThis.console.error('No ascent found')
-    return ascentSchema.parse(ascents[0])
-  }
+      const isCurrentAscentHarder = hardestGrade < currentGrade
 
-  return hardestAscent
+      if (isCurrentAscentHarder) return currentAscent
+
+      return hardestAscent
+    },
+    { topoGrade: '1a' } as Ascent,
+  )
 }
 
 export function getMostFrequentCrag(ascents: Ascent[]) {
