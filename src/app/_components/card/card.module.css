@@ -1,6 +1,6 @@
-.container {
-  --_light-background: color-mix(in oklch, var(--accent) 10%, transparent);
-  --_dark-background: color-mix(in oklch, var(--accent) 20%, transparent);
+.card {
+  --_light-background: oklch(from var(--accent) l c h / 10%);
+  --_dark-background: oklch(from var(--accent) l c h / 20%);
   --_background-color: light-dark(
     var(--_light-background),
     var(--_dark-background)
@@ -13,6 +13,7 @@
   padding: var(--size-fluid-2);
   border-radius: var(--radius-conditional-3);
   background: var(--_background-color);
-  box-shadow: 0 0 var(--size-2) rgb(0 0 0 / 10%);
+  box-shadow: 3px 4px 4px
+    oklch(from var(--_background-color) calc(l + 0.2) c h / 20%);
   overflow: hidden;
 }
