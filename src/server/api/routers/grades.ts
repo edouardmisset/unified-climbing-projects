@@ -1,7 +1,7 @@
 import { average } from '@edouardmisset/math/average.ts'
 
 import { z } from 'zod'
-import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
+import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/grade-converter'
 import { minMaxGrades } from '~/helpers/min-max-grades'
 import { gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'

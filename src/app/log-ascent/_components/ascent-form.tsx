@@ -2,7 +2,10 @@
 import { useForm } from 'react-hook-form'
 
 import { env } from '~/env'
-import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/converters'
+import {
+  fromGradeToNumber,
+  fromNumberToGrade,
+} from '~/helpers/grade-converter.ts'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
   HOLDS,

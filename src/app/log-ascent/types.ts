@@ -1,7 +1,7 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { string, z } from 'zod'
-import { fromNumberToGrade } from '~/helpers/converters'
+import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
 import {
   ascentStyleSchema,
   climbingDisciplineSchema,

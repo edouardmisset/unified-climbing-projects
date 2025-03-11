@@ -2,8 +2,8 @@ import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
-import { fromGradeToNumber } from './converters.ts'
 import { frequencyBy } from './frequency-by.ts'
+import { fromGradeToNumber } from './grade-converter.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 
 /**

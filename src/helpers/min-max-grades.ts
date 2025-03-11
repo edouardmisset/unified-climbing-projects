@@ -1,5 +1,5 @@
 import { type Ascent, type Grade, _GRADES } from '~/schema/ascent'
-import { fromGradeToNumber, fromNumberToGrade } from './converters'
+import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 
 /**
  * Calculates the minimum and maximum grades from a list of ascents.

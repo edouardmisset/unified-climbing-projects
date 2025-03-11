@@ -1,6 +1,6 @@
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { fromGradeToNumber } from './converters.ts'
+import { fromGradeToNumber } from './grade-converter.ts'
 
 export const sortByDescendingGrade = (
   { topoGrade: aGrade }: Ascent,
