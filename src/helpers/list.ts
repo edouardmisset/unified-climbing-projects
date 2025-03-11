@@ -1,4 +1,4 @@
-// ? What does it mean to undefined as first arg ?
+// ? What does it mean to pass undefined as first arg ?
 // => The runtime's default locale is used when undefined is passed ~ MDN
 const createListFormatter =
   (type: 'disjunction' | 'conjunction') =>
