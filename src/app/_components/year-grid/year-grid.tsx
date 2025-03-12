@@ -80,7 +80,7 @@ export function YearGrid({
                 key={date.toString()}
                 formattedDate={formatDateInTooltip(date)}
                 stringDate={date}
-                tooltip={description}
+                description={description}
                 backgroundColor={backgroundColor}
                 shortText={shortText}
               />

@@ -1,11 +1,12 @@
 import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
+import { formatDateInTooltip } from '~/helpers/formatters'
 import Popover from '../popover/popover'
 import { datesEqual } from './helpers'
 import styles from './year-grid.module.css'
 
 type YearGridCellProps = {
   stringDate: string
-  tooltip: ReactNode
+  description: ReactNode
   backgroundColor: string | undefined
   shortText?: ReactNode
   formattedDate: string
@@ -14,7 +15,7 @@ type YearGridCellProps = {
 function YearGridCell(props: YearGridCellProps) {
   const {
     stringDate,
-    tooltip: title,
+    description,
     backgroundColor,
     shortText = '',
     formattedDate,
@@ -31,11 +32,20 @@ function YearGridCell(props: YearGridCellProps) {
     [backgroundColor, stringDate],
   )
 
+  if (description === '')
+    return (
+      <span
+        className={styles.yearGridCell}
+        style={cellStyle}
+        title={formatDateInTooltip(stringDate)}
+      />
+    )
+
   return (
     <Popover
       triggerContent={shortText}
       popoverTitle={formattedDate}
-      popoverDescription={title}
+      popoverDescription={description}
       triggerClassName={`${styles.yearGridCell} contrast-color`}
       buttonStyle={cellStyle}
     />

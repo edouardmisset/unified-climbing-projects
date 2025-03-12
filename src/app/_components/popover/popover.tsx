@@ -33,9 +33,10 @@ function Popover({
             <BasePopover.Title className={styles.Title}>
               {popoverTitle}
             </BasePopover.Title>
-            <BasePopover.Description className={styles.Description}>
-              {popoverDescription}
-            </BasePopover.Description>
+            <BasePopover.Description
+              className={styles.Description}
+              render={<div>{popoverDescription}</div>}
+            />
           </BasePopover.Popup>
         </BasePopover.Positioner>
       </BasePopover.Portal>
