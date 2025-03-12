@@ -10,7 +10,7 @@ import {
   formatRating,
   formatStyleAndTriers,
   fromClimbingDisciplineToEmoji,
-} from '~/helpers/tooltips'
+} from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-card.module.css'
 
