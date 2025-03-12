@@ -2,11 +2,12 @@ import {
   fromGradeToBackgroundColor,
   fromGradeToClassName,
 } from '~/helpers/converter'
+import { getWeekNumber } from '~/helpers/date'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { createAscentBarCodeTooltip } from '~/helpers/tooltips'
+import { AscentInWeekDescription } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
-
+import Popover from '../popover/popover'
 import styles from './barcode.module.css'
 
 type AscentsBarsProps = {
@@ -22,12 +23,14 @@ export function AscentsBar({ weeklyAscents }: AscentsBarsProps) {
 
   const isSingleAscent = weeklyAscents.length <= 1
 
+  if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
+
   return (
-    <span
-      className={`${
+    <Popover
+      triggerClassName={`${
         isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
       } ${styles.bar}`}
-      style={{
+      buttonStyle={{
         inlineSize: `${numberOfAscents / 2}%`,
         background: isSingleAscent
           ? undefined
@@ -35,7 +38,11 @@ export function AscentsBar({ weeklyAscents }: AscentsBarsProps) {
               .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
               .join(', ')})`,
       }}
-      title={createAscentBarCodeTooltip(weeklyAscentsByDescendingGrade)}
+      triggerContent=""
+      popoverDescription={
+        <AscentInWeekDescription ascents={weeklyAscentsByDescendingGrade} />
+      }
+      popoverTitle={`${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`}
     />
   )
 }

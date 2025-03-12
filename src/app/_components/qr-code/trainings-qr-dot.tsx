@@ -1,6 +1,8 @@
 import { fromSessionTypeToClassName } from '~/helpers/converter'
-import { createTrainingQRTooltip } from '~/helpers/tooltips'
+import { formatDateInTooltip } from '~/helpers/formatters'
+import { TrainingDayPopoverDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
+import Popover from '../popover/popover'
 
 // TODO: this component can now take multiple sessions. We should aggregate the
 // sessions and display a tooltip showing all the sessions and the className
@@ -16,9 +18,15 @@ export function TrainingsQRDot({
     return <span />
 
   return (
-    <span
-      className={fromSessionTypeToClassName(trainingSessions[0].sessionType)}
-      title={createTrainingQRTooltip(trainingSessions[0])}
+    <Popover
+      triggerClassName={fromSessionTypeToClassName(
+        trainingSessions[0].sessionType,
+      )}
+      popoverDescription={
+        <TrainingDayPopoverDescription trainingSession={trainingSessions[0]} />
+      }
+      popoverTitle={formatDateInTooltip(trainingSessions[0].date)}
+      triggerContent=""
     />
   )
 }

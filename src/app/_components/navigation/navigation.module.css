@@ -105,22 +105,6 @@
   }
 }
 
-.ArrowFill {
-  fill: canvas;
-}
-
-.ArrowOuterStroke {
-  @media (prefers-color-scheme: light) {
-    fill: var(--color-gray-200);
-  }
-}
-
-.ArrowInnerStroke {
-  @media (prefers-color-scheme: dark) {
-    fill: var(--color-gray-300);
-  }
-}
-
 .Item {
   outline: 0;
   cursor: default;
