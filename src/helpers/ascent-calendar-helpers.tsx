@@ -2,15 +2,16 @@ import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { formatDateTime } from '~/helpers/date'
 import { getHardestAscent } from '~/helpers/filter-ascents'
-import { createAscentsQRTooltip } from '~/helpers/tooltips'
+import { AscentsInDayPopoverDescription } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
+import { formatDateInTooltip } from './formatters'
 
 export function fromAscentsToCalendarEntries(
   year: number,
   ascentsArray?: Ascent[][],
 ): DayDescriptor[] {
   return (
-    ascentsArray?.map((ascents, index) => {
+    ascentsArray?.map((ascents, index): DayDescriptor => {
       const firstAscent = ascents[0]
 
       if (firstAscent === undefined || ascents === undefined) {
@@ -18,7 +19,8 @@ export function fromAscentsToCalendarEntries(
         return {
           date,
           shortText: '',
-          tooltip: formatDateTime(new Date(date), 'shortDate'),
+          description: '',
+          title: formatDateTime(new Date(date), 'shortDate'),
         }
       }
 
@@ -28,7 +30,8 @@ export function fromAscentsToCalendarEntries(
       return {
         date,
         backgroundColor,
-        tooltip: createAscentsQRTooltip(ascents),
+        title: formatDateInTooltip(date),
+        description: <AscentsInDayPopoverDescription ascents={ascents} />,
         shortText: topoGrade,
       }
     }) ?? []

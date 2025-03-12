@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { type ReactNode, useMemo } from 'react'
+import { formatDateInTooltip } from '~/helpers/formatters.ts'
 import { isDateInYear } from '~/helpers/is-date-in-year.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
@@ -9,8 +10,9 @@ import styles from './year-grid.module.css'
 export type DayDescriptor = {
   date: string
   backgroundColor?: string
-  tooltip: string
-  shortText?: string
+  description: ReactNode
+  title: ReactNode
+  shortText: ReactNode
 }
 
 export function YearGrid({
@@ -44,7 +46,8 @@ export function YearGrid({
         { length: numberOfDaysFromPreviousMondayTo1stJanuary },
         (_, index): DayDescriptor => ({
           date: '',
-          tooltip: '',
+          description: '',
+          title: '',
           shortText: index.toString(),
         }),
       ),
@@ -65,18 +68,19 @@ export function YearGrid({
       <DaysColumn />
       <WeeksRow columns={columns} />
       {allDayCollection.map(
-        ({ date, tooltip, backgroundColor, shortText = '' }, index) =>
+        ({ date, description, backgroundColor, shortText = '' }, index) =>
           date === '' ? (
             <i
-              key={shortText || index}
+              key={shortText?.toString() || index}
               className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
             />
           ) : (
             isDateInYear(date, year) && (
               <YearGridCell
                 key={date.toString()}
+                formattedDate={formatDateInTooltip(date)}
                 stringDate={date}
-                tooltip={tooltip}
+                tooltip={description}
                 backgroundColor={backgroundColor}
                 shortText={shortText}
               />

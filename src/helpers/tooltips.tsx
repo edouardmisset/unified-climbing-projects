@@ -1,6 +1,5 @@
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { getWeekNumber } from './date'
 import {
   formatComments,
   formatCragAndArea,
@@ -20,24 +19,22 @@ import { roundToTen } from './math'
 
 // TRAINING
 
-export function createTrainingBarCodeTooltip(
-  sessions: TrainingSession[],
-): string | undefined {
-  return sessions.length > 0 && sessions[0] !== undefined
-    ? `Week # ${getWeekNumber(new Date(sessions[0].date))}
-# Training (${sessions.length}):
-${sessions
-  .map(
-    ({ sessionType, climbingDiscipline, gymCrag, load }) =>
-      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${sessionType} (${gymCrag}) - ${load === undefined ? '' : roundToTen(load)}%`,
-  )
-  .join('\n')}`
-    : undefined
+export function TrainingInWeekDescription({
+  sessions,
+}: { sessions: TrainingSession[] }) {
+  if (sessions.length === 0 || sessions[0] === undefined) return <span />
+
+  return sessions.map(({ sessionType, climbingDiscipline, gymCrag, load }) => (
+    <div key={`${sessionType}-${gymCrag}-${load}`}>
+      {fromClimbingDisciplineToEmoji(climbingDiscipline)} {sessionType} (
+      {gymCrag}) - {load === undefined ? '' : roundToTen(load)}%
+    </div>
+  ))
 }
 
-export function createTrainingQRTooltip(
-  trainingSession: TrainingSession,
-): string {
+export function TrainingDayPopoverDescription({
+  trainingSession,
+}: { trainingSession: TrainingSession }) {
   const {
     anatomicalRegion,
     climbingDiscipline,
@@ -50,7 +47,6 @@ export function createTrainingQRTooltip(
     volume,
   } = trainingSession
 
-  const localeDate = formatDateInTooltip(trainingSession, 'longDate')
   const cragEmoji = formatCragAndDiscipline({
     gymCrag,
     climbingDiscipline,
@@ -71,12 +67,12 @@ export function createTrainingQRTooltip(
       : `| ${fromEnergySystemToEmoji(energySystem)}`
 
   return [
-    `${localeDate} ${cragEmoji} ${sessionText}`,
+    `${cragEmoji} ${sessionText}`,
     `${volumeText} ${intensityText} ${loadText} ${anatomicalRegionEmoji} ${energySystemEmoji}`,
     commentText,
   ]
     .filter(s => s !== '')
-    .join('\n\n')
+    .map(str => <p key={str}>{str}</p>)
 }
 
 // ASCENT
@@ -87,22 +83,23 @@ export function createAscentTooltip(
 ): string {
   const { showDetails = true } = options ?? {}
   const {
-    climbingDiscipline,
-    topoGrade,
-    routeName,
-    crag,
-    comments,
-    tries,
     area,
+    climbingDiscipline,
+    comments,
+    crag,
+    date,
     height,
     holds,
     personalGrade,
     profile,
     rating,
+    routeName,
     style,
+    topoGrade,
+    tries,
   } = ascent
 
-  return `${formatDateInTooltip(ascent)}
+  return `${formatDateInTooltip(date)}
 
 ${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${formatCragAndArea(crag, area, { showDetails })} ${formatGrades({ topoGrade, personalGrade, showDetails })} ${formatStyleAndTriers({ style, tries, options: { showDetails } })}
 
@@ -121,20 +118,20 @@ ${
 }`
 }
 
-export function createAscentBarCodeTooltip(ascents: Ascent[]): string {
-  return ascents.length > 0 && ascents[0] !== undefined
-    ? `Week # ${getWeekNumber(new Date(ascents[0].date))}
-Ascents (${ascents.length}):
-${ascents
-  .map(
-    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
-    : ''
+export function AscentInWeekDescription({ ascents }: { ascents: Ascent[] }) {
+  if (ascents.length === 0 || ascents[0] === undefined) return <span />
+
+  return ascents.map(({ routeName, topoGrade, climbingDiscipline, crag }) => (
+    <div key={routeName}>
+      {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} ({crag}) -{' '}
+      {topoGrade}
+    </div>
+  ))
 }
 
-export function createAscentsQRTooltip(ascents: Ascent[] | undefined): string {
+export function AscentsInDayPopoverDescription({
+  ascents,
+}: { ascents?: Ascent[] }) {
   if (ascents === undefined || ascents[0] === undefined) {
     return ''
   }
@@ -145,16 +142,17 @@ export function createAscentsQRTooltip(ascents: Ascent[] | undefined): string {
     ascent => ascent.climbingDiscipline === 'Route',
   )
 
-  return `${formatDateInTooltip(ascents[0])}
-${
-  isMultipleAscents
-    ? `${includeRoute ? 'Routes' : 'Boulders'} (${ascentsCount})`
+  const header = isMultipleAscents
+    ? `${ascentsCount} ${includeRoute ? 'Routes' : 'Boulders'}`
     : ''
-}
-${ascents
-  .map(
-    ({ routeName, topoGrade, climbingDiscipline, crag }) =>
-      `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
-  )
-  .join('\n')}`
+
+  const lines = [
+    header,
+    ...ascents.map(
+      ({ routeName, topoGrade, climbingDiscipline, crag }) =>
+        `${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} (${crag}) - ${topoGrade}`,
+    ),
+  ].filter(s => s !== '')
+
+  return lines.map(s => <div key={s}>{s}</div>)
 }

@@ -2,11 +2,12 @@ import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
 } from '~/helpers/converter'
+import { getWeekNumber } from '~/helpers/date'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
-import { createTrainingBarCodeTooltip } from '~/helpers/tooltips'
+import { TrainingInWeekDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
-
+import Popover from '../popover/popover'
 import styles from './barcode.module.css'
 
 type TrainingBarsProps = {
@@ -27,14 +28,15 @@ export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
 
   const isSingleWeekTraining = weeklyTraining.length <= 1
 
+  if (filteredWeeklyTraining[0] === undefined) return <span />
   return (
-    <span
-      className={`${
+    <Popover
+      triggerClassName={`${
         isSingleWeekTraining
           ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)
           : ''
       } ${styles.bar}`}
-      style={{
+      buttonStyle={{
         inlineSize: `${numberOfTraining / 2}%`,
         background: isSingleWeekTraining
           ? undefined
@@ -44,7 +46,11 @@ export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
               )
               .join(', ')})`,
       }}
-      title={createTrainingBarCodeTooltip(filteredWeeklyTraining)}
+      triggerContent=""
+      popoverDescription={
+        <TrainingInWeekDescription sessions={filteredWeeklyTraining} />
+      }
+      popoverTitle={`${filteredWeeklyTraining.length} training sessions in week # ${getWeekNumber(new Date(filteredWeeklyTraining[0].date))}`}
     />
   )
 }

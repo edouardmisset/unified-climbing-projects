@@ -45,7 +45,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime} style={stylesDependingOnComments}>
-          <time>{formatDateInTooltip(ascent)}</time>
+          <time>{formatDateInTooltip(ascent.date)}</time>
           <span>{formatCragAndArea(crag, area, { showDetails: true })}</span>
         </div>
         <div className={styles.details} style={stylesDependingOnComments}>
