@@ -67,16 +67,16 @@ export const TRAINING_HEADERS = [
 ] as const
 
 export const TRANSFORMED_TRAINING_HEADER_NAMES = {
-  'Anatomical Region': 'anatomicalRegion',
-  Comments: 'comments',
   Date: 'date',
-  'Energy System': 'energySystem',
-  'Gym / Crag': 'gymCrag',
-  Intensity: 'intensity',
-  LOAD: 'load',
-  'Route / Bouldering': 'climbingDiscipline',
   'Type of Session': 'sessionType',
   Volume: 'volume',
+  'Anatomical Region': 'anatomicalRegion',
+  'Energy System': 'energySystem',
+  'Route / Bouldering': 'climbingDiscipline',
+  'Gym / Crag': 'gymCrag',
+  Comments: 'comments',
+  Intensity: 'intensity',
+  LOAD: 'load',
 } as const satisfies Record<(typeof TRAINING_HEADERS)[number], string>
 
 export type GSTrainingKeys = keyof typeof TRANSFORMED_TRAINING_HEADER_NAMES

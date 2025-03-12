@@ -1,8 +1,8 @@
-import { number, z } from 'zod'
+import { boolean, number, z } from 'zod'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { getAllTrainingSessions } from '~/services/training'
+import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
   getAllTrainingSessions: publicProcedure
@@ -23,5 +23,17 @@ export const trainingRouter = createTRPCRouter({
         throw new Error('No training sessions found')
       }
       return latestTrainingSession
+    }),
+  addOne: publicProcedure
+    .input(trainingSessionSchema.omit({ id: true }))
+    .output(boolean())
+    .mutation(async ({ input: trainingSession }) => {
+      try {
+        await addTrainingSession(trainingSession)
+        return true
+      } catch (error) {
+        globalThis.console.error(error)
+        return false
+      }
     }),
 })

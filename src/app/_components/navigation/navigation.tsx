@@ -44,7 +44,7 @@ export function Navigation() {
                 <Link href={'/log-ascent'}>📋 Log Ascent</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
-                <Link href={'/log-training'}>📋 Log Training</Link>
+                <Link href={'/log-training-session'}>📋 Log Training</Link>
               </Menu.Item>
               <Menu.Item className={styles.Item}>
                 <Link href={'/visualization'}>🖼️ Visualization</Link>

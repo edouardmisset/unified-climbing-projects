@@ -1,11 +1,18 @@
 'use client'
-import { useForm } from 'react-hook-form'
 
+import { type ChangeEventHandler, useCallback } from 'react'
+import { useForm } from 'react-hook-form'
+import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
+import { Loader } from '~/app/_components/loader/loader.tsx'
+import { GradeSlider } from '~/app/_components/slider/slider'
+import { Spacer } from '~/app/_components/spacer/spacer.tsx'
+import { _0To100RegEx } from '~/constants/generic.ts'
 import { env } from '~/env'
 import {
   fromGradeToNumber,
   fromNumberToGrade,
 } from '~/helpers/grade-converter.ts'
+import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
   HOLDS,
@@ -13,13 +20,6 @@ import {
   _GRADES,
   ascentStyleSchema,
 } from '~/schema/ascent'
-
-import { type ChangeEventHandler, useCallback } from 'react'
-import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
-import { Loader } from '~/app/_components/loader/loader.tsx'
-import { GradeSlider } from '~/app/_components/slider/slider'
-import { Spacer } from '~/app/_components/spacer/spacer.tsx'
-import { disjunctiveListFormatter } from '~/helpers/list.ts'
 import { api } from '~/trpc/react.tsx'
 import { onSubmit } from '../actions.ts'
 import {
@@ -29,7 +29,6 @@ import {
   MIN_HEIGHT,
   MIN_RATING,
   MIN_TRIES,
-  _0To100RegEx,
   _1To5RegEx,
   _1To9999RegEx,
 } from '../constants.ts'

@@ -119,24 +119,34 @@ export function transformTrainingSessionFromGSToJS(
 }
 
 export function transformTrainingSessionFromJSToGS(
-  trainingSession: TrainingSession,
+  trainingSession: Omit<TrainingSession, 'id'>,
 ): GSTrainingRecord {
-  const filteredHeaders = TRAINING_HEADERS.filter(
-    header => header !== 'Intensity' && header !== 'LOAD',
+  const filteredHeaders = TRAINING_HEADERS.filter(header => header !== 'LOAD')
+  return filteredHeaders.reduce(
+    (accumulator, header) => {
+      const key = TRANSFORMED_TRAINING_HEADER_NAMES[header]
+
+      const valueAsString = trainingSession[key]?.toString() ?? ''
+
+      const keyAs = key as keyof typeof TRANSFORM_FUNCTIONS_JS_TO_GS
+
+      const transformer =
+        keyAs in TRANSFORM_FUNCTIONS_JS_TO_GS
+          ? TRANSFORM_FUNCTIONS_JS_TO_GS[keyAs]
+          : String
+
+      accumulator[header] = transformer(valueAsString)
+      return accumulator
+    },
+    {
+      Horodateur: '',
+      'Perceived Physical Fitness': '',
+      'Perceived Technical Hability': '',
+      'Perceived Mental Game': '',
+      'Injured Anatomical Region': '',
+      'Pain scale': '',
+      'Weight (kg)': '',
+      'Other Comments': '',
+    } as unknown as GSTrainingRecord,
   )
-  return filteredHeaders.reduce((accumulator, header) => {
-    const key = TRANSFORMED_TRAINING_HEADER_NAMES[header]
-
-    const valueAsString = trainingSession[key]?.toString() ?? ''
-
-    const keyAs = key as keyof typeof TRANSFORM_FUNCTIONS_JS_TO_GS
-
-    const transformer =
-      keyAs in TRANSFORM_FUNCTIONS_JS_TO_GS
-        ? TRANSFORM_FUNCTIONS_JS_TO_GS[keyAs]
-        : String
-
-    accumulator[header] = transformer(valueAsString)
-    return accumulator
-  }, {} as GSTrainingRecord)
 }

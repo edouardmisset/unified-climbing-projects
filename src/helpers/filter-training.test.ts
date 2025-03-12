@@ -5,6 +5,7 @@ import { filterTrainingSessions } from './filter-training'
 describe('filterTrainingSessions', () => {
   const trainingSessions = [
     {
+      id: 1,
       date: '2023-01-01',
       sessionType: 'CS',
       volume: 70,
@@ -15,6 +16,7 @@ describe('filterTrainingSessions', () => {
       comments: 'Good session',
     },
     {
+      id: 2,
       date: '2023-02-01',
       sessionType: 'PE',
       volume: 60,
@@ -25,6 +27,7 @@ describe('filterTrainingSessions', () => {
       comments: 'Hard session',
     },
     {
+      id: 3,
       date: '2024-01-01',
       sessionType: 'MS',
       volume: 80,

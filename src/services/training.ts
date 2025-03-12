@@ -1,10 +1,11 @@
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { createCache } from '~/helpers/cache'
-import { transformTrainingSessionFromGSToJS } from '~/helpers/transformers/transformers'
+import {
+  transformTrainingSessionFromGSToJS,
+  transformTrainingSessionFromJSToGS,
+} from '~/helpers/transformers/transformers'
 import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
 import { loadWorksheet } from './google-sheets.ts'
-
-const { getCache, setCache } = createCache<TrainingSession[]>()
 
 /**
  * Retrieves all training sessions from the Google Sheets 'training' worksheet,
@@ -27,9 +28,10 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
 
   if (rows === undefined) return []
 
-  const rawTrainingSessions = rows.map(row =>
-    transformTrainingSessionFromGSToJS(row.toObject()),
-  )
+  const rawTrainingSessions = rows.map((row, index) => ({
+    ...transformTrainingSessionFromGSToJS(row.toObject()),
+    id: index,
+  }))
 
   const parsedTrainingSession = trainingSessionSchema
     .array()
@@ -41,6 +43,8 @@ async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
   }
   return parsedTrainingSession.data
 }
+
+const { getCache, setCache } = createCache<TrainingSession[]>()
 
 export async function getAllTrainingSessions(options?: {
   refresh?: boolean
@@ -54,4 +58,25 @@ export async function getAllTrainingSessions(options?: {
   }
 
   return cachedData
+}
+
+export async function addTrainingSession(
+  trainingSession: Omit<TrainingSession, 'id'>,
+): Promise<void> {
+  const manualTrainingSessionsSheet = await loadWorksheet('training', {
+    edit: true,
+  })
+
+  const trainingSessionInGS =
+    transformTrainingSessionFromJSToGS(trainingSession)
+
+  try {
+    await manualTrainingSessionsSheet.addRow(trainingSessionInGS)
+    globalThis.console.log(
+      `Training session added successfully (${new Date().getUTCMinutes()}):`,
+      trainingSessionInGS,
+    )
+  } catch (error) {
+    globalThis.console.error('Error adding training session:', error)
+  }
 }
