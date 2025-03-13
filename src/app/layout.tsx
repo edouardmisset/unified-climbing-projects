@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense } from 'react'
+import { ToastContainer } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
 import { env } from '~/env.js'
 import { TRPCReactProvider } from '~/trpc/react'
@@ -61,6 +62,7 @@ export default async function RootLayout({
                 </NuqsAdapter>
               </TRPCReactProvider>
             </Suspense>
+            <ToastContainer closeOnClick theme="colored" />
             <SpeedInsights />
             <Analytics />
           </body>

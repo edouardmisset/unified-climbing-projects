@@ -2,6 +2,7 @@
 
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { GradeSlider } from '~/app/_components/slider/slider'
@@ -81,7 +82,7 @@ export default function AscentForm() {
 
   const { data: defaultAscent } = defaultAscentFormValues
 
-  const { handleSubmit, register, setValue, watch, reset } = useForm({
+  const { handleSubmit, register, setValue, watch } = useForm({
     defaultValues: defaultAscent,
   })
 
@@ -172,10 +173,21 @@ export default function AscentForm() {
       className={styles.form}
       name="ascent-form"
       spellCheck={false}
-      onSubmit={handleSubmit(data => {
-        onSubmit(data)
-        reset()
-      }, console.error)}
+      onSubmit={handleSubmit(
+        async data => {
+          await onSubmit(data)
+          toast.success(`Successfully submitted ${data.routeName}`)
+          // reset()
+        },
+        error => {
+          console.error(error)
+          if ('message' in error) {
+            toast.error(`Error: ${error.message}`)
+          } else {
+            toast.error('Something went wrong')
+          }
+        },
+      )}
     >
       <label htmlFor="date" className={styles.label}>
         Date
