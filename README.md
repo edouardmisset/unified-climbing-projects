@@ -21,6 +21,8 @@ is my playground for these experiments.
 </details>
 </br>
 
+- [ ] Update the page (tab) title when we navigate to a new page
+
 - [ ] Use [parallel
   routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)
   ([see Theo's video](https://www.youtube.com/watch?v=d5x0JCZbAJs&t=5527s))
