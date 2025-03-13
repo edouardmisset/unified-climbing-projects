@@ -16,6 +16,7 @@ is my playground for these experiments.
   page
 - [x] Add chart showing the average (min and max) number of tries per grade
 - [x] Add auth (Clerk) and protect the `/log` route
+- [x] Add ability to log a training session
 
 </details>
 </br>
@@ -26,7 +27,6 @@ is my playground for these experiments.
   when clicking a QR-code or Barcode. When we
   refresh the page, we should arrive
   on a distinct page with the same content
-- [ ] Update the `/log` page to also be able to log a training session
 - [ ] Update Log page with Server Actions (see [Robin Wieruch's
   article](https://www.robinwieruch.de/next-forms/)) and [this
   article](https://www.robinwieruch.de/react-form-validation/)
@@ -40,7 +40,7 @@ is my playground for these experiments.
   filters (by year, by session type, by "intensity": high, medium, low)
 - [ ] Add a page (or modal component with parallel routing) to display the
   selected day's (or **days**) training session. We should be able to navigate
-  the the training calendar (or training QR or training Barcode) to this page.
+  to the training calendar (or training QR or training Barcode) to this page.
   **NOTE**: the elements of the calendar (day), qr-code (dot) and barcode (bars)
   should be clickable (buttons or links)
 - [ ] Add a page (or modal component with parallel routing) to display the

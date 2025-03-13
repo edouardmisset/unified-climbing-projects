@@ -10,7 +10,7 @@ export default async function LogTrainingSession() {
     <Suspense fallback={<Loader />}>
       <SignedIn>
         <section className={styles.container}>
-          <h1 className={styles.title}>Training Hard 💪</h1>
+          <h1 className={styles.title}>Train Hard 💪</h1>
           <span className="visually-hidden" aria-describedby="form-description">
             Form to log a training session
           </span>
