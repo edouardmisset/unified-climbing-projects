@@ -57,6 +57,12 @@
   text-align: center;
 }
 
+.text-no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .grid {
   --min: 300px;
 
@@ -66,11 +72,13 @@
   padding-inline: var(--size-fluid-2);
 }
 
-.w100 {
+.w100,
+.w-100 {
   inline-size: 100%;
 }
 
-.h100 {
+.h100,
+.h-100 {
   block-size: 100%;
 }
 

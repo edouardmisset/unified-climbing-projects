@@ -1,10 +1,12 @@
 .card {
+  --inline-padding: var(--size-fluid-2);
   --surface: var(--surface-3);
   --text: var(--text-1);
+  --gap: var(--size-fluid-2);
 
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
+  gap: var(--gap);
 
   max-inline-size: var(--size-content-2);
   aspect-ratio: 2.5 / 3.5;
@@ -25,8 +27,8 @@
   inset: 0;
   background-color: var(--surface);
   color: var(--text);
-  padding-block: var(--size-3);
-  padding-inline: var(--size-3);
+  padding-block: var(--size-fluid-3);
+  padding-inline: var(--inline-padding);
 
   box-shadow: var(--shadow-2);
 }
@@ -35,10 +37,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
+  gap: var(--gap);
 
-  padding-inline: var(--size-3);
-  padding-block-end: var(--size-3);
+  padding-inline: var(--inline-padding);
+  padding-block-end: var(--size-fluid-2);
 }
 
 .details {
@@ -47,18 +49,15 @@
   display: flex;
   flex-flow: var(--direction) wrap;
   justify-content: space-between;
-  column-gap: var(--size-3);
-}
-
-.detailsItem {
-  white-space: nowrap;
+  column-gap: var(--gap);
 }
 
 .placeAndTime {
   --direction: row;
 
   display: flex;
-  flex-direction: var(--direction);
-  justify-content: space-between;
-  column-gap: var(--size-3);
+  flex-flow: var(--direction) wrap;
+  justify-content: space-evenly;
+  column-gap: var(--gap);
+  row-gap: calc(var(--gap) / 2);
 }

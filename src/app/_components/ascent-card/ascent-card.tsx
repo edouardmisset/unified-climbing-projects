@@ -41,10 +41,10 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
   return (
     <div className={styles.card}>
       <h2
-        className={styles.header}
+        className={`${styles.header} text-no-wrap`}
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
-        <div className={styles.placeAndTime} style={stylesDependingOnComments}>
+        <div className={styles.placeAndTime}>
           <time>{formatDateInTooltip(ascent)}</time>
           <span>{formatCragAndArea(crag, area, { showDetails: true })}</span>
         </div>
@@ -62,7 +62,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className={styles.detailsItem} key={formattedContent}>
+              <span className="text-no-wrap" key={formattedContent}>
                 {formattedContent}
               </span>
             ))}
