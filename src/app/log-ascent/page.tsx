@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
@@ -27,4 +28,11 @@ export default async function Log() {
       </div>
     </Suspense>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Log ascent 📋',
+  description:
+    'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
+  keywords: ['climbing', 'route', 'boulder', 'outdoor', 'multi-pitch', 'log'],
 }

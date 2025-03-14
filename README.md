@@ -17,11 +17,10 @@ is my playground for these experiments.
 - [x] Add chart showing the average (min and max) number of tries per grade
 - [x] Add auth (Clerk) and protect the `/log` route
 - [x] Add ability to log a training session
+- [x] Update the page (tab) title when we navigate to a new page
 
 </details>
 </br>
-
-- [ ] Update the page (tab) title when we navigate to a new page
 
 - [ ] Use [parallel
   routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)

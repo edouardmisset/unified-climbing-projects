@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Dashboard } from '~/app/_components/dashboard/dashboard'
 import { Loader } from '~/app/_components/loader/loader'
@@ -12,4 +13,10 @@ export default function Page() {
       </Suspense>
     </div>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Dashboard 📊',
+  description: 'Visualize ascents charts and statistics',
+  keywords: ['climbing', 'statistics', 'charts', 'dashboard', 'filter'],
 }

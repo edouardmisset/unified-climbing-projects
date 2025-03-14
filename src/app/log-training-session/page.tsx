@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
@@ -27,4 +28,10 @@ export default async function LogTrainingSession() {
       </div>
     </Suspense>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Log Training Session 📋',
+  description: 'Log a training session',
+  keywords: ['climbing', 'training', 'session', 'log'],
 }
