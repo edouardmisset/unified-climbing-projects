@@ -20,12 +20,12 @@ export default async function LogTrainingSession() {
           </Suspense>
         </section>
       </SignedIn>
-      <div className={styles.container}>
-        <SignedOut>
+      <SignedOut>
+        <section className={styles.container}>
           <p>You need to be signed in to log a training session.</p>
           <SignInButton />
-        </SignedOut>
-      </div>
+        </section>
+      </SignedOut>
     </Suspense>
   )
 }

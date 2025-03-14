@@ -20,12 +20,12 @@ export default async function Log() {
           </Suspense>
         </section>
       </SignedIn>
-      <div className={styles.container}>
-        <SignedOut>
+      <SignedOut>
+        <section className={styles.container}>
           <p>You need to be signed in to log an ascent.</p>
           <SignInButton />
-        </SignedOut>
-      </div>
+        </section>
+      </SignedOut>
     </Suspense>
   )
 }
