@@ -46,7 +46,8 @@ is my playground for these experiments.
 - [ ] Add Analytics (Posthog)
 
 - [ ] Add a list of all training sessions like the list of ascents. Also use
-  filters (by year, by session type, by "intensity": high, medium, low)
+  filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
+  medium, low))
 
 - [ ] Add a page (or modal component with parallel routing) to display the
   selected day's (or **days**) training session. We should be able to navigate
