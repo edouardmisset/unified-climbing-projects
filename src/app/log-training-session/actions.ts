@@ -1,12 +1,10 @@
 'use server'
-
-import type { SubmitHandler } from 'react-hook-form'
 import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
 import { api } from '~/trpc/server'
 
-export const onSubmit: SubmitHandler<
-  Record<string, unknown>
-> = async formData => {
+export const onSubmit = async (
+  formData: Record<string, unknown>,
+): Promise<boolean> => {
   const parsedFormData = trainingSessionSchema
     .omit({ load: true })
     .omit({ id: true })
@@ -14,7 +12,7 @@ export const onSubmit: SubmitHandler<
 
   if (!parsedFormData.success) {
     globalThis.console.error(parsedFormData.error)
-    return
+    return false
   }
 
   const { data: form } = parsedFormData
