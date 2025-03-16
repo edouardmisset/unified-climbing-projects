@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
@@ -24,4 +25,18 @@ export default async function Visualization() {
       />
     </Suspense>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Visualization 🖼️',
+  description: 'Fun visuals of all my climbing ascents and training sessions',
+  keywords: [
+    'climbing',
+    'visualization',
+    'ascents',
+    'qr code',
+    'training',
+    'barcode',
+    'calendar',
+  ],
 }

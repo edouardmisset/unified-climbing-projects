@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
@@ -10,7 +11,7 @@ export default async function LogTrainingSession() {
     <Suspense fallback={<Loader />}>
       <SignedIn>
         <section className={styles.container}>
-          <h1 className={styles.title}>Training Hard 💪</h1>
+          <h1 className={styles.title}>Train Hard 💪</h1>
           <span className="visually-hidden" aria-describedby="form-description">
             Form to log a training session
           </span>
@@ -19,12 +20,18 @@ export default async function LogTrainingSession() {
           </Suspense>
         </section>
       </SignedIn>
-      <div className={styles.container}>
-        <SignedOut>
+      <SignedOut>
+        <section className={styles.container}>
           <p>You need to be signed in to log a training session.</p>
           <SignInButton />
-        </SignedOut>
-      </div>
+        </section>
+      </SignedOut>
     </Suspense>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Log Training Session 📋',
+  description: 'Log a training session',
+  keywords: ['climbing', 'training', 'session', 'log'],
 }

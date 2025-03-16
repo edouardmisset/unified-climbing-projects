@@ -2,6 +2,7 @@
 
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic'
 import { disjunctiveListFormatter } from '~/helpers/list'
@@ -33,7 +34,7 @@ export default function TrainingSessionForm() {
 
   const { data: defaultTrainingSession } = result
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register, reset } = useForm({
     defaultValues: defaultTrainingSession,
   })
 
@@ -55,12 +56,21 @@ export default function TrainingSessionForm() {
       spellCheck={false}
       onSubmit={handleSubmit(
         async data => {
-          const res = await onSubmit(data)
-          console.log('🚀 ~ TrainingSessionForm ~ res:', res)
-          // reset()
+          const promise = onSubmit(data)
+          toast.promise(promise, {
+            pending: 'Sending...',
+            success: 'Training session successfully sent 🎉',
+            error: '❌ Failed to send',
+          })
+          if (await promise) reset()
         },
         error => {
           console.error(error)
+          if ('message' in error) {
+            toast.error(`Error: ${error.message}`)
+          } else {
+            toast.error('Something went wrong')
+          }
         },
       )}
     >

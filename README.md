@@ -16,6 +16,8 @@ is my playground for these experiments.
   page
 - [x] Add chart showing the average (min and max) number of tries per grade
 - [x] Add auth (Clerk) and protect the `/log` route
+- [x] Add ability to log a training session
+- [x] Update the page (tab) title when we navigate to a new page
 
 </details>
 </br>
@@ -26,30 +28,49 @@ is my playground for these experiments.
   when clicking a QR-code or Barcode. When we
   refresh the page, we should arrive
   on a distinct page with the same content
-- [ ] Update the `/log` page to also be able to log a training session
+
 - [ ] Update Log page with Server Actions (see [Robin Wieruch's
   article](https://www.robinwieruch.de/next-forms/)) and [this
   article](https://www.robinwieruch.de/react-form-validation/)
+
 - [ ] Add database (Postgres)
+
 - [ ] Add ORM (Drizzle)
+
 - [ ] Add toasts for success and error form submission
-- [ ] Bonus: Implement rate limiting (use upstash) ?
+
+- [ ] Bonus: Implement rate limiting (use Upstash) ?
+
 - [ ] Add error management (w/ Sentry)
-- [ ] Add Analytics (posthog)
+
+- [ ] Add Analytics (Posthog)
+
 - [ ] Add a list of all training sessions like the list of ascents. Also use
-  filters (by year, by session type, by "intensity": high, medium, low)
-- [ ] Add a page (or modal component with parallel routing) to display the
-  selected day's (or **days**) training session. We should be able to navigate
-  the the training calendar (or training QR or training Barcode) to this page.
-  **NOTE**: the elements of the calendar (day), qr-code (dot) and barcode (bars)
+  filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
+  medium, low))
+
+- [ ] Transform the dashboard so that it displays the list of selected ascents
+  along with the charts. Each ascent should be clickable to see a modal with the
+  Ascent's details (use the `AscentCard` component)
+
+- [ ] Add a page (or modal component with [parallel
+  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
+  to display the selected day's (or **days**) training session. We should be
+  able to navigate
+  from the training calendar (or training QR or training Barcode) to this page.
+  **NOTE**: the elements of the calendar (day), QR-code (dot) and Barcode (bar)
   should be clickable (buttons or links)
-- [ ] Add a page (or modal component with parallel routing) to display the
-  selected day's ascent**s**. We should be able to navigate to this page from
-  the QR Code, Barcode or calendar. **NOTE**: the elements of the calendar
-  (day), qr-code (dot) and barcode (bars) should be clickable (buttons or links)
+
+- [ ] Add a page (or modal component with [parallel
+  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
+  to display the selected day's ascent**s**. We should be able to navigate to
+  this page from
+  the QR-code, Barcode, or calendar. **NOTE**: the elements of the calendar
+  (day), QR-code (dot), and Barcode (bar) should be clickable (buttons or links)
+
 - [ ] Add a cron function to backup the database (as CSV and JSON) every week on
- Tuesday at 3am and delete the backups older than 1 year. *The backups should be
- stored in a bucket (S3)?*
+ Tuesday at 3am and delete the backups older than 1 year. *Where should the
+ backups be stored?*
 
 ### Performance
 
@@ -65,7 +86,10 @@ is my playground for these experiments.
 
 - [ ] Investigate the viability of changing the communication between front and
   back from `tRPC` to `RSC` for better performances
+
 - [ ] Memoize costly functions (like data transformations).
+
+- [ ] Improve performances of the `Visualization` page.
 
 ### Style
 
@@ -80,9 +104,11 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Redo the styles of the slider of the ascent log page
+- [ ] ~~Redo the styles of the slider of the ascent log page~~
+
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
+
 - [ ] Update the `ascents/:id` page to display a card with the ascent's details
 
 ### Refactoring
@@ -105,8 +131,12 @@ is my playground for these experiments.
 </br>
 
 - [ ] Refactor the code of the Visualization page
+
 - [ ] Refactor the form components. This needs to be more legible and
 maintainable
+
+- [ ] Change the logic for inputting the grade when logging an ascent. Use an
+  input along with `+` and `-` buttons to increase or decrease the grade.
 
 ### Tests
 
@@ -124,5 +154,6 @@ maintainable
 
 - [ ] Add visual non-regression tests for the following components: `graphs`,
   `calendars`, `QR-codes`, `Barcodes`, etc.
+
 - [ ] Add smoke tests for the main pages (`/`, `Dashboard`, `Log`,
   `Visualisation`, `Ascent`, `Ascents/:id`)

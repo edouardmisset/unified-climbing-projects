@@ -24,7 +24,7 @@ export function formatCragAndArea(
 ) {
   const { showDetails = true } = options ?? {}
 
-  return `📍 ${crag}${showDetails && area ? ` > ${area}` : ''}`
+  return `📍 ${crag}${showDetails && area ? ` ▸ ${area}` : ''}`
 }
 
 export function formatCragAndDiscipline({

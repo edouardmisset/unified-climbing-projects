@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { FilteredAscentTable } from '../_components/filtered-ascents-table/filtered-ascents-table'
 import { Loader } from '../_components/loader/loader'
@@ -12,4 +13,10 @@ export default async function Page() {
       </Suspense>
     </div>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Table 📇',
+  description: 'View all climbing ascents',
+  keywords: ['climbing', 'ascents', 'list'],
 }

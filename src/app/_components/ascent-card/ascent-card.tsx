@@ -17,17 +17,18 @@ import styles from './ascent-card.module.css'
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     routeName,
+    area,
     climbingDiscipline,
+    comments,
     crag,
+    date,
+    height,
+    holds,
+    profile,
+    rating,
     style,
     topoGrade,
     tries,
-    comments,
-    height,
-    holds,
-    rating,
-    profile,
-    area,
   } = ascent
 
   const stylesDependingOnComments: CSSProperties = useMemo(
@@ -41,11 +42,11 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
   return (
     <div className={styles.card}>
       <h2
-        className={styles.header}
+        className={`${styles.header} text-no-wrap`}
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
-        <div className={styles.placeAndTime} style={stylesDependingOnComments}>
-          <time>{formatDateInTooltip(ascent.date)}</time>
+        <div className={styles.placeAndTime}>
+          <time>{formatDateInTooltip(date)}</time>
           <span>{formatCragAndArea(crag, area, { showDetails: true })}</span>
         </div>
         <div className={styles.details} style={stylesDependingOnComments}>
@@ -62,7 +63,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className={styles.detailsItem} key={formattedContent}>
+              <span className="text-no-wrap" key={formattedContent}>
                 {formattedContent}
               </span>
             ))}

@@ -2,6 +2,7 @@
 
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { GradeSlider } from '~/app/_components/slider/slider'
@@ -139,7 +140,7 @@ export default function AscentForm() {
   )
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     event => {
-      // Reset the style value to 'Redpoint' when the number of tries is greater than 1
+      // Set the style value to 'Redpoint' when the number of tries is greater than 1
       if (Number(event.target.value) > 1) {
         setValue('style', 'Redpoint')
       }
@@ -172,10 +173,26 @@ export default function AscentForm() {
       className={styles.form}
       name="ascent-form"
       spellCheck={false}
-      onSubmit={handleSubmit(data => {
-        onSubmit(data)
-        reset()
-      }, console.error)}
+      onSubmit={handleSubmit(
+        async data => {
+          const promise = onSubmit(data)
+          toast.promise(promise, {
+            pending: 'Submitting...',
+            success: `Successfully submitted ${data.routeName} (${data.topoGrade})`,
+            error: 'Submission failed, please try again.',
+          })
+
+          if (await promise) reset()
+        },
+        error => {
+          console.error(error)
+          if ('message' in error) {
+            toast.error(`Error: ${error.message}`)
+          } else {
+            toast.error('Something went wrong')
+          }
+        },
+      )}
     >
       <label htmlFor="date" className={styles.label}>
         Date
