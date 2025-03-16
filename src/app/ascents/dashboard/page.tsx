@@ -17,6 +17,6 @@ export default function Page() {
 
 export const metadata: Metadata = {
   title: 'Dashboard 📊',
-  description: 'Visualize ascents charts and statistics',
+  description: 'Contemplate ascents charts and statistics',
   keywords: ['climbing', 'statistics', 'charts', 'dashboard', 'filter'],
 }

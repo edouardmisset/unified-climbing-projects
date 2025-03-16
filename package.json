@@ -13,10 +13,13 @@
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix --cache 'src/**/*.css'",
-    "test": "bun poku --reporter=dot ./src",
-    "test:watch": "bun run test --watch",
+    "test:unit": "bun poku --reporter=dot ./src",
+    "test:unit:watch": "bun run test --watch",
+    "test:e2e": "bun run playwright test",
+    "test:e2e:ui": "bun run test:e2e --ui",
+    "test:all": "bun run test:unit && bun run test:e2e",
     "knip": "clear && knip",
-    "validate": "clear && bun run check && bun run test && bun run build"
+    "validate": "clear && bun run check && bun run test:all && bun run build"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.6",
@@ -62,6 +65,7 @@
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
+    "@playwright/test": "^1.51.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "^22.13.5",
     "@types/react": "^19.0.10",
@@ -76,5 +80,27 @@
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   },
-  "trustedDependencies": ["@biomejs/biome", "@vercel/speed-insights", "sharp"]
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@clerk/shared",
+    "@vercel/speed-insights",
+    "core-js",
+    "sharp"
+  ],
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@biomejs/biome",
+      "@clerk/shared",
+      "@vercel/speed-insights",
+      "core-js",
+      "sharp"
+    ],
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "@clerk/shared",
+      "@vercel/speed-insights",
+      "core-js",
+      "sharp"
+    ]
+  }
 }
