@@ -19,42 +19,50 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const numberOfTraining = weeklyTraining.length
 
   // Sort week's training by session type
-  const filteredWeeklyTraining = weeklyTraining
-    .filter(training => training !== undefined)
-    .sort(({ sessionType: aType }, { sessionType: bType }) =>
-      aType === undefined || bType === undefined
-        ? 0
-        : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
-    )
+  const filteredSortedWeeklyTraining = useMemo(
+    () =>
+      weeklyTraining
+        .filter(training => training !== undefined)
+        .sort(({ sessionType: aType }, { sessionType: bType }) =>
+          aType === undefined || bType === undefined
+            ? 0
+            : fromSessionTypeToSortOrder(bType) -
+              fromSessionTypeToSortOrder(aType),
+        ),
+    [weeklyTraining],
+  )
 
   const isSingleWeekTraining = weeklyTraining.length <= 1
 
-  if (filteredWeeklyTraining[0] === undefined) return <span />
+  const [firstTraining] = filteredSortedWeeklyTraining
+
+  if (firstTraining === undefined) return <span />
+
   const buttonStyle = useMemo(
     () => ({
       inlineSize: `${numberOfTraining / 2}%`,
       background: isSingleWeekTraining
         ? undefined
-        : `linear-gradient(to bottom in oklch, ${filteredWeeklyTraining
+        : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
             .map(({ sessionType }) =>
               fromSessionTypeToBackgroundColor(sessionType),
             )
             .join(', ')})`,
     }),
-    [filteredWeeklyTraining, numberOfTraining, isSingleWeekTraining],
+    [filteredSortedWeeklyTraining, numberOfTraining, isSingleWeekTraining],
   )
   const trainingBarClassName = useMemo(
     () =>
       `${
         isSingleWeekTraining
-          ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)
+          ? fromSessionTypeToClassName(firstTraining?.sessionType)
           : ''
       } ${styles.bar}`,
-    [weeklyTraining, isSingleWeekTraining],
+    [firstTraining, isSingleWeekTraining],
   )
   const weeklyTrainingSummary = useMemo(
-    () => getTrainingSessionSummary(filteredWeeklyTraining),
-    [filteredWeeklyTraining],
+    () => getTrainingSessionSummary(filteredSortedWeeklyTraining),
+    [filteredSortedWeeklyTraining],
   )
   return (
     <Popover
@@ -62,7 +70,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       buttonStyle={buttonStyle}
       triggerContent=""
       popoverDescription={
-        <TrainingInWeekDescription sessions={filteredWeeklyTraining} />
+        <TrainingInWeekDescription sessions={filteredSortedWeeklyTraining} />
       }
       popoverTitle={weeklyTrainingSummary}
     />
@@ -70,7 +78,8 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
 })
 
 function getTrainingSessionSummary(trainingSessionInWeek: TrainingSession[]) {
-  return trainingSessionInWeek[0] === undefined
+  const [firstSession] = trainingSessionInWeek
+  return firstSession === undefined
     ? ''
-    : `${trainingSessionInWeek.length} training sessions in week # ${getWeekNumber(new Date(trainingSessionInWeek[0].date))}`
+    : `${trainingSessionInWeek.length} training sessions in week # ${getWeekNumber(new Date(firstSession.date))}`
 }

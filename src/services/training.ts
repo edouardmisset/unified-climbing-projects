@@ -1,4 +1,5 @@
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
+import { cache } from 'react'
 import { createCache } from '~/helpers/cache'
 import {
   transformTrainingSessionFromGSToJS,
@@ -14,35 +15,37 @@ import { loadWorksheet } from './google-sheets.ts'
  *
  * @returns A promise that resolves to an array of TrainingSessions objects.
  */
-async function getTrainingSessionsFromDB(): Promise<TrainingSession[]> {
-  let rows:
-    | undefined
-    | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
+const getTrainingSessionsFromDB = cache(
+  async (): Promise<TrainingSession[]> => {
+    let rows:
+      | undefined
+      | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
 
-  try {
-    const allTrainingSessionsSheet = await loadWorksheet('training')
-    rows = await allTrainingSessionsSheet.getRows()
-  } catch (error) {
-    globalThis.console.error(error)
-  }
+    try {
+      const allTrainingSessionsSheet = await loadWorksheet('training')
+      rows = await allTrainingSessionsSheet.getRows()
+    } catch (error) {
+      globalThis.console.error(error)
+    }
 
-  if (rows === undefined) return []
+    if (rows === undefined) return []
 
-  const rawTrainingSessions = rows.map((row, index) => ({
-    ...transformTrainingSessionFromGSToJS(row.toObject()),
-    id: index,
-  }))
+    const rawTrainingSessions = rows.map((row, index) => ({
+      ...transformTrainingSessionFromGSToJS(row.toObject()),
+      id: index,
+    }))
 
-  const parsedTrainingSession = trainingSessionSchema
-    .array()
-    .safeParse(rawTrainingSessions)
+    const parsedTrainingSession = trainingSessionSchema
+      .array()
+      .safeParse(rawTrainingSessions)
 
-  if (!parsedTrainingSession.success) {
-    globalThis.console.error(parsedTrainingSession.error)
-    return []
-  }
-  return parsedTrainingSession.data
-}
+    if (!parsedTrainingSession.success) {
+      globalThis.console.error(parsedTrainingSession.error)
+      return []
+    }
+    return parsedTrainingSession.data
+  },
+)
 
 const { getCache, setCache } = createCache<TrainingSession[]>()
 

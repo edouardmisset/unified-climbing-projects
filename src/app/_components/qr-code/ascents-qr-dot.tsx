@@ -12,7 +12,8 @@ export const AscentsQRDot = memo(
   }: {
     ascents?: Ascent[]
   }) => {
-    if (ascents === undefined || ascents[0] === undefined) return <span />
+    const [firstAscent] = ascents ?? []
+    if (ascents === undefined || firstAscent === undefined) return <span />
     const hardestAscent = useMemo(() => getHardestAscent(ascents), [ascents])
 
     const gradeClassName = useMemo(
@@ -22,10 +23,10 @@ export const AscentsQRDot = memo(
 
     const formattedAscentDate = useMemo(
       () =>
-        ascents?.[0]?.date === undefined
+        firstAscent.date === undefined
           ? ''
-          : formatDateInTooltip(ascents[0].date),
-      [ascents],
+          : formatDateInTooltip(firstAscent.date),
+      [firstAscent],
     )
 
     return (

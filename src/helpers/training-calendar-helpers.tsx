@@ -10,7 +10,7 @@ export function fromTrainingSessionsToCalendarEntries(
 ): DayDescriptor[] {
   return (
     trainingSessionsArray?.map((sessions, index): DayDescriptor => {
-      const firstSession = sessions[0]
+      const [firstSession] = sessions
 
       if (firstSession === undefined) {
         return {

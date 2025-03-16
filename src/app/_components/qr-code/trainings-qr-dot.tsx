@@ -10,7 +10,7 @@ import { Popover } from '../popover/popover'
 // should take an average ? max ? of the session types and load ?
 export const TrainingsQRDot = memo(
   ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
-    const firstSession = trainingSessions[0]
+    const [firstSession] = trainingSessions
     if (
       trainingSessions === undefined ||
       trainingSessions.length === 0 ||

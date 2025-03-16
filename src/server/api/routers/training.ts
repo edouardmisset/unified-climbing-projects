@@ -16,9 +16,9 @@ export const trainingRouter = createTRPCRouter({
     .output(trainingSessionSchema)
     .query(async () => {
       const allTrainingSessions = await getAllTrainingSessions()
-      const latestTrainingSession = allTrainingSessions.sort(
+      const [latestTrainingSession] = allTrainingSessions.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      )[0]
+      )
       if (!latestTrainingSession) {
         throw new Error('No training sessions found')
       }

@@ -1,4 +1,5 @@
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
+import { cache } from 'react'
 import { createCache } from '~/helpers/cache'
 import {
   transformAscentFromGSToJS,
@@ -15,7 +16,7 @@ import { loadWorksheet } from './google-sheets.ts'
  * @returns A promise that resolves to an array of Ascent objects, each
  * representing a validated ascent record.
  */
-async function getAscentsFromDB(): Promise<Ascent[]> {
+const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
   let rows:
     | undefined
     | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
@@ -41,7 +42,7 @@ async function getAscentsFromDB(): Promise<Ascent[]> {
     return []
   }
   return parsedAscents.data
-}
+})
 
 const { getCache, setCache } = createCache<Ascent[]>()
 

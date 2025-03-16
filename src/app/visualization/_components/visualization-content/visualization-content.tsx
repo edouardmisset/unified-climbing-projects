@@ -82,23 +82,29 @@ export function VisualizationContent(props: VisualizationContentProps) {
                 title={year}
                 content={
                   <QRCode>
-                    {sortedAscents.map((ascents, index) => (
-                      <AscentsQRDot
-                        ascents={ascents}
-                        key={ascents[0]?.date ?? index}
-                      />
-                    ))}
+                    {sortedAscents.map((ascents, index) => {
+                      const [firstAscent] = ascents
+                      return (
+                        <AscentsQRDot
+                          ascents={ascents}
+                          key={firstAscent?.date ?? index}
+                        />
+                      )
+                    })}
                   </QRCode>
                 }
               />
             </h2>
             <QRCode>
-              {sortedAscents.map((ascents, index) => (
-                <AscentsQRDot
-                  ascents={ascents}
-                  key={ascents[0]?.date ?? index}
-                />
-              ))}
+              {sortedAscents.map((ascents, index) => {
+                const [firstAscent] = ascents
+                return (
+                  <AscentsQRDot
+                    ascents={ascents}
+                    key={firstAscent?.date ?? index}
+                  />
+                )
+              })}
             </QRCode>
           </div>
         )
@@ -115,23 +121,29 @@ export function VisualizationContent(props: VisualizationContentProps) {
               title={year}
               content={
                 <Barcode>
-                  {yearAscents.map((ascents, index) => (
-                    <AscentsBar
-                      key={ascents[0]?.date ?? index}
-                      weeklyAscents={ascents}
-                    />
-                  ))}
+                  {yearAscents.map((ascents, index) => {
+                    const [firstAscent] = ascents
+                    return (
+                      <AscentsBar
+                        key={firstAscent?.date ?? index}
+                        weeklyAscents={ascents}
+                      />
+                    )
+                  })}
                 </Barcode>
               }
             />
           </h2>
           <Barcode>
-            {yearAscents.map((weeklyAscents, index) => (
-              <AscentsBar
-                key={weeklyAscents[0]?.date ?? index}
-                weeklyAscents={weeklyAscents}
-              />
-            ))}
+            {yearAscents.map((weeklyAscents, index) => {
+              const [firstAscentOfTheWeek] = weeklyAscents
+              return (
+                <AscentsBar
+                  key={firstAscentOfTheWeek?.date ?? index}
+                  weeklyAscents={weeklyAscents}
+                />
+              )
+            })}
           </Barcode>
         </div>
       ))
@@ -164,23 +176,29 @@ export function VisualizationContent(props: VisualizationContentProps) {
               title={year}
               content={
                 <QRCode>
-                  {yearlyTraining.map((trainingSessions, index) => (
-                    <TrainingsQRDot
-                      trainingSessions={trainingSessions}
-                      key={trainingSessions[0]?.date ?? index}
-                    />
-                  ))}
+                  {yearlyTraining.map((trainingSessions, index) => {
+                    const [firstTraining] = trainingSessions
+                    return (
+                      <TrainingsQRDot
+                        trainingSessions={trainingSessions}
+                        key={firstTraining?.date ?? index}
+                      />
+                    )
+                  })}
                 </QRCode>
               }
             />
           </h2>
           <QRCode>
-            {yearlyTraining.map((trainingSessions, index) => (
-              <TrainingsQRDot
-                trainingSessions={trainingSessions}
-                key={trainingSessions[0]?.date ?? index}
-              />
-            ))}
+            {yearlyTraining.map((trainingSessions, index) => {
+              const [firstTraining] = trainingSessions
+              return (
+                <TrainingsQRDot
+                  trainingSessions={trainingSessions}
+                  key={firstTraining?.date ?? index}
+                />
+              )
+            })}
           </QRCode>
         </div>
       ))
@@ -196,23 +214,29 @@ export function VisualizationContent(props: VisualizationContentProps) {
               title={year}
               content={
                 <Barcode>
-                  {yearTraining.map((weeklyTraining, index) => (
-                    <TrainingBar
-                      key={weeklyTraining[0]?.date ?? index}
-                      weeklyTraining={weeklyTraining}
-                    />
-                  ))}
+                  {yearTraining.map((weeklyTraining, index) => {
+                    const [firstTrainingOfTheWeek] = weeklyTraining
+                    return (
+                      <TrainingBar
+                        key={firstTrainingOfTheWeek?.date ?? index}
+                        weeklyTraining={weeklyTraining}
+                      />
+                    )
+                  })}
                 </Barcode>
               }
             />
           </h2>
           <Barcode>
-            {yearTraining.map((weeklyTraining, index) => (
-              <TrainingBar
-                key={weeklyTraining[0]?.date ?? index}
-                weeklyTraining={weeklyTraining}
-              />
-            ))}
+            {yearTraining.map((weeklyTraining, index) => {
+              const [firstTrainingOfTheWeek] = weeklyTraining
+              return (
+                <TrainingBar
+                  key={firstTrainingOfTheWeek?.date ?? index}
+                  weeklyTraining={weeklyTraining}
+                />
+              )
+            })}
           </Barcode>
         </div>
       ))

@@ -36,8 +36,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   )
 
   const handleQrCodeOrBarcodeChange = useCallback(
-    (value: unknown[]) => {
-      const result = visualizationSchema.safeParse(value[0])
+    ([value]: unknown[]) => {
+      const result = visualizationSchema.safeParse(value)
       if (!result.success) return
 
       setVisualizationType(result.data)

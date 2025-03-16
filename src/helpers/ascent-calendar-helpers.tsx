@@ -12,7 +12,7 @@ export function fromAscentsToCalendarEntries(
 ): DayDescriptor[] {
   return (
     ascentsArray?.map((ascents, index): DayDescriptor => {
-      const firstAscent = ascents[0]
+      const [firstAscent] = ascents
 
       if (firstAscent === undefined || ascents === undefined) {
         const date = new Date(year, 0, index + 1, 12).toISOString()

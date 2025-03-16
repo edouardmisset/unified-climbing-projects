@@ -32,14 +32,8 @@ export function AscentSelect(props: AscentSelectProps) {
       >
         <option value={ALL_VALUE}>{capitalize(ALL_VALUE)}</option>
         {options.map(option => {
-          const optionString =
-            option.toString().split(' (')[0] || option.toString()
           return (
-            <option
-              key={optionString}
-              value={optionString}
-              title={optionString}
-            >
+            <option key={option} value={option} title={String(option)}>
               {option}
             </option>
           )
