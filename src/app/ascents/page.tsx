@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { api } from '~/trpc/server'
 import { FilteredAscentTable } from '../_components/filtered-ascents-table/filtered-ascents-table'
 import { Loader } from '../_components/loader/loader'
 import styles from './page.module.css'
-import { api } from '~/trpc/server'
 
 export default async function Page() {
   const ascents = await api.ascents.getAllAscents()

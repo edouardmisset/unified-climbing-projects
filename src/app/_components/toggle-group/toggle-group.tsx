@@ -1,6 +1,6 @@
 import { Toggle } from '@base-ui-components/react/toggle'
 import { ToggleGroup as BaseToggleGroup } from '@base-ui-components/react/toggle-group'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import styles from './toggle-group.module.css'
 
 type ToggleGroupProps<T extends string> = {
@@ -14,22 +14,25 @@ export const ToggleGroup = memo(
     values,
     onValueChange,
     selectedValue,
-  }: ToggleGroupProps<T>) => (
-    <BaseToggleGroup
-      value={[selectedValue]}
-      className={styles.Panel}
-      onValueChange={onValueChange}
-    >
-      {values.map(value => (
-        <Toggle
-          key={value}
-          aria-label={value}
-          value={value}
-          className={`contrast-color ${styles.Button}`}
-        >
-          {value}
-        </Toggle>
-      ))}
-    </BaseToggleGroup>
-  ),
+  }: ToggleGroupProps<T>) => {
+    const memoizedValue = useMemo(() => [selectedValue], [selectedValue])
+    return (
+      <BaseToggleGroup
+        value={memoizedValue}
+        className={styles.Panel}
+        onValueChange={onValueChange}
+      >
+        {values.map(value => (
+          <Toggle
+            key={value}
+            aria-label={value}
+            value={value}
+            className={`contrast-color ${styles.Button}`}
+          >
+            {value}
+          </Toggle>
+        ))}
+      </BaseToggleGroup>
+    )
+  },
 )

@@ -1,7 +1,7 @@
 'use client'
 
 import { useQueryState } from 'nuqs'
-import type { ReactNode } from 'react'
+import { type ReactNode, useCallback } from 'react'
 import { AscentsTrainingSwitch } from '~/app/_components/ascents-training-switch/ascents-training-switch'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
@@ -27,15 +27,23 @@ export default function Layout({ children }: { children: ReactNode }) {
       parse: value => visualizationSchema.parse(value),
     })
 
-  const toggleAscentsOrTraining = () =>
-    setAscentOrTraining(state => (state === 'Ascents' ? 'Training' : 'Ascents'))
+  const toggleAscentsOrTraining = useCallback(
+    () =>
+      setAscentOrTraining(state =>
+        state === 'Ascents' ? 'Training' : 'Ascents',
+      ),
+    [setAscentOrTraining],
+  )
 
-  const handleQrCodeOrBarcodeChange = (value: unknown[]) => {
-    const result = visualizationSchema.safeParse(value[0])
-    if (!result.success) return
+  const handleQrCodeOrBarcodeChange = useCallback(
+    (value: unknown[]) => {
+      const result = visualizationSchema.safeParse(value[0])
+      if (!result.success) return
 
-    setVisualizationType(result.data)
-  }
+      setVisualizationType(result.data)
+    },
+    [setVisualizationType],
+  )
 
   return (
     <div className="w100 flex-column">
