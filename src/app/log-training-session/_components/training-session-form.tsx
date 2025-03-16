@@ -34,7 +34,7 @@ export default function TrainingSessionForm() {
 
   const { data: defaultTrainingSession } = result
 
-  const { handleSubmit, register } = useForm({
+  const { handleSubmit, register, reset } = useForm({
     defaultValues: defaultTrainingSession,
   })
 
@@ -56,9 +56,13 @@ export default function TrainingSessionForm() {
       spellCheck={false}
       onSubmit={handleSubmit(
         async data => {
-          await onSubmit(data)
-          toast.success(`Successfully submitted ${data?.date}`)
-          // reset()
+          const promise = onSubmit(data)
+          toast.promise(promise, {
+            pending: 'Sending...',
+            success: 'Training session successfully sent 🎉',
+            error: '❌ Failed to send',
+          })
+          if (await promise) reset()
         },
         error => {
           console.error(error)

@@ -82,7 +82,7 @@ export default function AscentForm() {
 
   const { data: defaultAscent } = defaultAscentFormValues
 
-  const { handleSubmit, register, setValue, watch } = useForm({
+  const { handleSubmit, register, setValue, watch, reset } = useForm({
     defaultValues: defaultAscent,
   })
 
@@ -175,9 +175,14 @@ export default function AscentForm() {
       spellCheck={false}
       onSubmit={handleSubmit(
         async data => {
-          await onSubmit(data)
-          toast.success(`Successfully submitted ${data.routeName}`)
-          // reset()
+          const promise = onSubmit(data)
+          toast.promise(promise, {
+            pending: 'Submitting...',
+            success: `Successfully submitted ${data.routeName} (${data.topoGrade})`,
+            error: 'Submission failed, please try again.',
+          })
+
+          if (await promise) reset()
         },
         error => {
           console.error(error)
