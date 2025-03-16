@@ -18,6 +18,7 @@ is my playground for these experiments.
 - [x] Add auth (Clerk) and protect the `/log` route
 - [x] Add ability to log a training session
 - [x] Update the page (tab) title when we navigate to a new page
+- [x] Add toasts for success and error form submission
 
 </details>
 </br>
@@ -36,8 +37,6 @@ is my playground for these experiments.
 - [ ] Add database (Postgres)
 
 - [ ] Add ORM (Drizzle)
-
-- [ ] Add toasts for success and error form submission
 
 - [ ] Bonus: Implement rate limiting (use Upstash) ?
 

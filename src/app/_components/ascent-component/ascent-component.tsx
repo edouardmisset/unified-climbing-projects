@@ -1,21 +1,17 @@
-import { Link } from 'next-view-transitions'
-import { createAscentTooltip } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
+import { AscentCard } from '../ascent-card/ascent-card'
+import AscentDialog from './_components/ascent-dialog'
 import styles from './ascent-component.module.css'
 
 export function AscentComponent({
   ascent,
   showGrade = false,
 }: { ascent: Ascent; showGrade?: boolean }) {
-  const tooltip = createAscentTooltip(ascent)
   return (
-    <Link
-      title={tooltip}
-      className={styles.container}
-      href={`/ascents/${ascent.id}`}
-      prefetch={true}
-    >
-      {ascent.routeName} {showGrade ? `(${ascent.topoGrade})` : ''}
-    </Link>
+    <AscentDialog
+      triggerText={`${ascent.routeName} ${showGrade ? `(${ascent.topoGrade})` : ''}`}
+      triggerClassName={styles.trigger}
+      content={<AscentCard ascent={ascent} />}
+    />
   )
 }
