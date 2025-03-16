@@ -17,17 +17,18 @@ import styles from './ascent-card.module.css'
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     routeName,
+    area,
     climbingDiscipline,
+    comments,
     crag,
+    date,
+    height,
+    holds,
+    profile,
+    rating,
     style,
     topoGrade,
     tries,
-    comments,
-    height,
-    holds,
-    rating,
-    profile,
-    area,
   } = ascent
 
   const stylesDependingOnComments: CSSProperties = useMemo(
@@ -45,7 +46,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
-          <time>{formatDateInTooltip(ascent)}</time>
+          <time>{formatDateInTooltip(date)}</time>
           <span>{formatCragAndArea(crag, area, { showDetails: true })}</span>
         </div>
         <div className={styles.details} style={stylesDependingOnComments}>

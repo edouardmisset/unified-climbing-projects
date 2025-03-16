@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import styles from './year-grid.module.css'
 
 const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-export function DaysColumn() {
-  return weekDays.map((day, index) => {
+export const DaysColumn = memo(() =>
+  weekDays.map((day, index) => {
     return index === 0 ? (
       <i
         key="empty-first-cell"
@@ -21,5 +22,5 @@ export function DaysColumn() {
         {day}
       </i>
     )
-  })
-}
+  }),
+)

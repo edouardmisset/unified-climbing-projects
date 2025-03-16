@@ -1,11 +1,9 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog'
+import { memo } from 'react'
 import styles from './dialog.module.css'
 
-export default function Dialog({
-  title,
-  content,
-}: { title: string; content: React.JSX.Element }) {
-  return (
+export const Dialog = memo(
+  ({ title, content }: { title: string; content: React.JSX.Element }) => (
     <BaseDialog.Root>
       <BaseDialog.Trigger className={styles.Button}>{title}</BaseDialog.Trigger>
       <BaseDialog.Portal keepMounted>
@@ -24,5 +22,5 @@ export default function Dialog({
         </BaseDialog.Popup>
       </BaseDialog.Portal>
     </BaseDialog.Root>
-  )
-}
+  ),
+)

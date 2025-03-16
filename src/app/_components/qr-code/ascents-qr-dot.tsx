@@ -1,22 +1,42 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { fromGradeToClassName } from '~/helpers/converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
-import { createAscentsQRTooltip } from '~/helpers/tooltips'
+import { formatDateInTooltip } from '~/helpers/formatters'
+import { AscentsInDayPopoverDescription } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
+import { Popover } from '../popover/popover'
 
-export function AscentsQRDot({
-  ascents,
-}: {
-  ascents?: Ascent[]
-}) {
-  if (ascents === undefined || ascents.length === 0) return <span />
+export const AscentsQRDot = memo(
+  ({
+    ascents,
+  }: {
+    ascents?: Ascent[]
+  }) => {
+    if (ascents === undefined || ascents[0] === undefined) return <span />
+    const hardestAscent = useMemo(() => getHardestAscent(ascents), [ascents])
 
-  const hardestAscent = useMemo(() => getHardestAscent(ascents), [ascents])
+    const gradeClassName = useMemo(
+      () => fromGradeToClassName(hardestAscent?.topoGrade),
+      [hardestAscent],
+    )
 
-  return (
-    <span
-      className={fromGradeToClassName(hardestAscent?.topoGrade)}
-      title={createAscentsQRTooltip(ascents)}
-    />
-  )
-}
+    const formattedAscentDate = useMemo(
+      () =>
+        ascents?.[0]?.date === undefined
+          ? ''
+          : formatDateInTooltip(ascents[0].date),
+      [ascents],
+    )
+
+    return (
+      <Popover
+        triggerClassName={gradeClassName}
+        triggerContent=""
+        popoverDescription={
+          <AscentsInDayPopoverDescription ascents={ascents} />
+        }
+        popoverTitle={formattedAscentDate}
+      />
+    )
+  },
+)

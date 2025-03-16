@@ -1,21 +1,23 @@
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { getSessionTypeColors } from '~/helpers/converter'
-import { createTrainingQRTooltip } from '~/helpers/tooltips'
+import { TrainingDayPopoverDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
+import { formatDateInTooltip } from './formatters'
 
 export function fromTrainingSessionsToCalendarEntries(
   year: number,
   trainingSessionsArray?: TrainingSession[][],
 ): DayDescriptor[] {
   return (
-    trainingSessionsArray?.map((sessions, index) => {
+    trainingSessionsArray?.map((sessions, index): DayDescriptor => {
       const firstSession = sessions[0]
 
       if (firstSession === undefined) {
         return {
           date: new Date(year, 0, index + 1, 12).toISOString(),
           shortText: '',
-          tooltip: '',
+          description: '',
+          title: '',
         }
       }
 
@@ -29,7 +31,10 @@ export function fromTrainingSessionsToCalendarEntries(
       return {
         date,
         backgroundColor,
-        tooltip: createTrainingQRTooltip(firstSession),
+        title: formatDateInTooltip(date),
+        description: (
+          <TrainingDayPopoverDescription trainingSession={firstSession} />
+        ),
         shortText: sessionType ?? '',
       }
     }) ?? []

@@ -67,11 +67,11 @@ export function formatProfile(profile: Ascent['profile']) {
   return profile ? `📐 ${profile}` : ''
 }
 
-export function formatDateInTooltip<T>(
-  data: T & { date: string },
+export function formatDateInTooltip(
+  date: string,
   options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
 ) {
-  return `📅 ${formatDateTime(new Date(data.date), options)}`
+  return `📅 ${formatDateTime(new Date(date), options)}`
 }
 
 export function formatStyleAndTriers({

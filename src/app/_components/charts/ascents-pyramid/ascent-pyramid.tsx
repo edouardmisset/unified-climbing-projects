@@ -6,7 +6,7 @@ import {
   type GradeFrequency,
   getGradeFrequencyAndColors,
 } from '../ascents-pyramid/get-grade-frequency'
-import ChartContainer from '../chart-container/chart-container'
+import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
   defaultBarChartPadding,

@@ -1,11 +1,12 @@
 'use client'
 
 import { useQueryState } from 'nuqs'
+import { useMemo } from 'react'
 import { AscentsBar } from '~/app/_components/barcode/ascents-bar'
-import Barcode from '~/app/_components/barcode/barcode'
+import { Barcode } from '~/app/_components/barcode/barcode'
 import { TrainingBar } from '~/app/_components/barcode/training-bar'
-import DataCalendar from '~/app/_components/data-calendar/data-calendar'
-import Dialog from '~/app/_components/dialog/dialog'
+import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { Dialog } from '~/app/_components/dialog/dialog'
 import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot'
@@ -49,8 +50,25 @@ export function VisualizationContent(props: VisualizationContentProps) {
     },
   )
 
+  const groupedAscentsDaily = useMemo(
+    () => groupDataDaysByYear(allAscents),
+    [allAscents],
+  )
+  const groupedAscentsWeekly = useMemo(
+    () => groupDataWeeksByYear(allAscents),
+    [allAscents],
+  )
+  const groupedTrainingDaily = useMemo(
+    () => groupDataDaysByYear(trainingSessions),
+    [trainingSessions],
+  )
+  const groupedTrainingWeekly = useMemo(
+    () => groupDataWeeksByYear(trainingSessions),
+    [trainingSessions],
+  )
+
   if (ascentsOrTraining === 'Ascents' && visualizationType === 'QR Code') {
-    return Object.entries(groupDataDaysByYear(allAscents))
+    return Object.entries(groupedAscentsDaily)
       .sort(([a], [b]) => Number(b) - Number(a))
       .map(([year, yearlyAscents]) => {
         if (yearlyAscents === undefined) return <span>Unexpected error</span>
@@ -88,7 +106,7 @@ export function VisualizationContent(props: VisualizationContentProps) {
   }
 
   if (ascentsOrTraining === 'Ascents' && visualizationType === 'Barcode') {
-    return Object.entries(groupDataWeeksByYear(allAscents))
+    return Object.entries(groupedAscentsWeekly)
       .sort(([a], [b]) => Number(b) - Number(a))
       .map(([year, yearAscents]) => (
         <div key={year} className="flex-column w100">
@@ -128,14 +146,16 @@ export function VisualizationContent(props: VisualizationContentProps) {
           year={year}
           data={allAscents}
           dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={fromAscentsToCalendarEntries}
+          fromDataToCalendarEntries={(year, ascents) =>
+            fromAscentsToCalendarEntries(year, ascents as Ascent[][])
+          }
         />
       </GridBreakOutWrapper>
     ))
   }
 
   if (ascentsOrTraining === 'Training' && visualizationType === 'QR Code') {
-    return Object.entries(groupDataDaysByYear(trainingSessions))
+    return Object.entries(groupedTrainingDaily)
       .sort(([a], [b]) => Number(b) - Number(a))
       .map(([year, yearlyTraining]) => (
         <div key={year}>
@@ -167,7 +187,7 @@ export function VisualizationContent(props: VisualizationContentProps) {
   }
 
   if (ascentsOrTraining === 'Training' && visualizationType === 'Barcode') {
-    return Object.entries(groupDataWeeksByYear(trainingSessions))
+    return Object.entries(groupedTrainingWeekly)
       .sort(([a], [b]) => Number(b) - Number(a))
       .map(([year, yearTraining]) => (
         <div key={year} className="flex-column w100">
@@ -206,7 +226,12 @@ export function VisualizationContent(props: VisualizationContentProps) {
           year={year}
           data={trainingSessions}
           dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={fromTrainingSessionsToCalendarEntries}
+          fromDataToCalendarEntries={(year, sessions) =>
+            fromTrainingSessionsToCalendarEntries(
+              year,
+              sessions as TrainingSession[][],
+            )
+          }
         />
       </GridBreakOutWrapper>
     ))

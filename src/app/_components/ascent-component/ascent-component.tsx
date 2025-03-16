@@ -7,7 +7,6 @@ export function AscentComponent({
   ascent,
   showGrade = false,
 }: { ascent: Ascent; showGrade?: boolean }) {
-  // const tooltip = createAscentTooltip(ascent)
   return (
     <AscentDialog
       triggerText={`${ascent.routeName} ${showGrade ? `(${ascent.topoGrade})` : ''}`}

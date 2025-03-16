@@ -9,20 +9,14 @@ describe('fromAscentsToCalendarEntries', () => {
     assert.deepEqual(result, [])
   })
 
-  it('should return calendar entries with empty shortText and default tooltip when ascents are undefined', () => {
+  it('should return calendar entries with empty shortText when ascents are undefined', () => {
     const year = 2024
     const ascentsArray: Ascent[][] = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
     assert.equal(result.length, 3)
-    result.forEach(({ shortText, tooltip }, index) => {
+    for (const { shortText } of result) {
       assert.equal(shortText, '')
-      assert.equal(
-        tooltip,
-        new Date(year, 0, index + 1, 12).toLocaleDateString('en-US', {
-          dateStyle: 'short',
-        }),
-      )
-    })
+    }
   })
 
   it('should return calendar entries with correct data when ascents are provided', () => {

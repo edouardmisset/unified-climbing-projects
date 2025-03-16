@@ -2,14 +2,14 @@ import { Switch } from '@base-ui-components/react/switch'
 import { memo } from 'react'
 import styles from './ascents-training-switch.module.css'
 
-function AscentsTrainingSwitch({
-  toggle,
-  isTraining,
-}: {
-  toggle: () => void
-  isTraining: boolean
-}) {
-  return (
+export const AscentsTrainingSwitch = memo(
+  ({
+    toggle,
+    isTraining,
+  }: {
+    toggle: () => void
+    isTraining: boolean
+  }) => (
     <div className={styles.Container}>
       <label htmlFor="ascents-training-switch">Ascent</label>
       <Switch.Root
@@ -22,7 +22,5 @@ function AscentsTrainingSwitch({
       </Switch.Root>
       <span>Training</span>
     </div>
-  )
-}
-
-export default memo(AscentsTrainingSwitch)
+  ),
+)
