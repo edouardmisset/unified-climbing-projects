@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import Marker from './marker.tsx'
+import { Marker } from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
 

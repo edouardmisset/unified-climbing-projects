@@ -1,7 +1,8 @@
+import { memo } from 'react'
 import styles from './year-grid.module.css'
 
-export function WeeksRow({ columns }: { columns: number[] }) {
-  return columns.map((columnNumber, index) => {
+export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
+  columns.map((columnNumber, index) => {
     if (columnNumber === 0)
       return <i key={0} className={`super-center ${styles.firstCell}`} />
 
@@ -25,5 +26,5 @@ export function WeeksRow({ columns }: { columns: number[] }) {
         {columnNumber}
       </i>
     )
-  })
-}
+  }),
+)

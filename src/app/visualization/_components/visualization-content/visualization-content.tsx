@@ -3,10 +3,10 @@
 import { useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 import { AscentsBar } from '~/app/_components/barcode/ascents-bar'
-import Barcode from '~/app/_components/barcode/barcode'
+import { Barcode } from '~/app/_components/barcode/barcode'
 import { TrainingBar } from '~/app/_components/barcode/training-bar'
-import DataCalendar from '~/app/_components/data-calendar/data-calendar'
-import Dialog from '~/app/_components/dialog/dialog'
+import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { Dialog } from '~/app/_components/dialog/dialog'
 import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot'
 import QRCode from '~/app/_components/qr-code/qr-code'
 import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot'
@@ -146,7 +146,9 @@ export function VisualizationContent(props: VisualizationContentProps) {
           year={year}
           data={allAscents}
           dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={fromAscentsToCalendarEntries}
+          fromDataToCalendarEntries={(year, ascents) =>
+            fromAscentsToCalendarEntries(year, ascents as Ascent[][])
+          }
         />
       </GridBreakOutWrapper>
     ))
@@ -224,7 +226,12 @@ export function VisualizationContent(props: VisualizationContentProps) {
           year={year}
           data={trainingSessions}
           dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={fromTrainingSessionsToCalendarEntries}
+          fromDataToCalendarEntries={(year, sessions) =>
+            fromTrainingSessionsToCalendarEntries(
+              year,
+              sessions as TrainingSession[][],
+            )
+          }
         />
       </GridBreakOutWrapper>
     ))

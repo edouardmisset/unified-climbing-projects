@@ -2,22 +2,18 @@
 
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
-import { api } from '~/trpc/react'
+import type { Ascent } from '~/schema/ascent'
 import { AscentTable } from '../ascent-table/ascent-table'
 import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
-import { Loader } from '../loader/loader'
 
-export function FilteredAscentTable() {
-  const { data: allAscents, isLoading } = api.ascents.getAllAscents.useQuery()
+export function FilteredAscentTable({ ascents }: { ascents: Ascent[] }) {
+  const filteredAscents = useAscentsFilter(ascents ?? [])
 
-  const filteredAscents = useAscentsFilter(allAscents ?? [])
-
-  if (isLoading) return <Loader />
-  if (!allAscents) return <NotFound />
+  if (!ascents) return <NotFound />
 
   return (
     <>
-      <AscentsFilterBar allAscents={allAscents} />
+      <AscentsFilterBar allAscents={ascents} />
       <AscentTable ascents={filteredAscents} />
     </>
   )

@@ -5,7 +5,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button'
 import { ArrowSvg } from '../arrow-svg/arrow-svg'
-import Link from '../link/link'
+import { Link } from '../link/link'
 import styles from './navigation.module.css'
 
 export function Navigation() {

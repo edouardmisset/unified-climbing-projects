@@ -1,6 +1,6 @@
 import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
 import { formatDateInTooltip } from '~/helpers/formatters'
-import Popover from '../popover/popover'
+import { Popover } from '../popover/popover'
 import { datesEqual } from './helpers'
 import styles from './year-grid.module.css'
 
@@ -12,7 +12,7 @@ type YearGridCellProps = {
   formattedDate: string
 }
 
-function YearGridCell(props: YearGridCellProps) {
+export const YearGridCell = memo((props: YearGridCellProps) => {
   const {
     stringDate,
     description,
@@ -50,6 +50,4 @@ function YearGridCell(props: YearGridCellProps) {
       buttonStyle={cellStyle}
     />
   )
-}
-
-export default memo(YearGridCell)
+})

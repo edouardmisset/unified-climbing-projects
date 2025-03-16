@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react'
 import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
@@ -7,14 +8,14 @@ import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { TrainingInWeekDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
-import Popover from '../popover/popover'
+import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
 
 type TrainingBarsProps = {
   weeklyTraining: ((StringDate & TrainingSession) | undefined)[]
 }
 
-export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
+export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const numberOfTraining = weeklyTraining.length
 
   // Sort week's training by session type
@@ -29,28 +30,47 @@ export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
   const isSingleWeekTraining = weeklyTraining.length <= 1
 
   if (filteredWeeklyTraining[0] === undefined) return <span />
-  return (
-    <Popover
-      triggerClassName={`${
+  const buttonStyle = useMemo(
+    () => ({
+      inlineSize: `${numberOfTraining / 2}%`,
+      background: isSingleWeekTraining
+        ? undefined
+        : `linear-gradient(to bottom in oklch, ${filteredWeeklyTraining
+            .map(({ sessionType }) =>
+              fromSessionTypeToBackgroundColor(sessionType),
+            )
+            .join(', ')})`,
+    }),
+    [filteredWeeklyTraining, numberOfTraining, isSingleWeekTraining],
+  )
+  const trainingBarClassName = useMemo(
+    () =>
+      `${
         isSingleWeekTraining
           ? fromSessionTypeToClassName(weeklyTraining[0]?.sessionType)
           : ''
-      } ${styles.bar}`}
-      buttonStyle={{
-        inlineSize: `${numberOfTraining / 2}%`,
-        background: isSingleWeekTraining
-          ? undefined
-          : `linear-gradient(to bottom in oklch, ${filteredWeeklyTraining
-              .map(({ sessionType }) =>
-                fromSessionTypeToBackgroundColor(sessionType),
-              )
-              .join(', ')})`,
-      }}
+      } ${styles.bar}`,
+    [weeklyTraining, isSingleWeekTraining],
+  )
+  const weeklyTrainingSummary = useMemo(
+    () => getTrainingSessionSummary(filteredWeeklyTraining),
+    [filteredWeeklyTraining],
+  )
+  return (
+    <Popover
+      triggerClassName={trainingBarClassName}
+      buttonStyle={buttonStyle}
       triggerContent=""
       popoverDescription={
         <TrainingInWeekDescription sessions={filteredWeeklyTraining} />
       }
-      popoverTitle={`${filteredWeeklyTraining.length} training sessions in week # ${getWeekNumber(new Date(filteredWeeklyTraining[0].date))}`}
+      popoverTitle={weeklyTrainingSummary}
     />
   )
+})
+
+function getTrainingSessionSummary(trainingSessionInWeek: TrainingSession[]) {
+  return trainingSessionInWeek[0] === undefined
+    ? ''
+    : `${trainingSessionInWeek.length} training sessions in week # ${getWeekNumber(new Date(trainingSessionInWeek[0].date))}`
 }

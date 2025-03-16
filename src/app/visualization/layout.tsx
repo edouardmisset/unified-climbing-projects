@@ -2,9 +2,9 @@
 
 import { useQueryState } from 'nuqs'
 import type { ReactNode } from 'react'
-import AscentsTrainingSwitch from '~/app/_components/ascents-training-switch/ascents-training-switch'
+import { AscentsTrainingSwitch } from '~/app/_components/ascents-training-switch/ascents-training-switch'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
-import ToggleGroup from '~/app/_components/toggle-group/toggle-group'
+import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
 import {
   type AscentsOrTrainingType,
   type VisualizationType,

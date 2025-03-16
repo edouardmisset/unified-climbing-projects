@@ -9,12 +9,12 @@ type ToggleGroupProps<T extends string> = {
   selectedValue: T
 }
 
-function ToggleGroup<T extends string>({
-  values,
-  onValueChange,
-  selectedValue,
-}: ToggleGroupProps<T>) {
-  return (
+export const ToggleGroup = memo(
+  <T extends string>({
+    values,
+    onValueChange,
+    selectedValue,
+  }: ToggleGroupProps<T>) => (
     <BaseToggleGroup
       value={[selectedValue]}
       className={styles.Panel}
@@ -31,7 +31,5 @@ function ToggleGroup<T extends string>({
         </Toggle>
       ))}
     </BaseToggleGroup>
-  )
-}
-
-export default memo(ToggleGroup)
+  ),
+)

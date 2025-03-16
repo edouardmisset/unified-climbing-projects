@@ -1,3 +1,5 @@
+import { memo, useMemo } from 'react'
+
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
 
 const markerSize = 8
@@ -6,18 +8,22 @@ const numberOfSquareInMarker = 4
 const leftRegEx = /left/i
 const topRegEx = /top/i
 
-export default function Marker({
-  placement,
-}: {
-  placement: MarkerPlacement
-}) {
-  const startingColumn = leftRegEx.test(placement) ? 1 : -1
-  const startingRow = topRegEx.test(placement) ? 1 : -1
+export const Marker = memo(
+  ({
+    placement,
+  }: {
+    placement: MarkerPlacement
+  }) => {
+    const startingColumn = leftRegEx.test(placement) ? 1 : -1
+    const startingRow = topRegEx.test(placement) ? 1 : -1
 
-  return (
-    <>
-      {Array.from({ length: numberOfSquareInMarker }, (_, index) => index).map(
-        index => {
+    const markerIndices = useMemo(
+      () => Array.from({ length: numberOfSquareInMarker }, (_, index) => index),
+      [],
+    )
+    return (
+      <>
+        {markerIndices.map(index => {
           const remainingMarkerSize = markerSize - index
 
           const rowStart = index <= 1 ? startingRow : startingRow * index
@@ -37,8 +43,8 @@ export default function Marker({
               }}
             />
           )
-        },
-      )}
-    </>
-  )
-}
+        })}
+      </>
+    )
+  },
+)
