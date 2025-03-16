@@ -55,10 +55,10 @@ export function Navigation() {
                   🧗 Ascents 🧗
                 </Menu.GroupLabel>
                 <Menu.Item className={styles.Item}>
-                  <Link href={'/ascents'}>Table</Link>
+                  <Link href={'/ascents'}>📇 Table</Link>
                 </Menu.Item>
                 <Menu.Item className={styles.Item}>
-                  <Link href={'/ascents/dashboard'}>Dashboard</Link>
+                  <Link href={'/ascents/dashboard'}>📊 Dashboard</Link>
                 </Menu.Item>
               </Menu.Group>
               <Menu.Separator className={styles.Separator} />

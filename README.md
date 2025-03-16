@@ -17,6 +17,7 @@ is my playground for these experiments.
 - [x] Add chart showing the average (min and max) number of tries per grade
 - [x] Add auth (Clerk) and protect the `/log` route
 - [x] Add ability to log a training session
+- [x] Update the page (tab) title when we navigate to a new page
 
 </details>
 </br>
@@ -45,16 +46,25 @@ is my playground for these experiments.
 - [ ] Add Analytics (Posthog)
 
 - [ ] Add a list of all training sessions like the list of ascents. Also use
-  filters (by year, by session type, by "intensity": high, medium, low)
+  filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
+  medium, low))
 
-- [ ] Add a page (or modal component with parallel routing) to display the
-  selected day's (or **days**) training session. We should be able to navigate
+- [ ] Transform the dashboard so that it displays the list of selected ascents
+  along with the charts. Each ascent should be clickable to see a modal with the
+  Ascent's details (use the `AscentCard` component)
+
+- [ ] Add a page (or modal component with [parallel
+  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
+  to display the selected day's (or **days**) training session. We should be
+  able to navigate
   from the training calendar (or training QR or training Barcode) to this page.
   **NOTE**: the elements of the calendar (day), QR-code (dot) and Barcode (bar)
   should be clickable (buttons or links)
 
-- [ ] Add a page (or modal component with parallel routing) to display the
-  selected day's ascent**s**. We should be able to navigate to this page from
+- [ ] Add a page (or modal component with [parallel
+  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
+  to display the selected day's ascent**s**. We should be able to navigate to
+  this page from
   the QR-code, Barcode, or calendar. **NOTE**: the elements of the calendar
   (day), QR-code (dot), and Barcode (bar) should be clickable (buttons or links)
 
@@ -79,6 +89,8 @@ is my playground for these experiments.
 
 - [ ] Memoize costly functions (like data transformations).
 
+- [ ] Improve performances of the `Visualization` page.
+
 ### Style
 
 <details>
@@ -92,7 +104,7 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Redo the styles of the slider of the ascent log page
+- [ ] ~~Redo the styles of the slider of the ascent log page~~
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
@@ -122,6 +134,9 @@ is my playground for these experiments.
 
 - [ ] Refactor the form components. This needs to be more legible and
 maintainable
+
+- [ ] Change the logic for inputting the grade when logging an ascent. Use an
+  input along with `+` and `-` buttons to increase or decrease the grade.
 
 ### Tests
 
