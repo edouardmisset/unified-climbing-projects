@@ -147,12 +147,11 @@ maintainable
   the app
 - [x] Add unit tests for the `Google Sheets` to `JS` transformer functions
 - [x] Add unit tests for the functions in the `src/helpers` folder
+- [x] Add smoke tests for the main pages (`/`, `Dashboard`, `Visualisation`,
+  `Ascent`, `Ascents/:id`)
 
 </details>
 </br>
 
 - [ ] Add visual non-regression tests for the following components: `graphs`,
   `calendars`, `QR-codes`, `Barcodes`, etc.
-
-- [ ] Add smoke tests for the main pages (`/`, `Dashboard`, `Log`,
-  `Visualisation`, `Ascent`, `Ascents/:id`)

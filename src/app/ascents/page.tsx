@@ -18,7 +18,7 @@ export default async function Page() {
 }
 
 export const metadata: Metadata = {
-  title: 'Table 📇',
+  title: 'Ascents 📇',
   description: 'View all climbing ascents',
   keywords: ['climbing', 'ascents', 'list'],
 }

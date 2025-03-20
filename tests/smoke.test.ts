@@ -26,8 +26,13 @@ test.describe('ascents page', () => {
     await page.goto('http://localhost:3000/ascents')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Table/)
+    await expect(page).toHaveTitle(/Ascents/)
     await expect(page.getByText(/Ascents/)).toBeVisible()
+  })
+
+  test('should show a single ascent', async ({ page }) => {
+    await page.goto('http://localhost:3000/ascents/1')
+    await expect(page.getByText(/Lévitation/)).toBeVisible()
   })
 })
 
