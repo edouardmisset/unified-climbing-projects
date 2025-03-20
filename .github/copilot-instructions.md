@@ -1,199 +1,183 @@
 # Copilot Instructions
 
-## Folder structure
+## Folder Structure
 
 ```
 component-name
-├── helpers.ts               // Contains the handler functions and all the other functions needed in the component
-├── component-name.tsx       // Contains the actual component
-├── component-name.module.ts // Contains the styled component
-├── constants.ts             // Contains the constants used in the component
-├── types.ts                 // Contains the types (props and others) used in the component or the helpers
-├── hooks.ts                 // Contains the custom hooks used in the component
-└── component-name.tests.ts  // Contains the unit tests for the component
+├── helpers.ts               // MUST contain handler functions and other functions needed in the component
+├── component-name.tsx       // MUST contain the actual component
+├── component-name.module.ts // MUST contain the styled component
+├── constants.ts             // MUST contain the constants used in the component
+├── types.ts                 // MUST contain the types (props and others) used in the component or the helpers
+├── hooks.ts                 // MUST contain the custom hooks used in the component
+└── component-name.tests.ts  // MUST contain the unit tests for the component
 ```
 
-⚠️: `default export`s are used for pages.
-
-> Like in the example above, in a perfect world, we would be using a kebab-case
-> naming convention for all folders and files, because PascalCase named
-> folders/files are handled differently in the diversity of operating systems
-> which may lead to bugs when working with teams using different OSs.
->
-> ~ [Robin Wieruch](https://www.robinwieruch.de/react-folder-structure/)
+- `default export`s MUST be used for pages.
+- Folders and files MUST use kebab-case to avoid cross-OS issues.
+  - **Example:** `my-component/index.tsx`
 
 ## Naming Conventions
 
-File names must use Kebab Case. For example, `my-file-name.js`.
+- **File Names:** MUST use kebab-case.
+  - **Example:** `my-file-name.ts`.
+- **Variables:** MUST be descriptive and follow camelCase.
+  - **Example:** `timeoutInMs`.
+- **Constants:** MUST be in ALL_CAPS with underscores.
+  - **Example:** `DEFAULT_TIMEOUT_IN_MS`.
+- **Booleans:** MUST read as a question using `is` or `has`.
+  - **Examples:** `isOpen`, `hasPermission`.
+- **Functions:**
+  - Arrow functions MUST be used for callbacks.
+  - Function declarations SHOULD be used for all other functions.
+  - React components MUST use function declarations.
+- **React Components:**
+  - MUST be named using PascalCase.
+  - MUST be function components, NOT class components.
+  - SHOULD use `useCallback` for event handlers.
+  - Handlers SHOULD be prefixed with `handle<EventName>`.
+    - **Example:** `handleClick`.
+- **Hooks:** MUST start with `use<Name>`.
+  - **Example:** `useBooleanState`.
+- **Function Parameters:**
+  - General functions MUST use `params`.
 
-Ensure that all variable names are descriptive and follow camelCase conventions.
-For example, `timeoutInMs`.
+    ```ts
+    export const clampValueInRange = (params: ValueAndRange): number => {
+      const { maximum, minimum, value } = params
+      return Math.max(Math.min(value, maximum), minimum)
+    }
+    ```
 
-Constants should be in all caps and use underscores to separate words. For example,
-`DEFAULT_TIMEOUT_IN_MS`.
+  - React components MUST use `props`.
 
-Boolean values should try to read as a question using `is` (most of the time) or
-`has` (less frequent). For example: `isOpen`
+    ```tsx
+    export function BooleanStateGridCell(props: BooleanStateCellProps): React.JSX.Element {
+      const { checked } = props
+      return (
+        <StyledCenterCell>
+          <StyledBooleanStateCell checked={checked} />
+        </StyledCenterCell>
+      )
+    }
+    ```
 
-Use **arrow functions** for callbacks only and function declarations for all
-other functions.
-
-The **exception to this is for React Components** which are Function
-Declarations.
-
-React components should be named using PascalCase. For example, `MyComponent`.
-
-Use React function components instead of class components.
-
-Ensure that all event handlers are defined using the `useCallback` hook for
-better performance.
-
-Use the following for naming event handler functions:
-`handle<EventName>`. For example: `handleClick`
-
-When defining a function, we use `params` for its parameters.
-
-For example:
-
-```ts
-export const clampValueInRange = (params: ValueAndRange): number => {
-  const { maximum, minimum, value } = params
-  return Math.max(Math.min(value, maximum), minimum)
-}
-```
-
-When defining a React Component, we use `props` for its "properties".
-
-For example:
-
-```tsx
-export function BooleanStateGridCell(
-  props: BooleanStateCellProps,
-): React.JSX.Element {
-  const { checked } = props
-  return (
-    <StyledCenterCell>
-      <StyledBooleanStateCell checked={checked} />
-    </StyledCenterCell>
-  )
-}
-```
-
-The naming convention for React's `hooks` is to start the name with
-`use<NameOfTheHook>`. For example: `useBooleanState`.
-
-## React Components structure
+## React Components Structure
 
 ### Import Order
 
-Third Party Libraries
-Custom Components
-Utils Imports
-Constant imports
+Imports SHOULD follow this order, separated by an empty line:
 
-Separate each import category by one empty line
+1. Third-party libraries
+2. Custom components
+3. Utils imports
+4. Constants imports
 
-### Rules for Components
+### Component Rules
 
-Very first line — destructure Props (if any)
-Initialize State Variables — `useState`
-Create Refs — `useRef`
-Initialize hooks — `useAppDispatch`
-Write all side effects — `useEffect`
-Create `const`/`let` specific to the Component
-Function definition — (if any)
+The following structure SHOULD be followed:
 
-Separate each section by one empty line
+1. Destructure `props` (if any)
+2. Initialize state variables (`useState`)
+3. Create refs (`useRef`)
+4. Initialize hooks (e.g., `useAppDispatch`)
+5. Write all side effects (`useEffect`)
+6. Define component-specific `const`/`let` variables
+7. Define functions (if any)
+
+Each section MUST be separated by an empty line.
 
 ## Style
 
-Destructure simple arrow functions when possible.
-For example, `({ a, b }) => a + b`
+- Simple arrow functions SHOULD be destructured when possible.
+  - **Example:** `({ a, b }) => a + b`
+- Comments MUST be used only for complex logic.
+- Semicolons MUST NOT be used at the end of lines.
+- Modern TypeScript features SHOULD be used.
+- Magic numbers or strings SHOULD be avoided; named constants SHOULD be used instead.
+  - **Example:** `const TIMEOUT_IN_MS = 1000`.
+- Use template literals over string concatenation.
+  - **Example:** Prefer `` `Hello, ${name}` `` to `'Hello, ' + name`.
+- Code MUST be:
+  - **Linted**
+  - **Free of unused variables**
+  - **Free of unused imports/exports**
+  - **Formatted**
+  - **Passing static analysis checks**
+- A linter SHOULD be used for linting.
+  - **Example:** `bun run lint`
+- A formatter SHOULD be used for formatting.
+  - **Example:** `bun run format`
 
-ONLY include comments to explain complex logic.
+## Git Commit Guidelines
 
-Do not use `;` at the end of a line.
+- Commit messages MUST follow **conventional commits**.
+  - **Examples:**
 
-Use modern TypeScript features
+    ```
+    feat: add new feature
+    fix: bug fix
+    ```
 
-Avoid using magic numbers or strings; instead, use named constants. For example,
-`const TIMEOUT_IN_MS = 1000`.
+- Structure:
 
-Make sure your code is **linted**
-Make sure you do not have **unused variables**
-Make sure you do not have **unused imports** (or exports)
-Make sure your code is **formatted**
-Make sure your code passes **static code analysis** checks (type checking)
+  ```
+  <type>: <description>
 
-Use Biome for linting and formatting the code. For example, `biome check --fix`.
+  [optional body]
+  ```
 
-Make sure your commit message follows the **conventional commits** guidelines.
-For example, `feat: add new feature` or `fix: bug fix`.
-The commit message should be structured as follows:
-
-```text
-<type>: <description>
-
-[optional body]
-```
-
-**fix**: a commit of the type `fix` patches a bug in your codebase (this
-correlates with **PATCH** in Semantic Versioning).
-
-**feat**: a commit of the type `feat` introduces a new feature to the codebase
-(this correlates with **MINOR** in Semantic Versioning).
-
-**BREAKING CHANGE**: a commit that appends a
-`!` after the type/scope, introduces a breaking API change (correlating with
-**MAJOR** in Semantic Versioning). A BREAKING CHANGE can be part of commits of
-any type.
-
-types other than fix: and feat: are allowed, @commitlint/config-conventional
-recommends **build:, chore:, ci:, docs:, style:, refactor:, perf:, test:**, and
-others.
-
-Additional types are not mandated by the Conventional Commits specification, and
-have no implicit effect in Semantic Versioning (unless they include a BREAKING
-CHANGE). A scope may be provided to a commit’s type, to provide additional
-contextual information and is contained within parenthesis, e.g., `feat(parser):
-add ability to parse arrays.`
+- **Types:**
+  - `fix:` for bug fixes (**PATCH** in SemVer)
+  - `feat:` for new features (**MINOR** in SemVer)
+  - `BREAKING CHANGE:` for breaking API changes (**MAJOR** in SemVer)
+  - Other types: `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`
 
 ## Testing
 
-Test should use poku for unit tests.
-
-End-to-end tests should use playwright.
-
-Ensure that you write unit tests for every new function.
-
-Ensure that you write end-to-end tests for every new feature.
-
-Ensure that you write tests for every bug fix.
-
-Ensure all tests pass.
+- **Unit Tests:** MUST use `poku`.
+- **End-to-End Tests:** MUST use `playwright`.
+- Tests MUST be written for:
+  - Every new function
+  - Every new feature
+  - Every bug fix
+- All tests MUST pass before merging.
 
 ## CSS
 
-Use CSS Modules for styling.
+- **CSS Modules** MUST be used for styling.
+- **Modern CSS features** SHOULD be used.
+- Design system variables MUST be used for:
+  - Colors: [colors.css](../src/styles/colors.css)
+  - Sizes: [sizes.css](../src/styles/sizes.css)
 
-Use modern CSS features.
+## Other Guidelines
 
-Ensure that styles are responsive.
+### Documentation
 
-Use the design system (variables) for [colors](../src/styles/colors.css), [sizes](../src/styles/sizes.css)...
+- Code SHOULD ONLY be documented where necessary. Only add comments when the
+  code is unclear or uses a particular algorithm.
 
-## Documentation
+### Performance
 
-## Performance
+- Code SHOULD be optimized for performance.
+  - **Example**: Use `for...of` instead of `.forEach(...)`
+- Expensive computations SHOULD use memoization (`useMemo`).
 
-## Security
+### Security
 
-## Accessibility
+- Security best practices MUST be followed.
+- Sensitive data MUST NOT be hardcoded.
 
-## Best Practices
+### Accessibility
 
-## Code Review
+- Components MUST be accessible (ARIA attributes, keyboard navigation, etc.).
 
-## Deployment
+### Best Practices
 
-## Monitoring
+- Follow DRY (**Don’t Repeat Yourself**) principle.
+- Follow SOLID principles where applicable.
+
+### Deployment
+
+- Code MUST pass CI/CD checks before deployment.

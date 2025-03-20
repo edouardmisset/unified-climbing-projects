@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "format": "biome format --write ./src",
+    "lint": "biome lint --write ./src",
     "check": "biome check --fix ./src && bun run style:lint && tsc --noEmit",
     "commitlint": "commitlint --edit",
     "dev": "next dev --turbo",
@@ -87,21 +89,5 @@
     "@vercel/speed-insights",
     "core-js",
     "sharp"
-  ],
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "@biomejs/biome",
-      "@clerk/shared",
-      "@vercel/speed-insights",
-      "core-js",
-      "sharp"
-    ],
-    "onlyBuiltDependencies": [
-      "@biomejs/biome",
-      "@clerk/shared",
-      "@vercel/speed-insights",
-      "core-js",
-      "sharp"
-    ]
-  }
+  ]
 }
