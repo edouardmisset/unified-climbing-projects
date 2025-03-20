@@ -73,6 +73,7 @@
     "cspell": "^8.17.5",
     "knip": "^5.46.0",
     "poku": "^3.0.1",
+    "react-scan": "^0.3.2",
     "stylelint": "^16.16.0",
     "stylelint-config-standard": "^37.0.0",
     "typescript": "^5.8.2"

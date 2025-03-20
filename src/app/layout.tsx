@@ -7,9 +7,10 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
+import { Navigation } from '~/app/_components/navigation/navigation.tsx'
+import { ReactScan } from '~/app/_components/react-scan/react-scan.tsx'
 import { env } from '~/env.js'
 import { TRPCReactProvider } from '~/trpc/react'
-import { Navigation } from './_components/navigation/navigation.tsx'
 import styles from './index.module.css'
 
 import '~/styles/sizes.css'
@@ -41,17 +42,13 @@ export default async function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <head>
-        {env.NEXT_PUBLIC_ENV === 'development' && (
-          <script src="//unpkg.com/react-scan/dist/auto.global.js" />
-        )}
-      </head>
       <ClerkProvider
         appearance={{
           baseTheme: dark,
           variables: { colorPrimary: 'hsl(255deg 93% 72%)' },
         }}
       >
+        {env.NEXT_PUBLIC_ENV === 'development' && <ReactScan />}
         <html lang="en" suppressHydrationWarning={true}>
           <body className={styles.body}>
             <Suspense fallback={<Loader />}>
