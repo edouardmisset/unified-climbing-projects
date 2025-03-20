@@ -7,7 +7,6 @@ droite
 Edouard
 edouardmisset
 gauche
-handsontable
 Misset
 nuqs
 NuqsAdapter
