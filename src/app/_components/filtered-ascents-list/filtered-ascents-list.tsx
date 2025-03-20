@@ -3,10 +3,10 @@
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
 import type { Ascent } from '~/schema/ascent'
-import { AscentTable } from '../ascent-table/ascent-table'
+import { AscentList } from '../ascent-list/ascent-list'
 import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
 
-export function FilteredAscentTable({ ascents }: { ascents: Ascent[] }) {
+export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
   const filteredAscents = useAscentsFilter(ascents ?? [])
 
   if (!ascents) return <NotFound />
@@ -14,7 +14,7 @@ export function FilteredAscentTable({ ascents }: { ascents: Ascent[] }) {
   return (
     <>
       <AscentsFilterBar allAscents={ascents} />
-      <AscentTable ascents={filteredAscents} />
+      <AscentList ascents={filteredAscents} />
     </>
   )
 }

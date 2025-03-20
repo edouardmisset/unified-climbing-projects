@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { api } from '~/trpc/server'
-import { FilteredAscentTable } from '../_components/filtered-ascents-table/filtered-ascents-table'
+import { FilteredAscentList } from '../_components/filtered-ascents-list/filtered-ascents-list'
 import { Loader } from '../_components/loader/loader'
 import styles from './page.module.css'
 
@@ -11,7 +11,7 @@ export default async function Page() {
     <div className={styles.container}>
       <h1 className="super-center">Ascents</h1>
       <Suspense fallback={<Loader />}>
-        <FilteredAscentTable ascents={ascents} />
+        <FilteredAscentList ascents={ascents} />
       </Suspense>
     </div>
   )

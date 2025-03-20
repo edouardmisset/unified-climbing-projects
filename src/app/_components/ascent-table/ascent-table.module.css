@@ -1,5 +1,0 @@
-.container {
-  inline-size: clamp(20ch, 100%, 90vw);
-  max-inline-size: min(100ch, 100%);
-  margin-inline: auto;
-}

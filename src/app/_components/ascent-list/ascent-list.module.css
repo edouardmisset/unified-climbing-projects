@@ -1,0 +1,27 @@
+.grid {
+  max-inline-size: 100%;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  grid-auto-flow: row;
+  gap: calc(var(--size-fluid-1) / 2);
+
+  background-color: var(--surface-1);
+  color: var(--text-1);
+
+  padding-inline: var(--size-fluid-2);
+  padding-block: var(--size-fluid-3);
+
+  overflow: auto;
+}
+
+.item {
+  inline-size: min-content;
+  max-inline-size: 20ch;
+
+  /* no-text-wrap */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

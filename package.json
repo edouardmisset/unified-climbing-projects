@@ -50,7 +50,6 @@
     "fuzzysort": "^3.1.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
-    "handsontable": "^15.1.0",
     "lucide-react": "^0.482.0",
     "next": "^15.2.2",
     "next-view-transitions": "^0.3.4",

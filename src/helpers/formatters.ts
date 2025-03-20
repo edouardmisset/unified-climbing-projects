@@ -107,7 +107,7 @@ const suffixes = new Map([
   ['few', 'rd'],
   ['other', 'th'],
 ])
-function formatOrdinals(number_: number) {
+export function formatOrdinals(number_: number) {
   const rule = englishOrdinalRules.select(number_)
   const suffix = suffixes.get(rule)
   return `${number_}${suffix}`
@@ -123,7 +123,7 @@ const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], Emoji> = {
   Redpoint: '🔴',
 }
 
-function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
+export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
   return style === undefined
     ? ASCENT_STYLE_TO_EMOJI.Redpoint
     : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
