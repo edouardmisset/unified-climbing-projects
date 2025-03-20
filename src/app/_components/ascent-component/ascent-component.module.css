@@ -1,7 +1,7 @@
 .trigger {
   display: inline-block;
   inline-size: fit-content;
-  max-inline-size: var(--size-14);
+  max-inline-size: min(var(--size-14), 100vw);
   font-family: var(--font-didone);
   font-size: var(--font-size-3);
   font-weight: var(--font-weight-9);

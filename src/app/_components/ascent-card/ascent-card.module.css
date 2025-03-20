@@ -8,7 +8,7 @@
   flex-direction: column;
   gap: var(--gap);
 
-  max-inline-size: var(--size-content-2);
+  max-inline-size: min(var(--size-content-2), 100vw);
   aspect-ratio: 2.5 / 3.5;
 
   background-color: var(--surface);
