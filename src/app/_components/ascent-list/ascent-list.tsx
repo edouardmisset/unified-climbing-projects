@@ -53,8 +53,8 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               title={tries === 1 ? style : formatOrdinals(tries)}
               className={styles.item}
             >
-              <span>{fromAscentStyleToEmoji(style)}</span>{' '}
-              <sup>{tries > 1 ? formatOrdinals(tries) : ''}</sup>
+              <span>{fromAscentStyleToEmoji(style)}</span>
+              <sup>{tries > 1 ? ` ${formatOrdinals(tries)}` : ''}</sup>
             </span>
             <span
               title={formatDateInTooltip(date, 'longDate')}
@@ -67,7 +67,7 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               {formatCragAndArea(crag, area)}
             </span>
 
-            <span title={String(height)} className={styles.item}>
+            <span title={`${height}m`} className={styles.item}>
               {formatHeight(height)}
             </span>
             <span title={profile} className={styles.item}>
@@ -77,7 +77,7 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               {formatHolds(holds)}
             </span>
 
-            <span title={String(rating)} className={styles.item}>
+            <span title={`${rating}⭐️`} className={styles.item}>
               {formatRating(rating)}
             </span>
           </Fragment>
