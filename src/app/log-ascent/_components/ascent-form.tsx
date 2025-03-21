@@ -48,9 +48,14 @@ const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
 export default function AscentForm() {
-  const { data, isLoading: isAverageGradeLoading } =
+  const { data: rawAverageGrade, isLoading: isAverageGradeLoading } =
     api.grades.getAverage.useQuery()
-  const averageGrade = fromGradeToNumber(data ?? '7b')
+  const averageGrade = fromGradeToNumber(rawAverageGrade ?? '7b')
+
+  const { data: allCrags, isLoading: areCragsLoading } =
+    api.crags.getAllCrags.useQuery()
+  const { data: allAreas, isLoading: areAreasLoading } =
+    api.areas.getAllAreas.useQuery()
 
   const {
     data: [minGrade, maxGrade] = [
@@ -168,7 +173,12 @@ export default function AscentForm() {
     AVAILABLE_CLIMBING_DISCIPLINE,
   )
 
-  if (isAverageGradeLoading || isGradesLoading) {
+  if (
+    isAverageGradeLoading ||
+    isGradesLoading ||
+    areCragsLoading ||
+    areAreasLoading
+  ) {
     return <Loader />
   }
 
@@ -185,7 +195,7 @@ export default function AscentForm() {
           const promise = onSubmit(data)
           toast.promise(promise, {
             pending: 'Submitting...',
-            success: `Successfully submitted ${data.routeName} (${data.topoGrade})`,
+            success: `Successfully submitted ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
             error: 'Submission failed, please try again.',
           })
 
@@ -221,6 +231,7 @@ export default function AscentForm() {
           autoCapitalize="on"
           autoComplete="off"
           className={styles.input}
+          enterKeyHint="next"
           id="routeName"
           placeholder="The name of the route or boulder climbed (use `N/A` for routes without name)"
           required={true}
@@ -233,6 +244,7 @@ export default function AscentForm() {
         <select
           {...register('climbingDiscipline')}
           className={styles.input}
+          enterKeyHint="next"
           id="climbingDiscipline"
           title={climbingDisciplineFormattedList}
         >
@@ -256,7 +268,15 @@ export default function AscentForm() {
           required={true}
           title="Crag Name"
           type="text"
+          list="crag-list"
         />
+        <datalist id="crag-list">
+          {allCrags?.map(crag => (
+            <option key={crag} value={crag}>
+              {crag}
+            </option>
+          ))}
+        </datalist>
       </label>
       <label htmlFor="area" className={styles.label}>
         Area
@@ -269,7 +289,15 @@ export default function AscentForm() {
           placeholder="The name of the crag's sector (or area)"
           title="Crag's area"
           type="text"
+          list="area-list"
         />
+        <datalist id="area-list">
+          {allAreas?.map(area => (
+            <option key={area} value={area}>
+              {area}
+            </option>
+          ))}
+        </datalist>
       </label>
       <label htmlFor="tries" className={styles.label}>
         Tries & Style

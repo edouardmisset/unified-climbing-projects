@@ -24,6 +24,19 @@ export const trainingRouter = createTRPCRouter({
       }
       return latestTrainingSession
     }),
+  getAllTrainingGymOrCrag: publicProcedure
+    .output(z.array(trainingSessionSchema.shape.gymCrag))
+    .query(async () => {
+      const allTrainingSessions = await getAllTrainingSessions()
+      return Array.from(
+        new Set(
+          allTrainingSessions
+            .map(({ gymCrag }) => gymCrag)
+            .filter(Boolean)
+            .sort((a, b) => a.localeCompare(b)),
+        ),
+      )
+    }),
   addOne: publicProcedure
     .input(trainingSessionSchema.omit({ id: true }))
     .output(boolean())

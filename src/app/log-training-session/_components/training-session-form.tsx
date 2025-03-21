@@ -3,8 +3,14 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { Loader } from '~/app/_components/loader/loader'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic'
+import {
+  fromAnatomicalRegionToEmoji,
+  fromClimbingDisciplineToEmoji,
+  fromEnergySystemToEmoji,
+} from '~/helpers/formatters'
 import { disjunctiveListFormatter } from '~/helpers/list'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -15,8 +21,12 @@ import {
   ENERGY_SYSTEMS,
   SESSION_TYPES,
   type TrainingSession,
+  fromAnatomicalRegionToLabel,
+  fromEnergySystemToLabel,
+  fromSessionTypeToLabel,
   trainingSessionSchema,
 } from '~/schema/training'
+import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 import styles from '../page.module.css'
@@ -31,6 +41,9 @@ export default function TrainingSessionForm() {
   if (!result.success) {
     globalThis.console.log(result.error)
   }
+
+  const { data: allGymsOrCrags, isLoading: isLoadingGymsOrCrags } =
+    api.training.getAllTrainingGymOrCrag.useQuery()
 
   const { data: defaultTrainingSession } = result
 
@@ -50,6 +63,8 @@ export default function TrainingSessionForm() {
     disjunctiveListFormatter(ANATOMICAL_REGIONS)
   const energySystemFormattedList = disjunctiveListFormatter(ENERGY_SYSTEMS)
   const sessionTypeFormattedList = disjunctiveListFormatter(SESSION_TYPES)
+
+  if (isLoadingGymsOrCrags) return <Loader />
 
   return (
     <form
@@ -97,6 +112,7 @@ export default function TrainingSessionForm() {
         <input
           {...register('sessionType')}
           className={styles.input}
+          enterKeyHint="next"
           id="session-type"
           list="session-type-list"
           title={sessionTypeFormattedList}
@@ -104,7 +120,7 @@ export default function TrainingSessionForm() {
         <datalist id="session-type-list">
           {SESSION_TYPES.map(sessionType => (
             <option key={sessionType} value={sessionType}>
-              {sessionType}
+              {fromSessionTypeToLabel(sessionType)}
             </option>
           ))}
         </datalist>
@@ -120,13 +136,22 @@ export default function TrainingSessionForm() {
           placeholder="Gym or Crag name"
           title="Gym or Crag name"
           type="text"
+          list="gym-crag-list"
         />
       </label>
+      <datalist id="gym-crag-list">
+        {allGymsOrCrags?.map(gymOrCrag => (
+          <option key={gymOrCrag} value={gymOrCrag}>
+            {gymOrCrag}
+          </option>
+        ))}
+      </datalist>
       <label htmlFor="climbing-discipline" className={styles.label}>
         Climbing Discipline
         <input
           {...register('climbingDiscipline')}
           className={styles.input}
+          enterKeyHint="next"
           id="climbing-discipline"
           list="climbing-discipline-list"
           title={climbingDisciplineFormattedList}
@@ -134,7 +159,7 @@ export default function TrainingSessionForm() {
         <datalist id="climbing-discipline-list">
           {CLIMBING_DISCIPLINE.map(discipline => (
             <option key={discipline} value={discipline}>
-              {discipline}
+              {`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
             </option>
           ))}
         </datalist>
@@ -152,7 +177,7 @@ export default function TrainingSessionForm() {
         <datalist id="anatomical-region-list">
           {ANATOMICAL_REGIONS.map(region => (
             <option key={region} value={region}>
-              {region}
+              {`${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`}
             </option>
           ))}
         </datalist>
@@ -171,7 +196,7 @@ export default function TrainingSessionForm() {
         <datalist id="energy-system-list">
           {ENERGY_SYSTEMS.map(system => (
             <option key={system} value={system}>
-              {system}
+              {`${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`}
             </option>
           ))}
         </datalist>
