@@ -56,7 +56,7 @@ export function Navigation() {
                   🧗 Ascents 🧗
                 </Menu.GroupLabel>
                 <Menu.Item className={styles.Item}>
-                  <Link href={'/ascents'}>📇 Table</Link>
+                  <Link href={'/ascents'}>📇 List</Link>
                 </Menu.Item>
                 <Menu.Item className={styles.Item}>
                   <Link href={'/ascents/dashboard'}>📊 Dashboard</Link>

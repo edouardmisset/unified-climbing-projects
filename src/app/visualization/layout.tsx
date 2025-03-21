@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <GridLayout
         title="Visualization"
         additionalContent={
-          <div className={`flex-row space-between gap ${styles.header}`}>
+          <div className={`flex-row space-evenly gap ${styles.header}`}>
             <ToggleGroup
               onValueChange={handleQrCodeOrBarcodeChange}
               values={visualizations}
