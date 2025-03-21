@@ -55,7 +55,7 @@
   justify-content: space-between;
 
   & > input {
-    min-inline-size: var(--size-fluid-7);
+    min-inline-size: var(--size-fluid-5);
   }
 
   @media screen and (width >= 640px) {

@@ -31,7 +31,6 @@
   font-family: system-ui, sans-serif;
 
   --accent: light-dark(var(--violet-6), var(--violet-4));
-  --brand: var(--accent);
   --link: light-dark(var(--indigo-7), var(--indigo-5));
   --link-visited: light-dark(var(--indigo-5), var(--indigo-3));
   --text-1: light-dark(var(--gray-12), var(--gray-1));
@@ -42,8 +41,8 @@
   --surface-4: light-dark(var(--gray-4), var(--gray-6));
 
   /* Accent colors */
-  accent-color: var(--brand, var(--link));
-  caret-color: var(--brand, var(--link));
+  accent-color: var(--accent, var(--link));
+  caret-color: var(--accent, var(--link));
 
   /* By default we enable dark mode */
   color-scheme: light dark;
@@ -237,7 +236,7 @@ not to see them */
 }
 
 :focus-visible {
-  outline-color: var(--brand, var(--link));
+  outline-color: var(--accent);
 }
 
 :where(:not(dialog)) {
