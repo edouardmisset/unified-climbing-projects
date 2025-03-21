@@ -43,6 +43,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     <div className={styles.card}>
       <h2
         className={`${styles.header} text-no-wrap`}
+        title={`${routeName} ${topoGrade}`}
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>

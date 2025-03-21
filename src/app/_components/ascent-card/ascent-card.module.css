@@ -9,6 +9,7 @@
   gap: var(--gap);
 
   max-inline-size: min(var(--size-content-2), 100vw);
+  max-block-size: 100dvh;
   aspect-ratio: 2.5 / 3.5;
 
   background-color: var(--surface);
