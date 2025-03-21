@@ -112,4 +112,10 @@
   background: var(--accent);
   line-height: 2;
   font-weight: var(--font-weight-6);
+  transition: background var(--blink);
+
+  &:disabled {
+    background: var(--surface-4);
+    cursor: not-allowed;
+  }
 }

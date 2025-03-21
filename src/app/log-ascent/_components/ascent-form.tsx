@@ -82,7 +82,14 @@ export default function AscentForm() {
 
   const { data: defaultAscent } = defaultAscentFormValues
 
-  const { handleSubmit, register, setValue, watch, reset } = useForm({
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: defaultAscent,
   })
 
@@ -414,11 +421,13 @@ export default function AscentForm() {
         />
       </label>
       <Spacer size={3} />
-      <input
+      <button
         type="submit"
-        value="Send 📮"
+        disabled={isSubmitting}
         className={`contrast-color ${styles.submit}`}
-      />
+      >
+        {isSubmitting ? 'Sending...' : 'Send 📮'}
+      </button>
     </form>
   )
 }

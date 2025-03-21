@@ -34,7 +34,12 @@ export default function TrainingSessionForm() {
 
   const { data: defaultTrainingSession } = result
 
-  const { handleSubmit, register, reset } = useForm({
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: defaultTrainingSession,
   })
 
@@ -219,11 +224,13 @@ export default function TrainingSessionForm() {
         />
       </label>
       <Spacer size={3} />
-      <input
+      <button
         type="submit"
-        value="Submit 📮"
+        disabled={isSubmitting}
         className={`contrast-color ${styles.submit}`}
-      />
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit 📮'}
+      </button>
     </form>
   )
 }
