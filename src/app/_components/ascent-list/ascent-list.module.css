@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: repeat(10, auto);
   grid-auto-flow: row;
-  gap: calc(var(--size-fluid-1) / 2);
+  gap: var(--size-fluid-1);
 
   background-color: var(--surface-1);
   color: var(--text-1);
@@ -24,4 +24,15 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.Separator {
+  inline-size: 100%;
+  grid-column: 1 / -1;
+  block-size: 1px;
+  background-color: var(--color-gray-400);
+}
+
+.total {
+  grid-column: 1 / -1;
 }

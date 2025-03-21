@@ -1,5 +1,7 @@
 'use client'
+import { Separator } from '@base-ui-components/react/separator'
 import { Fragment } from 'react'
+import { NON_BREAKING_SPACE } from '~/constants/generic'
 import {
   formatCragAndArea,
   formatDateInTooltip,
@@ -43,12 +45,13 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
             </strong>
             <em
               title={`${topoGrade} - ${personalGrade}`}
-              className={styles.item}
+              className={`${styles.item} monospace`}
             >
-              {topoGrade}{' '}
-              {personalGrade === topoGrade ? null : <sup>{personalGrade}</sup>}
+              {topoGrade.endsWith('+')
+                ? topoGrade
+                : `${topoGrade}${NON_BREAKING_SPACE}`}
+              {personalGrade === topoGrade ? null : <sup> {personalGrade}</sup>}
             </em>
-
             <span
               title={tries === 1 ? style : formatOrdinals(tries)}
               className={styles.item}
@@ -58,7 +61,7 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
             </span>
             <span
               title={formatDateInTooltip(date, 'longDate')}
-              className={styles.item}
+              className={`${styles.item} monospace`}
             >
               {formatDateInTooltip(date, 'shortDate')}
             </span>
@@ -67,7 +70,7 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               {formatCragAndArea(crag, area)}
             </span>
 
-            <span title={`${height}m`} className={styles.item}>
+            <span title={`${height}m`} className={`${styles.item} monospace`}>
               {formatHeight(height)}
             </span>
             <span title={profile} className={styles.item}>
@@ -83,6 +86,11 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
           </Fragment>
         ),
       )}
+      <Separator orientation="horizontal" className={styles.Separator} />
+      <div className={styles.total}>
+        Total: <strong>{ascents.length}</strong> ascent
+        {ascents.length > 1 ? 's' : ''}
+      </div>
     </div>
   )
 }

@@ -3,8 +3,8 @@ import { sortNumericalValues } from './sort-values'
 
 const localeIdentifier = 'en-US'
 
-const MILLISECONDS_IN_WEEK = 604_800_000
 const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
+const MILLISECONDS_IN_WEEK = 7 * MILLISECONDS_IN_DAY
 
 export const DATE_TIME_OPTIONS = {
   longDateTime: {
@@ -16,7 +16,9 @@ export const DATE_TIME_OPTIONS = {
     timeStyle: 'short',
   },
   shortDate: {
-    dateStyle: 'short',
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
   },
   mediumDate: {
     dateStyle: 'medium',

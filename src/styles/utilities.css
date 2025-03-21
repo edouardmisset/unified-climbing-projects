@@ -86,6 +86,10 @@
   cursor: pointer;
 }
 
+.monospace {
+  font-family: var(--font-monospace-code);
+}
+
 .select-none {
   user-select: none;
 }
