@@ -21,7 +21,9 @@
     "test:e2e:ui": "bun run test:e2e --ui",
     "test:all": "bun run test:unit && bun run test:e2e",
     "knip": "clear && knip",
-    "validate": "clear && bun run check && bun run test:all && bun run build"
+    "validate": "clear && bun run check && bun run test:all && bun run build",
+    "client:rsdoctor": "rsdoctor analyze --profile .next/.rsdoctor/manifest.json",
+    "server:rsdoctor": "rsdoctor analyze --profile .next/server/chunks/.rsdoctor/manifest.json"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.6",
@@ -66,6 +68,8 @@
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@playwright/test": "^1.51.0",
+    "@rsdoctor/cli": "^1.0.0",
+    "@rsdoctor/webpack-plugin": "^1.0.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
