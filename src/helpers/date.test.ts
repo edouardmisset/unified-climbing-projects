@@ -18,7 +18,7 @@ describe('formatDateTime', () => {
   it('should format the date correctly with shortDate option', () => {
     const date = new Date(2024, 0, 20, 10, 30, 0)
     const result = formatDateTime(date, 'shortDate')
-    assert.equal(result, '1/20/24')
+    assert.equal(result, '01/20/24')
   })
 })
 
