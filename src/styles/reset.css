@@ -217,12 +217,12 @@ not to see them */
   background-color: var(--surface-2);
 }
 
-:where(form) :user-invalid {
+:where(form) input:user-invalid {
   outline-offset: 1px;
   outline: var(--red-8) solid var(--border-size-2);
 }
 
-:where(form) :user-valid {
+:where(form) input:user-valid {
   outline-offset: 1px;
   outline: var(--green-8) solid var(--border-size-1);
 }
