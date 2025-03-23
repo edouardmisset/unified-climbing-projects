@@ -35,6 +35,17 @@ const colors: OrdinalColorScaleConfigCustomFunction<LineChartDataStructure> = ({
   color,
 }) => color
 
+const legends = [
+  {
+    anchor: 'top',
+    direction: 'column',
+    itemBackground: 'var(--surface-1)',
+    itemWidth: 80,
+    itemHeight: 20,
+    symbolShape: 'circle',
+  },
+] as const
+
 export function TriesByGrade({
   ascents,
   className,
@@ -55,6 +66,7 @@ export function TriesByGrade({
         yScale={lineYScale}
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfTriesAxisLeft}
+        legends={legends}
         pointSize={8}
         colors={colors}
         theme={theme}

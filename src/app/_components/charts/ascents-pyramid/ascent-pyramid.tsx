@@ -43,6 +43,7 @@ export function AscentPyramid({
         margin={DEFAULT_CHART_MARGIN}
         padding={defaultBarChartPadding}
         enableGridY={false}
+        enableTotals
         // @ts-ignore
         colors={colors}
         enableLabel={false}

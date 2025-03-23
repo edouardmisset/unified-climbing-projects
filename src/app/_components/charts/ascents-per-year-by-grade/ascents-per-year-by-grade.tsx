@@ -32,6 +32,7 @@ export function AscentsPerYearByGrade({
         margin={DEFAULT_CHART_MARGIN}
         padding={defaultBarChartPadding}
         enableGridY={false}
+        enableTotals
         // @ts-ignore
         colors={chartColorGetter}
         enableLabel={false}

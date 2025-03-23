@@ -25,6 +25,11 @@ export const theme: Theme = {
       },
     },
   },
+  labels: {
+    text: {
+      fontWeight: 'var(--font-weight-6)',
+    },
+  },
 }
 
 // Margins
