@@ -71,11 +71,18 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
   )
 }
 
-export function getMostFrequentCrag(ascents: Ascent[]) {
-  const sortedCragFrequency = frequencyBy(ascents, 'crag', { ascending: false })
+export function getCragsDetails(ascents: Ascent[]): {
+  numberOfCrags: number
+  mostFrequentCrag: string | undefined
+  crags: Ascent['crag'][]
+} {
+  const cragsByFrequency = frequencyBy(ascents, 'crag', { ascending: false })
+  const crags = Object.keys(cragsByFrequency)
+  const [mostFrequentCrag] = crags
 
   return {
-    numberOfCrags: objectSize(sortedCragFrequency),
-    mostFrequentCrag: Object.keys(sortedCragFrequency)[0],
+    numberOfCrags: objectSize(cragsByFrequency),
+    mostFrequentCrag,
+    crags,
   }
 }

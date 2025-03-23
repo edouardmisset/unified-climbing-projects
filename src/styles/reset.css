@@ -472,6 +472,10 @@ not to see them */
   margin-block: var(--size-fluid-5);
 }
 
+:where(i, em) {
+  font-style: italic;
+}
+
 :where(figure) {
   display: grid;
   gap: var(--size-2);

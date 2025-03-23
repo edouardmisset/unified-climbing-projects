@@ -1,0 +1,23 @@
+.popover {
+  display: inline-block;
+  cursor: pointer;
+
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: currentColor;
+  text-decoration-line: underline;
+
+  transition: color var(--sneeze);
+
+  &:hover {
+    background-color: transparent;
+    color: hsl(from currentColor h s calc(l * 0.7));
+  }
+}
+
+.popoverContainer {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-block-size: 20rem;
+}

@@ -14,7 +14,7 @@ type ClimbingStyleToggleGroup = {
 export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
   const { display, onValueChange, value, isOnsightDisable } = props
 
-  if (!display) return null
+  if (!display) return undefined
 
   return (
     <ToggleGroup

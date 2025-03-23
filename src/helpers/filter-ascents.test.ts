@@ -2,8 +2,8 @@ import { assert, describe, it } from 'poku'
 import { sampleAscents } from '~/backup/sample-ascents'
 import {
   filterAscents,
+  getCragsDetails,
   getHardestAscent,
-  getMostFrequentCrag,
 } from './filter-ascents'
 
 describe('filterAscents', () => {
@@ -65,13 +65,13 @@ describe('getHardestAscent', () => {
 
 describe('getMostFrequentCrag', () => {
   it('should return the most frequent crag and the correct number of distinct crags', () => {
-    const result = getMostFrequentCrag(sampleAscents)
+    const result = getCragsDetails(sampleAscents)
     assert.equal(result.mostFrequentCrag, 'Fontainebleau')
     assert.equal(result.numberOfCrags, 43)
   })
 
   it('should handle an empty array and return undefined mostFrequentCrag', () => {
-    const result = getMostFrequentCrag([])
+    const result = getCragsDetails([])
     assert.equal(result.numberOfCrags, 0)
     assert.equal(result.mostFrequentCrag, undefined)
   })

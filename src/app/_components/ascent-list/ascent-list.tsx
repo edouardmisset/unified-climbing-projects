@@ -50,7 +50,7 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               {topoGrade.endsWith('+')
                 ? topoGrade
                 : `${topoGrade}${NON_BREAKING_SPACE}`}
-              {personalGrade === topoGrade ? null : <sup> {personalGrade}</sup>}
+              {personalGrade === topoGrade ? undefined : <sup> {personalGrade}</sup>}
             </em>
             <span
               title={tries === 1 ? style : formatOrdinals(tries)}

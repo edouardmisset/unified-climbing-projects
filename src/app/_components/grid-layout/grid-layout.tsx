@@ -31,7 +31,7 @@ export default function GridLayout({
       enabled={true}
       path="/wrap-up"
     />
-  ) : null
+  ) : undefined
 
   const afterTitle = titleIsValidNumber && (
     <YearNavigationButton

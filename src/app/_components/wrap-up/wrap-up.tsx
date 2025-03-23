@@ -1,19 +1,22 @@
 import { sum } from '@edouardmisset/math/sum.ts'
-
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
 import { formatDateTime, getMostFrequentDate } from '~/helpers/date'
 import {
   filterAscents,
+  getCragsDetails,
   getHardestAscent,
-  getMostFrequentCrag,
 } from '~/helpers/filter-ascents'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { api } from '~/trpc/server'
 import { AscentComponent } from '../ascent-component/ascent-component'
+import { AscentsWithPopover } from '../ascents-with-popover/ascents-with-popover'
 import { Card } from '../card/card'
 import GridLayout from '../grid-layout/grid-layout'
+import { Popover } from '../popover/popover'
 import { ALL_TIME } from './constants'
+
+import ascentsWithPopoverStyles from '~/app/_components/ascents-with-popover/ascents-with-popover.module.css'
 
 async function fetchData(year?: number) {
   const [trainingSessionsPromise, ascentsPromise] = await Promise.allSettled([
@@ -72,9 +75,13 @@ export default async function WrapUp({ year }: { year?: number }) {
     useGrouping: true,
   }).format(totalHeight)
 
-  const [mostAscentDate, mostAscent] = getMostFrequentDate(ascents)
+  const [mostAscentDate] = getMostFrequentDate(ascents)
 
-  const { numberOfCrags, mostFrequentCrag } = getMostFrequentCrag(ascents)
+  const ascentsInMostAscentDay = ascents.filter(({ date }) => {
+    return new Date(date).getTime() === new Date(mostAscentDate).getTime()
+  })
+
+  const { numberOfCrags, mostFrequentCrag, crags } = getCragsDetails(ascents)
 
   const averageRouteGrade = getAverageGrade(routes)
   const averageBoulderGrade = getAverageGrade(boulders)
@@ -87,7 +94,7 @@ export default async function WrapUp({ year }: { year?: number }) {
 
   const ascentsInTheHardestDegree = ascents.filter(({ topoGrade }) =>
     topoGrade.startsWith(highestDegree.toString()),
-  ).length
+  )
 
   // TRAINING
 
@@ -95,21 +102,32 @@ export default async function WrapUp({ year }: { year?: number }) {
     sessionType: 'Out',
   }).length
 
+  const ascentsRatio = (ascents.length / daysOutside).toFixed(1)
+
   return (
     <GridLayout title={year ?? ALL_TIME}>
       <Card>
         <h2>Days outside</h2>
         <p>
-          You climbed <b>{ascents.length}</b> ascents in <b>{daysOutside}</b>{' '}
-          days.
+          {ascents.length === 0 ? undefined : (
+            <>
+              You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
+              <strong>{daysOutside}</strong> days (
+              <strong>{ascentsRatio}</strong> ascents per day outside).
+            </>
+          )}
         </p>
-        {mostAscentDate !== '' && (
+        {mostAscentDate === '' ||
+        ascentsInMostAscentDay.length === 0 ? undefined : (
           <p>
             Your best day was the{' '}
             <span>
-              <b>{formatDateTime(new Date(mostAscentDate), 'longDate')}</b>
+              <strong>
+                {formatDateTime(new Date(mostAscentDate), 'longDate')}
+              </strong>
             </span>{' '}
-            where you climbed <b>{mostAscent}</b> ascents.
+            where you climbed{' '}
+            <AscentsWithPopover ascents={ascentsInMostAscentDay} />.
           </p>
         )}
       </Card>
@@ -122,13 +140,27 @@ export default async function WrapUp({ year }: { year?: number }) {
           </p>
         )}
         <p>
-          You Onsighted <b>{onsightAscents.length}</b>, Flashed{' '}
-          <b>{flashAscents.length}</b>, and Redpointed{' '}
-          <b>{redpointAscents.length}</b> routes and boulders.
+          You{' '}
+          {onsightAscents.length === 0 ? undefined : (
+            <span>
+              <i>Onsighted</i> <AscentsWithPopover ascents={onsightAscents} />,{' '}
+            </span>
+          )}
+          {flashAscents.length === 0 ? undefined : (
+            <span>
+              <i>Flashed</i> <AscentsWithPopover ascents={flashAscents} />,{' '}
+            </span>
+          )}
+          {redpointAscents.length === 0 ? undefined : (
+            <span>
+              and <i>Redpointed</i>{' '}
+              <AscentsWithPopover ascents={redpointAscents} />.
+            </span>
+          )}
         </p>
         <p>
-          Your average grade was <b>{averageRouteGrade}</b> for routes and{' '}
-          <b>{averageBoulderGrade}</b> for boulders.
+          Your average grade was <strong>{averageRouteGrade}</strong> for routes
+          and <strong>{averageBoulderGrade}</strong> for boulders.
         </p>
       </Card>
       <Card>
@@ -146,25 +178,56 @@ export default async function WrapUp({ year }: { year?: number }) {
           </p>
         )}
         <p>
-          You climbed <b>{ascentsInTheHardestDegree}</b> routes in the{' '}
-          <b>{highestDegree}</b>
+          You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} />{' '}
+          in the <strong>{highestDegree}</strong>
           <sup>th</sup> degree.
         </p>
       </Card>
       <Card>
         <h2>Vertical Milestone</h2>
         <p>
-          You climbed <b>{routes.length}</b> routes and <b>{boulders.length}</b>{' '}
-          boulders for a total of <b>{formattedTotalHeight}</b> meters.
+          {routes.length === 0 ? undefined : (
+            <>
+              You climbed <AscentsWithPopover ascents={routes} />{' '}
+            </>
+          )}
+          {boulders.length === 0 ? undefined : (
+            <>
+              and <AscentsWithPopover ascents={boulders} />
+            </>
+          )}{' '}
+          {boulders.length === 0 && routes.length === 0 ? undefined : (
+            <>
+              for a total of <strong>{formattedTotalHeight}</strong> meters.
+            </>
+          )}
         </p>
       </Card>
-      <Card>
-        <h2>Favorite Crag</h2>
-        <p>
-          You visited <b>{numberOfCrags}</b> different crags and you went to{' '}
-          <b>{mostFrequentCrag}</b> the most.
-        </p>
-      </Card>
+      {crags.length === 0 ? undefined : (
+        <Card>
+          <h2>Favorite Crag</h2>
+          <p>
+            You visited{' '}
+            <Popover
+              triggerClassName={ascentsWithPopoverStyles.popover}
+              popoverDescription={
+                <div className={ascentsWithPopoverStyles.popoverContainer}>
+                  {crags.map(crag => (
+                    <span key={crag}>{crag}</span>
+                  ))}
+                </div>
+              }
+              popoverTitle="Crags"
+              triggerContent={
+                <span>
+                  <strong>{numberOfCrags}</strong> crags
+                </span>
+              }
+            />{' '}
+            and you went to <strong>{mostFrequentCrag}</strong> the most.
+          </p>
+        </Card>
+      )}
     </GridLayout>
   )
 }
