@@ -135,7 +135,7 @@ export default async function WrapUp({ year }: { year?: number }) {
         <h2>Ascents</h2>
         {mostRecentAscent !== undefined && (
           <p>
-            Your last ascent was{' '}
+            Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
             <AscentComponent ascent={mostRecentAscent} showGrade={true} />
           </p>
         )}
@@ -159,8 +159,18 @@ export default async function WrapUp({ year }: { year?: number }) {
           )}
         </p>
         <p>
-          Your average grade was <strong>{averageRouteGrade}</strong> for routes
-          and <strong>{averageBoulderGrade}</strong> for boulders.
+          Your average grade{' '}
+          {averageRouteGrade === 'N/A' ? undefined : (
+            <>
+              was <strong>{averageRouteGrade}</strong> for routes
+            </>
+          )}
+          {averageBoulderGrade === 'N/A' ? undefined : (
+            <>
+              and <strong>{averageBoulderGrade}</strong> for boulders
+            </>
+          )}
+          .
         </p>
       </Card>
       <Card>
