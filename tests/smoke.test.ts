@@ -31,7 +31,8 @@ test.describe('ascents page', () => {
   })
 
   test('should show a single ascent', async ({ page }) => {
-    await page.goto('http://localhost:3000/ascents/1')
+    await page.goto('http://localhost:3000/ascents/1', { waitUntil: 'networkidle' })
+    await page.waitForSelector('text=Lévitation')
     await expect(page.getByText(/Lévitation/)).toBeVisible()
   })
 })
