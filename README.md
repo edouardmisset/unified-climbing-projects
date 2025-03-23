@@ -99,6 +99,7 @@ is my playground for these experiments.
 - [x] Style the sign-in button & User Avatar button
 - [x] Style the QR/Barcode buttons & the `<dialog>` elements (in the
   Visualization page)
+- [x] Update the `ascents/:id` page to display a card with the ascent's details
 
 </details>
 </br>
@@ -107,8 +108,6 @@ is my playground for these experiments.
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
-
-- [ ] Update the `ascents/:id` page to display a card with the ascent's details
 
 - [ ] Add dark / light theme (also add a toggle). Replace the purple theme with
   the dark theme
