@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test'
 
+const port = process.env.PORT ?? 3000
+
 test.describe('Home page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000')
+    await page.goto(`http://localhost:${port}`)
   })
 
   test('should load correctly', async ({ page }) => {
@@ -13,7 +15,7 @@ test.describe('Home page', () => {
 
 test.describe('Visualization page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/visualization')
+    await page.goto(`http://localhost:${port}/visualization`)
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Visualization/)
@@ -23,7 +25,7 @@ test.describe('Visualization page', () => {
 
 test.describe('ascents page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/ascents')
+    await page.goto(`http://localhost:${port}/ascents`)
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Ascents/)
@@ -31,7 +33,7 @@ test.describe('ascents page', () => {
   })
 
   test('should show a single ascent', async ({ page }) => {
-    await page.goto('http://localhost:3000/ascents/1', { waitUntil: 'networkidle' })
+    await page.goto(`http://localhost:${port}/ascents/1`)
     await page.waitForSelector('text=Lévitation')
     await expect(page.getByText(/Lévitation/)).toBeVisible()
   })
@@ -39,7 +41,7 @@ test.describe('ascents page', () => {
 
 test.describe('Dashboard page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/ascents/dashboard')
+    await page.goto(`http://localhost:${port}/ascents/dashboard`)
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Dashboard/)
