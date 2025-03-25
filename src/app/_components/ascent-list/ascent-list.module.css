@@ -54,6 +54,7 @@
   &:nth-of-type(even) {
     background-color: var(--surface-2);
   }
+
   &:nth-of-type(even):hover {
     background-color: light-dark(var(--gray-0), var(--gray-10));
   }
