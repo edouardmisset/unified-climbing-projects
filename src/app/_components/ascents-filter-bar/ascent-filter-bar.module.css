@@ -7,6 +7,8 @@
 
   position: sticky;
   inset: 0;
+  z-index: var(--layer-2);
+
   inline-size: 100%;
 }
 
@@ -56,10 +58,9 @@
 
 .filters {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: center;
   gap: var(--size-fluid-1);
-  z-index: var(--layer-2);
   padding-block: var(--size-fluid-1);
 
   overflow-x: auto;

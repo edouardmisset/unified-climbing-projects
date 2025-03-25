@@ -8,6 +8,5 @@
 }
 
 .select {
-  max-inline-size: 15ch;
-  min-inline-size: 8ch;
+  inline-size: 10ch;
 }

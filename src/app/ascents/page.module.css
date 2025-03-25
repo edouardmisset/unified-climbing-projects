@@ -5,5 +5,5 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: var(--size-3);
+  gap: var(--size-fluid-1);
 }
