@@ -1,5 +1,5 @@
 import { type ReactNode, memo, useMemo } from 'react'
-import { formatDateInTooltip } from '~/helpers/formatters.ts'
+import { prettyLongDate } from '~/helpers/formatters.ts'
 import { isDateInYear } from '~/helpers/is-date-in-year.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
@@ -85,7 +85,7 @@ export const YearGrid = memo(
               isDateInYear(date, year) && (
                 <YearGridCell
                   key={date.toString()}
-                  formattedDate={formatDateInTooltip(date)}
+                  formattedDate={prettyLongDate(date)}
                   stringDate={date}
                   description={description}
                   backgroundColor={backgroundColor}

@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react'
 import { fromSessionTypeToClassName } from '~/helpers/converter'
-import { formatDateInTooltip } from '~/helpers/formatters'
+import { prettyLongDate } from '~/helpers/formatters'
 import type { TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
 import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
@@ -26,7 +26,7 @@ export const TrainingsQRDot = memo(
       [firstSession.sessionType],
     )
     const formattedDate = useMemo(
-      () => formatDateInTooltip(firstSession.date),
+      () => prettyLongDate(firstSession.date),
       [firstSession.date],
     )
     return (

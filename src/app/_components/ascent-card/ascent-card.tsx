@@ -3,13 +3,13 @@ import { addParenthesis } from '~/helpers/add-parenthesis'
 import {
   formatComments,
   formatCragAndArea,
-  formatDateInTooltip,
   formatHeight,
   formatHolds,
   formatProfile,
   formatRating,
   formatStyleAndTriers,
   fromClimbingDisciplineToEmoji,
+  prettyLongDate,
 } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-card.module.css'
@@ -47,7 +47,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
-          <time>{formatDateInTooltip(date)}</time>
+          <time>{prettyLongDate(date)}</time>
           <span>{formatCragAndArea(crag, area, { showDetails: true })}</span>
         </div>
         <div className={styles.details} style={stylesDependingOnComments}>

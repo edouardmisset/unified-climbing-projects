@@ -2,7 +2,7 @@ import { TrainingPopoverDescription } from '~/app/_components/training-popover-d
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { getSessionTypeColors } from '~/helpers/converter'
 import type { TrainingSession } from '~/schema/training'
-import { formatDateInTooltip } from './formatters'
+import { prettyLongDate } from './formatters'
 
 export function fromTrainingSessionsToCalendarEntries(
   year: number,
@@ -31,7 +31,7 @@ export function fromTrainingSessionsToCalendarEntries(
       return {
         date,
         backgroundColor,
-        title: formatDateInTooltip(date),
+        title: prettyLongDate(date),
         description: <TrainingPopoverDescription trainingSessions={sessions} />,
         shortText: sessionType ?? '',
       }

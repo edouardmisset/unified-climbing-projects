@@ -4,7 +4,7 @@ import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { formatDateTime } from '~/helpers/date'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import type { Ascent } from '~/schema/ascent'
-import { formatDateInTooltip } from './formatters'
+import { prettyLongDate } from './formatters'
 
 export function fromAscentsToCalendarEntries(
   year: number,
@@ -30,7 +30,7 @@ export function fromAscentsToCalendarEntries(
       return {
         date,
         backgroundColor,
-        title: formatDateInTooltip(date),
+        title: prettyLongDate(date),
         description: <AscentsPopoverDescription ascents={ascents} />,
         shortText: topoGrade,
       }

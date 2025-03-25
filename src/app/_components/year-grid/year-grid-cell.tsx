@@ -1,5 +1,5 @@
 import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
-import { formatDateInTooltip } from '~/helpers/formatters'
+import { prettyLongDate } from '~/helpers/formatters'
 import { Popover } from '../popover/popover'
 import { datesEqual } from './helpers'
 import styles from './year-grid.module.css'
@@ -37,7 +37,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       <span
         className={styles.yearGridCell}
         style={cellStyle}
-        title={formatDateInTooltip(stringDate)}
+        title={prettyLongDate(stringDate)}
       />
     )
 

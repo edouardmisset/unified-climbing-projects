@@ -58,7 +58,7 @@ export function formatProfile(profile: Ascent['profile']) {
   return profile ? `📐 ${profile}` : ''
 }
 
-export function formatDateInTooltip(
+export function prettyLongDate(
   date: string,
   options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
 ) {

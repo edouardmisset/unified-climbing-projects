@@ -1,7 +1,6 @@
 import { NON_BREAKING_SPACE } from '~/constants/generic'
 import {
   formatCragAndArea,
-  formatDateInTooltip,
   formatHeight,
   formatHolds,
   formatOrdinals,
@@ -9,6 +8,7 @@ import {
   formatRating,
   fromAscentStyleToEmoji,
   fromClimbingDisciplineToEmoji,
+  prettyLongDate,
 } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 
@@ -129,10 +129,10 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
                 <sup>{tries > 1 ? ` ${formatOrdinals(tries)}` : ''}</sup>
               </td>
               <td
-                title={formatDateInTooltip(date, 'longDate')}
+                title={prettyLongDate(date, 'longDate')}
                 className={`${styles.cell} monospace`}
               >
-                {formatDateInTooltip(date, 'shortDate')}
+                {prettyLongDate(date, 'shortDate')}
               </td>
               <td title={formatCragAndArea(crag, area)} className={styles.cell}>
                 {formatCragAndArea(crag, area)}
