@@ -167,6 +167,7 @@ export default async function WrapUp({ year }: { year?: number }) {
           )}
           {averageBoulderGrade === 'N/A' ? undefined : (
             <>
+              {' '}
               and <strong>{averageBoulderGrade}</strong> for boulders
             </>
           )}
