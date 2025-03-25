@@ -1,6 +1,6 @@
 import { Toggle } from '@base-ui-components/react/toggle'
 import { ToggleGroup } from '@base-ui-components/react/toggle-group'
-import { disjunctiveListFormatter } from '~/helpers/list'
+import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import styles from './climbing-style-toggle-group.module.css'
 

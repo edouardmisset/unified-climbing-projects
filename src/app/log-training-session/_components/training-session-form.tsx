@@ -11,7 +11,7 @@ import {
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
-import { disjunctiveListFormatter } from '~/helpers/list'
+import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
   CLIMBING_DISCIPLINE,

@@ -13,7 +13,7 @@ import {
   fromGradeToNumber,
   fromNumberToGrade,
 } from '~/helpers/grade-converter.ts'
-import { disjunctiveListFormatter } from '~/helpers/list.ts'
+import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
   HOLDS,

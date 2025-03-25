@@ -6,3 +6,4 @@ const createListFormatter =
     new Intl.ListFormat(undefined, { type }).format(list)
 
 export const disjunctiveListFormatter = createListFormatter('disjunction')
+export const conjunctiveListFormatter = createListFormatter('conjunction')
