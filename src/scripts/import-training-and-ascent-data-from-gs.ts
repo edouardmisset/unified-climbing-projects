@@ -1,9 +1,7 @@
+import { writeFile } from 'node:fs/promises'
 import { parse } from '@std/csv'
 import { removeObjectExtendedNullishValues } from '~/helpers/remove-undefined-values'
 import { sortKeys } from '~/helpers/sort-keys'
-import { SHEETS_INFO } from '~/services/google-sheets'
-
-import { writeFile } from 'node:fs/promises'
 import {
   TRANSFORM_FUNCTIONS_GS_TO_JS,
   transformTriesGSToJS,
@@ -12,6 +10,7 @@ import {
   TRANSFORMED_ASCENT_HEADER_NAMES,
   TRANSFORMED_TRAINING_HEADER_NAMES,
 } from '~/helpers/transformers/headers'
+import { SHEETS_INFO } from '~/services/google-sheets'
 
 const backupFilePath = './src/server/backup/'
 const trainingFileName = 'training-data.json'
@@ -85,33 +84,34 @@ export function transformClimbingData(
   csvData: CSVData,
   headers: CSVHeaders,
 ): Record<string, string | number | boolean>[] {
-  return csvData
-    .map(rowOfStrings =>
-      headers.reduce(
-        (acc, header, index) => {
-          const valueAsString = rowOfStrings[index] ?? ''
+  return csvData.map(rowOfStrings =>
+    sortKeys(
+      removeObjectExtendedNullishValues(
+        headers.reduce(
+          (acc, header, index) => {
+            const valueAsString = rowOfStrings[index] ?? ''
 
-          if (valueAsString === '') return acc
+            if (valueAsString === '') return acc
 
-          if (header === 'tries') {
-            acc.style = transformTriesGSToJS(valueAsString).style
-            acc[header] = transformTriesGSToJS(valueAsString).tries
-          } else {
-            const transform =
-              TRANSFORM_FUNCTIONS_GS_TO_JS[
-                header as keyof typeof TRANSFORM_FUNCTIONS_GS_TO_JS
-              ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
+            if (header === 'tries') {
+              acc.style = transformTriesGSToJS(valueAsString).style
+              acc[header] = transformTriesGSToJS(valueAsString).tries
+            } else {
+              const transform =
+                TRANSFORM_FUNCTIONS_GS_TO_JS[
+                  header as keyof typeof TRANSFORM_FUNCTIONS_GS_TO_JS
+                ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
 
-            acc[header] = transform(valueAsString)
-          }
+              acc[header] = transform(valueAsString)
+            }
 
-          return acc
-        },
-        {} as Record<CSVHeaders[number], string | number | boolean>,
+            return acc
+          },
+          {} as Record<CSVHeaders[number], string | number | boolean>,
+        ),
       ),
-    )
-    .map(item => removeObjectExtendedNullishValues(item))
-    .map(item => sortKeys(item))
+    ),
+  )
 }
 
 /**
