@@ -1,22 +1,65 @@
-.grid {
+.table {
   max-inline-size: 100%;
   margin-inline: auto;
+  max-block-size: 80dvh;
 
   display: grid;
   grid-template-columns: repeat(10, auto);
-  grid-auto-flow: row;
-  gap: var(--size-fluid-1);
+  column-gap: var(--size-fluid-1);
 
   background-color: var(--surface-1);
   color: var(--text-1);
 
-  padding-inline: var(--size-fluid-2);
-  padding-block: var(--size-fluid-3);
+  padding-block: var(--size-fluid-2);
 
-  overflow: auto;
+  overflow-x: auto;
 }
 
-.item {
+.header {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+
+  border-block-end: 1px solid var(--color-gray-400);
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  padding-inline: var(--size-fluid-2);
+
+  padding-block-end: var(--size-fluid-2);
+}
+
+.headerCell {
+  background-color: var(--surface-1);
+  font-weight: var(--font-weight-7);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+
+  overflow-x: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  padding-inline: var(--size-fluid-2);
+
+  &:nth-of-type(even) {
+    background-color: var(--surface-2);
+  }
+  &:nth-of-type(even):hover {
+    background-color: light-dark(var(--gray-0), var(--gray-10));
+  }
+}
+
+.cell {
   inline-size: min-content;
   max-inline-size: 20ch;
 
@@ -26,13 +69,18 @@
   text-overflow: ellipsis;
 }
 
-.Separator {
-  inline-size: 100%;
+.footer {
+  display: grid;
+  grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  block-size: 1px;
-  background-color: var(--color-gray-400);
+
+  border-block-start: 1px solid var(--surface-4);
 }
 
-.total {
-  grid-column: 1 / -1;
+.footerCell {
+  border: none;
+
+  color: var(--text-1);
+  background-color: var(--surface-1);
+  text-align: start;
 }

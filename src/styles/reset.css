@@ -619,7 +619,6 @@ not to see them */
 
 :where(td) {
   text-wrap: pretty;
-  background: var(--surface-1);
   max-inline-size: var(--size-content-2);
 }
 
@@ -636,16 +635,11 @@ not to see them */
   border-collapse: collapse;
 }
 
-:where(table tr:hover td),
-:where(tbody tr:nth-child(2n):hover td) {
-  background-color: var(--gray-10);
-}
-
-@media (prefers-color-scheme: light) {
-  :where(table tr:hover td),
-  :where(tbody tr:nth-child(2n):hover td) {
-    background-color: var(--gray-0);
-  }
+:where(table tr:not(thead tr, tfoot tr):hover td),
+:where(tbody tr:not(thead tr, tfoot tr):nth-child(2n):hover td),
+:where(table tr:not(thead tr, tfoot tr):hover),
+:where(table tr:not(thead tr, tfoot tr):nth-child(2n):hover) {
+  background-color: light-dark(var(--gray-0), var(--gray-10));
 }
 
 :where(table > caption) {
