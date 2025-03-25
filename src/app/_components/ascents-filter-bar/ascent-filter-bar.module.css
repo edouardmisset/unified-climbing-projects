@@ -8,12 +8,6 @@
   position: sticky;
   inset: 0;
   inline-size: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  gap: var(--size-3);
-  z-index: var(--layer-2);
-  padding-block: var(--size-3);
 }
 
 .backdrop {
@@ -58,4 +52,15 @@
     black var(--thickness),
     transparent var(--thickness)
   );
+}
+
+.filters {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: var(--size-fluid-1);
+  z-index: var(--layer-2);
+  padding-block: var(--size-fluid-1);
+
+  overflow-x: auto;
 }

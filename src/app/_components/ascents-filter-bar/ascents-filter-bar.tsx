@@ -14,8 +14,9 @@ import {
 import { AscentSelect } from '../ascent-select/ascent-select.tsx'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import type { OrAll } from '../dashboard/types.ts'
-import styles from './ascent-filter-bar.module.css'
 import { createChangeHandler } from './helpers.ts'
+
+import styles from './ascent-filter-bar.module.css'
 
 export default function AscentsFilterBar({
   allAscents,
@@ -62,32 +63,34 @@ export default function AscentsFilterBar({
     <search className={styles.container}>
       <div className={styles.backdrop} />
       <div className={styles.backdropEdge} />
-      <AscentSelect
-        handleChange={handleDisciplineChange}
-        name="discipline"
-        options={AVAILABLE_CLIMBING_DISCIPLINE}
-        selectedOption={selectedDiscipline}
-        title="Climbing Discipline"
-      />
-      <AscentSelect
-        handleChange={handleStyleChange}
-        name="style"
-        options={ASCENT_STYLE}
-        selectedOption={selectedStyle}
-        title="Ascent Style"
-      />
-      <AscentSelect
-        handleChange={handleYearChange}
-        name="year"
-        options={yearList}
-        selectedOption={selectedYear}
-      />
-      <AscentSelect
-        handleChange={handleCragChange}
-        name="crag"
-        options={cragList}
-        selectedOption={selectedCrag}
-      />
+      <div className={styles.filters}>
+        <AscentSelect
+          handleChange={handleDisciplineChange}
+          name="discipline"
+          options={AVAILABLE_CLIMBING_DISCIPLINE}
+          selectedOption={selectedDiscipline}
+          title="Climbing Discipline"
+        />
+        <AscentSelect
+          handleChange={handleStyleChange}
+          name="style"
+          options={ASCENT_STYLE}
+          selectedOption={selectedStyle}
+          title="Ascent Style"
+        />
+        <AscentSelect
+          handleChange={handleYearChange}
+          name="year"
+          options={yearList}
+          selectedOption={selectedYear}
+        />
+        <AscentSelect
+          handleChange={handleCragChange}
+          name="crag"
+          options={cragList}
+          selectedOption={selectedCrag}
+        />
+      </div>
     </search>
   )
 }

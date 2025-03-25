@@ -26,8 +26,13 @@
  * [blog](https://lisyarus.github.io/blog/posts/exponential-smoothing.html)
  */
 
+:where(*) {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  font-weight: 400;
+  font-weight: var(--font-weight-4);
   font-family: system-ui, sans-serif;
 
   --accent: light-dark(var(--violet-6), var(--violet-4));
@@ -72,12 +77,6 @@
   box-sizing: border-box;
 }
 
-:where(*) {
-  margin: 0;
-  padding: 0;
-  font: inherit;
-}
-
 :where(html) {
   hanging-punctuation: first last;
   scrollbar-color: light-dark(var(--gray-7), var(--gray-6)) transparent;
@@ -98,13 +97,12 @@
 :where(body) {
   min-block-size: 100svh;
   font-size: 1.125rem;
-  font-family: system-ui, sans-serif;
   line-height: 1.5;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
   text-wrap: balance;
-  font-weight: var(--font-weight-9);
+  font-weight: var(--font-weight-7);
   line-height: var(--font-lineheight-1);
 }
 
@@ -126,7 +124,7 @@
 
 :where(a) {
   color: var(--violet-9);
-  font-weight: 500;
+  font-weight: var(--font-weight-5);
 }
 
 :where(a:hover) {
