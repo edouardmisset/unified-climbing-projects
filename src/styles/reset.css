@@ -125,6 +125,7 @@
 :where(a) {
   color: var(--violet-9);
   font-weight: var(--font-weight-5);
+  text-underline-offset: 0.2em;
 }
 
 :where(a:hover) {
