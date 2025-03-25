@@ -22,7 +22,7 @@ export const SESSION_TYPES = [
   'FB',
 ] as const
 
-export const SESSION_TYPES_TO_LABELS = {
+const SESSION_TYPES_TO_TEXT = {
   Out: 'Outdoor',
 
   En: 'Endurance',
@@ -46,12 +46,12 @@ export const SESSION_TYPES_TO_LABELS = {
 export function fromSessionTypeToLabel(
   sessionType: (typeof SESSION_TYPES)[number],
 ) {
-  return SESSION_TYPES_TO_LABELS[sessionType]
+  return SESSION_TYPES_TO_TEXT[sessionType]
 }
 
 export const ANATOMICAL_REGIONS = ['Ar', 'Fi', 'Ge'] as const
 
-export const ANATOMICAL_REGIONS_TO_LABELS = {
+const ANATOMICAL_REGIONS_TO_TEXT = {
   Ar: 'Arms',
   Fi: 'Fingers',
   Ge: 'General',
@@ -60,12 +60,12 @@ export const ANATOMICAL_REGIONS_TO_LABELS = {
 export function fromAnatomicalRegionToLabel(
   anatomicalRegion: (typeof ANATOMICAL_REGIONS)[number],
 ) {
-  return ANATOMICAL_REGIONS_TO_LABELS[anatomicalRegion]
+  return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion]
 }
 
 export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
 
-export const ENERGY_SYSTEMS_TO_LABELS = {
+const ENERGY_SYSTEMS_TO_TEXT = {
   AA: 'Anaerobic Alactic',
   AL: 'Anaerobic Lactic',
   AE: 'Aerobic',
@@ -74,14 +74,14 @@ export const ENERGY_SYSTEMS_TO_LABELS = {
 export function fromEnergySystemToLabel(
   energySystem: (typeof ENERGY_SYSTEMS)[number],
 ) {
-  return ENERGY_SYSTEMS_TO_LABELS[energySystem]
+  return ENERGY_SYSTEMS_TO_TEXT[energySystem]
 }
 
-export const sessionTypeSchema = z.enum(SESSION_TYPES)
-export const energySystemSchema = z.enum(ENERGY_SYSTEMS)
-export const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
+const sessionTypeSchema = z.enum(SESSION_TYPES)
+const energySystemSchema = z.enum(ENERGY_SYSTEMS)
+const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
 
-export const percentSchema = number().int().min(0).max(100)
+const percentSchema = number().int().min(0).max(100)
 
 export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),

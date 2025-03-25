@@ -27,15 +27,6 @@ export function formatCragAndArea(
   return `📍 ${crag}${showDetails && area ? ` ▸ ${area}` : ''}`
 }
 
-export function formatCragAndDiscipline({
-  gymCrag,
-  climbingDiscipline,
-}: Pick<TrainingSession, 'gymCrag' | 'climbingDiscipline'>): Emoji {
-  return gymCrag === undefined
-    ? ''
-    : `\t${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${gymCrag}`
-}
-
 export function formatRating(rating: Ascent['rating']) {
   return rating === undefined
     ? ''
