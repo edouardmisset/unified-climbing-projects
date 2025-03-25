@@ -5,9 +5,9 @@ import {
 } from '~/helpers/converter'
 import { getWeekNumber } from '~/helpers/date'
 import { sortByDescendingGrade } from '~/helpers/sorter'
-import { AscentInWeekDescription } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
+import { AscentsPopoverDescription } from '../ascents-popover-description/ascents-popover-description'
 import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
 
@@ -45,7 +45,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       }}
       triggerContent=""
       popoverDescription={
-        <AscentInWeekDescription ascents={weeklyAscentsByDescendingGrade} />
+        <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} />
       }
       popoverTitle={`${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`}
     />

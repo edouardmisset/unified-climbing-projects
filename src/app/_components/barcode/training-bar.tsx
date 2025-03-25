@@ -5,10 +5,10 @@ import {
 } from '~/helpers/converter'
 import { getWeekNumber } from '~/helpers/date'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
-import { TrainingInWeekDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
 import { Popover } from '../popover/popover'
+import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
 import styles from './barcode.module.css'
 
 type TrainingBarsProps = {
@@ -70,7 +70,9 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       buttonStyle={buttonStyle}
       triggerContent=""
       popoverDescription={
-        <TrainingInWeekDescription sessions={filteredSortedWeeklyTraining} />
+        <TrainingPopoverDescription
+          trainingSessions={filteredSortedWeeklyTraining}
+        />
       }
       popoverTitle={weeklyTrainingSummary}
     />

@@ -1,9 +1,9 @@
 import { memo, useMemo } from 'react'
 import { fromSessionTypeToClassName } from '~/helpers/converter'
 import { formatDateInTooltip } from '~/helpers/formatters'
-import { TrainingDayPopoverDescription } from '~/helpers/tooltips'
 import type { TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
+import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
 
 // TODO: this component can now take multiple sessions. We should aggregate the
 // sessions and display a tooltip showing all the sessions and the className
@@ -33,7 +33,7 @@ export const TrainingsQRDot = memo(
       <Popover
         triggerClassName={sessionClassName}
         popoverDescription={
-          <TrainingDayPopoverDescription trainingSession={firstSession} />
+          <TrainingPopoverDescription trainingSessions={trainingSessions} />
         }
         popoverTitle={formattedDate}
         triggerContent=""

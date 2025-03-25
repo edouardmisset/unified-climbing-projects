@@ -2,8 +2,8 @@ import { memo, useMemo } from 'react'
 import { fromGradeToClassName } from '~/helpers/converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { formatDateInTooltip } from '~/helpers/formatters'
-import { AscentsInDayPopoverDescription } from '~/helpers/tooltips'
 import type { Ascent } from '~/schema/ascent'
+import { AscentsPopoverDescription } from '../ascents-popover-description/ascents-popover-description'
 import { Popover } from '../popover/popover'
 
 export const AscentsQRDot = memo(
@@ -33,9 +33,7 @@ export const AscentsQRDot = memo(
       <Popover
         triggerClassName={gradeClassName}
         triggerContent=""
-        popoverDescription={
-          <AscentsInDayPopoverDescription ascents={ascents} />
-        }
+        popoverDescription={<AscentsPopoverDescription ascents={ascents} />}
         popoverTitle={formattedAscentDate}
       />
     )

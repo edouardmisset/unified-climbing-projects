@@ -12,7 +12,8 @@ type ClimbingActivity =
  *   or with an "s" if there are multiple ascents.
  *
  * @param {Ascent[]} ascents - The list of ascent objects.
- * @returns {ClimbingActivity} The text for the ascents.
+ * @returns {ClimbingActivity} The text for the ascents ('boulder', 'boulders',
+ * 'route', etc).
  */
 export function writeAscentsDisciplineText<
   T extends Pick<Ascent, 'climbingDiscipline'>,
