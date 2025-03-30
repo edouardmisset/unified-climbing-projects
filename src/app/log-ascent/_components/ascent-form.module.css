@@ -1,0 +1,110 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-1);
+  border-radius: var(--radius-conditional-3);
+  overflow: scroll;
+  inline-size: clamp(15ch, 75ch, 100%);
+  margin: auto;
+  padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
+  padding-block: var(--size-fluid-2);
+  background-color: var(--surface-1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (width >= 640px) {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--size-3);
+  }
+}
+
+.input {
+  margin-block-start: 0.25rem;
+
+  @media screen and (width >= 640px) {
+    margin-block-start: 0;
+    min-inline-size: var(--size-relative-15);
+  }
+
+  &:is([type='number']) {
+    text-align: end;
+  }
+}
+
+.tries {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: var(--size-3);
+  justify-content: space-between;
+
+  & > input {
+    min-inline-size: var(--size-fluid-5);
+  }
+
+  @media screen and (width >= 640px) {
+    padding: var(--size-1);
+    min-inline-size: var(--size-relative-15);
+  }
+
+  @supports (field-sizing: content) {
+    field-sizing: content;
+  }
+}
+
+.textarea {
+  min-inline-size: 70%;
+
+  @supports (field-sizing: content) {
+    field-sizing: content;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: var(--font-size-fluid-3);
+  line-height: 1.5;
+}
+
+.grades {
+  --gap: var(--size-fluid-1);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+  & > span {
+    inline-size: 100%;
+  }
+
+  @media screen and (width >= 640px) {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(15ch, calc(50% - (var(--gap) / 2)))
+      );
+    align-items: center;
+
+    & > span {
+      justify-self: end;
+      inline-size: var(--size-relative-15);
+    }
+  }
+}
+
+.submit {
+  background: var(--accent);
+  line-height: 2;
+  font-weight: var(--font-weight-6);
+  transition: background var(--blink);
+
+  &:disabled {
+    background: var(--surface-4);
+    cursor: not-allowed;
+  }
+}

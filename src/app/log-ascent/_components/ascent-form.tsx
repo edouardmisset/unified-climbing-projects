@@ -33,11 +33,12 @@ import {
   _1To5RegEx,
   _1To9999RegEx,
 } from '../constants.ts'
-import styles from '../page.module.css'
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 
+import styles from './ascent-form.module.css'
+
 type HandleGradeSliderChange = (
-  value: number | number[],
+  value: number | readonly number[],
   event: Event,
   activeThumbIndex: number,
 ) => void
@@ -186,7 +187,6 @@ export default function AscentForm() {
     <form
       aria-describedby="form-description"
       autoComplete="off"
-      autoCorrect="off"
       className={styles.form}
       name="ascent-form"
       spellCheck={false}
@@ -211,8 +211,8 @@ export default function AscentForm() {
         },
       )}
     >
-      <label htmlFor="date" className={styles.label}>
-        Date
+      <div className={styles.field}>
+        <label htmlFor="date">Date</label>
         <input
           {...register('date')}
           className={styles.input}
@@ -223,13 +223,14 @@ export default function AscentForm() {
           title="Date"
           type="date"
         />
-      </label>
-      <label htmlFor="routeName" className={styles.label}>
-        Route Name
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="routeName">Route Name</label>
         <input
           {...register('routeName')}
           autoCapitalize="on"
           autoComplete="off"
+          autoCorrect="off"
           className={styles.input}
           enterKeyHint="next"
           id="routeName"
@@ -238,9 +239,9 @@ export default function AscentForm() {
           title="Route Name"
           type="text"
         />
-      </label>
-      <label htmlFor="climbingDiscipline" className={styles.label}>
-        Climbing Discipline
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="climbingDiscipline">Climbing Discipline</label>
         <select
           {...register('climbingDiscipline')}
           className={styles.input}
@@ -254,13 +255,13 @@ export default function AscentForm() {
             </option>
           ))}
         </select>
-      </label>
-      <label htmlFor="crag" className={styles.label}>
-        Crag
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="crag">Crag</label>
         <input
           {...register('crag')}
           autoCapitalize="on"
-          autoComplete="on"
+          autoComplete="off"
           className={styles.input}
           enterKeyHint="next"
           id="crag"
@@ -277,12 +278,13 @@ export default function AscentForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="area" className={styles.label}>
-        Area
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="area">Area</label>
         <input
           {...register('area')}
-          autoComplete="on"
+          autoCapitalize="on"
+          autoComplete="off"
           className={styles.input}
           enterKeyHint="next"
           id="area"
@@ -298,9 +300,9 @@ export default function AscentForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="tries" className={styles.label}>
-        Tries & Style
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="tries">Tries & Style</label>
         <div className={styles.tries}>
           <input
             {...triesRegister}
@@ -324,9 +326,9 @@ export default function AscentForm() {
             isOnsightDisable={isOnsightDisable}
           />
         </div>
-      </label>
+      </div>
       <div className={styles.grades}>
-        <label htmlFor="topoGrade" className={styles.label}>
+        <label htmlFor="topoGrade" className={styles.field}>
           <span>
             Topo Grade <strong>{fromNumberToGrade(numberTopoGrade)}</strong>
           </span>
@@ -339,7 +341,7 @@ export default function AscentForm() {
           max={adjustedMaxGrade}
           step={1}
         />
-        <label htmlFor="personalGrade" className={styles.label}>
+        <label htmlFor="personalGrade" className={styles.field}>
           <span>
             Personal Grade{' '}
             <strong>{fromNumberToGrade(personalNumberGrade)}</strong>
@@ -354,8 +356,8 @@ export default function AscentForm() {
           step={1}
         />
       </div>
-      <label htmlFor="holds" className={styles.label}>
-        Holds
+      <div className={styles.field}>
+        <label htmlFor="holds">Holds</label>
         <input
           {...register('holds')}
           className={styles.input}
@@ -363,18 +365,17 @@ export default function AscentForm() {
           id="holds"
           list="hold-types"
           placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
-          required
           title="The main hold type in the route or in the crux section"
           type="text"
         />
-      </label>
-      <datalist id="hold-types">
-        {HOLDS.map(hold => (
-          <option key={hold} value={hold} />
-        ))}
-      </datalist>
-      <label htmlFor="profile" className={styles.label}>
-        Profile
+        <datalist id="hold-types">
+          {HOLDS.map(hold => (
+            <option key={hold} value={hold} />
+          ))}
+        </datalist>
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="profile">Profile</label>
         <input
           {...register('profile')}
           className={styles.input}
@@ -382,18 +383,17 @@ export default function AscentForm() {
           id="profile"
           list="profile-types"
           placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
-          required
           title="The main profile of the route or in the crux section"
           type="text"
         />
-      </label>
-      <datalist id="profile-types">
-        {PROFILES.map(profile => (
-          <option key={profile} value={profile} />
-        ))}
-      </datalist>
-      <label htmlFor="height" className={styles.label}>
-        Height (m)
+        <datalist id="profile-types">
+          {PROFILES.map(profile => (
+            <option key={profile} value={profile} />
+          ))}
+        </datalist>
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="height">Height (m)</label>
         <input
           {...register('height')}
           className={styles.input}
@@ -417,9 +417,9 @@ export default function AscentForm() {
           }
           type="number"
         />
-      </label>
-      <label htmlFor="rating" className={styles.label}>
-        Rating
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="rating">Rating</label>
         <input
           {...register('rating')}
           className={styles.input}
@@ -434,12 +434,13 @@ export default function AscentForm() {
           title={`Route / Boulder rating (on a ${MAX_RATING} stars system)`}
           type="number"
         />
-      </label>
-      <label htmlFor="comments" className={styles.label}>
-        Comments
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="comments">Comments</label>
         <textarea
           {...register('comments')}
           autoComplete="off"
+          autoCorrect="on"
           className={`${styles.input} ${styles.textarea}`}
           enterKeyHint="send"
           id="comments"
@@ -447,7 +448,7 @@ export default function AscentForm() {
           spellCheck={true}
           title="Feelings, partners, betas..."
         />
-      </label>
+      </div>
       <Spacer size={3} />
       <button
         type="submit"

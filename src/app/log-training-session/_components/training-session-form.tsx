@@ -29,11 +29,12 @@ import {
 import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
-import styles from '../page.module.css'
+
+import styles from '~/app/log-ascent/_components/ascent-form.module.css'
 
 export default function TrainingSessionForm() {
   const result = trainingSessionSchema
-    .omit({ load: true, id: true })
+    .omit({ id: true, load: true })
     .safeParse({
       date: stringifyDate(new Date()),
     } satisfies Omit<TrainingSession, 'id'>)
@@ -70,7 +71,6 @@ export default function TrainingSessionForm() {
     <form
       aria-describedby="form-description"
       autoComplete="off"
-      autoCorrect="off"
       className={styles.form}
       name="training-session-form"
       spellCheck={false}
@@ -94,8 +94,8 @@ export default function TrainingSessionForm() {
         },
       )}
     >
-      <label htmlFor="date" className={styles.label}>
-        Date
+      <div className={styles.field}>
+        <label htmlFor="date">Date</label>
         <input
           {...register('date')}
           className={styles.input}
@@ -106,13 +106,14 @@ export default function TrainingSessionForm() {
           title="Date"
           type="date"
         />
-      </label>
-      <label htmlFor="session-type" className={styles.label}>
-        Session Type
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="session-type">Session Type</label>
         <input
           {...register('sessionType')}
           className={styles.input}
           enterKeyHint="next"
+          type="text"
           id="session-type"
           list="session-type-list"
           title={sessionTypeFormattedList}
@@ -124,13 +125,12 @@ export default function TrainingSessionForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="gymCrag" className={styles.label}>
-        Gym / Crag
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="gymCrag">Gym / Crag</label>
         <input
           {...register('gymCrag')}
           className={styles.input}
-          autoComplete="on"
           enterKeyHint="next"
           id="gymCrag"
           placeholder="Gym or Crag name"
@@ -138,7 +138,7 @@ export default function TrainingSessionForm() {
           type="text"
           list="gym-crag-list"
         />
-      </label>
+      </div>
       <datalist id="gym-crag-list">
         {allGymsOrCrags?.map(gymOrCrag => (
           <option key={gymOrCrag} value={gymOrCrag}>
@@ -146,8 +146,8 @@ export default function TrainingSessionForm() {
           </option>
         ))}
       </datalist>
-      <label htmlFor="climbing-discipline" className={styles.label}>
-        Climbing Discipline
+      <div className={styles.field}>
+        <label htmlFor="climbing-discipline">Climbing Discipline</label>
         <input
           {...register('climbingDiscipline')}
           className={styles.input}
@@ -163,9 +163,9 @@ export default function TrainingSessionForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="anatomical-region" className={styles.label}>
-        Anatomical Region
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="anatomical-region">Anatomical Region</label>
         <input
           {...register('anatomicalRegion')}
           className={styles.input}
@@ -181,9 +181,9 @@ export default function TrainingSessionForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="energy-system" className={styles.label}>
-        Energy System
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="energy-system">Energy System</label>
         <input
           {...register('energySystem')}
           className={styles.input}
@@ -200,9 +200,9 @@ export default function TrainingSessionForm() {
             </option>
           ))}
         </datalist>
-      </label>
-      <label htmlFor="intensity" className={styles.label}>
-        Intensity (%)
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="intensity">Intensity (%)</label>
         <input
           {...register('intensity', { valueAsNumber: true })}
           className={styles.input}
@@ -214,12 +214,12 @@ export default function TrainingSessionForm() {
           inputMode="numeric"
           max={MAX_PERCENT}
           min={MIN_PERCENT}
-          step={10}
+          step={5}
           pattern={_0To100RegEx.source}
         />
-      </label>
-      <label htmlFor="volume" className={styles.label}>
-        Volume (%)
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="volume">Volume (%)</label>
         <input
           {...register('volume', { valueAsNumber: true })}
           className={styles.input}
@@ -231,15 +231,16 @@ export default function TrainingSessionForm() {
           inputMode="numeric"
           max={MAX_PERCENT}
           min={MIN_PERCENT}
-          step={10}
+          step={5}
           pattern={_0To100RegEx.source}
         />
-      </label>
-      <label htmlFor="comments" className={styles.label}>
-        Comments
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="comments">Comments</label>
         <textarea
           {...register('comments')}
           autoComplete="off"
+          autoCorrect="on"
           className={`${styles.input} ${styles.textarea}`}
           enterKeyHint="send"
           id="comments"
@@ -247,7 +248,7 @@ export default function TrainingSessionForm() {
           spellCheck={true}
           title="Comments"
         />
-      </label>
+      </div>
       <Spacer size={3} />
       <button
         type="submit"

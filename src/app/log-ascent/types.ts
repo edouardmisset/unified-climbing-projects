@@ -33,7 +33,7 @@ export const ascentFormInputSchema = z.object({
   personalGrade: optionalNumberGradeSchema,
   routeName: z.string().optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
-  crag: z.string().optional(), // pick from a look up in DB
+  crag: z.string().optional(),
   date: z.date().transform(date => stringifyDate(date)),
   holds: holdsSchema.optional(),
   height: z.number().min(0).max(MAX_HEIGHT).transform(String).optional(),
@@ -66,8 +66,8 @@ export const ascentFormOutputSchema = z.object({
   climbingDiscipline: climbingDisciplineSchema,
   crag: z.string().min(1).trim(),
   date: z.string().transform(s => new Date(s).toISOString()), // yyyy-mm-dd
-  holds: holdsSchema,
-  profile: profileSchema,
+  holds: holdsSchema.optional(),
+  profile: profileSchema.optional(),
   height: z
     .string()
     .superRefine((height, ctx) => {

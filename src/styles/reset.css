@@ -216,14 +216,21 @@ not to see them */
   background-color: var(--surface-2);
 }
 
-:where(form) input:user-invalid {
+:where(form input:user-invalid) {
   outline-offset: 1px;
   outline: var(--red-8) solid var(--border-size-2);
 }
 
-:where(form) input:user-valid {
+:where(form input:user-valid) {
   outline-offset: 1px;
   outline: var(--green-8) solid var(--border-size-1);
+}
+
+:where(div:has(input:required)) label::after {
+  content: ' *';
+  color: var(--red-9);
+  font-size: 1em;
+  vertical-align: super;
 }
 
 :where(a[href]) {

@@ -16,14 +16,10 @@ export const onSubmit = async (
 
   const { data: form } = parsedFormData
 
-  const ascentInGSFormat = {
+  const ascentWithFormattedDate = {
     ...form,
     date: stringifyDate(new Date(form.date)),
   }
 
-  const result = await api.ascents.addOne(ascentInGSFormat)
-
-  globalThis.console.log('Ascent added successfully:', ascentInGSFormat)
-
-  return result
+  return await api.ascents.addOne(ascentWithFormattedDate)
 }
