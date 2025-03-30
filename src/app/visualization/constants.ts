@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const visualizations = ['QR Code', 'Barcode', 'Calendar'] as const
+export const visualizations = ['Calendar', 'QR Code', 'Barcode'] as const
 export const visualizationSchema = z.enum(visualizations)
 export type VisualizationType = z.infer<typeof visualizationSchema>
 

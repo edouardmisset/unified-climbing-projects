@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const [selectedVisualization, setVisualizationType] =
     useQueryState<VisualizationType>('visualization', {
-      defaultValue: 'QR Code',
+      defaultValue: 'Calendar',
       parse: value => visualizationSchema.parse(value),
     })
 

@@ -45,7 +45,7 @@ export function VisualizationContent(props: VisualizationContentProps) {
   const [visualizationType] = useQueryState<VisualizationType>(
     'visualization',
     {
-      defaultValue: 'QR Code',
+      defaultValue: 'Calendar',
       parse: value => visualizationSchema.parse(value),
     },
   )
