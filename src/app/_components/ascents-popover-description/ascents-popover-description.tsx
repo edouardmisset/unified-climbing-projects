@@ -3,7 +3,10 @@ import type { Ascent } from '~/schema/ascent'
 
 import styles from './ascents-popover-description.module.css'
 
-export function AscentsPopoverDescription({ ascents }: { ascents?: Ascent[] }) {
+export function AscentsPopoverDescription({
+  ascents,
+  showCrag = false,
+}: { ascents?: Ascent[]; showCrag?: boolean }) {
   if (ascents === undefined || ascents[0] === undefined) return ''
 
   return (
@@ -17,7 +20,7 @@ export function AscentsPopoverDescription({ ascents }: { ascents?: Ascent[] }) {
           className={styles.item}
         >
           {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
-          <strong>{topoGrade}</strong>) - {crag}
+          <strong>{topoGrade}</strong>) {showCrag ? `- ${crag}` : ''}
         </li>
       ))}
     </ul>

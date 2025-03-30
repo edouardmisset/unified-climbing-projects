@@ -21,9 +21,11 @@ export const AscentsQRDot = memo(
       [hardestAscent],
     )
 
-    const formattedAscentDate = useMemo(
+    const dateAndCrag = useMemo(
       () =>
-        firstAscent.date === undefined ? '' : prettyLongDate(firstAscent.date),
+        firstAscent.date === undefined
+          ? ''
+          : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`,
       [firstAscent],
     )
 
@@ -32,7 +34,7 @@ export const AscentsQRDot = memo(
         triggerClassName={gradeClassName}
         triggerContent=""
         popoverDescription={<AscentsPopoverDescription ascents={ascents} />}
-        popoverTitle={formattedAscentDate}
+        popoverTitle={dateAndCrag}
       />
     )
   },

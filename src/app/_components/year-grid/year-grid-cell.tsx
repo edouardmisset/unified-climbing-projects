@@ -10,6 +10,7 @@ type YearGridCellProps = {
   backgroundColor: string | undefined
   shortText?: ReactNode
   formattedDate: string
+  title?: ReactNode
 }
 
 export const YearGridCell = memo((props: YearGridCellProps) => {
@@ -19,6 +20,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     backgroundColor,
     shortText = '',
     formattedDate,
+    title = formattedDate,
   } = props
 
   const cellStyle: CSSProperties = useMemo(
@@ -37,6 +39,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       <span
         className={styles.yearGridCell}
         style={cellStyle}
+        // Here no data is available for the date, so we only display the date
         title={prettyLongDate(stringDate)}
       />
     )
@@ -44,7 +47,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
   return (
     <Popover
       triggerContent={shortText}
-      popoverTitle={formattedDate}
+      popoverTitle={title}
       popoverDescription={description}
       triggerClassName={`${styles.yearGridCell} contrast-color`}
       buttonStyle={cellStyle}

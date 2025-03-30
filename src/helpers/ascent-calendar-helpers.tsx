@@ -24,13 +24,15 @@ export function fromAscentsToCalendarEntries(
         }
       }
 
-      const { date } = firstAscent
+      const { date, crag } = firstAscent
       const { topoGrade } = getHardestAscent(ascents)
       const backgroundColor = fromGradeToBackgroundColor(topoGrade)
+      const dateAndCrag = `${prettyLongDate(date)} - ${crag}`
+
       return {
         date,
         backgroundColor,
-        title: prettyLongDate(date),
+        title: dateAndCrag,
         description: <AscentsPopoverDescription ascents={ascents} />,
         shortText: topoGrade,
       }

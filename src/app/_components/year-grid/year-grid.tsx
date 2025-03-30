@@ -75,7 +75,10 @@ export const YearGrid = memo(
         <DaysColumn />
         <WeeksRow columns={columns} />
         {allDayCollection.map(
-          ({ date, description, backgroundColor, shortText = '' }, index) =>
+          (
+            { date, description, backgroundColor, shortText = '', title },
+            index,
+          ) =>
             date === '' ? (
               <i
                 key={shortText?.toString() || index}
@@ -90,6 +93,7 @@ export const YearGrid = memo(
                   description={description}
                   backgroundColor={backgroundColor}
                   shortText={shortText}
+                  title={title}
                 />
               )
             ),
