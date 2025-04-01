@@ -7,6 +7,7 @@ import { api } from '~/trpc/react'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerYearByGrade } from '../charts/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx'
 import { AscentPyramid } from '../charts/ascents-pyramid/ascent-pyramid.tsx'
+import { DistanceClimbedPerYear } from '../charts/distance-climbed/distance-climbed-per-year.tsx'
 import { RoutesVsBouldersPerGrade } from '../charts/routes-vs-boulders-per-grade/routes-vs-boulders-per-grade.tsx'
 import { RoutesVsBouldersPerYear } from '../charts/routes-vs-boulders-per-year/routes-vs-boulders-per-year.tsx'
 import { RoutesVsBoulders } from '../charts/routes-vs-boulders/routes-vs-boulders.tsx'
@@ -40,6 +41,10 @@ export function Dashboard() {
         />
         <TriesByGrade ascents={filteredAscents} className={styles.item} />
         <RoutesVsBouldersPerGrade
+          ascents={filteredAscents}
+          className={styles.item}
+        />
+        <DistanceClimbedPerYear
           ascents={filteredAscents}
           className={styles.item}
         />
