@@ -18,10 +18,10 @@ export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
 
     return {
       year,
-      boulders: Boulder,
-      bouldersColor: 'var(--boulder)',
-      routes: Route,
-      routesColor: 'var(--route)',
+      Boulder,
+      BoulderColor: 'var(--boulder)',
+      Route,
+      RouteColor: 'var(--route)',
     }
   })
 }

@@ -12,10 +12,10 @@ describe('getRoutesVsBouldersPerYear', () => {
     const expected = [
       {
         year: 2024,
-        boulders: 1,
-        bouldersColor: 'var(--boulder)',
-        routes: 19,
-        routesColor: 'var(--route)',
+        Boulder: 1,
+        BoulderColor: 'var(--boulder)',
+        Route: 19,
+        RouteColor: 'var(--route)',
       },
     ]
     const result = getRoutesVsBouldersPerYear(

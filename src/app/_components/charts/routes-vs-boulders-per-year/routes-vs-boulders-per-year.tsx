@@ -1,6 +1,7 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
+import type { CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
@@ -13,7 +14,10 @@ import {
 } from '../constants'
 import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
-const discipline = ['boulders', 'routes']
+const ROUTE_AND_BOULDER = [
+  'Boulder',
+  'Route',
+] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
 export function RoutesVsBouldersPerYear({
   ascents,
@@ -29,7 +33,7 @@ export function RoutesVsBouldersPerYear({
       <ResponsiveBar
         data={data}
         theme={theme}
-        keys={discipline}
+        keys={ROUTE_AND_BOULDER}
         groupMode="grouped"
         indexBy="year"
         margin={DEFAULT_CHART_MARGIN}
