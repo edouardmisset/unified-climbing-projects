@@ -57,9 +57,9 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
           </th>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
-            title="Height of the route in meters"
+            title="Most common holds on the route (or boulder) or holds of the crux section"
           >
-            Height (m)
+            Holds
           </th>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
@@ -69,9 +69,9 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
           </th>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
-            title="Most common holds on the route (or boulder) or holds of the crux section"
+            title="Height of the route in meters"
           >
-            Holds
+            Height
           </th>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
@@ -137,17 +137,17 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
               <td title={formatCragAndArea(crag, area)} className={styles.cell}>
                 {formatCragAndArea(crag, area)}
               </td>
+              <td title={holds} className={styles.cell}>
+                {formatHolds(holds)}
+              </td>
+              <td title={profile} className={styles.cell}>
+                {formatProfile(profile)}
+              </td>
               <td
                 title={height === undefined ? undefined : `${height}m`}
                 className={`${styles.cell} monospace`}
               >
                 {formatHeight(height)}
-              </td>
-              <td title={profile} className={styles.cell}>
-                {formatProfile(profile)}
-              </td>
-              <td title={holds} className={styles.cell}>
-                {formatHolds(holds)}
               </td>
               <td
                 title={rating === undefined ? undefined : `${rating}⭐️`}
