@@ -9,7 +9,7 @@ import {
   defaultMotionConfig,
   numberOfAscentsAxisLeft,
   theme,
-  yearAxisBottom,
+  yearBottomAxis,
 } from '../constants'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
@@ -37,7 +37,7 @@ export function AscentsPerYearByGrade({
         colors={chartColorGetter}
         enableLabel={false}
         motionConfig={defaultMotionConfig}
-        axisBottom={yearAxisBottom}
+        axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
       />
     </ChartContainer>

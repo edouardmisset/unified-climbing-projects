@@ -85,9 +85,9 @@ export const numberOfAscentsAxisLeft: AxisProps = {
   legendPosition: 'middle',
 }
 // biome-ignore lint/suspicious/noExplicitAny: This comes from the Nivo library
-export const yearAxisBottom: AxisProps<any> = {
+export const yearBottomAxis: AxisProps<any> = {
   format: year => `'${year.toString().slice(2)}`,
-  legend: 'Year',
+  legend: 'Years',
   legendOffset: 40,
   legendPosition: 'middle',
 }

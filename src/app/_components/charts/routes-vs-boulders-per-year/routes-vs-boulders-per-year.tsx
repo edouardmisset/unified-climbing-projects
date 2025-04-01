@@ -10,7 +10,7 @@ import {
   defaultMotionConfig,
   numberOfAscentsAxisLeft,
   theme,
-  yearAxisBottom,
+  yearBottomAxis,
 } from '../constants'
 import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
 
@@ -43,7 +43,7 @@ export function RoutesVsBouldersPerYear({
         colors={chartColorGetter}
         enableLabel={false}
         motionConfig={defaultMotionConfig}
-        axisBottom={yearAxisBottom}
+        axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
       />
     </ChartContainer>
