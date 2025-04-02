@@ -1,8 +1,8 @@
 import { createYearList } from '~/data/helpers'
+import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { createGradeScale } from '~/helpers/create-grade-scale'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { minMaxGrades } from '~/helpers/min-max-grades'
-import { fromGradeToBackgroundColor } from '~/helpers/training-converter'
 import type { Ascent } from '~/schema/ascent'
 
 export function getAscentsPerYearByGrade(ascents: Ascent[]): {

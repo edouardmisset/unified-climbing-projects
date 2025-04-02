@@ -62,7 +62,7 @@
 
 .cell {
   inline-size: min-content;
-  max-inline-size: 20ch;
+  max-inline-size: 22ch;
 
   /* no-text-wrap */
   overflow: hidden;

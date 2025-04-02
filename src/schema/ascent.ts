@@ -130,6 +130,49 @@ export const GRADE_TO_NUMBER = {
   '9c+': 54,
 } as const satisfies Record<Grade, number>
 
+export const GRADE_TO_POINTS = {
+  '5a': 100,
+  '5a+': 150,
+  '5b': 200,
+  '5b+': 250,
+  '5c': 300,
+  '5c+': 350,
+
+  '6a': 400,
+  '6a+': 450,
+  '6b': 500,
+  '6b+': 550,
+  '6c': 600,
+  '6c+': 650,
+
+  '7a': 700,
+  '7a+': 750,
+  '7b': 800,
+  '7b+': 850,
+  '7c': 900,
+  '7c+': 950,
+
+  '8a': 1000,
+  '8a+': 1050,
+  '8b': 1100,
+  '8b+': 1150,
+  '8c': 1200,
+  '8c+': 1250,
+
+  '9a': 1300,
+  '9a+': 1350,
+  '9b': 1400,
+  '9b+': 1450,
+  '9c': 1500,
+  '9c+': 1550,
+} as const satisfies Partial<Record<Grade, number>>
+
+export const STYLE_TO_POINTS = {
+  Redpoint: 0,
+  Flash: 100,
+  Onsight: 150,
+} as const satisfies Record<Ascent['style'], number>
+
 export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
@@ -213,5 +256,6 @@ export const ascentSchema = z.object({
   topoGrade: gradeSchema,
   tries: number().int().min(1),
   id: number().min(0),
+  points: number().int().min(0).optional(),
 })
 export type Ascent = z.infer<typeof ascentSchema>

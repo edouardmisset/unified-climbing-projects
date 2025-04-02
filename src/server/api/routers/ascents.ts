@@ -4,8 +4,10 @@ import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
 
 import fuzzySort from 'fuzzysort'
 import { number, string, z } from 'zod'
+import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
+import { isDateInYear } from '~/helpers/is-date-in-year'
 import {
   type Ascent,
   ascentSchema,
@@ -195,6 +197,41 @@ export const ascentsRouter = createTRPCRouter({
         globalThis.console.error(error)
         return false
       }
+    }),
+  getTopTen: publicProcedure
+    .input(
+      z
+        .object({
+          timespan: z.enum(['year', '12-months']).optional(),
+          year: z.number().int().positive().optional(),
+        })
+        .optional(),
+    )
+    .output(ascentSchema.extend({ points: z.number() }).array())
+    .query(async ({ input }) => {
+      const { timespan = 'year', year = new Date().getFullYear() } = input ?? {}
+
+      const allAscents = await getAllAscents()
+
+      const ascentsWithPoints = allAscents
+        .filter(({ date }) => {
+          const now = new Date()
+          const lastYear = new Date()
+          lastYear.setFullYear(now.getFullYear() - 1)
+          lastYear.setHours(0, 0, 0, 0)
+          const lastYearDate = new Date(date)
+
+          return timespan === 'year'
+            ? isDateInYear(date, year)
+            : new Date(date) >= lastYearDate
+        })
+        .map(ascent => ({
+          ...ascent,
+          points: fromAscentToPoints(ascent),
+        }))
+        .sort((a, b) => b.points - a.points)
+
+      return ascentsWithPoints.slice(0, 10)
     }),
 })
 
