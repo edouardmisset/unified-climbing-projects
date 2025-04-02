@@ -169,7 +169,7 @@ export const GRADE_TO_POINTS = {
 
 export const STYLE_TO_POINTS = {
   Redpoint: 0,
-  Flash: 100,
+  Flash: 50,
   Onsight: 150,
 } as const satisfies Record<Ascent['style'], number>
 

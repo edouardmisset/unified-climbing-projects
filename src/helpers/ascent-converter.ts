@@ -41,17 +41,23 @@ export function fromGradeToClassName(
 /**
  * Converts a climbing ascent to its corresponding points value.
  *
- * Combines the points defined for the given climbing grade and style of the
- * ascent.
+ * Combines the points defined for the given climbing grade, style, and discipline.
  *
- * @param {Ascent} params - The ascent
- * @param {Grade} params.topoGrade - The topo grade of the ascent
- * @param {string} params.style - The style of the ascent
- * @returns {number} The total points for the ascent
+ * @param {Ascent} params - The ascent object containing climb details.
+ * @param {Grade} params.topoGrade - The topo grade of the ascent.
+ * @param {string} params.style - The style of the ascent.
+ * @param {string} params.climbingDiscipline - The discipline of the climb.
+ * @returns {number} The total points for the ascent.
  */
-export function fromAscentToPoints({ topoGrade, style }: Ascent): number {
-  return (
-    (GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0) +
-    (STYLE_TO_POINTS[style] ?? 0)
-  )
+export function fromAscentToPoints({
+  topoGrade,
+  style,
+  climbingDiscipline,
+}: Ascent): number {
+  const gradePoints =
+    GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
+  const stylePoints = STYLE_TO_POINTS[style] ?? 0
+  const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? 100 : 0
+
+  return gradePoints + stylePoints + climbingDisciplineBonus
 }
