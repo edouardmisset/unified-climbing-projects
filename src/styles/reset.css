@@ -629,7 +629,7 @@ not to see them */
 }
 
 :where(td, th) {
-  padding: var(--size-2);
+  padding: calc(var(--size-fluid-1) / 2);
   text-align: left;
 }
 
