@@ -4,6 +4,7 @@ import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filte
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { api } from '~/trpc/react'
+import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerYearByGrade } from '../charts/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx'
 import { AscentPyramid } from '../charts/ascents-pyramid/ascent-pyramid.tsx'
@@ -45,6 +46,10 @@ export function Dashboard() {
           className={styles.item}
         />
         <DistanceClimbedPerYear
+          ascents={filteredAscents}
+          className={styles.item}
+        />
+        <AscentsByGradesPerCrag
           ascents={filteredAscents}
           className={styles.item}
         />
