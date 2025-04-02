@@ -12,6 +12,7 @@ import {
 } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 
+import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import styles from './ascent-list.module.css'
 
 export function AscentList({ ascents }: { ascents: Ascent[] }) {
@@ -163,8 +164,8 @@ export function AscentList({ ascents }: { ascents: Ascent[] }) {
         <tr className={styles.row}>
           <th className={styles.footerCell}>Total</th>
           <td className={styles.footerCell}>
-            <strong>{ascents.length}</strong> ascent
-            {ascents.length > 1 ? 's' : ''}
+            <strong>{ascents.length}</strong>{' '}
+            {writeAscentsDisciplineText(ascents)}
           </td>
         </tr>
       </tfoot>
