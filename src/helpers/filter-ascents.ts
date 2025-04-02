@@ -1,3 +1,4 @@
+import { objectKeys } from '@edouardmisset/object'
 import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import type { Ascent } from '~/schema/ascent'
@@ -77,7 +78,7 @@ export function getCragsDetails(ascents: Ascent[]): {
   crags: Ascent['crag'][]
 } {
   const cragsByFrequency = frequencyBy(ascents, 'crag', { ascending: false })
-  const crags = Object.keys(cragsByFrequency)
+  const crags = objectKeys(cragsByFrequency)
   const [mostFrequentCrag] = crags
 
   return {

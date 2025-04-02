@@ -6,7 +6,7 @@ import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
   getAllTrainingSessions: publicProcedure
-    .input(z.object({ year: number().optional() }).optional())
+    .input(z.object({ year: number().int().positive().optional(), sessionType: trainingSessionSchema.shape.sessionType.optional() }).optional())
     .output(trainingSessionSchema.array())
     .query(async ({ input }) => {
       const allTrainingSessions = await getAllTrainingSessions()
