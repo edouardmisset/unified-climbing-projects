@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react'
-import { fromSessionTypeToClassName } from '~/helpers/converter'
 import { prettyLongDate } from '~/helpers/formatters'
+import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
 import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'

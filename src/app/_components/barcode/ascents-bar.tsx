@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react'
+import { getWeekNumber } from '~/helpers/date'
+import { sortByDescendingGrade } from '~/helpers/sorter'
 import {
   fromGradeToBackgroundColor,
   fromGradeToClassName,
-} from '~/helpers/converter'
-import { getWeekNumber } from '~/helpers/date'
-import { sortByDescendingGrade } from '~/helpers/sorter'
+} from '~/helpers/training-converter'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
 import { AscentsPopoverDescription } from '../ascents-popover-description/ascents-popover-description'

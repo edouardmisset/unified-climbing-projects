@@ -23,6 +23,7 @@ redpointed
 ruffwear
 Serie
 stylelintcache
+timespan
 topoGrade
 toutes
 traiter

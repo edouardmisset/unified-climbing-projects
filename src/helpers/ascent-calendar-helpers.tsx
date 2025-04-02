@@ -1,8 +1,8 @@
 import { AscentsPopoverDescription } from '~/app/_components/ascents-popover-description/ascents-popover-description'
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
-import { fromGradeToBackgroundColor } from '~/helpers/converter'
 import { formatDateTime } from '~/helpers/date'
 import { getHardestAscent } from '~/helpers/filter-ascents'
+import { fromGradeToBackgroundColor } from '~/helpers/training-converter'
 import type { Ascent } from '~/schema/ascent'
 import { prettyLongDate } from './formatters'
 

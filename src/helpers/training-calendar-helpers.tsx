@@ -1,6 +1,6 @@
 import { TrainingPopoverDescription } from '~/app/_components/training-popover-description/training-popover-description'
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
-import { getSessionTypeColors } from '~/helpers/converter'
+import { getSessionTypeColors } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import { prettyLongDate } from './formatters'
 

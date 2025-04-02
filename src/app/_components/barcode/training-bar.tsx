@@ -1,10 +1,10 @@
 import { memo, useMemo } from 'react'
+import { getWeekNumber } from '~/helpers/date'
+import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
-} from '~/helpers/converter'
-import { getWeekNumber } from '~/helpers/date'
-import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
+} from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
 import { Popover } from '../popover/popover'
