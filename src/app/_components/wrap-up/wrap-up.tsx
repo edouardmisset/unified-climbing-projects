@@ -34,7 +34,7 @@ export default async function WrapUp({ year }: { year?: number }) {
           </Card>
         }
       >
-        <DaysOutsideSummary ascents={ascents} />
+        <DaysOutsideSummary ascents={ascents} year={year} />
       </Suspense>
       <AscentSummary ascents={ascents} />
       <HardestClimbsSummary ascents={ascents} />

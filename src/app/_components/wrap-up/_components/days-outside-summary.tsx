@@ -6,14 +6,17 @@ import { Card } from '../../card/card'
 
 export async function DaysOutsideSummary({
   ascents,
+  year,
 }: {
   ascents: Ascent[]
+  year?: number
 }) {
-  const daysOutside = (
-    await api.training.getAllTrainingSessions({
-      sessionType: 'Out',
-    })
-  ).length
+  const outdoorSessions = await api.training.getAllTrainingSessions({
+    sessionType: 'Out',
+    year,
+  })
+
+  const daysOutside = outdoorSessions.length
 
   if (ascents.length === 0 || daysOutside === 0) return undefined
 
@@ -36,12 +39,13 @@ export async function DaysOutsideSummary({
       {mostAscentDate === '' ||
       ascentsInMostAscentDay.length === 0 ? undefined : (
         <p>
-          Your best day was the{' '}
+          Your best day was{' '}
           <strong>
             {formatDateTime(new Date(mostAscentDate), 'longDate')}
           </strong>{' '}
           where you climbed{' '}
-          <AscentsWithPopover ascents={ascentsInMostAscentDay} />
+          <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
+          <strong>{ascentsInMostAscentDay[0]?.crag}</strong>
         </p>
       )}
     </Card>
