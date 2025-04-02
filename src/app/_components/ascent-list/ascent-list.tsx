@@ -1,3 +1,5 @@
+import { sum } from '@edouardmisset/math/sum.ts'
+import { useMemo } from 'react'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
 import {
   formatCragAndArea,
@@ -10,9 +12,8 @@ import {
   fromClimbingDisciplineToEmoji,
   prettyLongDate,
 } from '~/helpers/formatters'
-import type { Ascent } from '~/schema/ascent'
-
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
+import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-list.module.css'
 
 export function AscentList({
@@ -24,6 +25,10 @@ export function AscentList({
   showDetails?: boolean
   showPoints?: boolean
 }): React.JSX.Element {
+  const totalAscentPoints = useMemo(
+    () => sum(ascents.map(({ points }) => points ?? 0)),
+    [ascents],
+  )
   return (
     <table className={styles.table}>
       <thead className={styles.header}>
@@ -193,11 +198,23 @@ export function AscentList({
       </tbody>
       <tfoot className={styles.footer}>
         <tr className={styles.row}>
-          <th className={styles.footerCell}>Total</th>
-          <td className={styles.footerCell}>
-            <strong>{ascents.length}</strong>{' '}
-            {writeAscentsDisciplineText(ascents)}
-          </td>
+          {showPoints ? (
+            <>
+              <th className={styles.footerCell}>Total</th>
+              <td className={styles.footerCell} />
+              <td className={styles.footerCell}>
+                <strong>{totalAscentPoints}</strong>
+              </td>
+            </>
+          ) : (
+            <>
+              <th className={styles.footerCell}>Total</th>
+              <td className={styles.footerCell}>
+                <strong>{ascents.length}</strong>{' '}
+                {writeAscentsDisciplineText(ascents)}
+              </td>
+            </>
+          )}
         </tr>
       </tfoot>
     </table>
