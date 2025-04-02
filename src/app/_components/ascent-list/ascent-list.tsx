@@ -135,7 +135,10 @@ export function AscentList({
                 <strong title={routeName}>{routeName}</strong>
               </td>
               {showPoints && (
-                <td title={'hi'} className={`${styles.cell} monospace`}>
+                <td
+                  title={points?.toString()}
+                  className={`${styles.cell} monospace`}
+                >
                   {points}
                 </td>
               )}

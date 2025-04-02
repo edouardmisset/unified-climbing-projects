@@ -7,6 +7,7 @@ import { number, string, z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
+import { isDateInLast12Months } from '~/helpers/is-date-in-last-12-months'
 import { isDateInYear } from '~/helpers/is-date-in-year'
 import {
   type Ascent,
@@ -17,7 +18,7 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import { errorSchema } from '~/schema/generic'
+import { errorSchema, timeframeSchema } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
 
@@ -25,6 +26,7 @@ export async function getFilteredAscents(
   filters?: OptionalAscentFilter,
 ): Promise<Ascent[]> {
   const ascents = await getAllAscents()
+  if (filters === undefined) return ascents
   return filterAscents(ascents, filters)
 }
 
@@ -202,28 +204,24 @@ export const ascentsRouter = createTRPCRouter({
     .input(
       z
         .object({
-          timespan: z.enum(['year', '12-months']).optional(),
+          timeframe: timeframeSchema.optional(),
           year: z.number().int().positive().optional(),
         })
         .optional(),
     )
     .output(ascentSchema.extend({ points: z.number() }).array())
-    .query(async ({ input }) => {
-      const { timespan = 'year', year = new Date().getFullYear() } = input ?? {}
+    .query(async ({ input = {} }) => {
+      const { timeframe = 'year', year = new Date().getFullYear() } = input
 
       const allAscents = await getAllAscents()
 
-      const ascentsWithPoints = allAscents
+      const sortedAscentsWithPoints = allAscents
         .filter(({ date }) => {
-          const now = new Date()
-          const lastYear = new Date()
-          lastYear.setFullYear(now.getFullYear() - 1)
-          lastYear.setHours(0, 0, 0, 0)
-          const lastYearDate = new Date(date)
+          if (timeframe === 'all-time') return true
+          if (timeframe === 'year') return isDateInYear(date, year)
+          if (timeframe === '12-months') return isDateInLast12Months(date)
 
-          return timespan === 'year'
-            ? isDateInYear(date, year)
-            : new Date(date) >= lastYearDate
+          return false
         })
         .map(ascent => ({
           ...ascent,
@@ -231,7 +229,7 @@ export const ascentsRouter = createTRPCRouter({
         }))
         .sort((a, b) => b.points - a.points)
 
-      return ascentsWithPoints.slice(0, 10)
+      return sortedAscentsWithPoints.slice(0, 10)
     }),
 })
 

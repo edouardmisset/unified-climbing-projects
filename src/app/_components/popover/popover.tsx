@@ -1,6 +1,6 @@
 import { Popover as BasePopover } from '@base-ui-components/react/popover'
 import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
-import { ArrowSvg } from '../arrow-svg/arrow-svg'
+import { Arrow } from '../svg/arrow/arrow'
 import styles from './popover.module.css'
 
 const PopoverContent = memo(
@@ -15,7 +15,7 @@ const PopoverContent = memo(
       <BasePopover.Positioner sideOffset={8}>
         <BasePopover.Popup className={styles.Popup}>
           <BasePopover.Arrow className={styles.Arrow}>
-            <ArrowSvg />
+            <Arrow />
           </BasePopover.Arrow>
           <BasePopover.Title className={styles.Title}>
             {popoverTitle}

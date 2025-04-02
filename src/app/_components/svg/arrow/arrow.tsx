@@ -1,6 +1,6 @@
-import styles from './arrow-svg.module.css'
+import styles from './arrow.module.css'
 
-export function ArrowSvg(props: React.ComponentProps<'svg'>) {
+export function Arrow(props: React.ComponentProps<'svg'>) {
   return (
     <svg width="20" height="10" viewBox="0 0 20 10" fill="none" {...props}>
       <title>Arrow Icon</title>

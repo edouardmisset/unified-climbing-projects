@@ -31,13 +31,11 @@ export function AscentSelect(props: AscentSelectProps) {
         className={styles.select}
       >
         <option value={ALL_VALUE}>{capitalize(ALL_VALUE)}</option>
-        {options.map(option => {
-          return (
-            <option key={option} value={option} title={String(option)}>
-              {option}
-            </option>
-          )
-        })}
+        {options.map(option => (
+          <option key={option} value={option} title={String(option)}>
+            {option}
+          </option>
+        ))}
       </select>
     </label>
   )

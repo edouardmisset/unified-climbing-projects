@@ -4,8 +4,8 @@ import { Menu } from '@base-ui-components/react/menu'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { MenuIcon } from 'lucide-react'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button'
-import { ArrowSvg } from '../arrow-svg/arrow-svg'
 import { Link } from '../link/link'
+import { Arrow } from '../svg/arrow/arrow'
 import styles from './navigation.module.css'
 
 export function Navigation() {
@@ -23,7 +23,7 @@ export function Navigation() {
           <Menu.Positioner className={styles.Positioner} sideOffset={8}>
             <Menu.Popup className={styles.Popup}>
               <Menu.Arrow className={styles.Arrow}>
-                <ArrowSvg />
+                <Arrow />
               </Menu.Arrow>
               <Menu.Item
                 className={styles.Item}

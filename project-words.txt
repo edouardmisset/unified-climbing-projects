@@ -23,6 +23,10 @@ redpointed
 ruffwear
 Serie
 stylelintcache
+timeframe
+Timeframe
+timeframes
+timesframe
 timespan
 topoGrade
 toutes
