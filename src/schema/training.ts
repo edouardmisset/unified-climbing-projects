@@ -77,6 +77,9 @@ export function fromEnergySystemToLabel(
   return ENERGY_SYSTEMS_TO_TEXT[energySystem]
 }
 
+export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
+export type LoadCategory = (typeof LOAD_CATEGORIES)[number]
+
 const sessionTypeSchema = z.enum(SESSION_TYPES)
 const energySystemSchema = z.enum(ENERGY_SYSTEMS)
 const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)

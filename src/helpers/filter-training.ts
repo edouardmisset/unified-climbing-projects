@@ -1,11 +1,12 @@
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import type { TrainingSession } from '~/schema/training.ts'
+import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
 import { isDateInYear } from './is-date-in-year.ts'
 
 type OptionalTrainingInput = Partial<
-  Omit<TrainingSession, 'date' | 'comments'>
+  Omit<TrainingSession, 'date' | 'comments' | 'load'>
 > & {
   year?: number
+  load?: LoadCategory
 }
 
 /**
@@ -52,9 +53,28 @@ export function filterTrainingSessions(
       (energySystem === undefined ||
         trainingSession.energySystem === energySystem) &&
       (intensity === undefined || trainingSession.intensity === intensity) &&
-      (load === undefined || trainingSession.load === load) &&
+      (load === undefined ||
+        isLoadInLoadCategory(trainingSession.load, load)) &&
       (sessionType === undefined ||
         trainingSession.sessionType === sessionType) &&
       (volume === undefined || trainingSession.volume === volume),
   )
+}
+
+export function isLoadInLoadCategory(
+  load: TrainingSession['load'],
+  loadCategory: LoadCategory,
+): boolean {
+  if (load === undefined) return false
+
+  if (loadCategory === 'Low') {
+    return load < 30
+  }
+  if (loadCategory === 'Medium') {
+    return 30 <= load && load < 70
+  }
+  if (loadCategory === 'High') {
+    return load >= 70
+  }
+  return false
 }

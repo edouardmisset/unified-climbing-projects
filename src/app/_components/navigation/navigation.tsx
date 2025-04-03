@@ -8,7 +8,7 @@ import { Link } from '../link/link'
 import { Arrow } from '../svg/arrow/arrow'
 import styles from './navigation.module.css'
 
-export function Navigation() {
+export function Navigation(): React.JSX.Element {
   return (
     <header className={styles.Header}>
       <Menu.Root openOnHover={true}>
@@ -67,6 +67,9 @@ export function Navigation() {
                 <Menu.GroupLabel className={styles.GroupLabel}>
                   💪 Training 💪
                 </Menu.GroupLabel>
+                <Menu.Item className={styles.Item}>
+                  <Link href="/training-sessions">📇 List</Link>
+                </Menu.Item>
               </Menu.Group>
             </Menu.Popup>
           </Menu.Positioner>

@@ -19,6 +19,9 @@ is my playground for these experiments.
 - [x] Add ability to log a training session
 - [x] Update the page (tab) title when we navigate to a new page
 - [x] Add toasts for success and error form submission
+- [x] Add a list of all training sessions like the list of ascents. Also use
+  filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
+  medium, low))
 
 </details>
 </br>
@@ -36,10 +39,6 @@ is my playground for these experiments.
 - [ ] Add error management (w/ Sentry)
 
 - [ ] Add Analytics (Posthog)
-
-- [ ] Add a list of all training sessions like the list of ascents. Also use
-  filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
-  medium, low))
 
 - [ ] Transform the dashboard so that it displays the list of selected ascents
   along with the charts. Each ascent should be clickable to see a modal with the

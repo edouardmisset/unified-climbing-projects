@@ -1,9 +1,9 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
 import { ALL_VALUE } from '../dashboard/constants.ts'
-import styles from './ascent-select.module.css'
+import styles from './custom-select.module.css'
 
-type AscentSelectProps = {
+type CustomSelectProps = {
   handleChange: ChangeEventHandler<HTMLSelectElement>
   selectedOption: string
   options: string[] | number[] | readonly string[]
@@ -11,7 +11,7 @@ type AscentSelectProps = {
   title?: string
 }
 
-export function AscentSelect(props: AscentSelectProps) {
+export function CustomSelect(props: CustomSelectProps) {
   const {
     handleChange,
     selectedOption,

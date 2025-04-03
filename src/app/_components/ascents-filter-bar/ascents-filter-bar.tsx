@@ -12,7 +12,7 @@ import {
   ascentStyleSchema,
   climbingDisciplineSchema,
 } from '~/schema/ascent'
-import { AscentSelect } from '../ascent-select/ascent-select.tsx'
+import { CustomSelect } from '../custom-select/custom-select.tsx'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import type { OrAll } from '../dashboard/types.ts'
 import styles from './ascent-filter-bar.module.css'
@@ -64,27 +64,27 @@ export default function AscentsFilterBar({
       <div className={styles.backdrop} />
       <div className={styles.backdropEdge} />
       <div className={styles.filters}>
-        <AscentSelect
+        <CustomSelect
           handleChange={handleDisciplineChange}
           name="discipline"
           options={AVAILABLE_CLIMBING_DISCIPLINE}
           selectedOption={selectedDiscipline}
           title="Climbing Discipline"
         />
-        <AscentSelect
+        <CustomSelect
           handleChange={handleStyleChange}
           name="style"
           options={ASCENT_STYLE}
           selectedOption={selectedStyle}
           title="Ascent Style"
         />
-        <AscentSelect
+        <CustomSelect
           handleChange={handleYearChange}
           name="year"
           options={yearList}
           selectedOption={selectedYear}
         />
-        <AscentSelect
+        <CustomSelect
           handleChange={handleCragChange}
           name="crag"
           options={cragList}
