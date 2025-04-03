@@ -1,52 +1,8 @@
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
-const localeIdentifier = 'en-US'
-
 const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
 const MILLISECONDS_IN_WEEK = 7 * MILLISECONDS_IN_DAY
-
-export const DATE_TIME_OPTIONS = {
-  longDateTime: {
-    dateStyle: 'long',
-    timeStyle: 'medium',
-  },
-  shortDateTime: {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  },
-  shortDate: {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-  },
-  mediumDate: {
-    dateStyle: 'medium',
-  },
-  longDate: {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  },
-} as const satisfies Record<string, Intl.DateTimeFormatOptions>
-
-/**
- * Formats the provided date using the specified date time options.
- *
- * @param {Date} date - The date to format
- * @param {keyof typeof DATE_TIME_OPTIONS} [options='fullDateTime'] - The format option key from DATE_TIME_OPTIONS
- * @returns {string} The formatted date string
- */
-export const formatDateTime = (
-  date: Date,
-  options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
-): string => {
-  return new Intl.DateTimeFormat(
-    localeIdentifier,
-    DATE_TIME_OPTIONS[options],
-  ).format(date)
-}
 
 export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)

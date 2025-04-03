@@ -1,7 +1,8 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { addParenthesis } from './add-parenthesis'
-import { type DATE_TIME_OPTIONS, formatDateTime } from './date'
+import { type DATE_TIME_OPTIONS, formatDateTime } from './format-date'
+import { formatOrdinals } from './format-plurals'
 
 export function formatComments(
   comments: Ascent['comments'] | TrainingSession['comments'],
@@ -89,19 +90,6 @@ export function formatStyleAndTriers({
   return [styleEmoji, styleText, triesText]
     .filter(string => string !== '')
     .join(' ')
-}
-
-const englishOrdinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' })
-const suffixes = new Map([
-  ['one', 'st'],
-  ['two', 'nd'],
-  ['few', 'rd'],
-  ['other', 'th'],
-])
-export function formatOrdinals(number_: number) {
-  const rule = englishOrdinalRules.select(number_)
-  const suffix = suffixes.get(rule)
-  return `${number_}${suffix}`
 }
 
 // EMOJIS
