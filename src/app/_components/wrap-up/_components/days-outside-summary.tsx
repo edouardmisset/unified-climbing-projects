@@ -1,4 +1,5 @@
-import { formatDateTime, getMostFrequentDate } from '~/helpers/date'
+import { getMostFrequentDate } from '~/helpers/date'
+import { formatDateTime } from '~/helpers/format-date'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'

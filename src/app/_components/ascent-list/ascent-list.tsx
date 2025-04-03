@@ -1,11 +1,11 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { useMemo } from 'react'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
+import { formatOrdinals } from '~/helpers/format-plurals'
 import {
   formatCragAndArea,
   formatHeight,
   formatHolds,
-  formatOrdinals,
   formatProfile,
   formatRating,
   fromAscentStyleToEmoji,

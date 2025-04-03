@@ -3,10 +3,10 @@ import { average } from '@edouardmisset/math/average.ts'
 import { z } from 'zod'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/grade-converter'
 import { minMaxGrades } from '~/helpers/min-max-grades'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import { gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
-import { compareStringsAscending } from '~/helpers/sort-strings'
 
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
@@ -17,7 +17,9 @@ export const gradesRouter = createTRPCRouter({
 
       const filteredGrades = filteredAscents.map(({ topoGrade }) => topoGrade)
 
-      return [...new Set(filteredGrades)].sort((a, b) => compareStringsAscending(a, b))
+      return [...new Set(filteredGrades)].sort((a, b) =>
+        compareStringsAscending(a, b),
+      )
     }),
   getAverage: publicProcedure
     .input(optionalAscentFilterSchema)
