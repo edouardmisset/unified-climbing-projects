@@ -1,0 +1,17 @@
+ls:
+  .dir: kebab-case # applies to the current directory and all their subdirectories
+  .js: kebab-case
+  .ts: kebab-case
+  .d.ts: kebab-case
+  .json: kebab-case
+
+ignore:
+  - .git
+  - .md
+  - .next
+  - .github
+  - .husky
+  - .vscode
+  - node_modules
+  - '**/_components'
+  - '**/{\[id\],\[year\],\[trpc\]}'
