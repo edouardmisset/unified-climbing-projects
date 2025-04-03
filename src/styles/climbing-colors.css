@@ -5,9 +5,6 @@
 
 /* stylelint-disable custom-property-empty-line-before */
 :where(:root) {
-  /* Here we work out the luminance for best contrast */
-  --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
-
   /* GRADES */
   --6a: var(--yellow-2);
   --6a_: var(--yellow-4);

@@ -27,7 +27,7 @@
   background-color: color-mix(in hsl, var(--surface-3) 50%, transparent);
 
   color: var(--text-1);
-  padding: calc(var(--size-fluid-1) / 2);
+  padding: var(--size-fluid-0);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-2);
 }

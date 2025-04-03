@@ -19,6 +19,7 @@
   --size-13: 15rem;
   --size-14: 20rem;
   --size-15: 30rem;
+  --size-fluid-0: clamp(0.25rem, 1vw, 0.5rem);
   --size-fluid-1: clamp(0.5rem, 1vw, 1rem);
   --size-fluid-2: clamp(1rem, 2vw, 1.5rem);
   --size-fluid-3: clamp(1.5rem, 3vw, 2rem);
