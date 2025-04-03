@@ -13,8 +13,10 @@ export const AscentsQRDot = memo(
     ascents?: Ascent[]
   }) => {
     const [firstAscent] = ascents ?? []
-    if (ascents === undefined || firstAscent === undefined) return <span />
-    const hardestAscent = useMemo(() => getHardestAscent(ascents), [ascents])
+    const hardestAscent = useMemo(
+      () => (ascents === undefined ? undefined : getHardestAscent(ascents)),
+      [ascents],
+    )
 
     const gradeClassName = useMemo(
       () => fromGradeToClassName(hardestAscent?.topoGrade),
@@ -23,11 +25,13 @@ export const AscentsQRDot = memo(
 
     const dateAndCrag = useMemo(
       () =>
-        firstAscent.date === undefined
+        firstAscent?.date === undefined
           ? ''
           : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`,
       [firstAscent],
     )
+
+    if (ascents === undefined || firstAscent === undefined) return <span />
 
     return (
       <Popover

@@ -36,8 +36,6 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
 
   const [firstTraining] = filteredSortedWeeklyTraining
 
-  if (firstTraining === undefined) return <span />
-
   const buttonStyle = useMemo(
     () => ({
       inlineSize: `${numberOfTraining / 2}%`,
@@ -64,6 +62,9 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
     () => getTrainingSessionSummary(filteredSortedWeeklyTraining),
     [filteredSortedWeeklyTraining],
   )
+
+  if (firstTraining === undefined) return <span />
+
   return (
     <Popover
       triggerClassName={trainingBarClassName}

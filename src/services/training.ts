@@ -30,10 +30,11 @@ const getTrainingSessionsFromDB = cache(
 
     if (rows === undefined) return []
 
-    const rawTrainingSessions = rows.map((row, index) => ({
-      ...transformTrainingSessionFromGSToJS(row.toObject()),
-      id: index,
-    }))
+    const rawTrainingSessions = rows.map((row, index) =>
+      Object.assign(transformTrainingSessionFromGSToJS(row.toObject()), {
+        id: index,
+      }),
+    )
 
     const parsedTrainingSession = trainingSessionSchema
       .array()

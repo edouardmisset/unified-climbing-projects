@@ -16,7 +16,7 @@ type TransformFunctionGSToJS = (value: string) => string | number
  * @param {string} value - The value to transform.
  * @returns {string} - The transformed string value.
  */
-const transformToStringGSToJS: TransformFunctionGSToJS = value => String(value)
+const transformToStringGSToJS: TransformFunctionGSToJS = String
 
 /**
  * Transforms a date string from "DD/MM/YYYY" format to ISO string.

@@ -175,6 +175,7 @@ export async function backupAscentsAndTrainingFromGoogleSheets(): Promise<boolea
 
     return true
   } catch (_error) {
+    globalThis.console.error('An error occurred while backing up data:', _error)
     return false
   }
 }

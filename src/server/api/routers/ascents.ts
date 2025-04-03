@@ -125,11 +125,12 @@ export const ascentsRouter = createTRPCRouter({
         },
       )
 
-      return results.map(result => ({
-        highlight: result.highlight(),
-        target: result.target,
-        ...result.obj,
-      }))
+      return results.map(result =>
+        Object.assign(result.obj, {
+          highlight: result.highlight(),
+          target: result.target,
+        }),
+      )
     }),
   getById: publicProcedure
     .input(
@@ -222,13 +223,11 @@ export const ascentsRouter = createTRPCRouter({
           if (timeframe === 'all-time') return true
           if (timeframe === 'year') return isDateInYear(date, year)
           if (timeframe === '12-months') return isDateInLast12Months(date)
-
           return false
         })
-        .map(ascent => ({
-          ...ascent,
-          points: fromAscentToPoints(ascent),
-        }))
+        .map(ascent =>
+          Object.assign(ascent, { points: fromAscentToPoints(ascent) }),
+        )
         .sort((a, b) => b.points - a.points)
 
       return sortedAscentsWithPoints.slice(0, 10)
@@ -245,14 +244,15 @@ function mostFrequentBy<
 
   for (const ascent of records) {
     const { [property]: value } = ascent
-    if (value) {
-      const count = (map.get(property) ?? 0) + 1
-      map.set(property, count)
-      if (count > highestCount) {
-        highestCount = count
-        mostFrequent = value
-      }
-    }
+    if (value === undefined) continue
+
+    const count = (map.get(property) ?? 0) + 1
+    map.set(property, count)
+
+    if (count <= highestCount) continue
+
+    highestCount = count
+    mostFrequent = value
   }
   return mostFrequent
 }

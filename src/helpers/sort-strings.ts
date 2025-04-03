@@ -15,9 +15,13 @@ import { FR_LOCALE } from '~/constants/generic'
 const createCompareStrings = (
   order: 'asc' | 'desc' = 'asc',
   locale = FR_LOCALE,
-  options: Intl.CollatorOptions = { sensitivity: 'base' },
+  options?: Intl.CollatorOptions,
 ): ((a: string, b: string) => number) => {
-  const { compare } = new Intl.Collator(locale, options)
+  const { sensitivity = 'base', ...rest } = options ?? {}
+  const { compare } = new Intl.Collator(
+    locale,
+    { sensitivity, ...rest },
+  )
 
   return order === 'asc' ? compare : (a, b) => compare(b, a)
 }

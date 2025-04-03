@@ -71,7 +71,8 @@ export function VisualizationContent(props: VisualizationContentProps) {
     return Object.entries(groupedAscentsDaily)
       .sort(([a], [b]) => Number(b) - Number(a))
       .map(([year, yearlyAscents]) => {
-        if (yearlyAscents === undefined) return <span>Unexpected error</span>
+        if (yearlyAscents === undefined)
+          return <span key="unexpected-error">Unexpected error</span>
         const sortedAscents = yearlyAscents.map(ascents =>
           ascents.toSorted((a, b) => sortByGrade(a, b)),
         )

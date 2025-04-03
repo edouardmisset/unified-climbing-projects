@@ -50,16 +50,15 @@ export const transformTriesJSToGS = ({
   tries,
 }: ClimbingAttempt): string => {
   if (tries < 1) throw new Error('Tries must be greater than 1')
-  if (style === 'Redpoint' && tries === 1) {
+  if (style === 'Redpoint' && tries === 1)
     throw new Error(
-      '1 try means Flash or Onsight but nor Redpoint ascent style',
+      '1 try means Flash or Onsight. It cannot be a Redpoint ascent',
     )
-  }
-  if ((style === 'Flash' || style === 'Onsight') && tries !== 1) {
+
+  if ((style === 'Flash' || style === 'Onsight') && tries !== 1)
     throw new Error(
-      'Flash or Onsight ascents should their number of tries equal to 1',
+      'Flash or Onsight ascents should have their number of tries equal to 1',
     )
-  }
 
   if (style === 'Onsight') return '001 Onsight'
   if (style === 'Flash') return '01 Flash'

@@ -18,8 +18,8 @@ function formatString(item: string): string {
     .toLowerCase()
     .trim()
     .replaceAll('-', ' ')
-    .replace(/[^a-z0-9\s]/gi, '') // Remove special characters
-    .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
+    .replaceAll(/[^a-z0-9\s]/gi, '') // Remove special characters
+    .replaceAll(/\s+/g, ' ') // Replace multiple spaces with a single space
     .split(' ') // Split the string into words
     .map(word => synonyms[word] ?? word) // Replace synonyms
     .join(' ') // Join the words back into a string
@@ -47,7 +47,7 @@ export function findSimilar(items: string[]): { [key: string]: string[] }[] {
 }
 
 export function groupSimilarStrings(
-  arr: string[],
+  strings: string[],
   maxDistance: number,
 ): Map<string, string[]> {
   const result = new Map<string, string[]>()
@@ -62,23 +62,21 @@ export function groupSimilarStrings(
     return distanceCache.get(key) ?? 0
   }
 
-  for (const word of arr) {
-    if (!seen.has(word)) {
-      const similarStrings: string[] = []
-      for (const str of arr) {
-        if (
-          str !== word &&
-          !seen.has(str) &&
-          getDistance(str, word) <= maxDistance
-        ) {
-          similarStrings.push(str)
-          seen.add(str)
-        }
-      }
-      if (similarStrings.length > 1) {
-        result.set(word, similarStrings)
-      }
-      seen.add(word)
+  for (const word of strings) {
+    if (seen.has(word)) continue
+
+    const similarStrings = strings.filter(
+      str =>
+        str !== word && !seen.has(str) && getDistance(word, str) <= maxDistance,
+    )
+
+    if (similarStrings.length > 1) {
+      result.set(word, similarStrings)
+    }
+
+    seen.add(word)
+    for (const str of similarStrings) {
+      seen.add(str)
     }
   }
 

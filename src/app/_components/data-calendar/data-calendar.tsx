@@ -32,13 +32,13 @@ export const DataCalendar = memo(
       [year, yearlyData],
     )
 
-    if (dataInSelectedYear === undefined) return <p>Year not found</p>
-    if (dataInSelectedYear.length === 0) return <p>No record</p>
-
     const calendarEntries = useMemo(
       () => fromDataToCalendarEntries(year, dataInSelectedYear),
       [year, dataInSelectedYear, fromDataToCalendarEntries],
     )
+
+    if (dataInSelectedYear === undefined) return <p>Year not found</p>
+    if (dataInSelectedYear.length === 0) return <p>No record</p>
 
     return (
       <div className={styles.calendarContainer}>

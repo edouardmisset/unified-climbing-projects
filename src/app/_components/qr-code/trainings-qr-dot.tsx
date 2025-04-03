@@ -11,24 +11,28 @@ import { TrainingPopoverDescription } from '../training-popover-description/trai
 export const TrainingsQRDot = memo(
   ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
     const [firstSession] = trainingSessions
-    if (
-      trainingSessions === undefined ||
-      trainingSessions.length === 0 ||
-      firstSession === undefined
-    )
-      return <span />
 
     const sessionClassName = useMemo(
       () =>
         firstSession?.sessionType === undefined
           ? ''
           : fromSessionTypeToClassName(firstSession.sessionType),
-      [firstSession.sessionType],
+      [firstSession?.sessionType],
     )
     const formattedDate = useMemo(
-      () => prettyLongDate(firstSession.date),
-      [firstSession.date],
+      () =>
+        firstSession?.date === undefined
+          ? ''
+          : prettyLongDate(firstSession.date),
+      [firstSession?.date],
     )
+
+    if (
+      trainingSessions === undefined ||
+      trainingSessions.length === 0 ||
+      firstSession === undefined
+    )
+      return <span />
     return (
       <Popover
         triggerClassName={sessionClassName}

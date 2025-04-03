@@ -80,13 +80,12 @@ export const cragsRouter = createTRPCRouter({
       const mostSuccessfulCrags: Record<string, number> = Object.fromEntries(
         Object.entries(sortedCragsByNumber)
           .map<[string, number]>(([crag, number]) => {
-            const daysClimbedInCrag = new Set(
-              ascents
-                .filter(({ crag: ascentCrag }) =>
-                  stringEqualsCaseInsensitive(crag, ascentCrag),
-                )
-                .map(({ date }) => date),
-            ).size
+            const filteredAscentDates = ascents
+              .filter(({ crag: ascentCrag }) =>
+                stringEqualsCaseInsensitive(crag, ascentCrag),
+              )
+              .map(({ date }) => date)
+            const daysClimbedInCrag = new Set(filteredAscentDates).size
 
             return [crag, number / daysClimbedInCrag]
           })

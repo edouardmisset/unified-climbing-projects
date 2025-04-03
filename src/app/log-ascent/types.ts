@@ -24,7 +24,7 @@ const numberOfTriesSchema = z
   .refine(val => _1To9999RegEx.test(val), {
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
-  .transform(st => Number(st))
+  .transform(Number)
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
   tries: numberOfTriesSchema.transform(num => num?.toString()),
@@ -37,12 +37,7 @@ export const ascentFormInputSchema = z.object({
   date: z.date().transform(date => stringifyDate(date)),
   holds: holdsSchema.optional(),
   height: z.number().min(0).max(MAX_HEIGHT).transform(String).optional(),
-  rating: z
-    .number()
-    .min(0)
-    .max(MAX_RATING)
-    .transform(val => String(val))
-    .optional(),
+  rating: z.number().min(0).max(MAX_RATING).transform(String).optional(),
   profile: profileSchema.optional(),
   comments: z.string().optional(),
 })

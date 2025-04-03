@@ -30,10 +30,9 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
 
   if (rows === undefined) return []
 
-  const rawAscents = rows.map((row, index) => ({
-    ...transformAscentFromGSToJS(row.toObject()),
-    id: index,
-  }))
+  const rawAscents = rows.map((row, index) =>
+    Object.assign(transformAscentFromGSToJS(row.toObject()), { id: index }),
+  )
 
   const parsedAscents = ascentSchema.array().safeParse(rawAscents)
 

@@ -4,14 +4,14 @@ import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import styles from './climbing-style-toggle-group.module.css'
 
-type ClimbingStyleToggleGroup = {
+type ClimbingStyleToggleGroupProps = {
   display: boolean
   onValueChange: (groupValue: string[], event: Event) => void
   value?: string
   isOnsightDisable: boolean
 }
 
-export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroup) {
+export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
   const { display, onValueChange, value, isOnsightDisable } = props
 
   if (!display) return undefined

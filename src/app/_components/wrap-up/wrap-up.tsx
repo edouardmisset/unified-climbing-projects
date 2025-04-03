@@ -18,7 +18,7 @@ export default async function WrapUp({ year }: { year?: number }) {
         <Card>
           <h2>No Data</h2>
           <p>
-            You haven't logged any data yet. Go climb some routes and train!
+            You have not logged any data yet. Go climb some routes and train!
           </p>
         </Card>
       </GridLayout>
