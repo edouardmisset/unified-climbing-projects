@@ -23,13 +23,6 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Use [parallel
-  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)
-  ([see Theo's video](https://www.youtube.com/watch?v=d5x0JCZbAJs&t=5527s))
-  when clicking a QR-code or Barcode. When we
-  refresh the page, we should arrive
-  on a distinct page with the same content
-
 - [ ] Update Log page with Server Actions (see [Robin Wieruch's
   article](https://www.robinwieruch.de/next-forms/)) and [this
   article](https://www.robinwieruch.de/react-form-validation/)
@@ -51,25 +44,6 @@ is my playground for these experiments.
 - [ ] Transform the dashboard so that it displays the list of selected ascents
   along with the charts. Each ascent should be clickable to see a modal with the
   Ascent's details (use the `AscentCard` component)
-
-- [ ] Add a page (or modal component with [parallel
-  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
-  to display the selected day's (or **days**) training session. We should be
-  able to navigate
-  from the training calendar (or training QR or training Barcode) to this page.
-  **NOTE**: the elements of the calendar (day), QR-code (dot) and Barcode (bar)
-  should be clickable (buttons or links)
-
-- [ ] Add a page (or modal component with [parallel
-  routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#modals))
-  to display the selected day's ascent**s**. We should be able to navigate to
-  this page from
-  the QR-code, Barcode, or calendar. **NOTE**: the elements of the calendar
-  (day), QR-code (dot), and Barcode (bar) should be clickable (buttons or links)
-
-- [ ] Add a cron function to backup the database (as CSV and JSON) every week on
- Tuesday at 3am and delete the backups older than 1 year. *Where should the
- backups be stored?*
 
 ### Performance
 
@@ -100,11 +74,10 @@ is my playground for these experiments.
 - [x] Style the QR/Barcode buttons & the `<dialog>` elements (in the
   Visualization page)
 - [x] Update the `ascents/:id` page to display a card with the ascent's details
+- [ ] ~~Redo the styles of the slider of the ascent log page~~
 
 </details>
 </br>
-
-- [ ] ~~Redo the styles of the slider of the ascent log page~~
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
@@ -131,7 +104,8 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Refactor the code of the Visualization page
+- [ ] Refactor the code of the Visualization page => Maybe this should be a
+  navigation page and not a dynamic content page?
 
 - [ ] Refactor the form components. This needs to be more legible and
 maintainable
