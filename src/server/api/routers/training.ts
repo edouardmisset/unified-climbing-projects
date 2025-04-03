@@ -18,7 +18,17 @@ export const trainingRouter = createTRPCRouter({
     .output(trainingSessionSchema.array())
     .query(async ({ input }) => {
       const allTrainingSessions = await getAllTrainingSessions()
-      return filterTrainingSessions(allTrainingSessions, input)
+      const filteredTrainingSessions = filterTrainingSessions(
+        allTrainingSessions,
+        input,
+      )
+      return filteredTrainingSessions.sort(
+        ({ date: leftDate }, { date: rightDate }) => {
+          if (leftDate === rightDate) return 0
+
+          return new Date(leftDate) < new Date(rightDate) ? 1 : -1
+        },
+      )
     }),
   getLatestTrainingSession: publicProcedure
     .output(trainingSessionSchema)
