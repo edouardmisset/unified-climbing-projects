@@ -1,3 +1,5 @@
+import { compareStringsAscending } from './sort-strings'
+
 /**
  * *WARNING* Sorting objects'keys or values is not guaranteed to be stable.
  *
@@ -27,7 +29,7 @@ export function sortKeys<Obj extends Record<string, unknown>>(
   return Object.fromEntries(
     Object.entries(obj).sort(
       ([leftKey], [rightKey]) =>
-        leftKey.localeCompare(rightKey) * (ascending ? 1 : -1),
+        compareStringsAscending(leftKey, rightKey) * (ascending ? 1 : -1),
     ),
   ) as Obj
 }

@@ -6,6 +6,7 @@ import { minMaxGrades } from '~/helpers/min-max-grades'
 import { gradeSchema } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 
 export const gradesRouter = createTRPCRouter({
   getAllGrades: publicProcedure
@@ -16,7 +17,7 @@ export const gradesRouter = createTRPCRouter({
 
       const filteredGrades = filteredAscents.map(({ topoGrade }) => topoGrade)
 
-      return [...new Set(filteredGrades)].sort()
+      return [...new Set(filteredGrades)].sort((a, b) => compareStringsAscending(a, b))
     }),
   getAverage: publicProcedure
     .input(optionalAscentFilterSchema)

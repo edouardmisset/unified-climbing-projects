@@ -3,6 +3,7 @@
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { useQueryState } from 'nuqs'
 import { createYearList } from '~/data/helpers.ts'
+import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import {
   ASCENT_STYLE,
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -14,9 +15,8 @@ import {
 import { AscentSelect } from '../ascent-select/ascent-select.tsx'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import type { OrAll } from '../dashboard/types.ts'
-import { createChangeHandler } from './helpers.ts'
-
 import styles from './ascent-filter-bar.module.css'
+import { createChangeHandler } from './helpers.ts'
 
 export default function AscentsFilterBar({
   allAscents,
@@ -24,7 +24,7 @@ export default function AscentsFilterBar({
   const yearList = createYearList(allAscents, { descending: true })
 
   const cragList = [...new Set(allAscents.map(({ crag }) => crag))].sort(
-    (a, b) => a.localeCompare(b),
+    (a, b) => compareStringsAscending(a, b),
   )
 
   const [selectedCrag, setSelectedCrag] = useQueryState<OrAll<string>>('crag', {

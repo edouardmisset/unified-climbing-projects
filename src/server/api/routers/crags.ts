@@ -4,6 +4,7 @@ import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.t
 import { z } from 'zod'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
 import type { Ascent } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -25,7 +26,9 @@ export const cragsRouter = createTRPCRouter({
 
       const uniqueCrags = [...new Set(validCrags)]
 
-      return sorted ? uniqueCrags.sort() : uniqueCrags
+      return sorted
+        ? uniqueCrags.sort((a, b) => compareStringsAscending(a, b))
+        : uniqueCrags
     }),
   getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
     const validCrags = await getValidCrags()

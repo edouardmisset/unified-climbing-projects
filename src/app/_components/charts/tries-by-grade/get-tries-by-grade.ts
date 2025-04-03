@@ -1,4 +1,5 @@
 import { objectKeys } from '@edouardmisset/object'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { LineChartDataStructure } from './tries-by-grade'
 
@@ -23,7 +24,9 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
     topoGradeStat.count++
   }
 
-  const grades = objectKeys(gradeStats).sort((a, b) => a.localeCompare(b))
+  const grades = objectKeys(gradeStats).sort((a, b) =>
+    compareStringsAscending(a, b),
+  )
 
   return [
     {

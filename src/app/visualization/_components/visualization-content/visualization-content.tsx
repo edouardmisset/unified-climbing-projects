@@ -13,7 +13,7 @@ import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear, groupDataWeeksByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
-import { sortByDescendingGrade } from '~/helpers/sorter'
+import { sortByGrade } from '~/helpers/sorter'
 import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -73,7 +73,7 @@ export function VisualizationContent(props: VisualizationContentProps) {
       .map(([year, yearlyAscents]) => {
         if (yearlyAscents === undefined) return <span>Unexpected error</span>
         const sortedAscents = yearlyAscents.map(ascents =>
-          ascents.toSorted((a, b) => sortByDescendingGrade(a, b)),
+          ascents.toSorted((a, b) => sortByGrade(a, b)),
         )
         return (
           <div key={year}>

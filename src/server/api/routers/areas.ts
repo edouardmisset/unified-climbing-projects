@@ -1,6 +1,7 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { z } from 'zod'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
 
 import type { Ascent } from '~/schema/ascent'
@@ -19,7 +20,9 @@ export const areasRouter = createTRPCRouter({
   // Get all known areas
   getAllAreas: publicProcedure.output(z.string().array()).query(async () => {
     const validAreas = await getValidAreas()
-    const sortedAreas = [...new Set(validAreas)].sort()
+    const sortedAreas = [...new Set(validAreas)].sort((a, b) =>
+      compareStringsAscending(a, b),
+    )
 
     return sortedAreas
   }),

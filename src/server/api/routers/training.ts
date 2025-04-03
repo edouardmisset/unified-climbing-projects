@@ -1,12 +1,20 @@
 import { boolean, number, z } from 'zod'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
   getAllTrainingSessions: publicProcedure
-    .input(z.object({ year: number().int().positive().optional(), sessionType: trainingSessionSchema.shape.sessionType.optional() }).optional())
+    .input(
+      z
+        .object({
+          year: number().int().positive().optional(),
+          sessionType: trainingSessionSchema.shape.sessionType.optional(),
+        })
+        .optional(),
+    )
     .output(trainingSessionSchema.array())
     .query(async ({ input }) => {
       const allTrainingSessions = await getAllTrainingSessions()
@@ -33,7 +41,7 @@ export const trainingRouter = createTRPCRouter({
           allTrainingSessions
             .map(({ gymCrag }) => gymCrag)
             .filter(Boolean)
-            .sort((a, b) => a.localeCompare(b)),
+            .sort((a, b) => compareStringsAscending(a, b)),
         ),
       )
     }),

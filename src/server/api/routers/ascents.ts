@@ -53,9 +53,11 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      return filteredAscents.sort(({ date: leftDate }, { date: rightDate }) =>
-        new Date(leftDate) < new Date(rightDate) ? 1 : -1,
-      )
+      return filteredAscents.sort(({ date: leftDate }, { date: rightDate }) => {
+        if (leftDate === rightDate) return 0
+
+        return new Date(leftDate) < new Date(rightDate) ? 1 : -1
+      })
     }),
   getDuplicates: publicProcedure.output(z.string().array()).query(async () => {
     const ascentMap = new Map<string, number>()

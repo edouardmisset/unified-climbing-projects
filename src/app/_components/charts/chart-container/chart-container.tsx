@@ -9,7 +9,7 @@ export const ChartContainer = memo(
   }: { children: ReactNode; className?: string; caption: string }) => (
     <figure className={`h100 ${styles.container} ${className}`}>
       {children}
-      {<figcaption>{caption}</figcaption>}
+      <figcaption>{caption}</figcaption>
     </figure>
   ),
 )
