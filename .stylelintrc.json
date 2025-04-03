@@ -4,6 +4,11 @@
     "custom-property-pattern": null,
     "selector-class-pattern": null,
     "declaration-empty-line-before": null,
-    "declaration-block-no-redundant-longhand-properties": null
+    "declaration-block-no-redundant-longhand-properties": null,
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "unit-no-unknown": true,
+    "color-no-hex": true,
+    "color-function-notation": ["modern", { "ignore": ["with-var-inside"] }]
   }
 }
