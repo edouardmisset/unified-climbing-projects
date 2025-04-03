@@ -18,10 +18,7 @@ const createCompareStrings = (
   options?: Intl.CollatorOptions,
 ): ((a: string, b: string) => number) => {
   const { sensitivity = 'base', ...rest } = options ?? {}
-  const { compare } = new Intl.Collator(
-    locale,
-    { sensitivity, ...rest },
-  )
+  const { compare } = new Intl.Collator(locale, { sensitivity, ...rest })
 
   return order === 'asc' ? compare : (a, b) => compare(b, a)
 }
