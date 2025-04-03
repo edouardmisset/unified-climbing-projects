@@ -40,7 +40,14 @@ export function TrainingSessionList({
       <tbody className={styles.body}>
         {trainingSessions.map(({ id, sessionType, date, load, gymCrag }) => (
           <tr key={id} className={styles.row}>
-            <td title={sessionType} className={styles.cell}>
+            <td
+              title={
+                sessionType === undefined
+                  ? undefined
+                  : fromSessionTypeToLabel(sessionType)
+              }
+              className={styles.cell}
+            >
               {sessionType === undefined
                 ? '—'
                 : fromSessionTypeToLabel(sessionType)}
