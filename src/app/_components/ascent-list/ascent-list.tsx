@@ -31,8 +31,8 @@ export function AscentList({
   )
   return (
     <table className={styles.table}>
-      <thead className={styles.header}>
-        <tr className={styles.headerRow}>
+      <thead className={`${styles.header} grid-full-width`}>
+        <tr className={`${styles.headerRow} grid-full-width`}>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
             title="Route, boulder..."
@@ -108,7 +108,7 @@ export function AscentList({
           )}
         </tr>
       </thead>
-      <tbody className={styles.body}>
+      <tbody className={`${styles.body} grid-full-width`}>
         {ascents.map(
           ({
             id,
@@ -127,7 +127,7 @@ export function AscentList({
             rating,
             points,
           }) => (
-            <tr key={id} className={styles.row}>
+            <tr key={id} className={`${styles.row} grid-full-width`}>
               <td title={climbingDiscipline} className={styles.cell}>
                 {fromClimbingDisciplineToEmoji(climbingDiscipline)}
               </td>
@@ -199,8 +199,8 @@ export function AscentList({
           ),
         )}
       </tbody>
-      <tfoot className={styles.footer}>
-        <tr className={styles.row}>
+      <tfoot className={`${styles.footer} grid-full-width`}>
+        <tr className={`${styles.row} grid-full-width`}>
           {showPoints ? (
             <>
               <th className={styles.footerCell}>Total</th>

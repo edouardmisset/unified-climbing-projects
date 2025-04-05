@@ -1,14 +1,16 @@
 .form {
+  grid-column: 1 / -1;
+  margin-inline: auto;
+
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
   border-radius: var(--radius-conditional-3);
   overflow: scroll;
   inline-size: clamp(15ch, 75ch, 100%);
-  margin: auto;
   padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
   padding-block: var(--size-fluid-2);
-  background-color: var(--surface-1);
+  background-color: var(--surface-2);
 }
 
 .field {
@@ -26,6 +28,7 @@
 
 .input {
   margin-block-start: 0.25rem;
+  background-color: var(--surface-4);
 
   @media screen and (width >= 640px) {
     margin-block-start: 0;
@@ -98,13 +101,13 @@
 }
 
 .submit {
-  background: var(--accent);
+  background-color: var(--accent);
   line-height: 2;
   font-weight: var(--font-weight-6);
   transition: background var(--blink);
 
   &:disabled {
-    background: var(--surface-4);
+    background-color: var(--surface-4);
     cursor: not-allowed;
   }
 }

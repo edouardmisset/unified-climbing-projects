@@ -1,17 +1,16 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Dashboard } from '~/app/_components/dashboard/dashboard'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
-import styles from './page.module.css'
 
 export default function Page() {
   return (
-    <div className={styles.container}>
-      <h1 className="super-center">Dashboard</h1>
+    <GridLayout title="Dashboard">
       <Suspense fallback={<Loader />}>
         <Dashboard />
       </Suspense>
-    </div>
+    </GridLayout>
   )
 }
 

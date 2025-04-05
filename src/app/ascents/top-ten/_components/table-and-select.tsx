@@ -27,9 +27,9 @@ export function TableAndSelect(): React.JSX.Element {
     return <div>No data available</div>
 
   return (
-    <>
+    <div className="flex flex-column gap grid-full-width">
       <TimeframeSelect value={timeframe} onChange={handleChange} />
       <TopTenTable topTenAscents={topTen} />
-    </>
+    </div>
   )
 }
