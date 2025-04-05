@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
@@ -11,4 +12,10 @@ export default async function Page(): Promise<React.JSX.Element> {
       </Suspense>
     </GridLayout>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Top Ten 🔟',
+  description: 'Best of my climbing ascents',
+  keywords: ['climbing', 'ascents', 'description', 'top ten', 'best'],
 }

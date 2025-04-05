@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { api } from '~/trpc/server'
 import { FilteredTrainingSessionList } from '../_components/filtered-training-sessions-list/filtered-training-sessions-list'
@@ -14,4 +15,10 @@ export default async function TrainingSessionsPage(): Promise<React.JSX.Element>
       </Suspense>
     </GridLayout>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Training Sessions 💪',
+  description: 'Lists my training sessions',
+  keywords: ['climbing', 'training', 'sessions'],
 }
