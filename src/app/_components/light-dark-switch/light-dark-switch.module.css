@@ -43,8 +43,8 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    box-shadow: hsla(0, 0%, 0%, 0.75) 0 1.5px 2px inset;
-    outline-color: hsla(0, 0%, 100%, 0.15);
+    box-shadow: hsl(0deg 0% 0% / 75%) 0 1.5px 2px inset;
+    outline-color: hsl(0deg 0% 100% / 15%);
 
     &[data-checked] {
       box-shadow: none;

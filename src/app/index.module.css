@@ -22,7 +22,7 @@
   background-color: var(--surface-2);
   padding-block-start: var(--size-3);
 
-  > * {
+  & > * {
     inline-size: 100%;
   }
 }
