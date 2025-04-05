@@ -1,21 +1,16 @@
 'use client'
 
-import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
-import { useQueryState } from 'nuqs'
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
+import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import {
   LOAD_CATEGORIES,
-  type LoadCategory,
   SESSION_TYPES,
   type TrainingSession,
-  trainingSessionSchema,
 } from '~/schema/training.ts'
 import styles from '../ascents-filter-bar/ascent-filter-bar.module.css'
 import { createChangeHandler } from '../ascents-filter-bar/helpers.ts'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
-import { ALL_VALUE } from '../dashboard/constants.ts'
-import type { OrAll } from '../dashboard/types.ts'
 
 export function TrainingSessionFilterBar({
   trainingSessions,
@@ -34,52 +29,21 @@ export function TrainingSessionFilterBar({
     ] as string[]
   ).sort(compareStringsAscending)
 
-  const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
-    defaultValue:
-      yearList[0] !== undefined ? yearList[0].toString() : ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE
-        ? ALL_VALUE
-        : validNumberWithFallback(value, ALL_VALUE).toString(),
-  })
+  const {
+    selectedYear,
+    selectedSessionType,
+    selectedLoad,
+    selectedLocation,
+    setLoad,
+    setLocation,
+    setSessionType,
+    setYear,
+  } = useTrainingSessionsQueryState()
 
-  const [selectedSessionType, setSelectedSessionType] = useQueryState<
-    OrAll<NonNullable<TrainingSession['sessionType']>>
-  >('sessionType', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE
-        ? ALL_VALUE
-        : trainingSessionSchema
-            .required({ sessionType: true })
-            .shape.sessionType.parse(value),
-  })
-
-  const [selectedLoad, setSelectedLoad] = useQueryState<OrAll<LoadCategory>>(
-    'load',
-    {
-      defaultValue: ALL_VALUE,
-      parse: value =>
-        LOAD_CATEGORIES.includes(value) ? (value as LoadCategory) : ALL_VALUE,
-    },
-  )
-
-  const [selectedLocation, setSelectedLocation] = useQueryState<
-    OrAll<NonNullable<TrainingSession['gymCrag']>>
-  >('location', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE
-        ? ALL_VALUE
-        : trainingSessionSchema
-            .required({ gymCrag: true })
-            .shape.gymCrag.parse(value),
-  })
-
-  const handleYearChange = createChangeHandler(setSelectedYear)
-  const handleSessionTypeChange = createChangeHandler(setSelectedSessionType)
-  const handleLoadLevelChange = createChangeHandler(setSelectedLoad)
-  const handleLocationChange = createChangeHandler(setSelectedLocation)
+  const handleYearChange = createChangeHandler(setYear)
+  const handleSessionTypeChange = createChangeHandler(setSessionType)
+  const handleLoadLevelChange = createChangeHandler(setLoad)
+  const handleLocationChange = createChangeHandler(setLocation)
 
   return (
     <search className={styles.container}>
@@ -100,13 +64,15 @@ export function TrainingSessionFilterBar({
           selectedOption={selectedLoad}
           title="Load"
         />
-        <CustomSelect
-          handleChange={handleYearChange}
-          name="year"
-          options={yearList}
-          selectedOption={selectedYear}
-          title="Year"
-        />
+        {yearList.length > 0 && (
+          <CustomSelect
+            handleChange={handleYearChange}
+            name="year"
+            options={yearList}
+            selectedOption={selectedYear}
+            title="Year"
+          />
+        )}
         {locationList.length > 0 && (
           <CustomSelect
             handleChange={handleLocationChange}

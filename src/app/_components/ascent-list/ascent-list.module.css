@@ -18,15 +18,12 @@
 .header {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-
   border-block-end: 1px solid var(--color-gray-400);
 }
 
 .headerRow {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1 / -1;
   padding-inline: var(--size-fluid-2);
 
   padding-block-end: var(--size-fluid-2);
@@ -40,7 +37,6 @@
 .body {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1 / -1;
 
   overflow-x: auto;
 }
@@ -48,7 +44,6 @@
 .row {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1 / -1;
   padding-inline: var(--size-fluid-2);
 
   &:nth-of-type(even) {
@@ -73,7 +68,6 @@
 .footer {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1 / -1;
 
   border-block-start: 1px solid var(--surface-4);
 }

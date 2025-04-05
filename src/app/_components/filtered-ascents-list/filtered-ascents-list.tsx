@@ -12,9 +12,9 @@ export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
   if (!ascents) return <NotFound />
 
   return (
-    <>
+    <section className="flex flex-column gap grid-full-width">
       <AscentsFilterBar allAscents={ascents} />
       <AscentList ascents={filteredAscents} />
-    </>
+    </section>
   )
 }

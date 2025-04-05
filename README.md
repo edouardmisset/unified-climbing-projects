@@ -26,10 +26,6 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Update Log page with Server Actions (see [Robin Wieruch's
-  article](https://www.robinwieruch.de/next-forms/)) and [this
-  article](https://www.robinwieruch.de/react-form-validation/)
-
 - [ ] Add database (Postgres)
 
 - [ ] Add ORM (Drizzle)
@@ -74,15 +70,14 @@ is my playground for these experiments.
   Visualization page)
 - [x] Update the `ascents/:id` page to display a card with the ascent's details
 - [ ] ~~Redo the styles of the slider of the ascent log page~~
+- [x] Add dark / light theme (also add a toggle). Replace the purple theme with
+  the dark theme
 
 </details>
 </br>
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
-
-- [ ] Add dark / light theme (also add a toggle). Replace the purple theme with
-  the dark theme
 
 ### Refactoring
 

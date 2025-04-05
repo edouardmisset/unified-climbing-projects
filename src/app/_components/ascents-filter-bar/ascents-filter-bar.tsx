@@ -1,20 +1,14 @@
 'use client'
 
-import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
-import { useQueryState } from 'nuqs'
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
+import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
 import {
   ASCENT_STYLE,
   AVAILABLE_CLIMBING_DISCIPLINE,
   type Ascent,
-  ascentSchema,
-  ascentStyleSchema,
-  climbingDisciplineSchema,
 } from '~/schema/ascent'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
-import { ALL_VALUE } from '../dashboard/constants.ts'
-import type { OrAll } from '../dashboard/types.ts'
 import styles from './ascent-filter-bar.module.css'
 import { createChangeHandler } from './helpers.ts'
 
@@ -27,37 +21,21 @@ export default function AscentsFilterBar({
     (a, b) => compareStringsAscending(a, b),
   )
 
-  const [selectedCrag, setSelectedCrag] = useQueryState<OrAll<string>>('crag', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : ascentSchema.shape.crag.parse(value),
-  })
-  const [selectedYear, setSelectedYear] = useQueryState<OrAll<string>>('year', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE
-        ? ALL_VALUE
-        : validNumberWithFallback(value, ALL_VALUE).toString(),
-  })
-  const [selectedDiscipline, setSelectedDiscipline] = useQueryState<
-    OrAll<Ascent['climbingDiscipline']>
-  >('discipline', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : climbingDisciplineSchema.parse(value),
-  })
-  const [selectedStyle, setSelectedStyle] = useQueryState<
-    OrAll<Ascent['style']>
-  >('style', {
-    defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : ascentStyleSchema.parse(value),
-  })
+  const {
+    selectedYear,
+    selectedStyle,
+    selectedDiscipline,
+    selectedCrag,
+    setYear,
+    setStyle,
+    setDiscipline,
+    setCrag,
+  } = useAscentsQueryState()
 
-  const handleYearChange = createChangeHandler(setSelectedYear)
-  const handleStyleChange = createChangeHandler(setSelectedStyle)
-  const handleDisciplineChange = createChangeHandler(setSelectedDiscipline)
-  const handleCragChange = createChangeHandler(setSelectedCrag)
+  const handleYearChange = createChangeHandler(setYear)
+  const handleStyleChange = createChangeHandler(setStyle)
+  const handleDisciplineChange = createChangeHandler(setDiscipline)
+  const handleCragChange = createChangeHandler(setCrag)
 
   return (
     <search className={styles.container}>

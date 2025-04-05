@@ -27,7 +27,7 @@
 }
 
 .gap {
-  gap: var(--size-fluid-2);
+  gap: var(--size-fluid-1);
 }
 
 .space-evenly {
@@ -43,12 +43,12 @@
 }
 
 .padding {
-  padding: var(--size-fluid-2);
+  padding: var(--size-fluid-1);
 }
 
 .section-header {
   max-inline-size: 100%;
-  padding-block-end: var(--size-fluid-2);
+  padding-block-end: var(--size-fluid-1);
   text-align: center;
   text-wrap: balance;
 }
@@ -67,9 +67,13 @@
   --min: 300px;
 
   display: grid;
-  gap: var(--size-fluid-2);
+  gap: var(--size-fluid-1);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
-  padding-inline: var(--size-fluid-2);
+  padding-inline: var(--size-fluid-1);
+}
+
+.grid-full-width {
+  grid-column: 1 / -1;
 }
 
 .w100,

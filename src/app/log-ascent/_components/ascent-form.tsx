@@ -215,7 +215,7 @@ export default function AscentForm() {
         <label htmlFor="date">Date</label>
         <input
           {...register('date')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="date"
           max={new Date().toISOString().split('T')[0]}
@@ -231,7 +231,7 @@ export default function AscentForm() {
           autoCapitalize="on"
           autoComplete="off"
           autoCorrect="off"
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="routeName"
           placeholder="The name of the route or boulder climbed (use `N/A` for routes without name)"
@@ -244,7 +244,7 @@ export default function AscentForm() {
         <label htmlFor="climbingDiscipline">Climbing Discipline</label>
         <select
           {...register('climbingDiscipline')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="climbingDiscipline"
           title={climbingDisciplineFormattedList}
@@ -262,7 +262,7 @@ export default function AscentForm() {
           {...register('crag')}
           autoCapitalize="on"
           autoComplete="off"
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="crag"
           placeholder="The name of the crag"
@@ -285,7 +285,7 @@ export default function AscentForm() {
           {...register('area')}
           autoCapitalize="on"
           autoComplete="off"
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="area"
           placeholder="The name of the crag's sector (or area)"
@@ -360,7 +360,7 @@ export default function AscentForm() {
         <label htmlFor="holds">Holds</label>
         <input
           {...register('holds')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="holds"
           list="hold-types"
@@ -378,7 +378,7 @@ export default function AscentForm() {
         <label htmlFor="profile">Profile</label>
         <input
           {...register('profile')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="profile"
           list="profile-types"
@@ -396,7 +396,7 @@ export default function AscentForm() {
         <label htmlFor="height">Height (m)</label>
         <input
           {...register('height')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
           disabled={watch('climbingDiscipline') === 'Boulder'}
           enterKeyHint="next"
@@ -422,7 +422,7 @@ export default function AscentForm() {
         <label htmlFor="rating">Rating</label>
         <input
           {...register('rating')}
-          className={styles.input}
+          className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="rating"
           inputMode="numeric"

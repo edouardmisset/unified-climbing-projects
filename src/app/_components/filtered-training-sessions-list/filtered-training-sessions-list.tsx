@@ -16,9 +16,9 @@ export function FilteredTrainingSessionList({
   if (!trainingSessions) return <NotFound />
 
   return (
-    <>
+    <section className="grid-full-width">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
       <TrainingSessionList trainingSessions={filteredTrainingSessions} />
-    </>
+    </section>
   )
 }

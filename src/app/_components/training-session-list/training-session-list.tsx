@@ -9,8 +9,8 @@ export function TrainingSessionList({
 }): React.JSX.Element {
   return (
     <table className={styles.table}>
-      <thead className={styles.header}>
-        <tr className={styles.headerRow}>
+      <thead className={`${styles.header} grid-full-width`}>
+        <tr className={`${styles.headerRow} grid-full-width`}>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
             title="Type of the session"
@@ -37,9 +37,9 @@ export function TrainingSessionList({
           </th>
         </tr>
       </thead>
-      <tbody className={styles.body}>
+      <tbody className={`${styles.body} grid-full-width`}>
         {trainingSessions.map(({ id, sessionType, date, load, gymCrag }) => (
-          <tr key={id} className={styles.row}>
+          <tr key={id} className={`${styles.row} grid-full-width`}>
             <td
               title={
                 sessionType === undefined
@@ -70,8 +70,8 @@ export function TrainingSessionList({
           </tr>
         ))}
       </tbody>
-      <tfoot className={styles.footer}>
-        <tr className={styles.row}>
+      <tfoot className={`${styles.footer} grid-full-width`}>
+        <tr className={`${styles.row} grid-full-width`}>
           <th className={styles.footerCell}>Total</th>
           <td className={styles.footerCell}>
             <strong>{trainingSessions.length}</strong> sessions
