@@ -26,10 +26,6 @@ is my playground for these experiments.
 </details>
 </br>
 
-- [ ] Update Log page with Server Actions (see [Robin Wieruch's
-  article](https://www.robinwieruch.de/next-forms/)) and [this
-  article](https://www.robinwieruch.de/react-form-validation/)
-
 - [ ] Add database (Postgres)
 
 - [ ] Add ORM (Drizzle)
