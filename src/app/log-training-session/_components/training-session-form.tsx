@@ -1,5 +1,6 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -33,6 +34,8 @@ import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 import styles from '~/app/log-ascent/_components/ascent-form.module.css'
 
 export default function TrainingSessionForm() {
+  const { user } = useUser()
+
   const result = trainingSessionSchema
     .omit({ id: true, load: true })
     .safeParse({
@@ -67,7 +70,7 @@ export default function TrainingSessionForm() {
 
   if (isLoadingGymsOrCrags) return <Loader />
 
-  return (
+  return user?.fullName === 'Edouard' ? (
     <form
       aria-describedby="form-description"
       autoComplete="off"
@@ -258,5 +261,9 @@ export default function TrainingSessionForm() {
         {isSubmitting ? 'Submitting...' : 'Submit 📮'}
       </button>
     </form>
+  ) : (
+    <section className="flex-column gap">
+      <p>You are not authorized to log an ascent.</p>
+    </section>
   )
 }

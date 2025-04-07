@@ -1,5 +1,6 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -49,6 +50,8 @@ const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
 export default function AscentForm() {
+  const { user } = useUser()
+
   const { data: rawAverageGrade, isLoading: isAverageGradeLoading } =
     api.grades.getAverage.useQuery()
   const averageGrade = fromGradeToNumber(rawAverageGrade ?? '7b')
@@ -183,7 +186,7 @@ export default function AscentForm() {
     return <Loader />
   }
 
-  return (
+  return user?.fullName === 'Edouard' ? (
     <form
       aria-describedby="form-description"
       autoComplete="off"
@@ -458,5 +461,9 @@ export default function AscentForm() {
         {isSubmitting ? 'Sending...' : 'Send 📮'}
       </button>
     </form>
+  ) : (
+    <section className="flex-column gap">
+      <p>You are not authorized to log an ascent.</p>
+    </section>
   )
 }
