@@ -12,6 +12,7 @@ import {
   fromClimbingDisciplineToEmoji,
   prettyLongDate,
 } from '~/helpers/formatters'
+import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-list.module.css'
@@ -139,7 +140,7 @@ export function AscentList({
                   title={points?.toString()}
                   className={`${styles.cell} monospace`}
                 >
-                  {points}
+                  {points === undefined ? '—' : <strong>{points}</strong>}
                 </td>
               )}
               <td className={styles.cell}>
@@ -206,7 +207,7 @@ export function AscentList({
               <th className={styles.footerCell}>Total</th>
               <td className={styles.footerCell} />
               <td className={styles.footerCell}>
-                <strong>{totalAscentPoints}</strong>
+                <strong>{frenchNumberFormatter(totalAscentPoints)}</strong>
               </td>
             </>
           ) : (
