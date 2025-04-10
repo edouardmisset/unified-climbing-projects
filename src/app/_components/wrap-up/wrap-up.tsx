@@ -10,7 +10,7 @@ import { VerticalMilestoneSummary } from './_components/vertical-milestone-summa
 import { ALL_TIME } from './constants'
 
 export default async function WrapUp({ year }: { year?: number }) {
-  const ascents = await api.ascents.getAllAscents({ year })
+  const ascents = await api.ascents.getAll({ year })
 
   if (ascents.length === 0) {
     return (

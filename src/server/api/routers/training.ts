@@ -6,7 +6,7 @@ import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
-  getAllTrainingSessions: publicProcedure
+  getAll: publicProcedure
     .input(
       z
         .object({
@@ -30,30 +30,28 @@ export const trainingRouter = createTRPCRouter({
         },
       )
     }),
-  getLatestTrainingSession: publicProcedure
-    .output(trainingSessionSchema)
-    .query(async () => {
-      const allTrainingSessions = await getAllTrainingSessions()
-      const [latestTrainingSession] = allTrainingSessions.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      )
-      if (!latestTrainingSession) {
-        throw new Error('No training sessions found')
-      }
-      return latestTrainingSession
-    }),
-  getAllTrainingGymOrCrag: publicProcedure
+  getLatest: publicProcedure.output(trainingSessionSchema).query(async () => {
+    const allTrainingSessions = await getAllTrainingSessions()
+    const [latestTrainingSession] = allTrainingSessions.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
+    if (!latestTrainingSession) {
+      throw new Error('No training sessions found')
+    }
+    return latestTrainingSession
+  }),
+  getAllLocations: publicProcedure
     .output(z.array(trainingSessionSchema.shape.gymCrag))
     .query(async () => {
       const allTrainingSessions = await getAllTrainingSessions()
-      return Array.from(
-        new Set(
+      return [
+        ...new Set(
           allTrainingSessions
-            .map(({ gymCrag }) => gymCrag)
+            .map(({ gymCrag }) => gymCrag?.trim())
             .filter(Boolean)
-            .sort((a, b) => compareStringsAscending(a, b)),
+            .sort(compareStringsAscending),
         ),
-      )
+      ]
     }),
   addOne: publicProcedure
     .input(trainingSessionSchema.omit({ id: true }))

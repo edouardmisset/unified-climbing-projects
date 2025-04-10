@@ -47,7 +47,7 @@ export default function TrainingSessionForm() {
   }
 
   const { data: allGymsOrCrags, isLoading: isLoadingGymsOrCrags } =
-    api.training.getAllTrainingGymOrCrag.useQuery()
+    api.training.getAllLocations.useQuery()
 
   const { data: defaultTrainingSession } = result
 

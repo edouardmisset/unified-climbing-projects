@@ -9,7 +9,7 @@ import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 
 export default async function AscentsCalendarPage() {
-  const allAscents = await api.ascents.getAllAscents()
+  const allAscents = await api.ascents.getAll()
 
   if (!allAscents) return <NotFound />
 

@@ -11,7 +11,7 @@ import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
 export const cragsRouter = createTRPCRouter({
-  getAllCrags: publicProcedure
+  getAll: publicProcedure
     .input(
       z
         .object({
@@ -22,7 +22,7 @@ export const cragsRouter = createTRPCRouter({
     .output(z.string().array())
     .query(async ({ input }) => {
       const { sorted = true } = input ?? {}
-      const validCrags = await getValidCrags()
+      const validCrags = await getAllCrags()
 
       const uniqueCrags = [...new Set(validCrags)]
 
@@ -31,7 +31,7 @@ export const cragsRouter = createTRPCRouter({
         : uniqueCrags
     }),
   getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
-    const validCrags = await getValidCrags()
+    const validCrags = await getAllCrags()
 
     const sortedCragsByFrequency = sortNumericalValues(frequency(validCrags), {
       ascending: false,
@@ -39,7 +39,7 @@ export const cragsRouter = createTRPCRouter({
 
     return sortedCragsByFrequency
   }),
-  getMostSuccessfulCrags: publicProcedure
+  getMostSuccessful: publicProcedure
     .input(
       z.object({
         'weight-by-grade': z.boolean().optional(),
@@ -50,7 +50,7 @@ export const cragsRouter = createTRPCRouter({
       const { 'weight-by-grade': weightedByGrade } = input
 
       const ascents = await getAllAscents()
-      const validCrags = await getValidCrags()
+      const validCrags = await getAllCrags()
 
       const weightedByGradeAndSortedCrags: Record<string, number> = {}
 
@@ -110,7 +110,7 @@ export const cragsRouter = createTRPCRouter({
   getDuplicate: publicProcedure
     .output(z.record(z.string().array()).array())
     .query(async () => {
-      const validCrags = await getValidCrags()
+      const validCrags = await getAllCrags()
 
       const similarCrags = findSimilar(validCrags)
 
@@ -120,7 +120,7 @@ export const cragsRouter = createTRPCRouter({
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())
     .query(async () => {
-      const validCrags = await getValidCrags()
+      const validCrags = await getAllCrags()
       const similarCrags = Array.from(
         groupSimilarStrings(validCrags, 2).entries(),
       )
@@ -129,9 +129,7 @@ export const cragsRouter = createTRPCRouter({
     }),
 })
 
-async function getValidCrags(): Promise<Ascent['crag'][]> {
+async function getAllCrags(): Promise<Ascent['crag'][]> {
   const ascents = await getAllAscents()
-  return ascents
-    .map(({ crag }) => crag.trim())
-    .filter(crag => crag !== undefined)
+  return ascents.map(({ crag }) => crag.trim()).filter(Boolean)
 }

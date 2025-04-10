@@ -9,7 +9,7 @@ import { sortByGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
 
 export default async function AscentsQRCodePage() {
-  const allAscents = await api.ascents.getAllAscents()
+  const allAscents = await api.ascents.getAll()
 
   if (!allAscents) return <NotFound />
 

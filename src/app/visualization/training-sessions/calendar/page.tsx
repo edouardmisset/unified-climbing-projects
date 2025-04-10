@@ -9,7 +9,7 @@ import type { TrainingSession } from '~/schema/training'
 import { api } from '~/trpc/server'
 
 export default async function TrainingSessionsCalendarPage() {
-  const trainingSessions = await api.training.getAllTrainingSessions()
+  const trainingSessions = await api.training.getAll()
 
   if (!trainingSessions) return <NotFound />
 

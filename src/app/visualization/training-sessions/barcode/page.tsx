@@ -8,7 +8,7 @@ import { groupDataWeeksByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function TrainingSessionsBarcodePage() {
-  const trainingSessions = await api.training.getAllTrainingSessions()
+  const trainingSessions = await api.training.getAll()
 
   if (!trainingSessions) return <NotFound />
 

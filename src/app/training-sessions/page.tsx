@@ -6,7 +6,7 @@ import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
 
 export default async function TrainingSessionsPage(): Promise<React.JSX.Element> {
-  const trainingSessions = await api.training.getAllTrainingSessions()
+  const trainingSessions = await api.training.getAll()
 
   return (
     <GridLayout title="Training Sessions">

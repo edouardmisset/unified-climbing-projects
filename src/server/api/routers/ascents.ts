@@ -1,7 +1,6 @@
 import { average } from '@edouardmisset/math/average.ts'
 import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
 import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
-
 import fuzzySort from 'fuzzysort'
 import { number, string, z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
@@ -9,6 +8,7 @@ import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { isDateInLast12Months } from '~/helpers/is-date-in-last-12-months'
 import { isDateInYear } from '~/helpers/is-date-in-year'
+import { mostFrequentBy } from '~/helpers/most-frequent-by'
 import {
   type Ascent,
   ascentSchema,
@@ -47,7 +47,7 @@ export const optionalAscentFilterSchema = z
 export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
 export const ascentsRouter = createTRPCRouter({
-  getAllAscents: publicProcedure
+  getAll: publicProcedure
     .input(optionalAscentFilterSchema)
     .output(ascentSchema.array())
     .query(async ({ input }) => {
@@ -233,26 +233,3 @@ export const ascentsRouter = createTRPCRouter({
       return sortedAscentsWithPoints.slice(0, 10)
     }),
 })
-
-function mostFrequentBy<
-  Type extends Record<string, unknown>,
-  Key extends keyof Type,
->(records: Type[], property: Key): Type[Key] | undefined {
-  const map = new Map<Key, number>()
-  let mostFrequent: Type[Key] | undefined
-  let highestCount = 0
-
-  for (const ascent of records) {
-    const { [property]: value } = ascent
-    if (value === undefined) continue
-
-    const count = (map.get(property) ?? 0) + 1
-    map.set(property, count)
-
-    if (count <= highestCount) continue
-
-    highestCount = count
-    mostFrequent = value
-  }
-  return mostFrequent
-}

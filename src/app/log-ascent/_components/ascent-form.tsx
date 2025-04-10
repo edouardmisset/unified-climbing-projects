@@ -57,9 +57,9 @@ export default function AscentForm() {
   const averageGrade = fromGradeToNumber(rawAverageGrade ?? '7b')
 
   const { data: allCrags, isLoading: areCragsLoading } =
-    api.crags.getAllCrags.useQuery()
+    api.crags.getAll.useQuery()
   const { data: allAreas, isLoading: areAreasLoading } =
-    api.areas.getAllAreas.useQuery()
+    api.areas.getAll.useQuery()
 
   const {
     data: [minGrade, maxGrade] = [

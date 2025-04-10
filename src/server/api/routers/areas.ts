@@ -8,18 +8,16 @@ import type { Ascent } from '~/schema/ascent'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
-async function getValidAreas(): Promise<NonNullable<Ascent['area']>[]> {
+async function getAllAreas(): Promise<NonNullable<Ascent['area']>[]> {
   const ascents = await getAllAscents()
-  return ascents
-    .map(({ area }) => area?.trim())
-    .filter(area => area !== undefined)
+  return ascents.map(({ area }) => area?.trim()).filter(Boolean)
 }
 
 // Get all known areas from the ascents
 export const areasRouter = createTRPCRouter({
   // Get all known areas
-  getAllAreas: publicProcedure.output(z.string().array()).query(async () => {
-    const validAreas = await getValidAreas()
+  getAll: publicProcedure.output(z.string().array()).query(async () => {
+    const validAreas = await getAllAreas()
     const sortedAreas = [...new Set(validAreas)].sort((a, b) =>
       compareStringsAscending(a, b),
     )
@@ -29,7 +27,7 @@ export const areasRouter = createTRPCRouter({
   // Get all known areas sorted by frequency
   getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
     const sortedAreasByFrequency = sortNumericalValues(
-      frequency(await getValidAreas()),
+      frequency(await getAllAreas()),
       {
         ascending: false,
       },
@@ -40,7 +38,7 @@ export const areasRouter = createTRPCRouter({
   getDuplicates: publicProcedure
     .output(z.record(z.string().array()).array())
     .query(async () => {
-      const duplicateAreas = findSimilar(await getValidAreas())
+      const duplicateAreas = findSimilar(await getAllAreas())
 
       return duplicateAreas
     }),
@@ -49,7 +47,7 @@ export const areasRouter = createTRPCRouter({
     .output(z.tuple([z.string(), z.string().array()]).array())
     .query(async () => {
       const similarAreas = Array.from(
-        groupSimilarStrings(await getValidAreas(), 3).entries(),
+        groupSimilarStrings(await getAllAreas(), 3).entries(),
       )
 
       return similarAreas

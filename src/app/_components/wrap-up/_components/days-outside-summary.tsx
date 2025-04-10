@@ -12,7 +12,7 @@ export async function DaysOutsideSummary({
   ascents: Ascent[]
   year?: number
 }) {
-  const outdoorSessions = await api.training.getAllTrainingSessions({
+  const outdoorSessions = await api.training.getAll({
     sessionType: 'Out',
     year,
   })

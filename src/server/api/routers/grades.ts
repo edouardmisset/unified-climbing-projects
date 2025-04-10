@@ -9,7 +9,7 @@ import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
 
 export const gradesRouter = createTRPCRouter({
-  getAllGrades: publicProcedure
+  getAll: publicProcedure
     .input(optionalAscentFilterSchema)
     .output(gradeSchema.array())
     .query(async ({ input }) => {

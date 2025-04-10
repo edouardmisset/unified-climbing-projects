@@ -8,7 +8,7 @@ import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function TrainingSessionsQRCodePage() {
-  const trainingSessions = await api.training.getAllTrainingSessions()
+  const trainingSessions = await api.training.getAll()
 
   if (!trainingSessions) return <NotFound />
 

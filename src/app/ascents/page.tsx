@@ -6,7 +6,7 @@ import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
 
 export default async function Page() {
-  const ascents = await api.ascents.getAllAscents()
+  const ascents = await api.ascents.getAll()
   return (
     <GridLayout title="Ascents">
       <Suspense fallback={<Loader />}>

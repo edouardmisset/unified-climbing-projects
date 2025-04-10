@@ -8,7 +8,7 @@ import { groupDataWeeksByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function AscentBarcodePage() {
-  const allAscents = await api.ascents.getAllAscents()
+  const allAscents = await api.ascents.getAll()
 
   if (!allAscents) return <NotFound />
 
