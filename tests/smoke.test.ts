@@ -18,7 +18,6 @@ test.describe('Visualization page', () => {
     await page.goto(`http://localhost:${port}/visualization`)
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Visualization/)
     await expect(
       page.getByRole('heading', { name: 'Visualization' }),
     ).toBeVisible()

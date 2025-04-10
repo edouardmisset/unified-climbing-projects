@@ -20,6 +20,7 @@
   display: grid;
   place-items: center;
   background-color: var(--cell-color);
+
   && {
     border-radius: var(--radius-1, 2px);
   }
