@@ -1,6 +1,5 @@
-import type { Ascent, Grade } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { addParenthesis } from './add-parenthesis'
 import { type DATE_TIME_OPTIONS, formatDateTime } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
@@ -32,27 +31,6 @@ export function formatRating(rating: Ascent['rating']) {
   return rating === undefined
     ? ''
     : Array.from({ length: rating }, () => '⭐').join('')
-}
-
-export function formatGrades({
-  topoGrade,
-  personalGrade,
-  showDetails = true,
-}: {
-  topoGrade: Grade
-  personalGrade?: Grade
-  showDetails?: boolean
-}) {
-  if (topoGrade === undefined) {
-    return ''
-  }
-
-  const maybePersonalGrade =
-    personalGrade === undefined || personalGrade === topoGrade || !showDetails
-      ? ''
-      : addParenthesis(personalGrade)
-
-  return `⚡︎ ${topoGrade} ${maybePersonalGrade}`.trim()
 }
 
 export function formatProfile(profile: Ascent['profile']) {

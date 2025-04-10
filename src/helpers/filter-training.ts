@@ -61,7 +61,7 @@ export function filterTrainingSessions(
   )
 }
 
-export function isLoadInLoadCategory(
+function isLoadInLoadCategory(
   load: TrainingSession['load'],
   loadCategory: LoadCategory,
 ): boolean {

@@ -13,6 +13,7 @@ export type DayDescriptor = {
   description: ReactNode
   title: ReactNode
   shortText: ReactNode
+  isSpecialCase?: boolean
 }
 
 export const YearGrid = memo(
@@ -76,7 +77,14 @@ export const YearGrid = memo(
         <WeeksRow columns={columns} />
         {allDayCollection.map(
           (
-            { date, description, backgroundColor, shortText = '', title },
+            {
+              date,
+              description,
+              backgroundColor,
+              shortText = '',
+              title,
+              isSpecialCase = false,
+            },
             index,
           ) =>
             date === '' ? (
@@ -94,6 +102,7 @@ export const YearGrid = memo(
                   backgroundColor={backgroundColor}
                   shortText={shortText}
                   title={title}
+                  isSpecialCase={isSpecialCase}
                 />
               )
             ),

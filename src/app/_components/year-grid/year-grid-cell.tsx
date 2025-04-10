@@ -11,6 +11,7 @@ type YearGridCellProps = {
   shortText?: ReactNode
   formattedDate: string
   title?: ReactNode
+  isSpecialCase?: boolean
 }
 
 export const YearGridCell = memo((props: YearGridCellProps) => {
@@ -21,6 +22,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     shortText = '',
     formattedDate,
     title = formattedDate,
+    isSpecialCase = false,
   } = props
 
   const cellStyle: CSSProperties = useMemo(
@@ -29,7 +31,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       backgroundColor,
       outline: datesEqual(new Date(stringDate), new Date())
         ? '2px solid var(--text-1)'
-        : 'none',
+        : undefined,
     }),
     [backgroundColor, stringDate],
   )
@@ -49,7 +51,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       triggerContent={shortText}
       popoverTitle={title}
       popoverDescription={description}
-      triggerClassName={`${styles.yearGridCell} contrast-color`}
+      triggerClassName={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrast-color`}
       buttonStyle={cellStyle}
     />
   )

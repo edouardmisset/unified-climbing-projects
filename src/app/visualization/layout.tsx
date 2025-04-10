@@ -1,48 +1,68 @@
 'use client'
-
-import { useQueryState } from 'nuqs'
-import { type ReactNode, useCallback } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { type ReactNode, useCallback, useMemo } from 'react'
 import { AscentsTrainingSwitch } from '~/app/_components/ascents-training-switch/ascents-training-switch'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
 import {
-  type AscentsOrTrainingType,
-  type VisualizationType,
-  ascentsOrTrainingSchema,
+  PATH_TO_VISUALIZATION,
+  visualizationPathSchema,
   visualizationSchema,
   visualizations,
 } from './constants'
 import styles from './page.module.css'
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const [ascentsOrTraining, setAscentOrTraining] =
-    useQueryState<AscentsOrTrainingType>('ascentsOrTraining', {
-      defaultValue: 'Ascents',
-      parse: value => ascentsOrTrainingSchema.parse(value),
-    })
-
-  const [selectedVisualization, setVisualizationType] =
-    useQueryState<VisualizationType>('visualization', {
-      defaultValue: 'Calendar',
-      parse: value => visualizationSchema.parse(value),
-    })
+  const router = useRouter()
+  const pathname = usePathname()
 
   const toggleAscentsOrTraining = useCallback(
-    () =>
-      setAscentOrTraining(state =>
-        state === 'Ascents' ? 'Training' : 'Ascents',
-      ),
-    [setAscentOrTraining],
+    (isTraining: boolean) => {
+      router.push(
+        isTraining
+          ? '/visualization/training-sessions/calendar'
+          : '/visualization/ascents/calendar',
+      )
+    },
+    [router],
   )
 
-  const handleQrCodeOrBarcodeChange = useCallback(
+  const isTraining = useMemo(
+    () => pathname.includes('training-sessions'),
+    [pathname],
+  )
+
+  const selectedValue = useMemo(() => {
+    const visualizationTypeFromURL = pathname.split('/').at(-1)
+    if (!visualizationTypeFromURL) return 'Calendar'
+
+    const res = visualizationPathSchema.safeParse(visualizationTypeFromURL)
+    if (!res.success) return 'Calendar'
+    const visualizationType = res.data
+
+    return PATH_TO_VISUALIZATION[visualizationType] ?? 'Calendar'
+  }, [pathname])
+
+  const handleVisualizationChange = useCallback(
     ([value]: unknown[]) => {
       const result = visualizationSchema.safeParse(value)
       if (!result.success) return
+      const visualizationType = result.data
 
-      setVisualizationType(result.data)
+      const ascentsOrTraining: 'training-sessions' | 'ascents' = isTraining
+        ? 'training-sessions'
+        : 'ascents'
+
+      const normalizedVisualizationType = visualizationType
+        .split(' ')
+        .join('-')
+        .toLowerCase()
+
+      router.push(
+        `/visualization/${ascentsOrTraining}/${normalizedVisualizationType}`,
+      )
     },
-    [setVisualizationType],
+    [router, isTraining],
   )
 
   return (
@@ -52,13 +72,13 @@ export default function Layout({ children }: { children: ReactNode }) {
         additionalContent={
           <div className={`flex-row space-evenly gap ${styles.header}`}>
             <ToggleGroup
-              onValueChange={handleQrCodeOrBarcodeChange}
+              onValueChange={handleVisualizationChange}
               values={visualizations}
-              selectedValue={selectedVisualization}
+              selectedValue={selectedValue}
             />
             <AscentsTrainingSwitch
-              toggle={toggleAscentsOrTraining}
-              isTraining={ascentsOrTraining === 'Training'}
+              toggle={() => toggleAscentsOrTraining(!isTraining)}
+              isTraining={isTraining}
             />
           </div>
         }

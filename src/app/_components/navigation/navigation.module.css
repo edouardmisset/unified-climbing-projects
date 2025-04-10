@@ -8,10 +8,9 @@
   align-items: center;
   justify-content: center;
   gap: var(--size-2);
-  padding-inline: var(--size-3);
+  padding-inline: var(--size-fluid-2);
   padding-block: var(--size-2);
 
-  /* background-color: var(--surface-1); */
   color: var(--text-1);
 }
 
@@ -38,6 +37,10 @@
 
   @media (width <= 640px) {
     display: none;
+  }
+
+  & > li {
+    padding-inline-start: 0;
   }
 }
 

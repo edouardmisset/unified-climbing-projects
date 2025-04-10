@@ -14,7 +14,7 @@ import { FR_LOCALE } from '~/constants/generic'
  */
 const createCompareStrings = (
   order: 'asc' | 'desc' = 'asc',
-  locale = FR_LOCALE,
+  locale: string = FR_LOCALE,
   options?: Intl.CollatorOptions,
 ): ((a: string, b: string) => number) => {
   const { sensitivity = 'base', ...rest } = options ?? {}

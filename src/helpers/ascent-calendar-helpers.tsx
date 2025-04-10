@@ -35,6 +35,9 @@ export function fromAscentsToCalendarEntries(
         title: dateAndCrag,
         description: <AscentsPopoverDescription ascents={ascents} />,
         shortText: topoGrade,
+        isSpecialCase: ascents.every(
+          ascent => ascent.climbingDiscipline === 'Boulder',
+        ),
       }
     }) ?? []
   )

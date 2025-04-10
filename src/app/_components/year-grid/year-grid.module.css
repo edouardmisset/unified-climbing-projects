@@ -20,13 +20,21 @@
   display: grid;
   place-items: center;
   background-color: var(--cell-color);
-  border-radius: var(--radius-1, 2px);
+  && {
+    border-radius: var(--radius-1, 2px);
+  }
   font-weight: var(--font-weight-7);
 }
 
 .emptyGridCell {
   background-color: transparent;
   border: none;
+}
+
+.specialCase {
+  && {
+    outline: 2px dashed var(--text-1);
+  }
 }
 
 .gridHeader {

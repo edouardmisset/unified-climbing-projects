@@ -14,6 +14,15 @@ const config = {
       static: 180,
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/visualization',
+        destination: '/visualization/ascents/calendar',
+        permanent: false,
+      },
+    ]
+  },
   // webpack: config => {
   //   if (config.name === 'client') {
   //     config.plugins.push(
