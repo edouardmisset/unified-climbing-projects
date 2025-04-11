@@ -1,13 +1,11 @@
-import { average } from '@edouardmisset/math/average.ts'
-import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
-import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
+import { isDateInLast12Months, isDateInYear } from '@edouardmisset/date'
+import { average, validNumberWithFallback } from '@edouardmisset/math'
+import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { number, string, z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
-import { isDateInLast12Months } from '~/helpers/is-date-in-last-12-months'
-import { isDateInYear } from '~/helpers/is-date-in-year'
 import { mostFrequentBy } from '~/helpers/most-frequent-by'
 import {
   type Ascent,
@@ -56,7 +54,7 @@ export const ascentsRouter = createTRPCRouter({
       return filteredAscents.sort(({ date: leftDate }, { date: rightDate }) => {
         if (leftDate === rightDate) return 0
 
-        return new Date(leftDate) < new Date(rightDate) ? 1 : -1
+        return new Date(leftDate) > new Date(rightDate) ? 1 : -1
       })
     }),
   getDuplicates: publicProcedure.output(z.string().array()).query(async () => {

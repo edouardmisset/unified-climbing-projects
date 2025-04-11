@@ -1,6 +1,6 @@
+import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { type ReactNode, memo, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters.ts'
-import { isDateInYear } from '~/helpers/is-date-in-year.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'

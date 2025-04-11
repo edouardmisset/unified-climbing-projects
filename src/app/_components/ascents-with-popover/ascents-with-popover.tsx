@@ -1,5 +1,4 @@
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
-import { addParenthesis } from '~/helpers/add-parenthesis'
+import { capitalize, wrapInParentheses } from '@edouardmisset/text'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { Popover } from '../popover/popover'
@@ -14,7 +13,9 @@ export function AscentsWithPopover({
       popoverDescription={
         <div className={styles.popoverContainer}>
           {ascents.map(({ id, routeName, topoGrade }) => (
-            <span key={id}>{`${routeName} ${addParenthesis(topoGrade)}`}</span>
+            <span
+              key={id}
+            >{`${routeName} ${wrapInParentheses(topoGrade)}`}</span>
           ))}
         </div>
       }

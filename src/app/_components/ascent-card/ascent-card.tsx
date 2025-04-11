@@ -1,5 +1,5 @@
+import { wrapInParentheses } from '@edouardmisset/text'
 import { type CSSProperties, useMemo } from 'react'
-import { addParenthesis } from '~/helpers/add-parenthesis'
 import {
   formatComments,
   formatCragAndArea,
@@ -44,7 +44,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       <h2
         className={`${styles.header} text-no-wrap`}
         title={`${routeName} ${topoGrade}`}
-      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${addParenthesis(topoGrade)}`}</h2>
+      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(topoGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
           <time>{prettyLongDate(date)}</time>

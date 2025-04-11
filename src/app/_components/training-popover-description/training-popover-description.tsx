@@ -1,4 +1,4 @@
-import { addParenthesis } from '~/helpers/add-parenthesis'
+import { wrapInParentheses } from '@edouardmisset/text'
 import {
   formatComments,
   fromAnatomicalRegionToEmoji,
@@ -44,7 +44,7 @@ export function TrainingPopoverDescription({
                 title={fromSessionTypeToLabel(sessionType)}
                 aria-label={fromSessionTypeToLabel(sessionType)}
               >
-                {addParenthesis(fromSessionTypeToLabel(sessionType))}
+                {wrapInParentheses(fromSessionTypeToLabel(sessionType))}
               </span>
             ) : (
               ''

@@ -1,6 +1,6 @@
+import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
-import { isDateInYear } from './is-date-in-year.ts'
 
 type OptionalTrainingInput = Partial<
   Omit<TrainingSession, 'date' | 'comments' | 'load'>

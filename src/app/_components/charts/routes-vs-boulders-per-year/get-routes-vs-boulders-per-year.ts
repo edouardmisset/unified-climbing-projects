@@ -1,5 +1,5 @@
+import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { createYearList } from '~/data/helpers'
-import { isDateInYear } from '~/helpers/is-date-in-year'
 import type { Ascent } from '~/schema/ascent'
 
 export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
