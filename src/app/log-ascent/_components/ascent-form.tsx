@@ -301,7 +301,9 @@ export default function AscentForm() {
         </datalist>
       </div>
       <div className={styles.field}>
-        <label htmlFor="tries">Tries & Style</label>
+        <label htmlFor="tries" className="required">
+          Tries & Style
+        </label>
         <div className={styles.tries}>
           <input
             {...triesRegister}
@@ -327,7 +329,9 @@ export default function AscentForm() {
         </div>
       </div>
       <div className={styles.field}>
-        <label htmlFor="topoGrade">Topo Grade</label>
+        <label htmlFor="topoGrade" className="required">
+          Topo Grade
+        </label>
         <GradeInput
           {...topoGradeRegister}
           value={numberTopoGrade}
@@ -335,6 +339,7 @@ export default function AscentForm() {
           min={adjustedMinGrade}
           max={adjustedMaxGrade}
           step={1}
+          required={true}
         />
       </div>
       <div className={styles.field}>

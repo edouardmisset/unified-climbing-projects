@@ -226,7 +226,10 @@ not to see them */
   outline: var(--green-8) solid var(--border-size-1);
 }
 
-:where(div:has(input:required)) label::after {
+:where(label:has(+ input:required))::after,
+:where(label:has(+ textarea:required))::after,
+:where(label:has(+ select:required))::after,
+.required::after {
   content: ' *';
   color: var(--red-9);
   font-size: 1em;
