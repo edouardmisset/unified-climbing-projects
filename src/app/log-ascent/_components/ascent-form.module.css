@@ -20,7 +20,7 @@
   @media screen and (width >= 640px) {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: last baseline;
     justify-content: space-between;
     gap: var(--size-3);
   }

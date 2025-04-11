@@ -5,8 +5,8 @@ import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
+import { GradeInput } from '~/app/_components/grade-input/grade-input.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
-import { GradeSlider } from '~/app/_components/slider/slider'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic.ts'
 import { env } from '~/env'
@@ -38,11 +38,7 @@ import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 
 import styles from './ascent-form.module.css'
 
-type HandleGradeSliderChange = (
-  value: number | readonly number[],
-  event: Event,
-  activeThumbIndex: number,
-) => void
+type HandleGradeChange = (value: number | null, event?: Event) => void
 
 const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 const numberOfGrades = _GRADES.length
@@ -112,18 +108,18 @@ export default function AscentForm() {
   const personalNumberGrade = watch('personalGrade') ?? numberTopoGrade
   const numberOfTries = watch('tries') ?? '1'
 
-  const handleTopoGradeChange: HandleGradeSliderChange = useCallback(
+  const handleTopoGradeChange: HandleGradeChange = useCallback(
     value => {
-      const val = (typeof value === 'number' ? value : value[0]) ?? averageGrade
+      const val = value ?? averageGrade
       setValue('topoGrade', val)
 
       setValue('personalGrade', val)
     },
     [setValue, averageGrade],
   )
-  const updatePersonalGradeChange: HandleGradeSliderChange = useCallback(
+  const handlePersonalGradeChange: HandleGradeChange = useCallback(
     value => {
-      const val = (typeof value === 'number' ? value : value[0]) ?? averageGrade
+      const val = value ?? averageGrade
       setValue('personalGrade', val)
     },
     [setValue, averageGrade],
@@ -330,13 +326,9 @@ export default function AscentForm() {
           />
         </div>
       </div>
-      <div className={styles.grades}>
-        <label htmlFor="topoGrade" className={styles.field}>
-          <span>
-            Topo Grade <strong>{fromNumberToGrade(numberTopoGrade)}</strong>
-          </span>
-        </label>
-        <GradeSlider
+      <div className={styles.field}>
+        <label htmlFor="topoGrade">Topo Grade</label>
+        <GradeInput
           {...topoGradeRegister}
           value={numberTopoGrade}
           onValueChange={handleTopoGradeChange}
@@ -344,16 +336,13 @@ export default function AscentForm() {
           max={adjustedMaxGrade}
           step={1}
         />
-        <label htmlFor="personalGrade" className={styles.field}>
-          <span>
-            Personal Grade{' '}
-            <strong>{fromNumberToGrade(personalNumberGrade)}</strong>
-          </span>
-        </label>
-        <GradeSlider
+      </div>
+      <div className={styles.field}>
+        <label htmlFor="personalGrade">Personal Grade</label>
+        <GradeInput
           {...personalGradeRegister}
           value={personalNumberGrade}
-          onValueChange={updatePersonalGradeChange}
+          onValueChange={handlePersonalGradeChange}
           min={adjustedMinGrade}
           max={adjustedMaxGrade}
           step={1}
