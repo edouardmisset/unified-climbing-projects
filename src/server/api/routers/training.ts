@@ -1,5 +1,6 @@
 import { boolean, number, z } from 'zod'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { sortByDate } from '~/helpers/sort-by-date'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -32,8 +33,8 @@ export const trainingRouter = createTRPCRouter({
     }),
   getLatest: publicProcedure.output(trainingSessionSchema).query(async () => {
     const allTrainingSessions = await getAllTrainingSessions()
-    const [latestTrainingSession] = allTrainingSessions.sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    const [latestTrainingSession] = allTrainingSessions.sort((a, b) =>
+      sortByDate(a, b),
     )
     if (!latestTrainingSession) {
       throw new Error('No training sessions found')

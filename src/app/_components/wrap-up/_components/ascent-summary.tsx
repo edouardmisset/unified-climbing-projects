@@ -1,5 +1,6 @@
 import { filterAscents } from '~/helpers/filter-ascents'
 import { getAverageGrade } from '~/helpers/get-average-grade'
+import { sortByDate } from '~/helpers/sort-by-date'
 import type { Ascent } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
@@ -10,7 +11,8 @@ export function AscentSummary({
 }: {
   ascents: Ascent[]
 }) {
-  const mostRecentAscent = ascents.at(0)
+  const mostRecentAscent = ascents.toSorted((a, b) => sortByDate(a, b))[0]
+
   if (ascents.length === 0 || mostRecentAscent === undefined) return undefined
 
   const onsightAscents = filterAscents(ascents, {

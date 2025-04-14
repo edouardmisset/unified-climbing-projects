@@ -19,15 +19,18 @@ export async function DaysOutsideSummary({
 
   const daysOutside = outdoorSessions.length
 
-  if (ascents.length === 0 || daysOutside === 0) return undefined
+  const numberOfAscents = ascents.length
+
+  if (numberOfAscents === 0 || daysOutside === 0) return undefined
 
   const [mostAscentDate] = getMostFrequentDate(ascents)
 
-  const ascentsInMostAscentDay = ascents.filter(({ date }) => {
-    return new Date(date).getTime() === new Date(mostAscentDate).getTime()
-  })
+  const ascentsInMostAscentDay = ascents.filter(
+    ({ date }) =>
+      new Date(date).getTime() === new Date(mostAscentDate).getTime(),
+  )
 
-  const ascentsRatio = (ascents.length / daysOutside).toFixed(1)
+  const ascentsRatio = (numberOfAscents / daysOutside).toFixed(1)
 
   return (
     <Card>
