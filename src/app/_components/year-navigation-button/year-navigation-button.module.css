@@ -1,7 +1,9 @@
 .button {
   color: var(--text-1);
   background-color: var(--surface-1);
-  padding: var(--size-1);
   border-radius: 100vmax;
   aspect-ratio: 1;
+
+  padding: var(--size-1);
+  margin: var(--size-fluid-1);
 }
