@@ -201,6 +201,10 @@
   background-color: var(--color-gray-200);
 }
 
+.Break {
+  margin: 0;
+}
+
 .GroupLabel {
   cursor: default;
   user-select: none;

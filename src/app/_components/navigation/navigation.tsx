@@ -18,12 +18,14 @@ export function Navigation(): React.JSX.Element {
         <li>
           <Link href="/">🏠 Home</Link>
         </li>
+        <hr className={styles.Break} />
         <li>
           <Link href="/log-ascent">📋 Log Ascent</Link>
         </li>
         <li>
           <Link href="/log-training-session">📋 Log Training</Link>
         </li>
+        <hr className={styles.Break} />
         <li>
           <Link href="/visualization">🖼️ Visualization</Link>
         </li>
@@ -36,6 +38,7 @@ export function Navigation(): React.JSX.Element {
         <li>
           <Link href="/ascents/dashboard">📊 Dashboard</Link>
         </li>
+        <hr className={styles.Break} />
         <li>
           <Link href="/training-sessions">📇 Training List</Link>
         </li>
