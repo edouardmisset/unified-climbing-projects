@@ -103,12 +103,6 @@ export const gradesBottomAxis: AxisProps = {
   legendPosition: 'middle',
 }
 
-export const cragLeftAxis: AxisProps = {
-  legend: 'Crag',
-  legendPosition: 'middle',
-  legendOffset: -40,
-}
-
 export const numberOfAscentsAxisBottom: AxisProps = {
   legend: 'Number of Ascents',
   legendPosition: 'middle',

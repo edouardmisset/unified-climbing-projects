@@ -5,7 +5,6 @@ import { ChartContainer } from '../chart-container/chart-container'
 import {
   DEFAULT_CHART_MARGIN,
   chartColorGetter,
-  cragLeftAxis,
   defaultBarChartPadding,
   defaultMotionConfig,
   numberOfAscentsAxisBottom,
@@ -40,7 +39,6 @@ export function AscentsByGradesPerCrag({
         enableLabel={false}
         motionConfig={defaultMotionConfig}
         axisBottom={numberOfAscentsAxisBottom}
-        axisLeft={cragLeftAxis}
       />
     </ChartContainer>
   )
