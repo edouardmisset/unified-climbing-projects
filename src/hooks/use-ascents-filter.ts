@@ -21,11 +21,11 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedGrade,
   } = useAscentsQueryState()
 
-  const filteredAscents = useMemo(
+  return useMemo(
     () =>
       filterAscents(ascents, {
         year:
-          selectedYear !== ALL_VALUE && isValidNumber(selectedYear)
+          selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
             ? Number(selectedYear)
             : undefined,
         climbingDiscipline:
@@ -43,6 +43,4 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
       selectedYear,
     ],
   )
-
-  return filteredAscents
 }

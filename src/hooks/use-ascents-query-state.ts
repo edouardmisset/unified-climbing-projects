@@ -1,3 +1,4 @@
+import { isValidNumber } from '@edouardmisset/math'
 import { useQueryState } from 'nuqs'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
@@ -24,7 +25,11 @@ type UseAscentsQueryStateReturn = {
 export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
   const [selectedYear, setYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
-    parse: value => (value === ALL_VALUE ? ALL_VALUE : value),
+    parse: value => {
+      if (value === ALL_VALUE) return ALL_VALUE
+      if (isValidNumber(Number(value))) return value
+      return null
+    },
   })
   const [selectedDiscipline, setDiscipline] = useQueryState<
     OrAll<Ascent['climbingDiscipline']>
