@@ -62,7 +62,7 @@
   gap: 0.375rem;
   height: 2.5rem;
   padding: 0 0.875rem;
-  margin: var(--size-2);
+  margin: var(--size-fluid-1);
   margin-inline-start: auto;
   outline: 0;
   border: 1px solid var(--color-gray-200);

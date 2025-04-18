@@ -1,4 +1,8 @@
 .Switch {
+  @media (width < 640px) {
+    display: none;
+  }
+
   position: relative;
   display: flex;
   appearance: none;
@@ -24,10 +28,6 @@
   transition-duration: 125ms;
 
   justify-content: unset;
-
-  @media (width < 640px) {
-    display: none;
-  }
 
   &:active {
     background-color: var(--color-gray-100);
