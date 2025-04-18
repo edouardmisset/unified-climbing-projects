@@ -55,9 +55,9 @@ component-name
     export function BooleanStateGridCell(props: BooleanStateCellProps): React.JSX.Element {
       const { checked } = props
       return (
-        <StyledCenterCell>
+        <CenterCell>
           <StyledBooleanStateCell checked={checked} />
-        </StyledCenterCell>
+        </CenterCell>
       )
     }
     ```
@@ -96,6 +96,10 @@ Each section MUST be separated by an empty line.
 - Modern TypeScript features SHOULD be used.
 - Magic numbers or strings SHOULD be avoided; named constants SHOULD be used instead.
   - **Example:** `const TIMEOUT_IN_MS = 1000`.
+- Use `for...of` instead of `forEach`.
+  - **Example:** `for (const item of items) { ... }`
+- Use numeric separators for numbers above 1000.
+  - **Example:** `const largeNumber = 1_000`
 - Use template literals over string concatenation.
   - **Example:** Prefer `` `Hello, ${name}` `` to `'Hello, ' + name`.
 - Code MUST be:
