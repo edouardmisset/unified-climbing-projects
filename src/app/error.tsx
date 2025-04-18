@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+// biome-ignore lint/suspicious/noShadowRestrictedNames: This is a NextJS convention
 export default function Error({
   error,
   reset,

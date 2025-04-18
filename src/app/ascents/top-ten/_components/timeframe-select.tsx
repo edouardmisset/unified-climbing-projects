@@ -34,7 +34,7 @@ export function TimeframeSelect({
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>
                 <Select.ItemText className={styles.ItemText}>
-                  {capitalize(timeframe)}
+                  {capitalize(timeframe.replaceAll('-', ' '))}
                 </Select.ItemText>
               </Select.Item>
             ))}
