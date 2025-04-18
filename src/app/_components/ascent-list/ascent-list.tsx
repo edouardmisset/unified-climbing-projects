@@ -36,10 +36,9 @@ export function AscentList({
         <tr className={`${styles.headerRow} grid-full-width`}>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
-            title="Route, boulder..."
-          >
-            Discipline
-          </th>
+            aria-label="Discipline"
+            title="Discipline: 🧗 route, 🪨 boulder..."
+          />
           <th
             className={`${styles.cell} ${styles.headerCell}`}
             title="Name of the route"
@@ -129,7 +128,10 @@ export function AscentList({
             points,
           }) => (
             <tr key={id} className={`${styles.row} grid-full-width`}>
-              <td title={climbingDiscipline} className={styles.cell}>
+              <td
+                title={climbingDiscipline}
+                className={`${styles.cell} margin-auto`}
+              >
                 {fromClimbingDisciplineToEmoji(climbingDiscipline)}
               </td>
               <td className={styles.cell}>
@@ -145,7 +147,7 @@ export function AscentList({
               )}
               <td className={styles.cell}>
                 <em
-                  title={`${topoGrade} - ${personalGrade}`}
+                  title={`Topo Grade: ${topoGrade}${topoGrade === personalGrade ? '' : ` - Personal Grade: ${personalGrade}`}`}
                   className="monospace"
                 >
                   <span>
@@ -201,19 +203,19 @@ export function AscentList({
         )}
       </tbody>
       <tfoot className={`${styles.footer} grid-full-width`}>
-        <tr className={`${styles.row} grid-full-width`}>
+        <tr className={`${styles.footerRow} grid-full-width`}>
           {showPoints ? (
             <>
-              <th className={styles.footerCell}>Total</th>
-              <td className={styles.footerCell} />
-              <td className={styles.footerCell}>
+              <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
+              <td className={`${styles.footerCell} ${styles.cell}`} />
+              <td className={`${styles.footerCell} ${styles.cell}`}>
                 <strong>{frenchNumberFormatter(totalAscentPoints)}</strong>
               </td>
             </>
           ) : (
             <>
-              <th className={styles.footerCell}>Total</th>
-              <td className={styles.footerCell}>
+              <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
+              <td className={`${styles.footerCell} ${styles.cell}`}>
                 <strong>{ascents.length}</strong>{' '}
                 {writeAscentsDisciplineText(ascents)}
               </td>

@@ -10,8 +10,6 @@
   background-color: var(--surface-1);
   color: var(--text-1);
 
-  padding-block: var(--size-fluid-2);
-
   overflow-x: auto;
 }
 
@@ -24,9 +22,7 @@
 .headerRow {
   display: grid;
   grid-template-columns: subgrid;
-  padding-inline: var(--size-fluid-2);
-
-  padding-block-end: var(--size-fluid-2);
+  padding: var(--size-fluid-1);
 }
 
 .headerCell {
@@ -44,7 +40,7 @@
 .row {
   display: grid;
   grid-template-columns: subgrid;
-  padding-inline: var(--size-fluid-2);
+  padding-inline: var(--size-fluid-1);
 
   &:nth-of-type(even) {
     background-color: var(--surface-2);
@@ -59,6 +55,9 @@
   inline-size: min-content;
   max-inline-size: 22ch;
 
+  padding-inline: 0;
+  padding-block: var(--size-fluid-0);
+
   /* no-text-wrap */
   overflow: hidden;
   white-space: nowrap;
@@ -70,6 +69,12 @@
   grid-template-columns: subgrid;
 
   border-block-start: 1px solid var(--surface-4);
+}
+
+.footerRow {
+  display: grid;
+  grid-template-columns: subgrid;
+  padding: var(--size-fluid-1);
 }
 
 .footerCell {
