@@ -296,7 +296,7 @@ export const ascentsRouter = createTRPCRouter({
         cragRatio,
       ]
 
-      return average(ratios) * 100
+      return Math.round(average(ratios) * 100)
     }),
   getEfficiencyPercentage: publicProcedure
     .input(optionalAscentFilterSchema)
@@ -341,11 +341,13 @@ export const ascentsRouter = createTRPCRouter({
             ascentsCount) *
         COEF_ONSIGHT_FLASH_RATIO
 
-      return sum(
-        ascentDayPerDayOutside,
-        ascentsPerDay,
-        averageTries,
-        onsightFlashRatio,
+      return Math.round(
+        sum(
+          ascentDayPerDayOutside,
+          ascentsPerDay,
+          averageTries,
+          onsightFlashRatio,
+        ),
       )
     }),
   getProgressionPercentage: publicProcedure
@@ -370,21 +372,17 @@ export const ascentsRouter = createTRPCRouter({
 
       const currentYear = input.year
 
-      console.time('Progression Slow')
       calculateProgressionPercentageSlow({
         ascents: filteredAscents,
         year: currentYear,
       })
-      console.timeEnd('Progression Slow')
 
-      console.time('Progression fast')
       const progression = calculateProgressionPercentage({
         ascents: filteredAscents,
         year: currentYear,
       })
-      console.timeEnd('Progression fast')
 
-      return progression
+      return Math.round(progression)
     }),
 })
 
