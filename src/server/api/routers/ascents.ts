@@ -2,7 +2,7 @@ import { isDateInLast12Months, isDateInYear } from '@edouardmisset/date'
 import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
-import { number, string, z } from 'zod'
+import { z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
@@ -16,7 +16,11 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import { errorSchema, timeframeSchema } from '~/schema/generic'
+import {
+  errorSchema,
+  optionalAscentYear,
+  timeframeSchema,
+} from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
 
@@ -38,7 +42,7 @@ export const optionalAscentFilterSchema = z
     profile: profileSchema.optional(),
     style: ascentStyleSchema.optional(),
     tries: ascentSchema.shape.tries.optional(),
-    year: number().optional(),
+    year: optionalAscentYear,
     rating: ascentSchema.shape.rating.optional(),
   })
   .optional()
@@ -93,19 +97,16 @@ export const ascentsRouter = createTRPCRouter({
   search: publicProcedure
     .input(
       z.object({
-        query: string(),
-        limit: z
-          .string()
-          .optional()
-          .transform(val => validNumberWithFallback(val, 100)),
+        query: z.string().min(1),
+        limit: z.string().transform(val => validNumberWithFallback(val, 10)),
       }),
     )
     .output(
       ascentSchema
-        .merge(
+        .extend(
           z.object({
-            highlight: string(),
-            target: string(),
+            highlight: z.string(),
+            target: z.string(),
           }),
         )
         .array(),
@@ -131,11 +132,7 @@ export const ascentsRouter = createTRPCRouter({
       )
     }),
   getById: publicProcedure
-    .input(
-      z.object({
-        id: z.number(),
-      }),
-    )
+    .input(ascentSchema.pick({ id: true }))
     .output(ascentSchema.or(errorSchema))
     .query(async ({ input }) => {
       const ascents = await getAllAscents()
@@ -163,15 +160,15 @@ export const ascentsRouter = createTRPCRouter({
     }),
   getMostFrequentHeight: publicProcedure
     .input(optionalAscentFilterSchema)
-    .output(z.number())
+    .output(ascentSchema.shape.height)
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      return mostFrequentBy(filteredAscents, 'height') ?? -1
+      return mostFrequentBy(filteredAscents, 'height')
     }),
   getAverageRating: publicProcedure
     .input(optionalAscentFilterSchema)
-    .output(z.number().min(0))
+    .output(ascentSchema.shape.rating)
     .query(async ({ input }) => {
       const filteredRatings = (await getFilteredAscents(input))
         .map(({ rating }) => rating)
@@ -181,7 +178,7 @@ export const ascentsRouter = createTRPCRouter({
     }),
   getAverageTries: publicProcedure
     .input(optionalAscentFilterSchema)
-    .output(z.number().min(1))
+    .output(ascentSchema.shape.tries)
     .query(async ({ input }) => {
       const filteredTries = (await getFilteredAscents(input)).map(
         ({ tries }) => tries,
@@ -206,11 +203,15 @@ export const ascentsRouter = createTRPCRouter({
       z
         .object({
           timeframe: timeframeSchema.optional(),
-          year: z.number().int().positive().optional(),
+          year: optionalAscentYear,
         })
         .optional(),
     )
-    .output(ascentSchema.extend({ points: z.number() }).array())
+    .output(
+      ascentSchema
+        .extend(ascentSchema.required({ points: true }).pick({ points: true }))
+        .array(),
+    )
     .query(async ({ input = {} }) => {
       const { timeframe = 'year', year = new Date().getFullYear() } = input
 
@@ -220,7 +221,7 @@ export const ascentsRouter = createTRPCRouter({
         .filter(({ date }) => {
           if (timeframe === 'all-time') return true
           if (timeframe === 'year') return isDateInYear(date, year)
-          if (timeframe === '12-months') return isDateInLast12Months(date)
+          if (timeframe === 'last-12-months') return isDateInLast12Months(date)
           return false
         })
         .map(ascent =>

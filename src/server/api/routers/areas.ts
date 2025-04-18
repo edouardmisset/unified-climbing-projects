@@ -4,7 +4,8 @@ import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
 
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
@@ -25,18 +26,32 @@ export const areasRouter = createTRPCRouter({
     return sortedAreas
   }),
   // Get all known areas sorted by frequency
-  getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
-    const sortedAreasByFrequency = sortNumericalValues(
-      frequency(await getAllAreas()),
-      {
-        ascending: false,
-      },
+  getFrequency: publicProcedure
+    .output(
+      z.record(
+        ascentSchema.required({ area: true }).shape.area,
+        positiveInteger,
+      ),
     )
-    return sortedAreasByFrequency
-  }),
+    .query(async () => {
+      const sortedAreasByFrequency = sortNumericalValues(
+        frequency(await getAllAreas()),
+        {
+          ascending: false,
+        },
+      )
+      return sortedAreasByFrequency
+    }),
   // Get all known areas that are similar
   getDuplicates: publicProcedure
-    .output(z.record(z.string().array()).array())
+    .output(
+      z
+        .record(
+          ascentSchema.required({ area: true }).shape.area,
+          z.string().array(),
+        )
+        .array(),
+    )
     .query(async () => {
       const duplicateAreas = findSimilar(await getAllAreas())
 

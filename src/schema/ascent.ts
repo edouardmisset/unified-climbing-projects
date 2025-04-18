@@ -1,4 +1,5 @@
-import { number, string, z } from 'zod'
+import { z } from 'zod'
+import { positiveInteger } from './generic'
 
 export const _GRADES = [
   '1a',
@@ -234,28 +235,34 @@ export const ascentStyleSchema = z.enum(ASCENT_STYLE)
 export const profileSchema = z.enum(PROFILES)
 export const holdsFomGSSchema = z.enum(HOLDS_FROM_GS)
 export const holdsSchema = z.enum(HOLDS)
-const optionalStringSchema = string().optional()
+const optionalStringSchema = z.string().optional()
 
 export const ascentSchema = z.object({
-  area: string().or(number()).transform(String).optional(),
-  climber: string()
+  area: z.string().or(z.number()).transform(String).optional(),
+  climber: z
+    .string()
     .transform(() => 'Edouard Misset')
     .optional(),
   climbingDiscipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
-  crag: string().min(1),
-  date: string(), // ISO 8601 date format
+  crag: z.string().min(1),
+  date: z.string(), // ISO 8601 date format
   region: optionalStringSchema,
-  height: number().int().min(0).optional(),
+  height: positiveInteger.optional(),
   holds: holdsSchema.optional(),
   profile: profileSchema.optional(),
   personalGrade: gradeSchema.optional(),
-  rating: number().int().min(0).max(5).optional(),
-  routeName: string().min(1).or(number()).transform(String).default('No Name'),
+  rating: z.number().int().min(0).max(5).optional(),
+  routeName: z
+    .string()
+    .min(1)
+    .or(z.number())
+    .transform(String)
+    .default('No Name'),
   style: ascentStyleSchema,
   topoGrade: gradeSchema,
-  tries: number().int().min(1),
-  id: number().min(0),
-  points: number().int().min(0).optional(),
+  tries: z.number().int().min(1),
+  id: positiveInteger,
+  points: positiveInteger.optional(),
 })
 export type Ascent = z.infer<typeof ascentSchema>

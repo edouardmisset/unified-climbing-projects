@@ -6,7 +6,8 @@ import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { getAllAscents } from '~/services/ascents'
 
@@ -30,31 +31,32 @@ export const cragsRouter = createTRPCRouter({
         ? uniqueCrags.sort((a, b) => compareStringsAscending(a, b))
         : uniqueCrags
     }),
-  getFrequency: publicProcedure.output(z.record(z.number())).query(async () => {
-    const validCrags = await getAllCrags()
+  getFrequency: publicProcedure
+    .output(z.record(ascentSchema.shape.crag, positiveInteger))
+    .query(async () => {
+      const validCrags = await getAllCrags()
 
-    const sortedCragsByFrequency = sortNumericalValues(frequency(validCrags), {
-      ascending: false,
-    })
-
-    return sortedCragsByFrequency
-  }),
+      return sortNumericalValues(frequency(validCrags), {
+        ascending: false,
+      })
+    }),
   getMostSuccessful: publicProcedure
     .input(
       z.object({
         'weight-by-grade': z.boolean().optional(),
       }),
     )
-    .output(z.record(z.number()))
+    .output(z.record(ascentSchema.shape.crag, positiveInteger))
     .query(async ({ input }) => {
       const { 'weight-by-grade': weightedByGrade } = input
 
       const ascents = await getAllAscents()
       const validCrags = await getAllCrags()
+      const uniqueValidCrags = new Set(validCrags)
 
       const weightedByGradeAndSortedCrags: Record<string, number> = {}
 
-      for (const crag of new Set(validCrags)) {
+      for (const crag of uniqueValidCrags) {
         const listOfAscentsInCrag = ascents.filter(({ crag: ascentCrag }) =>
           stringEqualsCaseInsensitive(crag, ascentCrag.trim()),
         )
@@ -79,7 +81,7 @@ export const cragsRouter = createTRPCRouter({
 
       const mostSuccessfulCrags: Record<string, number> = Object.fromEntries(
         Object.entries(sortedCragsByNumber)
-          .map<[string, number]>(([crag, number]) => {
+          .map<[string, number]>(([crag, ascentCount]) => {
             const filteredAscentDates = ascents
               .filter(({ crag: ascentCrag }) =>
                 stringEqualsCaseInsensitive(crag, ascentCrag),
@@ -87,7 +89,7 @@ export const cragsRouter = createTRPCRouter({
               .map(({ date }) => date)
             const daysClimbedInCrag = new Set(filteredAscentDates).size
 
-            return [crag, number / daysClimbedInCrag]
+            return [crag, ascentCount / daysClimbedInCrag]
           })
           .sort(([, a], [, b]) => b - a),
       )
@@ -108,7 +110,7 @@ export const cragsRouter = createTRPCRouter({
       )
     }),
   getDuplicate: publicProcedure
-    .output(z.record(z.string().array()).array())
+    .output(z.record(ascentSchema.shape.crag, z.string().array()).array())
     .query(async () => {
       const validCrags = await getAllCrags()
 

@@ -1,7 +1,8 @@
-import { boolean, number, z } from 'zod'
+import { z } from 'zod'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { sortByDate } from '~/helpers/sort-by-date'
 import { compareStringsAscending } from '~/helpers/sort-strings'
+import { optionalAscentYear } from '~/schema/generic'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
@@ -11,7 +12,7 @@ export const trainingRouter = createTRPCRouter({
     .input(
       z
         .object({
-          year: number().int().positive().optional(),
+          year: optionalAscentYear,
           sessionType: trainingSessionSchema.shape.sessionType.optional(),
         })
         .optional(),
@@ -56,7 +57,7 @@ export const trainingRouter = createTRPCRouter({
     }),
   addOne: publicProcedure
     .input(trainingSessionSchema.omit({ id: true }))
-    .output(boolean())
+    .output(z.boolean())
     .mutation(async ({ input: trainingSession }) => {
       try {
         await addTrainingSession(trainingSession)

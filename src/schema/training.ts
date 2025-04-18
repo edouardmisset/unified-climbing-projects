@@ -1,5 +1,6 @@
-import { number, string, z } from 'zod'
+import { z } from 'zod'
 import { climbingDisciplineSchema } from './ascent.ts'
+import { percentSchema, positiveInteger } from './generic.ts'
 
 export const SESSION_TYPES = [
   'Out',
@@ -84,19 +85,17 @@ const sessionTypeSchema = z.enum(SESSION_TYPES)
 const energySystemSchema = z.enum(ENERGY_SYSTEMS)
 const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
 
-const percentSchema = number().int().min(0).max(100)
-
 export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
-  comments: string().optional(),
-  date: string(),
+  comments: z.string().optional(),
+  date: z.string(),
   energySystem: energySystemSchema.optional(),
-  gymCrag: string().optional(),
+  gymCrag: z.string().optional(),
   intensity: percentSchema.optional(),
   load: percentSchema.optional(),
   sessionType: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
-  id: number(),
+  id: positiveInteger,
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>

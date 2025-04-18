@@ -1,6 +1,5 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { string, z } from 'zod'
+import { z } from 'zod'
 import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
 import {
   ascentStyleSchema,
@@ -12,8 +11,6 @@ import {
   MAX_HEIGHT,
   MAX_RATING,
   MAX_TRIES,
-  MIN_HEIGHT,
-  MIN_RATING,
   _1To9999RegEx,
 } from './constants.ts'
 
@@ -36,8 +33,8 @@ export const ascentFormInputSchema = z.object({
   crag: z.string().optional(),
   date: z.date().transform(date => stringifyDate(date)),
   holds: holdsSchema.optional(),
-  height: z.number().min(0).max(MAX_HEIGHT).transform(String).optional(),
-  rating: z.number().min(0).max(MAX_RATING).transform(String).optional(),
+  height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
+  rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
   profile: profileSchema.optional(),
   comments: z.string().optional(),
 })
@@ -46,7 +43,7 @@ export type AscentFormInput = z.input<typeof ascentFormInputSchema>
 
 const numberGradeToGradeSchema = z
   .number()
-  .or(string())
+  .or(z.string())
   .transform(stringOrNumberGrade =>
     fromNumberToGrade(Number(stringOrNumberGrade)),
   )
@@ -65,69 +62,11 @@ export const ascentFormOutputSchema = z.object({
   profile: profileSchema.optional(),
   height: z
     .string()
-    .superRefine((height, ctx) => {
-      const numberHeight = Number(height)
-
-      if (MIN_HEIGHT <= numberHeight && numberHeight <= MAX_HEIGHT) {
-        return z.NEVER
-      }
-
-      if (!isValidNumber(numberHeight)) {
-        ctx.addIssue({
-          message: 'Height should be a valid number',
-          code: z.ZodIssueCode.not_finite,
-        })
-      }
-      if (!Number.isInteger(numberHeight)) {
-        ctx.addIssue({
-          message: 'Height should be an integer',
-          code: z.ZodIssueCode.invalid_type,
-          expected: 'integer',
-          received: 'float',
-        })
-      }
-
-      if (!(MIN_HEIGHT <= numberHeight && numberHeight <= MAX_HEIGHT)) {
-        ctx.addIssue({
-          message: `Height (${numberHeight}) should be a number between ${MIN_HEIGHT} and ${MAX_HEIGHT}`,
-          code: z.ZodIssueCode.custom,
-        })
-      }
-    })
     .transform(height =>
       height === undefined || height === '' ? undefined : Number(height),
     ),
   rating: z
     .string()
-    .superRefine((rating, ctx) => {
-      if (rating === undefined || rating === '') {
-        return z.NEVER
-      }
-
-      const numberRating = Number(rating)
-
-      if (!isValidNumber(numberRating)) {
-        ctx.addIssue({
-          message: 'Rating should be a valid number',
-          code: z.ZodIssueCode.not_finite,
-        })
-      }
-      if (!Number.isInteger(numberRating)) {
-        ctx.addIssue({
-          message: 'Rating should be an integer',
-          code: z.ZodIssueCode.invalid_type,
-          expected: 'integer',
-          received: 'float',
-        })
-      }
-
-      if (!(MIN_RATING <= numberRating && numberRating <= MAX_RATING)) {
-        ctx.addIssue({
-          message: `Rating (${rating}) should be a number between ${MIN_RATING} and ${MAX_RATING}`,
-          code: z.ZodIssueCode.custom,
-        })
-      }
-    })
     .transform(rating =>
       rating === undefined || rating === '' ? undefined : Number(rating),
     ),
