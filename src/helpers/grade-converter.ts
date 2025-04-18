@@ -1,4 +1,5 @@
 import { invert } from '@edouardmisset/object/invert.ts'
+import { DEFAULT_GRADE } from '~/constants/ascents'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 
 export const NUMBER_TO_GRADE = invert(GRADE_TO_NUMBER)
@@ -25,7 +26,7 @@ export function fromGradeToNumber(grade: Grade): number {
  * Converts a numeric grade to its corresponding Grade.
  *
  * If the provided number is not present in the NUMBER_TO_GRADE mapping, logs an
- * error and returns a default grade of '1a'.
+ * error and returns a default grade of DEFAULT_GRADE.
  *
  * @param {number} gradeNumber - The numeric grade to convert.
  * @returns {Grade} The converted grade.
@@ -35,7 +36,7 @@ export const fromNumberToGrade = (gradeNumber: number): Grade => {
     globalThis.console.error(
       `Error in fromNumberToGrade, with gradeNumber: ${gradeNumber}`,
     )
-    return '1a'
+    return DEFAULT_GRADE
   }
 
   return NUMBER_TO_GRADE[gradeNumber as keyof typeof NUMBER_TO_GRADE]

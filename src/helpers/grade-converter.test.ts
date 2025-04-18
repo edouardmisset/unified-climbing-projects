@@ -6,6 +6,7 @@ import {
   fromGradeToNumber,
   fromNumberToGrade,
 } from './grade-converter'
+import { DEFAULT_GRADE } from '~/constants/ascents'
 
 describe('fromGradeToNumber', () => {
   it('should convert a valid grade correctly', () => {
@@ -34,9 +35,9 @@ describe('fromNumberToGrade', () => {
     assert.equal(result, expectedGrade)
   })
 
-  it("should return '1a' for an invalid number", () => {
+  it('should return `DEFAULT_GRADE` for an invalid number', () => {
     const invalidNumber = -9999
     const result = fromNumberToGrade(invalidNumber)
-    assert.equal(result, '1a')
+    assert.equal(result, DEFAULT_GRADE)
   })
 })

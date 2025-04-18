@@ -6,6 +6,7 @@ import { AscentSummary } from './_components/ascent-summary'
 import { DaysOutsideSummary } from './_components/days-outside-summary'
 import { FavoriteCragSummary } from './_components/favorite-crag-summary'
 import { HardestClimbsSummary } from './_components/hardest-climbs-summary'
+import { TopTenSummary } from './_components/top-ten-summary'
 import { VerticalMilestoneSummary } from './_components/vertical-milestone-summary'
 import { ALL_TIME } from './constants'
 
@@ -40,6 +41,7 @@ export default async function WrapUp({ year }: { year?: number }) {
       <HardestClimbsSummary ascents={ascents} />
       <VerticalMilestoneSummary ascents={ascents} />
       <FavoriteCragSummary ascents={ascents} />
+      <TopTenSummary ascents={ascents} />
     </GridLayout>
   )
 }

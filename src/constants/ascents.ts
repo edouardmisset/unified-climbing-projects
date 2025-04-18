@@ -42,3 +42,5 @@ export const ASCENT_GRADE_TO_COLOR = {
 } as const satisfies Partial<Record<Grade, string>>
 
 export const DEFAULT_BOULDER_HEIGHT = 2
+
+export const DEFAULT_GRADE = '1a' as const satisfies Grade

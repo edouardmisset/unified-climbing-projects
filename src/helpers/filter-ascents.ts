@@ -2,6 +2,7 @@ import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { objectKeys } from '@edouardmisset/object'
 import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
+import { DEFAULT_GRADE } from '~/constants/ascents.ts'
 import type { Ascent } from '~/schema/ascent'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { frequencyBy } from './frequency-by.ts'
@@ -68,7 +69,7 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
 
       return hardestAscent
     },
-    { topoGrade: '1a' } as Ascent,
+    { topoGrade: DEFAULT_GRADE } as Ascent,
   )
 }
 

@@ -174,6 +174,8 @@ export const STYLE_TO_POINTS = {
   Onsight: 150,
 } as const satisfies Record<Ascent['style'], number>
 
+export const BOULDERING_BONUS_POINTS = 100 as const
+
 export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
