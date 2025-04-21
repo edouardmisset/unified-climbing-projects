@@ -2,33 +2,22 @@ import { isDateInLast12Months, isDateInYear } from '@edouardmisset/date'
 import {
   average,
   isValidNumber,
-  sum,
   validNumberWithFallback,
 } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { z } from 'zod'
-import {
-  COEF_ASCENTS_PER_DAY,
-  COEF_ASCENT_DAY_PER_DAY_OUTSIDE,
-  COEF_NUMBER_OF_CRAGS,
-  COEF_ONSIGHT_FLASH_RATIO,
-  COEF_TRIES_PER_ASCENT,
-  MAX_DISCRETE_HEIGHT_COUNT,
-} from '~/constants/ascents'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
+import { calculateEfficiencyPercentage } from '~/helpers/calculate-efficiency-percentage'
+import { calculateProgressionPercentage } from '~/helpers/calculate-progression-percentage'
+import { calculateVersatilityPercentage } from '~/helpers/calculate-versatility-percentage'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { groupSimilarStrings } from '~/helpers/find-similar'
-import { fromGradeToNumber } from '~/helpers/grade-converter'
-import { minMaxGrades } from '~/helpers/min-max-grades'
 import { mostFrequentBy } from '~/helpers/most-frequent-by'
 import { sortByDate } from '~/helpers/sort-by-date'
 import {
-  ASCENT_STYLE,
   type Ascent,
-  HOLDS,
-  PROFILES,
   ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
@@ -253,56 +242,14 @@ export const ascentsRouter = createTRPCRouter({
     .input(optionalAscentFilterSchema)
     .output(percentSchema)
     .query(async ({ input }) => {
-      // TODO: extract the logic into a separate function with JSDOC and unit tests
       const filteredAscents = await getFilteredAscents(input)
 
-      const ascentsCount = filteredAscents.length
-      if (ascentsCount === 0) return 0
-
-      const holdsRatio =
-        new Set(
-          filteredAscents
-            .map(({ holds }) => holds)
-            .filter(hold => hold !== undefined),
-        ).size / HOLDS.length
-
-      const heightRatio =
-        new Set(
-          filteredAscents
-            .map(({ height }) => height)
-            .filter(height => height !== undefined),
-        ).size / MAX_DISCRETE_HEIGHT_COUNT
-
-      const profileRatio =
-        new Set(
-          filteredAscents
-            .map(({ profile }) => profile)
-            .filter(profile => profile !== undefined),
-        ).size / PROFILES.length
-
-      const styleRatio =
-        new Set(filteredAscents.map(({ style }) => style)).size /
-        ASCENT_STYLE.length
-
-      const cragRatio =
-        new Set(filteredAscents.map(({ crag }) => crag)).size /
-        COEF_NUMBER_OF_CRAGS
-
-      const ratios = [
-        holdsRatio,
-        heightRatio,
-        profileRatio,
-        styleRatio,
-        cragRatio,
-      ]
-
-      return Math.round(average(ratios) * 100)
+      return calculateVersatilityPercentage(filteredAscents)
     }),
   getEfficiencyPercentage: publicProcedure
     .input(optionalAscentFilterSchema)
     .output(percentSchema)
     .query(async ({ input }) => {
-      // TODO: extract the logic into a separate function with JSDOC and unit tests
       const filteredAscents = await getFilteredAscents(input)
 
       const allTrainingSessions = await getAllTrainingSessions()
@@ -316,39 +263,10 @@ export const ascentsRouter = createTRPCRouter({
         },
       )
 
-      const ascentsCount = filteredAscents.length
-      if (ascentsCount === 0) return 0
-
-      const daysOutside = new Set(
-        filteredTrainingSessions.map(({ date }) => date.split('T')[0]),
-      ).size
-      const ascentDays = new Set(
-        filteredAscents.map(({ date }) => date.split('T')[0]),
-      ).size
-      const ascentDayPerDayOutside =
-        (ascentDays / daysOutside) * COEF_ASCENT_DAY_PER_DAY_OUTSIDE
-
-      const ascentsPerDay =
-        (filteredAscents.length / daysOutside) * COEF_ASCENTS_PER_DAY
-
-      const averageTries =
-        COEF_TRIES_PER_ASCENT /
-        average(filteredAscents.map(({ tries }) => tries))
-
-      const onsightFlashRatio =
-        (filterAscents(filteredAscents, { style: 'Flash' }).length +
-          filterAscents(filteredAscents, { style: 'Onsight' }).length /
-            ascentsCount) *
-        COEF_ONSIGHT_FLASH_RATIO
-
-      return Math.round(
-        sum(
-          ascentDayPerDayOutside,
-          ascentsPerDay,
-          averageTries,
-          onsightFlashRatio,
-        ),
-      )
+      return calculateEfficiencyPercentage({
+        ascents: filteredAscents,
+        trainingSessions: filteredTrainingSessions,
+      })
     }),
   getProgressionPercentage: publicProcedure
     .input(optionalAscentFilterSchema)
@@ -372,195 +290,9 @@ export const ascentsRouter = createTRPCRouter({
 
       const currentYear = input.year
 
-      calculateProgressionPercentageSlow({
+      return calculateProgressionPercentage({
         ascents: filteredAscents,
         year: currentYear,
       })
-
-      const progression = calculateProgressionPercentage({
-        ascents: filteredAscents,
-        year: currentYear,
-      })
-
-      return Math.round(progression)
     }),
 })
-
-// TODO: benchmark the two functions, write unit tests and JSDOC
-function calculateProgressionPercentage({
-  ascents,
-  year,
-}: { ascents: Ascent[]; year: number }): number {
-  const previousYear = year - 1
-
-  // Define our categories to check
-  const categories = [
-    { climbingDiscipline: 'Boulder', style: 'Redpoint' },
-    { climbingDiscipline: 'Boulder', style: 'Flash' },
-    { climbingDiscipline: 'Route', style: 'Redpoint' },
-    { climbingDiscipline: 'Route', style: 'Flash' },
-    { climbingDiscipline: 'Route', style: 'Onsight' },
-  ] as const satisfies Pick<Ascent, 'climbingDiscipline' | 'style'>[]
-
-  // First, pre-filter ascents to only include relevant years (current and previous)
-  const relevantAscents = ascents.filter(ascent => {
-    const ascentYear = new Date(ascent.date).getFullYear()
-    return ascentYear === year || ascentYear === previousYear
-  })
-
-  // Process each category and get the hardest grades for each year
-  const progressionResults = categories.map(({ climbingDiscipline, style }) => {
-    // Find hardest grade for previous year
-    const [, previousYearHardest] = minMaxGrades(
-      relevantAscents.filter(
-        ascent =>
-          new Date(ascent.date).getFullYear() === previousYear &&
-          ascent.climbingDiscipline === climbingDiscipline &&
-          ascent.style === style,
-      ),
-    )
-
-    // Find hardest grade for current year
-    const [, currentYearHardest] = minMaxGrades(
-      relevantAscents.filter(
-        ascent =>
-          new Date(ascent.date).getFullYear() === year &&
-          ascent.climbingDiscipline === climbingDiscipline &&
-          ascent.style === style,
-      ),
-    )
-
-    // Compare grades and return 1 if current year is harder, 0 otherwise
-    return fromGradeToNumber(currentYearHardest) >
-      fromGradeToNumber(previousYearHardest)
-      ? 1
-      : 0
-  })
-
-  // Calculate average progression score
-  return average(progressionResults) * 100
-}
-
-function calculateProgressionPercentageSlow({
-  ascents,
-  year,
-}: { ascents: Ascent[]; year: number }): number {
-  const previousYear = year - 1
-
-  // Previous year
-
-  const [, previousYearHardestRedpointBoulder] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Boulder',
-      style: 'Redpoint',
-      year: previousYear,
-    }),
-  )
-  const [, previousYearHardestFlashBoulder] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Boulder',
-      style: 'Flash',
-      year: previousYear,
-    }),
-  )
-  const [, previousYearHardestRedpointRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Redpoint',
-      year: previousYear,
-    }),
-  )
-  const [, previousYearHardestFlashRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Flash',
-      year: previousYear,
-    }),
-  )
-  const [, previousYearHardestOnsightRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Onsight',
-      year: previousYear,
-    }),
-  )
-
-  // Current year
-
-  const [, currentYearHardestRedpointBoulder] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Boulder',
-      style: 'Redpoint',
-      year,
-    }),
-  )
-  const [, currentYearHardestFlashBoulder] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Boulder',
-      style: 'Flash',
-      year,
-    }),
-  )
-  const [, currentYearHardestRedpointRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Redpoint',
-      year,
-    }),
-  )
-  const [, currentYearHardestFlashRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Flash',
-      year,
-    }),
-  )
-  const [, currentYearHardestOnsightRoute] = minMaxGrades(
-    filterAscents(ascents, {
-      climbingDiscipline: 'Route',
-      style: 'Onsight',
-      year,
-    }),
-  )
-
-  const isHarderRedpointBoulder =
-    fromGradeToNumber(currentYearHardestRedpointBoulder) -
-      fromGradeToNumber(previousYearHardestRedpointBoulder) >
-    0
-      ? 1
-      : 0
-  const isHarderFlashBoulder =
-    fromGradeToNumber(currentYearHardestFlashBoulder) -
-      fromGradeToNumber(previousYearHardestFlashBoulder) >
-    0
-      ? 1
-      : 0
-  const isHarderRedpointRoute =
-    fromGradeToNumber(currentYearHardestRedpointRoute) -
-      fromGradeToNumber(previousYearHardestRedpointRoute) >
-    0
-      ? 1
-      : 0
-  const isHarderFlashRoute =
-    fromGradeToNumber(currentYearHardestFlashRoute) -
-      fromGradeToNumber(previousYearHardestFlashRoute) >
-    0
-      ? 1
-      : 0
-  const isHarderOnsightRoute =
-    fromGradeToNumber(currentYearHardestOnsightRoute) -
-      fromGradeToNumber(previousYearHardestOnsightRoute) >
-    0
-      ? 1
-      : 0
-
-  const harder = [
-    isHarderRedpointBoulder,
-    isHarderFlashBoulder,
-    isHarderRedpointRoute,
-    isHarderFlashRoute,
-    isHarderOnsightRoute,
-  ]
-
-  return average(harder) * 100
-}

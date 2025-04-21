@@ -46,11 +46,12 @@ export const DEFAULT_BOULDER_HEIGHT = 2 as const
 export const DEFAULT_GRADE = '1a' as const satisfies Grade
 
 // COEFFICIENTS
-export const COEF_ONSIGHT_FLASH_RATIO = 0.2 as const
-export const COEF_TRIES_PER_ASCENT = 0.2 as const
-export const COEF_ASCENTS_PER_DAY = 0.05 as const
-export const COEF_ASCENT_DAY_PER_DAY_OUTSIDE = 0.1 as const
-export const COEF_TOP_TEN = 0.0001 as const
-export const COEF_VOLUME = 0.01 as const
-export const COEF_NUMBER_OF_CRAGS = 15 as const
-export const MAX_DISCRETE_HEIGHT_COUNT = 10 as const
+export const COEFFICIENT_ONSIGHT_FLASH_RATIO = 0.2 as const
+export const COEFFICIENT_TRIES_PER_ASCENT = 0.2 as const
+export const COEFFICIENT_ASCENTS_PER_DAY = 0.05 as const
+export const COEFFICIENT_ASCENT_DAY_PER_DAY_OUTSIDE = 0.1 as const
+export const COEFFICIENT_TOP_TEN = 0.0001 as const
+export const COEFFICIENT_VOLUME = 0.01 as const
+export const COEFFICIENT_NUMBER_OF_CRAGS = 15 as const
+/** From 5m to 50m in 5m intervals */
+export const COEFFICIENT_DISCRETE_HEIGHTS = 10 as const
