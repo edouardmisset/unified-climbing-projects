@@ -11,7 +11,7 @@
     rotate: -90deg;
   }
 
-  @media (width >= 640px) {
+  @media (width > 640px) {
     flex-direction: row;
 
     & > :last-child,
@@ -25,10 +25,8 @@
   max-inline-size: 100%;
   overflow-x: scroll;
   padding-block: var(--size-2);
-}
 
-@media (width >= 640px) {
-  .calendarContainer {
+  @media (width > 640px) {
     overflow-x: auto;
   }
 }
