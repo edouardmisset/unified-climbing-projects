@@ -131,10 +131,9 @@ export default function AscentForm() {
       if (!parsedVal.success) return
 
       const parsedClimbData = parsedVal.data[0]
+      if (parsedClimbData === undefined) return
 
-      return parsedClimbData === undefined
-        ? undefined
-        : setValue('style', parsedClimbData)
+      setValue('style', parsedClimbData)
     },
     [setValue],
   )
@@ -158,11 +157,7 @@ export default function AscentForm() {
       }
       // By default set the style value to 'Onsight' when the number of tries is equal to 1
       if (Number(event.target.value) === 1) {
-        if (isOnsightDisable) {
-          setValue('style', 'Flash')
-        } else {
-          setValue('style', 'Onsight')
-        }
+        setValue('style', isOnsightDisable ? 'Flash' : 'Onsight')
       }
       return handleTriesChangeRegister(event)
     },
