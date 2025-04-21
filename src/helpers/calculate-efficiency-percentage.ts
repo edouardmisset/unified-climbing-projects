@@ -15,6 +15,8 @@ type CalculateEfficiencyPercentageParams = {
   trainingSessions: TrainingSession[]
 }
 
+// TODO THIS IS WRONG !!!
+
 /**
  * Calculates the climbing efficiency percentage based on multiple factors
  *
