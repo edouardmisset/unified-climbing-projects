@@ -48,11 +48,10 @@
     "@trpc/server": "11.0.0-rc.446",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "babel-plugin-react-compiler": "^19.0.0-beta-ebf51a3-20250411",
     "fuzzysort": "^3.1.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
-    "lucide-react": "^0.482.0",
+    "lucide-react": "^0.503.0",
     "next": "^15.3.0",
     "next-view-transitions": "^0.3.4",
     "nuqs": "^2.4.2",
@@ -81,7 +80,7 @@
     "poku": "^3.0.2",
     "react-scan": "^0.3.3",
     "stylelint": "^16.16.0",
-    "stylelint-config-standard": "^37.0.0",
+    "stylelint-config-standard": "^38.0.0",
     "typescript": "^5.8.2"
   },
   "ct3aMetadata": {
