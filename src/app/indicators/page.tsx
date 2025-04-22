@@ -25,9 +25,6 @@ async function getIndicators() {
 
 export default async function Page() {
   const indicators = await getIndicators()
-
-  console.log(indicators)
-
   return (
     <div>
       <h1>Indicators</h1>
