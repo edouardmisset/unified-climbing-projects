@@ -1,9 +1,8 @@
+import { average, clampValueInRange } from '@edouardmisset/math'
 import { assert, describe, it } from 'poku'
 import {
   COEFFICIENT_ASCENTS_PER_DAY,
-  COEFFICIENT_ASCENT_DAY_PER_DAY_OUTSIDE,
   COEFFICIENT_ONSIGHT_FLASH_RATIO,
-  COEFFICIENT_TRIES_PER_ASCENT,
 } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -42,7 +41,7 @@ describe('calculateEfficiencyPercentage', () => {
   })
 
   it('should calculate efficiency percentage correctly for a simple case', () => {
-    // Scenario: 1 day outside, 1 ascent, Flash, 1 try
+    // Scenario: 1 day outside, 1 ascent Flash, 1 try
     const ascents: Ascent[] = [
       {
         id: 1,
@@ -66,13 +65,21 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // Calculate expected result manually
-    const ascentDayPerDayOutside =
-      (1 / 1) * COEFFICIENT_ASCENT_DAY_PER_DAY_OUTSIDE
-    const ascentsPerDay = (1 / 1) * COEFFICIENT_ASCENTS_PER_DAY
-    const averageTries = COEFFICIENT_TRIES_PER_ASCENT / 1
-    const onsightFlashRatio = (1 / 1) * COEFFICIENT_ONSIGHT_FLASH_RATIO
+    const ascentDayPerDayOutside = 1
+    const ascentsPerDay = 1 * COEFFICIENT_ASCENTS_PER_DAY
+    const averageTries = 1
+    const onsightFlashRatio = clampValueInRange({
+      value: 1 * COEFFICIENT_ONSIGHT_FLASH_RATIO,
+      minimum: 0,
+      maximum: 1,
+    })
     const expected = Math.round(
-      ascentDayPerDayOutside + ascentsPerDay + averageTries + onsightFlashRatio,
+      average(
+        ascentDayPerDayOutside,
+        ascentsPerDay,
+        averageTries,
+        onsightFlashRatio,
+      ) * 100,
     )
 
     assert.equal(result, expected)
@@ -127,15 +134,24 @@ describe('calculateEfficiencyPercentage', () => {
       trainingSessions,
     })
 
-    // Calculate expected result manually
-    const ascentDayPerDayOutside =
-      (2 / 3) * COEFFICIENT_ASCENT_DAY_PER_DAY_OUTSIDE
+    const ascentDayPerDayOutside = 2 / 3
     const ascentsPerDay = (3 / 3) * COEFFICIENT_ASCENTS_PER_DAY
-    const averageTries = COEFFICIENT_TRIES_PER_ASCENT / ((1 + 3 + 1) / 3)
+    const averageTries = 3 / (1 + 3 + 1)
     const onsightFlashRatio = (2 / 3) * COEFFICIENT_ONSIGHT_FLASH_RATIO
-    const expected = Math.round(
-      ascentDayPerDayOutside + ascentsPerDay + averageTries + onsightFlashRatio,
+
+    const ratios = [
+      ascentDayPerDayOutside,
+      ascentsPerDay,
+      averageTries,
+      onsightFlashRatio,
+    ].map(ratio =>
+      clampValueInRange({
+        value: ratio * 100,
+        minimum: 0,
+        maximum: 100,
+      }),
     )
+    const expected = Math.round(average(ratios))
 
     assert.equal(result, expected)
   })
@@ -303,13 +319,18 @@ describe('calculateEfficiencyPercentage', () => {
 
     // Calculate expected result manually
     // Only 1 unique day
-    const ascentDayPerDayOutside =
-      (1 / 1) * COEFFICIENT_ASCENT_DAY_PER_DAY_OUTSIDE
-    const ascentsPerDay = (2 / 1) * COEFFICIENT_ASCENTS_PER_DAY
-    const averageTries = COEFFICIENT_TRIES_PER_ASCENT / ((1 + 3) / 2)
+    const ascentDayPerDayOutside = 1
+    const ascentsPerDay = 2 * COEFFICIENT_ASCENTS_PER_DAY
+    const averageTries = 2 / (1 + 3)
     const onsightFlashRatio = (1 / 2) * COEFFICIENT_ONSIGHT_FLASH_RATIO
+
     const expected = Math.round(
-      ascentDayPerDayOutside + ascentsPerDay + averageTries + onsightFlashRatio,
+      average(
+        ascentDayPerDayOutside,
+        ascentsPerDay,
+        averageTries,
+        onsightFlashRatio,
+      ) * 100,
     )
 
     assert.equal(result, expected)

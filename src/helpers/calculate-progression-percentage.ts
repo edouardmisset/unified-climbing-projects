@@ -47,13 +47,17 @@ export function calculateProgressionPercentage({
   const currentYearAscents: Ascent[] = []
   const previousYearAscents: Ascent[] = []
 
-  // Pre-filter and group ascents by year in a single pass
+  // Pre-filter and group ascents by year
   for (const ascent of ascents) {
     const ascentYear = new Date(ascent.date).getFullYear()
 
-    if (ascentYear === year) currentYearAscents.push(ascent)
+    if (ascentYear === year) {
+      currentYearAscents.push(ascent)
+    }
 
-    if (ascentYear === previousYear) previousYearAscents.push(ascent)
+    if (ascentYear === previousYear) {
+      previousYearAscents.push(ascent)
+    }
   }
 
   if (currentYearAscents.length === 0) return 0
@@ -61,7 +65,6 @@ export function calculateProgressionPercentage({
   const currentYearMap = createHardestGradeMap(currentYearAscents)
   const previousYearMap = createHardestGradeMap(previousYearAscents)
 
-  // counting missing categories as no progression
   let progressionCount = 0
 
   for (const { climbingDiscipline, style } of categories) {
@@ -70,18 +73,16 @@ export function calculateProgressionPercentage({
     const currentYearHardest = currentYearMap.get(categoryKey)
     const previousYearHardest = previousYearMap.get(categoryKey)
 
-    if (currentYearHardest === undefined) {
-      continue
-    }
+    if (currentYearHardest === undefined) continue
 
-    if (previousYearHardest === undefined) {
+    if (previousYearHardest === undefined && currentYearHardest !== undefined) {
       progressionCount++
       continue
     }
 
     const isClimbingProgressing =
       fromGradeToNumber(currentYearHardest) >
-      fromGradeToNumber(previousYearHardest)
+      fromGradeToNumber(previousYearHardest as Grade)
 
     if (isClimbingProgressing) progressionCount++
   }
@@ -92,11 +93,16 @@ export function calculateProgressionPercentage({
 /**
  * Helper function to create a map of the hardest grades for each category
  */
-function createHardestGradeMap(ascents: Ascent[]): Map<string, Grade> {
-  const result = new Map<string, Grade>()
+export function createHardestGradeMap(
+  ascents: Ascent[],
+): Map<ReturnType<typeof generateCategoryKey>, Grade> {
+  const result = new Map<ReturnType<typeof generateCategoryKey>, Grade>()
 
   // Group ascents by category
-  const categoryGroups = new Map<string, Ascent[]>()
+  const categoryGroups = new Map<
+    ReturnType<typeof generateCategoryKey>,
+    Ascent[]
+  >()
 
   for (const ascent of ascents) {
     const key = generateCategoryKey(ascent.climbingDiscipline, ascent.style)

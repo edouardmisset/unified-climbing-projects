@@ -1,18 +1,11 @@
 import { isDateInLast12Months, isDateInYear } from '@edouardmisset/date'
-import {
-  average,
-  isValidNumber,
-  validNumberWithFallback,
-} from '@edouardmisset/math'
+import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
-import { calculateEfficiencyPercentage } from '~/helpers/calculate-efficiency-percentage'
-import { calculateProgressionPercentage } from '~/helpers/calculate-progression-percentage'
-import { calculateVersatilityPercentage } from '~/helpers/calculate-versatility-percentage'
+import { calculateTopTenScore } from '~/helpers/calculate-top-ten'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
-import { filterTrainingSessions } from '~/helpers/filter-training'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { mostFrequentBy } from '~/helpers/most-frequent-by'
 import { sortByDate } from '~/helpers/sort-by-date'
@@ -28,12 +21,10 @@ import {
 import {
   errorSchema,
   optionalAscentYear,
-  percentSchema,
   timeframeSchema,
 } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addAscent, getAllAscents } from '~/services/ascents'
-import { getAllTrainingSessions } from '~/services/training'
 
 export async function getFilteredAscents(
   filters?: OptionalAscentFilter,
@@ -238,61 +229,32 @@ export const ascentsRouter = createTRPCRouter({
 
       return sortedAscentsWithPoints.slice(0, 10)
     }),
-  getVersatilityPercentage: publicProcedure
-    .input(optionalAscentFilterSchema)
-    .output(percentSchema)
-    .query(async ({ input }) => {
-      const filteredAscents = await getFilteredAscents(input)
+  calculateTopTen: publicProcedure
+    .input(
+      z
+        .object({
+          timeframe: timeframeSchema.optional(),
+          year: optionalAscentYear,
+        })
+        .optional(),
+    )
+    .output(z.number().int().min(0))
+    .query(async ({ input = {} }) => {
+      const { timeframe = 'year', year = new Date().getFullYear() } = input
 
-      return calculateVersatilityPercentage(filteredAscents)
-    }),
-  getEfficiencyPercentage: publicProcedure
-    .input(optionalAscentFilterSchema)
-    .output(percentSchema)
-    .query(async ({ input }) => {
-      const filteredAscents = await getFilteredAscents(input)
+      const allAscents = await getAllAscents()
 
-      const allTrainingSessions = await getAllTrainingSessions()
-      const filteredTrainingSessions = filterTrainingSessions(
-        allTrainingSessions,
-        {
-          sessionType: 'Out',
-          year: input?.year,
-          climbingDiscipline: input?.climbingDiscipline,
-          gymCrag: input?.crag,
-        },
-      )
+      const filteredAscents =
+        timeframe === 'all-time'
+          ? allAscents
+          : allAscents.filter(({ date }) => {
+              if (timeframe === 'year') return isDateInYear(date, year)
+              if (timeframe === 'last-12-months')
+                return isDateInLast12Months(date)
 
-      return calculateEfficiencyPercentage({
-        ascents: filteredAscents,
-        trainingSessions: filteredTrainingSessions,
-      })
-    }),
-  getProgressionPercentage: publicProcedure
-    .input(optionalAscentFilterSchema)
-    .output(percentSchema)
-    .query(async ({ input }) => {
-      if (
-        input?.year === undefined ||
-        !isValidNumber(input.year) ||
-        input.year <= 0
-      ) {
-        globalThis.console.log('invalid year', input?.year)
-        return 0
-      }
+              return false
+            })
 
-      const filteredAscents = await getFilteredAscents(input)
-
-      if (filteredAscents.length === 0) {
-        globalThis.console.log('no ascents')
-        return 0
-      }
-
-      const currentYear = input.year
-
-      return calculateProgressionPercentage({
-        ascents: filteredAscents,
-        year: currentYear,
-      })
+      return calculateTopTenScore(filteredAscents)
     }),
 })

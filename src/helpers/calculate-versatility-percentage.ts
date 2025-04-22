@@ -1,4 +1,4 @@
-import { average } from '@edouardmisset/math'
+import { average, clampValueInRange } from '@edouardmisset/math'
 import {
   COEFFICIENT_DISCRETE_HEIGHTS,
   COEFFICIENT_NUMBER_OF_CRAGS,
@@ -37,20 +37,25 @@ export function calculateVersatilityPercentage(ascents: Ascent[]): number {
     if (holds) uniqueHolds.add(holds)
     if (height) uniqueHeights.add(height)
     if (profile) uniqueProfiles.add(profile)
-    if (crag !== '') uniqueCrags.add(crag)
+    if (crag.trim() !== '') uniqueCrags.add(crag)
     uniqueStyles.add(style)
   }
 
   const holdsRatio = uniqueHolds.size / HOLDS.length
-  const heightRatio = Math.min(
-    uniqueHeights.size / COEFFICIENT_DISCRETE_HEIGHTS,
-    1,
-  )
+  const heightRatio = uniqueHeights.size / COEFFICIENT_DISCRETE_HEIGHTS
   const profileRatio = uniqueProfiles.size / PROFILES.length
   const styleRatio = uniqueStyles.size / ASCENT_STYLE.length
   const cragRatio = uniqueCrags.size / COEFFICIENT_NUMBER_OF_CRAGS
 
-  const ratios = [holdsRatio, heightRatio, profileRatio, styleRatio, cragRatio]
+  const ratios = [
+    holdsRatio,
+    heightRatio,
+    profileRatio,
+    styleRatio,
+    cragRatio,
+  ].map(ratio =>
+    clampValueInRange({ value: ratio * 100, minimum: 0, maximum: 100 }),
+  )
 
-  return Math.round(average(ratios) * 100)
+  return Math.round(average(ratios))
 }
