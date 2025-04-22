@@ -4,6 +4,7 @@ import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { z } from 'zod'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
+import { calculateTopTenScore } from '~/helpers/calculate-top-ten'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { mostFrequentBy } from '~/helpers/most-frequent-by'
@@ -227,5 +228,33 @@ export const ascentsRouter = createTRPCRouter({
         .sort((a, b) => b.points - a.points)
 
       return sortedAscentsWithPoints.slice(0, 10)
+    }),
+  calculateTopTen: publicProcedure
+    .input(
+      z
+        .object({
+          timeframe: timeframeSchema.optional(),
+          year: optionalAscentYear,
+        })
+        .optional(),
+    )
+    .output(z.number().int().min(0))
+    .query(async ({ input = {} }) => {
+      const { timeframe = 'year', year = new Date().getFullYear() } = input
+
+      const allAscents = await getAllAscents()
+
+      const filteredAscents =
+        timeframe === 'all-time'
+          ? allAscents
+          : allAscents.filter(({ date }) => {
+              if (timeframe === 'year') return isDateInYear(date, year)
+              if (timeframe === 'last-12-months')
+                return isDateInLast12Months(date)
+
+              return false
+            })
+
+      return calculateTopTenScore(filteredAscents)
     }),
 })

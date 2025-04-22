@@ -1,12 +1,12 @@
 import { objectKeys } from '@edouardmisset/object'
 import { assert, describe, it } from 'poku'
+import { DEFAULT_GRADE } from '~/constants/ascents'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 import {
   NUMBER_TO_GRADE,
   fromGradeToNumber,
   fromNumberToGrade,
 } from './grade-converter'
-import { DEFAULT_GRADE } from '~/constants/ascents'
 
 describe('fromGradeToNumber', () => {
   it('should convert a valid grade correctly', () => {

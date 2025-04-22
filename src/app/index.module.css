@@ -6,7 +6,7 @@
 }
 
 .header {
-  @media screen and (width <= 640px) {
+  @media (width <= 640px) {
     position: absolute;
 
     inset-block-start: 0;
@@ -35,12 +35,12 @@
 }
 
 .themeToggle {
-  @media screen and (width <= 640px) {
-    display: none;
-  }
-
   margin-top: auto;
   padding: var(--size-fluid-0);
   background: transparent;
   border: 1px solid var(--gray-5);
+
+  @media (width <= 640px) {
+    display: none;
+  }
 }

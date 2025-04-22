@@ -3,6 +3,7 @@ import { areasRouter } from './routers/areas.ts'
 import { ascentsRouter } from './routers/ascents.ts'
 import { cragsRouter } from './routers/crags.ts'
 import { gradesRouter } from './routers/grades.ts'
+import { indicatorsRouter } from './routers/indicators.ts'
 import { trainingRouter } from './routers/training.ts'
 
 /**
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   crags: cragsRouter,
   grades: gradesRouter,
   training: trainingRouter,
+  indicators: indicatorsRouter,
 })
 
 // export type definition of API
