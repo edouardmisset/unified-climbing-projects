@@ -1,4 +1,5 @@
 import { capitalize, wrapInParentheses } from '@edouardmisset/text'
+import { displayGrade } from '~/helpers/display-grade'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { Popover } from '../popover/popover'
@@ -12,10 +13,10 @@ export function AscentsWithPopover({
     <Popover
       popoverDescription={
         <div className={styles.popoverContainer}>
-          {ascents.map(({ id, routeName, topoGrade }) => (
+          {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
             <span
               key={id}
-            >{`${routeName} ${wrapInParentheses(topoGrade)}`}</span>
+            >{`${routeName} ${wrapInParentheses(displayGrade({ grade: topoGrade, climbingDiscipline }))}`}</span>
           ))}
         </div>
       }

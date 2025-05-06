@@ -1,3 +1,4 @@
+import { displayGrade } from '~/helpers/display-grade'
 import type { Ascent } from '~/schema/ascent'
 import { AscentCard } from '../ascent-card/ascent-card'
 import AscentDialog from './_components/ascent-dialog'
@@ -7,9 +8,10 @@ export function AscentComponent({
   ascent,
   showGrade = false,
 }: { ascent: Ascent; showGrade?: boolean }) {
+  const { topoGrade, climbingDiscipline, routeName } = ascent
   return (
     <AscentDialog
-      triggerText={`${ascent.routeName} ${showGrade ? `(${ascent.topoGrade})` : ''}`}
+      triggerText={`${routeName} ${showGrade ? `(${displayGrade({ grade: topoGrade, climbingDiscipline })})` : ''}`}
       triggerClassName={styles.trigger}
       content={<AscentCard ascent={ascent} />}
     />

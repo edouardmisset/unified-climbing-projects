@@ -1,6 +1,7 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { useMemo } from 'react'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
+import { displayGrade } from '~/helpers/display-grade'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
   formatCragAndArea,
@@ -126,80 +127,96 @@ export function AscentList({
             profile,
             rating,
             points,
-          }) => (
-            <tr key={id} className={`${styles.row} grid-full-width`}>
-              <td
-                title={climbingDiscipline}
-                className={`${styles.cell} margin-auto`}
-              >
-                {fromClimbingDisciplineToEmoji(climbingDiscipline)}
-              </td>
-              <td className={styles.cell}>
-                <strong title={routeName}>{routeName}</strong>
-              </td>
-              {showPoints && (
+          }) => {
+            const formattedGrade = displayGrade({
+              grade: topoGrade,
+              climbingDiscipline,
+            })
+            return (
+              <tr key={id} className={`${styles.row} grid-full-width`}>
                 <td
-                  title={points?.toString()}
-                  className={`${styles.cell} monospace`}
+                  title={climbingDiscipline}
+                  className={`${styles.cell} margin-auto`}
                 >
-                  {points === undefined ? '—' : <strong>{points}</strong>}
+                  {fromClimbingDisciplineToEmoji(climbingDiscipline)}
                 </td>
-              )}
-              <td className={styles.cell}>
-                <em
-                  title={`Topo Grade: ${topoGrade}${topoGrade === personalGrade ? '' : ` - Personal Grade: ${personalGrade}`}`}
-                  className="monospace"
-                >
-                  <span>
-                    {topoGrade.endsWith('+')
-                      ? topoGrade
-                      : `${topoGrade}${NON_BREAKING_SPACE}`}
-                  </span>
-                  {personalGrade === topoGrade ? undefined : (
-                    <sup> {personalGrade}</sup>
-                  )}
-                </em>
-              </td>
-              <td
-                title={tries === 1 ? style : formatOrdinals(tries)}
-                className={styles.cell}
-              >
-                <span>{fromAscentStyleToEmoji(style)}</span>
-                <sup>{tries > 1 ? ` ${formatOrdinals(tries)}` : ''}</sup>
-              </td>
-              <td
-                title={prettyLongDate(date, 'longDate')}
-                className={`${styles.cell} monospace`}
-              >
-                {prettyLongDate(date, 'shortDate')}
-              </td>
-              <td title={formatCragAndArea(crag, area)} className={styles.cell}>
-                {formatCragAndArea(crag, area)}
-              </td>
-              {showDetails && (
-                <>
-                  <td title={holds} className={styles.cell}>
-                    {formatHolds(holds)}
-                  </td>
-                  <td title={profile} className={styles.cell}>
-                    {formatProfile(profile)}
-                  </td>
+                <td className={styles.cell}>
+                  <strong title={routeName}>{routeName}</strong>
+                </td>
+                {showPoints && (
                   <td
-                    title={height === undefined ? undefined : `${height}m`}
+                    title={points?.toString()}
                     className={`${styles.cell} monospace`}
                   >
-                    {formatHeight(height)}
+                    {points === undefined ? '—' : <strong>{points}</strong>}
                   </td>
-                  <td
-                    title={rating === undefined ? undefined : `${rating}⭐️`}
-                    className={styles.cell}
+                )}
+                <td className={styles.cell}>
+                  <em
+                    title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` - Personal Grade: ${displayGrade({ grade: personalGrade, climbingDiscipline })}`}`}
+                    className="monospace"
                   >
-                    {formatRating(rating)}
-                  </td>
-                </>
-              )}
-            </tr>
-          ),
+                    <span>
+                      {formattedGrade.endsWith('+')
+                        ? formattedGrade
+                        : `${formattedGrade}${NON_BREAKING_SPACE}`}
+                    </span>
+                    {personalGrade === topoGrade ||
+                    personalGrade === undefined ? undefined : (
+                      <sup>
+                        {' '}
+                        {displayGrade({
+                          grade: personalGrade,
+                          climbingDiscipline,
+                        })}
+                      </sup>
+                    )}
+                  </em>
+                </td>
+                <td
+                  title={tries === 1 ? style : formatOrdinals(tries)}
+                  className={styles.cell}
+                >
+                  <span>{fromAscentStyleToEmoji(style)}</span>
+                  <sup>{tries > 1 ? ` ${formatOrdinals(tries)}` : ''}</sup>
+                </td>
+                <td
+                  title={prettyLongDate(date, 'longDate')}
+                  className={`${styles.cell} monospace`}
+                >
+                  {prettyLongDate(date, 'shortDate')}
+                </td>
+                <td
+                  title={formatCragAndArea(crag, area)}
+                  className={styles.cell}
+                >
+                  {formatCragAndArea(crag, area)}
+                </td>
+                {showDetails && (
+                  <>
+                    <td title={holds} className={styles.cell}>
+                      {formatHolds(holds)}
+                    </td>
+                    <td title={profile} className={styles.cell}>
+                      {formatProfile(profile)}
+                    </td>
+                    <td
+                      title={height === undefined ? undefined : `${height}m`}
+                      className={`${styles.cell} monospace`}
+                    >
+                      {formatHeight(height)}
+                    </td>
+                    <td
+                      title={rating === undefined ? undefined : `${rating}⭐️`}
+                      className={styles.cell}
+                    >
+                      {formatRating(rating)}
+                    </td>
+                  </>
+                )}
+              </tr>
+            )
+          },
         )}
       </tbody>
       <tfoot className={`${styles.footer} grid-full-width`}>

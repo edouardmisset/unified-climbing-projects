@@ -1,5 +1,6 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import { type CSSProperties, useMemo } from 'react'
+import { displayGrade } from '~/helpers/display-grade'
 import {
   formatComments,
   formatCragAndArea,
@@ -39,12 +40,13 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     [comments],
   )
 
+  const formattedGrade = displayGrade({ grade: topoGrade, climbingDiscipline });
   return (
     <div className={styles.card}>
       <h2
         className={`${styles.header} text-no-wrap`}
-        title={`${routeName} ${topoGrade}`}
-      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(topoGrade)}`}</h2>
+        title={`${routeName} ${formattedGrade}`}
+      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
           <time>{prettyLongDate(date)}</time>
