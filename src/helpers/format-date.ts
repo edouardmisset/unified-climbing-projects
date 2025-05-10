@@ -29,14 +29,16 @@ export const DATE_TIME_OPTIONS = {
  * Formats the provided date using the specified date time options.
  *
  * @param {Date} date - The date to format
- * @param {keyof typeof DATE_TIME_OPTIONS} [options='fullDateTime'] - The format option key from DATE_TIME_OPTIONS
+ * @param {keyof typeof DATE_TIME_OPTIONS} [options='fullDateTime'] - The format
+ * option key from DATE_TIME_OPTIONS
  * @returns {string} The formatted date string
  */
 export const formatDateTime = (
   date: Date,
   options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
 ): string => {
-  return new Intl.DateTimeFormat(US_LOCALE, DATE_TIME_OPTIONS[options]).format(
-    date,
-  )
+  return new Intl.DateTimeFormat(
+    options === 'shortDate' ? 'fr-FR' : US_LOCALE,
+    DATE_TIME_OPTIONS[options],
+  ).format(date)
 }
