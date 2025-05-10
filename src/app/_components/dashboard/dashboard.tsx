@@ -26,7 +26,7 @@ export function Dashboard() {
   if (!allAscents) return <NotFound />
 
   return (
-    <div className="flex flex-column gap grid-full-width">
+    <div className="flex flex-column gap align-center grid-full-width">
       <AscentsFilterBar allAscents={allAscents} />
       <div className={styles.container}>
         <AscentPyramid ascents={filteredAscents} className={styles.item} />
