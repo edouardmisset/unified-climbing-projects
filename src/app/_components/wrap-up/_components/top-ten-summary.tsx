@@ -4,6 +4,7 @@ import {
   fromAscentToPoints,
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
+import { displayGrade } from '~/helpers/display-grade'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { Card } from '../../card/card'
@@ -47,7 +48,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
                 style: 'Onsight',
               })}
             </strong>{' '}
-            Route
+            route
           </p>
           <p>
             Flash a{' '}
@@ -72,9 +73,12 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
           <p>
             Flash a{' '}
             <strong>
-              {fromPointToGrade(nextStepPoints, {
+              {displayGrade({
+                grade: fromPointToGrade(nextStepPoints, {
+                  climbingDiscipline: 'Boulder',
+                  style: 'Flash',
+                }),
                 climbingDiscipline: 'Boulder',
-                style: 'Flash',
               })}
             </strong>{' '}
             boulder
@@ -82,9 +86,12 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
           <p>
             Redpoint a{' '}
             <strong>
-              {fromPointToGrade(nextStepPoints, {
+              {displayGrade({
+                grade: fromPointToGrade(nextStepPoints, {
+                  climbingDiscipline: 'Boulder',
+                  style: 'Redpoint',
+                }),
                 climbingDiscipline: 'Boulder',
-                style: 'Redpoint',
               })}
             </strong>{' '}
             boulder
