@@ -16,7 +16,7 @@ export function FilteredTrainingSessionList({
   if (!trainingSessions) return <NotFound />
 
   return (
-    <section className="grid-full-width">
+    <section className="flex flex-column gap grid-full-width">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
       <TrainingSessionList trainingSessions={filteredTrainingSessions} />
     </section>

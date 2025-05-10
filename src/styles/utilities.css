@@ -69,7 +69,6 @@
   display: grid;
   gap: var(--size-fluid-1);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
-  padding-inline: var(--size-fluid-1);
 }
 
 .grid-full-width {
