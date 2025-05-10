@@ -8,6 +8,9 @@ import './src/env.js'
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
+    // ppr: true,
+    routerBFCache: true,
+    useCache: true,
     staleTimes: {
       dynamic: 30,
       static: 180,
