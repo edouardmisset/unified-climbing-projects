@@ -1,6 +1,7 @@
 import { filterAscents } from '~/helpers/filter-ascents'
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { sortByDate } from '~/helpers/sort-by-date'
+import { displayGrade } from '~/helpers/display-grade'
 import type { Ascent } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
@@ -61,7 +62,7 @@ export function AscentSummary({
       {averageBoulderGrade === 'N/A' ? undefined : (
         <p>
           Your average bouldering grade was{' '}
-          <strong>{averageBoulderGrade}</strong>
+          <strong>{displayGrade({grade: averageBoulderGrade, climbingDiscipline: "Boulder"})}</strong>
         </p>
       )}
     </Card>
