@@ -34,14 +34,14 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your Top Ten score is{' '}
+        Your score is{' '}
         <strong>{frenchNumberFormatter(topTenScore)}</strong>
       </p>
       {lowestTopTenAscent && (
         <>
-          <h3>To improve Top Ten</h3>
+          <h3>Improve by</h3>
           <p>
-            Onsight a{' '}
+            Onsighting a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
                 climbingDiscipline: 'Route',
@@ -51,7 +51,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             route
           </p>
           <p>
-            Flash a{' '}
+            Flashing a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
                 climbingDiscipline: 'Route',
@@ -61,7 +61,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             route
           </p>
           <p>
-            Redpoint a{' '}
+            Redpointing a{' '}
             <strong>
               {fromPointToGrade(nextStepPoints, {
                 climbingDiscipline: 'Route',
@@ -71,7 +71,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             route
           </p>
           <p>
-            Flash a{' '}
+            Flashing a{' '}
             <strong>
               {displayGrade({
                 grade: fromPointToGrade(nextStepPoints, {
@@ -84,7 +84,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
             boulder
           </p>
           <p>
-            Redpoint a{' '}
+            Redpointing a{' '}
             <strong>
               {displayGrade({
                 grade: fromPointToGrade(nextStepPoints, {
