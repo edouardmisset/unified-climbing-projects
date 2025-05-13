@@ -8,10 +8,12 @@ import { YEAR_OF_FIRST_ASCENT } from './constants'
 import styles from './grid-layout.module.css'
 
 export default function GridLayout({
+  gridClassName = '',
   children,
   title,
   additionalContent,
 }: {
+  gridClassName?: string
   children: ReactNode
   title: ReactNode
   additionalContent?: ReactNode
@@ -50,7 +52,7 @@ export default function GridLayout({
       </div>
       {additionalContent}
       <Suspense fallback={<Loader />}>
-        <div className="grid">{children}</div>
+        <div className={`grid ${gridClassName}`}>{children}</div>
       </Suspense>
     </section>
   )

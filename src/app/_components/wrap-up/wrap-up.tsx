@@ -27,7 +27,7 @@ export default async function WrapUp({ year }: { year?: number }) {
   }
 
   return (
-    <GridLayout title={year ?? ALL_TIME}>
+    <GridLayout title={year ?? ALL_TIME} gridClassName="padding">
       <Suspense
         fallback={
           <Card>

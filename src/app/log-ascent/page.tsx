@@ -10,7 +10,7 @@ export default async function Log() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <GridLayout title="Congrats 🎉">
+        <GridLayout title="Congrats 🎉" gridClassName="padding">
           <span className="visually-hidden" aria-describedby="form-description">
             Form to log a climbing ascent
           </span>
