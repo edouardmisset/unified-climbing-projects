@@ -1,9 +1,11 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { z } from 'zod'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
-import { compareStringsAscending } from '~/helpers/sort-strings'
+import {
+  compareStringsAscending,
+  compareStringsDescending,
+} from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
-
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -14,18 +16,30 @@ async function getAllAreas(): Promise<NonNullable<Ascent['area']>[]> {
   return ascents.map(({ area }) => area?.trim()).filter(Boolean)
 }
 
-// Get all known areas from the ascents
 export const areasRouter = createTRPCRouter({
-  // Get all known areas
-  getAll: publicProcedure.output(z.string().array()).query(async () => {
-    const validAreas = await getAllAreas()
-    const sortedAreas = [...new Set(validAreas)].sort((a, b) =>
-      compareStringsAscending(a, b),
+  getAll: publicProcedure
+    .input(
+      z
+        .object({
+          sortOrder: z.enum(['asc', 'desc', 'newest', 'oldest']).optional(),
+        })
+        .optional(),
     )
+    .output(ascentSchema.shape.area.array())
+    .query(async ({ input }) => {
+      const { sortOrder } = input ?? {}
+      const validAreas = await getAllAreas()
+      const uniqueAreas = [...new Set(validAreas)]
 
-    return sortedAreas
-  }),
-  // Get all known areas sorted by frequency
+      if (sortOrder === 'asc')
+        return uniqueAreas.sort((a, b) => compareStringsAscending(a, b))
+      if (sortOrder === 'desc')
+        return uniqueAreas.sort((a, b) => compareStringsDescending(a, b))
+      if (sortOrder === 'newest') return uniqueAreas
+      if (sortOrder === 'oldest') return uniqueAreas.reverse()
+
+      return uniqueAreas
+    }),
   getFrequency: publicProcedure
     .output(
       z.record(
@@ -42,7 +56,6 @@ export const areasRouter = createTRPCRouter({
       )
       return sortedAreasByFrequency
     }),
-  // Get all known areas that are similar
   getDuplicates: publicProcedure
     .output(
       z
@@ -57,7 +70,6 @@ export const areasRouter = createTRPCRouter({
 
       return duplicateAreas
     }),
-  // Get all known areas that are similar
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())
     .query(async () => {

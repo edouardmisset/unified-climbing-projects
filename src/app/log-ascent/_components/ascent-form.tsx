@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { type ChangeEventHandler, useCallback } from 'react'
+import { type ChangeEventHandler, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
@@ -9,7 +9,6 @@ import { GradeInput } from '~/app/_components/grade-input/grade-input.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic.ts'
-import { env } from '~/env'
 import {
   fromGradeToNumber,
   fromNumberToGrade,
@@ -40,22 +39,20 @@ import styles from './ascent-form.module.css'
 
 type HandleGradeChange = (value: number | null, event?: Event) => void
 
-const isDevelopmentEnv = env.NEXT_PUBLIC_ENV === 'development'
 const numberOfGrades = _GRADES.length
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
 export default function AscentForm() {
-  const { user } = useUser()
+  const { user, isLoaded: isUserLoaded } = useUser()
 
-  const { data: rawAverageGrade, isLoading: isAverageGradeLoading } =
-    api.grades.getAverage.useQuery()
-  const averageGrade = fromGradeToNumber(rawAverageGrade ?? '7b')
-
+  const { data: latestAscent, isLoading: isLatestAscentLoading } =
+    api.ascents.getLatest.useQuery()
+  console.log('🚀 ~ AscentForm ~ latestAscent:', latestAscent)
   const { data: allCrags, isLoading: areCragsLoading } =
-    api.crags.getAll.useQuery()
+    api.crags.getAll.useQuery({ sortOrder: 'newest' })
   const { data: allAreas, isLoading: areAreasLoading } =
-    api.areas.getAll.useQuery()
+    api.areas.getAll.useQuery({ sortOrder: 'newest' })
 
   const {
     data: [minGrade, maxGrade] = [
@@ -65,18 +62,22 @@ export default function AscentForm() {
     isLoading: isGradesLoading,
   } = api.grades.getMinMax.useQuery()
 
-  const defaultAscentToParse = {
-    routeName: isDevelopmentEnv ? 'This_Is_A_Test_Route_Name' : '',
-    crag: isDevelopmentEnv ? 'This_Is_A_Test_Crag' : '',
-    topoGrade: averageGrade,
-    personalGrade: averageGrade,
-    holds: isDevelopmentEnv ? 'Crimp' : undefined,
-    profile: isDevelopmentEnv ? 'Vertical' : undefined,
-    date: new Date(),
-    climbingDiscipline: 'Route',
-    tries: '1',
-    style: 'Onsight',
-  } satisfies AscentFormInput
+  const defaultAscentToParse = useMemo(
+    () =>
+      ({
+        date: new Date(),
+        routeName: '',
+        crag: latestAscent?.crag,
+        area: latestAscent?.area,
+        topoGrade: fromGradeToNumber(minGrade),
+        personalGrade: fromGradeToNumber(minGrade),
+        climbingDiscipline: latestAscent?.climbingDiscipline,
+        tries: '1',
+        style:
+          latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+      }) satisfies AscentFormInput,
+    [latestAscent, minGrade],
+  )
 
   const defaultAscentFormValues =
     ascentFormInputSchema.safeParse(defaultAscentToParse)
@@ -85,7 +86,7 @@ export default function AscentForm() {
     globalThis.console.log(defaultAscentFormValues.error)
   }
 
-  const { data: defaultAscent } = defaultAscentFormValues
+  const defaultAscent = defaultAscentFormValues.data
 
   const {
     handleSubmit,
@@ -104,25 +105,25 @@ export default function AscentForm() {
   const { onChange: handleTriesChangeRegister, ...triesRegister } =
     register('tries')
 
-  const numberTopoGrade = watch('topoGrade') ?? averageGrade
+  const numberTopoGrade = watch('topoGrade') ?? fromGradeToNumber(minGrade)
   const personalNumberGrade = watch('personalGrade') ?? numberTopoGrade
   const numberOfTries = watch('tries') ?? '1'
 
   const handleTopoGradeChange: HandleGradeChange = useCallback(
     value => {
-      const val = value ?? averageGrade
+      const val = value ?? fromGradeToNumber(minGrade)
       setValue('topoGrade', val)
 
       setValue('personalGrade', val)
     },
-    [setValue, averageGrade],
+    [setValue, minGrade],
   )
   const handlePersonalGradeChange: HandleGradeChange = useCallback(
     value => {
-      const val = value ?? averageGrade
+      const val = value ?? fromGradeToNumber(minGrade)
       setValue('personalGrade', val)
     },
-    [setValue, averageGrade],
+    [setValue, minGrade],
   )
 
   const handleStyleChange = useCallback(
@@ -139,7 +140,7 @@ export default function AscentForm() {
   )
 
   const styleValue = watch('style')
-  const isOnsightDisable = watch('climbingDiscipline') === 'Boulder'
+  const isBoulder = watch('climbingDiscipline') === 'Boulder'
 
   const adjustedMinGrade = Math.max(
     fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
@@ -157,11 +158,11 @@ export default function AscentForm() {
       }
       // By default set the style value to 'Onsight' when the number of tries is equal to 1
       if (Number(event.target.value) === 1) {
-        setValue('style', isOnsightDisable ? 'Flash' : 'Onsight')
+        setValue('style', isBoulder ? 'Flash' : 'Onsight')
       }
       return handleTriesChangeRegister(event)
     },
-    [handleTriesChangeRegister, isOnsightDisable, setValue],
+    [handleTriesChangeRegister, isBoulder, setValue],
   )
 
   const climbingDisciplineFormattedList = disjunctiveListFormatter(
@@ -169,10 +170,11 @@ export default function AscentForm() {
   )
 
   if (
-    isAverageGradeLoading ||
+    isLatestAscentLoading ||
     isGradesLoading ||
     areCragsLoading ||
-    areAreasLoading
+    areAreasLoading ||
+    !isUserLoaded
   ) {
     return <Loader />
   }
@@ -319,7 +321,7 @@ export default function AscentForm() {
             display={Number(numberOfTries) === 1}
             onValueChange={handleStyleChange}
             value={styleValue}
-            isOnsightDisable={isOnsightDisable}
+            isOnsightDisable={isBoulder}
           />
         </div>
       </div>
@@ -390,7 +392,7 @@ export default function AscentForm() {
           {...register('height')}
           className={`${styles.input} contrast-color`}
           // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
-          disabled={watch('climbingDiscipline') === 'Boulder'}
+          disabled={isBoulder}
           enterKeyHint="next"
           id="height"
           inputMode="numeric"
@@ -401,7 +403,7 @@ export default function AscentForm() {
           step={5}
           title="Height of the route in meters (does not apply for boulders)"
           style={
-            watch('climbingDiscipline') === 'Boulder'
+            isBoulder
               ? {
                   cursor: 'not-allowed',
                 }

@@ -257,4 +257,13 @@ export const ascentsRouter = createTRPCRouter({
 
       return calculateTopTenScore(filteredAscents)
     }),
+  getLatest: publicProcedure
+    .input(optionalAscentFilterSchema)
+    .output(ascentSchema.or(z.undefined()))
+    .query(async ({ input = {} }) => {
+      const ascents = await getFilteredAscents(input)
+      if (ascents.length === 0) return
+
+      return ascents.sort((a, b) => sortByDate(a, b, true)).at(0)
+    }),
 })

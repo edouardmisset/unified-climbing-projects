@@ -4,7 +4,10 @@ import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.t
 import { z } from 'zod'
 import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
-import { compareStringsAscending } from '~/helpers/sort-strings'
+import {
+  compareStringsAscending,
+  compareStringsDescending,
+} from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import { positiveInteger } from '~/schema/generic'
@@ -16,20 +19,24 @@ export const cragsRouter = createTRPCRouter({
     .input(
       z
         .object({
-          sorted: z.boolean().optional(),
+          sortOrder: z.enum(['asc', 'desc', 'newest', 'oldest']).optional(),
         })
         .optional(),
     )
-    .output(z.string().array())
+    .output(ascentSchema.shape.crag.array())
     .query(async ({ input }) => {
-      const { sorted = true } = input ?? {}
-      const validCrags = await getAllCrags()
+      const { sortOrder } = input ?? {}
+      const allCrags = await getAllCrags()
+      const uniqueCrags = [...new Set(allCrags)]
 
-      const uniqueCrags = [...new Set(validCrags)]
+      if (sortOrder === 'asc')
+        return uniqueCrags.sort((a, b) => compareStringsAscending(a, b))
+      if (sortOrder === 'desc')
+        return uniqueCrags.sort((a, b) => compareStringsDescending(a, b))
+      if (sortOrder === 'newest') return uniqueCrags
+      if (sortOrder === 'oldest') return uniqueCrags.reverse()
 
-      return sorted
-        ? uniqueCrags.sort((a, b) => compareStringsAscending(a, b))
-        : uniqueCrags
+      return uniqueCrags
     }),
   getFrequency: publicProcedure
     .output(z.record(ascentSchema.shape.crag, positiveInteger))
@@ -118,7 +125,6 @@ export const cragsRouter = createTRPCRouter({
 
       return similarCrags
     }),
-
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())
     .query(async () => {
