@@ -41,7 +41,13 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
     globalThis.console.error(parsedAscents.error)
     return []
   }
-  return parsedAscents.data.sort((a, b) => sortByDate(a, b, true))
+  return parsedAscents.data.sort((a, b) =>
+    // If the dates are the same, we reverse the order because there is no
+    // information about the time of the ascent in the Google Sheets. By
+    // default, they are stored chronologically (oldest first), so we need to
+    // reverse the order to have the most recent first.
+    a.date === b.date ? -1 : sortByDate(a, b, true),
+  )
 })
 
 const { getCache, setCache } = createCache<Ascent[]>()
