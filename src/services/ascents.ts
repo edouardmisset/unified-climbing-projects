@@ -1,6 +1,7 @@
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { cache } from 'react'
 import { createCache } from '~/helpers/cache'
+import { sortByDate } from '~/helpers/sort-by-date.ts'
 import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
@@ -40,7 +41,7 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
     globalThis.console.error(parsedAscents.error)
     return []
   }
-  return parsedAscents.data
+  return parsedAscents.data.sort((a, b) => sortByDate(a, b, true))
 })
 
 const { getCache, setCache } = createCache<Ascent[]>()

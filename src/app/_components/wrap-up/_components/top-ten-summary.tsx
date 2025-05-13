@@ -8,6 +8,7 @@ import { displayGrade } from '~/helpers/display-grade'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { Card } from '../../card/card'
+import { SCORE_INCREMENT } from '../constants'
 
 export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
   const ascentsWithPoints = ascents.map(ascent => ({
@@ -29,13 +30,12 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
 
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
 
-  const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + 50
+  const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
   return (
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your score is{' '}
-        <strong>{frenchNumberFormatter(topTenScore)}</strong>
+        Your score is <strong>{frenchNumberFormatter(topTenScore)}</strong>
       </p>
       {lowestTopTenAscent && (
         <>

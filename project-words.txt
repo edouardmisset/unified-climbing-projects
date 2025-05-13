@@ -14,12 +14,14 @@ NuqsAdapter
 onsight
 Onsight
 onsighted
+Onsighting
 patagonia
 poku
 qrcode
 redpoint
 Redpoint
 redpointed
+Redpointing
 ruffwear
 Serie
 stylelintcache

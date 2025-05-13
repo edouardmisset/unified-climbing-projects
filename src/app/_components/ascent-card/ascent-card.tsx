@@ -17,7 +17,6 @@ import styles from './ascent-card.module.css'
 
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
-    routeName,
     area,
     climbingDiscipline,
     comments,
@@ -27,6 +26,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     holds,
     profile,
     rating,
+    routeName,
     style,
     topoGrade,
     tries,
@@ -40,7 +40,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     [comments],
   )
 
-  const formattedGrade = displayGrade({ grade: topoGrade, climbingDiscipline });
+  const formattedGrade = displayGrade({ grade: topoGrade, climbingDiscipline })
   return (
     <div className={styles.card}>
       <h2

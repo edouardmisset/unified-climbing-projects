@@ -17,9 +17,9 @@ import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
 export function Dashboard() {
-  const { data: allAscents, isLoading } = api.ascents.getAll.useQuery()
+  const { data: allAscents = [], isLoading } = api.ascents.getAll.useQuery()
 
-  const filteredAscents = useAscentsFilter(allAscents ?? [])
+  const filteredAscents = useAscentsFilter(allAscents)
 
   if (isLoading) return <Loader />
 
