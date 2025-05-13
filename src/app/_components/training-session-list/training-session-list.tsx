@@ -13,21 +13,9 @@ export function TrainingSessionList({
         <tr className={`${styles.headerRow} grid-full-width`}>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
-            title="Type of the session"
-          >
-            Type
-          </th>
-          <th
-            className={`${styles.cell} ${styles.headerCell}`}
             title="Date of the session"
           >
             Date
-          </th>
-          <th
-            className={`${styles.cell} ${styles.headerCell}`}
-            title="Load level of the session"
-          >
-            Load
           </th>
           <th
             className={`${styles.cell} ${styles.headerCell}`}
@@ -35,11 +23,32 @@ export function TrainingSessionList({
           >
             Location
           </th>
+          <th
+            className={`${styles.cell} ${styles.headerCell}`}
+            title="Type of the session"
+          >
+            Type
+          </th>
+          <th
+            className={`${styles.cell} ${styles.headerCell}`}
+            title="Load level of the session"
+          >
+            Load
+          </th>
         </tr>
       </thead>
       <tbody className={`${styles.body} grid-full-width`}>
         {trainingSessions.map(({ id, sessionType, date, load, gymCrag }) => (
           <tr key={id} className={`${styles.row} grid-full-width`}>
+            <td
+              title={prettyLongDate(date, 'longDate')}
+              className={`${styles.cell} monospace`}
+            >
+              {prettyLongDate(date, 'shortDate')}
+            </td>
+            <td title={gymCrag} className={styles.cell}>
+              {gymCrag || '—'}
+            </td>
             <td
               title={
                 sessionType === undefined
@@ -53,19 +62,10 @@ export function TrainingSessionList({
                 : fromSessionTypeToLabel(sessionType)}
             </td>
             <td
-              title={prettyLongDate(date, 'longDate')}
-              className={`${styles.cell} monospace`}
-            >
-              {prettyLongDate(date, 'shortDate')}
-            </td>
-            <td
               title={load === undefined ? '—' : `${load}%`}
               className={styles.cell}
             >
               {load === undefined ? '—' : `${load}%`}
-            </td>
-            <td title={gymCrag} className={styles.cell}>
-              {gymCrag || '—'}
             </td>
           </tr>
         ))}
