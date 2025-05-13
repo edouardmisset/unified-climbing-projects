@@ -1,11 +1,10 @@
 import { assert, describe, it } from 'poku'
-import sampleAscents from '~/backup/ascent-data-sample-2024-10-30.json'
+import { sampleAscents } from '~/backup/sample-ascents'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
-import { ascentSchema } from '~/schema/ascent'
 import { getAscentsByStyle } from './get-ascents-by-style'
 
 describe('getAscentsByStyle', () => {
-  const testAscents = ascentSchema.array().parse(sampleAscents)
+  const testAscents = sampleAscents
   it('should return empty array for empty input', () => {
     const result = getAscentsByStyle([])
     assert.deepEqual(result, [])
