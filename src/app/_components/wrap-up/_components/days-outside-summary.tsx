@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { getMostFrequentDate } from '~/helpers/date'
 import { formatDateTime } from '~/helpers/format-date'
 import type { Ascent } from '~/schema/ascent'
@@ -35,11 +36,19 @@ export async function DaysOutsideSummary({
   return (
     <Card>
       <h2>Days outside</h2>
-      <p>
-        You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
-        <strong>{daysOutside}</strong> days (<strong>{ascentsRatio}</strong>{' '}
-        ascents per day outside)
-      </p>
+      <Suspense
+        fallback={
+          <p>
+            <strong>Loading...</strong>
+          </p>
+        }
+      >
+        <DaysOutsideDetails
+          ascents={ascents}
+          ascentsRatio={ascentsRatio}
+          daysOutside={daysOutside}
+        />
+      </Suspense>
       {mostAscentDate === '' ||
       ascentsInMostAscentDay.length === 0 ? undefined : (
         <p>
@@ -53,5 +62,23 @@ export async function DaysOutsideSummary({
         </p>
       )}
     </Card>
+  )
+}
+
+function DaysOutsideDetails({
+  ascents,
+  ascentsRatio,
+  daysOutside,
+}: {
+  ascents: Ascent[]
+  ascentsRatio: string
+  daysOutside: number
+}) {
+  return (
+    <p>
+      You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
+      <strong>{daysOutside}</strong> days (<strong>{ascentsRatio}</strong>{' '}
+      ascents per day outside)
+    </p>
   )
 }

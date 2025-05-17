@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { api } from '~/trpc/server'
 import { Card } from '../card/card'
 import GridLayout from '../grid-layout/grid-layout'
@@ -28,15 +27,7 @@ export default async function WrapUp({ year }: { year?: number }) {
 
   return (
     <GridLayout title={year ?? ALL_TIME} gridClassName="padding">
-      <Suspense
-        fallback={
-          <Card>
-            <h2>Loading...</h2>
-          </Card>
-        }
-      >
-        <DaysOutsideSummary ascents={ascents} year={year} />
-      </Suspense>
+      <DaysOutsideSummary ascents={ascents} year={year} />
       <AscentSummary ascents={ascents} />
       <HardestClimbsSummary ascents={ascents} />
       <VerticalMilestoneSummary ascents={ascents} />
