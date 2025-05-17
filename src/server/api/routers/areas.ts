@@ -25,7 +25,7 @@ export const areasRouter = createTRPCRouter({
         })
         .optional(),
     )
-    .output(ascentSchema.shape.area.array())
+    .output(ascentSchema.shape.area.nonoptional().array())
     .query(async ({ input }) => {
       const { sortOrder } = input ?? {}
       const validAreas = await getAllAreas()

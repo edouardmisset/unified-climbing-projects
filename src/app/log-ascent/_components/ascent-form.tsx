@@ -16,12 +16,13 @@ import {
 import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
+  type Ascent,
+  type Grade,
   HOLDS,
   PROFILES,
   _GRADES,
   ascentStyleSchema,
 } from '~/schema/ascent'
-import { api } from '~/trpc/react.tsx'
 import { onSubmit } from '../actions.ts'
 import {
   MAX_HEIGHT,
@@ -34,8 +35,8 @@ import {
   _1To9999RegEx,
 } from '../constants.ts'
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
-
 import styles from './ascent-form.module.css'
+import { DataList } from './data-list'
 
 type HandleGradeChange = (value: number | null, event?: Event) => void
 
@@ -43,24 +44,24 @@ const numberOfGrades = _GRADES.length
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
-export default function AscentForm() {
+const climbingDisciplineFormattedList = disjunctiveListFormatter(
+  AVAILABLE_CLIMBING_DISCIPLINE,
+)
+
+export default function AscentForm({
+  latestAscent,
+  maxGrade,
+  minGrade,
+  areas,
+  crags,
+}: {
+  latestAscent?: Ascent
+  minGrade: Grade
+  maxGrade: Grade
+  areas?: string[]
+  crags?: string[]
+}) {
   const { user, isLoaded: isUserLoaded } = useUser()
-
-  const { data: latestAscent, isLoading: isLatestAscentLoading } =
-    api.ascents.getLatest.useQuery()
-  console.log('🚀 ~ AscentForm ~ latestAscent:', latestAscent)
-  const { data: allCrags, isLoading: areCragsLoading } =
-    api.crags.getAll.useQuery({ sortOrder: 'newest' })
-  const { data: allAreas, isLoading: areAreasLoading } =
-    api.areas.getAll.useQuery({ sortOrder: 'newest' })
-
-  const {
-    data: [minGrade, maxGrade] = [
-      fromNumberToGrade(1),
-      fromNumberToGrade(numberOfGrades),
-    ],
-    isLoading: isGradesLoading,
-  } = api.grades.getMinMax.useQuery()
 
   const defaultAscentToParse = useMemo(
     () =>
@@ -83,7 +84,7 @@ export default function AscentForm() {
     ascentFormInputSchema.safeParse(defaultAscentToParse)
 
   if (!defaultAscentFormValues.success) {
-    globalThis.console.log(defaultAscentFormValues.error)
+    globalThis.console.warn(defaultAscentFormValues.error)
   }
 
   const defaultAscent = defaultAscentFormValues.data
@@ -108,6 +109,18 @@ export default function AscentForm() {
   const numberTopoGrade = watch('topoGrade') ?? fromGradeToNumber(minGrade)
   const personalNumberGrade = watch('personalGrade') ?? numberTopoGrade
   const numberOfTries = watch('tries') ?? '1'
+  const styleValue = watch('style')
+  const discipline = watch('climbingDiscipline')
+  const isBoulder = discipline === 'Boulder'
+
+  const adjustedMinGrade = Math.max(
+    fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
+    1,
+  )
+  const adjustedMaxGrade = Math.min(
+    fromGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
+    numberOfGrades,
+  )
 
   const handleTopoGradeChange: HandleGradeChange = useCallback(
     value => {
@@ -139,17 +152,6 @@ export default function AscentForm() {
     [setValue],
   )
 
-  const styleValue = watch('style')
-  const isBoulder = watch('climbingDiscipline') === 'Boulder'
-
-  const adjustedMinGrade = Math.max(
-    fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
-    1,
-  )
-  const adjustedMaxGrade = Math.min(
-    fromGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
-    numberOfGrades,
-  )
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     event => {
       // Set the style value to 'Redpoint' when the number of tries is greater than 1
@@ -165,17 +167,7 @@ export default function AscentForm() {
     [handleTriesChangeRegister, isBoulder, setValue],
   )
 
-  const climbingDisciplineFormattedList = disjunctiveListFormatter(
-    AVAILABLE_CLIMBING_DISCIPLINE,
-  )
-
-  if (
-    isLatestAscentLoading ||
-    isGradesLoading ||
-    areCragsLoading ||
-    areAreasLoading ||
-    !isUserLoaded
-  ) {
+  if (!isUserLoaded) {
     return <Loader />
   }
 
@@ -267,13 +259,7 @@ export default function AscentForm() {
           type="text"
           list="crag-list"
         />
-        <datalist id="crag-list">
-          {allCrags?.map(crag => (
-            <option key={crag} value={crag}>
-              {crag}
-            </option>
-          ))}
-        </datalist>
+        <DataList id="crag-list" options={crags ?? []} />
       </div>
       <div className={styles.field}>
         <label htmlFor="area">Area</label>
@@ -289,13 +275,7 @@ export default function AscentForm() {
           type="text"
           list="area-list"
         />
-        <datalist id="area-list">
-          {allAreas?.map(area => (
-            <option key={area} value={area}>
-              {area}
-            </option>
-          ))}
-        </datalist>
+        <DataList id="area-list" options={areas ?? []} />
       </div>
       <div className={styles.field}>
         <label htmlFor="tries" className="required">
@@ -362,11 +342,7 @@ export default function AscentForm() {
           title="The main hold type in the route or in the crux section"
           type="text"
         />
-        <datalist id="hold-types">
-          {HOLDS.map(hold => (
-            <option key={hold} value={hold} />
-          ))}
-        </datalist>
+        <DataList id="hold-types" options={HOLDS} />
       </div>
       <div className={styles.field}>
         <label htmlFor="profile">Profile</label>
@@ -380,11 +356,7 @@ export default function AscentForm() {
           title="The main profile of the route or in the crux section"
           type="text"
         />
-        <datalist id="profile-types">
-          {PROFILES.map(profile => (
-            <option key={profile} value={profile} />
-          ))}
-        </datalist>
+        <DataList id="profile-types" options={PROFILES} />
       </div>
       <div className={styles.field}>
         <label htmlFor="height">Height (m)</label>
