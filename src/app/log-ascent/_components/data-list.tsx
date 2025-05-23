@@ -1,14 +1,18 @@
-export function DataList({
-  id,
-  options,
-}: {
+type DataListProps = {
   id: string
-  options: string[] | readonly string[] | number[]
-}): React.JSX.Element {
+  options: {
+    value: string
+    label?: string
+  }[]
+}
+
+export function DataList({ id, options }: DataListProps): React.JSX.Element {
   return (
     <datalist id={id}>
-      {options.map(option => (
-        <option key={option} value={option} />
+      {options.map(({ value, label }) => (
+        <option key={String(value)} value={String(value)}>
+          {label}
+        </option>
       ))}
     </datalist>
   )

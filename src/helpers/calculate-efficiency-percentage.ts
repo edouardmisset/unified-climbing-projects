@@ -5,6 +5,7 @@ import {
 } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
+import { extractDateFromISODateString } from './date'
 
 type CalculateEfficiencyPercentageParams = {
   /** List of filtered ascents to calculate efficiency for */
@@ -36,7 +37,7 @@ export function calculateEfficiencyPercentage(
   // Get unique dates for training sessions (days outside)
   const daysOutsideSet = new Set<string>()
   for (const { date, sessionType } of trainingSessions) {
-    const dateAsString = date.split('T')[0]
+    const dateAsString = extractDateFromISODateString(date)
     if (dateAsString === undefined || sessionType !== 'Out') continue
 
     daysOutsideSet.add(dateAsString)
@@ -51,7 +52,7 @@ export function calculateEfficiencyPercentage(
   let totalTries = 0
 
   for (const { date, style, tries } of ascents) {
-    const dateAsString = date.split('T')[0]
+    const dateAsString = extractDateFromISODateString(date)
     if (dateAsString === undefined) continue
 
     ascentDaysSet.add(dateAsString)

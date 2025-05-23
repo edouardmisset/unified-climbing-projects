@@ -43,7 +43,7 @@ export const trainingRouter = createTRPCRouter({
     return latestTrainingSession
   }),
   getAllLocations: publicProcedure
-    .output(z.array(trainingSessionSchema.shape.gymCrag))
+    .output(z.array(trainingSessionSchema.shape.gymCrag.nonoptional()))
     .query(async () => {
       const allTrainingSessions = await getAllTrainingSessions()
       return [

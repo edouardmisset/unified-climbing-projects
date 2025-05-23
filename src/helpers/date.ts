@@ -1,3 +1,4 @@
+import { isValidDate } from '@edouardmisset/date'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
@@ -89,4 +90,91 @@ export function getMostFrequentDate<Type extends { date: string }>(
     string,
     number,
   ]
+}
+
+/**
+ * Returns a new Date object set to noon (12:00:00.000) of the given date.
+ * @param {Date} date - The date to normalize
+ * @returns {Date} The normalized date at noon
+ */
+function getDateAtNoon(date: Date): Date {
+  const normalized = new Date(date)
+  normalized.setHours(12, 0, 0, 0)
+  return normalized
+}
+
+/**
+ * Returns a Date object representing yesterday at noon.
+ * @returns {Date} Yesterday's date at noon
+ */
+export function getYesterday(): Date {
+  const now = new Date()
+  const yesterday = new Date(now)
+  yesterday.setDate(now.getDate() - 1)
+  return getDateAtNoon(yesterday)
+}
+
+/**
+ * Returns a Date object representing the most recent Saturday at noon.
+ * If today is Saturday, returns last week's Saturday.
+ * @returns {Date} Last Saturday at noon
+ */
+export function getLastSaturday(): Date {
+  const now = new Date()
+  const dayOfWeek = now.getDay() // 0 = Sunday, 6 = Saturday
+  // If today is Saturday (6), go back 7 days; else, go back to last Saturday
+  const daysSinceSaturday = dayOfWeek === 6 ? 7 : dayOfWeek + 1
+  const lastSaturday = new Date(now)
+  lastSaturday.setDate(now.getDate() - daysSinceSaturday)
+  return getDateAtNoon(lastSaturday)
+}
+
+/**
+ * Returns a Date object representing the most recent Sunday at noon.
+ * If today is Sunday, returns last week's Sunday.
+ * @returns {Date} Last Sunday at noon
+ */
+export function getLastSunday(): Date {
+  const now = new Date()
+  const dayOfWeek = now.getDay() // 0 = Sunday
+  // If today is Sunday (0), go back 7 days; else, go back to last Sunday
+  const daysSinceSunday = dayOfWeek === 0 ? 7 : dayOfWeek
+  const lastSunday = new Date(now)
+  lastSunday.setDate(now.getDate() - daysSinceSunday)
+  return getDateAtNoon(lastSunday)
+}
+
+/**
+ * Returns an ISO date string (YYYY-MM-DD) from a Date object.
+ * Throws if the date is invalid.
+ *
+ * @param {Date} date - The date to convert
+ * @returns {string} The ISO date string (YYYY-MM-DD)
+ */
+export function fromDateToStringDate(date: Date): string {
+  if (!isValidDate(date)) {
+    throw new Error('Invalid date')
+  }
+
+  const isoDateString = date.toISOString()
+  return extractDateFromISODateString(isoDateString)
+}
+
+/**
+ * Extracts the date portion (YYYY-MM-DD) from an ISO 8601 string.
+ * Throws if the input is not a string or is not a valid ISO date string.
+ *
+ * @param {string} isoDate - The ISO 8601 date string
+ * @returns {string} The date portion (YYYY-MM-DD)
+ */
+export function extractDateFromISODateString(isoDate: string): string {
+  if (isoDate.length < 10) {
+    throw new Error('Invalid ISO date string')
+  }
+
+  const datePart = isoDate.slice(0, 10)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart)) {
+    throw new Error('Invalid ISO date string')
+  }
+  return datePart
 }

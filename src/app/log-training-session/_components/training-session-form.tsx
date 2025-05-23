@@ -31,10 +31,38 @@ import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 
+import { useRouter } from 'next/navigation'
+import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
 import styles from '~/app/log-ascent/_components/ascent-form.module.css'
+import { DataList } from '~/app/log-ascent/_components/data-list'
+import { fromDateToStringDate } from '~/helpers/date'
+
+const climbingDisciplineFormattedList = disjunctiveListFormatter(
+  AVAILABLE_CLIMBING_DISCIPLINE,
+)
+const anatomicalRegionFormattedList = getFormattedList(
+  ANATOMICAL_REGIONS,
+  fromAnatomicalRegionToLabel,
+)
+const energySystemFormattedList = getFormattedList(
+  ENERGY_SYSTEMS,
+  fromEnergySystemToLabel,
+)
+const sessionTypeFormattedList = getFormattedList(
+  SESSION_TYPES,
+  fromSessionTypeToLabel,
+)
+
+function getFormattedList<T extends string>(
+  list: readonly T[],
+  transform: (item: T) => string,
+) {
+  return disjunctiveListFormatter(list.map(transform))
+}
 
 export default function TrainingSessionForm() {
   const { user } = useUser()
+  const router = useRouter()
 
   const result = trainingSessionSchema
     .omit({ id: true, load: true })
@@ -54,19 +82,10 @@ export default function TrainingSessionForm() {
   const {
     handleSubmit,
     register,
-    reset,
     formState: { isSubmitting },
   } = useForm({
     defaultValues: defaultTrainingSession,
   })
-
-  const climbingDisciplineFormattedList = disjunctiveListFormatter(
-    AVAILABLE_CLIMBING_DISCIPLINE,
-  )
-  const anatomicalRegionFormattedList =
-    disjunctiveListFormatter(ANATOMICAL_REGIONS)
-  const energySystemFormattedList = disjunctiveListFormatter(ENERGY_SYSTEMS)
-  const sessionTypeFormattedList = disjunctiveListFormatter(SESSION_TYPES)
 
   if (isLoadingGymsOrCrags) return <Loader />
 
@@ -81,11 +100,13 @@ export default function TrainingSessionForm() {
         async data => {
           const promise = onSubmit(data)
           toast.promise(promise, {
-            pending: 'Sending...',
-            success: 'Training session successfully sent 🎉',
-            error: '❌ Failed to send',
+            pending: 'Submitting...',
+            success: 'Training session submitted 🎉',
+            error: 'Failed to submit ❌',
           })
-          if (await promise) reset()
+          if (await promise) {
+            router.push('/log-ascent')
+          }
         },
         error => {
           console.error(error)
@@ -104,11 +125,13 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="date"
-          max={new Date().toISOString().split('T')[0]}
+          max={fromDateToStringDate(new Date())}
           required={true}
           title="Date"
           type="date"
+          list="date-list"
         />
+        <DataList id="date-list" options={recentDateOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="session-type">Session Type</label>
@@ -119,36 +142,38 @@ export default function TrainingSessionForm() {
           type="text"
           id="session-type"
           list="session-type-list"
+          placeholder="Out"
           title={sessionTypeFormattedList}
         />
-        <datalist id="session-type-list">
-          {SESSION_TYPES.map(sessionType => (
-            <option key={sessionType} value={sessionType}>
-              {fromSessionTypeToLabel(sessionType)}
-            </option>
-          ))}
-        </datalist>
+        <DataList
+          id="session-type-list"
+          options={SESSION_TYPES.map(sessionType => ({
+            value: sessionType,
+            label: fromSessionTypeToLabel(sessionType),
+          }))}
+        />
       </div>
       <div className={styles.field}>
-        <label htmlFor="gymCrag">Gym / Crag</label>
+        <label htmlFor="gymCrag">Location</label>
         <input
           {...register('gymCrag')}
           className={styles.input}
           enterKeyHint="next"
           id="gymCrag"
-          placeholder="Gym or Crag name"
-          title="Gym or Crag name"
+          placeholder="Ceüse"
+          title="The name of the gym or crag"
           type="text"
           list="gym-crag-list"
         />
+        <DataList
+          id="gym-crag-list"
+          options={
+            allGymsOrCrags?.map(gymOrCrag => ({
+              value: gymOrCrag,
+            })) ?? []
+          }
+        />
       </div>
-      <datalist id="gym-crag-list">
-        {allGymsOrCrags?.map(gymOrCrag => (
-          <option key={gymOrCrag} value={gymOrCrag}>
-            {gymOrCrag}
-          </option>
-        ))}
-      </datalist>
       <div className={styles.field}>
         <label htmlFor="climbing-discipline">Climbing Discipline</label>
         <input
@@ -157,15 +182,16 @@ export default function TrainingSessionForm() {
           enterKeyHint="next"
           id="climbing-discipline"
           list="climbing-discipline-list"
-          title={climbingDisciplineFormattedList}
+          placeholder="Route"
+          title={`The climbing discipline of the session (e.g. ${climbingDisciplineFormattedList})`}
         />
-        <datalist id="climbing-discipline-list">
-          {CLIMBING_DISCIPLINE.map(discipline => (
-            <option key={discipline} value={discipline}>
-              {`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
-            </option>
-          ))}
-        </datalist>
+        <DataList
+          id="climbing-discipline-list"
+          options={CLIMBING_DISCIPLINE.map(discipline => ({
+            value: discipline,
+            label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
+          }))}
+        />
       </div>
       <div className={styles.field}>
         <label htmlFor="anatomical-region">Anatomical Region</label>
@@ -175,15 +201,16 @@ export default function TrainingSessionForm() {
           id="anatomical-region"
           enterKeyHint="next"
           list="anatomical-region-list"
-          title={anatomicalRegionFormattedList}
+          placeholder="Fi"
+          title={`The anatomical region targeted during the training session (e.g. ${anatomicalRegionFormattedList})`}
         />
-        <datalist id="anatomical-region-list">
-          {ANATOMICAL_REGIONS.map(region => (
-            <option key={region} value={region}>
-              {`${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`}
-            </option>
-          ))}
-        </datalist>
+        <DataList
+          id="anatomical-region-list"
+          options={ANATOMICAL_REGIONS.map(region => ({
+            value: region,
+            label: `${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`,
+          }))}
+        />
       </div>
       <div className={styles.field}>
         <label htmlFor="energy-system">Energy System</label>
@@ -193,16 +220,17 @@ export default function TrainingSessionForm() {
           id="energy-system"
           enterKeyHint="next"
           list="energy-system-list"
-          title={energySystemFormattedList}
+          placeholder="AL"
+          title={`The energy system targeted during the training session (e.g. ${energySystemFormattedList})`}
           type="text"
         />
-        <datalist id="energy-system-list">
-          {ENERGY_SYSTEMS.map(system => (
-            <option key={system} value={system}>
-              {`${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`}
-            </option>
-          ))}
-        </datalist>
+        <DataList
+          id="energy-system-list"
+          options={ENERGY_SYSTEMS.map(system => ({
+            value: system,
+            label: `${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`,
+          }))}
+        />
       </div>
       <div className={styles.field}>
         <label htmlFor="intensity">Intensity (%)</label>
@@ -211,8 +239,8 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="intensity"
-          placeholder="50%"
-          title="The perceived intensity of the session (0 - 100)"
+          placeholder="50"
+          title="The perceived intensity of the session (0 - 100%)"
           type="number"
           inputMode="numeric"
           max={MAX_PERCENT}
@@ -228,8 +256,8 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="volume"
-          placeholder="50%"
-          title="The perceived volume of the session (0 - 100)"
+          placeholder="80"
+          title="The perceived volume of the session (0 - 100%)"
           type="number"
           inputMode="numeric"
           max={MAX_PERCENT}
@@ -247,9 +275,9 @@ export default function TrainingSessionForm() {
           className={`${styles.input} ${styles.textarea}`}
           enterKeyHint="send"
           id="comments"
-          placeholder="Comments about the training session"
+          placeholder="Felt great, but need to work on my footwork"
           spellCheck={true}
-          title="Comments"
+          title="Comments about the training session"
         />
       </div>
       <Spacer size={3} />

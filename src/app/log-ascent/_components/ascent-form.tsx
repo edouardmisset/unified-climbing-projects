@@ -1,7 +1,8 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { type ChangeEventHandler, useCallback, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
+import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
@@ -10,6 +11,13 @@ import { Loader } from '~/app/_components/loader/loader.tsx'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic.ts'
 import {
+  fromDateToStringDate,
+  getLastSaturday,
+  getLastSunday,
+  getYesterday,
+} from '~/helpers/date.ts'
+import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
+import {
   fromGradeToNumber,
   fromNumberToGrade,
 } from '~/helpers/grade-converter.ts'
@@ -17,10 +25,10 @@ import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
 import {
   AVAILABLE_CLIMBING_DISCIPLINE,
   type Ascent,
+  GRADE_TO_NUMBER,
   type Grade,
   HOLDS,
   PROFILES,
-  _GRADES,
   ascentStyleSchema,
 } from '~/schema/ascent'
 import { onSubmit } from '../actions.ts'
@@ -40,7 +48,6 @@ import { DataList } from './data-list'
 
 type HandleGradeChange = (value: number | null, event?: Event) => void
 
-const numberOfGrades = _GRADES.length
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
 
@@ -48,37 +55,45 @@ const climbingDisciplineFormattedList = disjunctiveListFormatter(
   AVAILABLE_CLIMBING_DISCIPLINE,
 )
 
-export default function AscentForm({
-  latestAscent,
-  maxGrade,
-  minGrade,
-  areas,
-  crags,
-}: {
+type AscentFormProps = {
   latestAscent?: Ascent
   minGrade: Grade
   maxGrade: Grade
   areas?: string[]
   crags?: string[]
-}) {
+}
+
+const holdOptions = HOLDS.map(hold => ({ value: hold }))
+const profileOptions = PROFILES.map(profile => ({ value: profile }))
+
+export const recentDateOptions = [
+  { value: fromDateToStringDate(getYesterday()), label: 'Yesterday' },
+  {
+    value: fromDateToStringDate(getLastSaturday()),
+    label: 'Last Saturday',
+  },
+  {
+    value: fromDateToStringDate(getLastSunday()),
+    label: 'Last Sunday',
+  },
+]
+export default function AscentForm(props: AscentFormProps) {
+  const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
 
-  const defaultAscentToParse = useMemo(
-    () =>
-      ({
-        date: new Date(),
-        routeName: '',
-        crag: latestAscent?.crag,
-        area: latestAscent?.area,
-        topoGrade: fromGradeToNumber(minGrade),
-        personalGrade: fromGradeToNumber(minGrade),
-        climbingDiscipline: latestAscent?.climbingDiscipline,
-        tries: '1',
-        style:
-          latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
-      }) satisfies AscentFormInput,
-    [latestAscent, minGrade],
-  )
+  const router = useRouter()
+
+  const defaultAscentToParse = {
+    date: new Date(),
+    routeName: '',
+    crag: latestAscent?.crag,
+    area: latestAscent?.area,
+    topoGrade: fromGradeToNumber(minGrade),
+    personalGrade: fromGradeToNumber(minGrade),
+    climbingDiscipline: latestAscent?.climbingDiscipline,
+    tries: '1',
+    style: latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+  } satisfies AscentFormInput
 
   const defaultAscentFormValues =
     ascentFormInputSchema.safeParse(defaultAscentToParse)
@@ -119,7 +134,7 @@ export default function AscentForm({
   )
   const adjustedMaxGrade = Math.min(
     fromGradeToNumber(maxGrade) + numberOfGradesAboveMaximum,
-    numberOfGrades,
+    Math.max(...Object.values(GRADE_TO_NUMBER)),
   )
 
   const handleTopoGradeChange: HandleGradeChange = useCallback(
@@ -171,6 +186,8 @@ export default function AscentForm({
     return <Loader />
   }
 
+  const cragOptions = crags?.map(crag => ({ value: crag })) ?? []
+  const areaOptions = areas?.map(area => ({ value: area })) ?? []
   return user?.fullName === 'Edouard' ? (
     <form
       aria-describedby="form-description"
@@ -183,11 +200,14 @@ export default function AscentForm({
           const promise = onSubmit(data)
           toast.promise(promise, {
             pending: 'Submitting...',
-            success: `Successfully submitted ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
+            success: `You sent ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
             error: 'Submission failed, please try again.',
           })
 
-          if (await promise) reset()
+          if (await promise) {
+            reset()
+            router.refresh()
+          }
         },
         error => {
           console.error(error)
@@ -206,11 +226,13 @@ export default function AscentForm({
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="date"
-          max={new Date().toISOString().split('T')[0]}
+          max={fromDateToStringDate(new Date())}
           required={true}
           title="Date"
           type="date"
+          list="date-list"
         />
+        <DataList id="date-list" options={recentDateOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="routeName">Route Name</label>
@@ -222,9 +244,9 @@ export default function AscentForm({
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="routeName"
-          placeholder="The name of the route or boulder climbed (use `N/A` for routes without name)"
+          placeholder="Biographie, La Dura Dura, etc."
           required={true}
-          title="Route Name"
+          title="The name of the route or boulder climbed (use `N/A` for routes without name)"
           type="text"
         />
       </div>
@@ -235,11 +257,11 @@ export default function AscentForm({
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="climbingDiscipline"
-          title={climbingDisciplineFormattedList}
+          title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
         >
           {AVAILABLE_CLIMBING_DISCIPLINE.map(discipline => (
             <option key={discipline} value={discipline}>
-              {discipline}
+              {`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
             </option>
           ))}
         </select>
@@ -253,13 +275,13 @@ export default function AscentForm({
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="crag"
-          placeholder="The name of the crag"
+          placeholder="Ceüse, Fontainebleau, etc."
           required={true}
-          title="Crag Name"
+          title="The name of the crag"
           type="text"
           list="crag-list"
         />
-        <DataList id="crag-list" options={crags ?? []} />
+        <DataList id="crag-list" options={cragOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="area">Area</label>
@@ -270,12 +292,12 @@ export default function AscentForm({
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="area"
-          placeholder="The name of the crag's sector (or area)"
-          title="Crag's area"
+          placeholder="Biographie"
+          title="The name of the crag's sector (or area)"
           type="text"
           list="area-list"
         />
-        <DataList id="area-list" options={areas ?? []} />
+        <DataList id="area-list" options={areaOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="tries" className="required">
@@ -291,7 +313,7 @@ export default function AscentForm({
             step={1}
             id="tries"
             placeholder="1"
-            title="Number of tries"
+            title="Total number of tries"
             type="number"
             inputMode="numeric"
             pattern={_1To9999RegEx.source}
@@ -317,6 +339,7 @@ export default function AscentForm({
           max={adjustedMaxGrade}
           step={1}
           required={true}
+          gradeType="Topo"
         />
       </div>
       <div className={styles.field}>
@@ -328,6 +351,7 @@ export default function AscentForm({
           min={adjustedMinGrade}
           max={adjustedMaxGrade}
           step={1}
+          gradeType="Personal"
         />
       </div>
       <div className={styles.field}>
@@ -338,11 +362,11 @@ export default function AscentForm({
           enterKeyHint="next"
           id="holds"
           list="hold-types"
-          placeholder={`Hold types (${HOLDS.slice(0, 3).join(', ')}, ...)`}
-          title="The main hold type in the route or in the crux section"
+          placeholder="Crimp"
+          title="The main hold type in the route or the holds of the crux section"
           type="text"
         />
-        <DataList id="hold-types" options={HOLDS} />
+        <DataList id="hold-types" options={holdOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="profile">Profile</label>
@@ -352,11 +376,11 @@ export default function AscentForm({
           enterKeyHint="next"
           id="profile"
           list="profile-types"
-          placeholder={`Route's profile (${PROFILES.slice(0, 2).join(', ')}, ...)`}
-          title="The main profile of the route or in the crux section"
+          placeholder="Vertical"
+          title={`The main profile of the route or the profile of the crux section (e.g. ${PROFILES.slice(0, 2).join(', ')}, ...)`}
           type="text"
         />
-        <DataList id="profile-types" options={PROFILES} />
+        <DataList id="profile-types" options={profileOptions} />
       </div>
       <div className={styles.field}>
         <label htmlFor="height">Height (m)</label>
@@ -371,7 +395,7 @@ export default function AscentForm({
           max={MAX_HEIGHT}
           min={MIN_HEIGHT}
           pattern={_0To100RegEx.source}
-          placeholder="Height in meters (not needed for boulders)"
+          placeholder="25"
           step={5}
           title="Height of the route in meters (does not apply for boulders)"
           style={
@@ -395,9 +419,9 @@ export default function AscentForm({
           max={MAX_RATING}
           min={MIN_RATING}
           pattern={_1To5RegEx.source}
-          placeholder={`${MAX_RATING - 1} ⭐️`}
+          placeholder={(MAX_RATING - 1).toString()}
           step={1}
-          title={`Route / Boulder rating (on a ${MAX_RATING} stars system)`}
+          title={`The climb's rating on a ${MAX_RATING} ⭐️ system`}
           type="number"
         />
       </div>
@@ -410,7 +434,7 @@ export default function AscentForm({
           className={`${styles.input} ${styles.textarea}`}
           enterKeyHint="send"
           id="comments"
-          placeholder="Feelings, partners, betas..."
+          placeholder="This was my first 9b+. I thought I was going to die at the crux. It's so far! Thank you Sam for the belay and the encouragements. I didn't use the tiny foothold, instead I jump to the jug directly..."
           spellCheck={true}
           title="Feelings, partners, betas..."
         />

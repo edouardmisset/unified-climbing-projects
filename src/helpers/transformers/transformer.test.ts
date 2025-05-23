@@ -1,4 +1,3 @@
-import { setDifference } from '@edouardmisset/array/sets.ts'
 import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
@@ -334,10 +333,10 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
     // Some information loss is expected when transforming from GS to JS and back
     // like certain `hold` type are voluntarily not supported in the JS model.
 
+    const holdsUniqueToGS = new Set(HOLDS_FROM_GS).difference(new Set(HOLDS))
+
     const filteredAscents = ascents.filter(
-      ascent =>
-        ascent.holds === undefined ||
-        setDifference([...HOLDS], [...HOLDS_FROM_GS]).includes(ascent.holds),
+      ({ holds }) => holds !== undefined && !holdsUniqueToGS.has(holds),
     )
 
     for (const ascent of filteredAscents) {

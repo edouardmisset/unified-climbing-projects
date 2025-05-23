@@ -17,7 +17,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "ES2024"
+      "ESNext"
     ],
     "noEmit": true,
     "module": "ESNext",
