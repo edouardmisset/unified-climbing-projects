@@ -28,12 +28,16 @@ export function VerticalMilestoneSummary({ ascents }: { ascents: Ascent[] }) {
   return (
     <Card>
       <h2>Vertical Milestone</h2>
-      <p>
-        You climbed <AscentsWithPopover ascents={routes} />
-      </p>
-      <p>
-        You climbed <AscentsWithPopover ascents={boulders} />
-      </p>
+      {routes.length !== 0 && (
+        <p>
+          You climbed <AscentsWithPopover ascents={routes} />
+        </p>
+      )}
+      {boulders.length !== 0 && (
+        <p>
+          You climbed <AscentsWithPopover ascents={boulders} />
+        </p>
+      )}
       {totalHeight !== 0 && (
         <p>
           In total, you climbed <strong>{formattedTotalHeight}</strong> meters

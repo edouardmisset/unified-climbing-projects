@@ -34,7 +34,7 @@ const handler = (req: NextRequest) =>
       const { ctx, info, errors, type } = opts
       // assuming you have all your public routes with the keyword `public` in them
       const allPublic = info?.calls?.every(({ path }) =>
-        path.includes('public'),
+        path?.includes('public'),
       )
       // checking that no procedures errored
       const allOk = errors.length === 0
