@@ -11,8 +11,12 @@ export function FavoriteCragSummary({
 }) {
   const { numberOfCrags, mostFrequentCrag, crags } = getCragsDetails(ascents)
 
-  if (numberOfCrags === 0) return undefined
-  if (mostFrequentCrag === undefined) return undefined
+  if (
+    numberOfCrags === 0 ||
+    mostFrequentCrag === undefined ||
+    mostFrequentCrag === ''
+  )
+    return undefined
 
   return (
     <Card>

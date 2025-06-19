@@ -97,6 +97,10 @@
   user-select: none;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
 .visually-hidden {
   clip-path: inset(100%);

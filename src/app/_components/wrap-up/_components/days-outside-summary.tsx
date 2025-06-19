@@ -36,31 +36,33 @@ export async function DaysOutsideSummary({
   return (
     <Card>
       <h2>Days outside</h2>
-      <Suspense
-        fallback={
-          <p>
-            <strong>Loading...</strong>
-          </p>
-        }
-      >
-        <DaysOutsideDetails
-          ascents={ascents}
-          ascentsRatio={ascentsRatio}
-          daysOutside={daysOutside}
-        />
-      </Suspense>
-      {mostAscentDate === '' ||
-      ascentsInMostAscentDay.length === 0 ? undefined : (
-        <p>
-          Your best day was{' '}
-          <strong>
-            {formatDateTime(new Date(mostAscentDate), 'longDate')}
-          </strong>{' '}
-          where you climbed{' '}
-          <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
-          <strong>{ascentsInMostAscentDay[0]?.crag}</strong>
-        </p>
-      )}
+      <p>
+        <Suspense
+          fallback={
+            <p>
+              <strong>Loading details...</strong>
+            </p>
+          }
+        >
+          <DaysOutsideDetails
+            ascents={ascents}
+            ascentsRatio={ascentsRatio}
+            daysOutside={daysOutside}
+          />
+        </Suspense>
+        {mostAscentDate === '' ||
+        ascentsInMostAscentDay.length === 0 ? undefined : (
+          <span className="inline-block">
+            Your best day was{' '}
+            <strong>
+              {formatDateTime(new Date(mostAscentDate), 'longDate')}
+            </strong>{' '}
+            where you climbed{' '}
+            <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
+            <strong>{ascentsInMostAscentDay[0]?.crag}</strong>
+          </span>
+        )}
+      </p>
     </Card>
   )
 }
@@ -75,10 +77,10 @@ function DaysOutsideDetails({
   daysOutside: number
 }) {
   return (
-    <p>
+    <span className="inline-block">
       You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
       <strong>{daysOutside}</strong> days (<strong>{ascentsRatio}</strong>{' '}
       ascents per day outside)
-    </p>
+    </span>
   )
 }

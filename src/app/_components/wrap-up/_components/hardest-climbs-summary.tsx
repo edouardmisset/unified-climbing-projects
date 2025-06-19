@@ -29,22 +29,24 @@ export function HardestClimbsSummary({
   return (
     <Card>
       <h2>Hardest Sends</h2>
-      {hardestRoute ? (
-        <p>
-          Your hardest route was{' '}
-          <AscentComponent ascent={hardestRoute} showGrade={true} />
-        </p>
-      ) : undefined}
-      {hardestBoulder ? (
-        <p>
-          Your hardest boulder was{' '}
-          <AscentComponent ascent={hardestBoulder} showGrade={true} />
-        </p>
-      ) : undefined}
       <p>
-        You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} />{' '}
-        in the <strong>{highestDegree}</strong>
-        <sup>th</sup> degree
+        {hardestRoute ? (
+          <span className="inline-block">
+            Your hardest route was{' '}
+            <AscentComponent ascent={hardestRoute} showGrade={true} />
+          </span>
+        ) : undefined}
+        {hardestBoulder ? (
+          <span className="inline-block">
+            Your hardest boulder was{' '}
+            <AscentComponent ascent={hardestBoulder} showGrade={true} />
+          </span>
+        ) : undefined}
+        <span className="inline-block">
+          You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} />{' '}
+          in the <strong>{highestDegree}</strong>
+          <sup>th</sup> degree
+        </span>
       </p>
     </Card>
   )

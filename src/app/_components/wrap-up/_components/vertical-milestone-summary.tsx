@@ -28,26 +28,28 @@ export function VerticalMilestoneSummary({ ascents }: { ascents: Ascent[] }) {
   return (
     <Card>
       <h2>Vertical Milestone</h2>
-      {routes.length !== 0 && (
-        <p>
-          You climbed <AscentsWithPopover ascents={routes} />
-        </p>
-      )}
-      {boulders.length !== 0 && (
-        <p>
-          You climbed <AscentsWithPopover ascents={boulders} />
-        </p>
-      )}
-      {totalHeight !== 0 && (
-        <p>
-          In total, you climbed <strong>{formattedTotalHeight}</strong> meters
-        </p>
-      )}
-      {averageHeight !== 0 && (
-        <p>
-          Your average route height is <strong>{averageHeight}</strong> meters
-        </p>
-      )}
+      <p>
+        {routes.length !== 0 && (
+          <span className="inline-block">
+            You climbed <AscentsWithPopover ascents={routes} />
+          </span>
+        )}
+        {boulders.length !== 0 && (
+          <span className="inline-block">
+            You climbed <AscentsWithPopover ascents={boulders} />
+          </span>
+        )}
+        {totalHeight !== 0 && (
+          <span className="inline-block">
+            In total, you climbed <strong>{formattedTotalHeight}</strong> meters
+          </span>
+        )}
+        {averageHeight !== 0 && (
+          <span className="inline-block">
+            Your average route height is <strong>{averageHeight}</strong> meters
+          </span>
+        )}
+      </p>
     </Card>
   )
 }

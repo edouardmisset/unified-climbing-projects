@@ -41,60 +41,62 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
         <>
           <h3>Improve by</h3>
           <p>
-            Onsighting a{' '}
-            <strong>
-              {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
-                style: 'Onsight',
-              })}
-            </strong>{' '}
-            route
-          </p>
-          <p>
-            Flashing a{' '}
-            <strong>
-              {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
-                style: 'Flash',
-              })}
-            </strong>{' '}
-            route
-          </p>
-          <p>
-            Redpointing a{' '}
-            <strong>
-              {fromPointToGrade(nextStepPoints, {
-                climbingDiscipline: 'Route',
-                style: 'Redpoint',
-              })}
-            </strong>{' '}
-            route
-          </p>
-          <p>
-            Flashing a{' '}
-            <strong>
-              {displayGrade({
-                grade: fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+            <span className="inline-block">
+              Onsighting a{' '}
+              <strong>
+                {fromPointToGrade(nextStepPoints, {
+                  climbingDiscipline: 'Route',
+                  style: 'Onsight',
+                })}
+              </strong>{' '}
+              route
+            </span>
+            <span className="inline-block">
+              Flashing a{' '}
+              <strong>
+                {fromPointToGrade(nextStepPoints, {
+                  climbingDiscipline: 'Route',
                   style: 'Flash',
-                }),
-                climbingDiscipline: 'Boulder',
-              })}
-            </strong>{' '}
-            boulder
-          </p>
-          <p>
-            Redpointing a{' '}
-            <strong>
-              {displayGrade({
-                grade: fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+                })}
+              </strong>{' '}
+              route
+            </span>
+            <span className="inline-block">
+              Redpointing a{' '}
+              <strong>
+                {fromPointToGrade(nextStepPoints, {
+                  climbingDiscipline: 'Route',
                   style: 'Redpoint',
-                }),
-                climbingDiscipline: 'Boulder',
-              })}
-            </strong>{' '}
-            boulder
+                })}
+              </strong>{' '}
+              route
+            </span>
+            <span className="inline-block">
+              Flashing a{' '}
+              <strong>
+                {displayGrade({
+                  grade: fromPointToGrade(nextStepPoints, {
+                    climbingDiscipline: 'Boulder',
+                    style: 'Flash',
+                  }),
+                  climbingDiscipline: 'Boulder',
+                })}
+              </strong>{' '}
+              boulder
+            </span>
+            <span className="inline-block">
+              Redpointing a{' '}
+              <strong>
+                {displayGrade({
+                  grade: fromPointToGrade(nextStepPoints, {
+                    climbingDiscipline: 'Boulder',
+                    style: 'Redpoint',
+                  }),
+                  climbingDiscipline: 'Boulder',
+                })}
+              </strong>{' '}
+              boulder
+            </span>
           </p>
         </>
       )}

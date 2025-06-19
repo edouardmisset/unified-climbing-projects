@@ -33,43 +33,47 @@ export function AscentSummary({
   return (
     <Card>
       <h2>Ascents</h2>
+
       <p>
-        Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
-        <AscentComponent ascent={mostRecentAscent} showGrade={true} />
+        <span className="inline-block">
+          Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
+          <AscentComponent ascent={mostRecentAscent} showGrade={true} />
+        </span>
+
+        {onsightAscents.length === 0 ? undefined : (
+          <span className="inline-block">
+            You <i>Onsighted</i> <AscentsWithPopover ascents={onsightAscents} />
+          </span>
+        )}
+        {flashAscents.length === 0 ? undefined : (
+          <span className="inline-block">
+            You <i>Flashed</i> <AscentsWithPopover ascents={flashAscents} />
+          </span>
+        )}
+        {redpointAscents.length === 0 ? undefined : (
+          <span className="inline-block">
+            You <i>Redpointed</i>{' '}
+            <AscentsWithPopover ascents={redpointAscents} />
+          </span>
+        )}
+
+        {averageRouteGrade === 'N/A' ? undefined : (
+          <span className="inline-block">
+            Your average route grade was <strong>{averageRouteGrade}</strong>
+          </span>
+        )}
+        {averageBoulderGrade === 'N/A' ? undefined : (
+          <span className="inline-block">
+            Your average bouldering grade was{' '}
+            <strong>
+              {displayGrade({
+                grade: averageBoulderGrade,
+                climbingDiscipline: 'Boulder',
+              })}
+            </strong>
+          </span>
+        )}
       </p>
-
-      {onsightAscents.length === 0 ? undefined : (
-        <p>
-          You <i>Onsighted</i> <AscentsWithPopover ascents={onsightAscents} />
-        </p>
-      )}
-      {flashAscents.length === 0 ? undefined : (
-        <p>
-          You <i>Flashed</i> <AscentsWithPopover ascents={flashAscents} />
-        </p>
-      )}
-      {redpointAscents.length === 0 ? undefined : (
-        <p>
-          You <i>Redpointed</i> <AscentsWithPopover ascents={redpointAscents} />
-        </p>
-      )}
-
-      {averageRouteGrade === 'N/A' ? undefined : (
-        <p>
-          Your average route grade was <strong>{averageRouteGrade}</strong>
-        </p>
-      )}
-      {averageBoulderGrade === 'N/A' ? undefined : (
-        <p>
-          Your average bouldering grade was{' '}
-          <strong>
-            {displayGrade({
-              grade: averageBoulderGrade,
-              climbingDiscipline: 'Boulder',
-            })}
-          </strong>
-        </p>
-      )}
     </Card>
   )
 }
