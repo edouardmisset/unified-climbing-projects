@@ -224,11 +224,8 @@
   --jungle-10: hsl(73deg 91% 26%);
   --jungle-11: hsl(73deg 91% 21%);
   --jungle-12: hsl(73deg 90% 16%);
-}
 
-/** Base-UI Theme */
-
-:where(:root) {
+  /** Base-UI Theme */
   --color-blue: var(--blue-5);
   --color-red: var(--red-5);
   --color-gray-50: light-dark(var(--gray-0), var(--gray-10));
@@ -242,4 +239,11 @@
   --color-gray-800: light-dark(var(--gray-8), var(--gray-2));
   --color-gray-900: light-dark(var(--gray-9), var(--gray-1));
   --color-gray-950: light-dark(var(--gray-10), var(--gray-0));
+
+  /** Patagonia color scheme */
+  --patagonia-color-1: hsl(250deg 63% 33%);
+  --patagonia-color-2: hsl(246deg 49% 50%);
+  --patagonia-color-3: hsl(248, 67%, 73%);
+  --patagonia-color-4: hsl(10deg 82% 54%);
+  --patagonia-color-5: hsl(24deg 83% 70%);
 }

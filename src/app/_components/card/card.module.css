@@ -8,11 +8,42 @@
 
   inline-size: 100%;
   block-size: 100%;
+
+  aspect-ratio: 1;
+
   display: flex;
   flex-direction: column;
   padding: var(--size-fluid-2);
   border-radius: var(--radius-conditional-3);
   background: var(--surface-2);
-  box-shadow: 0 4px 0 oklch(from var(--surface-2) calc(l + 0.2) c h / 20%);
   overflow: hidden;
+}
+
+.border {
+  --half-line-width: .75%;
+  --line-color: transparent;
+
+  background: linear-gradient(
+    135deg,
+    var(--patagonia-color-1) 0%,
+    var(--patagonia-color-1) calc(20% - var(--half-line-width)),
+    var(--line-color) calc(20% - var(--half-line-width)),
+    var(--line-color) calc(20% + var(--half-line-width)),
+    var(--patagonia-color-2) calc(20% + var(--half-line-width)),
+    var(--patagonia-color-2) calc(40% - var(--half-line-width)),
+    var(--line-color) calc(40% - var(--half-line-width)),
+    var(--line-color) calc(40% + var(--half-line-width)),
+    var(--patagonia-color-3) calc(40% + var(--half-line-width)),
+    var(--patagonia-color-3) calc(60% - var(--half-line-width)),
+    var(--line-color) calc(60% - var(--half-line-width)),
+    var(--line-color) calc(60% + var(--half-line-width)),
+    var(--patagonia-color-4) calc(60% + var(--half-line-width)),
+    var(--patagonia-color-4) calc(80% - var(--half-line-width)),
+    var(--line-color) calc(80% - var(--half-line-width)),
+    var(--line-color) calc(80% + var(--half-line-width)),
+    var(--patagonia-color-5) calc(80% + var(--half-line-width)),
+    var(--patagonia-color-5) 100%
+  );
+  padding: calc(var(--size-fluid-0) / 4);
+  border-radius: var(--radius-conditional-3);
 }
