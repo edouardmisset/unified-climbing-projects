@@ -1,13 +1,10 @@
 .card {
-  --_light-background: oklch(from var(--accent) l c h / 10%);
-  --_dark-background: oklch(from var(--accent) l c h / 20%);
-  --_background-color: light-dark(
-    var(--_light-background),
-    var(--_dark-background)
-  );
+  --border-width: calc(var(--size-fluid-0) / 2);
+  --half-line-width: .75%;
+  --line-color: transparent;
 
-  inline-size: 100%;
-  block-size: 100%;
+  inline-size: calc(100% - var(--border-width));
+  block-size: calc(100% - var(--border-width));
 
   aspect-ratio: 1;
 
@@ -15,35 +12,46 @@
   flex-direction: column;
   padding: var(--size-fluid-2);
   border-radius: var(--radius-conditional-3);
-  background: var(--surface-2);
+  position: relative;
   overflow: hidden;
-}
 
-.border {
-  --half-line-width: .75%;
-  --line-color: transparent;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-conditional-3);
+    background: linear-gradient(
+      135deg,
+      var(--patagonia-color-1) 0%,
+      var(--patagonia-color-1) calc(20% - var(--half-line-width)),
+      var(--line-color) calc(20% - var(--half-line-width)),
+      var(--line-color) calc(20% + var(--half-line-width)),
+      var(--patagonia-color-2) calc(20% + var(--half-line-width)),
+      var(--patagonia-color-2) calc(40% - var(--half-line-width)),
+      var(--line-color) calc(40% - var(--half-line-width)),
+      var(--line-color) calc(40% + var(--half-line-width)),
+      var(--patagonia-color-3) calc(40% + var(--half-line-width)),
+      var(--patagonia-color-3) calc(60% - var(--half-line-width)),
+      var(--line-color) calc(60% - var(--half-line-width)),
+      var(--line-color) calc(60% + var(--half-line-width)),
+      var(--patagonia-color-4) calc(60% + var(--half-line-width)),
+      var(--patagonia-color-4) calc(80% - var(--half-line-width)),
+      var(--line-color) calc(80% - var(--half-line-width)),
+      var(--line-color) calc(80% + var(--half-line-width)),
+      var(--patagonia-color-5) calc(80% + var(--half-line-width))
+    );
+  }
 
-  background: linear-gradient(
-    135deg,
-    var(--patagonia-color-1) 0%,
-    var(--patagonia-color-1) calc(20% - var(--half-line-width)),
-    var(--line-color) calc(20% - var(--half-line-width)),
-    var(--line-color) calc(20% + var(--half-line-width)),
-    var(--patagonia-color-2) calc(20% + var(--half-line-width)),
-    var(--patagonia-color-2) calc(40% - var(--half-line-width)),
-    var(--line-color) calc(40% - var(--half-line-width)),
-    var(--line-color) calc(40% + var(--half-line-width)),
-    var(--patagonia-color-3) calc(40% + var(--half-line-width)),
-    var(--patagonia-color-3) calc(60% - var(--half-line-width)),
-    var(--line-color) calc(60% - var(--half-line-width)),
-    var(--line-color) calc(60% + var(--half-line-width)),
-    var(--patagonia-color-4) calc(60% + var(--half-line-width)),
-    var(--patagonia-color-4) calc(80% - var(--half-line-width)),
-    var(--line-color) calc(80% - var(--half-line-width)),
-    var(--line-color) calc(80% + var(--half-line-width)),
-    var(--patagonia-color-5) calc(80% + var(--half-line-width)),
-    var(--patagonia-color-5) 100%
-  );
-  padding: calc(var(--size-fluid-0) / 4);
-  border-radius: var(--radius-conditional-3);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-width);
+    background: var(--surface-2);
+    border-radius: calc(var(--radius-conditional-3) - var(--border-width));
+  }
+
+  /* Place content above the background */
+  & > * {
+    z-index: 1;
+  }
 }
