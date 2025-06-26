@@ -7,11 +7,7 @@ import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-export function AscentSummary({
-  ascents,
-}: {
-  ascents: Ascent[]
-}) {
+export function AscentSummary({ ascents }: { ascents: Ascent[] }) {
   const mostRecentAscent = ascents.toSorted((a, b) => sortByDate(a, b))[0]
 
   if (ascents.length === 0 || mostRecentAscent === undefined) return undefined
@@ -67,8 +63,8 @@ export function AscentSummary({
             Your average bouldering grade was{' '}
             <strong>
               {displayGrade({
-                grade: averageBoulderGrade,
                 climbingDiscipline: 'Boulder',
+                grade: averageBoulderGrade,
               })}
             </strong>
           </span>

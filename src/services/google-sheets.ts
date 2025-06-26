@@ -7,16 +7,16 @@ import { env } from '~/env'
 
 export const SHEETS_INFO = {
   ascents: {
+    csvExportURL: env.GOOGLE_SHEET_ASCENTS_URL_CSV,
+    editSheetTitle: env.GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE,
     id: env.GOOGLE_SHEET_ID_ASCENTS,
     sheetTitle: env.GOOGLE_SHEET_ASCENTS_SHEET_TITLE,
-    editSheetTitle: env.GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE,
-    csvExportURL: env.GOOGLE_SHEET_ASCENTS_URL_CSV,
   },
   training: {
+    csvExportURL: env.GOOGLE_SHEET_TRAINING_URL_CSV,
+    editSheetTitle: env.GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE,
     id: env.GOOGLE_SHEET_ID_TRAINING,
     sheetTitle: env.GOOGLE_SHEET_TRAINING_SHEET_TITLE,
-    editSheetTitle: env.GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE,
-    csvExportURL: env.GOOGLE_SHEET_TRAINING_URL_CSV,
   },
 } as const
 

@@ -43,8 +43,10 @@
   background: var(--_bg);
   color: var(--_text);
   border: var(--border-size-2) solid var(--_border);
-  box-shadow: var(--shadow-2), 0 1px var(--surface-3), 0 0 0
-    var(--_highlight-size) var(--_highlight);
+  box-shadow:
+    var(--shadow-2),
+    0 1px var(--surface-3),
+    0 0 0 var(--_highlight-size) var(--_highlight);
   text-shadow: var(--_ink-shadow);
 
   display: inline-flex;
@@ -55,17 +57,19 @@
 
   font-weight: var(--font-weight-7);
   border-radius: var(--radius-2);
-  padding-block: .75ch;
+  padding-block: 0.75ch;
   padding-inline: var(--size-relative-6);
 
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 
-  transition: border-color .5s var(--ease-3);
+  transition: border-color 0.5s var(--ease-3);
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: border-color .5s var(--ease-3), box-shadow 145ms var(--ease-4),
+    transition:
+      border-color 0.5s var(--ease-3),
+      box-shadow 145ms var(--ease-4),
       outline-offset 145ms var(--ease-4);
   }
 }
@@ -90,7 +94,7 @@
   /* pressing */
   &:where(:not(:active):hover) {
     --_highlight-size: var(--size-2);
-    transition-duration: .25s;
+    transition-duration: 0.25s;
   }
 
   /* icons */

@@ -74,8 +74,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <ClerkProvider appearance={appearance}>
         {env.NEXT_PUBLIC_ENV === 'development' && <ReactScan />}
         <html
-          lang="en"
           data-color-scheme={theme}
+          lang="en"
           suppressHydrationWarning={true}
         >
           <body className={styles.body}>

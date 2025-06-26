@@ -32,6 +32,7 @@ describe('fromAscentsToCalendarEntries', () => {
           date: '2024-10-27T12:00:00.000Z',
           height: 25,
           holds: 'Crimp',
+          id: 1,
           personalGrade: '6c+',
           profile: 'Arête',
           rating: 4,
@@ -39,7 +40,6 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Onsight',
           topoGrade: '7a',
           tries: 1,
-          id: 1,
         },
       ],
       [
@@ -52,6 +52,7 @@ describe('fromAscentsToCalendarEntries', () => {
           date: '2023-08-01T12:00:00.000Z',
           height: 25,
           holds: 'Pocket',
+          id: 2,
           personalGrade: '7b+',
           profile: 'Overhang',
           rating: 3,
@@ -60,7 +61,6 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Redpoint',
           topoGrade: '7b',
           tries: 2,
-          id: 2,
         },
       ],
     ]

@@ -40,7 +40,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     [comments],
   )
 
-  const formattedGrade = displayGrade({ grade: topoGrade, climbingDiscipline })
+  const formattedGrade = displayGrade({ climbingDiscipline, grade: topoGrade })
   return (
     <div className={styles.card}>
       <h2
@@ -55,9 +55,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
         <div className={styles.details} style={stylesDependingOnComments}>
           {[
             formatStyleAndTriers({
+              options: { showDetails: true },
               style,
               tries,
-              options: { showDetails: true },
             }),
             formatHeight(height),
             formatProfile(profile),

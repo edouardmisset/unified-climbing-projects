@@ -8,7 +8,7 @@ type VisualizationType = z.infer<typeof visualizationSchema>
 type VisualizationPathType = z.infer<typeof visualizationPathSchema>
 
 export const PATH_TO_VISUALIZATION = {
+  barcode: 'Barcode',
   calendar: 'Calendar',
   'qr-code': 'QR Code',
-  barcode: 'Barcode',
 } as const satisfies Record<VisualizationPathType, VisualizationType>

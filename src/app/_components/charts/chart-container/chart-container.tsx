@@ -1,4 +1,4 @@
-import { type ReactNode, memo } from 'react'
+import { memo, type ReactNode } from 'react'
 import styles from './chart-container.module.css'
 
 export const ChartContainer = memo(
@@ -6,7 +6,11 @@ export const ChartContainer = memo(
     children,
     className,
     caption,
-  }: { children: ReactNode; className?: string; caption: string }) => (
+  }: {
+    children: ReactNode
+    className?: string
+    caption: string
+  }) => (
     <figure className={`h100 ${styles.container} ${className}`}>
       {children}
       <figcaption>{caption}</figcaption>

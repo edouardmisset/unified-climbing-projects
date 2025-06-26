@@ -42,5 +42,5 @@ export function createCache<T>(options?: {
     cache = undefined
   }
 
-  return { getCache, setCache, clearCache }
+  return { clearCache, getCache, setCache }
 }

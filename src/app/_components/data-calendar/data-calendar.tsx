@@ -42,7 +42,7 @@ export const DataCalendar = memo(
 
     return (
       <div className={styles.calendarContainer}>
-        <YearGrid year={year} dayCollection={calendarEntries} />
+        <YearGrid dayCollection={calendarEntries} year={year} />
       </div>
     )
   },

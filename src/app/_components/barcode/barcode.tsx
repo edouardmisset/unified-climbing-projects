@@ -1,12 +1,10 @@
 import type React from 'react'
 
-import { type ReactNode, memo } from 'react'
+import { memo, type ReactNode } from 'react'
 import styles from './barcode.module.css'
 
 export const Barcode = memo(
-  (props: {
-    children: ReactNode
-  }): React.JSX.Element => {
+  (props: { children: ReactNode }): React.JSX.Element => {
     const { children } = props
 
     return (

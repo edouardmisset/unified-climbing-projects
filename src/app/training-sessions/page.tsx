@@ -18,7 +18,7 @@ export default async function TrainingSessionsPage(): Promise<React.JSX.Element>
 }
 
 export const metadata: Metadata = {
-  title: 'Training Sessions 💪',
   description: 'Lists my training sessions',
   keywords: ['climbing', 'training', 'sessions'],
+  title: 'Training Sessions 💪',
 }

@@ -26,21 +26,21 @@ export const ASCENT_HEADERS = [
 ] as const
 
 export const TRANSFORMED_ASCENT_HEADER_NAMES = {
-  'Route Name': 'routeName',
-  'Topo Grade': 'topoGrade',
   '# Tries': 'tries',
-  'My Grade': 'personalGrade',
+  Area: 'area',
+  'Ascent Comments': 'comments',
+  Climber: 'climber',
+  Crag: 'crag',
+  Date: 'date',
+  Departement: 'region',
   Height: 'height',
-  Profile: 'profile',
   Holds: 'holds',
+  'My Grade': 'personalGrade',
+  Profile: 'profile',
   Rating: 'rating',
   'Route / Boulder': 'climbingDiscipline',
-  Crag: 'crag',
-  Area: 'area',
-  Departement: 'region',
-  Date: 'date',
-  Climber: 'climber',
-  'Ascent Comments': 'comments',
+  'Route Name': 'routeName',
+  'Topo Grade': 'topoGrade',
 } as const satisfies Record<(typeof ASCENT_HEADERS)[number], string>
 
 export type GSAscentKeys = keyof typeof TRANSFORMED_ASCENT_HEADER_NAMES
@@ -67,16 +67,16 @@ export const TRAINING_HEADERS = [
 ] as const
 
 export const TRANSFORMED_TRAINING_HEADER_NAMES = {
-  Date: 'date',
-  'Type of Session': 'sessionType',
-  Volume: 'volume',
   'Anatomical Region': 'anatomicalRegion',
-  'Energy System': 'energySystem',
-  'Route / Bouldering': 'climbingDiscipline',
-  'Gym / Crag': 'gymCrag',
   Comments: 'comments',
+  Date: 'date',
+  'Energy System': 'energySystem',
+  'Gym / Crag': 'gymCrag',
   Intensity: 'intensity',
   LOAD: 'load',
+  'Route / Bouldering': 'climbingDiscipline',
+  'Type of Session': 'sessionType',
+  Volume: 'volume',
 } as const satisfies Record<(typeof TRAINING_HEADERS)[number], string>
 
 export type GSTrainingKeys = keyof typeof TRANSFORMED_TRAINING_HEADER_NAMES

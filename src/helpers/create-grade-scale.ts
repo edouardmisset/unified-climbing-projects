@@ -1,4 +1,4 @@
-import { type Grade, _GRADES } from '~/schema/ascent'
+import { _GRADES, type Grade } from '~/schema/ascent'
 
 /**
  * Create a grade scale between two grades.

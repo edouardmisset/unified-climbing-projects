@@ -32,18 +32,14 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
 
   return (
     <Popover
-      triggerClassName={`${
-        isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
-      } ${styles.bar}`}
       buttonStyle={{
-        inlineSize: `${numberOfAscents / 2}%`,
         background: isSingleAscent
           ? undefined
           : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
               .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
               .join(', ')})`,
+        inlineSize: `${numberOfAscents / 2}%`,
       }}
-      triggerContent=""
       popoverDescription={
         <AscentsPopoverDescription
           ascents={weeklyAscentsByDescendingGrade}
@@ -51,6 +47,10 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
         />
       }
       popoverTitle={`${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`}
+      triggerClassName={`${
+        isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
+      } ${styles.bar}`}
+      triggerContent=""
     />
   )
 })

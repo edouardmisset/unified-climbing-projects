@@ -61,8 +61,6 @@
   animation-timing-function: cubic-bezier(0, 0.3, 0.1, 1);
   transition-timing-function: cubic-bezier(0, 0.3, 0.1, 1);
 
-  /* biome-ignore lint/correctness/noUnknownProperty: Biome doesn't know this
-  property yet */
   interpolate-size: allow-keywords;
 }
 

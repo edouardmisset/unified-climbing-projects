@@ -37,22 +37,22 @@ describe('getSessionTypeColors', () => {
 
   it('should return the correct color based on intensity and volume', () => {
     let result = getSessionTypeColors({
-      sessionType: 'CS',
       intensityPercent: 40,
+      sessionType: 'CS',
       volumePercent: 40,
     })
     assert.equal(result, 'var(--strength-low)')
 
     result = getSessionTypeColors({
-      sessionType: 'CS',
       intensityPercent: 90,
+      sessionType: 'CS',
       volumePercent: 90,
     })
     assert.equal(result, 'var(--strength-high)')
 
     result = getSessionTypeColors({
-      sessionType: 'CS',
       intensityPercent: 65,
+      sessionType: 'CS',
       volumePercent: 65,
     })
     assert.equal(result, 'var(--strength)')

@@ -14,14 +14,14 @@ export function useTrainingSessionsFilter(
   const filteredTrainingSessions = useMemo(
     () =>
       filterTrainingSessions(trainingSessions, {
+        gymCrag: selectedLocation === ALL_VALUE ? undefined : selectedLocation,
+        load: selectedLoad === ALL_VALUE ? undefined : selectedLoad,
+        sessionType:
+          selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
         year:
           selectedYear !== ALL_VALUE && isValidNumber(selectedYear)
             ? Number(selectedYear)
             : undefined,
-        sessionType:
-          selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
-        load: selectedLoad === ALL_VALUE ? undefined : selectedLoad,
-        gymCrag: selectedLocation === ALL_VALUE ? undefined : selectedLocation,
       }),
     [
       trainingSessions,

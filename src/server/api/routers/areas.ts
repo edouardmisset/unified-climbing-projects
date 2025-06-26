@@ -40,6 +40,20 @@ export const areasRouter = createTRPCRouter({
 
       return uniqueAreas
     }),
+  getDuplicates: publicProcedure
+    .output(
+      z
+        .record(
+          ascentSchema.required({ area: true }).shape.area,
+          z.string().array(),
+        )
+        .array(),
+    )
+    .query(async () => {
+      const duplicateAreas = findSimilar(await getAllAreas())
+
+      return duplicateAreas
+    }),
   getFrequency: publicProcedure
     .output(
       z.record(
@@ -55,20 +69,6 @@ export const areasRouter = createTRPCRouter({
         },
       )
       return sortedAreasByFrequency
-    }),
-  getDuplicates: publicProcedure
-    .output(
-      z
-        .record(
-          ascentSchema.required({ area: true }).shape.area,
-          z.string().array(),
-        )
-        .array(),
-    )
-    .query(async () => {
-      const duplicateAreas = findSimilar(await getAllAreas())
-
-      return duplicateAreas
     }),
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())

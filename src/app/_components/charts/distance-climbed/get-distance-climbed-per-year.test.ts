@@ -11,36 +11,36 @@ describe('getDistanceClimbedPerYear', () => {
   it('should compute distance and average height for a multiple years', () => {
     const expected = [
       {
-        year: 2017,
         distance: 55,
+        year: 2017,
       },
       {
+        distance: 155,
         year: 2018,
-        distance: 155,
       },
       {
+        distance: 155,
         year: 2019,
-        distance: 155,
       },
       {
-        year: 2020,
         distance: 290,
+        year: 2020,
       },
       {
-        year: 2021,
         distance: 105,
+        year: 2021,
       },
       {
-        year: 2022,
         distance: 300,
+        year: 2022,
       },
       {
-        year: 2023,
         distance: 405,
+        year: 2023,
       },
       {
-        year: 2024,
         distance: 455,
+        year: 2024,
       },
     ]
     const result = getDistanceClimbedPerYear(sampleAscents)

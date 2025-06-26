@@ -11,16 +11,16 @@ describe('getRoutesVsBoulders', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
+        color: 'var(--route)',
         id: 'Route',
         label: 'Route',
         value: 84,
-        color: 'var(--route)',
       },
       {
+        color: 'var(--boulder)',
         id: 'Boulder',
         label: 'Boulder',
         value: 16,
-        color: 'var(--boulder)',
       },
     ]
     const result = getRoutesVsBoulders(sampleAscents)

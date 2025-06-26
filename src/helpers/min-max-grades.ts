@@ -1,4 +1,4 @@
-import { type Ascent, type Grade, _GRADES } from '~/schema/ascent'
+import { _GRADES, type Ascent, type Grade } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 
 /**

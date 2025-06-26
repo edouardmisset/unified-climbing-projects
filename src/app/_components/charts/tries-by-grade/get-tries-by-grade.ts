@@ -14,7 +14,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
   for (const { topoGrade, tries } of ascents) {
     const topoGradeStat = gradeStats[topoGrade]
     if (!topoGradeStat) {
-      gradeStats[topoGrade] = { min: tries, max: tries, sum: tries, count: 1 }
+      gradeStats[topoGrade] = { count: 1, max: tries, min: tries, sum: tries }
       continue
     }
 
@@ -30,15 +30,15 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
 
   return [
     {
-      id: 'min',
+      color: 'var(--min-tries)',
       data: grades.map(grade => ({
         x: grade,
         y: gradeStats[grade].min,
       })),
-      color: 'var(--min-tries)',
+      id: 'min',
     },
     {
-      id: 'average',
+      color: 'var(--average-tries)',
       data: grades.map(grade => {
         const { sum, count } = gradeStats[grade]
         return {
@@ -46,15 +46,15 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
           y: Math.round(sum / count),
         }
       }),
-      color: 'var(--average-tries)',
+      id: 'average',
     },
     {
-      id: 'max',
+      color: 'var(--max-tries)',
       data: grades.map(grade => ({
         x: grade,
         y: gradeStats[grade].max,
       })),
-      color: 'var(--max-tries)',
+      id: 'max',
     },
   ]
 }

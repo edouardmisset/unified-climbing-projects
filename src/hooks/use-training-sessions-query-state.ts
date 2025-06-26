@@ -65,13 +65,13 @@ export const useTrainingSessionsQueryState =
     })
 
     return {
-      selectedYear,
-      selectedSessionType,
       selectedLoad,
       selectedLocation,
-      setYear,
-      setSessionType,
+      selectedSessionType,
+      selectedYear,
       setLoad,
       setLocation,
+      setSessionType,
+      setYear,
     }
   }

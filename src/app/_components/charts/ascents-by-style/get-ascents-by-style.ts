@@ -11,10 +11,10 @@ export const getAscentsByStyle = (ascents: Ascent[]) => {
     }
 
     return {
+      color: fromAscentStyleToBackgroundColor(style),
       id: style,
       label: style,
       value: filteredAscentsByStyle.length,
-      color: fromAscentStyleToBackgroundColor(style),
     }
   }).filter(val => val !== undefined)
 }

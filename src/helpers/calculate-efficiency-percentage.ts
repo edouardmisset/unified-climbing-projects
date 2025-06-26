@@ -80,7 +80,7 @@ export function calculateEfficiencyPercentage(
     averageTries,
     onsightFlashRatio,
   ].map(ratio =>
-    clampValueInRange({ value: ratio * 100, minimum: 0, maximum: 100 }),
+    clampValueInRange({ maximum: 100, minimum: 0, value: ratio * 100 }),
   )
 
   return Math.round(average(clampedRatios))

@@ -28,16 +28,16 @@ export function GradeInput(
   return (
     <NumberField.Root
       {...rest}
-      onValueChange={onValueChange}
-      value={value}
-      id={id}
       className={styles.Field}
+      id={id}
       max={max}
       min={min}
+      onValueChange={onValueChange}
+      value={value}
     >
       <NumberField.ScrubArea className={styles.ScrubArea}>
         {label ? (
-          <label htmlFor={id} className={styles.Label}>
+          <label className={styles.Label} htmlFor={id}>
             {label}
           </label>
         ) : null}

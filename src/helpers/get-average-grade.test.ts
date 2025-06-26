@@ -12,6 +12,7 @@ const ascent1: Ascent = {
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
+  id: 1,
   personalGrade: '6c+',
   profile: 'Arête',
   rating: 4,
@@ -19,7 +20,6 @@ const ascent1: Ascent = {
   style: 'Onsight',
   topoGrade: '7a',
   tries: 1,
-  id: 1,
 }
 const ascent2: Ascent = {
   area: 'Envers du canyon',
@@ -30,6 +30,7 @@ const ascent2: Ascent = {
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
   holds: 'Pocket',
+  id: 2,
   personalGrade: '7b+',
   profile: 'Overhang',
   rating: 3,
@@ -38,7 +39,6 @@ const ascent2: Ascent = {
   style: 'Redpoint',
   topoGrade: '7b',
   tries: 2,
-  id: 2,
 }
 const ascent3: Ascent = {
   area: 'Tarzoon',
@@ -48,6 +48,7 @@ const ascent3: Ascent = {
   date: '2024-01-01T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
+  id: 3,
   personalGrade: '7b',
   profile: 'Overhang',
   rating: 4,
@@ -56,7 +57,6 @@ const ascent3: Ascent = {
   style: 'Onsight',
   topoGrade: '7b',
   tries: 1,
-  id: 3,
 }
 
 describe('getAverageGrade', () => {

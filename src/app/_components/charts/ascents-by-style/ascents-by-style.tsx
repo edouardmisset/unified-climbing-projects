@@ -8,22 +8,25 @@ import { DEFAULT_PIE_MARGIN, defaultMotionConfig, theme } from '../constants'
 export function AscentsByStyle({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }) {
+}: {
+  ascents: Ascent[]
+  className?: string
+}) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
   return (
     <ChartContainer caption="Ascent By Style" className={className}>
       <ResponsivePie
-        data={data}
-        theme={theme}
-        colors={({ data }) => data.color}
-        margin={DEFAULT_PIE_MARGIN}
-        motionConfig={defaultMotionConfig}
         animate={true}
-        innerRadius={0.5}
         arcLabel={data =>
           `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
         }
         arcLabelsTextColor="var(--surface-1)"
+        colors={({ data }) => data.color}
+        data={data}
+        innerRadius={0.5}
+        margin={DEFAULT_PIE_MARGIN}
+        motionConfig={defaultMotionConfig}
+        theme={theme}
       />
     </ChartContainer>
   )

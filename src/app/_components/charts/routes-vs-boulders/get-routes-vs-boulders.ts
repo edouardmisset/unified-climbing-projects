@@ -13,11 +13,11 @@ export function getRoutesVsBoulders(ascents: Ascent[]): RouteVsBoulder {
 
   const initialValue: RouteVsBoulder = CLIMBING_DISCIPLINE.map(
     climbingDiscipline => ({
+      color:
+        CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
       id: climbingDiscipline,
       label: climbingDiscipline,
       value: 0,
-      color:
-        CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
     }),
   )
 

@@ -11,14 +11,6 @@ import { createTRPCRouter, publicProcedure } from '../trpc'
 import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
 
 export const indicatorsRouter = createTRPCRouter({
-  getVersatilityPercentage: publicProcedure
-    .input(optionalAscentFilterSchema)
-    .output(percentSchema)
-    .query(async ({ input }) => {
-      const filteredAscents = await getFilteredAscents(input)
-
-      return calculateVersatilityPercentage(filteredAscents)
-    }),
   getEfficiencyPercentage: publicProcedure
     .input(optionalAscentFilterSchema)
     .output(percentSchema)
@@ -29,10 +21,10 @@ export const indicatorsRouter = createTRPCRouter({
       const filteredTrainingSessions = filterTrainingSessions(
         allTrainingSessions,
         {
-          sessionType: 'Out',
-          year: input?.year,
           climbingDiscipline: input?.climbingDiscipline,
           gymCrag: input?.crag,
+          sessionType: 'Out',
+          year: input?.year,
         },
       )
 
@@ -84,10 +76,10 @@ export const indicatorsRouter = createTRPCRouter({
       const filteredTrainingSessions = filterTrainingSessions(
         allTrainingSessions,
         {
-          sessionType: 'Out',
-          year,
           climbingDiscipline: input?.climbingDiscipline,
           gymCrag: input?.crag,
+          sessionType: 'Out',
+          year,
         },
       )
       const filteredAscents = await getFilteredAscents(input)
@@ -97,5 +89,13 @@ export const indicatorsRouter = createTRPCRouter({
         trainingSessions: filteredTrainingSessions,
         year,
       })
+    }),
+  getVersatilityPercentage: publicProcedure
+    .input(optionalAscentFilterSchema)
+    .output(percentSchema)
+    .query(async ({ input }) => {
+      const filteredAscents = await getFilteredAscents(input)
+
+      return calculateVersatilityPercentage(filteredAscents)
     }),
 })

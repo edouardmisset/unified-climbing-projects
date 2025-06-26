@@ -38,6 +38,15 @@ export const cragsRouter = createTRPCRouter({
 
       return uniqueCrags
     }),
+  getDuplicate: publicProcedure
+    .output(z.record(ascentSchema.shape.crag, z.string().array()).array())
+    .query(async () => {
+      const validCrags = await getAllCrags()
+
+      const similarCrags = findSimilar(validCrags)
+
+      return similarCrags
+    }),
   getFrequency: publicProcedure
     .output(z.record(ascentSchema.shape.crag, positiveInteger))
     .query(async () => {
@@ -115,15 +124,6 @@ export const cragsRouter = createTRPCRouter({
       return mapObject(mostSuccessfulCrags, val =>
         Number((val / highestScore).toFixed(1)),
       )
-    }),
-  getDuplicate: publicProcedure
-    .output(z.record(ascentSchema.shape.crag, z.string().array()).array())
-    .query(async () => {
-      const validCrags = await getAllCrags()
-
-      const similarCrags = findSimilar(validCrags)
-
-      return similarCrags
     }),
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())

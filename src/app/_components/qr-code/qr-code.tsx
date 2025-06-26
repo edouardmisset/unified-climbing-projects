@@ -9,9 +9,7 @@ const imageSize = 9
 const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
 const _imageEnd = gridSize - imageSize + 2 // 18
 
-export default function QRCode(props: {
-  children?: ReactNode
-}) {
+export default function QRCode(props: { children?: ReactNode }) {
   const { children } = props
 
   return (
@@ -24,11 +22,11 @@ export default function QRCode(props: {
       {/* Image at the center of the QR Code */}
       <Image
         alt="emoji of a person climbing"
-        src={climberImagePath}
         className={styles.image}
-        width={120}
         height={120}
         priority={true}
+        src={climberImagePath}
+        width={120}
       />
 
       {/* Data */}

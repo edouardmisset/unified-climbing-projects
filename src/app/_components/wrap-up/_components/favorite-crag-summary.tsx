@@ -4,11 +4,7 @@ import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-po
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
 
-export function FavoriteCragSummary({
-  ascents,
-}: {
-  ascents: Ascent[]
-}) {
+export function FavoriteCragSummary({ ascents }: { ascents: Ascent[] }) {
   const { numberOfCrags, mostFrequentCrag, crags } = getCragsDetails(ascents)
 
   if (
@@ -24,7 +20,6 @@ export function FavoriteCragSummary({
       <p>
         You visited{' '}
         <Popover
-          triggerClassName={ascentsWithPopoverStyles.popover}
           popoverDescription={
             <div className={ascentsWithPopoverStyles.popoverContainer}>
               {crags.map(crag => (
@@ -33,6 +28,7 @@ export function FavoriteCragSummary({
             </div>
           }
           popoverTitle="Crags"
+          triggerClassName={ascentsWithPopoverStyles.popover}
           triggerContent={
             <span>
               <strong>{numberOfCrags}</strong> crags

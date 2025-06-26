@@ -8,7 +8,9 @@ import { TrainingSessionList } from '../training-session-list/training-session-l
 
 export function FilteredTrainingSessionList({
   trainingSessions,
-}: { trainingSessions: TrainingSession[] }) {
+}: {
+  trainingSessions: TrainingSession[]
+}) {
   const filteredTrainingSessions = useTrainingSessionsFilter(
     trainingSessions ?? [],
   )

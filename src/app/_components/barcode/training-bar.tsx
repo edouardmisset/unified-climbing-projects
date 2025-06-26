@@ -38,7 +38,6 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
 
   const buttonStyle = useMemo(
     () => ({
-      inlineSize: `${numberOfTraining / 2}%`,
       background: isSingleWeekTraining
         ? undefined
         : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
@@ -46,6 +45,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
               fromSessionTypeToBackgroundColor(sessionType),
             )
             .join(', ')})`,
+      inlineSize: `${numberOfTraining / 2}%`,
     }),
     [filteredSortedWeeklyTraining, numberOfTraining, isSingleWeekTraining],
   )
@@ -67,15 +67,15 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
 
   return (
     <Popover
-      triggerClassName={trainingBarClassName}
       buttonStyle={buttonStyle}
-      triggerContent=""
       popoverDescription={
         <TrainingPopoverDescription
           trainingSessions={filteredSortedWeeklyTraining}
         />
       }
       popoverTitle={weeklyTrainingSummary}
+      triggerClassName={trainingBarClassName}
+      triggerContent=""
     />
   )
 })

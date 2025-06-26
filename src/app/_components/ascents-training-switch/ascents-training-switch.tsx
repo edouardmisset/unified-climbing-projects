@@ -3,20 +3,14 @@ import { memo } from 'react'
 import styles from './ascents-training-switch.module.css'
 
 export const AscentsTrainingSwitch = memo(
-  ({
-    toggle,
-    isTraining,
-  }: {
-    toggle: () => void
-    isTraining: boolean
-  }) => (
+  ({ toggle, isTraining }: { toggle: () => void; isTraining: boolean }) => (
     <div className={styles.Container}>
       <label htmlFor="ascents-training-switch">Ascent</label>
       <Switch.Root
-        className={styles.Switch}
-        onCheckedChange={toggle}
-        id="ascents-training-switch"
         checked={isTraining}
+        className={styles.Switch}
+        id="ascents-training-switch"
+        onCheckedChange={toggle}
       >
         <Switch.Thumb className={styles.Thumb} />
       </Switch.Root>

@@ -5,8 +5,8 @@ import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
 import {
   ASCENT_STYLE,
-  AVAILABLE_CLIMBING_DISCIPLINE,
   type Ascent,
+  AVAILABLE_CLIMBING_DISCIPLINE,
 } from '~/schema/ascent'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
 import styles from './ascent-filter-bar.module.css'
@@ -14,7 +14,9 @@ import { createChangeHandler } from './helpers.ts'
 
 export default function AscentsFilterBar({
   allAscents,
-}: { allAscents: Ascent[] }) {
+}: {
+  allAscents: Ascent[]
+}) {
   const yearList = createYearList(allAscents, { descending: true })
 
   const cragList = [...new Set(allAscents.map(({ crag }) => crag))].sort(

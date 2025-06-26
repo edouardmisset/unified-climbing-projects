@@ -169,9 +169,9 @@ export const GRADE_TO_POINTS = {
 } as const satisfies Partial<Record<Grade, number>>
 
 export const STYLE_TO_POINTS = {
-  Redpoint: 0,
   Flash: 50,
   Onsight: 150,
+  Redpoint: 0,
 } as const satisfies Record<Ascent['style'], number>
 
 export const BOULDERING_BONUS_POINTS = 100 as const
@@ -249,12 +249,14 @@ export const ascentSchema = z.object({
   comments: optionalStringSchema,
   crag: z.string().min(1),
   date: z.string(), // ISO 8601 date format
-  region: optionalStringSchema,
   height: positiveInteger.optional(),
   holds: holdsSchema.optional(),
-  profile: profileSchema.optional(),
+  id: positiveInteger,
   personalGrade: gradeSchema.optional(),
+  points: positiveInteger.optional(),
+  profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(5).optional(),
+  region: optionalStringSchema,
   routeName: z
     .string()
     .min(1)
@@ -264,7 +266,5 @@ export const ascentSchema = z.object({
   style: ascentStyleSchema,
   topoGrade: gradeSchema,
   tries: z.number().int().min(1),
-  id: positiveInteger,
-  points: positiveInteger.optional(),
 })
 export type Ascent = z.infer<typeof ascentSchema>

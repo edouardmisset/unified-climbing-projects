@@ -7,7 +7,9 @@ import styles from './ascents-with-popover.module.css'
 
 export function AscentsWithPopover({
   ascents,
-}: { ascents: Ascent[] }): React.JSX.Element {
+}: {
+  ascents: Ascent[]
+}): React.JSX.Element {
   const ascentsDisciplineText = writeAscentsDisciplineText(ascents)
   return (
     <Popover
@@ -16,17 +18,17 @@ export function AscentsWithPopover({
           {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
             <span
               key={id}
-            >{`${routeName} ${wrapInParentheses(displayGrade({ grade: topoGrade, climbingDiscipline }))}`}</span>
+            >{`${routeName} ${wrapInParentheses(displayGrade({ climbingDiscipline, grade: topoGrade }))}`}</span>
           ))}
         </div>
       }
       popoverTitle={capitalize(ascentsDisciplineText)}
+      triggerClassName={styles.popover}
       triggerContent={
         <span>
           <strong>{ascents.length}</strong> {ascentsDisciplineText}
         </span>
       }
-      triggerClassName={styles.popover}
     />
   )
 }

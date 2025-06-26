@@ -68,20 +68,20 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="w100 flex-column">
       <GridLayout
-        title="Visualization"
         additionalContent={
           <div className={`flex-row space-evenly gap ${styles.header}`}>
             <ToggleGroup
               onValueChange={handleVisualizationChange}
-              values={visualizations}
               selectedValue={selectedValue}
+              values={visualizations}
             />
             <AscentsTrainingSwitch
-              toggle={() => toggleAscentsOrTraining(!isTraining)}
               isTraining={isTraining}
+              toggle={() => toggleAscentsOrTraining(!isTraining)}
             />
           </div>
         }
+        title="Visualization"
       >
         {children}
       </GridLayout>

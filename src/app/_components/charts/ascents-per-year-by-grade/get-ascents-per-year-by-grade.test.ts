@@ -11,23 +11,23 @@ describe('getAscentsPerYearByGrade', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        year: 2024,
         '7a': 7,
-        '7aColor': 'var(--7a)',
         '7a+': 4,
         '7a+Color': 'var(--7a_)',
+        '7aColor': 'var(--7a)',
         '7b': 5,
-        '7bColor': 'var(--7b)',
         '7b+': 1,
         '7b+Color': 'var(--7b_)',
+        '7bColor': 'var(--7b)',
         '7c': 1,
-        '7cColor': 'var(--7c)',
         '7c+': 1,
         '7c+Color': 'var(--7c_)',
+        '7cColor': 'var(--7c)',
         '8a': 0,
-        '8aColor': 'var(--8a)',
         '8a+': 1,
         '8a+Color': 'var(--8a_)',
+        '8aColor': 'var(--8a)',
+        year: 2024,
       },
     ]
     const result = getAscentsPerYearByGrade(

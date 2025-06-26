@@ -1,11 +1,11 @@
-import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
-import { type ReactNode, memo, useMemo } from 'react'
+import { isDateInYear } from '@edouardmisset/date'
+import { memo, type ReactNode, Suspense, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
-import { YearGridCell } from './year-grid-cell.tsx'
 import styles from './year-grid.module.css'
+import { YearGridCell } from './year-grid-cell.tsx'
 
 export type DayDescriptor = {
   date: string
@@ -55,8 +55,8 @@ export const YearGrid = memo(
           (_, index): DayDescriptor => ({
             date: '',
             description: '',
-            title: '',
             shortText: index.toString(),
+            title: '',
           }),
         ),
       [numberOfDaysFromPreviousMondayTo1stJanuary],
@@ -86,26 +86,29 @@ export const YearGrid = memo(
               isSpecialCase = false,
             },
             index,
-          ) =>
-            date === '' ? (
-              <i
-                key={shortText?.toString() || index}
-                className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-              />
-            ) : (
-              isDateInYear(date, year) && (
-                <YearGridCell
-                  key={date.toString()}
-                  formattedDate={prettyLongDate(date)}
-                  stringDate={date}
-                  description={description}
-                  backgroundColor={backgroundColor}
-                  shortText={shortText}
-                  title={title}
-                  isSpecialCase={isSpecialCase}
+          ) => (
+            <Suspense fallback={'Loading...'} key={date}>
+              {date === '' ? (
+                <i
+                  className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
+                  key={shortText?.toString() || index}
                 />
-              )
-            ),
+              ) : (
+                isDateInYear(date, year) && (
+                  <YearGridCell
+                    backgroundColor={backgroundColor}
+                    description={description}
+                    formattedDate={prettyLongDate(date)}
+                    isSpecialCase={isSpecialCase}
+                    key={date.toString()}
+                    shortText={shortText}
+                    stringDate={date}
+                    title={title}
+                  />
+                )
+              )}
+            </Suspense>
+          ),
         )}
       </div>
     )

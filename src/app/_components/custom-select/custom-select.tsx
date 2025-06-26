@@ -24,15 +24,15 @@ export function CustomSelect(props: CustomSelectProps) {
     <label className={styles.label} htmlFor={name} title={title}>
       {capitalize(name)}
       <select
-        id={name}
-        title={selectedOption === ALL_VALUE ? title : selectedOption}
-        onChange={handleChange}
-        value={selectedOption}
         className={styles.select}
+        id={name}
+        onChange={handleChange}
+        title={selectedOption === ALL_VALUE ? title : selectedOption}
+        value={selectedOption}
       >
         <option value={ALL_VALUE}>{capitalize(ALL_VALUE)}</option>
         {options.map(option => (
-          <option key={option} value={option} title={String(option)}>
+          <option key={option} title={String(option)} value={option}>
             {option}
           </option>
         ))}

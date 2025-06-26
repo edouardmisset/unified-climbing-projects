@@ -36,20 +36,21 @@ export function AscentPyramid({
   return (
     <ChartContainer caption="Ascent Pyramid" className={className}>
       <ResponsiveBar
-        theme={theme}
-        data={gradeFrequency}
-        keys={ASCENT_STYLE}
-        indexBy="grade"
-        margin={DEFAULT_CHART_MARGIN}
-        padding={defaultBarChartPadding}
-        enableGridY={false}
-        enableTotals
+        axisBottom={gradesBottomAxis}
+        axisLeft={numberOfAscentsAxisLeft}
         // @ts-ignore
         colors={colors}
+        data={gradeFrequency}
+        enableGridY={false}
         enableLabel={false}
+        enableTotals
+        indexBy="grade"
+        // @ts-ignore
+        keys={ASCENT_STYLE}
+        margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}
-        axisLeft={numberOfAscentsAxisLeft}
-        axisBottom={gradesBottomAxis}
+        padding={defaultBarChartPadding}
+        theme={theme}
       />
     </ChartContainer>
   )

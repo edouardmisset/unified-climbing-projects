@@ -8,10 +8,10 @@ import {
   profileSchema,
 } from '~/schema/ascent'
 import {
+  _1To9999RegEx,
   MAX_HEIGHT,
   MAX_RATING,
   MAX_TRIES,
-  _1To9999RegEx,
 } from './constants.ts'
 
 const optionalNumberGradeSchema = z.number().optional()
@@ -24,19 +24,19 @@ const numberOfTriesSchema = z
   .transform(Number)
 export const ascentFormInputSchema = z.object({
   area: z.string().optional(),
-  tries: numberOfTriesSchema.transform(num => num?.toString()),
-  style: ascentStyleSchema.optional(),
-  topoGrade: optionalNumberGradeSchema,
-  personalGrade: optionalNumberGradeSchema,
-  routeName: z.string().optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
+  comments: z.string().optional(),
   crag: z.string().optional(),
   date: z.date().transform(date => stringifyDate(date)),
-  holds: holdsSchema.optional(),
   height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
-  rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
+  holds: holdsSchema.optional(),
+  personalGrade: optionalNumberGradeSchema,
   profile: profileSchema.optional(),
-  comments: z.string().optional(),
+  rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
+  routeName: z.string().optional(),
+  style: ascentStyleSchema.optional(),
+  topoGrade: optionalNumberGradeSchema,
+  tries: numberOfTriesSchema.transform(num => num?.toString()),
 })
 
 export type AscentFormInput = z.input<typeof ascentFormInputSchema>
@@ -50,25 +50,25 @@ const numberGradeToGradeSchema = z
 
 export const ascentFormOutputSchema = z.object({
   area: z.string().optional(),
-  tries: numberOfTriesSchema,
-  style: ascentStyleSchema.optional().default('Redpoint'),
-  topoGrade: numberGradeToGradeSchema,
-  personalGrade: numberGradeToGradeSchema,
-  routeName: z.string().trim(),
   climbingDiscipline: climbingDisciplineSchema,
+  comments: z.string().optional(),
   crag: z.string().min(1).trim(),
-  date: z.string().transform(s => new Date(s).toISOString()), // yyyy-mm-dd
-  holds: holdsSchema.optional(),
-  profile: profileSchema.optional(),
+  date: z.string().transform(s => new Date(s).toISOString()),
   height: z
     .string()
     .transform(height =>
       height === undefined || height === '' ? undefined : Number(height),
     ),
+  holds: holdsSchema.optional(),
+  personalGrade: numberGradeToGradeSchema,
+  profile: profileSchema.optional(), // yyyy-mm-dd
   rating: z
     .string()
     .transform(rating =>
       rating === undefined || rating === '' ? undefined : Number(rating),
     ),
-  comments: z.string().optional(),
+  routeName: z.string().trim(),
+  style: ascentStyleSchema.optional().default('Redpoint'),
+  topoGrade: numberGradeToGradeSchema,
+  tries: numberOfTriesSchema,
 })

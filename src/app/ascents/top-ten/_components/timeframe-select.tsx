@@ -13,7 +13,7 @@ export function TimeframeSelect({
   onChange: (value: Timeframe, event?: Event) => void
 }): React.JSX.Element {
   return (
-    <Select.Root value={value} onValueChange={onChange}>
+    <Select.Root onValueChange={onChange} value={value}>
       <Select.Trigger className={styles.Select}>
         <Select.Value placeholder="Year" />
         <Select.Icon className={styles.SelectIcon}>
@@ -26,8 +26,8 @@ export function TimeframeSelect({
           <Select.Popup className={styles.Popup}>
             {timeframes.map(timeframe => (
               <Select.Item
-                key={timeframe}
                 className={styles.Item}
+                key={timeframe}
                 value={timeframe}
               >
                 <Select.ItemIndicator className={styles.ItemIndicator}>

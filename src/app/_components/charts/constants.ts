@@ -6,7 +6,22 @@ import type { ScaleSpec } from '@nivo/scales'
 import type { ClimbingDisciplineMetric } from './types'
 
 export const theme: Theme = {
+  axis: {
+    ticks: {
+      text: {
+        fill: 'var(--text-2)',
+        fontFamily: 'monospace',
+        fontSize: 'var(--font-size-1)',
+        fontStyle: 'normal',
+      },
+    },
+  },
   background: 'var(--surface-1)',
+  labels: {
+    text: {
+      fontWeight: 'var(--font-weight-6)',
+    },
+  },
   text: {
     fill: 'var(--text-1)',
   },
@@ -15,31 +30,16 @@ export const theme: Theme = {
       background: 'var(--surface-2)',
     },
   },
-  axis: {
-    ticks: {
-      text: {
-        fill: 'var(--text-2)',
-        fontFamily: 'monospace',
-        fontStyle: 'normal',
-        fontSize: 'var(--font-size-1)',
-      },
-    },
-  },
-  labels: {
-    text: {
-      fontWeight: 'var(--font-weight-6)',
-    },
-  },
 }
 
 // Margins
 
-export const DEFAULT_CHART_MARGIN = { bottom: 50, left: 60, top: 20, right: 20 }
+export const DEFAULT_CHART_MARGIN = { bottom: 50, left: 60, right: 20, top: 20 }
 export const DEFAULT_PIE_MARGIN = {
-  top: 20,
-  right: 100,
   bottom: 20,
   left: 100,
+  right: 100,
+  top: 20,
 }
 
 // Padding
@@ -67,9 +67,9 @@ export const pieColorsGetter: OrdinalColorScaleConfig<
 
 export const lineXScale: ScaleSpec = { type: 'point' }
 export const lineYScale: ScaleSpec = {
-  type: 'linear',
-  min: 0,
   max: 'auto',
+  min: 0,
+  type: 'linear',
 }
 
 // Axis
@@ -105,6 +105,6 @@ export const gradesBottomAxis: AxisProps = {
 
 export const numberOfAscentsAxisBottom: AxisProps = {
   legend: 'Number of Ascents',
-  legendPosition: 'middle',
   legendOffset: 40,
+  legendPosition: 'middle',
 }

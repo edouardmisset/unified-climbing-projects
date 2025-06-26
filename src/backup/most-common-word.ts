@@ -64,7 +64,7 @@ const meaninglessWords = [
 const words = ascents.flatMap(({ routeName }) =>
   removeAccents(routeName)
     .toLowerCase()
-    .split(/\s|\-|’|'|\(|\)|\,|\>|\<|\.|\"|\:|\?|\!|\¡|\#|\,|\=|\+|\/|\\/)
+    .split(/\s|-|’|'|\(|\)|,|>|<|\.|"|:|\?|!|¡|#|,|=|\+|\/|\\/)
     .filter(word => word.length > 2 && !meaninglessWords.includes(word)),
 )
 

@@ -7,13 +7,16 @@ import styles from './ascent-component.module.css'
 export function AscentComponent({
   ascent,
   showGrade = false,
-}: { ascent: Ascent; showGrade?: boolean }) {
+}: {
+  ascent: Ascent
+  showGrade?: boolean
+}) {
   const { topoGrade, climbingDiscipline, routeName } = ascent
   return (
     <AscentDialog
-      triggerText={`${routeName} ${showGrade ? `(${displayGrade({ grade: topoGrade, climbingDiscipline })})` : ''}`}
-      triggerClassName={styles.trigger}
       content={<AscentCard ascent={ascent} />}
+      triggerClassName={styles.trigger}
+      triggerText={`${routeName} ${showGrade ? `(${displayGrade({ climbingDiscipline, grade: topoGrade })})` : ''}`}
     />
   )
 }

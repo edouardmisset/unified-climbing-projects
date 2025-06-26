@@ -6,7 +6,7 @@ export default async function Page() {
 }
 
 export const metadata: Metadata = {
-  title: 'Home 🏠',
   description: 'Textual description of all my climbing ascents',
   keywords: ['climbing', 'ascents', 'description'],
+  title: 'Home 🏠',
 }

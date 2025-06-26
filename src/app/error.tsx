@@ -19,7 +19,7 @@ export default function Error({
     <div>
       <h2>Something went wrong!</h2>
       <p>Please try reloading the page or coming back later.</p>
-      <button type="button" onClick={() => reset()}>
+      <button onClick={() => reset()} type="button">
         Try again
       </button>
     </div>

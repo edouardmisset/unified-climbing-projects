@@ -15,25 +15,25 @@ export function fromTrainingSessionsToCalendarEntries(
       if (firstSession === undefined) {
         return {
           date: new Date(year, 0, index + 1, 12).toISOString(),
-          shortText: '',
           description: '',
+          shortText: '',
           title: '',
         }
       }
 
       const { date, sessionType, intensity, volume } = firstSession
       const backgroundColor = getSessionTypeColors({
-        sessionType,
         intensityPercent: intensity,
+        sessionType,
         volumePercent: volume,
       })
 
       return {
-        date,
         backgroundColor,
-        title: prettyLongDate(date),
+        date,
         description: <TrainingPopoverDescription trainingSessions={sessions} />,
         shortText: sessionType ?? '',
+        title: prettyLongDate(date),
       }
     }) ?? []
   )

@@ -1,4 +1,4 @@
-import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
+import { type CSSProperties, memo, type ReactNode, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import { Popover } from '../popover/popover'
 import { datesEqual } from './helpers'
@@ -48,11 +48,11 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
   return (
     <Popover
-      triggerContent={shortText}
-      popoverTitle={title}
-      popoverDescription={description}
-      triggerClassName={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrast-color`}
       buttonStyle={cellStyle}
+      popoverDescription={description}
+      popoverTitle={title}
+      triggerClassName={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrast-color`}
+      triggerContent={shortText}
     />
   )
 })

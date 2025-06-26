@@ -18,10 +18,8 @@ const createContext = async (req: NextRequest) => {
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    endpoint: '/api/trpc',
-    req,
-    router: appRouter,
     createContext: () => createContext(req),
+    endpoint: '/api/trpc',
     onError:
       env.NODE_ENV === 'development'
         ? ({ path, error }) => {
@@ -30,6 +28,7 @@ const handler = (req: NextRequest) =>
             )
           }
         : undefined,
+    req,
     responseMeta: opts => {
       const { ctx, info, errors, type } = opts
       // assuming you have all your public routes with the keyword `public` in them
@@ -54,6 +53,7 @@ const handler = (req: NextRequest) =>
         ]),
       }
     },
+    router: appRouter,
   })
 
 export { handler as GET, handler as POST }

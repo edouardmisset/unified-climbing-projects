@@ -15,10 +15,10 @@ describe('getAscentsByStyle', () => {
     const result = getAscentsByStyle(flashAscents)
     assert.deepEqual(result, [
       {
+        color: ASCENT_STYLE_TO_COLOR.Flash,
         id: 'Flash',
         label: 'Flash',
         value: 21,
-        color: ASCENT_STYLE_TO_COLOR.Flash,
       },
     ])
     // Ensure no other entry is returned
@@ -29,22 +29,22 @@ describe('getAscentsByStyle', () => {
     const result = getAscentsByStyle(testAscents)
     const expected = [
       {
+        color: ASCENT_STYLE_TO_COLOR.Onsight,
         id: 'Onsight',
         label: 'Onsight',
         value: 41,
-        color: ASCENT_STYLE_TO_COLOR.Onsight,
       },
       {
+        color: ASCENT_STYLE_TO_COLOR.Flash,
         id: 'Flash',
         label: 'Flash',
         value: 21,
-        color: ASCENT_STYLE_TO_COLOR.Flash,
       },
       {
+        color: ASCENT_STYLE_TO_COLOR.Redpoint,
         id: 'Redpoint',
         label: 'Redpoint',
         value: 38,
-        color: ASCENT_STYLE_TO_COLOR.Redpoint,
       },
     ]
     assert.deepEqual(result, expected)

@@ -35,11 +35,11 @@ export const TrainingsQRDot = memo(
       return <span />
     return (
       <Popover
-        triggerClassName={sessionClassName}
         popoverDescription={
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         }
         popoverTitle={formattedDate}
+        triggerClassName={sessionClassName}
         triggerContent=""
       />
     )

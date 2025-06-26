@@ -11,11 +11,11 @@ describe('getRoutesVsBouldersPerYear', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        year: 2024,
         Boulder: 1,
         BoulderColor: 'var(--boulder)',
         Route: 19,
         RouteColor: 'var(--route)',
+        year: 2024,
       },
     ]
     const result = getRoutesVsBouldersPerYear(

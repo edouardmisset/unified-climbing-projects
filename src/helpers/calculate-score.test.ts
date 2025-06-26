@@ -43,24 +43,24 @@ describe('calculateScore', () => {
     const previousYear = year - 1
 
     const currentYearAscent: Ascent = {
-      id: 1,
-      date: `${year}-01-01T10:00:00Z`,
       climbingDiscipline: 'Boulder',
-      style: 'Flash',
       crag: 'Test Crag',
-      topoGrade: '7a',
+      date: `${year}-01-01T10:00:00Z`,
+      id: 1,
       routeName: 'Test Route 1',
+      style: 'Flash',
+      topoGrade: '7a',
       tries: 1,
     }
 
     const previousYearAscent: Ascent = {
-      id: 2,
-      date: `${previousYear}-01-01T10:00:00Z`,
       climbingDiscipline: 'Boulder',
-      style: 'Redpoint',
       crag: 'Test Crag',
-      topoGrade: '6c',
+      date: `${previousYear}-01-01T10:00:00Z`,
+      id: 2,
       routeName: 'Test Route 2',
+      style: 'Redpoint',
+      topoGrade: '6c',
       tries: 3,
     }
 
@@ -68,8 +68,8 @@ describe('calculateScore', () => {
 
     const trainingSessions: TrainingSession[] = [
       {
-        id: 1,
         date: `${year}-01-01T09:00:00Z`,
+        id: 1,
         sessionType: 'Out',
       },
     ]
@@ -134,32 +134,32 @@ describe('calculateScore', () => {
     const ascents: Ascent[] = [
       // Current year ascents
       {
-        id: 1,
-        date: `${year}-01-01T10:00:00Z`,
         climbingDiscipline: 'Boulder',
-        style: 'Flash',
         crag: 'Test Crag',
-        topoGrade: '7a',
+        date: `${year}-01-01T10:00:00Z`,
+        id: 1,
         routeName: 'Test Route 1',
+        style: 'Flash',
+        topoGrade: '7a',
         tries: 1,
       },
       // Previous year ascent
       {
-        id: 2,
-        date: `${previousYear}-01-01T10:00:00Z`,
         climbingDiscipline: 'Boulder',
-        style: 'Redpoint',
         crag: 'Test Crag',
-        topoGrade: '6c',
+        date: `${previousYear}-01-01T10:00:00Z`,
+        id: 2,
         routeName: 'Test Route 2',
+        style: 'Redpoint',
+        topoGrade: '6c',
         tries: 3,
       },
     ]
 
     const trainingSessions: TrainingSession[] = [
       {
-        id: 1,
         date: `${year}-01-01T09:00:00Z`,
+        id: 1,
         sessionType: 'Out',
       },
     ]

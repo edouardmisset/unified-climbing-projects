@@ -22,20 +22,20 @@ export default async function TrainingSessionsQRCodePage() {
           <div key={year}>
             <h2 className="center-text">
               <Dialog
-                title={year}
                 content={
                   <QRCode>
                     {yearlyTraining.map((trainingSessions, index) => {
                       const [firstTraining] = trainingSessions
                       return (
                         <TrainingsQRDot
-                          trainingSessions={trainingSessions}
                           key={firstTraining?.date ?? index}
+                          trainingSessions={trainingSessions}
                         />
                       )
                     })}
                   </QRCode>
                 }
+                title={year}
               />
             </h2>
             <QRCode>
@@ -43,8 +43,8 @@ export default async function TrainingSessionsQRCodePage() {
                 const [firstTraining] = trainingSessions
                 return (
                   <TrainingsQRDot
-                    trainingSessions={trainingSessions}
                     key={firstTraining?.date ?? index}
+                    trainingSessions={trainingSessions}
                   />
                 )
               })}
@@ -56,7 +56,7 @@ export default async function TrainingSessionsQRCodePage() {
 }
 
 export const metadata = {
-  title: 'Training Sessions QR Code Visualization 🖼️',
   description: 'QR Code visualization of training sessions',
   keywords: ['climbing', 'visualization', 'training', 'qr code'],
+  title: 'Training Sessions QR Code Visualization 🖼️',
 }

@@ -16,12 +16,12 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
     points: fromAscentToPoints(ascent),
   }))
 
-  if (ascents.length === 0 || ascentsWithPoints.length === 0) return undefined
-
   const topTenAscents = useMemo(
     () => ascentsWithPoints.sort((a, b) => b.points - a.points).slice(0, 10),
     [ascentsWithPoints],
   )
+
+  if (ascents.length === 0 || ascentsWithPoints.length === 0) return undefined
 
   const lowestTopTenAscent = topTenAscents.findLast(
     ascent =>
@@ -75,11 +75,11 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               Flashing a{' '}
               <strong>
                 {displayGrade({
+                  climbingDiscipline: 'Boulder',
                   grade: fromPointToGrade(nextStepPoints, {
                     climbingDiscipline: 'Boulder',
                     style: 'Flash',
                   }),
-                  climbingDiscipline: 'Boulder',
                 })}
               </strong>{' '}
               boulder
@@ -88,11 +88,11 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               Redpointing a{' '}
               <strong>
                 {displayGrade({
+                  climbingDiscipline: 'Boulder',
                   grade: fromPointToGrade(nextStepPoints, {
                     climbingDiscipline: 'Boulder',
                     style: 'Redpoint',
                   }),
-                  climbingDiscipline: 'Boulder',
                 })}
               </strong>{' '}
               boulder

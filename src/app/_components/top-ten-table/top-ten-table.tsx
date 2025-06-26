@@ -4,7 +4,9 @@ import { AscentList } from '../ascent-list/ascent-list'
 
 export function TopTenTable({
   topTenAscents,
-}: { topTenAscents: Ascent[] }): React.JSX.Element {
+}: {
+  topTenAscents: Ascent[]
+}): React.JSX.Element {
   if (topTenAscents.length === 0) return <NotFound />
 
   return (

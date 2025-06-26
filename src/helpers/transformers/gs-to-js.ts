@@ -121,10 +121,10 @@ type TransformFunctionMappingGSToJS = Partial<
 export const TRANSFORM_FUNCTIONS_GS_TO_JS = {
   area: transformToStringGSToJS,
   date: transformDateGSToJS,
+  default: defaultTransformGSToJS,
   height: transformHeightGSToJS,
   holds: transformHoldsGSToJS,
   rating: transformRatingGSToJS,
   routeName: transformToStringGSToJS,
   sessionType: transformSessionTypeGSToJS,
-  default: defaultTransformGSToJS,
 } as const satisfies TransformFunctionMappingGSToJS

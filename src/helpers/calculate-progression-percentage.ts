@@ -30,7 +30,10 @@ import { minMaxGrades } from './min-max-grades'
 export function calculateProgressionPercentage({
   ascents,
   year,
-}: { ascents: Ascent[]; year: number }): number {
+}: {
+  ascents: Ascent[]
+  year: number
+}): number {
   if (ascents.length === 0) return 0
 
   const previousYear = year - 1

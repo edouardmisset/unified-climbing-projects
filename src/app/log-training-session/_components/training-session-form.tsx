@@ -2,11 +2,16 @@
 
 import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
+import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
+import styles from '~/app/log-ascent/_components/ascent-form.module.css'
+import { DataList } from '~/app/log-ascent/_components/data-list'
 import { _0To100RegEx } from '~/constants/generic'
+import { fromDateToStringDate } from '~/helpers/date'
 import {
   fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
@@ -20,22 +25,16 @@ import {
 import {
   ANATOMICAL_REGIONS,
   ENERGY_SYSTEMS,
-  SESSION_TYPES,
-  type TrainingSession,
   fromAnatomicalRegionToLabel,
   fromEnergySystemToLabel,
   fromSessionTypeToLabel,
+  SESSION_TYPES,
+  type TrainingSession,
   trainingSessionSchema,
 } from '~/schema/training'
 import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
-
-import { useRouter } from 'next/navigation'
-import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
-import styles from '~/app/log-ascent/_components/ascent-form.module.css'
-import { DataList } from '~/app/log-ascent/_components/data-list'
-import { fromDateToStringDate } from '~/helpers/date'
 
 const climbingDisciplineFormattedList = disjunctiveListFormatter(
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -95,14 +94,13 @@ export default function TrainingSessionForm() {
       autoComplete="off"
       className={styles.form}
       name="training-session-form"
-      spellCheck={false}
       onSubmit={handleSubmit(
         async data => {
           const promise = onSubmit(data)
           toast.promise(promise, {
+            error: 'Failed to submit ❌',
             pending: 'Submitting...',
             success: 'Training session submitted 🎉',
-            error: 'Failed to submit ❌',
           })
           if (await promise) {
             router.push('/log-ascent')
@@ -117,6 +115,7 @@ export default function TrainingSessionForm() {
           }
         },
       )}
+      spellCheck={false}
     >
       <div className={styles.field}>
         <label htmlFor="date">Date</label>
@@ -125,11 +124,11 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="date"
+          list="date-list"
           max={fromDateToStringDate(new Date())}
           required={true}
           title="Date"
           type="date"
-          list="date-list"
         />
         <DataList id="date-list" options={recentDateOptions} />
       </div>
@@ -139,17 +138,17 @@ export default function TrainingSessionForm() {
           {...register('sessionType')}
           className={styles.input}
           enterKeyHint="next"
-          type="text"
           id="session-type"
           list="session-type-list"
           placeholder="Out"
           title={sessionTypeFormattedList}
+          type="text"
         />
         <DataList
           id="session-type-list"
           options={SESSION_TYPES.map(sessionType => ({
-            value: sessionType,
             label: fromSessionTypeToLabel(sessionType),
+            value: sessionType,
           }))}
         />
       </div>
@@ -160,10 +159,10 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="gymCrag"
+          list="gym-crag-list"
           placeholder="Ceüse"
           title="The name of the gym or crag"
           type="text"
-          list="gym-crag-list"
         />
         <DataList
           id="gym-crag-list"
@@ -188,8 +187,8 @@ export default function TrainingSessionForm() {
         <DataList
           id="climbing-discipline-list"
           options={CLIMBING_DISCIPLINE.map(discipline => ({
-            value: discipline,
             label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
+            value: discipline,
           }))}
         />
       </div>
@@ -198,8 +197,8 @@ export default function TrainingSessionForm() {
         <input
           {...register('anatomicalRegion')}
           className={styles.input}
-          id="anatomical-region"
           enterKeyHint="next"
+          id="anatomical-region"
           list="anatomical-region-list"
           placeholder="Fi"
           title={`The anatomical region targeted during the training session (e.g. ${anatomicalRegionFormattedList})`}
@@ -207,8 +206,8 @@ export default function TrainingSessionForm() {
         <DataList
           id="anatomical-region-list"
           options={ANATOMICAL_REGIONS.map(region => ({
-            value: region,
             label: `${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`,
+            value: region,
           }))}
         />
       </div>
@@ -217,8 +216,8 @@ export default function TrainingSessionForm() {
         <input
           {...register('energySystem')}
           className={styles.input}
-          id="energy-system"
           enterKeyHint="next"
+          id="energy-system"
           list="energy-system-list"
           placeholder="AL"
           title={`The energy system targeted during the training session (e.g. ${energySystemFormattedList})`}
@@ -227,8 +226,8 @@ export default function TrainingSessionForm() {
         <DataList
           id="energy-system-list"
           options={ENERGY_SYSTEMS.map(system => ({
-            value: system,
             label: `${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`,
+            value: system,
           }))}
         />
       </div>
@@ -239,14 +238,14 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="intensity"
-          placeholder="50"
-          title="The perceived intensity of the session (0 - 100%)"
-          type="number"
           inputMode="numeric"
           max={MAX_PERCENT}
           min={MIN_PERCENT}
-          step={5}
           pattern={_0To100RegEx.source}
+          placeholder="50"
+          step={5}
+          title="The perceived intensity of the session (0 - 100%)"
+          type="number"
         />
       </div>
       <div className={styles.field}>
@@ -256,14 +255,14 @@ export default function TrainingSessionForm() {
           className={styles.input}
           enterKeyHint="next"
           id="volume"
-          placeholder="80"
-          title="The perceived volume of the session (0 - 100%)"
-          type="number"
           inputMode="numeric"
           max={MAX_PERCENT}
           min={MIN_PERCENT}
-          step={5}
           pattern={_0To100RegEx.source}
+          placeholder="80"
+          step={5}
+          title="The perceived volume of the session (0 - 100%)"
+          type="number"
         />
       </div>
       <div className={styles.field}>
@@ -282,9 +281,9 @@ export default function TrainingSessionForm() {
       </div>
       <Spacer size={3} />
       <button
-        type="submit"
-        disabled={isSubmitting}
         className={`contrast-color ${styles.submit}`}
+        disabled={isSubmitting}
+        type="submit"
       >
         {isSubmitting ? 'Submitting...' : 'Submit 📮'}
       </button>

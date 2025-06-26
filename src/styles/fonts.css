@@ -1,31 +1,34 @@
 :where(html) {
   --font-system-ui: system-ui, sans-serif;
   --font-transitional: charter, bitstream charter, sitka text, cambria, serif;
-  --font-old-style: iowan old style, palatino linotype, urw palladio l, p052,
-    serif;
-  --font-humanist: seravek, gill sans nova, ubuntu, calibri, dejavu sans,
-    source-sans-pro, sans-serif;
-  --font-geometric-humanist: avenir, montserrat, corbel, urw gothic,
-    source-sans-pro, sans-serif;
-  --font-classical-humanist: optima, candara, noto sans, source-sans-pro,
+  --font-old-style:
+    iowan old style, palatino linotype, urw palladio l, p052, serif;
+  --font-humanist:
+    seravek, gill sans nova, ubuntu, calibri, dejavu sans, source-sans-pro,
     sans-serif;
-  --font-neo-grotesque: inter, roboto, helvetica neue, arial nova, nimbus sans,
-    arial, sans-serif;
+  --font-geometric-humanist:
+    avenir, montserrat, corbel, urw gothic, source-sans-pro, sans-serif;
+  --font-classical-humanist:
+    optima, candara, noto sans, source-sans-pro, sans-serif;
+  --font-neo-grotesque:
+    inter, roboto, helvetica neue, arial nova, nimbus sans, arial, sans-serif;
   --font-monospace-slab-serif: nimbus mono ps, courier new, monospace;
   --font-monospace-code:
     dank mono, operator mono, inconsolata, fira mono, ui-monospace, sf mono, monaco, droid sans mono, source code pro, cascadia code, menlo, consolas, dejavu sans mono, monospace;
-  --font-industrial: bahnschrift, din alternate, franklin gothic medium, nimbus
-    sans narrow, sans-serif-condensed, sans-serif;
+  --font-industrial:
+    bahnschrift, din alternate, franklin gothic medium, nimbus sans narrow,
+    sans-serif-condensed, sans-serif;
   --font-rounded-sans:
     ui-rounded, hiragino maru gothic pron, quicksand, comfortaa, manjari, arial rounded mt, arial rounded mt bold, calibri, source-sans-pro, sans-serif;
-  --font-slab-serif: rockwell, rockwell nova, roboto slab, dejavu serif, sitka
-    small, serif;
-  --font-antique: superclarendon, bookman old style, urw bookman, urw bookman l,
-    georgia pro, georgia, serif;
-  --font-didone: didot, bodoni mt, noto serif display, urw palladio l, p052,
-    sylfaen, serif;
-  --font-handwritten: segoe print, bradley hand, chilanka, tscu_comic, casual,
-    cursive;
+  --font-slab-serif:
+    rockwell, rockwell nova, roboto slab, dejavu serif, sitka small, serif;
+  --font-antique:
+    superclarendon, bookman old style, urw bookman, urw bookman l, georgia pro,
+    georgia, serif;
+  --font-didone:
+    didot, bodoni mt, noto serif display, urw palladio l, p052, sylfaen, serif;
+  --font-handwritten:
+    segoe print, bradley hand, chilanka, tscu_comic, casual, cursive;
   --font-sans: var(--font-system-ui);
   --font-serif: ui-serif, serif;
   --font-mono: var(--font-monospace-code);
@@ -45,16 +48,16 @@
   --font-lineheight-3: 1.5;
   --font-lineheight-4: 1.75;
   --font-lineheight-5: 2;
-  --font-letterspacing-0: -.05em;
-  --font-letterspacing-1: .025em;
-  --font-letterspacing-2: .050em;
-  --font-letterspacing-3: .075em;
-  --font-letterspacing-4: .150em;
-  --font-letterspacing-5: .500em;
-  --font-letterspacing-6: .750em;
+  --font-letterspacing-0: -0.05em;
+  --font-letterspacing-1: 0.025em;
+  --font-letterspacing-2: 0.05em;
+  --font-letterspacing-3: 0.075em;
+  --font-letterspacing-4: 0.15em;
+  --font-letterspacing-5: 0.5em;
+  --font-letterspacing-6: 0.75em;
   --font-letterspacing-7: 1em;
-  --font-size-00: .5rem;
-  --font-size-0: .75rem;
+  --font-size-00: 0.5rem;
+  --font-size-0: 0.75rem;
   --font-size-1: 1rem;
   --font-size-2: 1.1rem;
   --font-size-3: 1.25rem;
@@ -63,9 +66,9 @@
   --font-size-6: 2.5rem;
   --font-size-7: 3rem;
   --font-size-8: 3.5rem;
-  --font-size-fluid-000: clamp(.25rem, 2vw, .5rem);
-  --font-size-fluid-00: clamp(.5rem, 2vw, .75rem);
-  --font-size-fluid-0: clamp(.75rem, 2vw, 1rem);
+  --font-size-fluid-000: clamp(0.25rem, 2vw, 0.5rem);
+  --font-size-fluid-00: clamp(0.5rem, 2vw, 0.75rem);
+  --font-size-fluid-0: clamp(0.75rem, 2vw, 1rem);
   --font-size-fluid-1: clamp(1rem, 4vw, 1.5rem);
   --font-size-fluid-2: clamp(1.5rem, 6vw, 2.5rem);
   --font-size-fluid-3: clamp(2rem, 9vw, 3.5rem);

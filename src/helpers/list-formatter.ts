@@ -22,8 +22,8 @@ function createListFormatter(
  * @returns {string} The formatted list string.
  */
 export const disjunctiveListFormatter = createListFormatter({
-  type: 'disjunction',
   style: 'long',
+  type: 'disjunction',
 })
 
 /**
@@ -34,6 +34,6 @@ export const disjunctiveListFormatter = createListFormatter({
  * @returns {string} The formatted list string.
  */
 export const conjunctiveListFormatter = createListFormatter({
-  type: 'conjunction',
   style: 'long',
+  type: 'conjunction',
 })

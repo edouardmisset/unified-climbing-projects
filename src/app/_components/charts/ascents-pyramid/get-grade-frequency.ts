@@ -22,8 +22,8 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
 
   const gradeClimbingStylesCount: GradeFrequency = grades.map(grade => {
     const initialStyleFrequency: Record<Ascent['style'], number> = {
-      Onsight: 0,
       Flash: 0,
+      Onsight: 0,
       Redpoint: 0,
     }
 
@@ -40,11 +40,11 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
     )
 
     return {
+      Flash,
+      FlashColor: 'var(--flash)',
       grade,
       Onsight,
       OnsightColor: 'var(--onsight)',
-      Flash,
-      FlashColor: 'var(--flash)',
       Redpoint,
       RedpointColor: 'var(--redpoint)',
     }

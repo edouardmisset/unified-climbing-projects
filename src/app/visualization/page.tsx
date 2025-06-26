@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 /**
- *  We redirect this page to visualization/ascents/calendar
+ * We redirect this page to visualization/ascents/calendar
  * See next.config.ts for the redirect
  */
 export default async function Visualization() {
@@ -9,7 +9,6 @@ export default async function Visualization() {
 }
 
 export const metadata: Metadata = {
-  title: 'Visualization 🖼️',
   description: 'Fun visuals of all my climbing ascents and training sessions',
   keywords: [
     'climbing',
@@ -20,4 +19,5 @@ export const metadata: Metadata = {
     'barcode',
     'calendar',
   ],
+  title: 'Visualization 🖼️',
 }

@@ -22,7 +22,6 @@ export default async function TrainingSessionsCalendarPage() {
           <Fragment key={year}>
             <h2 className="super-center">{year}</h2>
             <DataCalendar
-              year={year}
               data={trainingSessions}
               dataTransformationFunction={groupDataDaysByYear}
               fromDataToCalendarEntries={(year, sessions) =>
@@ -31,6 +30,7 @@ export default async function TrainingSessionsCalendarPage() {
                   sessions as TrainingSession[][],
                 )
               }
+              year={year}
             />
           </Fragment>
         ))}
@@ -40,7 +40,7 @@ export default async function TrainingSessionsCalendarPage() {
 }
 
 export const metadata = {
-  title: 'Training Sessions Calendar 🖼️',
   description: 'Calendar visualization of training sessions',
   keywords: ['climbing', 'visualization', 'training', 'calendar'],
+  title: 'Training Sessions Calendar 🖼️',
 }

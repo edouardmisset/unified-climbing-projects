@@ -29,7 +29,6 @@ export default async function AscentsQRCodePage() {
             <div key={year}>
               <h2 className="center-text">
                 <Dialog
-                  title={year}
                   content={
                     <QRCode>
                       {sortedAscents.map((ascents, index) => {
@@ -43,6 +42,7 @@ export default async function AscentsQRCodePage() {
                       })}
                     </QRCode>
                   }
+                  title={year}
                 />
               </h2>
               <QRCode>
@@ -64,7 +64,7 @@ export default async function AscentsQRCodePage() {
 }
 
 export const metadata = {
-  title: 'Ascents QR Code Visualization 🖼️',
   description: 'QR Code visualization of climbing ascents',
   keywords: ['climbing', 'visualization', 'ascents', 'qr code'],
+  title: 'Ascents QR Code Visualization 🖼️',
 }

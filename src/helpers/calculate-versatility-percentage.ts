@@ -54,7 +54,7 @@ export function calculateVersatilityPercentage(ascents: Ascent[]): number {
     styleRatio,
     cragRatio,
   ].map(ratio =>
-    clampValueInRange({ value: ratio * 100, minimum: 0, maximum: 100 }),
+    clampValueInRange({ maximum: 100, minimum: 0, value: ratio * 100 }),
   )
 
   return Math.round(average(ratios))

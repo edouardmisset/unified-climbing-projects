@@ -24,15 +24,15 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   return useMemo(
     () =>
       filterAscents(ascents, {
+        climbingDiscipline:
+          selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
+        crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
+        grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
+        style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
         year:
           selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
             ? Number(selectedYear)
             : undefined,
-        climbingDiscipline:
-          selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
-        style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
-        crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
-        grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
       }),
     [
       ascents,

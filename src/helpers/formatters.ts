@@ -75,8 +75,8 @@ export function formatStyleAndTriers({
 type Emoji = string
 
 const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], Emoji> = {
-  Onsight: '👁️',
   Flash: '🔦',
+  Onsight: '👁️',
   Redpoint: '🔴',
 }
 
@@ -91,8 +91,8 @@ const ENERGY_SYSTEM_TO_EMOJI: Record<
   Emoji
 > = {
   AA: '🔥',
-  AL: '🪫',
   AE: '🫀',
+  AL: '🪫',
 }
 
 export function fromEnergySystemToEmoji(
@@ -125,8 +125,8 @@ const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
   Emoji
 > = {
   Boulder: '🪨',
-  Route: '🧗',
   'Multi-Pitch': '⛰️',
+  Route: '🧗',
 }
 
 export function fromClimbingDisciplineToEmoji(

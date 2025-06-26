@@ -28,7 +28,7 @@ export function TableAndSelect(): React.JSX.Element {
 
   return (
     <div className="flex flex-column gap grid-full-width">
-      <TimeframeSelect value={timeframe} onChange={handleChange} />
+      <TimeframeSelect onChange={handleChange} value={timeframe} />
       <TopTenTable topTenAscents={topTen} />
     </div>
   )

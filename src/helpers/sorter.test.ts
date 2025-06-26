@@ -11,6 +11,7 @@ const easierAscent: Ascent = {
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
+  id: 1,
   personalGrade: '6c+',
   profile: 'Arête',
   rating: 4,
@@ -18,7 +19,6 @@ const easierAscent: Ascent = {
   style: 'Onsight',
   topoGrade: '7a',
   tries: 1,
-  id: 1,
 }
 
 const harderAscent: Ascent = {
@@ -30,6 +30,7 @@ const harderAscent: Ascent = {
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
   holds: 'Pocket',
+  id: 2,
   personalGrade: '7b+',
   profile: 'Overhang',
   rating: 3,
@@ -38,7 +39,6 @@ const harderAscent: Ascent = {
   style: 'Redpoint',
   topoGrade: '7b',
   tries: 2,
-  id: 2,
 }
 
 describe('sortByGrade', () => {

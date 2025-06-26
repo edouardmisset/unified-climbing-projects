@@ -1,12 +1,12 @@
 export function ChevronUpDownIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
-      width="8"
-      height="12"
-      viewBox="0 0 8 12"
       fill="none"
+      height="12"
       stroke="currentcolor"
       strokeWidth="1.5"
+      viewBox="0 0 8 12"
+      width="8"
       {...props}
     >
       <title>Chevron Up Down Icon</title>

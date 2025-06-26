@@ -23,24 +23,24 @@ import {
 } from '~/helpers/grade-converter.ts'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
 import {
-  AVAILABLE_CLIMBING_DISCIPLINE,
   type Ascent,
+  AVAILABLE_CLIMBING_DISCIPLINE,
+  ascentStyleSchema,
   GRADE_TO_NUMBER,
   type Grade,
   HOLDS,
   PROFILES,
-  ascentStyleSchema,
 } from '~/schema/ascent'
 import { onSubmit } from '../actions.ts'
 import {
+  _1To5RegEx,
+  _1To9999RegEx,
   MAX_HEIGHT,
   MAX_RATING,
   MAX_TRIES,
   MIN_HEIGHT,
   MIN_RATING,
   MIN_TRIES,
-  _1To5RegEx,
-  _1To9999RegEx,
 } from '../constants.ts'
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 import styles from './ascent-form.module.css'
@@ -67,14 +67,14 @@ const holdOptions = HOLDS.map(hold => ({ value: hold }))
 const profileOptions = PROFILES.map(profile => ({ value: profile }))
 
 export const recentDateOptions = [
-  { value: fromDateToStringDate(getYesterday()), label: 'Yesterday' },
+  { label: 'Yesterday', value: fromDateToStringDate(getYesterday()) },
   {
-    value: fromDateToStringDate(getLastSaturday()),
     label: 'Last Saturday',
+    value: fromDateToStringDate(getLastSaturday()),
   },
   {
-    value: fromDateToStringDate(getLastSunday()),
     label: 'Last Sunday',
+    value: fromDateToStringDate(getLastSunday()),
   },
 ]
 export default function AscentForm(props: AscentFormProps) {
@@ -84,15 +84,15 @@ export default function AscentForm(props: AscentFormProps) {
   const router = useRouter()
 
   const defaultAscentToParse = {
-    date: new Date(),
-    routeName: '',
-    crag: latestAscent?.crag,
     area: latestAscent?.area,
-    topoGrade: fromGradeToNumber(minGrade),
-    personalGrade: fromGradeToNumber(minGrade),
     climbingDiscipline: latestAscent?.climbingDiscipline,
-    tries: '1',
+    crag: latestAscent?.crag,
+    date: new Date(),
+    personalGrade: fromGradeToNumber(minGrade),
+    routeName: '',
     style: latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+    topoGrade: fromGradeToNumber(minGrade),
+    tries: '1',
   } satisfies AscentFormInput
 
   const defaultAscentFormValues =
@@ -194,14 +194,13 @@ export default function AscentForm(props: AscentFormProps) {
       autoComplete="off"
       className={styles.form}
       name="ascent-form"
-      spellCheck={false}
       onSubmit={handleSubmit(
         async data => {
           const promise = onSubmit(data)
           toast.promise(promise, {
+            error: 'Submission failed, please try again.',
             pending: 'Submitting...',
             success: `You sent ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
-            error: 'Submission failed, please try again.',
           })
 
           if (await promise) {
@@ -218,6 +217,7 @@ export default function AscentForm(props: AscentFormProps) {
           }
         },
       )}
+      spellCheck={false}
     >
       <div className={styles.field}>
         <label htmlFor="date">Date</label>
@@ -226,11 +226,11 @@ export default function AscentForm(props: AscentFormProps) {
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="date"
+          list="date-list"
           max={fromDateToStringDate(new Date())}
           required={true}
           title="Date"
           type="date"
-          list="date-list"
         />
         <DataList id="date-list" options={recentDateOptions} />
       </div>
@@ -275,11 +275,11 @@ export default function AscentForm(props: AscentFormProps) {
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="crag"
+          list="crag-list"
           placeholder="Ceüse, Fontainebleau, etc."
           required={true}
           title="The name of the crag"
           type="text"
-          list="crag-list"
         />
         <DataList id="crag-list" options={cragOptions} />
       </div>
@@ -292,66 +292,66 @@ export default function AscentForm(props: AscentFormProps) {
           className={`${styles.input} contrast-color`}
           enterKeyHint="next"
           id="area"
+          list="area-list"
           placeholder="Biographie"
           title="The name of the crag's sector (or area)"
           type="text"
-          list="area-list"
         />
         <DataList id="area-list" options={areaOptions} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="tries" className="required">
+        <label className="required" htmlFor="tries">
           Tries & Style
         </label>
         <div className={styles.tries}>
           <input
             {...triesRegister}
-            onChange={handleTriesChange}
-            required={true}
-            min={MIN_TRIES}
-            max={MAX_TRIES}
-            step={1}
+            enterKeyHint="next"
             id="tries"
+            inputMode="numeric"
+            max={MAX_TRIES}
+            min={MIN_TRIES}
+            onChange={handleTriesChange}
+            pattern={_1To9999RegEx.source}
             placeholder="1"
+            required={true}
+            step={1}
             title="Total number of tries"
             type="number"
-            inputMode="numeric"
-            pattern={_1To9999RegEx.source}
-            enterKeyHint="next"
           />
           <ClimbingStyleToggleGroup
             display={Number(numberOfTries) === 1}
+            isOnsightDisable={isBoulder}
             onValueChange={handleStyleChange}
             value={styleValue}
-            isOnsightDisable={isBoulder}
           />
         </div>
       </div>
       <div className={styles.field}>
-        <label htmlFor="topoGrade" className="required">
+        <label className="required" htmlFor="topoGrade">
           Topo Grade
         </label>
         <GradeInput
           {...topoGradeRegister}
-          value={numberTopoGrade}
-          onValueChange={handleTopoGradeChange}
-          min={adjustedMinGrade}
-          max={adjustedMaxGrade}
-          step={1}
-          required={true}
           gradeType="Topo"
+          max={adjustedMaxGrade}
+          min={adjustedMinGrade}
+          onValueChange={handleTopoGradeChange}
+          required={true}
+          step={1}
+          value={numberTopoGrade}
         />
       </div>
       <div className={styles.field}>
         <label htmlFor="personalGrade">Personal Grade</label>
         <GradeInput
           {...personalGradeRegister}
-          value={personalNumberGrade}
-          onValueChange={handlePersonalGradeChange}
-          min={adjustedMinGrade}
-          max={adjustedMaxGrade}
-          step={1}
           gradeType="Personal"
+          max={adjustedMaxGrade}
+          min={adjustedMinGrade}
+          onValueChange={handlePersonalGradeChange}
+          step={1}
+          value={personalNumberGrade}
         />
       </div>
       <div className={styles.field}>
@@ -397,7 +397,6 @@ export default function AscentForm(props: AscentFormProps) {
           pattern={_0To100RegEx.source}
           placeholder="25"
           step={5}
-          title="Height of the route in meters (does not apply for boulders)"
           style={
             isBoulder
               ? {
@@ -405,6 +404,7 @@ export default function AscentForm(props: AscentFormProps) {
                 }
               : undefined
           }
+          title="Height of the route in meters (does not apply for boulders)"
           type="number"
         />
       </div>
@@ -441,9 +441,9 @@ export default function AscentForm(props: AscentFormProps) {
       </div>
       <Spacer size={3} />
       <button
-        type="submit"
-        disabled={isSubmitting}
         className={`contrast-color ${styles.submit}`}
+        disabled={isSubmitting}
+        type="submit"
       >
         {isSubmitting ? 'Sending...' : 'Send 📮'}
       </button>

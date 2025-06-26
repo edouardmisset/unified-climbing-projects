@@ -52,9 +52,9 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
 
 const { getCache, setCache } = createCache<Ascent[]>()
 
-export async function getAllAscents(options?: { refresh?: boolean }): Promise<
-  Ascent[]
-> {
+export async function getAllAscents(options?: {
+  refresh?: boolean
+}): Promise<Ascent[]> {
   const { refresh = false } = options ?? {}
 
   const cachedData = getCache()

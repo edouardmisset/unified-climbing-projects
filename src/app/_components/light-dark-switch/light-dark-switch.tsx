@@ -11,8 +11,8 @@ export function LightDarkSwitch({
   return (
     <Switch.Root
       checked={checked}
-      onCheckedChange={onChange}
       className={styles.Switch}
+      onCheckedChange={onChange}
     >
       <Switch.Thumb className={styles.Thumb} />
     </Switch.Root>

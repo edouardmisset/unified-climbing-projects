@@ -40,8 +40,8 @@ const legends = [
     anchor: 'top',
     direction: 'column',
     itemBackground: 'var(--surface-1)',
-    itemWidth: 80,
     itemHeight: 20,
+    itemWidth: 80,
     symbolShape: 'circle',
   },
 ] as const
@@ -49,7 +49,10 @@ const legends = [
 export function TriesByGrade({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }) {
+}: {
+  ascents: Ascent[]
+  className?: string
+}) {
   const data: LineChartDataStructure[] = useMemo(
     () => getTriesByGrade(ascents),
     [ascents],
@@ -58,21 +61,21 @@ export function TriesByGrade({
   return (
     <ChartContainer caption="Tries by Grade" className={className}>
       <ResponsiveLine
-        data={data}
-        margin={DEFAULT_CHART_MARGIN}
-        curve="natural"
-        enableGridX={false}
-        xScale={lineXScale}
-        yScale={lineYScale}
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfTriesAxisLeft}
-        legends={legends}
-        pointSize={8}
         colors={colors}
-        theme={theme}
+        curve="natural"
+        data={data}
+        enableGridX={false}
         enableTouchCrosshair={true}
-        useMesh={true}
+        legends={legends}
+        margin={DEFAULT_CHART_MARGIN}
+        pointSize={8}
+        theme={theme}
         tooltip={Tooltip}
+        useMesh={true}
+        xScale={lineXScale}
+        yScale={lineYScale}
       />
     </ChartContainer>
   )

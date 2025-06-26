@@ -2,9 +2,9 @@ export function CheckIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
       fill="currentcolor"
-      width="10"
       height="10"
       viewBox="0 0 10 10"
+      width="10"
       {...props}
     >
       <title>Check Icon</title>

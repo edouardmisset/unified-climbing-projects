@@ -6,7 +6,7 @@ export const onSubmit = async (
   formData: Record<string, unknown>,
 ): Promise<boolean> => {
   const parsedFormData = trainingSessionSchema
-    .omit({ load: true, id: true })
+    .omit({ id: true, load: true })
     .safeParse(formData)
 
   if (!parsedFormData.success) {

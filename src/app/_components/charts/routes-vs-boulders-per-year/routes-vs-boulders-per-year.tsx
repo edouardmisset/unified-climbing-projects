@@ -1,11 +1,10 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import type { Ascent } from '~/schema/ascent'
-import type { CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  DEFAULT_CHART_MARGIN,
   chartColorGetter,
+  DEFAULT_CHART_MARGIN,
   defaultBarChartPadding,
   defaultMotionConfig,
   numberOfAscentsAxisLeft,
@@ -22,7 +21,10 @@ const ROUTE_AND_BOULDER = [
 export function RoutesVsBouldersPerYear({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }) {
+}: {
+  ascents: Ascent[]
+  className?: string
+}) {
   const data = useMemo(() => getRoutesVsBouldersPerYear(ascents), [ascents])
 
   return (
@@ -31,20 +33,21 @@ export function RoutesVsBouldersPerYear({
       className={className}
     >
       <ResponsiveBar
-        data={data}
-        theme={theme}
-        keys={ROUTE_AND_BOULDER}
-        groupMode="grouped"
-        indexBy="year"
-        margin={DEFAULT_CHART_MARGIN}
-        padding={defaultBarChartPadding}
-        enableGridY={false}
-        // @ts-ignore
-        colors={chartColorGetter}
-        enableLabel={false}
-        motionConfig={defaultMotionConfig}
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
+        // @ts-ignore
+        colors={chartColorGetter}
+        data={data}
+        enableGridY={false}
+        enableLabel={false}
+        groupMode="grouped"
+        indexBy="year"
+        // @ts-ignore
+        keys={ROUTE_AND_BOULDER}
+        margin={DEFAULT_CHART_MARGIN}
+        motionConfig={defaultMotionConfig}
+        padding={defaultBarChartPadding}
+        theme={theme}
       />
     </ChartContainer>
   )

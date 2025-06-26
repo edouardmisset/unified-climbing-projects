@@ -29,8 +29,8 @@ export const getDistanceClimbedPerYear = (ascents: Ascent[]) => {
     )
 
     return {
-      year,
       distance: totalDistance,
+      year,
       // averageHeight: yearAscents.length
       //   ? Math.round(totalDistance / yearAscents.length)
       //   : 0,

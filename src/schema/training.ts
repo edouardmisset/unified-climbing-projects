@@ -24,24 +24,24 @@ export const SESSION_TYPES = [
 ] as const
 
 const SESSION_TYPES_TO_TEXT = {
-  Out: 'Outdoor',
-
-  En: 'Endurance',
-  PE: 'Power Endurance',
-  SE: 'Strength Endurance',
-
-  MS: 'Max Strength',
-  Po: 'Power',
+  Co: 'Core',
   CS: 'Contact Strength',
 
-  Ta: 'Tapper',
-  St: 'Stamina',
-  Sk: 'Skill',
+  En: 'Endurance',
+  FB: 'Finger Boarding',
+
+  MS: 'Max Strength',
+  Out: 'Outdoor',
+  PE: 'Power Endurance',
+  Po: 'Power',
 
   Ro: 'Routine',
+  SE: 'Strength Endurance',
   Sg: 'Stretching',
-  Co: 'Core',
-  FB: 'Finger Boarding',
+  Sk: 'Skill',
+  St: 'Stamina',
+
+  Ta: 'Tapper',
 } as const satisfies Record<(typeof SESSION_TYPES)[number], string>
 
 export function fromSessionTypeToLabel(
@@ -68,8 +68,8 @@ export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
 
 const ENERGY_SYSTEMS_TO_TEXT = {
   AA: 'Anaerobic Alactic',
-  AL: 'Anaerobic Lactic',
   AE: 'Aerobic',
+  AL: 'Anaerobic Lactic',
 } as const satisfies Record<(typeof ENERGY_SYSTEMS)[number], string>
 
 export function fromEnergySystemToLabel(
@@ -92,10 +92,10 @@ export const trainingSessionSchema = z.object({
   date: z.string(),
   energySystem: energySystemSchema.optional(),
   gymCrag: z.string().optional(),
+  id: positiveInteger,
   intensity: percentSchema.optional(),
   load: percentSchema.optional(),
   sessionType: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
-  id: positiveInteger,
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>

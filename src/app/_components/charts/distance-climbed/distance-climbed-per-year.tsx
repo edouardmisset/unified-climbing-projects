@@ -14,25 +14,28 @@ import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
 export function DistanceClimbedPerYear({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }): React.JSX.Element {
+}: {
+  ascents: Ascent[]
+  className?: string
+}): React.JSX.Element {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
 
   return (
     <ChartContainer caption="Distance climbed per Year" className={className}>
       <ResponsiveBar
+        axisBottom={yearBottomAxis}
+        axisLeft={heightAxisLeft}
+        colors={['var(--blue-3)', 'var(--orange-3)']}
         data={data}
-        theme={theme}
-        keys={['distance']}
-        indexBy="year"
-        margin={{ ...DEFAULT_CHART_MARGIN, left: 80 }}
-        padding={0}
         enableGridY={false}
         enableLabel={false}
-        colors={['var(--blue-3)', 'var(--orange-3)']}
-        motionConfig={defaultMotionConfig}
-        axisBottom={yearBottomAxis}
         enableTotals={true}
-        axisLeft={heightAxisLeft}
+        indexBy="year"
+        keys={['distance']}
+        margin={{ ...DEFAULT_CHART_MARGIN, left: 80 }}
+        motionConfig={defaultMotionConfig}
+        padding={0}
+        theme={theme}
       />
     </ChartContainer>
   )

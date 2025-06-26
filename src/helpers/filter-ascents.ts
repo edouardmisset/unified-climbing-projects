@@ -83,8 +83,8 @@ export function getCragsDetails(ascents: Ascent[]): {
   const [mostFrequentCrag] = crags
 
   return {
-    numberOfCrags: objectSize(cragsByFrequency),
-    mostFrequentCrag,
     crags,
+    mostFrequentCrag,
+    numberOfCrags: objectSize(cragsByFrequency),
   }
 }

@@ -1,5 +1,5 @@
 import { prettyLongDate } from '~/helpers/formatters'
-import { type TrainingSession, fromSessionTypeToLabel } from '~/schema/training'
+import { fromSessionTypeToLabel, type TrainingSession } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
 export function TrainingSessionList({
@@ -39,31 +39,31 @@ export function TrainingSessionList({
       </thead>
       <tbody className={`${styles.body} grid-full-width`}>
         {trainingSessions.map(({ id, sessionType, date, load, gymCrag }) => (
-          <tr key={id} className={`${styles.row} grid-full-width`}>
+          <tr className={`${styles.row} grid-full-width`} key={id}>
             <td
-              title={prettyLongDate(date, 'longDate')}
               className={`${styles.cell} monospace`}
+              title={prettyLongDate(date, 'longDate')}
             >
               {prettyLongDate(date, 'shortDate')}
             </td>
-            <td title={gymCrag} className={styles.cell}>
+            <td className={styles.cell} title={gymCrag}>
               {gymCrag || '—'}
             </td>
             <td
+              className={styles.cell}
               title={
                 sessionType === undefined
                   ? undefined
                   : fromSessionTypeToLabel(sessionType)
               }
-              className={styles.cell}
             >
               {sessionType === undefined
                 ? '—'
                 : fromSessionTypeToLabel(sessionType)}
             </td>
             <td
-              title={load === undefined ? '—' : `${load}%`}
               className={styles.cell}
+              title={load === undefined ? '—' : `${load}%`}
             >
               {load === undefined ? '—' : `${load}%`}
             </td>

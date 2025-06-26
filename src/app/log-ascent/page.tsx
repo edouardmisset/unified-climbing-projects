@@ -16,17 +16,17 @@ export default async function Log() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <GridLayout title="Congrats 🎉" gridClassName="padding">
-          <span className="visually-hidden" aria-describedby="form-description">
+        <GridLayout gridClassName="padding" title="Congrats 🎉">
+          <span aria-describedby="form-description" className="visually-hidden">
             Form to log a climbing ascent
           </span>
           <Suspense fallback={<Loader />}>
             <AscentForm
-              latestAscent={latestAscent}
-              minGrade={minGrade}
-              maxGrade={maxGrade}
-              crags={allCrags}
               areas={allAreas}
+              crags={allCrags}
+              latestAscent={latestAscent}
+              maxGrade={maxGrade}
+              minGrade={minGrade}
             />
           </Suspense>
         </GridLayout>
@@ -42,8 +42,8 @@ export default async function Log() {
 }
 
 export const metadata: Metadata = {
-  title: 'Log ascent 📋',
   description:
     'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
   keywords: ['climbing', 'route', 'boulder', 'outdoor', 'multi-pitch', 'log'],
+  title: 'Log ascent 📋',
 }

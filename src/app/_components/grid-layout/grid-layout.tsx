@@ -1,9 +1,8 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { type ReactNode, Suspense } from 'react'
-import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
-
 import { Loader } from '../loader/loader'
 import { ALL_TIME } from '../wrap-up/constants'
+import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 import { YEAR_OF_FIRST_ASCENT } from './constants'
 import styles from './grid-layout.module.css'
 
@@ -22,24 +21,24 @@ export default function GridLayout({
 
   const beforeTitle = titleIsValidNumber ? (
     <YearNavigationButton
-      selectedYear={title}
-      nextOrPrevious="previous"
       enabled={YEAR_OF_FIRST_ASCENT < title}
+      nextOrPrevious="previous"
+      selectedYear={title}
     />
   ) : title === ALL_TIME ? (
     <YearNavigationButton
-      selectedYear={new Date().getFullYear() + 1}
-      nextOrPrevious="previous"
       enabled={true}
+      nextOrPrevious="previous"
       path="/wrap-up"
+      selectedYear={new Date().getFullYear() + 1}
     />
   ) : undefined
 
   const afterTitle = titleIsValidNumber && (
     <YearNavigationButton
-      selectedYear={title}
-      nextOrPrevious="next"
       enabled={title < new Date().getFullYear()}
+      nextOrPrevious="next"
+      selectedYear={title}
     />
   )
 

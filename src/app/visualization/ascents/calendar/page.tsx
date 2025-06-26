@@ -21,15 +21,17 @@ export default async function AscentsCalendarPage() {
         {ascentYears.map(year => (
           <Fragment key={year}>
             <h2 className="super-center">{year}</h2>
-            <DataCalendar
-              key={year}
-              year={year}
-              data={allAscents}
-              dataTransformationFunction={groupDataDaysByYear}
-              fromDataToCalendarEntries={(year, ascents) =>
-                fromAscentsToCalendarEntries(year, ascents as Ascent[][])
-              }
-            />
+            <Suspense fallback={<Loader />}>
+              <DataCalendar
+                data={allAscents}
+                dataTransformationFunction={groupDataDaysByYear}
+                fromDataToCalendarEntries={(year, ascents) =>
+                  fromAscentsToCalendarEntries(year, ascents as Ascent[][])
+                }
+                key={year}
+                year={year}
+              />
+            </Suspense>
           </Fragment>
         ))}
       </GridBreakOutWrapper>
@@ -38,7 +40,7 @@ export default async function AscentsCalendarPage() {
 }
 
 export const metadata = {
-  title: 'Ascents Calendar 🖼️',
   description: 'Calendar visualization of climbing ascents',
   keywords: ['climbing', 'visualization', 'ascents', 'calendar'],
+  title: 'Ascents Calendar 🖼️',
 }

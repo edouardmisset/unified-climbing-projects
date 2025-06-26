@@ -10,8 +10,8 @@ export default async function LogTrainingSession() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <GridLayout title="Train Hard 💪" gridClassName="padding">
-          <span className="visually-hidden" aria-describedby="form-description">
+        <GridLayout gridClassName="padding" title="Train Hard 💪">
+          <span aria-describedby="form-description" className="visually-hidden">
             Form to log a training session
           </span>
           <Suspense fallback={<Loader />}>
@@ -30,7 +30,7 @@ export default async function LogTrainingSession() {
 }
 
 export const metadata: Metadata = {
-  title: 'Log Training Session 📋',
   description: 'Log a training session',
   keywords: ['climbing', 'training', 'session', 'log'],
+  title: 'Log Training Session 📋',
 }

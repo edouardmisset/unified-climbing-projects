@@ -140,13 +140,13 @@ export function transformTrainingSessionFromJSToGS(
     },
     {
       Horodateur: '',
+      'Injured Anatomical Region': '',
+      'Other Comments': '',
+      'Pain scale': '',
+      'Perceived Mental Game': '',
       'Perceived Physical Fitness': '',
       'Perceived Technical Hability': '',
-      'Perceived Mental Game': '',
-      'Injured Anatomical Region': '',
-      'Pain scale': '',
       'Weight (kg)': '',
-      'Other Comments': '',
     } as unknown as GSTrainingRecord,
   )
 }

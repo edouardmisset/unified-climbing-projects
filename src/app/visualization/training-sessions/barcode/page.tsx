@@ -19,10 +19,9 @@ export default async function TrainingSessionsBarcodePage() {
       {Object.entries(groupedTrainingWeekly)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearTraining]) => (
-          <div key={year} className="flex-column w100">
+          <div className="flex-column w100" key={year}>
             <h2 className="center-text">
               <Dialog
-                title={year}
                 content={
                   <Barcode>
                     {yearTraining.map((weeklyTraining, index) => {
@@ -36,6 +35,7 @@ export default async function TrainingSessionsBarcodePage() {
                     })}
                   </Barcode>
                 }
+                title={year}
               />
             </h2>
             <Barcode>
@@ -56,7 +56,7 @@ export default async function TrainingSessionsBarcodePage() {
 }
 
 export const metadata = {
-  title: 'Training Sessions Barcode Visualization 🖼️',
   description: 'Barcode visualization of training sessions',
   keywords: ['climbing', 'visualization', 'training', 'barcode'],
+  title: 'Training Sessions Barcode Visualization 🖼️',
 }

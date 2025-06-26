@@ -4,14 +4,14 @@ import { levenshteinDistance } from '@std/text'
 function formatString(item: string): string {
   // TODO: comment traiter toutes les différentes combinatoires Majuscules etc.
   const synonyms: Record<string, string> = {
-    '(l1 + l2)': 'l1 + l2',
-    'l1+l2': 'l1 + l2',
-    '(p1 + p2)': 'l1 + l2',
-    'p1+p2': 'l1 + l2',
-    '(gauche)': 'gauche',
     '(droite)': 'droite',
+    '(gauche)': 'gauche',
+    '(l1 + l2)': 'l1 + l2',
     '(left)': 'gauche',
+    '(p1 + p2)': 'l1 + l2',
     '(right)': 'droite',
+    'l1+l2': 'l1 + l2',
+    'p1+p2': 'l1 + l2',
   }
 
   return removeAccents(item)

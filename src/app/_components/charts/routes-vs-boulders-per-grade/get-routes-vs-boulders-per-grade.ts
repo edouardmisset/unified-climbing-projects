@@ -21,7 +21,7 @@ export const getRoutesVsBouldersPerGrade = (
   const groupByYear = new Map<
     Grade,
     Record<Ascent['climbingDiscipline'], number>
-  >(grades.map(grade => [grade, { Boulder: 0, Route: 0, 'Multi-Pitch': 0 }]))
+  >(grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]))
 
   for (const { topoGrade, climbingDiscipline } of ascents) {
     if (!validGrades.has(topoGrade)) continue
@@ -37,9 +37,9 @@ export const getRoutesVsBouldersPerGrade = (
     const { Boulder = 0, Route = 0 } = groupByYear.get(grade) ?? {}
 
     return {
-      grade,
       Boulder,
       BoulderColor: 'var(--boulder)',
+      grade,
       Route,
       RouteColor: 'var(--route)',
     }

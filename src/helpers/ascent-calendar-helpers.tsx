@@ -19,8 +19,8 @@ export function fromAscentsToCalendarEntries(
         const date = new Date(year, 0, index + 1, 12).toISOString()
         return {
           date,
-          shortText: '',
           description: '',
+          shortText: '',
           title: formatDateTime(new Date(date), 'shortDate'),
         }
       }
@@ -31,14 +31,14 @@ export function fromAscentsToCalendarEntries(
       const dateAndCrag = `${prettyLongDate(date)} - ${crag}`
 
       return {
-        date,
         backgroundColor,
-        title: dateAndCrag,
+        date,
         description: <AscentsPopoverDescription ascents={ascents} />,
-        shortText: displayGrade({ grade: topoGrade, climbingDiscipline }),
         isSpecialCase: ascents.every(
           ascent => ascent.climbingDiscipline === 'Boulder',
         ),
+        shortText: displayGrade({ climbingDiscipline, grade: topoGrade }),
+        title: dateAndCrag,
       }
     }) ?? []
   )

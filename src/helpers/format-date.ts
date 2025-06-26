@@ -1,27 +1,27 @@
 import { US_LOCALE } from '~/constants/generic'
 
 export const DATE_TIME_OPTIONS = {
+  longDate: {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    year: 'numeric',
+  },
   longDateTime: {
     dateStyle: 'long',
     timeStyle: 'medium',
   },
-  shortDateTime: {
-    dateStyle: 'short',
-    timeStyle: 'short',
-  },
-  shortDate: {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-  },
   mediumDate: {
     dateStyle: 'medium',
   },
-  longDate: {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
+  shortDate: {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  },
+  shortDateTime: {
+    dateStyle: 'short',
+    timeStyle: 'short',
   },
 } as const satisfies Record<string, Intl.DateTimeFormatOptions>
 

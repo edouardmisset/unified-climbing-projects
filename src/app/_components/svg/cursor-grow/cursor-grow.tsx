@@ -1,11 +1,11 @@
 export function CursorGrowIcon(props: React.ComponentProps<'svg'>) {
   return (
     <svg
-      width="26"
-      height="14"
-      viewBox="0 0 24 14"
       fill="black"
+      height="14"
       stroke="white"
+      viewBox="0 0 24 14"
+      width="26"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >

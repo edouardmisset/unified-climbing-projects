@@ -1,14 +1,14 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR = {
-  Onsight: 'var(--onsight)',
   Flash: 'var(--flash)',
+  Onsight: 'var(--onsight)',
   Redpoint: 'var(--redpoint)',
 } as const satisfies Record<Ascent['style'], string>
 
 export const CLIMBING_DISCIPLINE_TO_COLOR = {
-  'Multi-Pitch': 'var(--multi-pitch)',
   Boulder: 'var(--boulder)',
+  'Multi-Pitch': 'var(--multi-pitch)',
   Route: 'var(--route)',
 } as const satisfies Record<Ascent['climbingDiscipline'], string>
 

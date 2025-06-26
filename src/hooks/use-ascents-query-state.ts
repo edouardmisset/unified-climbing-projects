@@ -60,15 +60,15 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
   )
 
   return {
-    selectedYear,
-    selectedDiscipline,
-    selectedStyle,
     selectedCrag,
+    selectedDiscipline,
     selectedGrade,
-    setYear,
-    setDiscipline,
-    setStyle,
+    selectedStyle,
+    selectedYear,
     setCrag,
+    setDiscipline,
     setGrade,
+    setStyle,
+    setYear,
   }
 }

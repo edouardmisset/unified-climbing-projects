@@ -20,7 +20,8 @@
     hsl(275deg 100% 44%),
     hsl(263deg 100% 71%)
   );
-  --gradient-3: radial-gradient(
+  --gradient-3:
+    radial-gradient(
       circle at top right,
       hsl(180deg 100% 50%),
       hsl(180deg 100% 50% / 0%)
@@ -102,11 +103,8 @@
     black
   );
   --gradient-17: conic-gradient(from -90deg at 50% -25%, blue, blueviolet);
-  --gradient-18: linear-gradient(
-      0deg,
-      hsl(0deg 100% 50% / 80%),
-      hsl(0deg 100% 50% / 0%) 75%
-    ),
+  --gradient-18:
+    linear-gradient(0deg, hsl(0deg 100% 50% / 80%), hsl(0deg 100% 50% / 0%) 75%),
     linear-gradient(
       60deg,
       hsl(60deg 100% 50% / 80%),
@@ -195,7 +193,8 @@
     rebeccapurple
   );
   --gradient-28: conic-gradient(from -90deg at 50% 105%, white, orchid);
-  --gradient-29: radial-gradient(
+  --gradient-29:
+    radial-gradient(
       circle at top right,
       hsl(250deg 100% 85%),
       hsl(250deg 100% 85% / 0%)
@@ -205,7 +204,8 @@
       hsl(220deg 90% 75%),
       hsl(220deg 90% 75% / 0%)
     );
-  --gradient-30: radial-gradient(
+  --gradient-30:
+    radial-gradient(
       circle at top right,
       hsl(150deg 100% 50%),
       hsl(150deg 100% 50% / 0%)

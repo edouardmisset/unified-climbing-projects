@@ -44,7 +44,7 @@ export async function fetchAndParseCSV(url: string): Promise<CSVParsedData> {
 
   const csv = await response.text()
   const [headers = [''], ...data] = parse(csv)
-  return { headers, data }
+  return { data, headers }
 }
 
 /**
@@ -162,15 +162,15 @@ export async function processCsvDataFromUrl({
 export async function backupAscentsAndTrainingFromGoogleSheets(): Promise<boolean> {
   try {
     await processCsvDataFromUrl({
-      uri: SHEETS_INFO.ascents.csvExportURL,
       fileName: ascentFileName,
       transformedHeaderNames: TRANSFORMED_ASCENT_HEADER_NAMES,
+      uri: SHEETS_INFO.ascents.csvExportURL,
     })
 
     await processCsvDataFromUrl({
-      uri: SHEETS_INFO.training.csvExportURL,
       fileName: trainingFileName,
       transformedHeaderNames: TRANSFORMED_TRAINING_HEADER_NAMES,
+      uri: SHEETS_INFO.training.csvExportURL,
     })
 
     return true

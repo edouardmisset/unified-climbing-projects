@@ -1,5 +1,5 @@
 import { Popover as BasePopover } from '@base-ui-components/react/popover'
-import { type CSSProperties, type ReactNode, memo, useMemo } from 'react'
+import { type CSSProperties, memo, type ReactNode, useMemo } from 'react'
 import { Arrow } from '../svg/arrow/arrow'
 import styles from './popover.module.css'
 
@@ -55,8 +55,8 @@ export const Popover = memo(
         </BasePopover.Trigger>
         <BasePopover.Portal>
           <PopoverContent
-            popoverTitle={popoverTitle}
             popoverDescription={popoverDescription}
+            popoverTitle={popoverTitle}
           />
         </BasePopover.Portal>
       </BasePopover.Root>

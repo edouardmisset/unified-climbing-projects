@@ -31,12 +31,11 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
         // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
-        value="Onsight"
         style={
           isOnsightDisable
             ? {
-                cursor: 'not-allowed',
                 color: 'var(--gray-7)',
+                cursor: 'not-allowed',
               }
             : undefined
         }
@@ -45,6 +44,7 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
             ? 'Historically, boulders can only be flashed, not onsighted'
             : 'Onsight: the route was climbed first try with no prior information (not used for boulders)'
         }
+        value="Onsight"
       >
         Onsight
       </Toggle>

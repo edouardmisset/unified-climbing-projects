@@ -56,8 +56,8 @@ export function Navigation(): React.JSX.Element {
       <div className={styles.mobileMenu}>
         <Menu.Root openOnHover={true}>
           <Menu.Trigger
-            className={styles.Button}
             aria-label="navigation"
+            className={styles.Button}
             tabIndex={0}
           >
             <MenuIcon />

@@ -15,7 +15,7 @@ export default async function Page(): Promise<React.JSX.Element> {
 }
 
 export const metadata: Metadata = {
-  title: 'Top Ten 🔟',
   description: 'Best of my climbing ascents',
   keywords: ['climbing', 'ascents', 'description', 'top ten', 'best'],
+  title: 'Top Ten 🔟',
 }

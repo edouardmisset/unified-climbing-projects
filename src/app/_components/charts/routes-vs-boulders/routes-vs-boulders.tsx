@@ -15,7 +15,10 @@ import { getRoutesVsBoulders } from './get-routes-vs-boulders'
 export function RoutesVsBoulders({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }) {
+}: {
+  ascents: Ascent[]
+  className?: string
+}) {
   const routesVsBoulders = useMemo(
     () => getRoutesVsBoulders(ascents),
     [ascents],
@@ -30,15 +33,15 @@ export function RoutesVsBoulders({
   return (
     <ChartContainer caption="Routes vs. Boulders" className={className}>
       <ResponsivePie
-        data={routesVsBoulders}
-        theme={theme}
-        margin={DEFAULT_PIE_MARGIN}
-        motionConfig={defaultMotionConfig}
         animate={true}
-        innerRadius={0.5}
-        colors={pieColorsGetter}
         arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
+        colors={pieColorsGetter}
+        data={routesVsBoulders}
+        innerRadius={0.5}
+        margin={DEFAULT_PIE_MARGIN}
+        motionConfig={defaultMotionConfig}
+        theme={theme}
       />
     </ChartContainer>
   )

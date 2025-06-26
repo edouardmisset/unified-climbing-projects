@@ -26,7 +26,7 @@ describe('frequencyBy', () => {
     const result = frequencyBy(items, 'type', { ascending: true })
     // frequencies: x:3, y:2, z:1
     // expect sorted ascending by count: z, y, x.
-    assert.deepEqual(result, { z: 1, y: 2, x: 3 })
+    assert.deepEqual(result, { x: 3, y: 2, z: 1 })
   })
 
   it('should count frequencies and sort in descending order when ascending is false', () => {
@@ -54,7 +54,7 @@ describe('frequencyBy', () => {
     const resultAsc = frequencyBy(items, 'num', { ascending: true })
     // Expected order by count ascending: num=3 (1 occurrence), then 1 and 2 (2 occurrences each).
     // Since 1 appears before 2 in the original set, order should be: 3, 1, 2.
-    assert.deepEqual(resultAsc, { 3: 1, 1: 2, 2: 2 })
+    assert.deepEqual(resultAsc, { 1: 2, 2: 2, 3: 1 })
   })
 
   it('should return an empty object when given an empty array', () => {

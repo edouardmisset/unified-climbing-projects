@@ -12,11 +12,11 @@ async function getIndicators() {
         ])
 
         return {
-          year,
-          progression: results[0],
           efficiency: results[1],
-          versatility: results[2],
+          progression: results[0],
           score: results[3],
+          versatility: results[2],
+          year,
         }
       },
     ),

@@ -1,10 +1,10 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import { type Ascent, _GRADES } from '~/schema/ascent'
+import { _GRADES, type Ascent } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  DEFAULT_CHART_MARGIN,
   chartColorGetter,
+  DEFAULT_CHART_MARGIN,
   defaultBarChartPadding,
   defaultMotionConfig,
   numberOfAscentsAxisBottom,
@@ -15,7 +15,10 @@ import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 export function AscentsByGradesPerCrag({
   ascents,
   className,
-}: { ascents: Ascent[]; className?: string }) {
+}: {
+  ascents: Ascent[]
+  className?: string
+}) {
   const ascentsByGradesPerCrag = useMemo(
     () => getAscentsByGradesPerCrag(ascents).reverse(),
     [ascents],
@@ -24,21 +27,22 @@ export function AscentsByGradesPerCrag({
   return (
     <ChartContainer caption="Ascents By Grades Per Crag" className={className}>
       <ResponsiveBar
-        theme={theme}
-        data={ascentsByGradesPerCrag}
-        keys={_GRADES}
-        indexBy="crag"
-        layout="horizontal"
-        margin={{ ...DEFAULT_CHART_MARGIN, left: 150, right: 40 }}
-        padding={defaultBarChartPadding}
-        enableGridX={false}
-        enableGridY={false}
-        enableTotals
+        axisBottom={numberOfAscentsAxisBottom}
         // @ts-ignore
         colors={chartColorGetter}
+        data={ascentsByGradesPerCrag}
+        enableGridX={false}
+        enableGridY={false}
         enableLabel={false}
+        enableTotals
+        indexBy="crag"
+        keys={_GRADES}
+        layout="horizontal"
+        // @ts-ignore
+        margin={{ ...DEFAULT_CHART_MARGIN, left: 150, right: 40 }}
         motionConfig={defaultMotionConfig}
-        axisBottom={numberOfAscentsAxisBottom}
+        padding={defaultBarChartPadding}
+        theme={theme}
       />
     </ChartContainer>
   )

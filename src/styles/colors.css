@@ -243,7 +243,7 @@
   /** Patagonia color scheme */
   --patagonia-color-1: hsl(250deg 63% 33%);
   --patagonia-color-2: hsl(246deg 49% 50%);
-  --patagonia-color-3: hsl(248, 67%, 73%);
+  --patagonia-color-3: hsl(248deg 67% 73%);
   --patagonia-color-4: hsl(10deg 82% 54%);
   --patagonia-color-5: hsl(24deg 83% 70%);
 }

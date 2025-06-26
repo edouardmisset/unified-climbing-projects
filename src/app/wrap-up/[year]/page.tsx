@@ -15,11 +15,13 @@ export default async function Page(props: {
 
 export async function generateMetadata({
   params,
-}: { params: Promise<{ year: string }> }): Promise<Metadata> {
+}: {
+  params: Promise<{ year: string }>
+}): Promise<Metadata> {
   const { year = '' } = await params
   return {
-    title: `${year} Climbing wrap Up 🔁`,
     description: `Textual description of all my climbing ascents in ${year}`,
     keywords: ['climbing', 'ascents', 'description', year],
+    title: `${year} Climbing wrap Up 🔁`,
   }
 }
