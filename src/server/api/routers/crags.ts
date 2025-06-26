@@ -2,7 +2,7 @@ import { frequency } from '@edouardmisset/array/count-by.ts'
 import { mapObject } from '@edouardmisset/object/map-object.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { z } from 'zod'
-import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
+import { groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import {
   compareStringsAscending,
@@ -37,15 +37,6 @@ export const cragsRouter = createTRPCRouter({
       if (sortOrder === 'oldest') return uniqueCrags.reverse()
 
       return uniqueCrags
-    }),
-  getDuplicate: publicProcedure
-    .output(z.record(ascentSchema.shape.crag, z.string().array()).array())
-    .query(async () => {
-      const validCrags = await getAllCrags()
-
-      const similarCrags = findSimilar(validCrags)
-
-      return similarCrags
     }),
   getFrequency: publicProcedure
     .output(z.record(ascentSchema.shape.crag, positiveInteger))

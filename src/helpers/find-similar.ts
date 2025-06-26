@@ -25,32 +25,11 @@ function formatString(item: string): string {
     .join(' ') // Join the words back into a string
 }
 
-export function findSimilar(items: string[]): { [key: string]: string[] }[] {
-  const map = new Map<string, string[]>()
-
-  for (const item of items) {
-    const transformedItem = formatString(item)
-
-    const existingItems = map.get(transformedItem)
-    if (!existingItems) {
-      map.set(transformedItem, [item])
-      continue
-    }
-    if (!existingItems.includes(item)) {
-      existingItems.push(item)
-    }
-  }
-
-  return Array.from(map.entries())
-    .filter(([, values]) => values.length > 1)
-    .map(([key, values]) => ({ [key]: values }))
-}
-
 export function groupSimilarStrings(
   strings: string[],
-  maxDistance: number,
+  maxDistance = 2,
 ): Map<string, string[]> {
-  const result = new Map<string, string[]>()
+  const similarStringsMap = new Map<string, string[]>()
   const seen = new Set<string>()
   const distanceCache = new Map<string, number>()
 
@@ -62,23 +41,25 @@ export function groupSimilarStrings(
     return distanceCache.get(key) ?? 0
   }
 
-  for (const word of strings) {
-    if (seen.has(word)) continue
+  for (const str of strings) {
+    if (seen.has(str)) continue
 
     const similarStrings = strings.filter(
-      str =>
-        str !== word && !seen.has(str) && getDistance(word, str) <= maxDistance,
+      s =>
+        s !== str &&
+        !seen.has(s) &&
+        getDistance(str, formatString(s)) <= maxDistance,
     )
 
     if (similarStrings.length > 1) {
-      result.set(word, similarStrings)
+      similarStringsMap.set(str, similarStrings)
     }
 
-    seen.add(word)
+    seen.add(str)
     for (const str of similarStrings) {
       seen.add(str)
     }
   }
 
-  return result
+  return similarStringsMap
 }

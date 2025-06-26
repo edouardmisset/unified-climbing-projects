@@ -1,6 +1,6 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { z } from 'zod'
-import { findSimilar, groupSimilarStrings } from '~/helpers/find-similar'
+import { groupSimilarStrings } from '~/helpers/find-similar'
 import {
   compareStringsAscending,
   compareStringsDescending,
@@ -39,20 +39,6 @@ export const areasRouter = createTRPCRouter({
       if (sortOrder === 'oldest') return uniqueAreas.reverse()
 
       return uniqueAreas
-    }),
-  getDuplicates: publicProcedure
-    .output(
-      z
-        .record(
-          ascentSchema.required({ area: true }).shape.area,
-          z.string().array(),
-        )
-        .array(),
-    )
-    .query(async () => {
-      const duplicateAreas = findSimilar(await getAllAreas())
-
-      return duplicateAreas
     }),
   getFrequency: publicProcedure
     .output(
