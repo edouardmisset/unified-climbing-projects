@@ -13,7 +13,7 @@ export default async function TrainingSessionsCalendarPage() {
 
   if (!trainingSessions) return <NotFound />
 
-  const trainingYears = createYearList(trainingSessions)
+  const trainingYears = createYearList(trainingSessions, { continuous: false })
 
   return (
     <Suspense fallback={<Loader />}>

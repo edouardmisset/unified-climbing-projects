@@ -1,3 +1,4 @@
+import { range } from '@edouardmisset/array'
 import {
   getDayOfYear,
   getDaysInYear,
@@ -8,14 +9,33 @@ import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
 
+/**
+ * Extracts unique years from data and returns them sorted.
+ *
+ * @template T - The type of data, must extend StringDate.
+ * @param {T[]} data - Array of data objects containing a `date` property.
+ * @param {Object} [options] - Optional configuration.
+ * @param {boolean} [options.descending=true] - Whether to sort years in descending order.
+ * @param {boolean} [options.continuous=false] - Whether to fill gaps between min and max years.
+ * @returns {number[]} Array of years, sorted as specified.
+ */
 export function createYearList<T extends StringDate = TrainingSession | Ascent>(
   data: T[],
-  options?: { descending?: boolean },
-) {
-  const { descending = true } = options ?? {}
-  return [
+  options?: { descending?: boolean; continuous?: boolean },
+): number[] {
+  const { descending = true, continuous = false } = options ?? {}
+
+  if (data.length === 0) return []
+
+  const uniqueYears = [
     ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
-  ].sort((a, b) => (a - b) * (descending ? -1 : 1))
+  ]
+
+  const yearsToSort = continuous
+    ? range(Math.min(...uniqueYears), Math.max(...uniqueYears))
+    : uniqueYears
+
+  return yearsToSort.sort((a, b) => (a - b) * (descending ? -1 : 1))
 }
 
 /** Note that the array of data of type T can represent a **week or a day** of data. */
@@ -30,7 +50,7 @@ function initializeYearlyDataDaysCollection<
   data: T[],
   getFractionInYear: (year: number) => number,
 ): YearlyDaysCollection<T> {
-  const years = createYearList(data)
+  const years = createYearList(data, { continuous: true })
   const yearlyDataCollections: YearlyDaysCollection<T> = {}
 
   for (const year of years) {

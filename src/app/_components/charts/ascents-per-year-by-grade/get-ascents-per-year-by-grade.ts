@@ -9,7 +9,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   year: number
   [grade: string]: number
 }[] {
-  const years = createYearList(ascents, { descending: false })
+  const years = createYearList(ascents, { descending: false, continuous: true })
 
   return years.map(year => {
     const ascentsForYear = filterAscents(ascents, { year })

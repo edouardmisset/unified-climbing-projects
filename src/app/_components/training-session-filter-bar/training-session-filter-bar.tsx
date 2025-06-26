@@ -17,7 +17,10 @@ export function TrainingSessionFilterBar({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const yearList = createYearList(trainingSessions, { descending: true })
+  const yearList = createYearList(trainingSessions, {
+    descending: true,
+    continuous: false,
+  })
 
   const locationList = (
     [

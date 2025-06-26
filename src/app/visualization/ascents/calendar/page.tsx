@@ -13,7 +13,7 @@ export default async function AscentsCalendarPage() {
 
   if (!allAscents) return <NotFound />
 
-  const ascentYears = createYearList(allAscents)
+  const ascentYears = createYearList(allAscents, { continuous: false })
 
   return (
     <Suspense fallback={<Loader />}>

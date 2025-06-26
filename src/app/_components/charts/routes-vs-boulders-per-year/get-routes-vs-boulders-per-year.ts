@@ -5,7 +5,7 @@ import type { Ascent } from '~/schema/ascent'
 export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
   if (ascents.length === 0) return []
 
-  const years = createYearList(ascents, { descending: false })
+  const years = createYearList(ascents, { descending: false, continuous: true })
 
   return years.map(year => {
     const { Boulder, Route } = ascents.reduce(

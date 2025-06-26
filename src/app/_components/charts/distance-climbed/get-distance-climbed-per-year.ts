@@ -11,7 +11,10 @@ export const getDistanceClimbedPerYear = (ascents: Ascent[]) => {
 
   if (filteredAscents.length === 0) return []
 
-  const years = createYearList(filteredAscents, { descending: false })
+  const years = createYearList(filteredAscents, {
+    descending: false,
+    continuous: true,
+  })
 
   const ascentsByYear = new Map<number, Ascent[]>(years.map(year => [year, []]))
 

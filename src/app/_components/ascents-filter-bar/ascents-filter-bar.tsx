@@ -17,7 +17,10 @@ export default function AscentsFilterBar({
 }: {
   allAscents: Ascent[]
 }) {
-  const yearList = createYearList(allAscents, { descending: true })
+  const yearList = createYearList(allAscents, {
+    descending: true,
+    continuous: false,
+  })
 
   const cragList = [...new Set(allAscents.map(({ crag }) => crag))].sort(
     (a, b) => compareStringsAscending(a, b),
