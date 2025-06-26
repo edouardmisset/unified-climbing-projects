@@ -18,7 +18,7 @@ export const getAscentsPerDisciplinePerGrade = (
   const grades = createGradeScale(...minMaxGrades(ascents))
   const validGrades = new Set(grades)
 
-  const groupByYear = new Map<
+  const groupByGrade = new Map<
     Grade,
     Record<Ascent['climbingDiscipline'], number>
   >(grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]))
@@ -26,14 +26,14 @@ export const getAscentsPerDisciplinePerGrade = (
   for (const { topoGrade, climbingDiscipline } of ascents) {
     if (!validGrades.has(topoGrade)) continue
 
-    const ascentCountsByYear = groupByYear.get(topoGrade)
-    if (ascentCountsByYear === undefined) continue
+    const ascentCountsByGrade = groupByGrade.get(topoGrade)
+    if (ascentCountsByGrade === undefined) continue
 
-    ascentCountsByYear[climbingDiscipline] += 1
+    ascentCountsByGrade[climbingDiscipline] += 1
   }
 
   return grades.map(grade => {
-    const { Boulder = 0, Route = 0 } = groupByYear.get(grade) ?? {}
+    const { Boulder = 0, Route = 0 } = groupByGrade.get(grade) ?? {}
 
     return {
       Boulder,
