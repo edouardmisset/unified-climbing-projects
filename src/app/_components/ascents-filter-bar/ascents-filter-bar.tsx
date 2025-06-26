@@ -9,7 +9,7 @@ import {
   AVAILABLE_CLIMBING_DISCIPLINE,
 } from '~/schema/ascent'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
-import styles from './ascent-filter-bar.module.css'
+import { StickyFilterBar } from '../sticky-filter-bar/sticky-filter-bar.tsx'
 import { createChangeHandler } from './helpers.ts'
 
 export default function AscentsFilterBar({
@@ -40,37 +40,33 @@ export default function AscentsFilterBar({
   const handleCragChange = createChangeHandler(setCrag)
 
   return (
-    <search className={styles.container}>
-      <div className={styles.backdrop} />
-      <div className={styles.backdropEdge} />
-      <div className={styles.filters}>
-        <CustomSelect
-          handleChange={handleDisciplineChange}
-          name="discipline"
-          options={AVAILABLE_CLIMBING_DISCIPLINE}
-          selectedOption={selectedDiscipline}
-          title="Climbing Discipline"
-        />
-        <CustomSelect
-          handleChange={handleStyleChange}
-          name="style"
-          options={ASCENT_STYLE}
-          selectedOption={selectedStyle}
-          title="Ascent Style"
-        />
-        <CustomSelect
-          handleChange={handleYearChange}
-          name="year"
-          options={yearList}
-          selectedOption={selectedYear}
-        />
-        <CustomSelect
-          handleChange={handleCragChange}
-          name="crag"
-          options={cragList}
-          selectedOption={selectedCrag}
-        />
-      </div>
-    </search>
+    <StickyFilterBar>
+      <CustomSelect
+        handleChange={handleDisciplineChange}
+        name="discipline"
+        options={AVAILABLE_CLIMBING_DISCIPLINE}
+        selectedOption={selectedDiscipline}
+        title="Climbing Discipline"
+      />
+      <CustomSelect
+        handleChange={handleStyleChange}
+        name="style"
+        options={ASCENT_STYLE}
+        selectedOption={selectedStyle}
+        title="Ascent Style"
+      />
+      <CustomSelect
+        handleChange={handleYearChange}
+        name="year"
+        options={yearList}
+        selectedOption={selectedYear}
+      />
+      <CustomSelect
+        handleChange={handleCragChange}
+        name="crag"
+        options={cragList}
+        selectedOption={selectedCrag}
+      />
+    </StickyFilterBar>
   )
 }

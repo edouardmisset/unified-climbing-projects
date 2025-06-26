@@ -12,7 +12,7 @@
   inline-size: 100%;
 }
 
-.backdrop {
+.background {
   position: absolute;
   inset: 0;
   height: 200%;
@@ -22,7 +22,7 @@
   mask-image: linear-gradient(to bottom, black 0, black 50%, transparent 50%);
 }
 
-.backdropEdge {
+.edge {
   /* Set this to whatever you want for the edge thickness: */
   --thickness: var(--size-1);
 
@@ -30,7 +30,7 @@
   inset: 0;
 
   /*
-      Only a few pixels will be visible, but we’ll
+      Only a few pixels will be visible, but we'll
       set the height by 100% to include nearby elements.
     */
   height: 100%;
@@ -62,7 +62,6 @@
 
   display: flex;
   flex-flow: row nowrap;
-  /* justify-content: flex-start; */
   gap: var(--size-fluid-1);
   padding-block: var(--size-fluid-1);
 

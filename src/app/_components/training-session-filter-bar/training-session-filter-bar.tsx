@@ -8,15 +8,15 @@ import {
   SESSION_TYPES,
   type TrainingSession,
 } from '~/schema/training.ts'
-import styles from '../ascents-filter-bar/ascent-filter-bar.module.css'
 import { createChangeHandler } from '../ascents-filter-bar/helpers.ts'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
+import { StickyFilterBar } from '../sticky-filter-bar/sticky-filter-bar.tsx'
 
 export function TrainingSessionFilterBar({
   trainingSessions,
 }: {
   trainingSessions: TrainingSession[]
-}): React.JSX.Element {
+}) {
   const yearList = createYearList(trainingSessions, { descending: true })
 
   const locationList = (
@@ -46,43 +46,39 @@ export function TrainingSessionFilterBar({
   const handleLocationChange = createChangeHandler(setLocation)
 
   return (
-    <search className={styles.container}>
-      <div className={styles.backdrop} />
-      <div className={styles.backdropEdge} />
-      <div className={styles.filters}>
+    <StickyFilterBar>
+      <CustomSelect
+        handleChange={handleSessionTypeChange}
+        name="Session Type"
+        options={SESSION_TYPES}
+        selectedOption={selectedSessionType}
+        title="Session Type"
+      />
+      <CustomSelect
+        handleChange={handleLoadLevelChange}
+        name="load"
+        options={LOAD_CATEGORIES}
+        selectedOption={selectedLoad}
+        title="Load"
+      />
+      {yearList.length > 0 && (
         <CustomSelect
-          handleChange={handleSessionTypeChange}
-          name="Session Type"
-          options={SESSION_TYPES}
-          selectedOption={selectedSessionType}
-          title="Session Type"
+          handleChange={handleYearChange}
+          name="year"
+          options={yearList}
+          selectedOption={selectedYear}
+          title="Year"
         />
+      )}
+      {locationList.length > 0 && (
         <CustomSelect
-          handleChange={handleLoadLevelChange}
-          name="load"
-          options={LOAD_CATEGORIES}
-          selectedOption={selectedLoad}
-          title="Load"
+          handleChange={handleLocationChange}
+          name="location"
+          options={locationList}
+          selectedOption={selectedLocation}
+          title="Location"
         />
-        {yearList.length > 0 && (
-          <CustomSelect
-            handleChange={handleYearChange}
-            name="year"
-            options={yearList}
-            selectedOption={selectedYear}
-            title="Year"
-          />
-        )}
-        {locationList.length > 0 && (
-          <CustomSelect
-            handleChange={handleLocationChange}
-            name="location"
-            options={locationList}
-            selectedOption={selectedLocation}
-            title="Location"
-          />
-        )}
-      </div>
-    </search>
+      )}
+    </StickyFilterBar>
   )
 }
