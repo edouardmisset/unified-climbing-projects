@@ -57,9 +57,12 @@
 }
 
 .filters {
+  max-inline-size: min-content;
+  margin: auto;
+
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  flex-flow: row nowrap;
+  /* justify-content: flex-start; */
   gap: var(--size-fluid-1);
   padding-block: var(--size-fluid-1);
 
