@@ -1,17 +1,19 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { type Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 
-type RouteVsBoulder = {
+type AscentsPerDiscipline = {
   id: Ascent['climbingDiscipline']
   label: Ascent['climbingDiscipline']
   value: number
   color: string
 }[]
 
-export function getRoutesVsBoulders(ascents: Ascent[]): RouteVsBoulder {
+export function getAscentsPerDiscipline(
+  ascents: Ascent[],
+): AscentsPerDiscipline {
   if (ascents.length === 0) return []
 
-  const initialValue: RouteVsBoulder = CLIMBING_DISCIPLINE.map(
+  const initialValue: AscentsPerDiscipline = CLIMBING_DISCIPLINE.map(
     climbingDiscipline => ({
       color:
         CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',

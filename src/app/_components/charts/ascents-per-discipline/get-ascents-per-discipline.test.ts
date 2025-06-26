@@ -1,10 +1,10 @@
 import { assert, describe, it } from 'poku'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { getRoutesVsBoulders } from './get-routes-vs-boulders'
+import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
-describe('getRoutesVsBoulders', () => {
+describe('getAscentsPerDiscipline', () => {
   it('should return empty array for empty input', () => {
-    const result = getRoutesVsBoulders([])
+    const result = getAscentsPerDiscipline([])
     assert.deepEqual(result, [])
   })
 
@@ -23,7 +23,7 @@ describe('getRoutesVsBoulders', () => {
         value: 16,
       },
     ]
-    const result = getRoutesVsBoulders(sampleAscents)
+    const result = getAscentsPerDiscipline(sampleAscents)
     assert.equal(
       result.reduce((sum, item) => sum + item.value, 0),
       sampleAscents.length,

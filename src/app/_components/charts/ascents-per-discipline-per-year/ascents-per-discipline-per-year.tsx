@@ -11,25 +11,34 @@ import {
   theme,
   yearBottomAxis,
 } from '../constants'
-import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
+import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per-year'
 
 const ROUTE_AND_BOULDER = [
   'Boulder',
   'Route',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
-export function RoutesVsBouldersPerYear({
+export function AscentsPerDisciplinePerYear({
   ascents,
   className,
 }: {
   ascents: Ascent[]
   className?: string
 }) {
-  const data = useMemo(() => getRoutesVsBouldersPerYear(ascents), [ascents])
+  const data = useMemo(() => getAscentsPerDisciplinePerYear(ascents), [ascents])
+
+  if (data.length === 0) return null
+  const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
+  if (uniqueYearsCount <= 1) return null
+
+  const isSingleDiscipline =
+    data.every(({ Boulder }) => !Boulder) || data.every(({ Route }) => !Route)
+
+  if (isSingleDiscipline) return null
 
   return (
     <ChartContainer
-      caption="Routes vs. Boulders per Year"
+      caption="Ascents per Discipline per Year"
       className={className}
     >
       <ResponsiveBar

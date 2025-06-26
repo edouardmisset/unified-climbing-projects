@@ -58,6 +58,10 @@ export function TriesByGrade({
     [ascents],
   )
 
+  const isFirstTry = data.every(item => item.data.every(point => point.y === 1))
+
+  if (data.length === 0 || isFirstTry) return null
+
   return (
     <ChartContainer caption="Tries by Grade" className={className}>
       <ResponsiveLine

@@ -33,6 +33,8 @@ export function AscentPyramid({
     [ascents],
   )
 
+  if (gradeFrequency.length === 0) return null
+
   return (
     <ChartContainer caption="Ascent Pyramid" className={className}>
       <ResponsiveBar

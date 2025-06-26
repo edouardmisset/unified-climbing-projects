@@ -25,6 +25,12 @@ export function AscentsPerYearByGrade({
     [ascents],
   )
 
+  if (ascentsPerYearByGrade.length === 0) return null
+  const uniqueYearsCount = new Set(
+    ascentsPerYearByGrade.map(({ year }) => year),
+  ).size
+  if (uniqueYearsCount <= 1) return null
+
   return (
     <ChartContainer caption="Ascents Per Year By Grade" className={className}>
       <ResponsiveBar

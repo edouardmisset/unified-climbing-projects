@@ -2,7 +2,14 @@ import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 
-export const getAscentsByStyle = (ascents: Ascent[]) => {
+type AscentByStyle = {
+  color: string
+  id: Ascent['style']
+  label: Ascent['style']
+  value: number
+}
+
+export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] => {
   return ASCENT_STYLE.map(style => {
     const filteredAscentsByStyle = filterAscents(ascents, { style })
 

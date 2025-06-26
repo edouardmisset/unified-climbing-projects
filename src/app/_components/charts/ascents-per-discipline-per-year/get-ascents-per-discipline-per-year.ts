@@ -2,7 +2,17 @@ import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { createYearList } from '~/data/helpers'
 import type { Ascent } from '~/schema/ascent'
 
-export const getRoutesVsBouldersPerYear = (ascents: Ascent[]) => {
+type AscentsPerDisciplinePerYear = {
+  Boulder: number
+  BoulderColor: string
+  Route: number
+  RouteColor: string
+  year: number
+}
+
+export const getAscentsPerDisciplinePerYear = (
+  ascents: Ascent[],
+): AscentsPerDisciplinePerYear[] => {
   if (ascents.length === 0) return []
 
   const years = createYearList(ascents, { descending: false, continuous: true })

@@ -10,9 +10,9 @@ import {
   theme,
 } from '../constants'
 import type { ClimbingDisciplineMetric } from '../types'
-import { getRoutesVsBoulders } from './get-routes-vs-boulders'
+import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
-export function RoutesVsBoulders({
+export function AscentsPerDiscipline({
   ascents,
   className,
 }: {
@@ -20,7 +20,7 @@ export function RoutesVsBoulders({
   className?: string
 }) {
   const routesVsBoulders = useMemo(
-    () => getRoutesVsBoulders(ascents),
+    () => getAscentsPerDiscipline(ascents),
     [ascents],
   )
 
@@ -30,8 +30,12 @@ export function RoutesVsBoulders({
   > = data =>
     `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
 
+  // If there are no ascents, we don't want to render the chart.
+  // If there is only one discipline, we don't want to render the chart.
+  if (routesVsBoulders.length <= 1) return null
+
   return (
-    <ChartContainer caption="Routes vs. Boulders" className={className}>
+    <ChartContainer caption="Ascents per Discipline" className={className}>
       <ResponsivePie
         animate={true}
         arcLabel={arcLabel}

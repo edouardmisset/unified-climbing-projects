@@ -17,8 +17,10 @@ export function DistanceClimbedPerYear({
 }: {
   ascents: Ascent[]
   className?: string
-}): React.JSX.Element {
+}) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
+
+  if (data.length === 0) return null
 
   return (
     <ChartContainer caption="Distance climbed per Year" className={className}>

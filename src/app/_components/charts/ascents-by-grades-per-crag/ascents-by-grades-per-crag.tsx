@@ -24,6 +24,13 @@ export function AscentsByGradesPerCrag({
     [ascents],
   )
 
+  if (ascentsByGradesPerCrag.length === 0) return null
+
+  const uniqueCragsCount = new Set(
+    ascentsByGradesPerCrag.map(({ crag }) => crag),
+  ).size
+  if (uniqueCragsCount <= 1) return null
+
   return (
     <ChartContainer caption="Ascents By Grades Per Crag" className={className}>
       <ResponsiveBar

@@ -13,6 +13,9 @@ export function AscentsByStyle({
   className?: string
 }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
+
+  if (data.length <= 1) return null
+
   return (
     <ChartContainer caption="Ascent By Style" className={className}>
       <ResponsivePie

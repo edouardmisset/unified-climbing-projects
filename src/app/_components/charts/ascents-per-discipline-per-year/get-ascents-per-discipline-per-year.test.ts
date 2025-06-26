@@ -1,10 +1,10 @@
 import { assert, describe, it } from 'poku'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { getRoutesVsBouldersPerYear } from './get-routes-vs-boulders-per-year'
+import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per-year'
 
-describe('getRoutesVsBouldersPerYear', () => {
+describe('getAscentsPerDisciplinePerYear', () => {
   it('should return empty array for empty input', () => {
-    const result = getRoutesVsBouldersPerYear([])
+    const result = getAscentsPerDisciplinePerYear([])
     assert.deepEqual(result, [])
   })
 
@@ -18,7 +18,7 @@ describe('getRoutesVsBouldersPerYear', () => {
         year: 2024,
       },
     ]
-    const result = getRoutesVsBouldersPerYear(
+    const result = getAscentsPerDisciplinePerYear(
       sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
     )
     assert.deepEqual(result, expected)

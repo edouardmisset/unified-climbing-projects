@@ -2,7 +2,7 @@ import { createGradeScale } from '~/helpers/create-grade-scale'
 import { minMaxGrades } from '~/helpers/min-max-grades'
 import type { Ascent, Grade } from '~/schema/ascent'
 
-type GetRoutesVsBouldersPerYearOutput = {
+type AscentsPerDisciplinePerGrade = {
   grade: Grade
   Boulder: number
   BoulderColor: string
@@ -10,9 +10,9 @@ type GetRoutesVsBouldersPerYearOutput = {
   RouteColor: string
 }[]
 
-export const getRoutesVsBouldersPerGrade = (
+export const getAscentsPerDisciplinePerGrade = (
   ascents: Ascent[],
-): GetRoutesVsBouldersPerYearOutput => {
+): AscentsPerDisciplinePerGrade => {
   if (ascents.length === 0) return []
 
   const grades = createGradeScale(...minMaxGrades(ascents))
@@ -29,8 +29,7 @@ export const getRoutesVsBouldersPerGrade = (
     const ascentCountsByYear = groupByYear.get(topoGrade)
     if (ascentCountsByYear === undefined) continue
 
-    ascentCountsByYear[climbingDiscipline] =
-      (ascentCountsByYear[climbingDiscipline] ?? 0) + 1
+    ascentCountsByYear[climbingDiscipline] += 1
   }
 
   return grades.map(grade => {

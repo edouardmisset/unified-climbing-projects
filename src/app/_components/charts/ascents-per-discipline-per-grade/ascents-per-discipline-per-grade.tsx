@@ -11,25 +11,34 @@ import {
   numberOfAscentsAxisLeft,
   theme,
 } from '../constants'
-import { getRoutesVsBouldersPerGrade } from './get-routes-vs-boulders-per-grade'
+import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 
 const ROUTE_AND_BOULDER = [
   'Boulder',
   'Route',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
-export function RoutesVsBouldersPerGrade({
+export function AscentsPerDisciplinePerGrade({
   ascents,
   className,
 }: {
   ascents: Ascent[]
   className?: string
 }) {
-  const data = useMemo(() => getRoutesVsBouldersPerGrade(ascents), [ascents])
+  const data = useMemo(
+    () => getAscentsPerDisciplinePerGrade(ascents),
+    [ascents],
+  )
+
+  if (data.length === 0) return null
+
+  const isSingleDiscipline =
+    data.every(({ Boulder }) => !Boulder) || data.every(({ Route }) => !Route)
+  if (isSingleDiscipline) return null
 
   return (
     <ChartContainer
-      caption="Routes vs. Boulders per Grade"
+      caption="Ascents per Discipline per Grade"
       className={className}
     >
       <ResponsiveBar

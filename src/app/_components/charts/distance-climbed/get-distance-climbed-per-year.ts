@@ -1,7 +1,15 @@
 import { createYearList } from '~/data/helpers'
 import type { Ascent } from '~/schema/ascent'
 
-export const getDistanceClimbedPerYear = (ascents: Ascent[]) => {
+type DistanceClimbedPerYear = {
+  distance: number
+  year: number
+  // averageHeight?: number
+}
+
+export const getDistanceClimbedPerYear = (
+  ascents: Ascent[],
+): DistanceClimbedPerYear[] => {
   const filteredAscents = ascents.filter(
     ascent =>
       ascent.climbingDiscipline === 'Route' &&
