@@ -12,16 +12,17 @@
   padding-block: var(--size-2);
 
   color: var(--text-1);
+  background: transparent;
 }
 
 .mobileMenu {
-  @media (width > 640px) {
-    display: none;
-  }
+  display: none;
 
   @media (width <= 640px) {
+    display: block;
     position: absolute;
     inset: 0;
+    background: transparent;
   }
 }
 
