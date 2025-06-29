@@ -1,4 +1,5 @@
 import { isValidDate } from '@edouardmisset/date'
+import type { StringDate } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
@@ -177,4 +178,117 @@ export function extractDateFromISODateString(isoDate: string): string {
     throw new Error('Invalid ISO date string')
   }
   return datePart
+}
+
+/**
+ * Finds the longest consecutive streak of dates in the provided data.
+ *
+ * A streak is defined as consecutive days without gaps. The function counts
+ * unique dates only, so multiple entries on the same date are treated as one.
+ *
+ * @template T - Type extending StringDate with a date property
+ * @param {T[]} data - Array of objects containing date strings in ISO format
+ * (YYYY-MM-DD)
+ * @returns {number} The length of the longest consecutive streak of dates
+ *
+ * @example
+ * ```typescript
+ * const activities = [
+ *   { date: '2024-01-01', activity: 'climb' },
+ *   { date: '2024-01-02', activity: 'climb' },
+ *   { date: '2024-01-03', activity: 'climb' },
+ *   { date: '2024-01-05', activity: 'climb' } // Gap here
+ * ];
+ * const streak = findLongestStreak(activities); // Returns 3
+ * ```
+ */
+export function findLongestStreak<T extends StringDate>(data: T[]): number {
+  if (data.length === 0) return 0
+
+  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
+  const sortedDates = uniqueDatesAsStrings
+    .map(dateString => new Date(dateString))
+    .filter(date => isValidDate(date))
+    .sort((a, b) => a.getTime() - b.getTime())
+
+  if (sortedDates.length === 0) return 0
+  if (sortedDates.length === 1) return 1
+
+  let maxStreak = 1
+  let currentStreak = 1
+
+  for (let i = 1; i < sortedDates.length; i++) {
+    const currentDate = sortedDates[i]
+    const previousDate = sortedDates[i - 1]
+
+    if (currentDate === undefined || previousDate === undefined) continue
+
+    const timeDifference = currentDate.getTime() - previousDate.getTime()
+    const isConsecutive = timeDifference === MILLISECONDS_IN_DAY
+
+    if (isConsecutive) {
+      currentStreak++
+      maxStreak = Math.max(maxStreak, currentStreak)
+    } else {
+      currentStreak = 1
+    }
+  }
+
+  return maxStreak
+}
+
+/**
+ * Finds the longest gap (in days) between consecutive dates in the provided data.
+ *
+ * A gap is defined as the number of days between two consecutive dates minus 1.
+ * For example, if you have activities on 2024-01-01 and 2024-01-05, the gap is
+ * 3 days.
+ * The function counts unique dates only, so multiple entries on the same date
+ * are treated as one.
+ *
+ * @template T - Type extending StringDate with a date property
+ * @param {T[]} data - Array of objects containing date strings in ISO format
+ * (YYYY-MM-DD)
+ * @returns {number} The length of the longest gap between consecutive dates in
+ * days, or 0 if no gaps exist
+ *
+ * @example
+ * ```typescript
+ * const activities = [
+ *   { date: '2024-01-01', activity: 'climb' },
+ *   { date: '2024-01-02', activity: 'climb' },
+ *   { date: '2024-01-07', activity: 'climb' }, // 4-day gap (Jan 3-6)
+ *   { date: '2024-01-15', activity: 'climb' }  // 7-day gap (Jan 8-14)
+ * ];
+ * const longestGap = findLongestGap(activities); // Returns 7
+ * ```
+ */
+export function findLongestGap<T extends StringDate>(data: T[]): number {
+  if (data.length <= 1) return 0
+
+  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
+  const sortedDates = uniqueDatesAsStrings
+    .map(dateString => new Date(dateString))
+    .filter(date => isValidDate(date))
+    .sort((a, b) => a.getTime() - b.getTime())
+
+  if (sortedDates.length <= 1) return 0
+
+  let maxGap = 0
+
+  for (let i = 1; i < sortedDates.length; i++) {
+    const currentDate = sortedDates[i]
+    const previousDate = sortedDates[i - 1]
+
+    if (currentDate === undefined || previousDate === undefined) continue
+
+    const timeDifference = currentDate.getTime() - previousDate.getTime()
+    const gapInDays = Math.floor(timeDifference / MILLISECONDS_IN_DAY) - 1
+
+    if (gapInDays > 0) {
+      maxGap = Math.max(maxGap, gapInDays)
+    }
+  }
+
+  return maxGap
 }

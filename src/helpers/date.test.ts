@@ -1,6 +1,8 @@
 import { assert, describe, it } from 'poku'
 import {
   extractDateFromISODateString,
+  findLongestGap,
+  findLongestStreak,
   fromDateToStringDate,
   getDayOfYear,
   getDaysInYear,
@@ -180,5 +182,272 @@ describe('extractDateFromISODateString', () => {
       extractDateFromISODateString('2024-12-31T23:59:59.999Z'),
       '2024-12-31',
     )
+  })
+})
+
+describe('findLongestStreak', () => {
+  it('should return 0 for empty array', () => {
+    const result = findLongestStreak([])
+    assert.strictEqual(result, 0)
+  })
+
+  it('should return 1 for single date', () => {
+    const data = [{ date: '2024-01-01' }]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 1)
+  })
+
+  it('should find longest streak in consecutive dates', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+      { date: '2024-01-03' },
+      { date: '2024-01-04' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 4)
+  })
+
+  it('should handle gaps in dates correctly', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+      { date: '2024-01-04' }, // Gap here
+      { date: '2024-01-05' },
+      { date: '2024-01-06' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 3) // Longest streak is days 4, 5, 6
+  })
+
+  it('should deduplicate dates on same day', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-01' }, // Duplicate
+      { date: '2024-01-02' },
+      { date: '2024-01-02' }, // Duplicate
+      { date: '2024-01-03' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should handle unsorted dates', () => {
+    const data = [
+      { date: '2024-01-03' },
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+      { date: '2024-01-05' },
+      { date: '2024-01-04' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 5)
+  })
+
+  it('should handle multiple separate streaks', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+      { date: '2024-01-05' }, // Gap
+      { date: '2024-01-06' },
+      { date: '2024-01-07' },
+      { date: '2024-01-08' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 4) // Days 5, 6, 7, 8
+  })
+
+  it('should handle month boundaries correctly', () => {
+    const data = [
+      { date: '2024-01-30' },
+      { date: '2024-01-31' },
+      { date: '2024-02-01' },
+      { date: '2024-02-02' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 4)
+  })
+
+  it('should handle year boundaries correctly', () => {
+    const data = [
+      { date: '2023-12-30' },
+      { date: '2023-12-31' },
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 4)
+  })
+
+  it('should handle leap year correctly', () => {
+    const data = [
+      { date: '2024-02-28' },
+      { date: '2024-02-29' }, // Leap day
+      { date: '2024-03-01' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should return 0 for all invalid dates', () => {
+    const data = [
+      { date: 'invalid-date' },
+      { date: '2024-13-01' }, // Invalid month
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 0)
+  })
+
+  it('should filter out invalid dates and process valid ones', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: 'invalid-date' },
+      { date: '2024-01-02' },
+      { date: '2024-13-01' }, // Invalid month
+      { date: '2024-01-03' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should work with objects containing additional properties', () => {
+    const data = [
+      { date: '2024-01-01', activity: 'climbing', grade: '5.10a' },
+      { date: '2024-01-02', activity: 'bouldering', grade: 'V4' },
+      { date: '2024-01-03', activity: 'climbing', grade: '5.11b' },
+    ]
+    const result = findLongestStreak(data)
+    assert.strictEqual(result, 3)
+  })
+})
+
+describe('findLongestGap', () => {
+  it('should return 0 for empty array', () => {
+    const data: Array<{ date: string }> = []
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 0)
+  })
+
+  it('should return 0 for single date', () => {
+    const data = [{ date: '2024-01-01' }]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 0)
+  })
+
+  it('should return 0 for consecutive dates with no gaps', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-02' },
+      { date: '2024-01-03' },
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 0)
+  })
+
+  it('should calculate gap correctly for simple case', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-05' }, // 3-day gap (Jan 2, 3, 4)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should find the longest gap among multiple gaps', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-03' }, // 1-day gap (Jan 2)
+      { date: '2024-01-10' }, // 6-day gap (Jan 4-9)
+      { date: '2024-01-12' }, // 1-day gap (Jan 11)
+      { date: '2024-01-17' }, // 4-day gap (Jan 13-16)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 6)
+  })
+
+  it('should handle unsorted dates correctly', () => {
+    const data = [
+      { date: '2024-01-10' },
+      { date: '2024-01-01' },
+      { date: '2024-01-15' },
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 8)
+  })
+
+  it('should handle duplicate dates correctly', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-01-01' }, // Duplicate
+      { date: '2024-01-05' }, // 3-day gap (Jan 2, 3, 4)
+      { date: '2024-01-05' }, // Duplicate
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should handle month boundaries correctly', () => {
+    const data = [
+      { date: '2024-01-30' },
+      { date: '2024-02-05' }, // 5-day gap (Jan 31, Feb 1-4)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 5)
+  })
+
+  it('should handle year boundaries correctly', () => {
+    const data = [
+      { date: '2023-12-30' },
+      { date: '2024-01-05' }, // 5-day gap (Dec 31, Jan 1-4)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 5)
+  })
+
+  it('should handle leap year correctly', () => {
+    const data = [
+      { date: '2024-02-27' },
+      { date: '2024-03-02' }, // 3-day gap (Feb 28, 29, Mar 1)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should return 0 for all invalid dates', () => {
+    const data = [
+      { date: 'invalid-date' },
+      { date: '2024-13-01' }, // Invalid month
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 0)
+  })
+
+  it('should filter out invalid dates and process valid ones', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: 'invalid-date' },
+      { date: '2024-01-05' }, // 3-day gap (Jan 2, 3, 4)
+      { date: '2024-13-01' }, // Invalid month
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 3)
+  })
+
+  it('should work with objects containing additional properties', () => {
+    const data = [
+      { date: '2024-01-01', activity: 'climbing', grade: '5.10a' },
+      { date: '2024-01-08', activity: 'bouldering', grade: 'V4' }, // 6-day gap
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 6)
+  })
+
+  it('should handle large gaps correctly', () => {
+    const data = [
+      { date: '2024-01-01' },
+      { date: '2024-12-31' }, // 364-day gap (entire year minus 1 day)
+    ]
+    const result = findLongestGap(data)
+    assert.strictEqual(result, 364)
   })
 })

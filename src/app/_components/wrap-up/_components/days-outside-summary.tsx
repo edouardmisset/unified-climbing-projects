@@ -1,10 +1,17 @@
+import humanizeDuration from 'humanize-duration'
 import { Suspense } from 'react'
-import { getMostFrequentDate } from '~/helpers/date'
+import {
+  findLongestGap,
+  findLongestStreak,
+  getMostFrequentDate,
+} from '~/helpers/date'
 import { formatDateTime } from '~/helpers/format-date'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
+
+const MIN_GAP_THRESHOLD = 5
 
 export async function DaysOutsideSummary({
   ascents,
@@ -17,6 +24,10 @@ export async function DaysOutsideSummary({
     sessionType: 'Out',
     year,
   })
+
+  const consecutiveClimbingDays = findLongestStreak(outdoorSessions)
+  const longestGap = findLongestGap(outdoorSessions)
+  console.log('🚀 ~ longestGap:', longestGap)
 
   const daysOutside = outdoorSessions.length
 
@@ -51,17 +62,37 @@ export async function DaysOutsideSummary({
           />
         </Suspense>
         {mostAscentDate === '' ||
-        ascentsInMostAscentDay.length === 0 ? undefined : (
-          <span className="inline-block">
+        ascentsInMostAscentDay[0] === undefined ? undefined : (
+          <span className="block">
             Your best day was{' '}
             <strong>
               {formatDateTime(new Date(mostAscentDate), 'longDate')}
             </strong>{' '}
             where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
-            <strong>{ascentsInMostAscentDay[0]?.crag}</strong>
+            <strong>{ascentsInMostAscentDay[0].crag}</strong>
           </span>
         )}
+        {consecutiveClimbingDays === 0 ? undefined : (
+          <span className="block">
+            Your longest streak was <strong>{consecutiveClimbingDays}</strong>{' '}
+            days.
+          </span>
+        )}
+        {longestGap >= MIN_GAP_THRESHOLD ? (
+          <span className="block">
+            Your longest gap without climbing was{' '}
+            <strong>
+              {humanizeDuration(longestGap * 24 * 60 * 60 * 1000, {
+                units: ['mo', 'w', 'd'],
+                largest: 2,
+                conjunction: ' and ',
+                round: true,
+              })}
+            </strong>
+            .
+          </span>
+        ) : undefined}
       </p>
     </Card>
   )
@@ -77,7 +108,7 @@ function DaysOutsideDetails({
   daysOutside: number
 }) {
   return (
-    <span className="inline-block">
+    <span className="block">
       You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
       <strong>{daysOutside}</strong> days (<strong>{ascentsRatio}</strong>{' '}
       ascents per day outside)

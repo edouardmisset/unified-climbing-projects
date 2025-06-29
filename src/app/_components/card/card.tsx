@@ -1,5 +1,4 @@
 import type React from 'react'
-
 import styles from './card.module.css'
 
 export async function Card({ children }: { children: React.ReactNode }) {
