@@ -6,8 +6,6 @@
   inline-size: calc(100% - var(--border-width));
   block-size: calc(100% - var(--border-width));
 
-  aspect-ratio: 1;
-
   display: flex;
   flex-direction: column;
   padding: var(--size-fluid-2);
