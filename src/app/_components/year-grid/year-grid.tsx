@@ -1,5 +1,5 @@
 import { isDateInYear } from '@edouardmisset/date'
-import { memo, type ReactNode, Suspense, useMemo } from 'react'
+import { memo, type ReactNode, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
@@ -86,29 +86,26 @@ export const YearGrid = memo(
               isSpecialCase = false,
             },
             index,
-          ) => (
-            <Suspense fallback={'Loading...'} key={date}>
-              {date === '' ? (
-                <i
-                  className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-                  key={shortText?.toString() || index}
+          ) =>
+            date === '' ? (
+              <i
+                className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
+                key={shortText?.toString() || index}
+              />
+            ) : (
+              isDateInYear(date, year) && (
+                <YearGridCell
+                  backgroundColor={backgroundColor}
+                  description={description}
+                  formattedDate={prettyLongDate(date)}
+                  isSpecialCase={isSpecialCase}
+                  key={date.toString()}
+                  shortText={shortText}
+                  stringDate={date}
+                  title={title}
                 />
-              ) : (
-                isDateInYear(date, year) && (
-                  <YearGridCell
-                    backgroundColor={backgroundColor}
-                    description={description}
-                    formattedDate={prettyLongDate(date)}
-                    isSpecialCase={isSpecialCase}
-                    key={date.toString()}
-                    shortText={shortText}
-                    stringDate={date}
-                    title={title}
-                  />
-                )
-              )}
-            </Suspense>
-          ),
+              )
+            ),
         )}
       </div>
     )
