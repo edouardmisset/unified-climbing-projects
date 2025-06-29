@@ -41,7 +41,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
         <>
           <h3>Improve by</h3>
           <p>
-            <span className="inline-block">
+            <span className="block">
               Onsighting a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
@@ -51,7 +51,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               </strong>{' '}
               route
             </span>
-            <span className="inline-block">
+            <span className="block">
               Flashing a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
@@ -61,7 +61,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               </strong>{' '}
               route
             </span>
-            <span className="inline-block">
+            <span className="block">
               Redpointing a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
@@ -71,7 +71,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               </strong>{' '}
               route
             </span>
-            <span className="inline-block">
+            <span className="block">
               Flashing a{' '}
               <strong>
                 {displayGrade({
@@ -84,7 +84,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               </strong>{' '}
               boulder
             </span>
-            <span className="inline-block">
+            <span className="block">
               Redpointing a{' '}
               <strong>
                 {displayGrade({

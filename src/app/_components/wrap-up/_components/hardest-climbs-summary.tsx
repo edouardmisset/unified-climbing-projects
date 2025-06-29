@@ -27,18 +27,18 @@ export function HardestClimbsSummary({ ascents }: { ascents: Ascent[] }) {
       <h2>Hardest Sends</h2>
       <p>
         {hardestRoute ? (
-          <span className="inline-block">
+          <span className="block">
             Your hardest route was{' '}
             <AscentComponent ascent={hardestRoute} showGrade={true} />
           </span>
         ) : undefined}
         {hardestBoulder ? (
-          <span className="inline-block">
+          <span className="block">
             Your hardest boulder was{' '}
             <AscentComponent ascent={hardestBoulder} showGrade={true} />
           </span>
         ) : undefined}
-        <span className="inline-block">
+        <span className="block">
           You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} />{' '}
           in the <strong>{highestDegree}</strong>
           <sup>th</sup> degree

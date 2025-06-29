@@ -31,35 +31,35 @@ export function AscentSummary({ ascents }: { ascents: Ascent[] }) {
       <h2>Ascents</h2>
 
       <p>
-        <span className="inline-block">
+        <span className="block">
           Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
           <AscentComponent ascent={mostRecentAscent} showGrade={true} />
         </span>
 
         {onsightAscents.length === 0 ? undefined : (
-          <span className="inline-block">
+          <span className="block">
             You <i>Onsighted</i> <AscentsWithPopover ascents={onsightAscents} />
           </span>
         )}
         {flashAscents.length === 0 ? undefined : (
-          <span className="inline-block">
+          <span className="block">
             You <i>Flashed</i> <AscentsWithPopover ascents={flashAscents} />
           </span>
         )}
         {redpointAscents.length === 0 ? undefined : (
-          <span className="inline-block">
+          <span className="block">
             You <i>Redpointed</i>{' '}
             <AscentsWithPopover ascents={redpointAscents} />
           </span>
         )}
 
         {averageRouteGrade === 'N/A' ? undefined : (
-          <span className="inline-block">
+          <span className="block">
             Your average route grade was <strong>{averageRouteGrade}</strong>
           </span>
         )}
         {averageBoulderGrade === 'N/A' ? undefined : (
-          <span className="inline-block">
+          <span className="block">
             Your average bouldering grade was{' '}
             <strong>
               {displayGrade({
