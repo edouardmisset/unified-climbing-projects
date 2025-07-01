@@ -4,7 +4,7 @@ import { Link } from 'next-view-transitions'
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
-import { api } from '~/trpc/react'
+import { useGetAscents } from '~/hooks/use-get-ascents.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
@@ -18,18 +18,18 @@ import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
 export function Dashboard() {
-  const { data: allAscents = [], isLoading } = api.ascents.getAll.useQuery()
+  const { data: allAscents = [], isLoading } = useGetAscents()
 
   const filteredAscents = useAscentsFilter(allAscents)
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader /> 
 
   if (!allAscents) return <NotFound />
 
   return (
     <div className="flex flex-column gap align-center grid-full-width">
       <AscentsFilterBar allAscents={allAscents} />
-      {filteredAscents.length === 0 && (
+      {filteredAscents.length === 0 ? (
         <div className=" flex-column gap w100 padding">
           <h2>Nothing there...</h2>
           <p>
@@ -37,36 +37,37 @@ export function Dashboard() {
             <Link href={'/log-ascent'}>logging new ascents</Link>.
           </p>
         </div>
+      ) : (
+        <div className={styles.container}>
+          <AscentPyramid ascents={filteredAscents} className={styles.item} />
+          <AscentsPerYearByGrade
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsByStyle ascents={filteredAscents} className={styles.item} />
+          <AscentsPerDiscipline
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsPerDisciplinePerYear
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <TriesByGrade ascents={filteredAscents} className={styles.item} />
+          <AscentsPerDisciplinePerGrade
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <DistanceClimbedPerYear
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsByGradesPerCrag
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+        </div>
       )}
-      <div className={styles.container}>
-        <AscentPyramid ascents={filteredAscents} className={styles.item} />
-        <AscentsPerYearByGrade
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-        <AscentsByStyle ascents={filteredAscents} className={styles.item} />
-        <AscentsPerDiscipline
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-        <AscentsPerDisciplinePerYear
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-        <TriesByGrade ascents={filteredAscents} className={styles.item} />
-        <AscentsPerDisciplinePerGrade
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-        <DistanceClimbedPerYear
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-        <AscentsByGradesPerCrag
-          ascents={filteredAscents}
-          className={styles.item}
-        />
-      </div>
     </div>
   )
 }
