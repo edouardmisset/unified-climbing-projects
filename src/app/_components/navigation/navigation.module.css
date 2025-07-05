@@ -1,6 +1,5 @@
 .nav {
   position: relative;
-  z-index: var(--layer-3);
   min-inline-size: 4rem;
   block-size: 100%;
 
@@ -23,6 +22,7 @@
     position: absolute;
     inset: 0;
     background: transparent;
+    z-index: var(--layer-3);
   }
 }
 
