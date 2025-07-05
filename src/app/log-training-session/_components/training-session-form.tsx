@@ -1,7 +1,7 @@
 'use client'
+
 import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -32,7 +32,7 @@ import {
   type TrainingSession,
   trainingSessionSchema,
 } from '~/schema/training'
-import { useTRPC } from '~/trpc/react'
+import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 
@@ -60,7 +60,6 @@ function getFormattedList<T extends string>(
 }
 
 export default function TrainingSessionForm() {
-  const api = useTRPC()
   const { user } = useUser()
   const router = useRouter()
 
@@ -74,9 +73,8 @@ export default function TrainingSessionForm() {
     globalThis.console.log(result.error)
   }
 
-  const { data: allGymsOrCrags, isLoading: isLoadingGymsOrCrags } = useQuery(
-    api.training.getAllLocations.queryOptions(),
-  )
+  const { data: allGymsOrCrags, isLoading: isLoadingGymsOrCrags } =
+    api.training.getAllLocations.useQuery()
 
   const { data: defaultTrainingSession } = result
 

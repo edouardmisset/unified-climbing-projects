@@ -22,7 +22,7 @@ export function Dashboard() {
 
   const filteredAscents = useAscentsFilter(allAscents)
 
-  if (isLoading) return <Loader /> 
+  if (isLoading) return <Loader />
 
   if (!allAscents) return <NotFound />
 
