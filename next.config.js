@@ -12,8 +12,8 @@ const config = {
     routerBFCache: true,
     useCache: true,
     staleTimes: {
-      dynamic: 30,
-      static: 180,
+      dynamic: 60,
+      static: 5 * 60,
     },
   },
   async redirects() {

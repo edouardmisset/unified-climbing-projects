@@ -1,6 +1,6 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-import { type ReactNode, useCallback, useMemo } from 'react'
+import { type ReactNode, useCallback, useMemo, useTransition } from 'react'
 import { AscentsTrainingSwitch } from '~/app/_components/ascents-training-switch/ascents-training-switch'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
@@ -15,6 +15,7 @@ import styles from './page.module.css'
 export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
+  const [isPending, startTransition] = useTransition()
 
   const activeVisualizationType = useMemo(() => {
     const visualizationTypeFromURL = pathname.split('/').at(-1)
@@ -27,20 +28,22 @@ export default function Layout({ children }: { children: ReactNode }) {
     return PATH_TO_VISUALIZATION[visualizationType] ?? 'Calendar'
   }, [pathname])
 
-  const toggleAscentsOrTraining = useCallback(
-    (isTraining: boolean) => {
-      router.push(
-        isTraining
-          ? `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
-          : `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
-      )
-    },
-    [router, activeVisualizationType],
-  )
-
   const isTraining = useMemo(
     () => pathname.includes('training-sessions'),
     [pathname],
+  )
+
+  const toggleAscentsOrTraining = useCallback(
+    (isTraining: boolean) => {
+      startTransition(() => {
+        router.push(
+          isTraining
+            ? `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
+            : `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
+        )
+      })
+    },
+    [router, activeVisualizationType],
   )
 
   const handleVisualizationChange = useCallback(
@@ -58,15 +61,17 @@ export default function Layout({ children }: { children: ReactNode }) {
         .join('-')
         .toLowerCase()
 
-      router.push(
-        `/visualization/${ascentsOrTraining}/${normalizedVisualizationType}`,
-      )
+      startTransition(() => {
+        router.push(
+          `/visualization/${ascentsOrTraining}/${normalizedVisualizationType}`,
+        )
+      })
     },
     [router, isTraining],
   )
 
   return (
-    <div className="w100 flex-column">
+    <div className={`${styles.container} w100 flex-column`}>
       <GridLayout
         additionalContent={
           <div className={`flex-row space-evenly gap ${styles.header}`}>
@@ -84,6 +89,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         title="Visualization"
       >
         {children}
+        {isPending && <div className={styles.overlay} />}
       </GridLayout>
     </div>
   )
