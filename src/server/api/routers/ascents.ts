@@ -206,9 +206,12 @@ export const ascentsRouter = createTRPCRouter({
         .optional(),
     )
     .output(
-      ascentSchema
-        .extend(ascentSchema.required({ points: true }).pick({ points: true }))
-        .array(),
+      z.array(
+        z.object({
+          ...ascentSchema.shape,
+          points: ascentSchema.required().shape.points,
+        }),
+      ),
     )
     .query(async ({ input = {} }) => {
       const { timeframe = 'year', year = new Date().getFullYear() } = input
@@ -237,13 +240,12 @@ export const ascentsRouter = createTRPCRouter({
       }),
     )
     .output(
-      ascentSchema
-        .extend(
-          z.object({
-            highlight: z.string(),
-            target: z.string(),
-          }),
-        )
+      z
+        .object({
+          highlight: z.string(),
+          target: z.string(),
+          ...ascentSchema.shape,
+        })
         .array(),
     )
     .query(async ({ input }) => {

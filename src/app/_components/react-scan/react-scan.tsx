@@ -11,5 +11,6 @@ export function ReactScan(): React.JSX.Element {
       }),
     [],
   )
+  // biome-ignore lint/complexity/noUselessFragments: special case for react-scan
   return <></>
 }

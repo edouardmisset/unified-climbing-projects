@@ -4,6 +4,8 @@ export function useTheme() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const stored = localStorage.getItem('theme')
     if (stored === 'light' || stored === 'dark') {
       setTheme(stored)
@@ -17,7 +19,11 @@ export function useTheme() {
   const toggleTheme = useCallback(() => {
     setTheme(prev => {
       const next = prev === 'dark' ? 'light' : 'dark'
-      localStorage.setItem('theme', next)
+      try {
+        localStorage.setItem('theme', next)
+      } catch (error) {
+        console.warn('Failed to save theme preference:', error)
+      }
       return next
     })
   }, [])

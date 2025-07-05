@@ -15,7 +15,7 @@ export function TimeframeSelect({
   return (
     <Select.Root onValueChange={onChange} value={value}>
       <Select.Trigger className={styles.Select}>
-        <Select.Value placeholder="Year" />
+        <Select.Value />
         <Select.Icon className={styles.SelectIcon}>
           <ChevronUpDownIcon />
         </Select.Icon>
