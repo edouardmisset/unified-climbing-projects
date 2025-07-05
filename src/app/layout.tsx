@@ -5,19 +5,13 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import {
-  type ReactNode,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { type ReactNode, Suspense, useMemo } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
 import { ReactScan } from '~/app/_components/react-scan/react-scan.tsx'
 import { env } from '~/env.js'
+import { useTheme } from '~/hooks/use-theme'
 import { TRPCReactProvider } from '~/trpc/react'
 import styles from './index.module.css'
 import '~/styles/sizes.css'
@@ -40,26 +34,7 @@ import { LightDarkSwitch } from './_components/light-dark-switch/light-dark-swit
 export const fetchCache = 'default-cache'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  // on mount read local storage or user system preference
-  useEffect(() => {
-    const stored = localStorage.getItem('theme')
-    if (stored === 'light' || stored === 'dark') {
-      setTheme(stored)
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark')
-    } else {
-      setTheme('light')
-    }
-  }, [])
-
-  const toggleTheme = useCallback(() => {
-    setTheme(prev => {
-      const next = prev === 'dark' ? 'light' : 'dark'
-      localStorage.setItem('theme', next)
-      return next
-    })
-  }, [])
+  const { theme, toggleTheme } = useTheme()
 
   const appearance = useMemo(
     () => ({

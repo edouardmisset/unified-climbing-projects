@@ -12,48 +12,23 @@ import { createTRPCContext } from '~/server/api/trpc'
 const createContext = async (req: NextRequest) => {
   return createTRPCContext({
     headers: req.headers,
-    req,
   })
 }
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    createContext: () => createContext(req),
     endpoint: '/api/trpc',
+    req,
+    router: appRouter,
+    createContext: () => createContext(req),
     onError:
       env.NODE_ENV === 'development'
         ? ({ path, error }) => {
-            globalThis.console.error(
+            console.error(
               `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`,
             )
           }
         : undefined,
-    req,
-    responseMeta: opts => {
-      const { ctx, info, errors, type } = opts
-      // assuming you have all your public routes with the keyword `public` in them
-      const allPublic = info?.calls?.every(({ path }) =>
-        path?.includes('public'),
-      )
-      // checking that no procedures errored
-      const allOk = errors.length === 0
-      // checking we're doing a query request
-      const isQuery = type === 'query'
-
-      if (!(ctx?.res && allPublic && allOk && isQuery)) return {}
-
-      // cache request for 1 hour + revalidate once every second
-      const ONE_HOUR_IN_SECONDS = 60 * 60
-      return {
-        headers: new Headers([
-          [
-            'cache-control',
-            `s-maxage=1, stale-while-revalidate=${ONE_HOUR_IN_SECONDS}`,
-          ],
-        ]),
-      }
-    },
-    router: appRouter,
   })
 
 export { handler as GET, handler as POST }

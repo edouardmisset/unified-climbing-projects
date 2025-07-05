@@ -27,7 +27,6 @@ export async function DaysOutsideSummary({
 
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)
   const longestGap = findLongestGap(outdoorSessions)
-  console.log('🚀 ~ longestGap:', longestGap)
 
   const daysOutside = outdoorSessions.length
 
