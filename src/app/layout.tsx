@@ -69,7 +69,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </Suspense>
             </main>
 
-            <ToastContainer closeOnClick theme="colored" />
+            <ToastContainer
+              closeOnClick
+              draggable
+              draggableDirection="x"
+              draggablePercent={20}
+              theme="colored"
+            />
             <SpeedInsights />
             <Analytics />
           </body>
