@@ -16,23 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  const toggleAscentsOrTraining = useCallback(
-    (isTraining: boolean) => {
-      router.push(
-        isTraining
-          ? '/visualization/training-sessions/calendar'
-          : '/visualization/ascents/calendar',
-      )
-    },
-    [router],
-  )
-
-  const isTraining = useMemo(
-    () => pathname.includes('training-sessions'),
-    [pathname],
-  )
-
-  const selectedValue = useMemo(() => {
+  const activeVisualizationType = useMemo(() => {
     const visualizationTypeFromURL = pathname.split('/').at(-1)
     if (!visualizationTypeFromURL) return 'Calendar'
 
@@ -42,6 +26,22 @@ export default function Layout({ children }: { children: ReactNode }) {
 
     return PATH_TO_VISUALIZATION[visualizationType] ?? 'Calendar'
   }, [pathname])
+
+  const toggleAscentsOrTraining = useCallback(
+    (isTraining: boolean) => {
+      router.push(
+        isTraining
+          ? `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
+          : `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
+      )
+    },
+    [router, activeVisualizationType],
+  )
+
+  const isTraining = useMemo(
+    () => pathname.includes('training-sessions'),
+    [pathname],
+  )
 
   const handleVisualizationChange = useCallback(
     ([value]: unknown[]) => {
@@ -72,7 +72,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className={`flex-row space-evenly gap ${styles.header}`}>
             <ToggleGroup
               onValueChange={handleVisualizationChange}
-              selectedValue={selectedValue}
+              selectedValue={activeVisualizationType}
               values={visualizations}
             />
             <AscentsTrainingSwitch
