@@ -10,7 +10,7 @@ export function DataList({ id, options }: DataListProps): React.JSX.Element {
   return (
     <datalist id={id}>
       {options.map(({ value, label }) => (
-        <option key={String(value)} value={String(value)}>
+        <option key={`${label} - ${String(value)}`} value={String(value)}>
           {label}
         </option>
       ))}
