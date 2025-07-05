@@ -31,6 +31,7 @@ import {
   HOLDS,
   PROFILES,
 } from '~/schema/ascent'
+import { api } from '~/trpc/react.tsx'
 import { onSubmit } from '../actions.ts'
 import {
   _1To5RegEx,
@@ -80,6 +81,7 @@ export const recentDateOptions = [
 export default function AscentForm(props: AscentFormProps) {
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
+  const utils = api.useUtils()
 
   const router = useRouter()
 
@@ -203,10 +205,11 @@ export default function AscentForm(props: AscentFormProps) {
             success: `You sent ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
           })
 
-          if (await promise) {
-            reset()
-            router.refresh()
-          }
+          if (!(await promise)) return
+
+          reset()
+          await utils.ascents.invalidate()
+          router.refresh()
         },
         error => {
           console.error(error)

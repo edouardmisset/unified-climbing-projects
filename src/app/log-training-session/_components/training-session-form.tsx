@@ -62,6 +62,7 @@ function getFormattedList<T extends string>(
 export default function TrainingSessionForm() {
   const { user } = useUser()
   const router = useRouter()
+  const utils = api.useUtils()
 
   const result = trainingSessionSchema
     .omit({ id: true, load: true })
@@ -102,9 +103,10 @@ export default function TrainingSessionForm() {
             pending: 'Submitting...',
             success: 'Training session submitted 🎉',
           })
-          if (await promise) {
-            router.push('/log-ascent')
-          }
+          if (!(await promise)) return
+
+          await utils.training.invalidate()
+          router.push('/log-ascent')
         },
         error => {
           console.error(error)
