@@ -6,6 +6,7 @@
 }
 
 .header {
+  isolation: isolate;
   @media (width <= 640px) {
     position: absolute;
 
@@ -23,6 +24,8 @@
 
   background-color: var(--surface-2);
   padding-block-start: var(--size-3);
+
+  box-shadow: var(--shadow-4);
 
   & > * {
     inline-size: 100%;
