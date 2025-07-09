@@ -1,7 +1,7 @@
 import { Select } from '@base-ui-components/react/select'
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import { CheckIcon } from '~/app/_components/svg/check/check'
 import { ChevronUpDownIcon } from '~/app/_components/svg/chevron-up-down/chevron-up-down'
+import { deSlugify } from '~/helpers/de-slugify'
 import { type Timeframe, timeframes } from '~/schema/generic'
 import styles from './timeframe-select.module.css'
 
@@ -15,7 +15,7 @@ export function TimeframeSelect({
   return (
     <Select.Root onValueChange={onChange} value={value}>
       <Select.Trigger className={styles.Select}>
-        <Select.Value />
+        <Select.Value>{deSlugify(value)}</Select.Value>
         <Select.Icon className={styles.SelectIcon}>
           <ChevronUpDownIcon />
         </Select.Icon>
@@ -34,7 +34,7 @@ export function TimeframeSelect({
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>
                 <Select.ItemText className={styles.ItemText}>
-                  {capitalize(timeframe.replaceAll('-', ' '))}
+                  {deSlugify(timeframe)}
                 </Select.ItemText>
               </Select.Item>
             ))}
