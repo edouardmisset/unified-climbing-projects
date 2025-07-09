@@ -13,7 +13,7 @@
   background-color: transparent;
   background-image: linear-gradient(
     to right,
-    light-dark(var(--blue-6), var(--blue-8)) 35%,
+    light-dark(var(--blue-7), var(--blue-9)) 35%,
     light-dark(var(--yellow-3), var(--yellow-5)) 65%
   );
   background-size: 6.5rem 100%;
