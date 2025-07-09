@@ -1,3 +1,4 @@
+import { isValidNumber } from '@edouardmisset/math'
 import type { Metadata } from 'next'
 import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
 import { isError } from '~/helpers/is-error'
@@ -8,9 +9,18 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const id = (await params).id
+  const id = (await params)?.id ?? ''
 
-  const ascent = await api.ascents.getById({ id: Number(id) })
+  const numericId = Number(id)
+  if (
+    !isValidNumber(numericId) ||
+    Number.isInteger(numericId) ||
+    numericId <= 0
+  ) {
+    return <div>Invalid ascent ID: {id}</div>
+  }
+
+  const ascent = await api.ascents.getById({ id: numericId })
 
   if (isError(ascent)) {
     return <div>{ascent.error}</div>
@@ -24,7 +34,7 @@ export default async function Page({
 }
 
 export const metadata: Metadata = {
-  description: 'View a single climbing ascent',
+  description: 'Display a climbing ascent',
   keywords: ['climbing', 'ascent', 'details'],
   title: 'Ascent 🧗',
 }

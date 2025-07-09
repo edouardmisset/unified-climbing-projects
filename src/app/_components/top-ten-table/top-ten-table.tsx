@@ -1,15 +1,21 @@
 import NotFound from '~/app/not-found'
 import type { Ascent } from '~/schema/ascent'
+import type { Timeframe } from '~/schema/generic'
+import { api } from '~/trpc/react'
 import { AscentList } from '../ascent-list/ascent-list'
 
 export function TopTenTable({
-  topTenAscents,
+  timeframe,
+  initialTopTen,
 }: {
-  topTenAscents: Ascent[]
+  timeframe: Timeframe
+  initialTopTen: Ascent[]
 }): React.JSX.Element {
-  if (topTenAscents.length === 0) return <NotFound />
+  const { data: topTen = initialTopTen } = api.ascents.getTopTen.useQuery({
+    timeframe,
+  })
 
-  return (
-    <AscentList ascents={topTenAscents} showDetails={false} showPoints={true} />
-  )
+  if (topTen === undefined || topTen.length === 0) return <NotFound />
+
+  return <AscentList ascents={topTen} showDetails={false} showPoints={true} />
 }
