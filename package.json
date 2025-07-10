@@ -65,7 +65,7 @@
     "zod": "^4.0.0-beta.20250418T073619"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.1.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@ls-lint/ls-lint": "^2.3.1",
