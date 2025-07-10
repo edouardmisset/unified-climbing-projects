@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
 export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
@@ -6,7 +7,7 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
     if (columnNumber === 0)
       return <i className={`super-center ${styles.firstCell}`} key={0} />
 
-    const hasExtraColumn = columns[1] === 53
+    const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
 
     // Adjust the grid column based on the presence of an extra column and the current index
     const adjustedGridColumn =

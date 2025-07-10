@@ -1,10 +1,11 @@
 import { isValidDate } from '@edouardmisset/date'
+import { DAYS_IN_WEEK } from '~/constants/generic'
 import type { StringDate } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
 const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
-const MILLISECONDS_IN_WEEK = 7 * MILLISECONDS_IN_DAY
+const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
 
 export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
@@ -124,7 +125,7 @@ export function getLastSaturday(): Date {
   const now = new Date()
   const dayOfWeek = now.getDay() // 0 = Sunday, 6 = Saturday
   // If today is Saturday (6), go back 7 days; else, go back to last Saturday
-  const daysSinceSaturday = dayOfWeek === 6 ? 7 : dayOfWeek + 1
+  const daysSinceSaturday = dayOfWeek === 6 ? DAYS_IN_WEEK : dayOfWeek + 1
   const lastSaturday = new Date(now)
   lastSaturday.setDate(now.getDate() - daysSinceSaturday)
   return getDateAtNoon(lastSaturday)
@@ -139,7 +140,7 @@ export function getLastSunday(): Date {
   const now = new Date()
   const dayOfWeek = now.getDay() // 0 = Sunday
   // If today is Sunday (0), go back 7 days; else, go back to last Sunday
-  const daysSinceSunday = dayOfWeek === 0 ? 7 : dayOfWeek
+  const daysSinceSunday = dayOfWeek === 0 ? DAYS_IN_WEEK : dayOfWeek
   const lastSunday = new Date(now)
   lastSunday.setDate(now.getDate() - daysSinceSunday)
   return getDateAtNoon(lastSunday)

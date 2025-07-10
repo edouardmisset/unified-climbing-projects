@@ -1,5 +1,6 @@
 import { isDateInYear } from '@edouardmisset/date'
 import { memo, type ReactNode, useMemo } from 'react'
+import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
@@ -36,7 +37,7 @@ export const YearGrid = memo(
     const columns = useMemo(
       () => [
         0,
-        ...(prependWeek53 ? [53] : []),
+        ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
         ...Array.from(
           { length: displayedNumberOfWeeks },
           (_, index) => index + 1,
