@@ -59,16 +59,16 @@
 
 .text-no-wrap {
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .grid {
   --min: 300px;
 
   display: grid;
-  gap: var(--size-fluid-1);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+  gap: var(--size-fluid-1);
 }
 
 .grid-full-width {
@@ -107,13 +107,13 @@
 
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
 .visually-hidden {
-  clip-path: inset(100%);
-  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute;
+  width: 1px;
   height: 1px;
   overflow: hidden;
-  position: absolute;
   white-space: nowrap;
-  width: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
 }
 
 .contrast-color {

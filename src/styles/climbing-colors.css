@@ -145,86 +145,86 @@
 
 .endurance {
   --color: var(--endurance);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .other-training {
   --color: var(--other-training);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .outdoor {
   --color: var(--outdoor);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .stamina {
   --color: var(--stamina);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .strength {
   --color: var(--strength);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .tapered {
   --color: var(--tapered);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 /* DISCIPLINE */
 .boulder {
   --color: var(--boulder);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .route {
   --color: var(--route);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .multi-pitch {
   --color: var(--multi-pitch);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 /* STYLE */
 .onsight {
   --color: var(--onsight);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .flash {
   --color: var(--flash);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }
 
 .redpoint {
   --color: var(--redpoint);
+  color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
-  color: oklch(from var(--color) var(--l) 0 h);
 }

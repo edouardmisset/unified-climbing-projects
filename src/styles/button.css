@@ -100,9 +100,9 @@
   /* icons */
   & > :where(svg) {
     flex-shrink: 0;
-    filter: drop-shadow(var(--_ink-shadow));
-    block-size: var(--_icon-size);
     inline-size: var(--_icon-size);
+    block-size: var(--_icon-size);
+    filter: drop-shadow(var(--_ink-shadow));
   }
 
   & > :where(svg > *) {
@@ -145,14 +145,14 @@
 
 /* file input */
 :where(input[type='file']) {
+  align-self: flex-start;
   max-inline-size: 100%;
   padding: 0;
-  cursor: initial;
-  align-self: flex-start;
-  border-radius: var(--radius-2);
-  border: var(--border-size-1) solid var(--surface-2);
-  box-shadow: var(--inner-shadow-4);
   color: var(--text-2);
+  cursor: initial;
+  border: var(--border-size-1) solid var(--surface-2);
+  border-radius: var(--radius-2);
+  box-shadow: var(--inner-shadow-4);
 }
 
 :where(input[type='file'])::-webkit-file-upload-button,

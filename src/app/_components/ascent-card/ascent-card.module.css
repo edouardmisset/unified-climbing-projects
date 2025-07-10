@@ -12,12 +12,12 @@
   max-block-size: 100dvh;
   aspect-ratio: 2.5 / 3.5;
 
-  background-color: var(--surface);
+  overflow: auto;
   color: var(--text);
+
+  background-color: var(--surface);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-3);
-
-  overflow: auto;
 }
 
 .header {
@@ -26,22 +26,22 @@
 
   position: sticky;
   inset: 0;
-  background-color: var(--surface);
-  color: var(--text);
   padding-block: var(--size-fluid-3);
   padding-inline: var(--inline-padding);
+  color: var(--text);
+  background-color: var(--surface);
 
   box-shadow: var(--shadow-2);
 }
 
 .content {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--gap);
+  padding-block-end: var(--size-fluid-2);
 
   padding-inline: var(--inline-padding);
-  padding-block-end: var(--size-fluid-2);
 }
 
 .details {
@@ -49,8 +49,8 @@
 
   display: flex;
   flex-flow: var(--direction) wrap;
-  justify-content: space-between;
   column-gap: var(--gap);
+  justify-content: space-between;
 }
 
 .placeAndTime {
@@ -58,7 +58,7 @@
 
   display: flex;
   flex-flow: var(--direction) wrap;
-  justify-content: space-evenly;
-  column-gap: var(--gap);
   row-gap: calc(var(--gap) / 2);
+  column-gap: var(--gap);
+  justify-content: space-evenly;
 }

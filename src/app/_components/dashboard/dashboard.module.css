@@ -2,20 +2,20 @@
   --min-width: 375px;
 
   display: grid;
-  gap: var(--size-fluid-2);
   grid-template-columns: repeat(
       auto-fit,
       minmax(min(100%, var(--min-width)), 1fr)
     );
+  gap: var(--size-fluid-2);
   inline-size: min(100%, var(--size-xl));
 }
 
 .item {
-  inline-size: 100%;
   display: flex;
   flex-direction: column;
-  margin-inline: auto;
+  inline-size: 100%;
   aspect-ratio: 1;
+  margin-inline: auto;
 
   & > div {
     flex: 1;

@@ -16,8 +16,8 @@
   position: absolute;
   inset: 0;
   height: 200%;
-  background: var(--transparent-background);
   pointer-events: none;
+  background: var(--transparent-background);
   backdrop-filter: blur(var(--size-3));
   mask-image: linear-gradient(to bottom, black 0, black 50%, transparent 50%);
 }
@@ -34,15 +34,9 @@
       set the height by 100% to include nearby elements.
     */
   height: 100%;
-
-  /*
-      Shift down by 100% of its own height, so that the
-      edge stacks underneath the main <header>:
-    */
-  transform: translateY(100%);
+  pointer-events: none;
   background: var(--transparent-background);
   backdrop-filter: blur(var(--size-2)) brightness(120%);
-  pointer-events: none;
 
   /*
       We mask out everything aside from the first few
@@ -54,16 +48,21 @@
     black var(--thickness),
     transparent var(--thickness)
   );
+
+  /*
+      Shift down by 100% of its own height, so that the
+      edge stacks underneath the main <header>:
+    */
+  transform: translateY(100%);
 }
 
 .filters {
-  max-inline-size: min-content;
-  margin: auto;
-
   display: flex;
   flex-flow: row nowrap;
   gap: var(--size-fluid-1);
+  max-inline-size: min-content;
   padding-block: var(--size-fluid-1);
+  margin: auto;
 
   overflow-x: auto;
 }

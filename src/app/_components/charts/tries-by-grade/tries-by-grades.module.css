@@ -1,6 +1,6 @@
 .tooltip {
-  background: var(--surface-2);
   padding: var(--size-fluid-1);
+  background: var(--surface-2);
   border-radius: var(--size-0);
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }

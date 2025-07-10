@@ -22,12 +22,12 @@
   inset-inline-end: var(--size-2);
   inline-size: 1.5em;
   aspect-ratio: 1;
+  padding: var(--size-fluid-0);
   margin: 0;
 
-  background-color: color-mix(in hsl, var(--surface-3) 50%, transparent);
-
   color: var(--text-1);
-  padding: var(--size-fluid-0);
+
+  background-color: color-mix(in hsl, var(--surface-3) 50%, transparent);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-2);
 }

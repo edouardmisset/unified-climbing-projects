@@ -5,26 +5,26 @@
   --border-color: currentcolor;
   --border-width: 1px;
   --border-radius: 2px;
-
-  inline-size: min-content;
   display: grid;
   grid-auto-flow: column;
   gap: var(--gap, 1px);
   place-items: center;
+
+  inline-size: min-content;
 }
 
 .yearGridCell {
+  display: grid;
+  place-items: center;
   block-size: var(--size-3);
   aspect-ratio: 1 / 1;
   font-size: var(--font-size-00);
-  display: grid;
-  place-items: center;
+  font-weight: var(--font-weight-7);
   background-color: var(--cell-color);
 
   && {
     border-radius: var(--radius-1, 2px);
   }
-  font-weight: var(--font-weight-7);
 }
 
 .emptyGridCell {
@@ -39,13 +39,13 @@
 }
 
 .gridHeader {
-  background-color: transparent;
-  color: var(--text-1);
-  border: none;
-  font-variant-numeric: tabular-nums;
-  min-block-size: 3ch;
   grid-row: 1 / 2;
+  min-block-size: 3ch;
   font-weight: var(--font-weight-7);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+  background-color: transparent;
+  border: none;
 }
 
 .firstCell {
@@ -57,8 +57,8 @@
 .firstColumn {
   position: sticky;
   inset-inline-start: 0;
-  background-color: var(--surface-3);
   grid-column: 1 / 2;
   min-inline-size: 4ch;
   line-height: 1;
+  background-color: var(--surface-3);
 }

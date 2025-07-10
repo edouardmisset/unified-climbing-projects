@@ -32,13 +32,12 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     tries,
   } = ascent
 
-  const stylesDependingOnComments: CSSProperties = useMemo(
-    () =>
-      comments && comments.length > 120
-        ? ({ '--direction': 'row' } as CSSProperties)
-        : ({ '--direction': 'column' } as CSSProperties),
-    [comments],
-  )
+  const stylesDependingOnComments: CSSProperties = useMemo(() => {
+    const maxCommentLength = 120
+    return comments && comments.length > maxCommentLength
+      ? ({ '--direction': 'row' } as CSSProperties)
+      : ({ '--direction': 'column' } as CSSProperties)
+  }, [comments])
 
   const formattedGrade = displayGrade({ climbingDiscipline, grade: topoGrade })
   return (

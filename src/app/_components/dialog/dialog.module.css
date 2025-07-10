@@ -1,13 +1,13 @@
 .Button {
-  inline-size: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
+  inline-size: 100%;
   font-size: var(--font-size-fluid-2);
   line-height: 1.5;
-  user-select: none;
   text-shadow: none;
+  user-select: none;
+  background-color: transparent;
 
   &:focus-visible {
     outline: 2px solid var(--accent);
@@ -16,15 +16,15 @@
 
   @media (hover: hover) {
     &:hover:not([data-close='true']) {
-      background: var(--gradient-1);
       color: transparent;
+      background: var(--gradient-1);
       background-clip: text;
     }
   }
 
   &:active:not([data-close='true']) {
-    background: var(--gradient-1);
     color: transparent;
+    background: var(--gradient-1);
     background-clip: text;
   }
 }
@@ -47,17 +47,17 @@
 }
 
 .Popup {
-  box-sizing: border-box;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  box-sizing: border-box;
   min-inline-size: var(--size-content-2);
   max-inline-size: calc(100vw - var(--size-fluid-3));
   padding: var(--size-fluid-3);
-  border-radius: var(--radius-3);
   outline: 1px solid light-dark(var(--color-gray-200), var(--color-gray-300));
   background-color: var(--surface-1);
+  border-radius: var(--radius-3);
+  transform: translate(-50%, -50%);
   transition: all 150ms;
 
   & > * + * {
@@ -78,6 +78,6 @@
 
 .Actions {
   display: flex;
-  justify-content: flex-end;
   gap: var(--size-fluid-1);
+  justify-content: flex-end;
 }

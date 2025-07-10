@@ -1,32 +1,32 @@
 .Panel {
-  block-size: fit-content;
   display: flex;
   gap: 1px;
-  border: 1px solid var(--color-gray-200);
-  background-color: var(--color-gray-50);
-  border-radius: 0.375rem;
+  block-size: fit-content;
   padding: 0.125rem;
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.375rem;
 }
 
 .Button {
-  inline-size: var(--size-relative-12);
-  block-size: var(--size-7);
   display: flex;
   align-items: center;
   justify-content: center;
+  inline-size: var(--size-relative-12);
+  block-size: var(--size-7);
   padding-inline: var(--size-2);
   margin: 0;
+  user-select: none;
   outline: 0;
+  background-color: transparent;
   border: 0;
   border-radius: 0.25rem;
-  background-color: transparent;
-  user-select: none;
   box-shadow: none;
 
   &:focus-visible {
-    background-color: transparent;
     outline: 2px solid var(--accent);
     outline-offset: -1px;
+    background-color: transparent;
   }
 
   @media (hover: hover) {
@@ -40,7 +40,7 @@
   }
 
   &[data-pressed] {
-    background-color: var(--accent);
     color: var(--color-gray-950);
+    background-color: var(--accent);
   }
 }

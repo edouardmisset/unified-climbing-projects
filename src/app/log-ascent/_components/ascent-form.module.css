@@ -1,16 +1,15 @@
 .form {
-  grid-column: 1 / -1;
-  margin-inline: auto;
-
   display: flex;
   flex-direction: column;
+  grid-column: 1 / -1;
   gap: var(--size-fluid-1);
-  border-radius: var(--radius-conditional-3);
-  overflow: scroll;
   inline-size: clamp(15ch, 75ch, 100%);
-  padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
   padding-block: var(--size-fluid-2);
+  padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
+  margin-inline: auto;
+  overflow: scroll;
   background-color: var(--surface-2);
+  border-radius: var(--radius-conditional-3);
 }
 
 .field {
@@ -20,9 +19,9 @@
   @media (width > 640px) {
     display: flex;
     flex-direction: row;
+    gap: var(--size-3);
     align-items: last baseline;
     justify-content: space-between;
-    gap: var(--size-3);
   }
 }
 
@@ -31,8 +30,8 @@
   background-color: var(--surface-3);
 
   @media (width > 640px) {
-    margin-block-start: 0;
     min-inline-size: var(--size-relative-15);
+    margin-block-start: 0;
   }
 
   &:is([type='number']) {
@@ -52,8 +51,8 @@
   }
 
   @media (width > 640px) {
-    padding: var(--size-1);
     min-inline-size: var(--size-relative-15);
+    padding: var(--size-1);
   }
 
   @supports (field-sizing: content) {
@@ -70,9 +69,9 @@
 }
 
 .title {
-  text-align: center;
   font-size: var(--font-size-fluid-3);
   line-height: 1.5;
+  text-align: center;
 }
 
 .grades {
@@ -102,13 +101,13 @@
 }
 
 .submit {
-  background-color: var(--accent);
-  line-height: 2;
   font-weight: var(--font-weight-6);
+  line-height: 2;
+  background-color: var(--accent);
   transition: background var(--blink);
 
   &:disabled {
-    background-color: var(--surface-4);
     cursor: not-allowed;
+    background-color: var(--surface-4);
   }
 }

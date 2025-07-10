@@ -1,10 +1,10 @@
 .navContainer {
-  inline-size: 100%;
   display: flex;
   flex-direction: column-reverse;
-  justify-content: space-between;
-  align-items: center;
   gap: var(--size-2);
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 100%;
 
   @media (width > 640px) {
     flex-direction: row;
@@ -23,8 +23,8 @@
 
 .calendarContainer {
   max-inline-size: 100%;
-  overflow-x: scroll;
   padding-block: var(--size-2);
+  overflow-x: scroll;
 
   @media (width > 640px) {
     overflow-x: auto;

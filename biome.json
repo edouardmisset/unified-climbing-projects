@@ -48,7 +48,7 @@
       },
       "nursery": {
         "useUniqueElementIds": "off",
-        "noMagicNumbers": "warn",
+        "noMagicNumbers": "info",
         "noUnassignedVariables": "warn"
       },
       "recommended": true,

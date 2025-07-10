@@ -2,23 +2,22 @@
   --border-width: calc(var(--size-fluid-0) / 2);
   --half-line-width: .75%;
   --line-color: transparent;
-
-  inline-size: calc(100% - var(--border-width));
-  block-size: calc(100% - var(--border-width));
+  position: relative;
 
   display: flex;
   flex-direction: column;
+
+  inline-size: calc(100% - var(--border-width));
+  block-size: calc(100% - var(--border-width));
   padding: var(--size-fluid-2);
-  border-radius: var(--radius-conditional-3);
-  position: relative;
   overflow: hidden;
+  border-radius: var(--radius-conditional-3);
   isolation: isolate;
 
   &::before {
-    content: '';
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-conditional-3);
+    content: '';
     background: linear-gradient(
       135deg,
       var(--patagonia-color-1) 0%,
@@ -39,12 +38,13 @@
       var(--line-color) calc(80% + var(--half-line-width)),
       var(--patagonia-color-5) calc(80% + var(--half-line-width))
     );
+    border-radius: var(--radius-conditional-3);
   }
 
   &::after {
-    content: '';
     position: absolute;
     inset: var(--border-width);
+    content: '';
     background: var(--surface-2);
     border-radius: calc(var(--radius-conditional-3) - var(--border-width));
   }

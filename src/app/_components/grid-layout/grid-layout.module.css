@@ -1,8 +1,8 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .patagonia {
@@ -55,27 +55,27 @@
 
   position: relative;
   inline-size: 100%;
-  background: var(--patagonia-gradient);
   color: var(--gray-1);
+  background: var(--patagonia-gradient);
 
   &::before {
-    content: '';
     position: absolute;
     inset-block-end: 0;
     inset-inline-start: 0;
     inline-size: 100%;
     block-size: 50%;
+    content: '';
     background: hsl(0deg 0% 93%);
     clip-path: polygon(var(--mountains));
   }
 
   &::after {
-    content: '';
     position: absolute;
     inset-block-end: 0;
     inset-inline-start: 0;
     inline-size: 100%;
     block-size: 50%;
+    content: '';
     background: linear-gradient(
       to bottom,
       hsl(0deg 0% 0%) 0%,

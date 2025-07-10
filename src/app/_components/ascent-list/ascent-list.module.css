@@ -1,16 +1,15 @@
 .table {
-  max-inline-size: 100%;
-  margin-inline: auto;
-  max-block-size: 80dvh;
-
   display: grid;
   grid-template-columns: repeat(10, auto);
   column-gap: var(--size-fluid-1);
-
-  background-color: var(--surface-1);
-  color: var(--text-1);
+  max-inline-size: 100%;
+  max-block-size: 80dvh;
+  margin-inline: auto;
 
   overflow-x: auto;
+  color: var(--text-1);
+
+  background-color: var(--surface-1);
 }
 
 .header {
@@ -26,8 +25,8 @@
 }
 
 .headerCell {
-  background-color: var(--surface-1);
   font-weight: var(--font-weight-7);
+  background-color: var(--surface-1);
 }
 
 .body {
@@ -54,14 +53,14 @@
 .cell {
   inline-size: min-content;
   max-inline-size: 22ch;
+  padding-block: var(--size-fluid-0);
 
   padding-inline: 0;
-  padding-block: var(--size-fluid-0);
 
   /* no-text-wrap */
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .footer {
@@ -78,9 +77,8 @@
 }
 
 .footerCell {
-  border: none;
-
   color: var(--text-1);
-  background-color: var(--surface-1);
   text-align: start;
+  background-color: var(--surface-1);
+  border: none;
 }

@@ -1,12 +1,23 @@
 .body {
-  isolation: isolate;
   display: flex;
   flex-direction: row;
   block-size: 100dvh;
+  isolation: isolate;
 }
 
 .header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+  align-items: center;
+  justify-content: center;
+  padding-block-start: var(--size-3);
+
+  background-color: var(--surface-2);
+
+  box-shadow: var(--shadow-4);
   isolation: isolate;
+
   @media (width <= 640px) {
     position: absolute;
 
@@ -15,17 +26,6 @@
 
     background-color: transparent;
   }
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--size-3);
-
-  background-color: var(--surface-2);
-  padding-block-start: var(--size-3);
-
-  box-shadow: var(--shadow-4);
 
   & > * {
     inline-size: 100%;
@@ -38,8 +38,8 @@
 }
 
 .themeToggle {
-  margin-top: auto;
   padding: var(--size-fluid-0);
+  margin-top: auto;
   background: transparent;
   border: 1px solid var(--gray-5);
 

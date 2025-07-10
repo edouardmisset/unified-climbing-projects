@@ -27,8 +27,8 @@
  */
 
 :where(*) {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 :root {
@@ -65,8 +65,8 @@
 }
 
 ::selection {
-  background-color: var(--text-1);
   color: var(--surface-1);
+  background-color: var(--text-1);
 }
 
 *,
@@ -99,9 +99,9 @@
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
-  text-wrap: balance;
   font-weight: var(--font-weight-7);
   line-height: var(--font-lineheight-1);
+  text-wrap: balance;
 }
 
 :where(p, h1, h2, h3, h4, h5, h6) {
@@ -114,15 +114,15 @@
 }
 
 :where(img, svg, picture) {
+  display: block;
   max-inline-size: 100%;
   block-size: auto;
-  display: block;
   font-style: italic;
 }
 
 :where(a) {
-  color: var(--violet-9);
   font-weight: var(--font-weight-5);
+  color: var(--violet-9);
   text-underline-offset: 0.2em;
 }
 
@@ -215,23 +215,23 @@ not to see them */
 }
 
 :where(form input:user-invalid) {
-  outline-offset: 1px;
   outline: var(--red-8) solid var(--border-size-2);
+  outline-offset: 1px;
 }
 
 :where(form input:user-valid) {
-  outline-offset: 1px;
   outline: var(--green-8) solid var(--border-size-1);
+  outline-offset: 1px;
 }
 
 :where(label:has(+ input:required))::after,
 :where(label:has(+ textarea:required))::after,
 :where(label:has(+ select:required))::after,
 .required::after {
-  content: ' *';
-  color: var(--red-9);
   font-size: 1em;
   vertical-align: super;
+  color: var(--red-9);
+  content: ' *';
 }
 
 :where(a[href]) {
@@ -251,8 +251,8 @@ not to see them */
 }
 
 :where(:not(fieldset, progress, meter)) {
-  background-origin: border-box;
   background-repeat: no-repeat;
+  background-origin: border-box;
   border-style: solid;
   border-width: 0;
 }
@@ -364,15 +364,15 @@ not to see them */
 }
 
 :where(img, svg, video) {
-  block-size: auto;
   max-inline-size: 100%;
+  block-size: auto;
 }
 
 :where(input, button, textarea, select),
 :where(input[type='file'])::-webkit-file-upload-button {
-  color: inherit;
   font: inherit;
   font-size: inherit;
+  color: inherit;
   letter-spacing: inherit;
 }
 
@@ -405,8 +405,8 @@ not to see them */
 }
 
 :where(input[type='checkbox'], input[type='radio']) {
-  block-size: var(--size-3);
   inline-size: var(--size-3);
+  block-size: var(--size-3);
 }
 
 :where(svg:not([width])) {
@@ -430,22 +430,22 @@ not to see them */
 }
 
 :where(:not(pre) > code) {
+  padding: var(--size-1) var(--size-2);
   background: var(--surface-2);
   border-radius: var(--radius-2);
-  padding: var(--size-1) var(--size-2);
   writing-mode: lr;
 }
 
 :where(kbd, var) {
-  border-color: var(--surface-4);
-  border-radius: var(--radius-2);
-  border-width: var(--border-size-1);
   padding: var(--size-1) var(--size-2);
+  border-color: var(--surface-4);
+  border-width: var(--border-size-1);
+  border-radius: var(--radius-2);
 }
 
 :where(mark) {
-  border-radius: var(--radius-2);
   padding-inline: var(--size-1);
+  border-radius: var(--radius-2);
 }
 
 :where(ol, ul) {
@@ -469,14 +469,14 @@ not to see them */
 }
 
 :where(small) {
-  font-size: max(0.5em, var(--font-size-0));
   max-inline-size: var(--size-content-1);
+  font-size: max(0.5em, var(--font-size-0));
 }
 
 :where(hr) {
-  background-color: var(--surface-3);
   height: var(--border-size-2);
   margin-block: var(--size-fluid-5);
+  background-color: var(--surface-3);
 }
 
 :where(i, em) {
@@ -490,8 +490,8 @@ not to see them */
 }
 
 :where(figure) > :where(figcaption) {
-  text-wrap: balance;
   font-size: var(--font-size-1);
+  text-wrap: balance;
 }
 
 :where(blockquote, :not(blockquote) > cite) {
@@ -511,23 +511,23 @@ not to see them */
 }
 
 :where(summary) {
+  padding: var(--size-2) var(--size-3);
+  margin: calc(var(--size-2) * -1) calc(var(--size-3) * -1);
   background: var(--surface-3);
   border-radius: var(--radius-2);
-  margin: calc(var(--size-2) * -1) calc(var(--size-3) * -1);
-  padding: var(--size-2) var(--size-3);
 }
 
 :where(details) {
-  background: var(--surface-2);
-  border-radius: var(--radius-2);
   padding-block: var(--size-2);
   padding-inline: var(--size-3);
+  background: var(--surface-2);
+  border-radius: var(--radius-2);
 }
 
 :where(details[open] > summary) {
-  border-end-end-radius: 0;
-  border-end-start-radius: 0;
   margin-bottom: var(--size-2);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
 }
 
 :where(fieldset) {
@@ -536,13 +536,13 @@ not to see them */
 }
 
 :where(del) {
-  background: var(--red-9);
   color: var(--red-2);
+  background: var(--red-9);
 }
 
 :where(ins) {
-  background: var(--green-9);
   color: var(--green-1);
+  background: var(--green-9);
 }
 
 :where(abbr) {
@@ -550,10 +550,10 @@ not to see them */
 }
 
 :where(dialog) {
+  color: inherit;
   background-color: var(--surface-1);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-6);
-  color: inherit;
 }
 
 :where(dialog)::backdrop {
@@ -576,11 +576,11 @@ not to see them */
 
 :where(table) {
   --nice-inner-radius: calc(var(--radius-3) - 2px);
+  width: fit-content;
 
   background: var(--surface-2);
   border: 1px solid var(--surface-2);
   border-radius: var(--radius-3);
-  width: fit-content;
 }
 
 :where(table[\:not-has\(tfoot\)] tr:last-child td:first-child) {
@@ -616,8 +616,8 @@ not to see them */
 }
 
 :where(th) {
-  background-color: var(--surface-2);
   color: var(--text-1);
+  background-color: var(--surface-2);
 }
 
 :where(table :is(a, button, [contenteditable]):is(:focus-visible)) {
@@ -625,8 +625,8 @@ not to see them */
 }
 
 :where(td) {
-  text-wrap: pretty;
   max-inline-size: var(--size-content-2);
+  text-wrap: pretty;
 }
 
 :where(td, th) {
