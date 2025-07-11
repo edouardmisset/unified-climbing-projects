@@ -1,11 +1,10 @@
 import { Fragment, Suspense } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { trainingTransformConfig } from '~/app/_components/data-calendar/transform-configs'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { GridBreakOutWrapper } from '~/app/visualization/_components/grid-break-out-wrapper/grid-break-out-wrapper'
-import { createYearList, groupDataDaysByYear } from '~/data/helpers'
-import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
-import type { TrainingSession } from '~/schema/training'
+import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function TrainingSessionsCalendarPage() {
@@ -23,13 +22,7 @@ export default async function TrainingSessionsCalendarPage() {
             <h2 className="super-center">{year}</h2>
             <DataCalendar
               data={trainingSessions}
-              dataTransformationFunction={groupDataDaysByYear}
-              fromDataToCalendarEntries={(year, sessions) =>
-                fromTrainingSessionsToCalendarEntries(
-                  year,
-                  sessions as TrainingSession[][],
-                )
-              }
+              config={trainingTransformConfig}
               year={year}
             />
           </Fragment>

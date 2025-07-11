@@ -1,11 +1,10 @@
 import { Fragment, Suspense } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { ascentTransformConfig } from '~/app/_components/data-calendar/transform-configs'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { GridBreakOutWrapper } from '~/app/visualization/_components/grid-break-out-wrapper/grid-break-out-wrapper'
-import { createYearList, groupDataDaysByYear } from '~/data/helpers'
-import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
-import type { Ascent } from '~/schema/ascent'
+import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
 
 export default async function AscentsCalendarPage() {
@@ -24,11 +23,7 @@ export default async function AscentsCalendarPage() {
             <Suspense fallback={<Loader />}>
               <DataCalendar
                 data={allAscents}
-                dataTransformationFunction={groupDataDaysByYear}
-                fromDataToCalendarEntries={(year, ascents) =>
-                  fromAscentsToCalendarEntries(year, ascents as Ascent[][])
-                }
-                key={year}
+                config={ascentTransformConfig}
                 year={year}
               />
             </Suspense>
