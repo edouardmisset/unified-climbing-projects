@@ -1,3 +1,18 @@
+@property --rotating-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes spin-gradient {
+  from {
+    --rotating-angle: 0deg;
+  }
+  to {
+    --rotating-angle: 360deg;
+  }
+}
+
 .card {
   --border-width: calc(var(--size-fluid-0) / 2);
   --half-line-width: .75%;
@@ -19,7 +34,7 @@
     inset: 0;
     content: '';
     background: linear-gradient(
-      135deg,
+      calc(var(--rotating-angle) + 135deg),
       var(--patagonia-color-1) 0%,
       var(--patagonia-color-1) calc(20% - var(--half-line-width)),
       var(--line-color) calc(20% - var(--half-line-width)),
@@ -39,6 +54,9 @@
       var(--patagonia-color-5) calc(80% + var(--half-line-width))
     );
     border-radius: var(--radius-conditional-3);
+  }
+  &:hover {
+    animation: spin-gradient 40s linear infinite;
   }
 
   &::after {
