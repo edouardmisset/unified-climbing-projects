@@ -5,7 +5,6 @@ import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filte
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { useGetAscents } from '~/hooks/use-get-ascents.ts'
-import { Card } from '../card/card.tsx'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
@@ -40,52 +39,33 @@ export function Dashboard() {
         </div>
       ) : (
         <div className={styles.container}>
-          <Card>
-            {' '}
-            <AscentPyramid ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerYearByGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsByStyle ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerDiscipline
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsPerDisciplinePerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <TriesByGrade ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerDisciplinePerGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <DistanceClimbedPerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsByGradesPerCrag
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
+          <AscentPyramid ascents={filteredAscents} className={styles.item} />
+          <AscentsPerYearByGrade
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsByStyle ascents={filteredAscents} className={styles.item} />
+          <AscentsPerDiscipline
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsPerDisciplinePerYear
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <TriesByGrade ascents={filteredAscents} className={styles.item} />
+          <AscentsPerDisciplinePerGrade
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <DistanceClimbedPerYear
+            ascents={filteredAscents}
+            className={styles.item}
+          />
+          <AscentsByGradesPerCrag
+            ascents={filteredAscents}
+            className={styles.item}
+          />
         </div>
       )}
     </div>
