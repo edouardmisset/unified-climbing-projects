@@ -8,6 +8,7 @@
   from {
     --rotating-angle: 0deg;
   }
+
   to {
     --rotating-angle: 360deg;
   }
@@ -55,6 +56,7 @@
     );
     border-radius: var(--radius-conditional-3);
   }
+
   &:hover {
     animation: rotating-gradient 40s linear infinite;
   }
