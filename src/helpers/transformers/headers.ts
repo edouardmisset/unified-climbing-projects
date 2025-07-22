@@ -22,13 +22,13 @@ export const ASCENT_HEADERS = [
   'Departement',
   'Date',
   'Climber',
-  'Ascent Comments',
+  'Comments',
 ] as const
 
 export const TRANSFORMED_ASCENT_HEADER_NAMES = {
   '# Tries': 'tries',
   Area: 'area',
-  'Ascent Comments': 'comments',
+  Comments: 'comments',
   Climber: 'climber',
   Crag: 'crag',
   Date: 'date',
