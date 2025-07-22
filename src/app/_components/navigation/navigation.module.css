@@ -32,9 +32,11 @@
   flex-direction: column;
   gap: var(--size-fluid-1);
   block-size: 100%;
-  padding: 0;
-  margin: 0;
   list-style: none;
+  && {
+    padding: 0;
+    margin: 0;
+  }
 
   @media (width <= 640px) {
     display: none;
