@@ -8,8 +8,8 @@ import { GRADE_TO_NUMBER } from '~/schema/ascent'
 import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
 import styles from './grade-input.module.css'
 
-const min = Math.min(...Object.values(GRADE_TO_NUMBER))
-const max = Math.max(...Object.values(GRADE_TO_NUMBER))
+const globalMinGrade = Math.min(...Object.values(GRADE_TO_NUMBER))
+const globalMaxGrade = Math.max(...Object.values(GRADE_TO_NUMBER))
 
 export function GradeInput(
   props: NumberField.Root.Props & {
@@ -17,7 +17,15 @@ export function GradeInput(
     gradeType?: 'Personal' | 'Topo'
   },
 ) {
-  const { label, onValueChange, value, gradeType = 'Topo', ...rest } = props
+  const {
+    label,
+    onValueChange,
+    value,
+    gradeType = 'Topo',
+    min = globalMinGrade,
+    max = globalMaxGrade,
+    ...rest
+  } = props
   const id = useId()
 
   if (value == null || !onValueChange) {
