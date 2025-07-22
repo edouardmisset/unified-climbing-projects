@@ -11,13 +11,16 @@ type ClimbingStyleToggleGroupProps = {
   isOnsightDisable: boolean
 }
 
-export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
-  const { display, onValueChange, value, isOnsightDisable } = props
+export function ClimbingStyleToggleGroup(
+  props: Omit<ToggleGroup.Props, 'value'> & ClimbingStyleToggleGroupProps,
+) {
+  const { display, onValueChange, value, isOnsightDisable, ...rest } = props
 
   if (!display) return undefined
 
   return (
     <ToggleGroup
+      {...rest}
       aria-label={`Climbing style (${disjunctiveListFormatter(ASCENT_STYLE)}). Default is "Redpoint" if number of tries is greater than 1.`}
       className={styles.Panel}
       defaultValue={['Redpoint']}
