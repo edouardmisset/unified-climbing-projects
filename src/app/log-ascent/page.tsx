@@ -5,7 +5,7 @@ import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
 import { api } from '~/trpc/server.ts'
 import GridLayout from '../_components/grid-layout/grid-layout.tsx'
-import AscentForm from './_components/ascent-form.tsx'
+import AscentForm from './_components/simplified-ascent-form.tsx'
 
 export default async function Log() {
   const latestAscent = await api.ascents.getLatest()

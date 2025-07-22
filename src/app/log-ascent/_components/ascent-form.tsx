@@ -46,6 +46,7 @@ import {
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 import styles from './ascent-form.module.css'
 import { DataList } from './data-list'
+import { fromInternalFormData } from './form-transformers.ts'
 
 type HandleGradeChange = (value: number | null, event?: Event) => void
 
@@ -198,7 +199,8 @@ export default function AscentForm(props: AscentFormProps) {
       name="ascent-form"
       onSubmit={handleSubmit(
         async data => {
-          const promise = onSubmit(data)
+          const transformedData = fromInternalFormData(data)
+          const promise = onSubmit(transformedData)
           toast.promise(promise, {
             error: 'Submission failed, please try again.',
             pending: 'Submitting...',
