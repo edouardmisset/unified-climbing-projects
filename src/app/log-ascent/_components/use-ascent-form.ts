@@ -18,7 +18,6 @@ import {
 type UseAscentFormParams = {
   latestAscent?: Ascent
   minGrade: Grade
-  maxGrade: Grade
 }
 
 export function useAscentForm(params: UseAscentFormParams) {
@@ -71,10 +70,12 @@ export function useAscentForm(params: UseAscentFormParams) {
 
   const handleTriesChange = useCallback(
     (tries: string) => {
+      const triesNumber = Number(tries)
+      if (Number.isNaN(triesNumber) || triesNumber < 0) return
+
       setValue('tries', tries)
 
       // Auto-update style based on tries
-      const triesNumber = Number(tries)
       if (triesNumber > 1) {
         setValue('style', 'Redpoint')
       } else if (triesNumber === 1) {
@@ -109,7 +110,8 @@ export function useAscentForm(params: UseAscentFormParams) {
         success: `You sent ${data.routeName} (${fromNumberToGrade(data.topoGrade)})`,
       })
 
-      if (!(await promise)) return
+      const isSubmissionSuccessful = await promise
+      if (!isSubmissionSuccessful) return
 
       reset()
       await utils.ascents.invalidate()
@@ -117,11 +119,17 @@ export function useAscentForm(params: UseAscentFormParams) {
     },
     error => {
       console.error(error)
-      if ('message' in error) {
-        toast.error(`Error: ${error.message}`)
-      } else {
-        toast.error('Something went wrong')
-      }
+
+      // Type-safe error message extraction
+      const errorMessage =
+        error &&
+        typeof error === 'object' &&
+        'message' in error &&
+        typeof error.message === 'string'
+          ? `Error: ${error.message}`
+          : 'Something went wrong'
+
+      toast.error(errorMessage)
     },
   )
 

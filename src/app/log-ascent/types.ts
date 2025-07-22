@@ -18,6 +18,14 @@ import {
 // Base schema is the original ascentSchema - the source of truth
 const baseAscentSchema = ascentSchema
 
+// Shared validation logic for tries field
+const triesValidation = z
+  .string()
+  .min(1)
+  .refine(val => _1To9999RegEx.test(val), {
+    message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
+  })
+
 // Schema for internal form data (raw HTML form values)
 // Pick only the fields we need for the form and adjust types for HTML inputs
 export const internalFormDataSchema = baseAscentSchema
@@ -49,14 +57,7 @@ export const ascentFormInputSchema = internalFormDataSchema.extend({
   crag: z.string().optional(), // Optional in input
   height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
   rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
-  tries: z
-    .string()
-    .min(1)
-    .refine(val => _1To9999RegEx.test(val), {
-      message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
-    })
-    .transform(Number)
-    .transform(num => num?.toString()),
+  tries: triesValidation,
 })
 
 export type AscentFormInput = z.input<typeof ascentFormInputSchema>
@@ -105,13 +106,7 @@ export const ascentFormOutputSchema = internalFormDataSchema.extend({
     .number()
     .or(z.string())
     .transform(val => fromNumberToGrade(Number(val))),
-  tries: z
-    .string()
-    .min(1)
-    .refine(val => _1To9999RegEx.test(val), {
-      message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
-    })
-    .transform(Number),
+  tries: triesValidation.transform(Number),
 })
 
 export type AscentFormOutput = z.input<typeof ascentFormOutputSchema>

@@ -31,9 +31,9 @@ import {
 import styles from './ascent-form.module.css'
 import { DataList } from './data-list'
 import {
+  buildRecentDateOptions,
   NUMBER_OF_GRADES_ABOVE_MAXIMUM,
   NUMBER_OF_GRADES_BELOW_MINIMUM,
-  recentDateOptions,
 } from './form-constants.ts'
 import { SelectField, TextAreaField, TextField } from './form-fields.tsx'
 import { useAscentForm } from './use-ascent-form.ts'
@@ -69,7 +69,6 @@ export default function SimplifiedAscentForm(props: SimplifiedAscentFormProps) {
   } = useAscentForm({
     latestAscent,
     minGrade,
-    maxGrade,
   })
 
   const {
@@ -129,7 +128,7 @@ export default function SimplifiedAscentForm(props: SimplifiedAscentFormProps) {
         title="Date"
         type="date"
       />
-      <DataList id="date-list" options={recentDateOptions} />
+      <DataList id="date-list" options={buildRecentDateOptions()} />
 
       <TextField
         {...register('routeName')}
