@@ -78,6 +78,10 @@ is my playground for these experiments.
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
+- [ ] Create a (climbing) style component to display the style of the climb
+  (`<em>{style}</em>`)
+- [ ] Create a (climbing) grade component to display the grade of the climb
+  (`<strong>{topoGrade}</strong>`)
 
 ### Refactoring
 
@@ -94,18 +98,17 @@ is my playground for these experiments.
   stash my component somewhere and also improve it using the best practice found
   in HeatJS~~
 - [x] Add the calendars (ascents and training) to the Visualization page
+- [x] Change the logic for inputting the grade when logging an ascent. Use an
+  input along with `+` and `-` buttons to increase or decrease the grade.
 
 </details>
 </br>
 
 - [ ] Refactor the code of the Visualization page => Maybe this should be a
-  navigation page and not a dynamic content page?
+  navigation page and not a dynamic content page
 
-- [ ] Refactor the form components. This needs to be more legible and
-maintainable
-
-- [ ] Change the logic for inputting the grade when logging an ascent. Use an
-  input along with `+` and `-` buttons to increase or decrease the grade.
+- [ ] Refactor the form components. This needs to be more legible and
+  maintainable
 
 ### Tests
 
