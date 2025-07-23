@@ -50,7 +50,7 @@ export function ClimbingStyleToggleGroup(
         }
         value="Onsight"
       >
-        <ClimbingStyle style="Onsight" />
+        <ClimbingStyle climbingStyle="Onsight" />
       </Toggle>
       <Toggle
         aria-label="Flash"
@@ -58,7 +58,7 @@ export function ClimbingStyleToggleGroup(
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >
-        <ClimbingStyle style="Flash" />
+        <ClimbingStyle climbingStyle="Flash" />
       </Toggle>
     </ToggleGroup>
   )

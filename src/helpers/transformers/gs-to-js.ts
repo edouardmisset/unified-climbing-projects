@@ -58,7 +58,7 @@ export type ClimbingAttempt = {
 /**
  * Transforms a tries string to extract style and number of tries.
  * @param {string} value - The tries string to transform.
- * @returns {{ style: Ascent['style'], tries: number }} - The transformed style and tries.
+ * @returns {ClimbingAttempt} - The transformed style and tries.
  */
 export function transformTriesGSToJS(value = ''): ClimbingAttempt {
   const style = value.includes('Onsight')

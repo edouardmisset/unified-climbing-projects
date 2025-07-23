@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react'
+import { type ComponentProps, useMemo } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
 import type { Ascent, Grade } from '~/schema/ascent'
 import styles from './display-grade.module.css'
@@ -9,7 +9,7 @@ interface ClimbingGradeProps {
 }
 
 export function DisplayGrade(
-  props: ComponentProps<'strong'> & ClimbingGradeProps,
+  props: Omit<ComponentProps<'strong'>, 'children'> & ClimbingGradeProps,
 ) {
   const {
     grade,
@@ -18,7 +18,10 @@ export function DisplayGrade(
     ...otherProps
   } = props
 
-  const formattedGrade = formatGrade({ grade, climbingDiscipline })
+  const formattedGrade = useMemo(
+    () => formatGrade({ grade, climbingDiscipline }),
+    [grade, climbingDiscipline],
+  )
 
   return (
     <strong {...otherProps} className={`${styles.grade} ${className}`}>

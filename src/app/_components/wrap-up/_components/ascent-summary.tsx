@@ -39,19 +39,19 @@ export function AscentSummary({ ascents }: { ascents: Ascent[] }) {
 
         {onsightAscents.length === 0 ? undefined : (
           <span className="block">
-            You <ClimbingStyle style="onsighted" />{' '}
+            You <ClimbingStyle climbingStyle="onsighted" />{' '}
             <AscentsWithPopover ascents={onsightAscents} />
           </span>
         )}
         {flashAscents.length === 0 ? undefined : (
           <span className="block">
-            You <ClimbingStyle style="flashed" />{' '}
+            You <ClimbingStyle climbingStyle="flashed" />{' '}
             <AscentsWithPopover ascents={flashAscents} />
           </span>
         )}
         {redpointAscents.length === 0 ? undefined : (
           <span className="block">
-            You <ClimbingStyle style="redpointed" />{' '}
+            You <ClimbingStyle climbingStyle="redpointed" />{' '}
             <AscentsWithPopover ascents={redpointAscents} />
           </span>
         )}

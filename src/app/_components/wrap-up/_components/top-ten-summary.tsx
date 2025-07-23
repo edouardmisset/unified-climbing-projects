@@ -41,7 +41,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
           <>
             <strong className="block">Improve by</strong>
             <span className="block">
-              <ClimbingStyle style="Onsighting" /> a{' '}
+              <ClimbingStyle climbingStyle="Onsighting" /> a{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -52,7 +52,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              <ClimbingStyle style="Flashing" /> a{' '}
+              <ClimbingStyle climbingStyle="Flashing" /> a{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -63,7 +63,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              <ClimbingStyle style="Redpointing" /> a{' '}
+              <ClimbingStyle climbingStyle="Redpointing" /> a{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -74,7 +74,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              <ClimbingStyle style="Flashing" /> a{' '}
+              <ClimbingStyle climbingStyle="Flashing" /> a{' '}
               <DisplayGrade
                 climbingDiscipline="Boulder"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -85,7 +85,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               boulder
             </span>
             <span className="block">
-              <ClimbingStyle style="Redpointing" /> a{' '}
+              <ClimbingStyle climbingStyle="Redpointing" /> a{' '}
               <DisplayGrade
                 climbingDiscipline="Boulder"
                 grade={fromPointToGrade(nextStepPoints, {

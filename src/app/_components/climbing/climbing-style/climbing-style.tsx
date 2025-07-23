@@ -4,20 +4,20 @@ import styles from './climbing-style.module.css'
 
 type InsensitiveStyle = Ascent['style'] | Lowercase<Ascent['style']>
 type Suffix = 'ed' | 'ing'
-type StyleWithSuffix = `${InsensitiveStyle}${Suffix | ''}`
+type StyleWithSuffix = `${InsensitiveStyle}${Suffix}` | InsensitiveStyle
 
 interface ClimbingStyleProps {
-  style: StyleWithSuffix
+  climbingStyle: StyleWithSuffix
 }
 
 export function ClimbingStyle(
-  props: ComponentProps<'em'> & ClimbingStyleProps,
+  props: Omit<ComponentProps<'em'>, 'children'> & ClimbingStyleProps,
 ) {
-  const { style, className = '', ...otherProps } = props
+  const { climbingStyle, className = '', ...otherProps } = props
 
   return (
     <em {...otherProps} className={`${styles.style} ${className}`}>
-      {style}
+      {climbingStyle}
     </em>
   )
 }

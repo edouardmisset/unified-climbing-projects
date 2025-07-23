@@ -1,4 +1,4 @@
 .grade {
   font-family: var(--font-neo-grotesque);
-  font-weight: 700;
+  font-weight: var(--font-weight-7);
 }

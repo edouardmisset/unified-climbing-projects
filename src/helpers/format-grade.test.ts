@@ -2,62 +2,49 @@ import { assert, describe, it } from 'poku'
 import type { Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 
-describe('displayGrade', () => {
-  it('should return uppercase grade for Bouldering (e.g., 7a -> 7A)', () => {
-    const ascentDetails = {
-      climbingDiscipline: 'Boulder',
-      topoGrade: '7a',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-    assert.strictEqual(
-      formatGrade({
-        climbingDiscipline: ascentDetails.climbingDiscipline,
-        grade: ascentDetails.topoGrade,
-      }),
-      '7A',
-    )
-  })
+describe('formatGrade', () => {
+  const BOULDER_TEST_CASES = [
+    { input: '7a', expected: '7A' },
+    { input: '5c', expected: '5C' },
+  ] as const
 
-  it('should return uppercase grade for Bouldering (e.g., 5c -> 5C)', () => {
-    const ascentDetails = {
-      climbingDiscipline: 'Boulder',
-      topoGrade: '5c',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-    assert.strictEqual(
-      formatGrade({
-        climbingDiscipline: ascentDetails.climbingDiscipline,
-        grade: ascentDetails.topoGrade,
-      }),
-      '5C',
-    )
-  })
+  for (const { input, expected } of BOULDER_TEST_CASES) {
+    it(`should return uppercase grade for Bouldering (${input} -> ${expected})`, () => {
+      const ascentDetails = {
+        climbingDiscipline: 'Boulder',
+        topoGrade: input,
+      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+      assert.strictEqual(
+        formatGrade({
+          climbingDiscipline: ascentDetails.climbingDiscipline,
+          grade: ascentDetails.topoGrade,
+        }),
+        expected,
+      )
+    })
+  }
 
-  it('should return grade as is for Route (e.g., 7a -> 7a)', () => {
-    const ascentDetails = {
-      climbingDiscipline: 'Route',
-      topoGrade: '7a',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-    assert.strictEqual(
-      formatGrade({
-        climbingDiscipline: ascentDetails.climbingDiscipline,
-        grade: ascentDetails.topoGrade,
-      }),
-      '7a',
-    )
-  })
+  const ROUTE_TEST_CASES = [
+    { input: '7a', expected: '7a' },
+    { input: '6b+', expected: '6b+' },
+    { input: '8a', expected: '8a' },
+  ] as const
 
-  it('should return grade as is for Route (e.g., 6b+ -> 6b+)', () => {
-    const ascentDetails = {
-      climbingDiscipline: 'Route',
-      topoGrade: '6b+',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-    assert.strictEqual(
-      formatGrade({
-        climbingDiscipline: ascentDetails.climbingDiscipline,
-        grade: ascentDetails.topoGrade,
-      }),
-      '6b+',
-    )
-  })
+  for (const { input, expected } of ROUTE_TEST_CASES) {
+    it(`should return grade as is for Route (${input} -> ${expected})`, () => {
+      const ascentDetails = {
+        climbingDiscipline: 'Route',
+        topoGrade: input,
+      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+      assert.strictEqual(
+        formatGrade({
+          climbingDiscipline: ascentDetails.climbingDiscipline,
+          grade: ascentDetails.topoGrade,
+        }),
+        expected,
+      )
+    })
+  }
 
   it('should return grade as is for Multi-Pitch (e.g., 8a -> 8a)', () => {
     const ascentDetails = {

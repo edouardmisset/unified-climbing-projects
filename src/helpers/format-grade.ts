@@ -12,7 +12,7 @@ interface FormatGradeParams {
 }
 
 /**
- * Displays the grade based on the climbing discipline.
+ * Formats the grade based on the climbing discipline.
  * For bouldering, the grade is displayed in uppercase.
  * For other disciplines, the grade is displayed as is.
  *

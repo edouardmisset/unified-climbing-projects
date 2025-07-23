@@ -39,7 +39,11 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       : ({ '--direction': 'column' } as CSSProperties)
   }, [comments])
 
-  const formattedGrade = formatGrade({ climbingDiscipline, grade: topoGrade })
+  const formattedGrade = useMemo(
+    () => formatGrade({ climbingDiscipline, grade: topoGrade }),
+    [climbingDiscipline, topoGrade],
+  )
+
   return (
     <div className={styles.card}>
       <h2
