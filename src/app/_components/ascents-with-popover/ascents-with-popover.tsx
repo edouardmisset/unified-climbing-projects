@@ -1,4 +1,5 @@
 import { capitalize, wrapInParentheses } from '@edouardmisset/text'
+import { useMemo } from 'react'
 import { displayGrade } from '~/helpers/display-grade'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
@@ -10,25 +11,39 @@ export function AscentsWithPopover({
 }: {
   ascents: Ascent[]
 }): React.JSX.Element {
-  const ascentsDisciplineText = writeAscentsDisciplineText(ascents)
+  const ascentsDisciplineText = useMemo(
+    () => writeAscentsDisciplineText(ascents),
+    [ascents],
+  )
+
+  const text = useMemo(
+    () => `${ascents.length} ${ascentsDisciplineText}`,
+    [ascents.length, ascentsDisciplineText],
+  )
+  const title = useMemo(
+    () => capitalize(ascentsDisciplineText),
+    [ascentsDisciplineText],
+  )
+
+  const ascentsList = useMemo(
+    () => (
+      <div className={styles.popoverContainer}>
+        {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
+          <span
+            key={id}
+          >{`${routeName} ${wrapInParentheses(displayGrade({ climbingDiscipline, grade: topoGrade }))}`}</span>
+        ))}
+      </div>
+    ),
+    [ascents],
+  )
+
   return (
     <Popover
-      popoverDescription={
-        <div className={styles.popoverContainer}>
-          {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
-            <span
-              key={id}
-            >{`${routeName} ${wrapInParentheses(displayGrade({ climbingDiscipline, grade: topoGrade }))}`}</span>
-          ))}
-        </div>
-      }
-      popoverTitle={capitalize(ascentsDisciplineText)}
+      popoverDescription={ascentsList}
+      popoverTitle={title}
       triggerClassName={styles.popover}
-      triggerContent={
-        <span>
-          <strong>{ascents.length}</strong> {ascentsDisciplineText}
-        </span>
-      }
+      triggerContent={<strong>{text}</strong>}
     />
   )
 }
