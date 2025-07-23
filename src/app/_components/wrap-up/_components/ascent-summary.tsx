@@ -38,17 +38,18 @@ export function AscentSummary({ ascents }: { ascents: Ascent[] }) {
 
         {onsightAscents.length === 0 ? undefined : (
           <span className="block">
-            You <i>Onsighted</i> <AscentsWithPopover ascents={onsightAscents} />
+            You <em>Onsighted</em>{' '}
+            <AscentsWithPopover ascents={onsightAscents} />
           </span>
         )}
         {flashAscents.length === 0 ? undefined : (
           <span className="block">
-            You <i>Flashed</i> <AscentsWithPopover ascents={flashAscents} />
+            You <em>Flashed</em> <AscentsWithPopover ascents={flashAscents} />
           </span>
         )}
         {redpointAscents.length === 0 ? undefined : (
           <span className="block">
-            You <i>Redpointed</i>{' '}
+            You <em>Redpointed</em>{' '}
             <AscentsWithPopover ascents={redpointAscents} />
           </span>
         )}

@@ -36,11 +36,9 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
       <h2>Top Ten</h2>
       <p>
         Your score is <strong>{frenchNumberFormatter(topTenScore)}</strong>
-      </p>
-      {lowestTopTenAscent && (
-        <>
-          <h3>Improve by</h3>
-          <p>
+        {lowestTopTenAscent && (
+          <>
+            <strong className="block">Improve by</strong>
             <span className="block">
               Onsighting a{' '}
               <strong>
@@ -97,9 +95,9 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               </strong>{' '}
               boulder
             </span>
-          </p>
-        </>
-      )}
+          </>
+        )}
+      </p>
     </Card>
   )
 }

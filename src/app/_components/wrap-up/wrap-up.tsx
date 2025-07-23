@@ -8,6 +8,7 @@ import { HardestClimbsSummary } from './_components/hardest-climbs-summary'
 import { TopTenSummary } from './_components/top-ten-summary'
 import { VerticalMilestoneSummary } from './_components/vertical-milestone-summary'
 import { ALL_TIME } from './constants'
+import styles from './wrap-up.module.css'
 
 export default async function WrapUp({ year }: { year?: number }) {
   const ascents = await api.ascents.getAll({ year })
@@ -26,7 +27,10 @@ export default async function WrapUp({ year }: { year?: number }) {
   }
 
   return (
-    <GridLayout gridClassName="padding" title={year ?? ALL_TIME}>
+    <GridLayout
+      gridClassName={`padding ${styles.wrapUp}`}
+      title={year ?? ALL_TIME}
+    >
       <DaysOutsideSummary ascents={ascents} year={year} />
       <AscentSummary ascents={ascents} />
       <HardestClimbsSummary ascents={ascents} />
