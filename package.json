@@ -93,6 +93,8 @@
     "@clerk/shared",
     "@vercel/speed-insights",
     "core-js",
+    "esbuild",
+    "oxc-resolver",
     "sharp"
   ]
 }
