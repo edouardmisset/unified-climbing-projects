@@ -16,7 +16,7 @@ export function ClimbingStyle(
   const { climbingStyle, className = '', ...otherProps } = props
 
   return (
-    <em {...otherProps} className={`${styles.style} ${className}`}>
+    <em {...otherProps} className={`${styles.climbingStyle} ${className}`}>
       {climbingStyle}
     </em>
   )

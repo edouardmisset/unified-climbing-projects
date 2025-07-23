@@ -1,4 +1,5 @@
-.style {
+.climbingStyle {
   font-family: var(--font-handwritten);
-  font-weight: 700;
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-7);
 }
