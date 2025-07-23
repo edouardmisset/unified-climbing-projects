@@ -52,13 +52,13 @@ type SimplifiedAscentFormProps = {
   crags?: string[]
 }
 
-export default function SimplifiedAscentForm(props: SimplifiedAscentFormProps) {
+export function SimplifiedAscentForm(props: SimplifiedAscentFormProps) {
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
 
   const {
     form,
-    formState,
+    state: { numberOfTries, isBoulder },
     handlers: {
       onSubmit,
       onTopoGradeChange,
@@ -76,7 +76,6 @@ export default function SimplifiedAscentForm(props: SimplifiedAscentFormProps) {
     watch,
     formState: { isSubmitting },
   } = form
-  const { numberOfTries, isBoulder } = formState
 
   // Prepare grade ranges
   const adjustedMinGrade = Math.max(

@@ -35,6 +35,7 @@ export function useAscentForm(params: UseAscentFormParams) {
       routeName: '',
       style:
         latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+      tries: '1',
     },
     minGrade,
   )
@@ -135,7 +136,7 @@ export function useAscentForm(params: UseAscentFormParams) {
 
   return {
     form,
-    formState: {
+    state: {
       numberOfTries,
       isBoulder,
     },

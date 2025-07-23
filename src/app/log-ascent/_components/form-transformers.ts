@@ -12,7 +12,6 @@ import type {
  * Handles all conversions between internal form state and external data formats
  */
 
-// Shared default values for consistent bidirectional transformations
 const FORM_DEFAULTS = {
   climbingDiscipline: 'Route',
   crag: '',
@@ -29,10 +28,6 @@ const FORM_DEFAULTS = {
   topoGrade: 1,
   comments: '',
 } as const satisfies InternalFormData
-
-// Use the inferred types from Zod schemas
-export type { InternalFormData } from '../types.ts'
-export type ActionFormData = AscentFormOutput
 
 // Transform external data to internal form format
 export function toInternalFormData(
@@ -75,7 +70,7 @@ export function toInternalFormData(
 }
 
 // Transform internal form data to external format (for the action/schema)
-export function fromInternalFormData(data: InternalFormData): ActionFormData {
+export function fromInternalFormData(data: InternalFormData): AscentFormOutput {
   const {
     date = FORM_DEFAULTS.date,
     routeName = FORM_DEFAULTS.routeName,
