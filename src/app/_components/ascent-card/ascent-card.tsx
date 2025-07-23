@@ -1,6 +1,6 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import { type CSSProperties, useMemo } from 'react'
-import { displayGrade } from '~/helpers/display-grade'
+import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
   formatCragAndArea,
@@ -39,7 +39,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
       : ({ '--direction': 'column' } as CSSProperties)
   }, [comments])
 
-  const formattedGrade = displayGrade({ climbingDiscipline, grade: topoGrade })
+  const formattedGrade = formatGrade({ climbingDiscipline, grade: topoGrade })
   return (
     <div className={styles.card}>
       <h2

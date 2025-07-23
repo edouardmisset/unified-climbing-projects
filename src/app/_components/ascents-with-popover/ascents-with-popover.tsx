@@ -1,8 +1,8 @@
-import { capitalize, wrapInParentheses } from '@edouardmisset/text'
+import { capitalize } from '@edouardmisset/text'
 import { useMemo } from 'react'
-import { displayGrade } from '~/helpers/display-grade'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
+import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
@@ -29,9 +29,14 @@ export function AscentsWithPopover({
     () => (
       <div className={styles.popoverContainer}>
         {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
-          <span
-            key={id}
-          >{`${routeName} ${wrapInParentheses(displayGrade({ climbingDiscipline, grade: topoGrade }))}`}</span>
+          <span key={id}>
+            {routeName} (
+            <DisplayGrade
+              climbingDiscipline={climbingDiscipline}
+              grade={topoGrade}
+            />
+            )
+          </span>
         ))}
       </div>
     ),

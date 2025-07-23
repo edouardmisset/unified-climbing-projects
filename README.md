@@ -72,16 +72,16 @@ is my playground for these experiments.
 - [ ] ~~Redo the styles of the slider of the ascent log page~~
 - [x] Add dark / light theme (also add a toggle). Replace the purple theme with
   the dark theme
+- [x] Create a (climbing) style component to display the style of the climb
+  (`<em>{style}</em>`)
+- [x] Create a (climbing) grade component to display the grade of the climb
+  (`<strong>{topoGrade}</strong>`)
 
 </details>
 </br>
 
 - [ ] Update the Dashboard page to display the charts in a carousel (use lib ?)
   and lazy load the charts
-- [ ] Create a (climbing) style component to display the style of the climb
-  (`<em>{style}</em>`)
-- [ ] Create a (climbing) grade component to display the grade of the climb
-  (`<strong>{topoGrade}</strong>`)
 
 ### Refactoring
 

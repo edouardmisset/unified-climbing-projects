@@ -1,6 +1,6 @@
-import { displayGrade } from '~/helpers/display-grade'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
+import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascents-popover-description.module.css'
 
 export function AscentsPopoverDescription({
@@ -23,9 +23,10 @@ export function AscentsPopoverDescription({
           }}
         >
           {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
-          <strong>
-            {displayGrade({ climbingDiscipline, grade: topoGrade })}
-          </strong>
+          <DisplayGrade
+            climbingDiscipline={climbingDiscipline}
+            grade={topoGrade}
+          />
           ) {showCrag ? `- ${crag}` : ''}
         </li>
       ))}

@@ -15,7 +15,7 @@ component-name
 
 - `default export`s MUST be used for pages.
 - Folders and files MUST use kebab-case to avoid cross-OS issues.
-  - **Example:** `my-component/index.tsx`
+  - **Example:** `my-component/my-component.tsx`
 
 ## Naming Conventions
 

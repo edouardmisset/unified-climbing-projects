@@ -2,6 +2,7 @@ import { Toggle } from '@base-ui-components/react/toggle'
 import { ToggleGroup } from '@base-ui-components/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
+import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
 import styles from './climbing-style-toggle-group.module.css'
 
 type ClimbingStyleToggleGroupProps = {
@@ -49,7 +50,7 @@ export function ClimbingStyleToggleGroup(
         }
         value="Onsight"
       >
-        Onsight
+        <ClimbingStyle style="Onsight" />
       </Toggle>
       <Toggle
         aria-label="Flash"
@@ -57,7 +58,7 @@ export function ClimbingStyleToggleGroup(
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >
-        Flash
+        <ClimbingStyle style="Flash" />
       </Toggle>
     </ToggleGroup>
   )

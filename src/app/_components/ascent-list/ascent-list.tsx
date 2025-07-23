@@ -1,7 +1,7 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { useMemo } from 'react'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
-import { displayGrade } from '~/helpers/display-grade'
+import { formatGrade } from '~/helpers/format-grade'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
   formatCragAndArea,
@@ -16,6 +16,7 @@ import {
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
+import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascent-list.module.css'
 
 export function AscentList({
@@ -128,7 +129,7 @@ export function AscentList({
             rating,
             points,
           }) => {
-            const formattedGrade = displayGrade({
+            const formattedGrade = formatGrade({
               climbingDiscipline,
               grade: topoGrade,
             })
@@ -154,7 +155,7 @@ export function AscentList({
                 <td className={styles.cell}>
                   <em
                     className="monospace"
-                    title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` - Personal Grade: ${displayGrade({ climbingDiscipline, grade: personalGrade })}`}`}
+                    title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` - Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
                   >
                     <span>
                       {formattedGrade.endsWith('+')
@@ -165,10 +166,10 @@ export function AscentList({
                     personalGrade === undefined ? undefined : (
                       <sup>
                         {' '}
-                        {displayGrade({
-                          climbingDiscipline,
-                          grade: personalGrade,
-                        })}
+                        <DisplayGrade
+                          climbingDiscipline={climbingDiscipline}
+                          grade={personalGrade}
+                        />
                       </sup>
                     )}
                   </em>

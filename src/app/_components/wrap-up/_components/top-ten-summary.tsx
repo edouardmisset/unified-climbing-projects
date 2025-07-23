@@ -4,10 +4,11 @@ import {
   fromAscentToPoints,
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
-import { displayGrade } from '~/helpers/display-grade'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { Card } from '../../card/card'
+import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
+import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
 export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
@@ -40,59 +41,58 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
           <>
             <strong className="block">Improve by</strong>
             <span className="block">
-              <em>Onsighting</em> a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              <ClimbingStyle style="Onsighting" /> a{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Onsight',
                 })}
-              </strong>{' '}
+              />{' '}
               route
             </span>
             <span className="block">
-              <em>Flashing</em> a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              <ClimbingStyle style="Flashing" /> a{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Flash',
                 })}
-              </strong>{' '}
+              />{' '}
               route
             </span>
             <span className="block">
-              <em>Redpointing</em> a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              <ClimbingStyle style="Redpointing" /> a{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Redpoint',
                 })}
-              </strong>{' '}
+              />{' '}
               route
             </span>
             <span className="block">
-              <em>Flashing</em> a{' '}
-              <strong>
-                {displayGrade({
+              <ClimbingStyle style="Flashing" /> a{' '}
+              <DisplayGrade
+                climbingDiscipline="Boulder"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
-                  grade: fromPointToGrade(nextStepPoints, {
-                    climbingDiscipline: 'Boulder',
-                    style: 'Flash',
-                  }),
+                  style: 'Flash',
                 })}
-              </strong>{' '}
+              />{' '}
               boulder
             </span>
             <span className="block">
-              <em>Redpointing</em> a{' '}
-              <strong>
-                {displayGrade({
+              <ClimbingStyle style="Redpointing" /> a{' '}
+              <DisplayGrade
+                climbingDiscipline="Boulder"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
-                  grade: fromPointToGrade(nextStepPoints, {
-                    climbingDiscipline: 'Boulder',
-                    style: 'Redpoint',
-                  }),
+                  style: 'Redpoint',
                 })}
-              </strong>{' '}
+              />{' '}
               boulder
             </span>
           </>

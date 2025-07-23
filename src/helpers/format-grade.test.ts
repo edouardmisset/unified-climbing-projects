@@ -1,6 +1,6 @@
 import { assert, describe, it } from 'poku'
 import type { Ascent } from '~/schema/ascent'
-import { displayGrade } from './display-grade'
+import { formatGrade } from './format-grade'
 
 describe('displayGrade', () => {
   it('should return uppercase grade for Bouldering (e.g., 7a -> 7A)', () => {
@@ -9,7 +9,7 @@ describe('displayGrade', () => {
       topoGrade: '7a',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     assert.strictEqual(
-      displayGrade({
+      formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
@@ -23,7 +23,7 @@ describe('displayGrade', () => {
       topoGrade: '5c',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     assert.strictEqual(
-      displayGrade({
+      formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
@@ -37,7 +37,7 @@ describe('displayGrade', () => {
       topoGrade: '7a',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     assert.strictEqual(
-      displayGrade({
+      formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
@@ -51,7 +51,7 @@ describe('displayGrade', () => {
       topoGrade: '6b+',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     assert.strictEqual(
-      displayGrade({
+      formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
@@ -65,7 +65,7 @@ describe('displayGrade', () => {
       topoGrade: '8a',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     assert.strictEqual(
-      displayGrade({
+      formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
