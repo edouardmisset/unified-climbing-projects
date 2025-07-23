@@ -33,6 +33,7 @@
   gap: var(--size-fluid-1);
   block-size: 100%;
   list-style: none;
+
   && {
     padding: 0;
     margin: 0;
