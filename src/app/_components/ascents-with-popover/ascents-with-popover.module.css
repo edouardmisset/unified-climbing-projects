@@ -2,9 +2,10 @@
   display: inline-block;
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
-
   text-decoration-style: dashed;
   text-decoration-color: currentcolor;
+  text-underline-offset: 0.2em;
+
   cursor: pointer;
 
   transition: color var(--sneeze);
