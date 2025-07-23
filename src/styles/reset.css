@@ -149,6 +149,7 @@
 }
 
 :where(b, strong) {
+  font-family: var(--font-neo-grotesque);
   font-weight: var(--font-weight-7);
 }
 
@@ -482,7 +483,9 @@ not to see them */
 }
 
 :where(i, em) {
+  font-family: var(--font-handwritten);
   font-style: italic;
+  font-weight: var(--font-weight-6);
 }
 
 :where(figure) {
