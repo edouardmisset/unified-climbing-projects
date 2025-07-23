@@ -44,7 +44,7 @@ describe('transformAscentFromJSToGS', () => {
     const expectedGSRecord = {
       '# Tries': '01 Flash',
       Area: 'Le Cul de Chien',
-      'Ascent Comments': 'Great climb!',
+      Comments: 'Great climb!',
       Climber: 'Edouard Misset',
       Crag: 'Fontainebleau',
       Date: '30/10/2024',
@@ -86,7 +86,7 @@ describe('transformAscentFromJSToGS', () => {
     const expectedGSRecord = {
       '# Tries': '03 go',
       Area: 'Secteur 13',
-      'Ascent Comments': '',
+      Comments: '',
       Climber: 'Edouard Misset',
       Crag: 'Balme de Yenne',
       Date: '10/05/2022',
@@ -131,7 +131,7 @@ describe('transformAscentFromJSToGS', () => {
     const expectedGSRecord = {
       '# Tries': '001 Onsight',
       Area: 'Berlin',
-      'Ascent Comments': '',
+      Comments: '',
       Climber: 'Edouard Misset',
       Crag: 'Ceuse',
       Date: '15/07/2023',
@@ -159,7 +159,7 @@ describe('transformAscentFromGSToJS', () => {
     const boulderingGSRecord: GSAscentRecord = {
       '# Tries': '01 Flash',
       Area: 'Le Cul de Chien',
-      'Ascent Comments': 'Great climb!',
+      Comments: 'Great climb!',
       Climber: 'Edouard Misset',
       Crag: 'Fontainebleau',
       Date: '30/10/2024',
@@ -203,7 +203,7 @@ describe('transformAscentFromGSToJS', () => {
     const routeGSRecord: GSAscentRecord = {
       '# Tries': '03 go',
       Area: 'Secteur 13',
-      'Ascent Comments': '',
+      Comments: '',
       Climber: 'Edouard Misset',
       Crag: 'Balme de Yenne',
       Date: '10/05/2022',
@@ -244,7 +244,7 @@ describe('transformAscentFromGSToJS', () => {
     const emptyGSRecord: GSAscentRecord = {
       '# Tries': '001 Onsight',
       Area: 'Berlin',
-      'Ascent Comments': '',
+      Comments: '',
       Climber: 'Edouard Misset',
       Crag: 'Ceuse',
       Date: '15/07/2023',
