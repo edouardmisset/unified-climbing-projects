@@ -40,7 +40,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
           <>
             <strong className="block">Improve by</strong>
             <span className="block">
-              Onsighting a{' '}
+              <em>Onsighting</em> a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
@@ -50,7 +50,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              Flashing a{' '}
+              <em>Flashing</em> a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
@@ -60,7 +60,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              Redpointing a{' '}
+              <em>Redpointing</em> a{' '}
               <strong>
                 {fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
@@ -70,7 +70,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               route
             </span>
             <span className="block">
-              Flashing a{' '}
+              <em>Flashing</em> a{' '}
               <strong>
                 {displayGrade({
                   climbingDiscipline: 'Boulder',
@@ -83,7 +83,7 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
               boulder
             </span>
             <span className="block">
-              Redpointing a{' '}
+              <em>Redpointing</em> a{' '}
               <strong>
                 {displayGrade({
                   climbingDiscipline: 'Boulder',

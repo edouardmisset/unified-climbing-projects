@@ -14,6 +14,7 @@
   block-size: var(--size-7);
   padding-inline: var(--size-2);
   margin: 0;
+  font-family: var(--font-handwritten);
   color: var(--color-gray-600);
   user-select: none;
   outline: 0;
