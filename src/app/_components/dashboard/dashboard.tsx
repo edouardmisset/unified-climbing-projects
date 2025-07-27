@@ -1,11 +1,12 @@
 'use client'
 
 import { Link } from 'next-view-transitions'
-import { Suspense } from 'react'
+import { memo, Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { useGetAscents } from '~/hooks/use-get-ascents.ts'
+import type { Ascent } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
@@ -31,46 +32,40 @@ export function Dashboard() {
     <div className="flex flex-column gap align-center grid-full-width">
       <AscentsFilterBar allAscents={allAscents} />
       <Suspense fallback={<Loader />}>
-        {filteredAscents.length === 0 ? (
-          <div className=" flex-column gap w100 padding">
-            <h2>Nothing there...</h2>
-            <p>
-              Try adjusting your filters or{' '}
-              <Link href={'/log-ascent'}>logging new ascents</Link>.
-            </p>
-          </div>
-        ) : (
-          <div className={styles.container}>
-            <AscentPyramid ascents={filteredAscents} className={styles.item} />
-            <AscentsPerYearByGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-            <AscentsByStyle ascents={filteredAscents} className={styles.item} />
-            <AscentsPerDiscipline
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-            <AscentsPerDisciplinePerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-            <TriesByGrade ascents={filteredAscents} className={styles.item} />
-            <AscentsPerDisciplinePerGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-            <DistanceClimbedPerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-            <AscentsByGradesPerCrag
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </div>
-        )}
+        <DashboardStatistics ascents={filteredAscents} />
       </Suspense>
     </div>
   )
+}
+
+const DashboardStatistics = memo(({ ascents }: DashboardStatisticsProps) => {
+  if (ascents.length === 0) {
+    return (
+      <div className=" flex-column gap w100 padding">
+        <h2>Nothing there...</h2>
+        <p>
+          Try adjusting your filters or{' '}
+          <Link href={'/log-ascent'}>logging new ascents</Link>.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.container}>
+      <AscentPyramid ascents={ascents} className={styles.item} />
+      <AscentsPerYearByGrade ascents={ascents} className={styles.item} />
+      <AscentsByStyle ascents={ascents} className={styles.item} />
+      <AscentsPerDiscipline ascents={ascents} className={styles.item} />
+      <AscentsPerDisciplinePerYear ascents={ascents} className={styles.item} />
+      <TriesByGrade ascents={ascents} className={styles.item} />
+      <AscentsPerDisciplinePerGrade ascents={ascents} className={styles.item} />
+      <DistanceClimbedPerYear ascents={ascents} className={styles.item} />
+      <AscentsByGradesPerCrag ascents={ascents} className={styles.item} />
+    </div>
+  )
+})
+
+type DashboardStatisticsProps = {
+  ascents: Ascent[]
 }
