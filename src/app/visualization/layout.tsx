@@ -1,9 +1,17 @@
 'use client'
+
 import { usePathname, useRouter } from 'next/navigation'
-import { type ReactNode, useCallback, useMemo, useTransition } from 'react'
+import {
+  type ReactNode,
+  Suspense,
+  useCallback,
+  useMemo,
+  useTransition,
+} from 'react'
 import { AscentsTrainingSwitch } from '~/app/_components/ascents-training-switch/ascents-training-switch'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
+import { Loader } from '../_components/loader/loader'
 import {
   PATH_TO_VISUALIZATION,
   visualizationPathSchema,
@@ -86,9 +94,10 @@ export default function Layout({ children }: { children: ReactNode }) {
             />
           </div>
         }
+        gridClassName="padding"
         title="Visualization"
       >
-        {children}
+        <Suspense fallback={<Loader />}>{children}</Suspense>
         {isPending && <div className={styles.overlay} />}
       </GridLayout>
     </div>

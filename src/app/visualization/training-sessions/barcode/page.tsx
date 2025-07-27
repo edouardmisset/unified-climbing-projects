@@ -1,8 +1,7 @@
-import { Suspense } from 'react'
+import type { Metadata } from 'next'
 import { Barcode } from '~/app/_components/barcode/barcode'
 import { TrainingBar } from '~/app/_components/barcode/training-bar'
 import { Dialog } from '~/app/_components/dialog/dialog'
-import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
@@ -14,48 +13,44 @@ export default async function TrainingSessionsBarcodePage() {
 
   const groupedTrainingWeekly = groupDataWeeksByYear(trainingSessions)
 
-  return (
-    <Suspense fallback={<Loader />}>
-      {Object.entries(groupedTrainingWeekly)
-        .sort(([a], [b]) => Number(b) - Number(a))
-        .map(([year, yearTraining]) => (
-          <div className="flex-column w100" key={year}>
-            <h2 className="center-text">
-              <Dialog
-                content={
-                  <Barcode>
-                    {yearTraining.map((weeklyTraining, index) => {
-                      const [firstTrainingOfTheWeek] = weeklyTraining
-                      return (
-                        <TrainingBar
-                          key={firstTrainingOfTheWeek?.date ?? index}
-                          weeklyTraining={weeklyTraining}
-                        />
-                      )
-                    })}
-                  </Barcode>
-                }
-                title={year}
+  return Object.entries(groupedTrainingWeekly)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, yearTraining]) => (
+      <div className="flex-column w100" key={year}>
+        <h2 className="center-text">
+          <Dialog
+            content={
+              <Barcode>
+                {yearTraining.map((weeklyTraining, index) => {
+                  const [firstTrainingOfTheWeek] = weeklyTraining
+                  return (
+                    <TrainingBar
+                      key={firstTrainingOfTheWeek?.date ?? index}
+                      weeklyTraining={weeklyTraining}
+                    />
+                  )
+                })}
+              </Barcode>
+            }
+            title={year}
+          />
+        </h2>
+        <Barcode>
+          {yearTraining.map((weeklyTraining, index) => {
+            const [firstTrainingOfTheWeek] = weeklyTraining
+            return (
+              <TrainingBar
+                key={firstTrainingOfTheWeek?.date ?? index}
+                weeklyTraining={weeklyTraining}
               />
-            </h2>
-            <Barcode>
-              {yearTraining.map((weeklyTraining, index) => {
-                const [firstTrainingOfTheWeek] = weeklyTraining
-                return (
-                  <TrainingBar
-                    key={firstTrainingOfTheWeek?.date ?? index}
-                    weeklyTraining={weeklyTraining}
-                  />
-                )
-              })}
-            </Barcode>
-          </div>
-        ))}
-    </Suspense>
-  )
+            )
+          })}
+        </Barcode>
+      </div>
+    ))
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   description: 'Barcode visualization of training sessions',
   keywords: ['climbing', 'visualization', 'training', 'barcode'],
   title: 'Training Sessions Barcode Visualization 🖼️',

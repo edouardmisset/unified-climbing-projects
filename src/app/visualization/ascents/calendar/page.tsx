@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Fragment, Suspense } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
 import { Loader } from '~/app/_components/loader/loader'
@@ -16,30 +17,28 @@ export default async function AscentsCalendarPage() {
   const ascentYears = createYearList(allAscents, { continuous: false })
 
   return (
-    <Suspense fallback={<Loader />}>
-      <GridBreakOutWrapper>
-        {ascentYears.map(year => (
-          <Fragment key={year}>
-            <h2 className="super-center">{year}</h2>
-            <Suspense fallback={<Loader />}>
-              <DataCalendar
-                data={allAscents}
-                dataTransformationFunction={groupDataDaysByYear}
-                fromDataToCalendarEntries={(year, ascents) =>
-                  fromAscentsToCalendarEntries(year, ascents as Ascent[][])
-                }
-                key={year}
-                year={year}
-              />
-            </Suspense>
-          </Fragment>
-        ))}
-      </GridBreakOutWrapper>
-    </Suspense>
+    <GridBreakOutWrapper>
+      {ascentYears.map(year => (
+        <Fragment key={year}>
+          <h2 className="super-center">{year}</h2>
+          <Suspense fallback={<Loader />}>
+            <DataCalendar
+              data={allAscents}
+              dataTransformationFunction={groupDataDaysByYear}
+              fromDataToCalendarEntries={(year, ascents) =>
+                fromAscentsToCalendarEntries(year, ascents as Ascent[][])
+              }
+              key={year}
+              year={year}
+            />
+          </Suspense>
+        </Fragment>
+      ))}
+    </GridBreakOutWrapper>
   )
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   description: 'Calendar visualization of climbing ascents',
   keywords: ['climbing', 'visualization', 'ascents', 'calendar'],
   title: 'Ascents Calendar 🖼️',
