@@ -1,8 +1,10 @@
 'use client'
 
+import { Suspense } from 'react'
 import NotFound from '~/app/not-found'
 import { useTrainingSessionsFilter } from '~/hooks/use-training-sessions-filter'
 import type { TrainingSession } from '~/schema/training'
+import { Loader } from '../loader/loader'
 import { TrainingSessionFilterBar } from '../training-session-filter-bar/training-session-filter-bar'
 import { TrainingSessionList } from '../training-session-list/training-session-list'
 
@@ -20,7 +22,9 @@ export function FilteredTrainingSessionList({
   return (
     <section className="flex flex-column gap grid-full-width">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
-      <TrainingSessionList trainingSessions={filteredTrainingSessions} />
+      <Suspense fallback={<Loader />}>
+        <TrainingSessionList trainingSessions={filteredTrainingSessions} />
+      </Suspense>
     </section>
   )
 }

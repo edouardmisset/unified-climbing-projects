@@ -1,5 +1,7 @@
 'use client'
 
+import { Loader } from 'lucide-react'
+import { Suspense } from 'react'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
 import type { Ascent } from '~/schema/ascent'
@@ -14,7 +16,9 @@ export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
   return (
     <section className="flex flex-column gap grid-full-width">
       <AscentsFilterBar allAscents={ascents} />
-      <AscentList ascents={filteredAscents} />
+      <Suspense fallback={<Loader />}>
+        <AscentList ascents={filteredAscents} />
+      </Suspense>
     </section>
   )
 }

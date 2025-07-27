@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
@@ -17,13 +18,21 @@ export default function AscentsFilterBar({
 }: {
   allAscents: Ascent[]
 }) {
-  const yearList = createYearList(allAscents, {
-    descending: true,
-    continuous: false,
-  })
+  const yearList = useMemo(
+    () =>
+      createYearList(allAscents, {
+        descending: true,
+        continuous: false,
+      }),
+    [allAscents],
+  )
 
-  const cragList = [...new Set(allAscents.map(({ crag }) => crag))].sort(
-    (a, b) => compareStringsAscending(a, b),
+  const cragList = useMemo(
+    () =>
+      [...new Set(allAscents.map(({ crag }) => crag))].sort((a, b) =>
+        compareStringsAscending(a, b),
+      ),
+    [allAscents],
   )
 
   const {
@@ -37,10 +46,18 @@ export default function AscentsFilterBar({
     setCrag,
   } = useAscentsQueryState()
 
-  const handleYearChange = createChangeHandler(setYear)
-  const handleStyleChange = createChangeHandler(setStyle)
-  const handleDisciplineChange = createChangeHandler(setDiscipline)
-  const handleCragChange = createChangeHandler(setCrag)
+  const handleYearChange = createChangeHandler<typeof selectedYear>(value =>
+    setYear(value),
+  )
+  const handleStyleChange = createChangeHandler<typeof selectedStyle>(value =>
+    setStyle(value),
+  )
+  const handleDisciplineChange = createChangeHandler<typeof selectedDiscipline>(
+    value => setDiscipline(value),
+  )
+  const handleCragChange = createChangeHandler<typeof selectedCrag>(value =>
+    setCrag(value),
+  )
 
   return (
     <StickyFilterBar>

@@ -3,15 +3,6 @@ import type { StringDate } from '~/types/generic'
 import { type DayDescriptor, YearGrid } from '../year-grid/year-grid'
 import styles from './data-calendar.module.css'
 
-type DataCalendarProps<DataArray extends (Data & StringDate)[], Data> = {
-  year: number
-  data: DataArray
-  dataTransformationFunction: (input: DataArray) => {
-    [year: number]: Data[][]
-  }
-  fromDataToCalendarEntries: (year: number, data?: Data[][]) => DayDescriptor[]
-}
-
 export const DataCalendar = memo(
   <Data, DataArray extends (Data & StringDate)[]>(
     props: DataCalendarProps<DataArray, Data>,
@@ -47,3 +38,12 @@ export const DataCalendar = memo(
     )
   },
 )
+
+type DataCalendarProps<DataArray extends (Data & StringDate)[], Data> = {
+  year: number
+  data: DataArray
+  dataTransformationFunction: (input: DataArray) => {
+    [year: number]: Data[][]
+  }
+  fromDataToCalendarEntries: (year: number, data?: Data[][]) => DayDescriptor[]
+}

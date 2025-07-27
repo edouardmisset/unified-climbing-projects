@@ -1,7 +1,8 @@
-import type { ChangeEventHandler } from 'react'
+import { type ChangeEventHandler, startTransition } from 'react'
 
 export function createChangeHandler<T>(
   setter: (value: T) => void,
 ): ChangeEventHandler<HTMLSelectElement> {
-  return event => setter(event.target.value as unknown as T)
+  return event =>
+    startTransition(() => setter(event.target.value as unknown as T))
 }

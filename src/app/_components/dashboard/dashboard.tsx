@@ -1,6 +1,7 @@
 'use client'
 
 import { Link } from 'next-view-transitions'
+import { Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
@@ -29,45 +30,47 @@ export function Dashboard() {
   return (
     <div className="flex flex-column gap align-center grid-full-width">
       <AscentsFilterBar allAscents={allAscents} />
-      {filteredAscents.length === 0 ? (
-        <div className=" flex-column gap w100 padding">
-          <h2>Nothing there...</h2>
-          <p>
-            Try adjusting your filters or{' '}
-            <Link href={'/log-ascent'}>logging new ascents</Link>.
-          </p>
-        </div>
-      ) : (
-        <div className={styles.container}>
-          <AscentPyramid ascents={filteredAscents} className={styles.item} />
-          <AscentsPerYearByGrade
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-          <AscentsByStyle ascents={filteredAscents} className={styles.item} />
-          <AscentsPerDiscipline
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-          <AscentsPerDisciplinePerYear
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-          <TriesByGrade ascents={filteredAscents} className={styles.item} />
-          <AscentsPerDisciplinePerGrade
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-          <DistanceClimbedPerYear
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-          <AscentsByGradesPerCrag
-            ascents={filteredAscents}
-            className={styles.item}
-          />
-        </div>
-      )}
+      <Suspense fallback={<Loader />}>
+        {filteredAscents.length === 0 ? (
+          <div className=" flex-column gap w100 padding">
+            <h2>Nothing there...</h2>
+            <p>
+              Try adjusting your filters or{' '}
+              <Link href={'/log-ascent'}>logging new ascents</Link>.
+            </p>
+          </div>
+        ) : (
+          <div className={styles.container}>
+            <AscentPyramid ascents={filteredAscents} className={styles.item} />
+            <AscentsPerYearByGrade
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+            <AscentsByStyle ascents={filteredAscents} className={styles.item} />
+            <AscentsPerDiscipline
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+            <AscentsPerDisciplinePerYear
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+            <TriesByGrade ascents={filteredAscents} className={styles.item} />
+            <AscentsPerDisciplinePerGrade
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+            <DistanceClimbedPerYear
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+            <AscentsByGradesPerCrag
+              ascents={filteredAscents}
+              className={styles.item}
+            />
+          </div>
+        )}
+      </Suspense>
     </div>
   )
 }

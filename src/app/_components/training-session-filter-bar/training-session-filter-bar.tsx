@@ -43,10 +43,18 @@ export function TrainingSessionFilterBar({
     setYear,
   } = useTrainingSessionsQueryState()
 
-  const handleYearChange = createChangeHandler(setYear)
-  const handleSessionTypeChange = createChangeHandler(setSessionType)
-  const handleLoadLevelChange = createChangeHandler(setLoad)
-  const handleLocationChange = createChangeHandler(setLocation)
+  const handleYearChange = createChangeHandler<typeof selectedYear>(value =>
+    setYear(value),
+  )
+  const handleSessionTypeChange = createChangeHandler<
+    typeof selectedSessionType
+  >(value => setSessionType(value as typeof selectedSessionType))
+  const handleLoadLevelChange = createChangeHandler<typeof selectedLoad>(
+    value => setLoad(value),
+  )
+  const handleLocationChange = createChangeHandler<typeof selectedLocation>(
+    value => setLocation(value),
+  )
 
   return (
     <StickyFilterBar>

@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useMemo } from 'react'
+import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import type { TrainingSession } from '~/schema/training'
@@ -32,5 +32,7 @@ export function useTrainingSessionsFilter(
     ],
   )
 
-  return filteredTrainingSessions
+  const deferredTrainingSessions = useDeferredValue(filteredTrainingSessions)
+
+  return deferredTrainingSessions
 }

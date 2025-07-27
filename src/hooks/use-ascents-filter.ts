@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useMemo } from 'react'
+import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
 import type { Ascent } from '~/schema/ascent'
@@ -21,7 +21,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedGrade,
   } = useAscentsQueryState()
 
-  return useMemo(
+  const filteredAscents = useMemo(
     () =>
       filterAscents(ascents, {
         climbingDiscipline:
@@ -43,4 +43,8 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
       selectedYear,
     ],
   )
+
+  const deferredFilteredAscents = useDeferredValue(filteredAscents)
+
+  return deferredFilteredAscents
 }
