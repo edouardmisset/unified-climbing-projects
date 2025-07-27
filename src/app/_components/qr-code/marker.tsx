@@ -28,7 +28,7 @@ export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
 
         const gridArea = `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`
         return (
-          <i
+          <span
             key={gridArea}
             style={{
               backgroundColor:

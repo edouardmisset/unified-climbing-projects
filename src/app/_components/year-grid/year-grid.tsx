@@ -89,7 +89,7 @@ export const YearGrid = memo(
             index,
           ) =>
             date === '' ? (
-              <i
+              <span
                 className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
                 key={shortText?.toString() || index}
               />

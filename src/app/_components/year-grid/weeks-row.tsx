@@ -5,7 +5,7 @@ import styles from './year-grid.module.css'
 export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
   columns.map((columnNumber, index) => {
     if (columnNumber === 0)
-      return <i className={`super-center ${styles.firstCell}`} key={0} />
+      return <span className={`super-center ${styles.firstCell}`} key={0} />
 
     const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
 
@@ -16,7 +16,7 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
         : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
 
     return (
-      <i
+      <span
         className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
         // biome-ignore lint/suspicious/noArrayIndexKey: We need to differentiate the two 53 columns, so we use the index as the key
         key={`W${columnNumber}-${index}column`}
@@ -25,7 +25,7 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
         }}
       >
         {columnNumber}
-      </i>
+      </span>
     )
   }),
 )

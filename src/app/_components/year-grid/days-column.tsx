@@ -6,12 +6,12 @@ const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 export const DaysColumn = memo(() =>
   weekDays.map((day, index) => {
     return index === 0 ? (
-      <i
+      <span
         className={`${styles.yearGridCell} ${styles.firstCell}`}
         key="empty-first-cell"
       />
     ) : (
-      <i
+      <span
         className={`contrast-color ${styles.firstColumn}`}
         key={day}
         style={
@@ -20,7 +20,7 @@ export const DaysColumn = memo(() =>
         title={day}
       >
         {day}
-      </i>
+      </span>
     )
   }),
 )
