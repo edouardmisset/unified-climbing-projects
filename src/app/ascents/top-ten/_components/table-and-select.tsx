@@ -1,7 +1,7 @@
 'use client'
 
 import { useQueryState } from 'nuqs'
-import { Suspense } from 'react'
+import { Suspense, useDeferredValue } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import { TopTenTable } from '~/app/_components/top-ten-table/top-ten-table'
 import type { Ascent } from '~/schema/ascent'
@@ -18,6 +18,8 @@ export function TableAndSelect({
     parse: value => timeframeSchema.parse(value),
   })
 
+  const deferredTimeframe = useDeferredValue(timeframe)
+
   const handleChange = (value: Timeframe) => {
     setTimeframe(value)
   }
@@ -26,7 +28,7 @@ export function TableAndSelect({
     <div className="flex flex-column gap grid-full-width">
       <TimeframeSelect onChange={handleChange} value={timeframe} />
       <Suspense fallback={<Loader />}>
-        <TopTenTable initialTopTen={topTen} timeframe={timeframe} />
+        <TopTenTable initialTopTen={topTen} timeframe={deferredTimeframe} />
       </Suspense>
     </div>
   )
