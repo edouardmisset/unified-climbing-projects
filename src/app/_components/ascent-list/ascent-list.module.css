@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(10, auto);
   column-gap: var(--size-fluid-1);
-  max-inline-size: 100%;
+  inline-size: min(100%, 90ch);
   max-block-size: 80dvh;
   margin-inline: auto;
 
