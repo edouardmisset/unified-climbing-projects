@@ -8,7 +8,7 @@ import { Link } from '../link/link'
 import { Arrow } from '../svg/arrow/arrow'
 import styles from './navigation.module.css'
 
-export function Navigation(): React.JSX.Element {
+export function Navigation() {
   const { user } = useUser()
 
   return (

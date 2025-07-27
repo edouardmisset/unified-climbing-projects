@@ -11,10 +11,10 @@ export function TimeframeSelect({
 }: {
   value: Timeframe
   onChange: (value: Timeframe, event?: Event) => void
-}): React.JSX.Element {
+}) {
   return (
     <Select.Root onValueChange={onChange} value={value}>
-      <Select.Trigger className={styles.Select}>
+      <Select.Trigger className={`${styles.Select} self-center`}>
         <Select.Value>{deSlugify(value)}</Select.Value>
         <Select.Icon className={styles.SelectIcon}>
           <ChevronUpDownIcon />

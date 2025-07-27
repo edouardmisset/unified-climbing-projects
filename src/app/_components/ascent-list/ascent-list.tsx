@@ -27,7 +27,7 @@ export function AscentList({
   ascents: Ascent[]
   showDetails?: boolean
   showPoints?: boolean
-}): React.JSX.Element {
+}) {
   const totalAscentPoints = useMemo(
     () => sum(ascents.map(({ points }) => points ?? 0)),
     [ascents],
@@ -155,7 +155,7 @@ export function AscentList({
                 <td className={styles.cell}>
                   <em
                     className="monospace"
-                    title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` - Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
+                    title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
                   >
                     <span>
                       {formattedGrade.endsWith('+')

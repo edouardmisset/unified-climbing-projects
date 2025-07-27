@@ -6,7 +6,7 @@ type DataListProps = {
   }[]
 }
 
-export function DataList({ id, options }: DataListProps): React.JSX.Element {
+export function DataList({ id, options }: DataListProps) {
   return (
     <datalist id={id}>
       {options.map(({ value, label }) => (

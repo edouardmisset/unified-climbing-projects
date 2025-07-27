@@ -69,22 +69,22 @@
   display: flex;
 
   &[data-side='top'] {
-    bottom: -8px;
+    inset-block-end: -8px;
     rotate: 180deg;
   }
 
   &[data-side='bottom'] {
-    top: -8px;
+    inset-block-start: -8px;
     rotate: 0deg;
   }
 
   &[data-side='left'] {
-    right: -13px;
+    inset-inline-end: -13px;
     rotate: 90deg;
   }
 
   &[data-side='right'] {
-    left: -13px;
+    inset-inline-start: -13px;
     rotate: -90deg;
   }
 }

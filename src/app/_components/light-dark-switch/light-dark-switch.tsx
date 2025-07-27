@@ -7,7 +7,7 @@ export function LightDarkSwitch({
 }: {
   checked: boolean
   onChange: (checked: boolean) => void
-}): React.JSX.Element {
+}) {
   return (
     <Switch.Root
       checked={checked}

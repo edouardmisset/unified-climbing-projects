@@ -12,7 +12,7 @@ export function TableAndSelect({
   initialTopTen: topTen,
 }: {
   initialTopTen: Ascent[]
-}): React.JSX.Element {
+}) {
   const [timeframe, setTimeframe] = useQueryState<Timeframe>('timeframe', {
     defaultValue: 'year',
     parse: value => timeframeSchema.parse(value),

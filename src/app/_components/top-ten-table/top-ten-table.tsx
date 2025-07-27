@@ -10,7 +10,7 @@ export function TopTenTable({
 }: {
   timeframe: Timeframe
   initialTopTen: Ascent[]
-}): React.JSX.Element {
+}) {
   const { data: topTen = initialTopTen } = api.ascents.getTopTen.useQuery({
     timeframe,
   })

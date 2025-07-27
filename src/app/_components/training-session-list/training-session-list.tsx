@@ -6,7 +6,7 @@ export function TrainingSessionList({
   trainingSessions,
 }: {
   trainingSessions: TrainingSession[]
-}): React.JSX.Element {
+}) {
   return (
     <table className={styles.table}>
       <thead className={`${styles.header} grid-full-width`}>

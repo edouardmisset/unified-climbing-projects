@@ -6,11 +6,7 @@ import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
-export function AscentsWithPopover({
-  ascents,
-}: {
-  ascents: Ascent[]
-}): React.JSX.Element {
+export function AscentsWithPopover({ ascents }: { ascents: Ascent[] }) {
   const ascentsDisciplineText = useMemo(
     () => writeAscentsDisciplineText(ascents),
     [ascents],

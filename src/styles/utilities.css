@@ -38,6 +38,10 @@
   justify-content: space-between;
 }
 
+.self-center {
+  align-self: center;
+}
+
 .margin-auto {
   margin: auto;
 }
@@ -108,8 +112,8 @@
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
 .visually-hidden {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  inline-size: 1px;
+  block-size: 1px;
   overflow: hidden;
   white-space: nowrap;
   clip: rect(1px, 1px, 1px, 1px);

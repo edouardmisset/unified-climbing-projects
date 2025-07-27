@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { scan } from 'react-scan'
 
-export function ReactScan(): React.JSX.Element {
+export function ReactScan() {
   useEffect(
     () =>
       scan({

@@ -529,7 +529,7 @@ not to see them */
 }
 
 :where(details[open] > summary) {
-  margin-bottom: var(--size-2);
+  margin-block-end: var(--size-2);
   border-end-start-radius: 0;
   border-end-end-radius: 0;
 }
@@ -580,7 +580,7 @@ not to see them */
 
 :where(table) {
   --nice-inner-radius: calc(var(--radius-3) - 2px);
-  width: fit-content;
+  inline-size: fit-content;
 
   background: var(--surface-2);
   border: 1px solid var(--surface-2);
@@ -635,7 +635,7 @@ not to see them */
 
 :where(td, th) {
   padding: var(--size-fluid-0);
-  text-align: left;
+  text-align: start;
 }
 
 :where(:is(td, th):not([align])) {

@@ -40,7 +40,7 @@
 
 .themeToggle {
   padding: var(--size-fluid-0);
-  margin-top: auto;
+  margin-block-start: auto;
   background: transparent;
   border: 1px solid var(--gray-5);
 

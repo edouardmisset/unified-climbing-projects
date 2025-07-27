@@ -100,7 +100,7 @@
 }
 
 .ButtonIcon {
-  margin-right: -0.25rem;
+  margin-inline-end: -0.25rem;
 }
 
 .Positioner {
@@ -142,22 +142,22 @@
   display: flex;
 
   &[data-side='top'] {
-    bottom: -8px;
+    inset-block-end: -8px;
     rotate: 180deg;
   }
 
   &[data-side='bottom'] {
-    top: -8px;
+    inset-block-start: -8px;
     rotate: 0deg;
   }
 
   &[data-side='left'] {
-    right: -13px;
+    inset-inline-end: -13px;
     rotate: 90deg;
   }
 
   &[data-side='right'] {
-    left: -13px;
+    inset-inline-start: -13px;
     rotate: -90deg;
   }
 }
@@ -165,8 +165,8 @@
 .Item {
   display: flex;
   padding-block: 0.5rem;
-  padding-right: 2rem;
-  padding-left: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: 2rem;
   font-size: 0.875rem;
   line-height: 1rem;
   cursor: default;
@@ -214,8 +214,8 @@
 
 .GroupLabel {
   padding-block: 0.5rem;
-  padding-right: 2rem;
-  padding-left: 1.875rem;
+  padding-inline-start: 1.875rem;
+  padding-inline-end: 2rem;
   font-size: 0.875rem;
   line-height: 1rem;
   color: var(--color-gray-600);

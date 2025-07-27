@@ -3,8 +3,8 @@
   display: flex;
 
   justify-content: unset;
-  width: 2.5rem;
-  height: 1.5rem;
+  inline-size: 2.5rem;
+  block-size: 1.5rem;
   padding: 1px;
   margin: 0;
   appearance: none;

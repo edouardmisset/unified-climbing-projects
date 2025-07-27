@@ -48,8 +48,8 @@
 
 .Popup {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   box-sizing: border-box;
   min-inline-size: var(--size-content-2);
   max-inline-size: calc(100vw - var(--size-fluid-3));

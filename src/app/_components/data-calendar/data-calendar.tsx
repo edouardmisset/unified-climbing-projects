@@ -15,7 +15,7 @@ type DataCalendarProps<DataArray extends (Data & StringDate)[], Data> = {
 export const DataCalendar = memo(
   <Data, DataArray extends (Data & StringDate)[]>(
     props: DataCalendarProps<DataArray, Data>,
-  ): React.JSX.Element => {
+  ) => {
     const {
       year,
       data,
