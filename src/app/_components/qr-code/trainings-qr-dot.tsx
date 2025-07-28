@@ -27,12 +27,9 @@ export const TrainingsQRDot = memo(
       [firstSession?.date],
     )
 
-    if (
-      trainingSessions === undefined ||
-      trainingSessions.length === 0 ||
-      firstSession === undefined
-    )
+    if (trainingSessions.length === 0 || firstSession === undefined)
       return <span />
+
     return (
       <Popover
         popoverDescription={

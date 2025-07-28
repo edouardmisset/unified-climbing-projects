@@ -6,8 +6,7 @@ import styles from '../ascent-list/ascent-list.module.css'
 
 export const TrainingSessionList = memo(
   ({ trainingSessions }: TrainingSessionListProps) => {
-    if (trainingSessions === undefined || trainingSessions.length === 0)
-      return <NotFound />
+    if (trainingSessions.length === 0) return <NotFound />
 
     return (
       <table className={styles.table}>

@@ -23,11 +23,11 @@ import styles from './ascent-list.module.css'
 export const AscentList = memo(
   ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
     const totalAscentPoints = useMemo(
-      () => sum(ascents.map(({ points }) => points ?? 0)),
+      () => sum(ascents?.map(({ points }) => points ?? 0)),
       [ascents],
     )
 
-    if (ascents === undefined || ascents.length === 0) return <NotFound />
+    if (ascents.length === 0) return <NotFound />
 
     return (
       <table className={styles.table}>

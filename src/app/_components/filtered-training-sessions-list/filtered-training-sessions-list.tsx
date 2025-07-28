@@ -17,8 +17,7 @@ export function FilteredTrainingSessionList({
     trainingSessions ?? [],
   )
 
-  if (trainingSessions === undefined || trainingSessions.length === 0)
-    return <NotFound />
+  if (trainingSessions.length === 0) return <NotFound />
 
   return (
     <section className="flex flex-column grid-full-width">

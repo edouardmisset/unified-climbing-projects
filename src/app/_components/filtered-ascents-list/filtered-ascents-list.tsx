@@ -11,7 +11,7 @@ import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
 export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
   const filteredAscents = useAscentsFilter(ascents ?? [])
 
-  if (ascents === undefined || ascents.length === 0) return <NotFound />
+  if (ascents.length === 0) return <NotFound />
 
   return (
     <section className="flex flex-column grid-full-width">
