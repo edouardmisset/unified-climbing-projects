@@ -79,10 +79,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   )
 
   return (
-    <div className={`${styles.container} w100 flex-column`}>
+    <div className={`${styles.container} w100 flex-column gap`}>
       <GridLayout
         additionalContent={
-          <div className={`flex-row space-evenly gap ${styles.header}`}>
+          <div className={`flex-row padding space-evenly gap ${styles.header}`}>
             <ToggleGroup
               onValueChange={handleVisualizationChange}
               selectedValue={activeVisualizationType}
@@ -94,7 +94,6 @@ export default function Layout({ children }: { children: ReactNode }) {
             />
           </div>
         }
-        gridClassName="padding"
         title="Visualization"
       >
         <Suspense fallback={<Loader />}>{children}</Suspense>

@@ -29,7 +29,7 @@ export function Dashboard() {
   if (!allAscents) return <NotFound />
 
   return (
-    <div className="flex flex-column gap align-center grid-full-width">
+    <div className="flex flex-column align-center grid-full-width">
       <AscentsFilterBar allAscents={allAscents} />
       <Suspense fallback={<Loader />}>
         <DashboardStatistics ascents={filteredAscents} />

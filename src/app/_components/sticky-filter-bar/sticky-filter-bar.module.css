@@ -10,6 +10,7 @@
   z-index: var(--layer-2);
 
   inline-size: 100%;
+  margin-block-end: var(--size-fluid-1);
 }
 
 .background {

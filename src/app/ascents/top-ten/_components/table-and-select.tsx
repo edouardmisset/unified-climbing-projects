@@ -25,7 +25,7 @@ export function TableAndSelect({
   }
 
   return (
-    <div className="flex flex-column gap grid-full-width">
+    <div className="flex flex-column gap grid-full-width padding">
       <TimeframeSelect onChange={handleChange} value={timeframe} />
       <Suspense fallback={<Loader />}>
         <TopTenTable initialTopTen={topTen} timeframe={deferredTimeframe} />
