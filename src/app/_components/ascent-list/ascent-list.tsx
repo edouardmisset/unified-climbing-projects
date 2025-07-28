@@ -1,5 +1,5 @@
 import { sum } from '@edouardmisset/math/sum.ts'
-import { memo, useMemo } from 'react'
+import { type CSSProperties, memo, useMemo } from 'react'
 import NotFound from '~/app/not-found'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
 import { formatGrade } from '~/helpers/format-grade'
@@ -20,6 +20,8 @@ import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascent-list.module.css'
 
+const columnsByDefault = 6
+
 export const AscentList = memo(
   ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
     const totalAscentPoints = useMemo(
@@ -27,10 +29,24 @@ export const AscentList = memo(
       [ascents],
     )
 
+    const columns = useMemo(
+      () => columnsByDefault + (showDetails ? 4 : 0) + (showPoints ? 1 : 0),
+      [showDetails, showPoints],
+    )
+
+    const tableStyles = useMemo(
+      () =>
+        ({
+          '--columns': columns,
+          '--max-width': columns > 8 ? '120ch' : '90ch',
+        }) as CSSProperties,
+      [columns],
+    )
+
     if (ascents.length === 0) return <NotFound />
 
     return (
-      <table className={styles.table}>
+      <table className={styles.table} style={tableStyles}>
         <thead className={`${styles.header} grid-full-width`}>
           <tr className={`${styles.headerRow} grid-full-width`}>
             <th
