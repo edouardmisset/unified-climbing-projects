@@ -1,10 +1,14 @@
 import { memo } from 'react'
+import NotFound from '~/app/not-found'
 import { prettyLongDate } from '~/helpers/formatters'
 import { fromSessionTypeToLabel, type TrainingSession } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
 export const TrainingSessionList = memo(
   ({ trainingSessions }: TrainingSessionListProps) => {
+    if (trainingSessions === undefined || trainingSessions.length === 0)
+      return <NotFound />
+
     return (
       <table className={styles.table}>
         <thead className={`${styles.header} grid-full-width`}>

@@ -1,5 +1,6 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { memo, useMemo } from 'react'
+import NotFound from '~/app/not-found'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
 import { formatGrade } from '~/helpers/format-grade'
 import { formatOrdinals } from '~/helpers/format-plurals'
@@ -25,6 +26,9 @@ export const AscentList = memo(
       () => sum(ascents.map(({ points }) => points ?? 0)),
       [ascents],
     )
+
+    if (ascents === undefined || ascents.length === 0) return <NotFound />
+
     return (
       <table className={styles.table}>
         <thead className={`${styles.header} grid-full-width`}>

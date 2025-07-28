@@ -17,10 +17,11 @@ export function FilteredTrainingSessionList({
     trainingSessions ?? [],
   )
 
-  if (!trainingSessions) return <NotFound />
+  if (trainingSessions === undefined || trainingSessions.length === 0)
+    return <NotFound />
 
   return (
-    <section className="flex flex-column gap grid-full-width">
+    <section className="flex flex-column grid-full-width">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
       <Suspense fallback={<Loader />}>
         <TrainingSessionList trainingSessions={filteredTrainingSessions} />
