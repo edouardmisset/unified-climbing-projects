@@ -268,3 +268,7 @@ export const ascentSchema = z.object({
   tries: z.number().int().min(1),
 })
 export type Ascent = z.infer<typeof ascentSchema>
+
+export type AscentListProps = {
+  ascents: Ascent[]
+}

@@ -6,14 +6,15 @@ import {
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
 import { roundToTen } from '~/helpers/math'
-import { fromSessionTypeToLabel, type TrainingSession } from '~/schema/training'
+import {
+  fromSessionTypeToLabel,
+  type TrainingSessionListProps,
+} from '~/schema/training'
 import styles from './training-popover-description.module.css'
 
 export function TrainingPopoverDescription({
   trainingSessions,
-}: {
-  trainingSessions: TrainingSession[]
-}) {
+}: TrainingSessionListProps) {
   if (trainingSessions.length === 0 || trainingSessions[0] === undefined)
     return undefined
 

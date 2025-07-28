@@ -99,3 +99,7 @@ export const trainingSessionSchema = z.object({
   volume: percentSchema.optional(),
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
+
+export type TrainingSessionListProps = {
+  trainingSessions: TrainingSession[]
+}

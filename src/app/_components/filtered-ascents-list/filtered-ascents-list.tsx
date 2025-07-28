@@ -4,11 +4,11 @@ import { Loader } from 'lucide-react'
 import { Suspense } from 'react'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { AscentList } from '../ascent-list/ascent-list'
 import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
 
-export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
+export function FilteredAscentList({ ascents }: AscentListProps) {
   const filteredAscents = useAscentsFilter(ascents ?? [])
 
   if (ascents.length === 0) return <NotFound />

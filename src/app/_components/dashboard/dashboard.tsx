@@ -6,7 +6,7 @@ import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filte
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import { useGetAscents } from '~/hooks/use-get-ascents.ts'
-import type { Ascent } from '~/schema/ascent.ts'
+import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
@@ -38,7 +38,7 @@ export function Dashboard() {
   )
 }
 
-const DashboardStatistics = memo(({ ascents }: DashboardStatisticsProps) => {
+const DashboardStatistics = memo(({ ascents }: AscentListProps) => {
   if (ascents.length === 0) {
     return (
       <div className=" flex-column gap w100 padding">
@@ -65,7 +65,3 @@ const DashboardStatistics = memo(({ ascents }: DashboardStatisticsProps) => {
     </div>
   )
 })
-
-type DashboardStatisticsProps = {
-  ascents: Ascent[]
-}

@@ -1,7 +1,10 @@
 import { memo } from 'react'
 import NotFound from '~/app/not-found'
 import { prettyLongDate } from '~/helpers/formatters'
-import { fromSessionTypeToLabel, type TrainingSession } from '~/schema/training'
+import {
+  fromSessionTypeToLabel,
+  type TrainingSessionListProps,
+} from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
 export const TrainingSessionList = memo(
@@ -83,7 +86,3 @@ export const TrainingSessionList = memo(
     )
   },
 )
-
-type TrainingSessionListProps = {
-  trainingSessions: TrainingSession[]
-}

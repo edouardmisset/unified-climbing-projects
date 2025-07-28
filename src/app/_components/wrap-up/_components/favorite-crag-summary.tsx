@@ -1,10 +1,10 @@
 import { getCragsDetails } from '~/helpers/filter-ascents'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
 
-export function FavoriteCragSummary({ ascents }: { ascents: Ascent[] }) {
+export function FavoriteCragSummary({ ascents }: AscentListProps) {
   const { numberOfCrags, mostFrequentCrag, crags } = getCragsDetails(ascents)
 
   if (

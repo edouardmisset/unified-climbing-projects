@@ -1,10 +1,10 @@
 import { filterAscents, getHardestAscent } from '~/helpers/filter-ascents'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-export function HardestClimbsSummary({ ascents }: { ascents: Ascent[] }) {
+export function HardestClimbsSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0) return undefined
 
   const highestDegree = Math.max(

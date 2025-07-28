@@ -6,7 +6,7 @@ import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-que
 import {
   LOAD_CATEGORIES,
   SESSION_TYPES,
-  type TrainingSession,
+  type TrainingSessionListProps,
 } from '~/schema/training.ts'
 import { createChangeHandler } from '../ascents-filter-bar/helpers.ts'
 import { CustomSelect } from '../custom-select/custom-select.tsx'
@@ -14,9 +14,7 @@ import { StickyFilterBar } from '../sticky-filter-bar/sticky-filter-bar.tsx'
 
 export function TrainingSessionFilterBar({
   trainingSessions,
-}: {
-  trainingSessions: TrainingSession[]
-}) {
+}: TrainingSessionListProps) {
   const yearList = createYearList(trainingSessions, {
     descending: true,
     continuous: false,

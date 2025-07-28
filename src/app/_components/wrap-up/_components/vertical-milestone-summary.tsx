@@ -3,11 +3,11 @@ import { sum } from '@edouardmisset/math/sum.ts'
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-export function VerticalMilestoneSummary({ ascents }: { ascents: Ascent[] }) {
+export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
   const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
 

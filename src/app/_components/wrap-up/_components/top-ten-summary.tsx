@@ -5,13 +5,13 @@ import {
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { Card } from '../../card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
-export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
+export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,
     points: fromAscentToPoints(ascent),

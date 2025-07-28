@@ -1,12 +1,12 @@
 import { capitalize } from '@edouardmisset/text'
 import { useMemo } from 'react'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
-export function AscentsWithPopover({ ascents }: { ascents: Ascent[] }) {
+export function AscentsWithPopover({ ascents }: AscentListProps) {
   const ascentsDisciplineText = useMemo(
     () => writeAscentsDisciplineText(ascents),
     [ascents],
