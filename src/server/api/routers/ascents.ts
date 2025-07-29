@@ -58,7 +58,7 @@ export const ascentsRouter = createTRPCRouter({
         await addAscent(input)
         return true
       } catch (error) {
-        globalThis.console.error(error)
+        globalThis.console.error('Error adding ascent:', error)
         return false
       }
     }),

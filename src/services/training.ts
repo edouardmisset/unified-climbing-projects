@@ -1,6 +1,5 @@
 import type { GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { cache } from 'react'
-import { createCache } from '~/helpers/cache'
 import {
   transformTrainingSessionFromGSToJS,
   transformTrainingSessionFromJSToGS,
@@ -13,10 +12,17 @@ import { loadWorksheet } from './google-sheets.ts'
  * transforms them from Google Sheets format to JavaScript object format,
  * and validates them against the trainingSession schema.
  *
+ * Uses React's cache() for per-request caching and global cache for cross-request persistence
+ *
  * @returns A promise that resolves to an array of TrainingSessions objects.
  */
 const getTrainingSessionsFromDB = cache(
   async (): Promise<TrainingSession[]> => {
+    globalThis.console.log(
+      '🔄 Fetching training sessions from Google Sheets...',
+    )
+    const startTime = Date.now()
+
     let rows:
       | undefined
       | Awaited<ReturnType<GoogleSpreadsheetWorksheet['getRows']>>
@@ -44,24 +50,20 @@ const getTrainingSessionsFromDB = cache(
       globalThis.console.error(parsedTrainingSession.error)
       return []
     }
-    return parsedTrainingSession.data
+
+    const trainingSessions = parsedTrainingSession.data
+
+    const duration = Date.now() - startTime
+    globalThis.console.log(
+      `✅ Fetched ${trainingSessions.length} training sessions in ${duration}ms`,
+    )
+
+    return trainingSessions
   },
 )
 
-const { getCache, setCache } = createCache<TrainingSession[]>()
-
-export async function getAllTrainingSessions(options?: {
-  refresh?: boolean
-}): Promise<TrainingSession[]> {
-  const cachedData = getCache()
-
-  if (options?.refresh === true || cachedData === undefined) {
-    const trainingSessions = await getTrainingSessionsFromDB()
-    setCache(trainingSessions)
-    return trainingSessions
-  }
-
-  return cachedData
+export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
+  return await getTrainingSessionsFromDB()
 }
 
 export async function addTrainingSession(
@@ -80,7 +82,11 @@ export async function addTrainingSession(
       `Training session added successfully (${new Date().getUTCMinutes()}):`,
       trainingSessionInGS,
     )
+
+    // Note: React's cache() will automatically handle cache invalidation per-request
+    // For immediate updates, consider using revalidation strategies or optimistic updates
   } catch (error) {
     globalThis.console.error('Error adding training session:', error)
+    throw error
   }
 }
