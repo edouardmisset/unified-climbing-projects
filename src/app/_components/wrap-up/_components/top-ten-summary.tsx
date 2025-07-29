@@ -11,7 +11,7 @@ import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
-export async function TopTenSummary({ ascents }: AscentListProps) {
+export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,
     points: fromAscentToPoints(ascent),

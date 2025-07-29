@@ -9,7 +9,10 @@ import styles from './timeframe-select.module.css'
 export function TimeframeSelect() {
   const [timeframe, setTimeframe] = useQueryState<Timeframe>('timeframe', {
     defaultValue: 'year',
-    parse: value => timeframeSchema.parse(value),
+    parse: value => {
+      const result = timeframeSchema.safeParse(value)
+      return result.success ? result.data : 'year'
+    },
   })
 
   const handleChange = (value: Timeframe) => {
