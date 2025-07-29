@@ -2,24 +2,19 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
-import type { Timeframe } from '~/schema/generic'
-import { api } from '~/trpc/server'
+import { api, HydrateClient } from '~/trpc/server'
 import { TableAndSelect } from './_components/table-and-select'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ timeframe: Timeframe | undefined }>
-}): Promise<React.JSX.Element> {
-  const topTen = await api.ascents.getTopTen({
-    timeframe: (await searchParams).timeframe || 'year',
-  })
+export default async function Page(): Promise<React.JSX.Element> {
+  const allAscents = await api.ascents.getAll()
   return (
-    <GridLayout title="Top Ten Ascents">
-      <Suspense fallback={<Loader />}>
-        <TableAndSelect initialTopTen={topTen} />
-      </Suspense>
-    </GridLayout>
+    <HydrateClient>
+      <GridLayout title="Top Ten Ascents">
+        <Suspense fallback={<Loader />}>
+          <TableAndSelect ascents={allAscents} />
+        </Suspense>
+      </GridLayout>
+    </HydrateClient>
   )
 }
 

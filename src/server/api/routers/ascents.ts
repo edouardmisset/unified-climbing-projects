@@ -3,7 +3,6 @@ import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
 import { z } from 'zod'
-import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { calculateTopTenScore } from '~/helpers/calculate-top-ten'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
@@ -195,42 +194,6 @@ export const ascentsRouter = createTRPCRouter({
       )
 
       return similarAscents
-    }),
-  getTopTen: publicProcedure
-    .input(
-      z
-        .object({
-          timeframe: timeframeSchema.optional(),
-          year: optionalAscentYear,
-        })
-        .optional(),
-    )
-    .output(
-      z.array(
-        z.object({
-          ...ascentSchema.shape,
-          points: ascentSchema.required().shape.points,
-        }),
-      ),
-    )
-    .query(async ({ input = {} }) => {
-      const { timeframe = 'year', year = new Date().getFullYear() } = input
-
-      const allAscents = await getAllAscents()
-
-      const sortedAscentsWithPoints = allAscents
-        .filter(({ date }) => {
-          if (timeframe === 'all-time') return true
-          if (timeframe === 'year') return isDateInYear(date, year)
-          if (timeframe === 'last-12-months') return isDateInLast12Months(date)
-          return false
-        })
-        .map(ascent =>
-          Object.assign(ascent, { points: fromAscentToPoints(ascent) }),
-        )
-        .sort((a, b) => b.points - a.points)
-
-      return sortedAscentsWithPoints.slice(0, 10)
     }),
   search: publicProcedure
     .input(
