@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
+import { useTransitionRouter } from 'next-view-transitions'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -83,7 +83,7 @@ export default function AscentForm(props: AscentFormProps) {
   const { user, isLoaded: isUserLoaded } = useUser()
   const utils = api.useUtils()
 
-  const router = useRouter()
+  const router = useTransitionRouter()
 
   const defaultAscentToParse = {
     area: latestAscent?.area,

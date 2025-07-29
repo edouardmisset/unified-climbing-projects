@@ -2,7 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { useRouter } from 'next/navigation'
+import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
@@ -61,7 +61,7 @@ function getFormattedList<T extends string>(
 
 export default function TrainingSessionForm() {
   const { user } = useUser()
-  const router = useRouter()
+  const router = useTransitionRouter()
   const utils = api.useUtils()
 
   const result = trainingSessionSchema

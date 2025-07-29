@@ -1,6 +1,7 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import { useTransitionRouter } from 'next-view-transitions'
 import {
   type ReactNode,
   Suspense,
@@ -21,7 +22,7 @@ import {
 import styles from './page.module.css'
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const router = useRouter()
+  const router = useTransitionRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
 
