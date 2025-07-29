@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math'
-import z from 'zod'
+import { z } from 'zod'
 import { calculateEfficiencyPercentage } from '~/helpers/calculate-efficiency-percentage'
 import { calculateProgressionPercentage } from '~/helpers/calculate-progression-percentage'
 import { calculateScore } from '~/helpers/calculate-score'
