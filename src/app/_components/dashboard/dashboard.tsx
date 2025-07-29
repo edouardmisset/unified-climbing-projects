@@ -5,7 +5,6 @@ import { memo, Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
-import { useGetAscents } from '~/hooks/use-get-ascents.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
@@ -19,18 +18,14 @@ import { TriesByGrade } from '../charts/tries-by-grade/tries-by-grade.tsx'
 import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
-export function Dashboard() {
-  const { data: allAscents = [], isLoading } = useGetAscents()
+export function Dashboard({ ascents }: AscentListProps) {
+  const filteredAscents = useAscentsFilter(ascents)
 
-  const filteredAscents = useAscentsFilter(allAscents)
-
-  if (isLoading) return <Loader />
-
-  if (!allAscents) return <NotFound />
+  if (filteredAscents.length === 0) return <NotFound />
 
   return (
     <div className="flex flex-column align-center grid-full-width">
-      <AscentsFilterBar allAscents={allAscents} />
+      <AscentsFilterBar allAscents={ascents} />
       <Suspense fallback={<Loader />}>
         <DashboardStatistics ascents={filteredAscents} />
       </Suspense>
