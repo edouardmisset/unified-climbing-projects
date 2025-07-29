@@ -21,7 +21,7 @@ import styles from './dashboard.module.css'
 export function Dashboard({ ascents }: AscentListProps) {
   const filteredAscents = useAscentsFilter(ascents)
 
-  if (filteredAscents.length === 0) return <NotFound />
+  if (ascents.length === 0) return <NotFound />
 
   return (
     <div className="flex flex-column align-center grid-full-width">
