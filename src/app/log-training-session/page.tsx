@@ -8,7 +8,11 @@ import GridLayout from '../_components/grid-layout/grid-layout.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
 export default async function LogTrainingSession() {
-  await api.training.getAllLocations.prefetch()
+  try {
+    await api.training.getAllLocations.prefetch()
+  } catch (error) {
+    globalThis.console.error('Failed to prefetch locations:', error)
+  }
 
   return (
     <Suspense fallback={<Loader />}>
