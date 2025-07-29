@@ -7,7 +7,7 @@ import type { AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
+export async function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
   const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
 

@@ -4,7 +4,7 @@ import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-po
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
 
-export function FavoriteCragSummary({ ascents }: AscentListProps) {
+export async function FavoriteCragSummary({ ascents }: AscentListProps) {
   const { numberOfCrags, mostFrequentCrag, crags } = getCragsDetails(ascents)
 
   if (
