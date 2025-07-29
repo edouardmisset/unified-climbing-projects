@@ -1,6 +1,8 @@
 'use client'
+
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
@@ -64,6 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <main className={styles.main}>
               <Suspense fallback={<Loader />}>
                 <TRPCReactProvider>
+                  <ReactQueryDevtools initialIsOpen={false} />
                   <NuqsAdapter>{children}</NuqsAdapter>
                 </TRPCReactProvider>
               </Suspense>
