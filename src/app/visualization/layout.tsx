@@ -77,7 +77,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className={`${styles.container} w100 flex-column gap`}>
       <GridLayout
         additionalContent={
-          <div className={`flex-row padding space-evenly gap ${styles.header}`}>
+          <div className={styles.header}>
             <ToggleGroup
               onValueChange={handleVisualizationChange}
               selectedValue={activeVisualizationType}

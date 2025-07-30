@@ -1,8 +1,15 @@
 .header {
+  position: sticky;
+  inset: 0;
+  z-index: var(--layer-1);
   display: flex;
   flex-flow: row wrap;
+  gap: var(--size-fluid-1);
   align-items: baseline;
   justify-content: space-evenly;
+  inline-size: 100%;
+  padding-block-start: var(--size-fluid-1);
+  background: var(--surface-1);
 }
 
 .overlay {
