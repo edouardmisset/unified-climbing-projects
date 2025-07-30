@@ -42,18 +42,15 @@ export default function Layout({ children }: { children: ReactNode }) {
     [pathname],
   )
 
-  const toggleAscentsOrTraining = useCallback(
-    (isTraining: boolean) => {
-      startTransition(() => {
-        router.push(
-          isTraining
-            ? `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
-            : `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
-        )
-      })
-    },
-    [router, activeVisualizationType],
-  )
+  const toggleAscentsOrTraining = useCallback(() => {
+    startTransition(() => {
+      router.push(
+        isTraining
+          ? `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
+          : `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
+      )
+    })
+  }, [router, activeVisualizationType, isTraining])
 
   const handleVisualizationChange = useCallback(
     ([value]: unknown[]) => {
@@ -91,7 +88,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             />
             <AscentsTrainingSwitch
               isTraining={isTraining}
-              toggle={() => toggleAscentsOrTraining(!isTraining)}
+              toggle={toggleAscentsOrTraining}
             />
           </div>
         }
