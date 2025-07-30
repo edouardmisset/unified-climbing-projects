@@ -13,6 +13,7 @@ import {
   fromAscentStyleToEmoji,
   fromClimbingDisciplineToEmoji,
   prettyLongDate,
+  prettyShortDate,
 } from '~/helpers/formatters'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
@@ -196,9 +197,9 @@ export const AscentList = memo(
                   </td>
                   <td
                     className={`${styles.cell} monospace`}
-                    title={prettyLongDate(date, 'longDate')}
+                    title={prettyLongDate(date)}
                   >
-                    {prettyLongDate(date, 'shortDate')}
+                    {prettyShortDate(date)}
                   </td>
                   <td
                     className={styles.cell}

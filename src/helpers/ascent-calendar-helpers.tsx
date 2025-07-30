@@ -3,9 +3,11 @@ import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import type { Ascent } from '~/schema/ascent'
-import { formatDateTime } from './format-date'
+import { buildDateTimeFormat } from './format-date'
 import { formatGrade } from './format-grade'
 import { prettyLongDate } from './formatters'
+
+const formatDate = buildDateTimeFormat('shortDate')
 
 export function fromAscentsToCalendarEntries(
   year: number,
@@ -21,7 +23,7 @@ export function fromAscentsToCalendarEntries(
           date,
           description: '',
           shortText: '',
-          title: formatDateTime(new Date(date), 'shortDate'),
+          title: formatDate(new Date(date)),
         }
       }
 

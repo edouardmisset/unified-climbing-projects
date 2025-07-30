@@ -5,13 +5,15 @@ import {
   findLongestStreak,
   getMostFrequentDate,
 } from '~/helpers/date'
-import { formatDateTime } from '~/helpers/format-date'
+import { buildDateTimeFormat } from '~/helpers/format-date'
 import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
 const MIN_GAP_THRESHOLD = 5
+
+const formatDate = buildDateTimeFormat('longDate')
 
 export async function DaysOutsideSummary({
   ascents,
@@ -64,11 +66,8 @@ export async function DaysOutsideSummary({
         ascentsInMostAscentDay[0] === undefined ? undefined : (
           <span className="block">
             Your best day was{' '}
-            <strong>
-              {formatDateTime(new Date(mostAscentDate), 'longDate')}
-            </strong>{' '}
-            where you climbed{' '}
-            <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
+            <strong>{formatDate(new Date(mostAscentDate))}</strong> where you
+            climbed <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
           </span>
         )}

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import NotFound from '~/app/not-found'
-import { prettyLongDate } from '~/helpers/formatters'
+import { prettyLongDate, prettyShortDate } from '~/helpers/formatters'
 import {
   fromSessionTypeToLabel,
   type TrainingSessionListProps,
@@ -46,9 +46,9 @@ export const TrainingSessionList = memo(
             <tr className={`${styles.row} grid-full-width`} key={id}>
               <td
                 className={`${styles.cell} monospace`}
-                title={prettyLongDate(date, 'longDate')}
+                title={prettyLongDate(date)}
               >
-                {prettyLongDate(date, 'shortDate')}
+                {prettyShortDate(date)}
               </td>
               <td className={styles.cell} title={gymCrag}>
                 {gymCrag || '—'}
