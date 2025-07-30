@@ -35,11 +35,11 @@ export const DATE_TIME_OPTIONS = {
  */
 export const buildDateTimeFormat = (
   options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
-): ((date: Date) => string) => {
-  const format = new Intl.DateTimeFormat(
+): ((date: string) => string) => {
+  const { format } = new Intl.DateTimeFormat(
     options === 'shortDate' ? 'fr-FR' : US_LOCALE,
     DATE_TIME_OPTIONS[options],
-  ).format
+  )
 
-  return date => format(date)
+  return date => format(new Date(date))
 }

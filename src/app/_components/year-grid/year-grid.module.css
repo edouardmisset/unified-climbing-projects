@@ -1,6 +1,6 @@
 .yearGrid {
   --gap: 2px;
-  --cell-color: light-dark(hsl(0deg 0% 90% / 70%), hsl(0deg 0% 70% / 70%));
+  --cell-color: var(--surface-4);
   --text-color: var(--text-1);
   --border-color: currentcolor;
   --border-width: 1px;
@@ -28,7 +28,6 @@
 }
 
 .emptyGridCell {
-  background-color: transparent;
   border: none;
 }
 
@@ -60,5 +59,5 @@
   grid-column: 1 / 2;
   min-inline-size: 4ch;
   line-height: 1;
-  background-color: var(--surface-3);
+  background-color: var(--surface-4);
 }

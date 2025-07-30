@@ -1,4 +1,3 @@
-import { isDateInYear } from '@edouardmisset/date'
 import { memo, type ReactNode, useMemo } from 'react'
 import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
@@ -7,15 +6,6 @@ import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
 import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell.tsx'
-
-export type DayDescriptor = {
-  date: string
-  backgroundColor?: string
-  description: ReactNode
-  title: ReactNode
-  shortText: ReactNode
-  isSpecialCase?: boolean
-}
 
 export const YearGrid = memo(
   ({
@@ -67,13 +57,15 @@ export const YearGrid = memo(
       () => [...emptyDays, ...dayCollection],
       [emptyDays, dayCollection],
     )
+    const gridTemplateStyle = useMemo(
+      () => ({
+        gridTemplateColumns: `repeat(${numberOfColumns},1fr)`,
+      }),
+      [numberOfColumns],
+    )
+
     return (
-      <div
-        className={styles.yearGrid}
-        style={{
-          gridTemplateColumns: `repeat(${numberOfColumns},1fr)`,
-        }}
-      >
+      <div className={styles.yearGrid} style={gridTemplateStyle}>
         <DaysColumn />
         <WeeksRow columns={columns} />
         {allDayCollection.map(
@@ -87,28 +79,30 @@ export const YearGrid = memo(
               isSpecialCase = false,
             },
             index,
-          ) =>
-            date === '' ? (
-              <span
-                className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-                key={shortText?.toString() || index}
-              />
-            ) : (
-              isDateInYear(date, year) && (
-                <YearGridCell
-                  backgroundColor={backgroundColor}
-                  description={description}
-                  formattedDate={prettyLongDate(date)}
-                  isSpecialCase={isSpecialCase}
-                  key={date.toString()}
-                  shortText={shortText}
-                  stringDate={date}
-                  title={title}
-                />
-              )
-            ),
+          ) => (
+            <YearGridCell
+              backgroundColor={backgroundColor}
+              date={date}
+              description={description}
+              formattedDate={date === '' ? '' : prettyLongDate(date)}
+              isSpecialCase={isSpecialCase}
+              key={(date || index).toString()}
+              shortText={shortText}
+              title={title}
+              year={year}
+            />
+          ),
         )}
       </div>
     )
   },
 )
+
+export type DayDescriptor = {
+  backgroundColor?: string
+  date: string
+  description: ReactNode
+  isSpecialCase?: boolean
+  shortText: ReactNode
+  title: ReactNode
+}
