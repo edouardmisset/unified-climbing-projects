@@ -15,6 +15,8 @@ import { ToggleGroup } from '~/app/_components/toggle-group/toggle-group'
 import { Loader } from '../_components/loader/loader'
 import {
   PATH_TO_VISUALIZATION,
+  VISUALIZATION_TO_PATH,
+  type VisualizationType,
   visualizationPathSchema,
   visualizationSchema,
   visualizations,
@@ -26,7 +28,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
 
-  const activeVisualizationType = useMemo(() => {
+  const activeVisualizationType = useMemo<VisualizationType>(() => {
     const visualizationTypeFromURL = pathname.split('/').at(-1)
     if (!visualizationTypeFromURL) return 'Calendar'
 
@@ -45,9 +47,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   const toggleAscentsOrTraining = useCallback(() => {
     startTransition(() => {
       router.push(
-        isTraining
-          ? `/visualization/ascents/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`
-          : `/visualization/training-sessions/${activeVisualizationType.toLowerCase().replaceAll(' ', '-')}`,
+        getVisualizationPath({
+          isTraining: !isTraining,
+          visualizationType: activeVisualizationType,
+        }),
       )
     })
   }, [router, activeVisualizationType, isTraining])
@@ -58,18 +61,12 @@ export default function Layout({ children }: { children: ReactNode }) {
       if (!result.success) return
       const visualizationType = result.data
 
-      const ascentsOrTraining: 'training-sessions' | 'ascents' = isTraining
-        ? 'training-sessions'
-        : 'ascents'
-
-      const normalizedVisualizationType = visualizationType
-        .split(' ')
-        .join('-')
-        .toLowerCase()
-
       startTransition(() => {
         router.push(
-          `/visualization/${ascentsOrTraining}/${normalizedVisualizationType}`,
+          getVisualizationPath({
+            isTraining,
+            visualizationType,
+          }),
         )
       })
     },
@@ -99,4 +96,17 @@ export default function Layout({ children }: { children: ReactNode }) {
       </GridLayout>
     </div>
   )
+}
+
+function getVisualizationPath({
+  isTraining,
+  visualizationType,
+}: {
+  isTraining: boolean
+  visualizationType: VisualizationType
+}): string {
+  const path = VISUALIZATION_TO_PATH[visualizationType]
+  return isTraining
+    ? `/visualization/training-sessions/${path}`
+    : `/visualization/ascents/${path}`
 }
