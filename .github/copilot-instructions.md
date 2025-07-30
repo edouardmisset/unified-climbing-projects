@@ -2,13 +2,6 @@
 
 These instructions are designed to help you write code that adheres to the project's standards and best practices. Please follow them closely.
 
-## General Guidelines
-
-Use the following file for the complete codebase structure:
-Repomix: [repomix-output.xml](../repomix-output.xml)
-
-Be careful as this file is not always up to date, so you might need to check the codebase for the latest changes.
-
 ## Folder Structure
 
 ```
