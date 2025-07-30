@@ -15,21 +15,6 @@ import { useTheme } from '~/hooks/use-theme'
 import { TRPCReactProvider } from '~/trpc/react'
 import styles from './index.module.css'
 
-// Dynamic import for ReactQueryDevtools & React Scan - only loads in development
-const ReactQueryDevtools = lazy(() =>
-  env.NEXT_PUBLIC_ENV === 'development'
-    ? import('@tanstack/react-query-devtools').then(module => ({
-        default: module.ReactQueryDevtools,
-      }))
-    : Promise.resolve({ default: () => <></> }),
-)
-const ReactScan = lazy(() =>
-  env.NEXT_PUBLIC_ENV === 'development'
-    ? import('~/app/_components/react-scan/react-scan.tsx').then(module => ({
-        default: module.ReactScan,
-      }))
-    : Promise.resolve({ default: () => <></> }),
-)
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
 import '~/styles/animation.css'
@@ -46,6 +31,22 @@ import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
 import { LightDarkSwitch } from './_components/light-dark-switch/light-dark-switch'
+
+// Dynamic import for ReactQueryDevtools & React Scan - only loads in development
+const ReactQueryDevtools = lazy(() =>
+  env.NEXT_PUBLIC_ENV === 'development'
+    ? import('@tanstack/react-query-devtools').then(module => ({
+        default: module.ReactQueryDevtools,
+      }))
+    : Promise.resolve({ default: () => <></> }),
+)
+const ReactScan = lazy(() =>
+  env.NEXT_PUBLIC_ENV === 'development'
+    ? import('~/app/_components/react-scan/react-scan.tsx').then(module => ({
+        default: module.ReactScan,
+      }))
+    : Promise.resolve({ default: () => <></> }),
+)
 
 export const fetchCache = 'default-cache'
 
