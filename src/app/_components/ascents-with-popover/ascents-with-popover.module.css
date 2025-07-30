@@ -16,9 +16,15 @@
   }
 }
 
-.popoverContainer {
+.list {
   display: flex;
   flex-direction: column;
   max-block-size: 20rem;
+  padding: 0;
   overflow: auto;
+  list-style: none;
+}
+
+.item {
+  padding: 0;
 }
