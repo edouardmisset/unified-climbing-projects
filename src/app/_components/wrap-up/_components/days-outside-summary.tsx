@@ -65,9 +65,9 @@ export async function DaysOutsideSummary({
         {mostAscentDate === '' ||
         ascentsInMostAscentDay[0] === undefined ? undefined : (
           <span className="block">
-            Your best day was{' '}
-            <strong>{formatDate(new Date(mostAscentDate))}</strong> where you
-            climbed <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
+            Your best day was <strong>{formatDate(mostAscentDate)}</strong>{' '}
+            where you climbed{' '}
+            <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
           </span>
         )}

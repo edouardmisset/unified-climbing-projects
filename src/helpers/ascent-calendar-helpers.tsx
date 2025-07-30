@@ -23,7 +23,7 @@ export function fromAscentsToCalendarEntries(
           date,
           description: '',
           shortText: '',
-          title: formatDate(new Date(date)),
+          title: formatDate(date),
         }
       }
 
