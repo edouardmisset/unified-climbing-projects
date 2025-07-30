@@ -24,7 +24,8 @@
     "ls-lint": "ls-lint",
     "validate": "clear && bun run check && bun run test:all && bun run build",
     "client:rsdoctor": "rsdoctor analyze --profile .next/.rsdoctor/manifest.json",
-    "server:rsdoctor": "rsdoctor analyze --profile .next/server/chunks/.rsdoctor/manifest.json"
+    "server:rsdoctor": "rsdoctor analyze --profile .next/server/chunks/.rsdoctor/manifest.json",
+    "repo": "bun run repomix"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",
@@ -82,6 +83,7 @@
     "knip": "^5.61.3",
     "poku": "^3.0.2",
     "react-scan": "^0.4.3",
+    "repomix": "^1.2.1",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^38.0.0",
     "typescript": "^5.8.3"

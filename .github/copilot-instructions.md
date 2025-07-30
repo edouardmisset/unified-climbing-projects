@@ -1,5 +1,14 @@
 # Copilot Instructions
 
+These instructions are designed to help you write code that adheres to the project's standards and best practices. Please follow them closely.
+
+## General Guidelines
+
+Use the following file for the complete codebase structure:
+Repomix: [repomix-output.xml](../repomix-output.xml)
+
+Be careful as this file is not always up to date, so you might need to check the codebase for the latest changes.
+
 ## Folder Structure
 
 ```
@@ -151,7 +160,7 @@ Each section MUST be separated by an empty line.
 
 - **CSS Modules** MUST be used for styling.
 - **Modern CSS features** SHOULD be used.
-- Design system variables MUST be used for:
+- Design system variables MUST be used for for styling (when working with `.css` files) ONLY:
   - Colors: [colors.css](../src/styles/colors.css)
   - Sizes: [sizes.css](../src/styles/sizes.css)
 
@@ -179,7 +188,7 @@ Each section MUST be separated by an empty line.
 
 ### Best Practices
 
-- Follow DRY (**Don’t Repeat Yourself**) principle.
+- Follow DRY (**Don’t Repeat Yourself**) principle. This is particularly true for test cases.
 - Follow SOLID principles where applicable.
 
 ### Deployment
