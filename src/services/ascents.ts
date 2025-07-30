@@ -19,8 +19,7 @@ import { loadWorksheet } from './google-sheets.ts'
  * representing a validated ascent record.
  */
 const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
-  globalThis.console.log('🔄 Fetching ascents from Google Sheets...')
-  const startTime = Date.now()
+  'use cache'
 
   let rows:
     | undefined
@@ -52,11 +51,6 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
     // default, they are stored chronologically (oldest first), so we need to
     // reverse the order to have the most recent first.
     a.date === b.date ? -1 : sortByDate(a, b, true),
-  )
-
-  const duration = Date.now() - startTime
-  globalThis.console.log(
-    `✅ Fetched ${sortedAscents.length} ascents in ${duration}ms`,
   )
 
   return sortedAscents

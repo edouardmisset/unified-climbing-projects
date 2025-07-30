@@ -18,10 +18,7 @@ import { loadWorksheet } from './google-sheets.ts'
  */
 const getTrainingSessionsFromDB = cache(
   async (): Promise<TrainingSession[]> => {
-    globalThis.console.log(
-      '🔄 Fetching training sessions from Google Sheets...',
-    )
-    const startTime = Date.now()
+    'use cache'
 
     let rows:
       | undefined
@@ -51,14 +48,7 @@ const getTrainingSessionsFromDB = cache(
       return []
     }
 
-    const trainingSessions = parsedTrainingSession.data
-
-    const duration = Date.now() - startTime
-    globalThis.console.log(
-      `✅ Fetched ${trainingSessions.length} training sessions in ${duration}ms`,
-    )
-
-    return trainingSessions
+    return parsedTrainingSession.data
   },
 )
 
