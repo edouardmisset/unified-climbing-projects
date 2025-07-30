@@ -21,11 +21,13 @@ export function FavoriteCragSummary({ ascents }: AscentListProps) {
         You visited{' '}
         <Popover
           popoverDescription={
-            <div className={ascentsWithPopoverStyles.popoverContainer}>
+            <ul className={ascentsWithPopoverStyles.list}>
               {crags.map(crag => (
-                <span key={crag}>{crag}</span>
+                <li className={ascentsWithPopoverStyles.item} key={crag}>
+                  {crag}
+                </li>
               ))}
-            </div>
+            </ul>
           }
           popoverTitle="Crags"
           triggerClassName={ascentsWithPopoverStyles.popover}
