@@ -1,6 +1,8 @@
 import { type ChangeEventHandler, startTransition } from 'react'
 
 export const createChangeHandler =
-  <T>(setter: (value: T) => void): ChangeEventHandler<HTMLSelectElement> =>
+  <T extends string | number>(
+    setter: (value: T) => void,
+  ): ChangeEventHandler<HTMLSelectElement> =>
   event =>
-    startTransition(() => setter(event.target.value as unknown as T))
+    startTransition(() => setter(event.target.value as T))

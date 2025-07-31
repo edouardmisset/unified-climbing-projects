@@ -7,8 +7,8 @@ import {
   SESSION_TYPES,
   type TrainingSessionListProps,
 } from '~/schema/training.ts'
-import { FilterBar } from '../filter-bar'
 import { createChangeHandler } from '../helpers'
+import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
 export function TrainingSessionFilterBar({
@@ -17,7 +17,7 @@ export function TrainingSessionFilterBar({
   const yearList = createYearList(trainingSessions, {
     descending: true,
     continuous: false,
-  })
+  }).map(String)
 
   const locationList = useMemo(
     () =>
@@ -43,36 +43,37 @@ export function TrainingSessionFilterBar({
   } = useTrainingSessionsQueryState()
 
   const filters = useMemo<FilterConfig[]>(
-    () => [
-      {
-        handleChange: createChangeHandler(setSessionType),
-        name: 'Session Type',
-        options: SESSION_TYPES,
-        selectedValue: selectedSessionType,
-        title: 'Session Type',
-      },
-      {
-        handleChange: createChangeHandler(setLoad),
-        name: 'load',
-        options: LOAD_CATEGORIES,
-        selectedValue: selectedLoad,
-        title: 'Load',
-      },
-      {
-        handleChange: createChangeHandler(setYear),
-        name: 'year',
-        options: yearList,
-        selectedValue: selectedYear,
-        title: 'Year',
-      },
-      {
-        handleChange: createChangeHandler(setLocation),
-        name: 'location',
-        options: locationList,
-        selectedValue: selectedLocation,
-        title: 'Location',
-      },
-    ],
+    () =>
+      [
+        {
+          handleChange: createChangeHandler(setSessionType),
+          name: 'Session Type',
+          options: SESSION_TYPES,
+          selectedValue: selectedSessionType,
+          title: 'Session Type',
+        },
+        {
+          handleChange: createChangeHandler(setLoad),
+          name: 'Load',
+          options: LOAD_CATEGORIES,
+          selectedValue: selectedLoad,
+          title: 'Load',
+        },
+        {
+          handleChange: createChangeHandler(setYear),
+          name: 'Year',
+          options: yearList,
+          selectedValue: selectedYear,
+          title: 'Year',
+        },
+        {
+          handleChange: createChangeHandler(setLocation),
+          name: 'Location',
+          options: locationList,
+          selectedValue: selectedLocation,
+          title: 'Location',
+        },
+      ] as const satisfies FilterConfig[],
     [
       setSessionType,
       setLoad,
@@ -87,5 +88,5 @@ export function TrainingSessionFilterBar({
     ],
   )
 
-  return <FilterBar filters={filters} />
+  return <StickyFilterBar filters={filters} />
 }

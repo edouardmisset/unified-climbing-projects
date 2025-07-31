@@ -11,26 +11,25 @@ export function useTrainingSessionsFilter(
   const { selectedYear, selectedSessionType, selectedLoad, selectedLocation } =
     useTrainingSessionsQueryState()
 
-  const filteredTrainingSessions = useMemo(
-    () =>
-      filterTrainingSessions(trainingSessions, {
-        gymCrag: selectedLocation === ALL_VALUE ? undefined : selectedLocation,
-        load: selectedLoad === ALL_VALUE ? undefined : selectedLoad,
-        sessionType:
-          selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
-        year:
-          selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
-            ? Number(selectedYear)
-            : undefined,
-      }),
-    [
-      trainingSessions,
-      selectedLocation,
-      selectedLoad,
-      selectedSessionType,
-      selectedYear,
-    ],
-  )
+  const filteredTrainingSessions = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    return filterTrainingSessions(trainingSessions, {
+      gymCrag: selectedLocation === ALL_VALUE ? undefined : selectedLocation,
+      load: selectedLoad === ALL_VALUE ? undefined : selectedLoad,
+      sessionType:
+        selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+    })
+  }, [
+    trainingSessions,
+    selectedLocation,
+    selectedLoad,
+    selectedSessionType,
+    selectedYear,
+  ])
 
   const deferredTrainingSessions = useDeferredValue(filteredTrainingSessions)
 

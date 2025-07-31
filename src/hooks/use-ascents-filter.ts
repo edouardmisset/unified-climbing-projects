@@ -21,28 +21,27 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedGrade,
   } = useAscentsQueryState()
 
-  const filteredAscents = useMemo(
-    () =>
-      filterAscents(ascents, {
-        climbingDiscipline:
-          selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
-        crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
-        grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
-        style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
-        year:
-          selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
-            ? Number(selectedYear)
-            : undefined,
-      }),
-    [
-      ascents,
-      selectedCrag,
-      selectedDiscipline,
-      selectedGrade,
-      selectedStyle,
-      selectedYear,
-    ],
-  )
+  const filteredAscents = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    return filterAscents(ascents, {
+      climbingDiscipline:
+        selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
+      crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
+      grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
+      style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+    })
+  }, [
+    ascents,
+    selectedCrag,
+    selectedDiscipline,
+    selectedGrade,
+    selectedStyle,
+    selectedYear,
+  ])
 
   const deferredFilteredAscents = useDeferredValue(filteredAscents)
 

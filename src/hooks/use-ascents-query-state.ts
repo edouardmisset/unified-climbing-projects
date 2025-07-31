@@ -9,19 +9,6 @@ import {
   gradeSchema,
 } from '~/schema/ascent'
 
-type UseAscentsQueryStateReturn = {
-  selectedYear: OrAll<string>
-  selectedDiscipline: OrAll<Ascent['climbingDiscipline']>
-  selectedStyle: OrAll<Ascent['style']>
-  selectedCrag: OrAll<Ascent['crag']>
-  selectedGrade: OrAll<Ascent['topoGrade']>
-  setYear: (year: OrAll<string>) => void
-  setDiscipline: (discipline: OrAll<Ascent['climbingDiscipline']>) => void
-  setStyle: (style: OrAll<Ascent['style']>) => void
-  setCrag: (crag: OrAll<Ascent['crag']>) => void
-  setGrade: (grade: OrAll<Ascent['topoGrade']>) => void
-}
-
 export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
   const [selectedYear, setYear] = useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
@@ -71,4 +58,17 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
     setStyle,
     setYear,
   }
+}
+
+type UseAscentsQueryStateReturn = {
+  selectedYear: OrAll<string>
+  selectedDiscipline: OrAll<Ascent['climbingDiscipline']>
+  selectedStyle: OrAll<Ascent['style']>
+  selectedCrag: OrAll<Ascent['crag']>
+  selectedGrade: OrAll<Ascent['topoGrade']>
+  setYear: (year: OrAll<string>) => void
+  setDiscipline: (discipline: OrAll<Ascent['climbingDiscipline']>) => void
+  setStyle: (style: OrAll<Ascent['style']>) => void
+  setCrag: (crag: OrAll<Ascent['crag']>) => void
+  setGrade: (grade: OrAll<Ascent['topoGrade']>) => void
 }

@@ -9,21 +9,6 @@ import {
   trainingSessionSchema,
 } from '~/schema/training'
 
-type UseTrainingSessionsQueryStateReturn = {
-  selectedYear: OrAll<string>
-  selectedSessionType: OrAll<NonNullable<TrainingSession['sessionType']>>
-  selectedLoad: OrAll<LoadCategory>
-  selectedLocation: OrAll<NonNullable<TrainingSession['gymCrag']>>
-  setYear: (year: OrAll<string>) => void
-  setSessionType: (
-    sessionType: OrAll<NonNullable<TrainingSession['sessionType']>>,
-  ) => void
-  setLoad: (load: OrAll<LoadCategory>) => void
-  setLocation: (
-    location: OrAll<NonNullable<TrainingSession['gymCrag']>>,
-  ) => void
-}
-
 export const useTrainingSessionsQueryState =
   (): UseTrainingSessionsQueryStateReturn => {
     const [selectedYear, setYear] = useQueryState<OrAll<string>>('year', {
@@ -75,3 +60,18 @@ export const useTrainingSessionsQueryState =
       setYear,
     }
   }
+
+type UseTrainingSessionsQueryStateReturn = {
+  selectedYear: OrAll<string>
+  selectedSessionType: OrAll<NonNullable<TrainingSession['sessionType']>>
+  selectedLoad: OrAll<LoadCategory>
+  selectedLocation: OrAll<NonNullable<TrainingSession['gymCrag']>>
+  setYear: (year: OrAll<string>) => void
+  setSessionType: (
+    sessionType: OrAll<NonNullable<TrainingSession['sessionType']>>,
+  ) => void
+  setLoad: (load: OrAll<LoadCategory>) => void
+  setLocation: (
+    location: OrAll<NonNullable<TrainingSession['gymCrag']>>,
+  ) => void
+}

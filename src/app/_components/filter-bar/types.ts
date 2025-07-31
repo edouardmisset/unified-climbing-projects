@@ -1,13 +1,13 @@
 import type { ChangeEventHandler } from 'react'
 
-export type FilterConfig = {
+export type FilterConfig<T extends string | number = string> = {
   name: string
   title: string
-  options: string[] | number[] | readonly string[]
-  selectedValue: string
+  options: ReadonlyArray<T>
+  selectedValue: T
   handleChange: ChangeEventHandler<HTMLSelectElement>
 }
 
-export type BaseFilterBarProps = {
-  filters: FilterConfig[]
+export type BaseFilterBarProps<T extends string | number = string> = {
+  filters: FilterConfig<T>[]
 }
