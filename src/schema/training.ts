@@ -79,7 +79,8 @@ export function fromEnergySystemToLabel(
 }
 
 export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
-export type LoadCategory = (typeof LOAD_CATEGORIES)[number]
+export const loadCategorySchema = z.enum(LOAD_CATEGORIES)
+export type LoadCategory = z.infer<typeof loadCategorySchema>
 
 const sessionTypeSchema = z.enum(SESSION_TYPES)
 const energySystemSchema = z.enum(ENERGY_SYSTEMS)

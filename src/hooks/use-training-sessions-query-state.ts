@@ -1,10 +1,10 @@
-import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
+import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useQueryState } from 'nuqs'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
 import {
-  LOAD_CATEGORIES,
   type LoadCategory,
+  loadCategorySchema,
   type TrainingSession,
   trainingSessionSchema,
 } from '~/schema/training'
@@ -13,10 +13,11 @@ export const useTrainingSessionsQueryState =
   (): UseTrainingSessionsQueryStateReturn => {
     const [selectedYear, setYear] = useQueryState<OrAll<string>>('year', {
       defaultValue: ALL_VALUE,
-      parse: value =>
-        value === ALL_VALUE
-          ? ALL_VALUE
-          : validNumberWithFallback(value, ALL_VALUE).toString(),
+      parse: value => {
+        if (value === ALL_VALUE) return ALL_VALUE
+        if (isValidNumber(Number(value))) return value
+        return null
+      },
     })
 
     const [selectedSessionType, setSessionType] = useQueryState<
@@ -34,7 +35,7 @@ export const useTrainingSessionsQueryState =
     const [selectedLoad, setLoad] = useQueryState<OrAll<LoadCategory>>('load', {
       defaultValue: ALL_VALUE,
       parse: value =>
-        LOAD_CATEGORIES.includes(value) ? (value as LoadCategory) : ALL_VALUE,
+        value === ALL_VALUE ? ALL_VALUE : loadCategorySchema.parse(value),
     })
 
     const [selectedLocation, setLocation] = useQueryState<

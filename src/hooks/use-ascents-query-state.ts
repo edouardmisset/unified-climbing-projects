@@ -4,6 +4,7 @@ import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
 import {
   type Ascent,
+  ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
   gradeSchema,
@@ -35,7 +36,8 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
   )
   const [selectedCrag, setCrag] = useQueryState<OrAll<Ascent['crag']>>('crag', {
     defaultValue: ALL_VALUE,
-    parse: value => (value === ALL_VALUE ? ALL_VALUE : value),
+    parse: value =>
+      value === ALL_VALUE ? ALL_VALUE : ascentSchema.shape.crag.parse(value),
   })
   const [selectedGrade, setGrade] = useQueryState<OrAll<Ascent['topoGrade']>>(
     'grade',
