@@ -11,31 +11,47 @@ export const Navigation = memo(() => (
     {/* Desktop full menu - visible by CSS when viewport is wide */}
     <ul className={styles.navList}>
       <li>
-        <Link href="/">🏠 Home</Link>
+        <Link className={styles.link} href="/">
+          🏠 Home
+        </Link>
       </li>
       <hr className={styles.Break} />
       <li>
-        <Link href="/log-ascent">📋 Log Ascent</Link>
+        <Link className={styles.link} href="/log-ascent">
+          📋 Log Ascent
+        </Link>
       </li>
       <li>
-        <Link href="/log-training-session">📋 Log Training</Link>
-      </li>
-      <hr className={styles.Break} />
-      <li>
-        <Link href="/visualization">🖼️ Visualization</Link>
-      </li>
-      <li>
-        <Link href="/ascents">📇 Ascents List</Link>
-      </li>
-      <li>
-        <Link href="/ascents/top-ten">🔟 Top Ten</Link>
-      </li>
-      <li>
-        <Link href="/ascents/dashboard">📊 Dashboard</Link>
+        <Link className={styles.link} href="/log-training-session">
+          📋 Log Training
+        </Link>
       </li>
       <hr className={styles.Break} />
       <li>
-        <Link href="/training-sessions">📇 Training List</Link>
+        <Link className={styles.link} href="/visualization">
+          🖼️ Visualization
+        </Link>
+      </li>
+      <li>
+        <Link className={styles.link} href="/ascents">
+          📇 Ascents List
+        </Link>
+      </li>
+      <li>
+        <Link className={styles.link} href="/ascents/top-ten">
+          🔟 Top Ten
+        </Link>
+      </li>
+      <li>
+        <Link className={styles.link} href="/ascents/dashboard">
+          📊 Dashboard
+        </Link>
+      </li>
+      <hr className={styles.Break} />
+      <li>
+        <Link className={styles.link} href="/training-sessions">
+          📇 Training List
+        </Link>
       </li>
       <li className={styles.user}>
         <UserStatus />

@@ -41,15 +41,19 @@
   @media (width <= 640px) {
     display: none;
   }
+}
 
-  & > li {
-    padding-block: var(--size-fluid-1);
-    padding-inline: var(--size-fluid-2);
-    border-radius: var(--border-size-4);
-  }
+.link {
+  display: inline-block;
+  padding-block: var(--size-fluid-1);
+  padding-inline: var(--size-fluid-2);
+  border-radius: var(--border-size-4);
 
-  & > li:hover {
-    background-color: var(--color-gray-100);
+  transition: all 0.3s var(--ease-elastic-in-1);
+
+  &:hover {
+    color: var(--accent);
+    background-color: var(--surface-1);
   }
 }
 
