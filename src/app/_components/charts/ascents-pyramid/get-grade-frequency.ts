@@ -1,5 +1,4 @@
-import { createGradeScale } from '~/helpers/create-grade-scale'
-import { minMaxGrades } from '~/helpers/min-max-grades'
+import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent, Grade } from '~/schema/ascent'
 
 export type GradeFrequency = {
@@ -16,9 +15,8 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
   if (ascents.length === 0) {
     return []
   }
-  // TODO: maybe refactor these two functions into one ? and pass Ascent[] as
-  // argument ?
-  const grades = createGradeScale(...minMaxGrades(ascents))
+
+  const grades = createGradeScaleFromAscents(ascents)
 
   const gradeClimbingStylesCount: GradeFrequency = grades.map(grade => {
     const initialStyleFrequency: Record<Ascent['style'], number> = {
