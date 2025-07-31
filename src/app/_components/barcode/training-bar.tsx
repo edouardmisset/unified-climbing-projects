@@ -11,18 +11,14 @@ import { Popover } from '../popover/popover'
 import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
 import styles from './barcode.module.css'
 
-type TrainingBarsProps = {
-  weeklyTraining: ((StringDate & TrainingSession) | undefined)[]
-}
-
 export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const numberOfTraining = weeklyTraining.length
+  const isSingleWeekTraining = numberOfTraining <= 1
 
-  // Sort week's training by session type
   const filteredSortedWeeklyTraining = useMemo(
     () =>
       weeklyTraining
-        .filter(training => training !== undefined)
+        .filter(Boolean)
         .sort(({ sessionType: aType }, { sessionType: bType }) =>
           aType === undefined || bType === undefined
             ? 0
@@ -31,8 +27,6 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
         ),
     [weeklyTraining],
   )
-
-  const isSingleWeekTraining = weeklyTraining.length <= 1
 
   const [firstTraining] = filteredSortedWeeklyTraining
 
@@ -49,21 +43,14 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
     }),
     [filteredSortedWeeklyTraining, numberOfTraining, isSingleWeekTraining],
   )
-  const trainingBarClassName = useMemo(
-    () =>
-      `${
-        isSingleWeekTraining
-          ? fromSessionTypeToClassName(firstTraining?.sessionType)
-          : ''
-      } ${styles.bar}`,
-    [firstTraining, isSingleWeekTraining],
-  )
-  const weeklyTrainingSummary = useMemo(
-    () => getTrainingSessionSummary(filteredSortedWeeklyTraining),
-    [filteredSortedWeeklyTraining],
-  )
 
   if (firstTraining === undefined) return <span />
+
+  const trainingBarClassName = `${
+    isSingleWeekTraining
+      ? fromSessionTypeToClassName(firstTraining?.sessionType)
+      : ''
+  } ${styles.bar}`
 
   return (
     <Popover
@@ -73,7 +60,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
           trainingSessions={filteredSortedWeeklyTraining}
         />
       }
-      popoverTitle={weeklyTrainingSummary}
+      popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
       triggerClassName={trainingBarClassName}
       triggerContent=""
     />
@@ -85,4 +72,8 @@ function getTrainingSessionSummary(trainingSessionInWeek: TrainingSession[]) {
   return firstSession === undefined
     ? ''
     : `${trainingSessionInWeek.length} training sessions in week # ${getWeekNumber(new Date(firstSession.date))}`
+}
+
+type TrainingBarsProps = {
+  weeklyTraining: ((StringDate & TrainingSession) | undefined)[]
 }

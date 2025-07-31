@@ -11,46 +11,50 @@ import { AscentsPopoverDescription } from '../ascents-popover-description/ascent
 import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
 
-type AscentsBarsProps = {
-  weeklyAscents: ((StringDate & Ascent) | undefined)[]
-}
-
 export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   const numberOfAscents = weeklyAscents.length
+  const isSingleAscent = numberOfAscents <= 1
 
   const weeklyAscentsByDescendingGrade = useMemo(
-    () =>
-      weeklyAscents
-        .filter(ascent => ascent !== undefined)
-        .sort((a, b) => sortByGrade(a, b)),
+    () => weeklyAscents.filter(Boolean).sort(sortByGrade),
     [weeklyAscents],
   )
 
-  const isSingleAscent = weeklyAscents.length <= 1
+  const buttonStyle = useMemo(
+    () => ({
+      background: isSingleAscent
+        ? undefined
+        : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
+            .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
+            .join(', ')})`,
+      inlineSize: `${numberOfAscents / 2}%`,
+    }),
+    [isSingleAscent, weeklyAscentsByDescendingGrade, numberOfAscents],
+  )
 
   if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
 
+  const title = `${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`
+  const triggerClassName = `${
+    isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
+  } ${styles.bar}`
+
   return (
     <Popover
-      buttonStyle={{
-        background: isSingleAscent
-          ? undefined
-          : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
-              .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
-              .join(', ')})`,
-        inlineSize: `${numberOfAscents / 2}%`,
-      }}
+      buttonStyle={buttonStyle}
       popoverDescription={
         <AscentsPopoverDescription
           ascents={weeklyAscentsByDescendingGrade}
           showCrag={true}
         />
       }
-      popoverTitle={`${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`}
-      triggerClassName={`${
-        isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
-      } ${styles.bar}`}
+      popoverTitle={title}
+      triggerClassName={triggerClassName}
       triggerContent=""
     />
   )
 })
+
+type AscentsBarsProps = {
+  weeklyAscents: ((StringDate & Ascent) | undefined)[]
+}
