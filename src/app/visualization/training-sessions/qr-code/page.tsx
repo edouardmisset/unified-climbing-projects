@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Dialog } from '~/app/_components/dialog/dialog'
-import QRCode from '~/app/_components/qr-code/qr-code'
-import { TrainingsQRDot } from '~/app/_components/qr-code/trainings-qr-dot'
+import { TrainingQRCode } from '~/app/_components/qr-code/qr-code'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
@@ -19,33 +18,11 @@ export default async function TrainingSessionsQRCodePage() {
       <div key={year}>
         <h2 className="center-text">
           <Dialog
-            content={
-              <QRCode>
-                {yearlyTraining.map((trainingSessions, index) => {
-                  const [firstTraining] = trainingSessions
-                  return (
-                    <TrainingsQRDot
-                      key={firstTraining?.date ?? index}
-                      trainingSessions={trainingSessions}
-                    />
-                  )
-                })}
-              </QRCode>
-            }
+            content={<TrainingQRCode yearlyTrainingSessions={yearlyTraining} />}
             title={year}
           />
         </h2>
-        <QRCode>
-          {yearlyTraining.map((trainingSessions, index) => {
-            const [firstTraining] = trainingSessions
-            return (
-              <TrainingsQRDot
-                key={firstTraining?.date ?? index}
-                trainingSessions={trainingSessions}
-              />
-            )
-          })}
-        </QRCode>
+        <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
       </div>
     ))
 }

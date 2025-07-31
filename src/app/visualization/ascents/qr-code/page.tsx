@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Dialog } from '~/app/_components/dialog/dialog'
-import { AscentsQRDot } from '~/app/_components/qr-code/ascents-qr-dot'
-import QRCode from '~/app/_components/qr-code/qr-code'
+import { AscentsQRCode } from '~/app/_components/qr-code/qr-code'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { sortByGrade } from '~/helpers/sorter'
@@ -26,24 +25,11 @@ export default async function AscentsQRCodePage() {
         <div key={year}>
           <h2 className="center-text">
             <Dialog
-              content={
-                <QRCode>
-                  {sortedAscents.map((ascents, index) => (
-                    <AscentsQRDot
-                      ascents={ascents}
-                      key={ascents[0]?.date ?? index}
-                    />
-                  ))}
-                </QRCode>
-              }
+              content={<AscentsQRCode yearlyAscents={sortedAscents} />}
               title={year}
             />
           </h2>
-          <QRCode>
-            {sortedAscents.map((ascents, index) => (
-              <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
-            ))}
-          </QRCode>
+          <AscentsQRCode yearlyAscents={sortedAscents} />
         </div>
       )
     })

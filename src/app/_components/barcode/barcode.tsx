@@ -16,12 +16,12 @@ const Barcode = memo((props: { children: ReactNode }) => {
 })
 
 export const AscentsBarcode = memo(
-  ({ yearAscents }: { yearAscents: Ascent[][] }) => {
-    if (!yearAscents || yearAscents.length === 0) return null
+  ({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => {
+    if (!yearlyAscents || yearlyAscents.length === 0) return null
 
     return (
       <Barcode>
-        {yearAscents.map((ascents, index) => (
+        {yearlyAscents.map((ascents, index) => (
           <AscentsBar key={ascents[0]?.date ?? index} weeklyAscents={ascents} />
         ))}
       </Barcode>
@@ -30,12 +30,12 @@ export const AscentsBarcode = memo(
 )
 
 export const TrainingSessionsBarcode = memo(
-  ({ yearTraining }: { yearTraining: TrainingSession[][] }) => {
-    if (!yearTraining || yearTraining.length === 0) return null
+  ({ yearlyTraining }: { yearlyTraining: TrainingSession[][] }) => {
+    if (!yearlyTraining || yearlyTraining.length === 0) return null
 
     return (
       <Barcode>
-        {yearTraining.map((sessions, index) => (
+        {yearlyTraining.map((sessions, index) => (
           <TrainingBar
             key={sessions[0]?.date ?? index}
             weeklyTraining={sessions}

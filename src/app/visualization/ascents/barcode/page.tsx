@@ -18,11 +18,11 @@ export default async function AscentBarcodePage() {
       <div className="flex-column w100" key={year}>
         <h2 className="center-text">
           <Dialog
-            content={<AscentsBarcode yearAscents={yearAscents} />}
+            content={<AscentsBarcode yearlyAscents={yearAscents} />}
             title={year}
           />
         </h2>
-        <AscentsBarcode yearAscents={yearAscents} />
+        <AscentsBarcode yearlyAscents={yearAscents} />
       </div>
     ))
 }

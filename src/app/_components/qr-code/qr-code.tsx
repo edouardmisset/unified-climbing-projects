@@ -1,15 +1,19 @@
 import Image from 'next/image'
-import type { ReactNode } from 'react'
+import { memo, type ReactNode } from 'react'
+import type { Ascent } from '~/schema/ascent.ts'
+import type { TrainingSession } from '~/schema/training.ts'
+import { AscentsQRDot } from './ascents-qr-dot.tsx'
 import { Marker } from './marker.tsx'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
+import { TrainingsQRDot } from './trainings-qr-dot.tsx'
 
 const gridSize = 25
 const imageSize = 9
 const _imageStart = (gridSize - imageSize) / 2 + 1 // 9
 const _imageEnd = gridSize - imageSize + 2 // 18
 
-export default function QRCode(props: { children?: ReactNode }) {
+const QRCode = memo((props: { children?: ReactNode }) => {
   const { children } = props
 
   return (
@@ -29,8 +33,39 @@ export default function QRCode(props: { children?: ReactNode }) {
         width={120}
       />
 
-      {/* Data */}
+      {/* Data (= the dots) */}
       {children}
     </div>
   )
-}
+})
+
+export const TrainingQRCode = memo(
+  ({
+    yearlyTrainingSessions,
+  }: {
+    yearlyTrainingSessions: TrainingSession[][]
+  }) => {
+    return (
+      <QRCode>
+        {yearlyTrainingSessions.map((sessions, index) => (
+          <TrainingsQRDot
+            key={sessions[0]?.date ?? index}
+            trainingSessions={sessions}
+          />
+        ))}
+      </QRCode>
+    )
+  },
+)
+
+export const AscentsQRCode = memo(
+  ({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => {
+    return (
+      <QRCode>
+        {yearlyAscents.map((ascents, index) => (
+          <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
+        ))}
+      </QRCode>
+    )
+  },
+)

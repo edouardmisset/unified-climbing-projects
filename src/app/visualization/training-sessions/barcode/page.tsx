@@ -18,11 +18,11 @@ export default async function TrainingSessionsBarcodePage() {
       <div className="flex-column w100" key={year}>
         <h2 className="center-text">
           <Dialog
-            content={<TrainingSessionsBarcode yearTraining={yearTraining} />}
+            content={<TrainingSessionsBarcode yearlyTraining={yearTraining} />}
             title={year}
           />
         </h2>
-        <TrainingSessionsBarcode yearTraining={yearTraining} />
+        <TrainingSessionsBarcode yearlyTraining={yearTraining} />
       </div>
     ))
 }
