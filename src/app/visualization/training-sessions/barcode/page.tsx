@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Barcode } from '~/app/_components/barcode/barcode'
-import { TrainingBar } from '~/app/_components/barcode/training-bar'
+import { TrainingSessionsBarcode } from '~/app/_components/barcode/barcode'
 import { Dialog } from '~/app/_components/dialog/dialog'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
@@ -19,33 +18,11 @@ export default async function TrainingSessionsBarcodePage() {
       <div className="flex-column w100" key={year}>
         <h2 className="center-text">
           <Dialog
-            content={
-              <Barcode>
-                {yearTraining.map((weeklyTraining, index) => {
-                  const [firstTrainingOfTheWeek] = weeklyTraining
-                  return (
-                    <TrainingBar
-                      key={firstTrainingOfTheWeek?.date ?? index}
-                      weeklyTraining={weeklyTraining}
-                    />
-                  )
-                })}
-              </Barcode>
-            }
+            content={<TrainingSessionsBarcode yearTraining={yearTraining} />}
             title={year}
           />
         </h2>
-        <Barcode>
-          {yearTraining.map((weeklyTraining, index) => {
-            const [firstTrainingOfTheWeek] = weeklyTraining
-            return (
-              <TrainingBar
-                key={firstTrainingOfTheWeek?.date ?? index}
-                weeklyTraining={weeklyTraining}
-              />
-            )
-          })}
-        </Barcode>
+        <TrainingSessionsBarcode yearTraining={yearTraining} />
       </div>
     ))
 }

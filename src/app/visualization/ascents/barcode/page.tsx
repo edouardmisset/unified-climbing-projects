@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { AscentsBar } from '~/app/_components/barcode/ascents-bar'
-import { Barcode } from '~/app/_components/barcode/barcode'
+import { AscentsBarcode } from '~/app/_components/barcode/barcode'
 import { Dialog } from '~/app/_components/dialog/dialog'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
@@ -19,27 +18,11 @@ export default async function AscentBarcodePage() {
       <div className="flex-column w100" key={year}>
         <h2 className="center-text">
           <Dialog
-            content={
-              <Barcode>
-                {yearAscents.map((ascents, index) => (
-                  <AscentsBar
-                    key={ascents[0]?.date ?? index}
-                    weeklyAscents={ascents}
-                  />
-                ))}
-              </Barcode>
-            }
+            content={<AscentsBarcode yearAscents={yearAscents} />}
             title={year}
           />
         </h2>
-        <Barcode>
-          {yearAscents.map((weeklyAscents, index) => (
-            <AscentsBar
-              key={weeklyAscents[0]?.date ?? index}
-              weeklyAscents={weeklyAscents}
-            />
-          ))}
-        </Barcode>
+        <AscentsBarcode yearAscents={yearAscents} />
       </div>
     ))
 }
