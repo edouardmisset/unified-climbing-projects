@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { type ReactNode, Suspense } from 'react'
+import { memo, type ReactNode, Suspense } from 'react'
 import { Loader } from '../loader/loader'
 import { ALL_TIME } from '../wrap-up/constants'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
@@ -11,12 +11,7 @@ export default function GridLayout({
   children,
   title,
   additionalContent,
-}: {
-  gridClassName?: string
-  children: ReactNode
-  title: ReactNode
-  additionalContent?: ReactNode
-}) {
+}: GridLayoutProps) {
   const titleIsValidNumber = isValidNumber(title)
 
   const beforeTitle = titleIsValidNumber ? (
@@ -44,15 +39,36 @@ export default function GridLayout({
 
   return (
     <section className="flex-column w100 h100">
-      <div className={`${styles.header} ${styles.patagonia}`}>
-        {beforeTitle}
-        <h1 className="center-text w100">{title}</h1>
-        {afterTitle}
-      </div>
+      <Header afterTitle={afterTitle} beforeTitle={beforeTitle} title={title} />
       {additionalContent}
       <Suspense fallback={<Loader />}>
         <div className={`grid ${gridClassName}`}>{children}</div>
       </Suspense>
     </section>
   )
+}
+
+const Header = memo(
+  ({
+    afterTitle,
+    beforeTitle,
+    title,
+  }: {
+    afterTitle: ReactNode
+    beforeTitle: ReactNode
+    title: ReactNode
+  }) => (
+    <div className={`${styles.header} ${styles.patagonia}`}>
+      {beforeTitle}
+      <h1 className="center-text w100">{title}</h1>
+      {afterTitle}
+    </div>
+  ),
+)
+
+type GridLayoutProps = {
+  gridClassName?: string
+  children: ReactNode
+  title: ReactNode
+  additionalContent?: ReactNode
 }
