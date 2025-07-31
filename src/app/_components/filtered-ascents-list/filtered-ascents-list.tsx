@@ -6,7 +6,7 @@ import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentList } from '../ascent-list/ascent-list'
-import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
+import AscentsFilterBar from '../filter-bar/_components/ascents-filter-bar'
 
 export function FilteredAscentList({ ascents }: AscentListProps) {
   const filteredAscents = useAscentsFilter(ascents ?? [])

@@ -19,7 +19,7 @@ export function useTrainingSessionsFilter(
         sessionType:
           selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
         year:
-          selectedYear !== ALL_VALUE && isValidNumber(selectedYear)
+          selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
             ? Number(selectedYear)
             : undefined,
       }),

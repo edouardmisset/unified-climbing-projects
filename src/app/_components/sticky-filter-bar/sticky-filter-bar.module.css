@@ -67,3 +67,13 @@
 
   overflow-x: auto;
 }
+
+.reset {
+  z-index: 1;
+  align-self: first baseline;
+  min-width: max-content;
+
+  & > svg {
+    transition: opacity 2s var(--ease-spring-1);
+  }
+}

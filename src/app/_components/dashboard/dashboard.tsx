@@ -2,7 +2,7 @@
 
 import { Link } from 'next-view-transitions'
 import { memo, Suspense } from 'react'
-import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
+import AscentsFilterBar from '~/app/_components/filter-bar/_components/ascents-filter-bar.tsx'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
