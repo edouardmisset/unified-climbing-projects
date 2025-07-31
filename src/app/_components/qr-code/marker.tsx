@@ -8,6 +8,19 @@ const numberOfSquareInMarker = 4
 const leftRegEx = /left/i
 const topRegEx = /top/i
 
+const GridItem = memo(
+  ({ gridArea, index }: { gridArea: string; index: number }) => {
+    const backgroundStyle = useMemo(
+      () => ({
+        backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
+        gridArea,
+      }),
+      [index, gridArea],
+    )
+    return <span key={gridArea} style={backgroundStyle} />
+  },
+)
+
 export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1
   const startingRow = topRegEx.test(placement) ? 1 : -1
@@ -28,13 +41,10 @@ export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
 
         const gridArea = `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`
         return (
-          <span
+          <GridItem
+            gridArea={`${gridArea} | ${index}`}
+            index={index}
             key={gridArea}
-            style={{
-              backgroundColor:
-                index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
-              gridArea,
-            }}
           />
         )
       })}

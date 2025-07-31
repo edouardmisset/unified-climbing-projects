@@ -36,7 +36,7 @@ export const Popover = memo(
     popoverTitle,
     popoverDescription,
     triggerClassName = '',
-    buttonStyle = {},
+    buttonStyle,
   }: {
     triggerContent: ReactNode
     triggerClassName?: string
