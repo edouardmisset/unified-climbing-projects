@@ -5,9 +5,6 @@ import type { TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
 import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
 
-// TODO: this component can now take multiple sessions. We should aggregate the
-// sessions and display a tooltip showing all the sessions and the className
-// should take an average ? max ? of the session types and load ?
 export const TrainingsQRDot = memo(
   ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
     const [firstSession] = trainingSessions
