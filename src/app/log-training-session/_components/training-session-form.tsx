@@ -5,7 +5,6 @@ import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { Loader } from '~/app/_components/loader/loader'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
 import styles from '~/app/log-ascent/_components/ascent-form.module.css'
@@ -59,7 +58,11 @@ function getFormattedList<T extends string>(
   return disjunctiveListFormatter(list.map(transform))
 }
 
-export default function TrainingSessionForm() {
+export default function TrainingSessionForm({
+  allLocations,
+}: {
+  allLocations: string[]
+}) {
   const { user } = useUser()
   const router = useTransitionRouter()
   const utils = api.useUtils()
@@ -74,9 +77,6 @@ export default function TrainingSessionForm() {
     globalThis.console.log(result.error)
   }
 
-  const { data: allGymsOrCrags, isLoading: isLoadingGymsOrCrags } =
-    api.training.getAllLocations.useQuery()
-
   const { data: defaultTrainingSession } = result
 
   const {
@@ -86,8 +86,6 @@ export default function TrainingSessionForm() {
   } = useForm({
     defaultValues: defaultTrainingSession,
   })
-
-  if (isLoadingGymsOrCrags) return <Loader />
 
   return user?.fullName === 'Edouard' ? (
     <form
@@ -169,8 +167,8 @@ export default function TrainingSessionForm() {
         <DataList
           id="gym-crag-list"
           options={
-            allGymsOrCrags?.map(gymOrCrag => ({
-              value: gymOrCrag,
+            allLocations.map(location => ({
+              value: location,
             })) ?? []
           }
         />
