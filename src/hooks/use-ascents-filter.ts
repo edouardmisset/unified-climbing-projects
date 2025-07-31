@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useDeferredValue, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -44,7 +44,5 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedYear,
   ])
 
-  const deferredFilteredAscents = useDeferredValue(filteredAscents)
-
-  return deferredFilteredAscents
+  return filteredAscents
 }
