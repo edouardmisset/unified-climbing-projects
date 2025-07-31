@@ -389,8 +389,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="height">Height (m)</label>
         <input
           {...register('height')}
-          className={`${styles.input} contrast-color`}
-          // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
+          className={`${styles.input} contrast-color ${isBoulder ? 'not-allowed' : ''}`}
           disabled={isBoulder}
           enterKeyHint="next"
           id="height"
@@ -400,13 +399,6 @@ export default function AscentForm(props: AscentFormProps) {
           pattern={_0To100RegEx.source}
           placeholder="25"
           step={5}
-          style={
-            isBoulder
-              ? {
-                  cursor: 'not-allowed',
-                }
-              : undefined
-          }
           title="Height of the route in meters (does not apply for boulders)"
           type="number"
         />

@@ -1,6 +1,5 @@
 import { Toggle } from '@base-ui-components/react/toggle'
 import { ToggleGroup } from '@base-ui-components/react/toggle-group'
-import type { CSSProperties } from 'react'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
@@ -25,10 +24,9 @@ export function ClimbingStyleToggleGroup(
       <Toggle
         aria-hidden={isOnsightDisable}
         aria-label="Onsight"
-        className={`contrast-color ${styles.Button}`}
+        className={`contrast-color ${styles.Button} ${isOnsightDisable ? 'not-allowed' : ''}`}
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
-        style={isOnsightDisable ? disabledStyle : undefined}
         title={
           isOnsightDisable
             ? 'Historically, boulders can only be flashed, not onsighted'
@@ -48,11 +46,6 @@ export function ClimbingStyleToggleGroup(
       </Toggle>
     </ToggleGroup>
   )
-}
-
-const disabledStyle: CSSProperties = {
-  color: 'var(--gray-7)',
-  cursor: 'not-allowed',
 }
 
 type ClimbingStyleToggleGroupProps = {

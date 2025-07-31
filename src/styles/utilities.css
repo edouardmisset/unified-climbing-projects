@@ -101,6 +101,11 @@
   user-select: none;
 }
 
+.not-allowed {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .block {
   display: block;
 }
