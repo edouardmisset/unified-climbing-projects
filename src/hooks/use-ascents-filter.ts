@@ -2,6 +2,7 @@ import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
+import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import type { Ascent } from '~/schema/ascent'
 import { useAscentsQueryState } from './use-ascents-query-state'
 
@@ -23,12 +24,12 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
 
   const filteredAscents = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
+
     return filterAscents(ascents, {
-      climbingDiscipline:
-        selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
-      crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
-      grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
-      style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      crag: normalizeFilterValue(selectedCrag),
+      grade: normalizeFilterValue(selectedGrade),
+      style: normalizeFilterValue(selectedStyle),
       year:
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber

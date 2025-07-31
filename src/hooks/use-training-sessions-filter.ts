@@ -2,6 +2,7 @@ import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import type { TrainingSession } from '~/schema/training'
 import { useTrainingSessionsQueryState } from './use-training-sessions-query-state'
 
@@ -14,10 +15,9 @@ export function useTrainingSessionsFilter(
   const filteredTrainingSessions = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
     return filterTrainingSessions(trainingSessions, {
-      gymCrag: selectedLocation === ALL_VALUE ? undefined : selectedLocation,
-      load: selectedLoad === ALL_VALUE ? undefined : selectedLoad,
-      sessionType:
-        selectedSessionType === ALL_VALUE ? undefined : selectedSessionType,
+      gymCrag: normalizeFilterValue(selectedLocation),
+      load: normalizeFilterValue(selectedLoad),
+      sessionType: normalizeFilterValue(selectedSessionType),
       year:
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
