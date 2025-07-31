@@ -38,6 +38,10 @@
     margin: 0;
   }
 
+  & > li {
+    padding: 0;
+  }
+
   @media (width <= 640px) {
     display: none;
   }
