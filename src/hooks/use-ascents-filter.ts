@@ -8,7 +8,7 @@ import { useAscentsQueryState } from './use-ascents-query-state'
 
 /**
  * Filters the provided ascents based on the following query state parameters:
- * year, discipline, style, crag, and grade.
+ * year, discipline, style, crag, and grade and period.
  *
  * @param {Ascent[]} ascents - The array of ascents to filter.
  * @returns {Ascent[]} The filtered ascents.
@@ -20,6 +20,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedStyle,
     selectedCrag,
     selectedGrade,
+    selectedPeriod,
   } = useAscentsQueryState()
 
   const filteredAscents = useMemo(() => {
@@ -34,12 +35,14 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
           : undefined,
+      period: normalizeFilterValue(selectedPeriod),
     })
   }, [
     ascents,
     selectedCrag,
     selectedDiscipline,
     selectedGrade,
+    selectedPeriod,
     selectedStyle,
     selectedYear,
   ])

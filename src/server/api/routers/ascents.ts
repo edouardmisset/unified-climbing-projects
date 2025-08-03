@@ -20,6 +20,7 @@ import {
 import {
   errorSchema,
   optionalAscentYear,
+  periodSchema,
   timeframeSchema,
 } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -45,6 +46,7 @@ export const optionalAscentFilterSchema = z
     style: ascentStyleSchema.optional(),
     tries: ascentSchema.shape.tries.optional(),
     year: optionalAscentYear,
+    period: periodSchema.optional(),
   })
   .optional()
 export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>

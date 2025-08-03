@@ -9,8 +9,13 @@ import { useTrainingSessionsQueryState } from './use-training-sessions-query-sta
 export function useTrainingSessionsFilter(
   trainingSessions: TrainingSession[],
 ): TrainingSession[] {
-  const { selectedYear, selectedSessionType, selectedLoad, selectedLocation } =
-    useTrainingSessionsQueryState()
+  const {
+    selectedYear,
+    selectedSessionType,
+    selectedLoad,
+    selectedLocation,
+    selectedPeriod,
+  } = useTrainingSessionsQueryState()
 
   const filteredTrainingSessions = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
@@ -22,13 +27,15 @@ export function useTrainingSessionsFilter(
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
           : undefined,
+      period: normalizeFilterValue(selectedPeriod),
     })
   }, [
-    trainingSessions,
-    selectedLocation,
     selectedLoad,
+    selectedLocation,
+    selectedPeriod,
     selectedSessionType,
     selectedYear,
+    trainingSessions,
   ])
 
   return filteredTrainingSessions

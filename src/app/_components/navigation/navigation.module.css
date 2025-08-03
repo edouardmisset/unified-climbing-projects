@@ -55,9 +55,11 @@
 
   transition: all 0.3s var(--ease-elastic-in-1);
 
-  &:hover {
-    color: var(--accent);
-    background-color: var(--surface-1);
+  && {
+    &:hover {
+      color: var(--accent);
+      background-color: var(--surface-1);
+    }
   }
 }
 

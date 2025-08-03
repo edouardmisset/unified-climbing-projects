@@ -1,5 +1,7 @@
+import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
+import { PERIOD_TO_DATES, type Period } from '~/schema/generic'
 import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
 
 type OptionalTrainingInput = Partial<
@@ -7,6 +9,7 @@ type OptionalTrainingInput = Partial<
 > & {
   year?: number
   load?: LoadCategory
+  period?: Period
 }
 
 /**
@@ -32,6 +35,7 @@ export function filterTrainingSessions(
     sessionType,
     volume,
     year,
+    period,
   } = filters ?? {}
 
   if (!trainingSessions || trainingSessions.length === 0) {
@@ -41,13 +45,14 @@ export function filterTrainingSessions(
     return []
   }
 
-  return trainingSessions.filter(
-    trainingSession =>
+  return trainingSessions.filter(trainingSession => {
+    const trainingSessionDate = new Date(trainingSession.date)
+    return (
       (gymCrag === undefined ||
         stringEqualsCaseInsensitive(trainingSession?.gymCrag ?? '', gymCrag)) &&
       (climbingDiscipline === undefined ||
         trainingSession.climbingDiscipline === climbingDiscipline) &&
-      (year === undefined || isDateInYear(trainingSession.date, year)) &&
+      (year === undefined || isDateInYear(trainingSessionDate, year)) &&
       (anatomicalRegion === undefined ||
         trainingSession.anatomicalRegion === anatomicalRegion) &&
       (energySystem === undefined ||
@@ -57,8 +62,11 @@ export function filterTrainingSessions(
         isLoadInLoadCategory(trainingSession.load, load)) &&
       (sessionType === undefined ||
         trainingSession.sessionType === sessionType) &&
-      (volume === undefined || trainingSession.volume === volume),
-  )
+      (volume === undefined || trainingSession.volume === volume) &&
+      (period === undefined ||
+        isDateInRange(trainingSessionDate, { ...PERIOD_TO_DATES[period] }))
+    )
+  })
 }
 
 function isLoadInLoadCategory(
