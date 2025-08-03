@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from 'react'
 
+type ThemeMode = 'dark' | 'light'
+
 export function useTheme() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<ThemeMode>('dark')
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const stored = localStorage.getItem('theme')
+    const stored = localStorage.getItem('theme') ?? 'light'
     if (stored === 'light' || stored === 'dark') {
       setTheme(stored)
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setTheme('dark')
-    } else {
-      setTheme('light')
+      return
     }
   }, [])
 
