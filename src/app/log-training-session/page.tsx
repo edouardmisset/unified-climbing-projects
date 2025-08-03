@@ -8,8 +8,7 @@ import GridLayout from '../_components/grid-layout/grid-layout.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
 export default async function LogTrainingSession() {
-
-    const allLocations = await api.training.getAllLocations()
+  const allLocations = await api.training.getAllLocations()
 
   return (
     <Suspense fallback={<Loader />}>

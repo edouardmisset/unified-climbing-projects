@@ -1,78 +1,47 @@
-import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useQueryState } from 'nuqs'
-import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
-import {
-  type LoadCategory,
-  loadCategorySchema,
-  type TrainingSession,
-  trainingSessionSchema,
-} from '~/schema/training'
+import type { Period } from '~/schema/generic'
+import type { LoadCategory, TrainingSession } from '~/schema/training'
+import { useLoadQueryState } from './query-state-slices/use-load-query-state'
+import { useLocationQueryState } from './query-state-slices/use-location-query-state'
+import { usePeriodQueryState } from './query-state-slices/use-period-query-state'
+import { useSessionTypeQueryState } from './query-state-slices/use-session-type-query-state'
+import { useYearQueryState } from './query-state-slices/use-year-query-state'
 
 export const useTrainingSessionsQueryState =
   (): UseTrainingSessionsQueryStateReturn => {
-    const [selectedYear, setYear] = useQueryState<OrAll<string>>('year', {
-      defaultValue: ALL_VALUE,
-      parse: value => {
-        if (value === ALL_VALUE) return ALL_VALUE
-        if (isValidNumber(Number(value))) return value
-        return null
-      },
-    })
-
-    const [selectedSessionType, setSessionType] = useQueryState<
-      OrAll<NonNullable<TrainingSession['sessionType']>>
-    >('sessionType', {
-      defaultValue: ALL_VALUE,
-      parse: value =>
-        value === ALL_VALUE
-          ? ALL_VALUE
-          : trainingSessionSchema
-              .required({ sessionType: true })
-              .shape.sessionType.parse(value),
-    })
-
-    const [selectedLoad, setLoad] = useQueryState<OrAll<LoadCategory>>('load', {
-      defaultValue: ALL_VALUE,
-      parse: value =>
-        value === ALL_VALUE ? ALL_VALUE : loadCategorySchema.parse(value),
-    })
-
-    const [selectedLocation, setLocation] = useQueryState<
-      OrAll<NonNullable<TrainingSession['gymCrag']>>
-    >('location', {
-      defaultValue: ALL_VALUE,
-      parse: value =>
-        value === ALL_VALUE
-          ? ALL_VALUE
-          : trainingSessionSchema
-              .required({ gymCrag: true })
-              .shape.gymCrag.parse(value),
-    })
+    const [selectedYear, setYear] = useYearQueryState()
+    const [selectedPeriod, setPeriod] = usePeriodQueryState()
+    const [selectedSessionType, setSessionType] = useSessionTypeQueryState()
+    const [selectedLoad, setLoad] = useLoadQueryState()
+    const [selectedLocation, setLocation] = useLocationQueryState()
 
     return {
       selectedLoad,
       selectedLocation,
+      selectedPeriod,
       selectedSessionType,
       selectedYear,
       setLoad,
       setLocation,
+      setPeriod,
       setSessionType,
       setYear,
     }
   }
 
 type UseTrainingSessionsQueryStateReturn = {
-  selectedYear: OrAll<string>
-  selectedSessionType: OrAll<NonNullable<TrainingSession['sessionType']>>
   selectedLoad: OrAll<LoadCategory>
   selectedLocation: OrAll<NonNullable<TrainingSession['gymCrag']>>
-  setYear: (year: OrAll<string>) => void
-  setSessionType: (
-    sessionType: OrAll<NonNullable<TrainingSession['sessionType']>>,
-  ) => void
+  selectedPeriod: OrAll<Period>
+  selectedSessionType: OrAll<NonNullable<TrainingSession['sessionType']>>
+  selectedYear: OrAll<string>
   setLoad: (load: OrAll<LoadCategory>) => void
   setLocation: (
     location: OrAll<NonNullable<TrainingSession['gymCrag']>>,
   ) => void
+  setPeriod: (period: OrAll<Period>) => void
+  setSessionType: (
+    sessionType: OrAll<NonNullable<TrainingSession['sessionType']>>,
+  ) => void
+  setYear: (year: OrAll<string>) => void
 }

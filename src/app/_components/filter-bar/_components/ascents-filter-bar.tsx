@@ -7,6 +7,7 @@ import {
   type Ascent,
   AVAILABLE_CLIMBING_DISCIPLINE,
 } from '~/schema/ascent'
+import { PERIOD } from '~/schema/generic'
 import { createChangeHandler } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
@@ -36,10 +37,12 @@ export default function AscentsFilterBar({
   const {
     selectedCrag,
     selectedDiscipline,
+    selectedPeriod,
     selectedStyle,
     selectedYear,
     setCrag,
     setDiscipline,
+    setPeriod,
     setStyle,
     setYear,
   } = useAscentsQueryState()
@@ -75,18 +78,27 @@ export default function AscentsFilterBar({
           selectedValue: selectedCrag,
           title: 'Crag',
         },
+        {
+          handleChange: createChangeHandler(setPeriod),
+          name: 'Period',
+          options: PERIOD,
+          selectedValue: selectedPeriod,
+          title: 'Period',
+        },
       ] as const satisfies FilterConfig[],
     [
-      setDiscipline,
-      setStyle,
-      setYear,
-      setCrag,
+      cragList,
+      selectedCrag,
       selectedDiscipline,
+      selectedPeriod,
       selectedStyle,
       selectedYear,
-      selectedCrag,
+      setCrag,
+      setDiscipline,
+      setPeriod,
+      setStyle,
+      setYear,
       yearList,
-      cragList,
     ],
   )
 

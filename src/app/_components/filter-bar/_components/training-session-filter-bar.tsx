@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
+import { PERIOD } from '~/schema/generic'
 import {
   LOAD_CATEGORIES,
   SESSION_TYPES,
@@ -34,10 +35,12 @@ export function TrainingSessionFilterBar({
   const {
     selectedLoad,
     selectedLocation,
+    selectedPeriod,
     selectedSessionType,
     selectedYear,
     setLoad,
     setLocation,
+    setPeriod,
     setSessionType,
     setYear,
   } = useTrainingSessionsQueryState()
@@ -73,18 +76,27 @@ export function TrainingSessionFilterBar({
           selectedValue: selectedLocation,
           title: 'Location',
         },
+        {
+          handleChange: createChangeHandler(setPeriod),
+          name: 'Period',
+          options: PERIOD,
+          selectedValue: selectedPeriod,
+          title: 'Period',
+        },
       ] as const satisfies FilterConfig[],
     [
-      setSessionType,
-      setLoad,
-      setYear,
-      setLocation,
-      selectedSessionType,
-      selectedLoad,
-      selectedYear,
-      selectedLocation,
-      yearList,
       locationList,
+      selectedLoad,
+      selectedLocation,
+      selectedPeriod,
+      selectedSessionType,
+      selectedYear,
+      setLoad,
+      setLocation,
+      setPeriod,
+      setSessionType,
+      setYear,
+      yearList,
     ],
   )
 

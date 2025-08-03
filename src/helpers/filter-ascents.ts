@@ -1,9 +1,11 @@
+import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { objectKeys } from '@edouardmisset/object'
 import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { DEFAULT_GRADE } from '~/constants/ascents.ts'
-import type { Ascent } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent.ts'
+import { PERIOD_TO_DATES } from '~/schema/generic.ts'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
 import { frequencyBy } from './frequency-by.ts'
 import { fromGradeToNumber } from './grade-converter.ts'
@@ -33,28 +35,33 @@ export function filterAscents(
     style,
     tries,
     year,
+    period,
   } = filters ?? {}
 
   if (!ascents || ascents.length === 0) {
-    globalThis.console.log('No ascents passed to filterAscents')
+    globalThis.console.log('No ascents passed to `filterAscents`')
     return []
   }
 
-  return ascents.filter(
-    ascent =>
+  return ascents.filter(ascent => {
+    const ascentDate = new Date(ascent.date)
+    return (
       (grade === undefined ||
         stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
       (climbingDiscipline === undefined ||
         ascent.climbingDiscipline === climbingDiscipline) &&
-      (year === undefined || isDateInYear(ascent.date, year)) &&
+      (year === undefined || isDateInYear(ascentDate, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&
       (rating === undefined || ascent.rating === rating) &&
       (height === undefined || ascent.height === height) &&
       (holds === undefined || ascent.holds === holds) &&
       (tries === undefined || ascent.tries === tries) &&
-      (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)),
-  )
+      (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
+      (period === undefined ||
+        isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] }))
+    )
+  })
 }
 
 export function getHardestAscent(ascents: Ascent[]): Ascent {
