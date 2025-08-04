@@ -10,9 +10,7 @@ export const Dialog = memo(
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
-          <BaseDialog.Description
-            render={content}
-          />
+          <BaseDialog.Description render={content} />
           <div className={styles.actions}>
             <BaseDialog.Close className={styles.button} data-close="true">
               Close

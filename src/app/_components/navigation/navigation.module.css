@@ -49,7 +49,7 @@
 
 .link {
   display: inline-block;
-  padding-block: var(--size-fluid-1);
+  padding-block: var(--size-fluid-0);
   padding-inline: var(--size-fluid-2);
   border-radius: var(--border-size-4);
 
