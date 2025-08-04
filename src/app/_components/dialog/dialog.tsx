@@ -6,7 +6,7 @@ export const Dialog = memo(
   ({ title, content }: { title: string; content: React.JSX.Element }) => (
     <BaseDialog.Root>
       <BaseDialog.Trigger className={styles.button}>{title}</BaseDialog.Trigger>
-      <BaseDialog.Portal keepMounted>
+      <BaseDialog.Portal>
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
