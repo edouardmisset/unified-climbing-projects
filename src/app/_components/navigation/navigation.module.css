@@ -1,14 +1,14 @@
 .nav {
   position: relative;
 
-  display: flex;
+  /* display: flex;
   gap: var(--size-2);
   align-items: center;
   justify-content: center;
   min-inline-size: 4rem;
   block-size: 100%;
   padding-block: var(--size-2);
-  padding-inline: var(--size-fluid-0);
+  padding-inline: var(--size-fluid-0); */
 
   color: var(--text-1);
   background: transparent;
@@ -28,9 +28,18 @@
 
 .navList {
   display: flex;
+
   flex: 1;
   flex-direction: column;
+  gap: var(--size-2);
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 4rem;
   block-size: 100%;
+
+  padding-block: var(--size-2);
+  padding-inline: var(--size-fluid-0);
+
   list-style: none;
 
   && {
