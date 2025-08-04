@@ -45,7 +45,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       popoverDescription={
         <AscentsPopoverDescription
           ascents={weeklyAscentsByDescendingGrade}
-          showCrag={true}
+          showCrag
         />
       }
       popoverTitle={title}

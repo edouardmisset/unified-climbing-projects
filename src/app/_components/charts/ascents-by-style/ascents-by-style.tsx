@@ -19,7 +19,7 @@ export function AscentsByStyle({
   return (
     <ChartContainer caption="Ascent By Style" className={className}>
       <ResponsivePie
-        animate={true}
+        animate
         arcLabel={data =>
           `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
         }

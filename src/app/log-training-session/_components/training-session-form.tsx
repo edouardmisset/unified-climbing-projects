@@ -126,7 +126,7 @@ export default function TrainingSessionForm({
           id="date"
           list="date-list"
           max={fromDateToStringDate(new Date())}
-          required={true}
+          required
           title="Date"
           type="date"
         />
@@ -275,7 +275,7 @@ export default function TrainingSessionForm({
           enterKeyHint="send"
           id="comments"
           placeholder="Felt great, but need to work on my footwork"
-          spellCheck={true}
+          spellCheck
           title="Comments about the training session"
         />
       </div>

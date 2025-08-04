@@ -71,13 +71,13 @@ export function TriesByGrade({
         curve="natural"
         data={data}
         enableGridX={false}
-        enableTouchCrosshair={true}
+        enableTouchCrosshair
         legends={legends}
         margin={DEFAULT_CHART_MARGIN}
         pointSize={8}
         theme={theme}
         tooltip={Tooltip}
-        useMesh={true}
+        useMesh
         xScale={lineXScale}
         yScale={lineYScale}
       />

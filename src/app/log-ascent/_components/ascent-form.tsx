@@ -231,7 +231,7 @@ export default function AscentForm(props: AscentFormProps) {
           id="date"
           list="date-list"
           max={fromDateToStringDate(new Date())}
-          required={true}
+          required
           title="Date"
           type="date"
         />
@@ -248,7 +248,7 @@ export default function AscentForm(props: AscentFormProps) {
           enterKeyHint="next"
           id="routeName"
           placeholder="Biographie, La Dura Dura, etc."
-          required={true}
+          required
           title="The name of the route or boulder climbed (use `N/A` for routes without name)"
           type="text"
         />
@@ -280,7 +280,7 @@ export default function AscentForm(props: AscentFormProps) {
           id="crag"
           list="crag-list"
           placeholder="Ceüse, Fontainebleau, etc."
-          required={true}
+          required
           title="The name of the crag"
           type="text"
         />
@@ -317,7 +317,7 @@ export default function AscentForm(props: AscentFormProps) {
             onChange={handleTriesChange}
             pattern={_1To9999RegEx.source}
             placeholder="1"
-            required={true}
+            required
             step={1}
             title="Total number of tries"
             type="number"
@@ -340,7 +340,7 @@ export default function AscentForm(props: AscentFormProps) {
           max={adjustedMaxGrade}
           min={adjustedMinGrade}
           onValueChange={handleTopoGradeChange}
-          required={true}
+          required
           step={1}
           value={numberTopoGrade}
         />
@@ -430,7 +430,7 @@ export default function AscentForm(props: AscentFormProps) {
           enterKeyHint="send"
           id="comments"
           placeholder="This was my first 9b+. I thought I was going to die at the crux. It's so far! Thank you Sam for the belay and the encouragements. I didn't use the tiny foothold, instead I jump to the jug directly..."
-          spellCheck={true}
+          spellCheck
           title="Feelings, partners, betas..."
         />
       </div>

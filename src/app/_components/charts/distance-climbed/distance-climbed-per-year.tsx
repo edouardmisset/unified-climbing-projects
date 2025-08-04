@@ -31,7 +31,7 @@ export function DistanceClimbedPerYear({
         data={data}
         enableGridY={false}
         enableLabel={false}
-        enableTotals={true}
+        enableTotals
         indexBy="year"
         keys={['distance']}
         margin={{ ...DEFAULT_CHART_MARGIN, left: 80 }}

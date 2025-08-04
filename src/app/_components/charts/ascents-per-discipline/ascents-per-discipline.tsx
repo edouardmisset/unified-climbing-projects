@@ -37,7 +37,7 @@ export function AscentsPerDiscipline({
   return (
     <ChartContainer caption="Ascents per Discipline" className={className}>
       <ResponsivePie
-        animate={true}
+        animate
         arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
         colors={pieColorsGetter}

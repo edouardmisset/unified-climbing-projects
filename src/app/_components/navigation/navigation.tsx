@@ -60,7 +60,7 @@ export const Navigation = memo(() => (
 
     {/* Mobile hamburger menu */}
     <div className={styles.mobileMenu}>
-      <Menu.Root openOnHover={true}>
+      <Menu.Root openOnHover>
         <Menu.Trigger
           aria-label="navigation"
           className={styles.Button}

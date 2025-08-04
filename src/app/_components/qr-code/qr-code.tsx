@@ -28,7 +28,7 @@ const QRCode = memo((props: { children?: ReactNode }) => {
         alt="emoji of a person climbing"
         className={styles.image}
         height={120}
-        priority={true}
+        priority
         src={climberImagePath}
         width={120}
       />

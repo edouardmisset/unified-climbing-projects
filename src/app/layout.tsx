@@ -64,11 +64,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <ClerkProvider appearance={appearance}>
-        <html
-          data-color-scheme={theme}
-          lang="en"
-          suppressHydrationWarning={true}
-        >
+        <html data-color-scheme={theme} lang="en" suppressHydrationWarning>
           <body className={styles.body}>
             <header className={styles.header}>
               <LightDarkSwitch

@@ -34,7 +34,7 @@ export function AscentSummary({ ascents }: AscentListProps) {
       <p>
         <span className="block">
           Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
-          <AscentComponent ascent={mostRecentAscent} showGrade={true} />
+          <AscentComponent ascent={mostRecentAscent} showGrade />
         </span>
 
         {onsightAscents.length === 0 ? undefined : (

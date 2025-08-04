@@ -22,7 +22,7 @@ export function YearNavigationButton({
     <Link
       className={styles.button}
       href={`.${path}/${targetYear}`}
-      prefetch={true}
+      prefetch
       title={targetYear?.toString() ?? ''}
     >
       {nextOrPrevious === 'next' ? (

@@ -22,7 +22,7 @@ export const Link = memo(
         href={href}
         {...props}
         className={`${styles.link} ${isActive ? styles.active : ''} ${className ?? ''}`}
-        prefetch={true}
+        prefetch
       >
         {children}
       </NextLink>

@@ -22,7 +22,7 @@ export default function GridLayout({
     />
   ) : title === ALL_TIME ? (
     <YearNavigationButton
-      enabled={true}
+      enabled
       nextOrPrevious="previous"
       path="/wrap-up"
       selectedYear={new Date().getFullYear() + 1}

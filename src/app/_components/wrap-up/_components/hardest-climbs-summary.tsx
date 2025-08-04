@@ -29,13 +29,13 @@ export function HardestClimbsSummary({ ascents }: AscentListProps) {
         {hardestRoute ? (
           <span className="block">
             Your hardest route was{' '}
-            <AscentComponent ascent={hardestRoute} showGrade={true} />
+            <AscentComponent ascent={hardestRoute} showGrade />
           </span>
         ) : undefined}
         {hardestBoulder ? (
           <span className="block">
             Your hardest boulder was{' '}
-            <AscentComponent ascent={hardestBoulder} showGrade={true} />
+            <AscentComponent ascent={hardestBoulder} showGrade />
           </span>
         ) : undefined}
         <span className="block">
