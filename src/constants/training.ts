@@ -4,19 +4,19 @@ export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['sessionType']>,
   string
 > = {
-  Co: 'var(--other-training)',
+  Co: 'var(--otherTraining)',
 
   CS: 'var(--strength)',
 
   En: 'var(--endurance)',
-  FB: 'var(--other-training)',
+  FB: 'var(--otherTraining)',
   MS: 'var(--strength)',
   Out: 'var(--outdoor)',
   PE: 'var(--endurance)',
   Po: 'var(--strength)',
-  Ro: 'var(--other-training)',
+  Ro: 'var(--otherTraining)',
   SE: 'var(--endurance)',
-  Sg: 'var(--other-training)',
+  Sg: 'var(--otherTraining)',
 
   Sk: 'var(--stamina)',
   St: 'var(--stamina)',
@@ -28,19 +28,19 @@ export const TRAINING_SESSION_TYPE_TO_CLASS_NAME: Record<
   NonNullable<TrainingSession['sessionType']>,
   string
 > = {
-  Co: 'other-training',
+  Co: 'otherTraining',
 
   CS: 'strength',
 
   En: 'endurance',
-  FB: 'other-training',
+  FB: 'otherTraining',
   MS: 'strength',
   Out: 'outdoor',
   PE: 'endurance',
   Po: 'strength',
-  Ro: 'other-training',
+  Ro: 'otherTraining',
   SE: 'endurance',
-  Sg: 'other-training',
+  Sg: 'otherTraining',
 
   Sk: 'stamina',
   St: 'stamina',
@@ -49,17 +49,17 @@ export const TRAINING_SESSION_TYPE_TO_CLASS_NAME: Record<
 } as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
 
 export const TRAINING_SESSION_TYPE_TO_STRING = {
-  Co: 'other-training',
+  Co: 'otherTraining',
   CS: 'strength',
   En: 'endurance',
-  FB: 'other-training',
+  FB: 'otherTraining',
   MS: 'strength',
   Out: 'outdoor',
   PE: 'endurance',
   Po: 'strength',
-  Ro: 'other-training',
+  Ro: 'otherTraining',
   SE: 'endurance',
-  Sg: 'other-training',
+  Sg: 'otherTraining',
   Sk: 'stamina',
   St: 'stamina',
   Ta: 'tapered',

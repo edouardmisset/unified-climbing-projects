@@ -30,7 +30,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
 
   return [
     {
-      color: 'var(--min-tries)',
+      color: 'var(--minTries)',
       data: grades.map(grade => ({
         x: grade,
         y: gradeStats[grade].min,
@@ -38,7 +38,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
       id: 'min',
     },
     {
-      color: 'var(--average-tries)',
+      color: 'var(--averageTries)',
       data: grades.map(grade => {
         const { sum, count } = gradeStats[grade]
         return {
@@ -49,7 +49,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
       id: 'average',
     },
     {
-      color: 'var(--max-tries)',
+      color: 'var(--maxTries)',
       data: grades.map(grade => ({
         x: grade,
         y: gradeStats[grade].max,

@@ -38,7 +38,7 @@ export default function GridLayout({
   )
 
   return (
-    <section className="flex-column w100 h100">
+    <section className="flexColumn w100 h100">
       <Header afterTitle={afterTitle} beforeTitle={beforeTitle} title={title} />
       {additionalContent}
       <Suspense fallback={<Loader />}>
@@ -60,7 +60,7 @@ const Header = memo(
   }) => (
     <div className={`${styles.header} ${styles.patagonia}`}>
       {beforeTitle}
-      <h1 className="center-text w100">{title}</h1>
+      <h1 className="centerText w100">{title}</h1>
       {afterTitle}
     </div>
   ),

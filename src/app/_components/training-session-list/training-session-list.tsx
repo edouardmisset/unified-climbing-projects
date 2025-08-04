@@ -13,8 +13,8 @@ export const TrainingSessionList = memo(
 
     return (
       <table className={styles.table}>
-        <thead className={`${styles.header} grid-full-width`}>
-          <tr className={`${styles.headerRow} grid-full-width`}>
+        <thead className={`${styles.header} gridFullWidth`}>
+          <tr className={`${styles.headerRow} gridFullWidth`}>
             <th
               className={`${styles.cell} ${styles.headerCell}`}
               title="Date of the session"
@@ -41,9 +41,9 @@ export const TrainingSessionList = memo(
             </th>
           </tr>
         </thead>
-        <tbody className={`${styles.body} grid-full-width`}>
+        <tbody className={`${styles.body} gridFullWidth`}>
           {trainingSessions.map(({ id, sessionType, date, load, gymCrag }) => (
-            <tr className={`${styles.row} grid-full-width`} key={id}>
+            <tr className={`${styles.row} gridFullWidth`} key={id}>
               <td
                 className={`${styles.cell} monospace`}
                 title={prettyLongDate(date)}
@@ -74,8 +74,8 @@ export const TrainingSessionList = memo(
             </tr>
           ))}
         </tbody>
-        <tfoot className={`${styles.footer} grid-full-width`}>
-          <tr className={`${styles.row} grid-full-width`}>
+        <tfoot className={`${styles.footer} gridFullWidth`}>
+          <tr className={`${styles.row} gridFullWidth`}>
             <th className={styles.footerCell}>Total</th>
             <td className={styles.footerCell}>
               <strong>{trainingSessions.length}</strong> sessions

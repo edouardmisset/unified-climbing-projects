@@ -15,8 +15,8 @@ export default async function TrainingSessionsBarcodePage() {
   return Object.entries(groupedTrainingWeekly)
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, yearTraining]) => (
-      <div className="flex-column w100" key={year}>
-        <h2 className="center-text">
+      <div className="flexColumn w100" key={year}>
+        <h2 className="centerText">
           <Dialog
             content={<TrainingSessionsBarcode yearlyTraining={yearTraining} />}
             title={year}

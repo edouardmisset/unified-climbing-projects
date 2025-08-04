@@ -17,7 +17,7 @@ export default async function LogTrainingSession() {
           <GridLayout gridClassName="padding" title="Train Hard 💪">
             <span
               aria-describedby="form-description"
-              className="visually-hidden"
+              className="visuallyHidden"
             >
               Form to log a training session
             </span>
@@ -28,7 +28,7 @@ export default async function LogTrainingSession() {
         </HydrateClient>
       </SignedIn>
       <SignedOut>
-        <section className="flex-column gap">
+        <section className="flexColumn gap">
           <p>You need to be signed in to log a training session.</p>
           <SignInButton />
         </section>

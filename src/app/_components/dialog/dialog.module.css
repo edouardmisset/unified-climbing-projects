@@ -1,4 +1,4 @@
-.Button {
+.button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@
   }
 }
 
-.Backdrop {
+.backdrop {
   position: fixed;
   inset: 0;
   background-color: black;
@@ -46,7 +46,7 @@
   }
 }
 
-.Popup {
+.popup {
   position: fixed;
   inset-block-start: 50%;
   inset-inline-start: 50%;
@@ -71,12 +71,12 @@
   }
 }
 
-.Title {
+.title {
   line-height: 1.5;
   text-align: center;
 }
 
-.Actions {
+.actions {
   display: flex;
   gap: var(--size-fluid-1);
   justify-content: flex-end;

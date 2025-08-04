@@ -1,11 +1,11 @@
-.Container {
+.container {
   display: flex;
   flex-direction: row;
   gap: var(--size-3);
   align-items: center;
 }
 
-.Switch {
+.switch {
   position: relative;
   display: flex;
   justify-content: flex-start;
@@ -74,7 +74,7 @@
   }
 }
 
-.Thumb {
+.thumb {
   height: 100%;
   aspect-ratio: 1 / 1;
   background-color: white;

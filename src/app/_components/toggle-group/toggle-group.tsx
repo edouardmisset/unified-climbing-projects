@@ -18,14 +18,14 @@ export const ToggleGroup = memo(
     const memoizedValue = useMemo(() => [selectedValue], [selectedValue])
     return (
       <BaseToggleGroup
-        className={styles.Panel}
+        className={styles.panel}
         onValueChange={onValueChange}
         value={memoizedValue}
       >
         {values.map(value => (
           <Toggle
             aria-label={value}
-            className={`contrast-color ${styles.Button}`}
+            className={`contrastColor ${styles.button}`}
             key={value}
             value={value}
           >

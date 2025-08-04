@@ -47,7 +47,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
   return (
     <div className={styles.card}>
       <h2
-        className={`${styles.header} text-no-wrap`}
+        className={`${styles.header} textNoWrap`}
         title={`${routeName} ${formattedGrade}`}
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
       <div className={styles.content}>
@@ -69,7 +69,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className="text-no-wrap" key={formattedContent}>
+              <span className="textNoWrap" key={formattedContent}>
                 {formattedContent}
               </span>
             ))}

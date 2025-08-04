@@ -281,7 +281,7 @@ export default function TrainingSessionForm({
       </div>
       <Spacer size={3} />
       <button
-        className={`contrast-color ${styles.submit}`}
+        className={`contrastColor ${styles.submit}`}
         disabled={isSubmitting}
         type="submit"
       >
@@ -289,7 +289,7 @@ export default function TrainingSessionForm({
       </button>
     </form>
   ) : (
-    <section className="flex-column gap">
+    <section className="flexColumn gap">
       <p>You are not authorized to log an ascent.</p>
     </section>
   )

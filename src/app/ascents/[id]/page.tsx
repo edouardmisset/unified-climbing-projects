@@ -27,7 +27,7 @@ export default async function Page({
   }
 
   return (
-    <div className="super-center w100 h100">
+    <div className="superCenter w100 h100">
       <AscentCard ascent={ascent} />
     </div>
   )

@@ -20,7 +20,7 @@ export default async function AscentsCalendarPage() {
     <GridBreakOutWrapper>
       {ascentYears.map(year => (
         <Fragment key={year}>
-          <h2 className="super-center">{year}</h2>
+          <h2 className="superCenter">{year}</h2>
           <Suspense fallback={<Loader />}>
             <DataCalendar
               data={allAscents}

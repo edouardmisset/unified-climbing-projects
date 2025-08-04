@@ -22,7 +22,7 @@ export function TableAndSelect({ ascents }: AscentListProps) {
     [ascents, deferredTimeframe],
   )
   return (
-    <div className="flex flex-column gap grid-full-width padding">
+    <div className="flex flexColumn gap gridFullWidth padding">
       <TimeframeSelect />
       <Suspense fallback={<Loader />}>
         <AscentList

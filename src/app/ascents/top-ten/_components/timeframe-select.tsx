@@ -13,7 +13,7 @@ export function TimeframeSelect() {
 
   return (
     <Select.Root onValueChange={handleTimeframeChange} value={timeframe}>
-      <Select.Trigger className={`${styles.Select} self-center`}>
+      <Select.Trigger className={`${styles.Select} selfCenter`}>
         <Select.Value>{deSlugify(timeframe)}</Select.Value>
         <Select.Icon className={styles.SelectIcon}>
           <ChevronUpDownIcon />

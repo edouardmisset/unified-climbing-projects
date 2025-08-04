@@ -16,7 +16,7 @@ export function ClimbingStyleToggleGroup(
     <ToggleGroup
       {...rest}
       aria-label={`Climbing style (${disjunctiveListFormatter(ASCENT_STYLE)}). Default is "Redpoint" if number of tries is greater than 1.`}
-      className={styles.Panel}
+      className={styles.panel}
       defaultValue={['Redpoint']}
       onValueChange={onValueChange}
       value={isOnsightDisable ? ['Flash'] : [value]}
@@ -24,7 +24,7 @@ export function ClimbingStyleToggleGroup(
       <Toggle
         aria-hidden={isOnsightDisable}
         aria-label="Onsight"
-        className={`contrast-color ${styles.Button} ${isOnsightDisable ? 'not-allowed' : ''}`}
+        className={`contrastColor ${styles.button} ${isOnsightDisable ? 'notAllowed' : ''}`}
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
         title={
@@ -38,7 +38,7 @@ export function ClimbingStyleToggleGroup(
       </Toggle>
       <Toggle
         aria-label="Flash"
-        className={`contrast-color ${styles.Button}`}
+        className={`contrastColor ${styles.button}`}
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >

@@ -1,4 +1,4 @@
-.IconButton {
+.iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,7 @@
   }
 }
 
-.Popup {
+.popup {
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
@@ -65,7 +65,7 @@
   }
 }
 
-.Arrow {
+.arrow {
   display: flex;
 
   &[data-side='top'] {
@@ -89,14 +89,14 @@
   }
 }
 
-.Title {
+.title {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.5rem;
 }
 
-.Description {
+.description {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5rem;

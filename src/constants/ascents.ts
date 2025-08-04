@@ -8,7 +8,7 @@ export const ASCENT_STYLE_TO_COLOR = {
 
 export const CLIMBING_DISCIPLINE_TO_COLOR = {
   Boulder: 'var(--boulder)',
-  'Multi-Pitch': 'var(--multi-pitch)',
+  'Multi-Pitch': 'var(--multiPitch)',
   Route: 'var(--route)',
 } as const satisfies Record<Ascent['climbingDiscipline'], string>
 

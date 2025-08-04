@@ -15,8 +15,8 @@ export default async function AscentBarcodePage() {
   return Object.entries(groupedAscentsWeekly)
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, yearAscents]) => (
-      <div className="flex-column w100" key={year}>
-        <h2 className="center-text">
+      <div className="flexColumn w100" key={year}>
+        <h2 className="centerText">
           <Dialog
             content={<AscentsBarcode yearlyAscents={yearAscents} />}
             title={year}

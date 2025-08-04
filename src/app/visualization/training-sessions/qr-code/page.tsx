@@ -16,7 +16,7 @@ export default async function TrainingSessionsQRCodePage() {
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, yearlyTraining]) => (
       <div key={year}>
-        <h2 className="center-text">
+        <h2 className="centerText">
           <Dialog
             content={<TrainingQRCode yearlyTrainingSessions={yearlyTraining} />}
             title={year}

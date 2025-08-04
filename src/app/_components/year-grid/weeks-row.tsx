@@ -28,11 +28,11 @@ const WeekCell = memo(
     )
 
     if (columnNumber === 0)
-      return <span className={`super-center ${styles.firstCell}`} key={0} />
+      return <span className={`superCenter ${styles.firstCell}`} key={0} />
 
     return (
       <span
-        className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
+        className={`superCenter ${styles.yearGridCell} ${styles.gridHeader}`}
         style={gridColumnStyle}
       >
         {columnNumber}

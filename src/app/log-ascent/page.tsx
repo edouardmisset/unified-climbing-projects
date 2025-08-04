@@ -26,7 +26,7 @@ export default async function Log() {
     <Suspense fallback={<Loader />}>
       <SignedIn>
         <GridLayout gridClassName="padding" title="Congrats 🎉">
-          <span aria-describedby="form-description" className="visually-hidden">
+          <span aria-describedby="form-description" className="visuallyHidden">
             Form to log a climbing ascent
           </span>
           <Suspense fallback={<Loader />}>
@@ -41,7 +41,7 @@ export default async function Log() {
         </GridLayout>
       </SignedIn>
       <SignedOut>
-        <section className="flex-column gap">
+        <section className="flexColumn gap">
           <h2>Unauthorized</h2>
           <p>You need to be signed in to log an ascent.</p>
           <SignInButton />

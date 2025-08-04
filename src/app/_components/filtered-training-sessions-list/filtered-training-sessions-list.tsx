@@ -18,7 +18,7 @@ export function FilteredTrainingSessionList({
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
-    <section className="flex flex-column grid-full-width">
+    <section className="flex flexColumn gridFullWidth">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
       <Suspense fallback={<Loader />}>
         <TrainingSessionList trainingSessions={filteredTrainingSessions} />

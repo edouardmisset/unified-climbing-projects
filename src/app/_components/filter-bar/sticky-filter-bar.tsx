@@ -44,7 +44,7 @@ export function StickyFilterBar({ filters }: BaseFilterBarProps) {
           type="reset"
         >
           <CircleX opacity={isOneFilterActive ? 1 : 0.5} />
-          <span className="visually-hidden">Clear filters</span>
+          <span className="visuallyHidden">Clear filters</span>
         </button>
       </div>
     </search>

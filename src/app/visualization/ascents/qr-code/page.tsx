@@ -23,7 +23,7 @@ export default async function AscentsQRCodePage() {
       )
       return (
         <div key={year}>
-          <h2 className="center-text">
+          <h2 className="centerText">
             <Dialog
               content={<AscentsQRCode yearlyAscents={sortedAscents} />}
               title={year}

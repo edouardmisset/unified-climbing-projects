@@ -32,7 +32,7 @@ describe('fromSessionTypeToClassName', () => {
 describe('getSessionTypeColors', () => {
   it('should return default cell color when sessionType is undefined', () => {
     const result = getSessionTypeColors({ sessionType: undefined })
-    assert.equal(result, 'var(--cell-color)')
+    assert.equal(result, 'var(--cellColor)')
   })
 
   it('should return the correct color based on intensity and volume', () => {
@@ -41,14 +41,14 @@ describe('getSessionTypeColors', () => {
       sessionType: 'CS',
       volumePercent: 40,
     })
-    assert.equal(result, 'var(--strength-low)')
+    assert.equal(result, 'var(--strengthLow)')
 
     result = getSessionTypeColors({
       intensityPercent: 90,
       sessionType: 'CS',
       volumePercent: 90,
     })
-    assert.equal(result, 'var(--strength-high)')
+    assert.equal(result, 'var(--strengthHigh)')
 
     result = getSessionTypeColors({
       intensityPercent: 65,

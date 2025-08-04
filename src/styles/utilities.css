@@ -1,24 +1,24 @@
 /* Utilities */
-.super-center {
+.superCenter {
   display: grid;
   place-items: center;
 }
 
-.flex-row {
+.flexRow {
   display: flex;
   flex-direction: row;
 }
 
-.flex-column {
+.flexColumn {
   display: flex;
   flex-direction: column;
 }
 
-.justify-center {
+.justifyCenter {
   justify-content: center;
 }
 
-.align-center {
+.alignCenter {
   align-items: center;
 }
 
@@ -30,19 +30,19 @@
   gap: var(--size-fluid-1);
 }
 
-.space-evenly {
+.spaceEvenly {
   justify-content: space-evenly;
 }
 
-.space-between {
+.spaceBetween {
   justify-content: space-between;
 }
 
-.self-center {
+.selfCenter {
   align-self: center;
 }
 
-.margin-auto {
+.marginAuto {
   margin: auto;
 }
 
@@ -50,18 +50,18 @@
   padding: var(--size-fluid-1);
 }
 
-.section-header {
+.sectionHeader {
   max-inline-size: 100%;
   padding-block-end: var(--size-fluid-1);
   text-align: center;
   text-wrap: balance;
 }
 
-.center-text {
+.centerText {
   text-align: center;
 }
 
-.text-no-wrap {
+.textNoWrap {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -75,21 +75,19 @@
   gap: var(--size-fluid-1);
 }
 
-.grid-full-width {
+.gridFullWidth {
   grid-column: 1 / -1;
 }
 
-.w100,
-.w-100 {
+.w100 {
   inline-size: 100%;
 }
 
-.h100,
-.h-100 {
+.h100 {
   block-size: 100%;
 }
 
-.cursor-pointer {
+.cursorPointer {
   cursor: pointer;
 }
 
@@ -97,11 +95,11 @@
   font-family: var(--font-monospace-code);
 }
 
-.select-none {
+.selectNone {
   user-select: none;
 }
 
-.not-allowed {
+.notAllowed {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -110,12 +108,12 @@
   display: block;
 }
 
-.inline-block {
+.inlineBlock {
   display: inline-block;
 }
 
 /*  It hides the <span> visually without stopping it from being read out in screen readers. */
-.visually-hidden {
+.visuallyHidden {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -125,7 +123,7 @@
   clip-path: inset(100%);
 }
 
-.contrast-color {
+.contrastColor {
   /* Fallback for browsers that don't support RCS */
   color: white;
   text-shadow:

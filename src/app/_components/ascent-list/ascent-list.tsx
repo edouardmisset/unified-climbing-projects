@@ -48,8 +48,8 @@ export const AscentList = memo(
 
     return (
       <table className={styles.table} style={tableStyles}>
-        <thead className={`${styles.header} grid-full-width`}>
-          <tr className={`${styles.headerRow} grid-full-width`}>
+        <thead className={`${styles.header} gridFullWidth`}>
+          <tr className={`${styles.headerRow} gridFullWidth`}>
             <th
               aria-label="Discipline"
               className={`${styles.cell} ${styles.headerCell}`}
@@ -124,7 +124,7 @@ export const AscentList = memo(
             )}
           </tr>
         </thead>
-        <tbody className={`${styles.body} grid-full-width`}>
+        <tbody className={`${styles.body} gridFullWidth`}>
           {ascents.map(
             ({
               id,
@@ -148,9 +148,9 @@ export const AscentList = memo(
                 grade: topoGrade,
               })
               return (
-                <tr className={`${styles.row} grid-full-width`} key={id}>
+                <tr className={`${styles.row} gridFullWidth`} key={id}>
                   <td
-                    className={`${styles.cell} margin-auto`}
+                    className={`${styles.cell} marginAuto`}
                     title={climbingDiscipline}
                   >
                     {fromClimbingDisciplineToEmoji(climbingDiscipline)}
@@ -234,8 +234,8 @@ export const AscentList = memo(
             },
           )}
         </tbody>
-        <tfoot className={`${styles.footer} grid-full-width`}>
-          <tr className={`${styles.footerRow} grid-full-width`}>
+        <tfoot className={`${styles.footer} gridFullWidth`}>
+          <tr className={`${styles.footerRow} gridFullWidth`}>
             {showPoints ? (
               <>
                 <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>

@@ -13,15 +13,15 @@ const PopoverContent = memo(
   }) => {
     return (
       <BasePopover.Positioner sideOffset={8}>
-        <BasePopover.Popup className={styles.Popup}>
-          <BasePopover.Arrow className={styles.Arrow}>
+        <BasePopover.Popup className={styles.popup}>
+          <BasePopover.Arrow className={styles.arrow}>
             <Arrow />
           </BasePopover.Arrow>
-          <BasePopover.Title className={styles.Title}>
+          <BasePopover.Title className={styles.title}>
             {popoverTitle}
           </BasePopover.Title>
           <BasePopover.Description
-            className={styles.Description}
+            className={styles.description}
             render={<div>{popoverDescription}</div>}
           />
         </BasePopover.Popup>
@@ -45,7 +45,7 @@ export const Popover = memo(
     popoverDescription: ReactNode
   }) => {
     const triggerClass = useMemo(
-      () => `${styles.IconButton} ${triggerClassName}`,
+      () => `${styles.iconButton} ${triggerClassName}`,
       [triggerClassName],
     )
     return (

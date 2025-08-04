@@ -4,15 +4,15 @@ import styles from './ascents-training-switch.module.css'
 
 export const AscentsTrainingSwitch = memo(
   ({ toggle, isTraining }: { toggle: () => void; isTraining: boolean }) => (
-    <div className={styles.Container}>
+    <div className={styles.container}>
       <label htmlFor="ascents-training-switch">Ascent</label>
       <Switch.Root
         checked={isTraining}
-        className={styles.Switch}
+        className={styles.switch}
         id="ascents-training-switch"
         onCheckedChange={toggle}
       >
-        <Switch.Thumb className={styles.Thumb} />
+        <Switch.Thumb className={styles.thumb} />
       </Switch.Root>
       <span>Training</span>
     </div>

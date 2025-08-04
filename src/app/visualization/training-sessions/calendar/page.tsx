@@ -19,7 +19,7 @@ export default async function TrainingSessionsCalendarPage() {
     <GridBreakOutWrapper>
       {trainingYears.map(year => (
         <Fragment key={year}>
-          <h2 className="super-center">{year}</h2>
+          <h2 className="superCenter">{year}</h2>
           <DataCalendar
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear}

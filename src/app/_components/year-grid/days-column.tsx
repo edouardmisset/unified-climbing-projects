@@ -14,7 +14,7 @@ const DayCell = memo(({ day, index }: { day: string; index: number }) => {
 
   return (
     <span
-      className={`contrast-color ${styles.firstColumn}`}
+      className={`contrastColor ${styles.firstColumn}`}
       style={backgroundStyle}
       title={day}
     >

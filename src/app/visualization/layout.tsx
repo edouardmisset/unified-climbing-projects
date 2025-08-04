@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   )
 
   return (
-    <div className={`${styles.container} w100 flex-column gap`}>
+    <div className={`${styles.container} w100 flexColumn gap`}>
       <GridLayout
         additionalContent={
           <div className={styles.header}>

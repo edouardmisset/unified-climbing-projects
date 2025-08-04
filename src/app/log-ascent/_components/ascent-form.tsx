@@ -226,7 +226,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="date">Date</label>
         <input
           {...register('date')}
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="date"
           list="date-list"
@@ -244,7 +244,7 @@ export default function AscentForm(props: AscentFormProps) {
           autoCapitalize="on"
           autoComplete="off"
           autoCorrect="off"
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="routeName"
           placeholder="Biographie, La Dura Dura, etc."
@@ -257,7 +257,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="climbingDiscipline">Climbing Discipline</label>
         <select
           {...register('climbingDiscipline')}
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="climbingDiscipline"
           title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
@@ -275,7 +275,7 @@ export default function AscentForm(props: AscentFormProps) {
           {...register('crag')}
           autoCapitalize="on"
           autoComplete="off"
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="crag"
           list="crag-list"
@@ -292,7 +292,7 @@ export default function AscentForm(props: AscentFormProps) {
           {...register('area')}
           autoCapitalize="on"
           autoComplete="off"
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="area"
           list="area-list"
@@ -361,7 +361,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="holds">Holds</label>
         <input
           {...register('holds')}
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="holds"
           list="hold-types"
@@ -375,7 +375,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="profile">Profile</label>
         <input
           {...register('profile')}
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="profile"
           list="profile-types"
@@ -389,7 +389,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="height">Height (m)</label>
         <input
           {...register('height')}
-          className={`${styles.input} contrast-color ${isBoulder ? 'not-allowed' : ''}`}
+          className={`${styles.input} contrastColor ${isBoulder ? 'notAllowed' : ''}`}
           disabled={isBoulder}
           enterKeyHint="next"
           id="height"
@@ -407,7 +407,7 @@ export default function AscentForm(props: AscentFormProps) {
         <label htmlFor="rating">Rating</label>
         <input
           {...register('rating')}
-          className={`${styles.input} contrast-color`}
+          className={`${styles.input} contrastColor`}
           enterKeyHint="next"
           id="rating"
           inputMode="numeric"
@@ -436,7 +436,7 @@ export default function AscentForm(props: AscentFormProps) {
       </div>
       <Spacer size={3} />
       <button
-        className={`contrast-color ${styles.submit}`}
+        className={`contrastColor ${styles.submit}`}
         disabled={isSubmitting}
         type="submit"
       >
@@ -444,7 +444,7 @@ export default function AscentForm(props: AscentFormProps) {
       </button>
     </form>
   ) : (
-    <section className="flex-column gap">
+    <section className="flexColumn gap">
       <p>You are not authorized to log an ascent.</p>
     </section>
   )
