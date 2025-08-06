@@ -30,7 +30,7 @@ export default async function AscentsQRCodePage() {
         ascents.toSorted((a, b) => sortByGrade(a, b)),
       )
       return (
-        <div key={year}>
+        <div className="flexColumn alignCenter" key={year}>
           <h2 className="centerText">
             <Dialog
               content={

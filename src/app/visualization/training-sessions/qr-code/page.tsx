@@ -23,7 +23,7 @@ export default async function TrainingSessionsQRCodePage() {
   return Object.entries(groupedTrainingDaily)
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, yearlyTraining]) => (
-      <div key={year}>
+      <div className="flexColumn alignCenter" key={year}>
         <h2 className="centerText">
           <Dialog
             content={
