@@ -4,5 +4,6 @@
 }
 
 .item {
+  max-inline-size: 60ch;
   padding: 0;
 }
