@@ -1,10 +1,18 @@
 import type { Metadata } from 'next'
+import { lazy, Suspense } from 'react'
 import { Dialog } from '~/app/_components/dialog/dialog'
-import { AscentsQRCode } from '~/app/_components/qr-code/qr-code'
+import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { sortByGrade } from '~/helpers/sorter'
 import { api } from '~/trpc/server'
+
+// LAZY LOADING: Load QR code component only when needed
+const AscentsQRCode = lazy(() =>
+  import('~/app/_components/qr-code/qr-code').then(module => ({
+    default: module.AscentsQRCode,
+  })),
+)
 
 export default async function AscentsQRCodePage() {
   const allAscents = await api.ascents.getAll()
@@ -25,11 +33,17 @@ export default async function AscentsQRCodePage() {
         <div key={year}>
           <h2 className="centerText">
             <Dialog
-              content={<AscentsQRCode yearlyAscents={sortedAscents} />}
+              content={
+                <Suspense fallback={<Loader />}>
+                  <AscentsQRCode yearlyAscents={sortedAscents} />
+                </Suspense>
+              }
               title={year}
             />
           </h2>
-          <AscentsQRCode yearlyAscents={sortedAscents} />
+          <Suspense fallback={<Loader />}>
+            <AscentsQRCode yearlyAscents={sortedAscents} />
+          </Suspense>
         </div>
       )
     })

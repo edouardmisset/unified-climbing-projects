@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import { lazy, memo, Suspense, useMemo } from 'react'
 import { getWeekNumber } from '~/helpers/date'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import {
@@ -8,8 +8,14 @@ import {
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
 import { Popover } from '../popover/popover'
-import { TrainingPopoverDescription } from '../training-popover-description/training-popover-description'
 import styles from './barcode.module.css'
+
+// Lazy load the popover component
+const TrainingPopoverDescription = lazy(() =>
+  import('../training-popover-description/training-popover-description').then(
+    module => ({ default: module.TrainingPopoverDescription }),
+  ),
+)
 
 export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const numberOfTraining = weeklyTraining.length
@@ -44,6 +50,18 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
     [filteredSortedWeeklyTraining, numberOfTraining, isSingleWeekTraining],
   )
 
+  // LAZY LOADING: Create description component only when needed
+  const lazyDescription = useMemo(() => {
+    if (filteredSortedWeeklyTraining.length === 0) return ''
+    return (
+      <Suspense fallback="Loading...">
+        <TrainingPopoverDescription
+          trainingSessions={filteredSortedWeeklyTraining}
+        />
+      </Suspense>
+    )
+  }, [filteredSortedWeeklyTraining])
+
   if (firstTraining === undefined) return <span />
 
   const trainingBarClassName = `${
@@ -55,11 +73,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   return (
     <Popover
       buttonStyle={buttonStyle}
-      popoverDescription={
-        <TrainingPopoverDescription
-          trainingSessions={filteredSortedWeeklyTraining}
-        />
-      }
+      popoverDescription={lazyDescription}
       popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
       triggerClassName={trainingBarClassName}
       triggerContent=""

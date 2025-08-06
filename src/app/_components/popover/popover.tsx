@@ -1,3 +1,5 @@
+'use client'
+
 import { Popover as BasePopover } from '@base-ui-components/react/popover'
 import { type CSSProperties, memo, type ReactNode, useMemo } from 'react'
 import { Arrow } from '../svg/arrow/arrow'

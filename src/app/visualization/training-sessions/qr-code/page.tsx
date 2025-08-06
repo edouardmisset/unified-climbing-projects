@@ -1,9 +1,17 @@
 import type { Metadata } from 'next'
+import { lazy, Suspense } from 'react'
 import { Dialog } from '~/app/_components/dialog/dialog'
-import { TrainingQRCode } from '~/app/_components/qr-code/qr-code'
+import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
+
+// LAZY LOADING: Load QR code component only when needed
+const TrainingQRCode = lazy(() =>
+  import('~/app/_components/qr-code/qr-code').then(module => ({
+    default: module.TrainingQRCode,
+  })),
+)
 
 export default async function TrainingSessionsQRCodePage() {
   const trainingSessions = await api.training.getAll()
@@ -18,11 +26,17 @@ export default async function TrainingSessionsQRCodePage() {
       <div key={year}>
         <h2 className="centerText">
           <Dialog
-            content={<TrainingQRCode yearlyTrainingSessions={yearlyTraining} />}
+            content={
+              <Suspense fallback={<Loader />}>
+                <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
+              </Suspense>
+            }
             title={year}
           />
         </h2>
-        <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
+        <Suspense fallback={<Loader />}>
+          <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
+        </Suspense>
       </div>
     ))
 }
