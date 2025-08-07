@@ -37,18 +37,20 @@ export function transformAscentFromGSToJS(
     (acc, [key, value], index) => {
       if (value === '') return acc
 
+      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+
       const transformedKey =
         TRANSFORMED_ASCENT_HEADER_NAMES[key as GSAscentKeys]
 
       if (transformedKey === 'tries') {
-        acc[transformedKey] = transformTriesGSToJS(value).tries
-        acc.style = transformTriesGSToJS(value).style
+        acc[transformedKey] = transformTriesGSToJS(cleanedValue).tries
+        acc.style = transformTriesGSToJS(cleanedValue).style
       } else {
         const transform =
           TRANSFORM_FUNCTIONS_GS_TO_JS[
             transformedKey as keyof typeof TRANSFORM_FUNCTIONS_GS_TO_JS
           ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
-        acc[transformedKey] = transform(value)
+        acc[transformedKey] = transform(cleanedValue)
       }
       acc.id = index
       return acc
@@ -101,6 +103,8 @@ export function transformTrainingSessionFromGSToJS(
     (acc, [key, value]) => {
       if (value === '') return acc
 
+      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+
       const transformedKey =
         TRANSFORMED_TRAINING_HEADER_NAMES[key as GSTrainingKeys]
 
@@ -108,7 +112,7 @@ export function transformTrainingSessionFromGSToJS(
         TRANSFORM_FUNCTIONS_GS_TO_JS[
           transformedKey as keyof typeof TRANSFORM_FUNCTIONS_GS_TO_JS
         ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
-      acc[transformedKey] = transform(value)
+      acc[transformedKey] = transform(cleanedValue)
 
       return acc
     },
