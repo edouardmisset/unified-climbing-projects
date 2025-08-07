@@ -1,3 +1,5 @@
+import type { Ascent } from '~/schema/ascent'
+import type { TrainingSession } from '~/schema/training'
 import { api } from '~/trpc/server'
 import { Card } from '../card/card'
 import GridLayout from '../grid-layout/grid-layout'
@@ -10,7 +12,9 @@ import { VerticalMilestoneSummary } from './_components/vertical-milestone-summa
 import { ALL_TIME } from './constants'
 import styles from './wrap-up.module.css'
 
-async function getAscentsAndTraining(year?: number) {
+async function getAscentsAndTraining(
+  year?: number,
+): Promise<{ ascents: Ascent[]; trainingSessions: TrainingSession[] }> {
   const [ascents, trainingSessions] = await Promise.all([
     api.ascents.getAll({ year }),
     api.training.getAll({ year }),
