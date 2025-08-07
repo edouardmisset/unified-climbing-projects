@@ -3,8 +3,6 @@ import { removeAccents } from '@edouardmisset/text'
 import { sortNumericalValues } from '~/helpers/sort-values'
 import { data as ascents } from './ascent-data.json' with { type: 'json' }
 
-// fetch data
-
 const meaninglessWords = [
   'a',
   'assis',

@@ -37,8 +37,8 @@ export function formatProfile(profile: Ascent['profile']): string {
   return profile ? `📐 ${profile}` : ''
 }
 
-const formatLongDate = buildDateTimeFormat('longDate')
-const formatShortDate = buildDateTimeFormat('shortDate')
+export const formatLongDate = buildDateTimeFormat('longDate')
+export const formatShortDate = buildDateTimeFormat('shortDate')
 
 export function prettyLongDate(date: string): string {
   return `📅 ${formatLongDate(date)}`

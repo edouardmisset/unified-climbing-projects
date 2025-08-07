@@ -7,7 +7,6 @@ import { api } from '~/trpc/server'
 
 export default async function Page() {
   const ascents = await api.ascents.getAll()
-
   return (
     <GridLayout title="Dashboard">
       <Suspense fallback={<Loader />}>

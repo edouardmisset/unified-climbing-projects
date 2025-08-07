@@ -5,26 +5,24 @@ import {
   findLongestStreak,
   getMostFrequentDate,
 } from '~/helpers/date'
-import { buildDateTimeFormat } from '~/helpers/format-date'
+import { filterTrainingSessions } from '~/helpers/filter-training'
+import { formatLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
-import { api } from '~/trpc/server'
+import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-const MIN_GAP_THRESHOLD = 5
-
-const formatDate = buildDateTimeFormat('longDate')
+const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
 
 export async function DaysOutsideSummary({
   ascents,
-  year,
+  trainingSessions,
 }: {
   ascents: Ascent[]
-  year?: number
+  trainingSessions: TrainingSession[]
 }) {
-  const outdoorSessions = await api.training.getAll({
+  const outdoorSessions = filterTrainingSessions(trainingSessions, {
     sessionType: 'Out',
-    year,
   })
 
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)
@@ -65,7 +63,7 @@ export async function DaysOutsideSummary({
         {mostAscentDate === '' ||
         ascentsInMostAscentDay[0] === undefined ? undefined : (
           <span className="block">
-            Your best day was <strong>{formatDate(mostAscentDate)}</strong>{' '}
+            Your best day was <strong>{formatLongDate(mostAscentDate)}</strong>{' '}
             where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
