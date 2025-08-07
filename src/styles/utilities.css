@@ -119,7 +119,6 @@
   block-size: 1px;
   overflow: hidden;
   white-space: nowrap;
-  clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(100%);
 }
 
