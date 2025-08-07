@@ -1,3 +1,12 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  aspect-ratio: 1;
+  margin-inline: auto;
   overflow: hidden;
+
+  & > div {
+    flex: 1;
+  }
 }

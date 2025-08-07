@@ -13,13 +13,7 @@ import {
 } from '../constants'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
-export function AscentsPerYearByGrade({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   const ascentsPerYearByGrade = useMemo(
     () => getAscentsPerYearByGrade(ascents),
     [ascents],
@@ -32,7 +26,7 @@ export function AscentsPerYearByGrade({
   if (uniqueYearsCount <= 1) return null
 
   return (
-    <ChartContainer caption="Ascents Per Year By Grade" className={className}>
+    <ChartContainer caption="Ascents Per Year By Grade">
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}

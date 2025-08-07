@@ -21,13 +21,7 @@ const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
   data,
 }) => String(data[`${id}Color` as keyof typeof data])
 
-export function AscentPyramid({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   const gradeFrequency = useMemo(
     () => getGradeFrequencyAndColors(ascents),
     [ascents],
@@ -36,7 +30,7 @@ export function AscentPyramid({
   if (gradeFrequency.length === 0) return null
 
   return (
-    <ChartContainer caption="Ascent Pyramid" className={className}>
+    <ChartContainer caption="Ascent Pyramid">
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}

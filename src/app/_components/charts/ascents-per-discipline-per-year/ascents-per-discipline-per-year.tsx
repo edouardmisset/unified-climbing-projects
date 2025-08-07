@@ -20,10 +20,8 @@ const ROUTE_AND_BOULDER = [
 
 export function AscentsPerDisciplinePerYear({
   ascents,
-  className,
 }: {
   ascents: Ascent[]
-  className?: string
 }) {
   const data = useMemo(() => getAscentsPerDisciplinePerYear(ascents), [ascents])
 
@@ -37,10 +35,7 @@ export function AscentsPerDisciplinePerYear({
   if (isSingleDiscipline) return null
 
   return (
-    <ChartContainer
-      caption="Ascents per Discipline per Year"
-      className={className}
-    >
+    <ChartContainer caption="Ascents per Discipline per Year">
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}

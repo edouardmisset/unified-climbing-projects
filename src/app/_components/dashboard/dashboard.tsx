@@ -48,15 +48,15 @@ const DashboardStatistics = memo(({ ascents }: AscentListProps) => {
 
   return (
     <div className={styles.container}>
-      <AscentPyramid ascents={ascents} className={styles.item} />
-      <AscentsPerYearByGrade ascents={ascents} className={styles.item} />
-      <AscentsByStyle ascents={ascents} className={styles.item} />
-      <AscentsPerDiscipline ascents={ascents} className={styles.item} />
-      <AscentsPerDisciplinePerYear ascents={ascents} className={styles.item} />
-      <TriesByGrade ascents={ascents} className={styles.item} />
-      <AscentsPerDisciplinePerGrade ascents={ascents} className={styles.item} />
-      <DistanceClimbedPerYear ascents={ascents} className={styles.item} />
-      <AscentsByGradesPerCrag ascents={ascents} className={styles.item} />
+      <AscentPyramid ascents={ascents} />
+      <AscentsPerYearByGrade ascents={ascents} />
+      <AscentsByStyle ascents={ascents} />
+      <AscentsPerDiscipline ascents={ascents} />
+      <AscentsPerDisciplinePerYear ascents={ascents} />
+      <TriesByGrade ascents={ascents} />
+      <AscentsPerDisciplinePerGrade ascents={ascents} />
+      <DistanceClimbedPerYear ascents={ascents} />
+      <AscentsByGradesPerCrag ascents={ascents} />
     </div>
   )
 })

@@ -2,7 +2,7 @@ import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 
-type AscentByStyle = {
+export type AscentByStyle = {
   color: string
   id: Ascent['style']
   label: Ascent['style']
