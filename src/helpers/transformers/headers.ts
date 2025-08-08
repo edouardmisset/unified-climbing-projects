@@ -23,6 +23,7 @@ export const ASCENT_HEADERS = [
   'Date',
   'Climber',
   'Comments',
+  'Ascent Comments',
 ] as const
 
 export const TRANSFORMED_ASCENT_HEADER_NAMES = {
@@ -41,6 +42,7 @@ export const TRANSFORMED_ASCENT_HEADER_NAMES = {
   'Route / Boulder': 'climbingDiscipline',
   'Route Name': 'routeName',
   'Topo Grade': 'topoGrade',
+  'Ascent Comments': 'comments',
 } as const satisfies Record<(typeof ASCENT_HEADERS)[number], string>
 
 export type GSAscentKeys = keyof typeof TRANSFORMED_ASCENT_HEADER_NAMES

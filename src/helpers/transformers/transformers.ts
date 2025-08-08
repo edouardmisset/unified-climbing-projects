@@ -81,8 +81,6 @@ export function transformAscentFromJSToGS(
     } else {
       const rawStringValue = ascent[key]?.toString() ?? ''
 
-      //? how to deal with special chars in comments ?
-
       const keyAs = key as keyof typeof TRANSFORM_FUNCTIONS_JS_TO_GS
       const transformer =
         keyAs in TRANSFORM_FUNCTIONS_JS_TO_GS
