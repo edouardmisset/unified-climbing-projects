@@ -11,7 +11,7 @@ describe('getTriesByGrade', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        color: 'var(--min-tries)',
+        color: 'var(--minTries)',
         data: [
           {
             x: '7a',
@@ -53,7 +53,7 @@ describe('getTriesByGrade', () => {
         id: 'min',
       },
       {
-        color: 'var(--average-tries)',
+        color: 'var(--averageTries)',
         data: [
           {
             x: '7a',
@@ -95,7 +95,7 @@ describe('getTriesByGrade', () => {
         id: 'average',
       },
       {
-        color: 'var(--max-tries)',
+        color: 'var(--maxTries)',
         data: [
           {
             x: '7a',
