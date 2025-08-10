@@ -26,6 +26,8 @@ export const ASCENT_HEADERS = [
   'Ascent Comments',
 ] as const
 
+export type GSAscentKeys = (typeof ASCENT_HEADERS)[number]
+
 export const TRANSFORMED_ASCENT_HEADER_NAMES = {
   '# Tries': 'tries',
   Area: 'area',
@@ -43,9 +45,8 @@ export const TRANSFORMED_ASCENT_HEADER_NAMES = {
   'Route Name': 'routeName',
   'Topo Grade': 'topoGrade',
   'Ascent Comments': 'comments',
-} as const satisfies Record<(typeof ASCENT_HEADERS)[number], string>
+} as const satisfies Record<GSAscentKeys, string>
 
-export type GSAscentKeys = keyof typeof TRANSFORMED_ASCENT_HEADER_NAMES
 export type JSAscentKeys =
   (typeof TRANSFORMED_ASCENT_HEADER_NAMES)[GSAscentKeys]
 
