@@ -86,7 +86,7 @@
     "repomix": "^1.2.1",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^39.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"
