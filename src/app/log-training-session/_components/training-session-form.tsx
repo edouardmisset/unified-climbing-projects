@@ -35,29 +35,6 @@ import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 
-const climbingDisciplineFormattedList = disjunctiveListFormatter(
-  AVAILABLE_CLIMBING_DISCIPLINE,
-)
-const anatomicalRegionFormattedList = getFormattedList(
-  ANATOMICAL_REGIONS,
-  fromAnatomicalRegionToLabel,
-)
-const energySystemFormattedList = getFormattedList(
-  ENERGY_SYSTEMS,
-  fromEnergySystemToLabel,
-)
-const sessionTypeFormattedList = getFormattedList(
-  SESSION_TYPES,
-  fromSessionTypeToLabel,
-)
-
-function getFormattedList<T extends string>(
-  list: readonly T[],
-  transform: (item: T) => string,
-) {
-  return disjunctiveListFormatter(list.map(transform))
-}
-
 export default function TrainingSessionForm({
   allLocations,
 }: {
@@ -294,3 +271,26 @@ export default function TrainingSessionForm({
     </section>
   )
 }
+
+function getFormattedList<T extends string>(
+  list: readonly T[],
+  transform: (item: T) => string,
+) {
+  return disjunctiveListFormatter(list.map(transform))
+}
+
+const climbingDisciplineFormattedList = disjunctiveListFormatter(
+  AVAILABLE_CLIMBING_DISCIPLINE,
+)
+const anatomicalRegionFormattedList = getFormattedList(
+  ANATOMICAL_REGIONS,
+  fromAnatomicalRegionToLabel,
+)
+const energySystemFormattedList = getFormattedList(
+  ENERGY_SYSTEMS,
+  fromEnergySystemToLabel,
+)
+const sessionTypeFormattedList = getFormattedList(
+  SESSION_TYPES,
+  fromSessionTypeToLabel,
+)

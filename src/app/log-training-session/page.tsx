@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
-import { api, HydrateClient } from '~/trpc/server.ts'
+import { api } from '~/trpc/server.ts'
 import GridLayout from '../_components/grid-layout/grid-layout.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
@@ -13,19 +13,14 @@ export default async function LogTrainingSession() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <HydrateClient>
-          <GridLayout gridClassName="padding" title="Train Hard 💪">
-            <span
-              aria-describedby="form-description"
-              className="visuallyHidden"
-            >
-              Form to log a training session
-            </span>
-            <Suspense fallback={<Loader />}>
-              <TrainingSessionForm allLocations={allLocations} />
-            </Suspense>
-          </GridLayout>
-        </HydrateClient>
+        <GridLayout gridClassName="padding" title="Train Hard 💪">
+          <span aria-describedby="form-description" className="visuallyHidden">
+            Form to log a training session
+          </span>
+          <Suspense fallback={<Loader />}>
+            <TrainingSessionForm allLocations={allLocations} />
+          </Suspense>
+        </GridLayout>
       </SignedIn>
       <SignedOut>
         <section className="flexColumn gap">
