@@ -71,6 +71,12 @@
   overflow-x: clip;
 }
 
+@supports not (overflow-x: clip) {
+  .overflowXClip {
+    overflow-x: hidden;
+  }
+}
+
 .grid {
   --min: 300px;
 
