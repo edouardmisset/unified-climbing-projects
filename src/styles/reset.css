@@ -35,7 +35,7 @@
   font-weight: var(--font-weight-4);
   font-family: system-ui, sans-serif;
 
-  --accent: light-dark(var(--violet-6), var(--violet-4));
+  --accent: light-dark(var(--patagonia-color-2), var(--patagonia-color-3));
   --link: light-dark(var(--indigo-7), var(--indigo-5));
   --link-visited: light-dark(var(--indigo-5), var(--indigo-3));
   --text-1: light-dark(var(--gray-12), var(--gray-1));
