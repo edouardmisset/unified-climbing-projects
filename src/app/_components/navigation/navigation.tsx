@@ -15,7 +15,9 @@ export const Navigation = memo(() => (
           🏠 Home
         </Link>
       </li>
-      <hr className={styles.Break} />
+      <li>
+        <hr className={styles.Break} />
+      </li>
       <li>
         <Link className={styles.link} href="/log-ascent">
           📋 Log Ascent
@@ -26,7 +28,9 @@ export const Navigation = memo(() => (
           📋 Log Training
         </Link>
       </li>
-      <hr className={styles.Break} />
+      <li>
+        <hr className={styles.Break} />
+      </li>
       <li>
         <Link className={styles.link} href="/visualization">
           🖼️ Visualization
@@ -47,7 +51,9 @@ export const Navigation = memo(() => (
           📊 Dashboard
         </Link>
       </li>
-      <hr className={styles.Break} />
+      <li>
+        <hr className={styles.Break} />
+      </li>
       <li>
         <Link className={styles.link} href="/training-sessions">
           📇 Training List

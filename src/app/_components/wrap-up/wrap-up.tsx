@@ -36,7 +36,7 @@ export default async function WrapUp({ year }: { year?: number }) {
           <p>
             You have not logged any data yet.{' '}
             {isAscentsEmpty ? 'Go climb some routes! ' : ''}{' '}
-            {isTrainingEmpty ? 'Go train!' : ''}.
+            {isTrainingEmpty ? 'Go train!' : ''}
           </p>
         </Card>
       </GridLayout>

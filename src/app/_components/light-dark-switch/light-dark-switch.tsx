@@ -10,6 +10,7 @@ export function LightDarkSwitch({
 }) {
   return (
     <Switch.Root
+      aria-label="Toggle light/dark mode"
       checked={checked}
       className={styles.Switch}
       onCheckedChange={onChange}
