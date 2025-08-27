@@ -67,6 +67,10 @@
   white-space: nowrap;
 }
 
+.overflowXClip {
+  overflow-x: clip;
+}
+
 .grid {
   --min: 300px;
 

@@ -38,7 +38,7 @@ export default function GridLayout({
   )
 
   return (
-    <section className="flexColumn w100 h100">
+    <section className="flexColumn w100 h100 overflowXClip">
       <Header afterTitle={afterTitle} beforeTitle={beforeTitle} title={title} />
       {additionalContent}
       <Suspense fallback={<Loader />}>
