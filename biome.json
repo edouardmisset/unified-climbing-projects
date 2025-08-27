@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -44,13 +44,10 @@
     "rules": {
       "correctness": {
         "noUnusedImports": "error",
-        "noUnusedVariables": "warn"
+        "noUnusedVariables": "warn",
+        "useUniqueElementIds": "off"
       },
-      "nursery": {
-        "useUniqueElementIds": "off",
-        "noMagicNumbers": "off",
-        "noUnassignedVariables": "warn"
-      },
+      "nursery": {},
       "recommended": true,
       "style": {
         "noInferrableTypes": "error",
@@ -62,10 +59,12 @@
         "useEnumInitializers": "error",
         "useNumberNamespace": "error",
         "useSelfClosingElements": "error",
-        "useSingleVarDeclarator": "error"
+        "useSingleVarDeclarator": "error",
+        "noMagicNumbers": "off"
       },
       "suspicious": {
-        "noShadowRestrictedNames": "error"
+        "noShadowRestrictedNames": "error",
+        "noUnassignedVariables": "warn"
       }
     }
   },

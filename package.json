@@ -55,7 +55,7 @@
     "google-spreadsheet": "^5.0.2",
     "humanize-duration": "^3.33.0",
     "lucide-react": "^0.537.0",
-    "next": "^15.4.4",
+    "next": "^15.5.2",
     "next-view-transitions": "^0.3.4",
     "nuqs": "^2.4.3",
     "react": "^19.1.0",
@@ -67,7 +67,7 @@
     "zod": "^4.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.0",
+    "@biomejs/biome": "^2.2.2",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@ls-lint/ls-lint": "^2.3.1",
