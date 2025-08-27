@@ -74,6 +74,6 @@
   min-width: max-content;
 
   & > svg {
-    transition: opacity 2s var(--ease-spring-1);
+    transition: opacity 2s var(--ease-elastic-in-1);
   }
 }

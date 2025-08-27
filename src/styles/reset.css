@@ -224,7 +224,7 @@ not to see them */
 
 @media (prefers-reduced-motion: no-preference) {
   :where(:focus-visible) {
-    transition: outline-offset 145ms var(--ease-2);
+    transition: outline-offset 145ms var(--ease-elastic-in-1);
   }
 
   :where(:not(:active):focus-visible) {
