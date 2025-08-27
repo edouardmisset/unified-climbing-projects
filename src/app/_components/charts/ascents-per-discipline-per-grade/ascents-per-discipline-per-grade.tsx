@@ -39,14 +39,13 @@ export function AscentsPerDisciplinePerGrade({
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={data}
         enableGridY={false}
         enableLabel={false}
         groupMode="grouped"
         indexBy="grade"
-        // @ts-ignore
         keys={ROUTE_AND_BOULDER}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

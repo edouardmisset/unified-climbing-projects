@@ -31,7 +31,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
     <ChartContainer caption="Ascents By Grades Per Crag">
       <ResponsiveBar
         axisBottom={numberOfAscentsAxisBottom}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={ascentsByGradesPerCrag}
         enableGridX={false}

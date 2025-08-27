@@ -39,14 +39,13 @@ export function AscentsPerDisciplinePerYear({
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={data}
         enableGridY={false}
         enableLabel={false}
         groupMode="grouped"
         indexBy="year"
-        // @ts-ignore
         keys={ROUTE_AND_BOULDER}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

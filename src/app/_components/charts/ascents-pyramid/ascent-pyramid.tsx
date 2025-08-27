@@ -34,14 +34,13 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-ignore
+        // @ts-expect-error
         colors={colors}
         data={gradeFrequency}
         enableGridY={false}
         enableLabel={false}
         enableTotals
         indexBy="grade"
-        // @ts-ignore
         keys={ASCENT_STYLE}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

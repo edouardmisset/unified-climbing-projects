@@ -30,14 +30,13 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={ascentsPerYearByGrade}
         enableGridY={false}
         enableLabel={false}
         enableTotals
         indexBy="year"
-        // @ts-ignore
         keys={_GRADES}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}
