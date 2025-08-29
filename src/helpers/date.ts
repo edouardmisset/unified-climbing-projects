@@ -99,7 +99,7 @@ export function getMostFrequentDate<Type extends { date: string }>(
  * @param {Date} date - The date to normalize
  * @returns {Date} The normalized date at noon
  */
-function getDateAtNoon(date: Date): Date {
+export function getDateAtNoon(date: Date): Date {
   const normalized = new Date(date)
   normalized.setHours(12, 0, 0, 0)
   return normalized

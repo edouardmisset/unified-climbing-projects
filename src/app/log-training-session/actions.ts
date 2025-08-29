@@ -1,13 +1,16 @@
 'use server'
-import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
+
+import { getDateAtNoon } from '~/helpers/date'
+import {
+  type TrainingSession,
+  trainingSessionFormSchema,
+} from '~/schema/training'
 import { api } from '~/trpc/server'
 
 export const onSubmit = async (
   formData: Record<string, unknown>,
 ): Promise<boolean> => {
-  const parsedFormData = trainingSessionSchema
-    .omit({ id: true, load: true })
-    .safeParse(formData)
+  const parsedFormData = trainingSessionFormSchema.safeParse(formData)
 
   if (!parsedFormData.success) {
     globalThis.console.error(parsedFormData.error)
@@ -24,7 +27,8 @@ export const onSubmit = async (
       volume === undefined || intensity === undefined
         ? undefined
         : Math.round((volume * intensity) / 100),
-  } satisfies Omit<TrainingSession, 'id'>
+    date: getDateAtNoon(new Date(form.date)).toISOString(),
+  } satisfies Omit<TrainingSession, '_id'>
 
   return await api.training.addOne(newTrainingSession)
 }

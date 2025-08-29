@@ -1,9 +1,11 @@
 'use client'
 
+import { api } from 'convex/_generated/api'
+import { useQuery } from 'convex/react'
 import { Link } from 'next-view-transitions'
 import { memo, Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/filter-bar/_components/ascents-filter-bar.tsx'
-import NotFound from '~/app/not-found'
+import { EMPTY_OPTIONS } from '~/constants/generic.ts'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
@@ -18,10 +20,12 @@ import { TriesByGrade } from '../charts/tries-by-grade/tries-by-grade.tsx'
 import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
-export function Dashboard({ ascents }: AscentListProps) {
-  const filteredAscents = useAscentsFilter(ascents)
+export function Dashboard() {
+  const ascents = useQuery(api.ascents.get, EMPTY_OPTIONS)
 
-  if (ascents.length === 0) return <NotFound />
+  const filteredAscents = useAscentsFilter(ascents ?? [])
+
+  if (!ascents) return <Loader />
 
   return (
     <div className="flex flexColumn alignCenter gridFullWidth">
