@@ -25,7 +25,7 @@ describe('minMaxGrades', () => {
         date: '2024-10-27T12:00:00.000Z',
         height: 25,
         holds: 'Crimp',
-        id: 1,
+        _id: '1',
         personalGrade: '6c+',
         profile: 'Arête',
         rating: 4,

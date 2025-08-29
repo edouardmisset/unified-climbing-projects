@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from '~/helpers/zod'
 
 export const visualizations = ['Calendar', 'QR Code', 'Barcode'] as const
 const visualizationPaths = ['calendar', 'qr-code', 'barcode'] as const

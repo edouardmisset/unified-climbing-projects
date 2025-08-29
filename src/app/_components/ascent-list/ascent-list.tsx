@@ -127,7 +127,7 @@ export const AscentList = memo(
         <tbody className={`${styles.body} gridFullWidth`}>
           {ascents.map(
             ({
-              id,
+              _id,
               routeName,
               crag,
               topoGrade,
@@ -148,7 +148,7 @@ export const AscentList = memo(
                 grade: topoGrade,
               })
               return (
-                <tr className={`${styles.row} gridFullWidth`} key={id}>
+                <tr className={`${styles.row} gridFullWidth`} key={_id}>
                   <td
                     className={`${styles.cell} marginAuto`}
                     title={climbingDiscipline}

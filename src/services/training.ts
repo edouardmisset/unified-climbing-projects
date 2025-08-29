@@ -16,7 +16,7 @@ import { loadWorksheet } from './google-sheets.ts'
  *
  * @returns A promise that resolves to an array of TrainingSessions objects.
  */
-const getTrainingSessionsFromDB = cache(
+const getTrainingSessionsFromGS = cache(
   async (): Promise<TrainingSession[]> => {
     'use cache'
 
@@ -35,7 +35,7 @@ const getTrainingSessionsFromDB = cache(
 
     const rawTrainingSessions = rows.map((row, index) =>
       Object.assign(transformTrainingSessionFromGSToJS(row.toObject()), {
-        id: index,
+        _id: String(index + 1),
       }),
     )
 
@@ -53,11 +53,11 @@ const getTrainingSessionsFromDB = cache(
 )
 
 export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
-  return await getTrainingSessionsFromDB()
+  return await getTrainingSessionsFromGS()
 }
 
-export async function addTrainingSession(
-  trainingSession: Omit<TrainingSession, 'id'>,
+export async function addTrainingSessionToGS(
+  trainingSession: Omit<TrainingSession, '_id'>,
 ): Promise<void> {
   const manualTrainingSessionsSheet = await loadWorksheet('training', {
     edit: true,

@@ -1,10 +1,8 @@
 import { writeFile } from 'node:fs/promises'
-import backup from './ascent-data.json' with { type: 'json' }
-
-const { data } = backup
+import ascents from './ascent-data.json' with { type: 'json' }
 
 const sampleSize = 100
-const stratifyBy: (keyof (typeof data)[number])[] = [
+const stratifyBy: (keyof (typeof ascents)[number])[] = [
   'crag',
   'climbingDiscipline',
   'style',
@@ -61,7 +59,7 @@ function stratifiedSample(
 }
 
 // Select n random ascents from the data using stratified sampling by multiple keys
-const subset = stratifiedSample(data, sampleSize, stratifyBy)
+const subset = stratifiedSample(ascents, sampleSize, stratifyBy)
 
 // Write the subset to a new JSON file
 await writeFile(

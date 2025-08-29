@@ -1,5 +1,5 @@
 import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const env = createEnv({
   /**
@@ -9,6 +9,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_ENV: z.string(),
+    NEXT_PUBLIC_CONVEX_URL: z.string().url(),
   },
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
@@ -37,6 +38,7 @@ export const env = createEnv({
     GOOGLE_SHEET_TRAINING_URL_CSV: process.env.GOOGLE_SHEET_TRAINING_URL_CSV,
     // Client-side env
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
+    NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
     // Server-side env
     NODE_ENV: process.env.NODE_ENV,
   },

@@ -279,7 +279,7 @@ export default function AscentForm(props: AscentFormProps) {
           enterKeyHint="next"
           id="crag"
           list="crag-list"
-          placeholder="Ceüse, Fontainebleau, etc."
+          placeholder="Saint-Léger, Fontainebleau, etc."
           required
           title="The name of the crag"
           type="text"

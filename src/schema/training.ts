@@ -1,6 +1,6 @@
-import { z } from 'zod'
+import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
-import { percentSchema, positiveInteger } from './generic.ts'
+import { percentSchema } from './generic.ts'
 
 export const SESSION_TYPES = [
   'Out',
@@ -90,16 +90,53 @@ export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: z.string().optional(),
-  date: z.string(),
+  date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
   energySystem: energySystemSchema.optional(),
   gymCrag: z.string().optional(),
-  id: positiveInteger,
+  _id: z.string(),
   intensity: percentSchema.optional(),
   load: percentSchema.optional(),
   sessionType: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
+
+export const trainingSessionFormSchema = z.object({
+  anatomicalRegion: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    anatomicalRegionSchema.optional(),
+  ),
+  climbingDiscipline: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    climbingDisciplineSchema.optional(),
+  ),
+  comments: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    z.string().optional(),
+  ),
+  date: z.string().transform(date => new Date(date).toISOString()),
+  energySystem: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    energySystemSchema.optional(),
+  ),
+  gymCrag: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    z.string().optional(),
+  ),
+  intensity: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : Number(v)),
+    percentSchema.optional(),
+  ),
+  sessionType: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : v),
+    sessionTypeSchema.optional(),
+  ),
+  volume: z.preprocess(
+    (v: unknown) => (v === '' ? undefined : Number(v)),
+    percentSchema.optional(),
+  ),
+})
+export type TrainingSessionForm = z.infer<typeof trainingSessionFormSchema>
 
 export type TrainingSessionListProps = {
   trainingSessions: TrainingSession[]
