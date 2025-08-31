@@ -28,7 +28,7 @@ export default async function WrapUp({ year }: { year?: number }) {
   const isTrainingEmpty = trainingSessions.length === 0
   const isAscentsEmpty = ascents.length === 0
 
-  if (isAscentsEmpty || isTrainingEmpty) {
+  if (isAscentsEmpty && isTrainingEmpty) {
     return (
       <GridLayout title={year ?? ALL_TIME}>
         <Card>
