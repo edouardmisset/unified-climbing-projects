@@ -23,7 +23,7 @@ const customDeepEquals = <
 
 describe('transformAscentFromJSToGS', () => {
   it('should transform boulder ascents', () => {
-    const boulderingAscent: Omit<Ascent, 'id'> = {
+    const boulderingAscent: Omit<Ascent, '_id'> = {
       area: 'Le Cul de Chien',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Boulder',
@@ -67,7 +67,7 @@ describe('transformAscentFromJSToGS', () => {
     )
   })
   it('should transform route ascents', () => {
-    const routeAscent: Omit<Ascent, 'id'> = {
+    const routeAscent: Omit<Ascent, '_id'> = {
       area: 'Secteur 13',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Route',
@@ -111,7 +111,7 @@ describe('transformAscentFromJSToGS', () => {
   })
 
   it('should handle edge case with undefined values', () => {
-    const undefinedAscent: Omit<Ascent, 'id'> = {
+    const undefinedAscent: Omit<Ascent, '_id'> = {
       area: 'Berlin',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Route',
@@ -178,7 +178,7 @@ describe('transformAscentFromGSToJS', () => {
       'Topo Grade': '6a',
     }
 
-    const expectedAscent: Omit<Ascent, 'id'> = {
+    const expectedAscent: Omit<Ascent, '_id'> = {
       area: 'Le Cul de Chien',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Boulder',
@@ -223,7 +223,7 @@ describe('transformAscentFromGSToJS', () => {
       'Topo Grade': '8a',
     }
 
-    const expectedAscent: Omit<Ascent, 'id'> = {
+    const expectedAscent: Omit<Ascent, '_id'> = {
       area: 'Secteur 13',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Route',
@@ -242,7 +242,7 @@ describe('transformAscentFromGSToJS', () => {
 
     const { _id, ...actualAscent } = transformAscentFromGSToJS(routeGSRecord)
 
-    customDeepEquals(actualAscent, expectedAscent, ['date', 'id'])
+    customDeepEquals(actualAscent, expectedAscent, ['date'])
   })
 
   it('should handle edge case with empty values', () => {
@@ -265,7 +265,7 @@ describe('transformAscentFromGSToJS', () => {
       'Topo Grade': '7b+',
     }
 
-    const bareBoneAscent: Omit<Ascent, 'id'> = {
+    const bareBoneAscent: Omit<Ascent, '_id'> = {
       area: 'Berlin',
       climber: 'Edouard Misset',
       climbingDiscipline: 'Route',
@@ -279,14 +279,13 @@ describe('transformAscentFromGSToJS', () => {
 
     customDeepEquals(transformAscentFromGSToJS(emptyGSRecord), bareBoneAscent, [
       'date',
-      'id',
     ])
   })
 })
 
 describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
   it('should be reversible', () => {
-    const ascents: Omit<Ascent, 'id'>[] = [
+    const ascents: Omit<Ascent, '_id'>[] = [
       {
         area: 'Secteur 13',
         climber: 'Edouard Misset',
@@ -348,7 +347,7 @@ describe('transformAscentFromJSToGS and transformAscentFromGSToJS', () => {
       customDeepEquals(
         transformAscentFromGSToJS(transformAscentFromJSToGS(ascent as Ascent)),
         ascent,
-        ['date', 'id'],
+        ['date'],
       )
     }
   })
