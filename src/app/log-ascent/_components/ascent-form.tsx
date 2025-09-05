@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
 import { GradeInput } from '~/app/_components/grade-input/grade-input.tsx'
+import { KeycapButton } from '~/app/_components/keycap-button/keycap-button.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic.ts'
@@ -66,7 +67,6 @@ type AscentFormProps = {
 
 const holdOptions = HOLDS.map(hold => ({ value: hold }))
 const profileOptions = PROFILES.map(profile => ({ value: profile }))
-
 export const recentDateOptions = [
   { label: 'Yesterday', value: fromDateToStringDate(getYesterday()) },
   {
@@ -78,6 +78,7 @@ export const recentDateOptions = [
     value: fromDateToStringDate(getLastSunday()),
   },
 ]
+
 export default function AscentForm(props: AscentFormProps) {
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
@@ -435,13 +436,12 @@ export default function AscentForm(props: AscentFormProps) {
         />
       </div>
       <Spacer size={3} />
-      <button
+      <KeycapButton
         className={`contrastColor ${styles.submit}`}
         disabled={isSubmitting}
+        label={isSubmitting ? 'Sending...' : 'Send 📮'}
         type="submit"
-      >
-        {isSubmitting ? 'Sending...' : 'Send 📮'}
-      </button>
+      />
     </form>
   ) : (
     <section className="flexColumn gap">

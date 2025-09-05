@@ -5,6 +5,7 @@ import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { KeycapButton } from '~/app/_components/keycap-button/keycap-button'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
 import styles from '~/app/log-ascent/_components/ascent-form.module.css'
@@ -257,13 +258,11 @@ export default function TrainingSessionForm({
         />
       </div>
       <Spacer size={3} />
-      <button
-        className={`contrastColor ${styles.submit}`}
+      <KeycapButton
         disabled={isSubmitting}
+        label={isSubmitting ? 'Submitting...' : 'Submit 📮'}
         type="submit"
-      >
-        {isSubmitting ? 'Submitting...' : 'Submit 📮'}
-      </button>
+      />
     </form>
   ) : (
     <section className="flexColumn gap">
