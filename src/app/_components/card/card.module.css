@@ -16,6 +16,10 @@
 
 .card {
   --border-width: calc(var(--size-fluid-0) / 2);
+  --shadow-light-1: hsl(0deg 0% 100% / 10%);
+  --shadow-light-2: hsl(0deg 0% 100% / 20%);
+  --shadow-dark-1: hsl(0deg 0% 0% / 10%);
+  --shadow-dark-2: hsl(0deg 0% 0% / 20%);
   position: relative;
 
   display: flex;
@@ -24,11 +28,15 @@
   inline-size: calc(100% - var(--border-width));
   block-size: calc(100% - var(--border-width));
   padding: var(--size-fluid-2);
-  overflow: hidden;
+
+  text-overflow: clip;
   border-radius: var(--radius-conditional-3);
   isolation: isolate;
 
+  transition: all 0.3s ease-in-out;
+
   &::before {
+    /* Rotating border gradient */
     position: absolute;
     inset: 0;
     content: '';
@@ -42,10 +50,11 @@
       var(--patagonia-color-5)
     );
     border-radius: var(--radius-conditional-3);
-  }
 
-  &:hover {
-    animation: rotating-gradient 40s linear infinite;
+    box-shadow:
+      0 2px 4px var(--shadow-dark-1),
+      0 8px 16px var(--shadow-dark-1);
+    transition: inherit;
   }
 
   &::after {
@@ -54,10 +63,29 @@
     content: '';
     background: var(--surface-2);
     border-radius: calc(var(--radius-conditional-3) - var(--border-width));
+
+    box-shadow:
+      inset 2px 2px 2px var(--shadow-light-1),
+      inset -2px -2px 2px var(--shadow-dark-1),
+      0 -1px 2px var(--shadow-dark-2),
+      0 2px 2px var(--shadow-dark-2);
+    transition: inherit;
   }
 
   /* Place content above the background */
-  & > * {
+  & * {
     z-index: 1;
+    transition: inherit;
+  }
+
+  &:hover,
+  &:focus-within {
+    animation: rotating-gradient 10s linear infinite;
+
+    &::before {
+      box-shadow:
+        0 4px 6px var(--shadow-dark-2),
+        0 12px 16px var(--shadow-dark-2);
+    }
   }
 }
