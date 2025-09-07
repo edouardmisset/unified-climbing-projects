@@ -18,8 +18,8 @@ const AscentListItem = memo(
 
 const AscentList = memo(({ ascents }: AscentListProps) => (
   <ul className={styles.list}>
-    {ascents.map(({ id, ...ascent }) => (
-      <AscentListItem key={id} {...ascent} />
+    {ascents.map(({ _id, ...ascent }) => (
+      <AscentListItem key={_id} {...ascent} />
     ))}
   </ul>
 ))
