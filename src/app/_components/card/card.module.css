@@ -35,11 +35,16 @@
 
   transition: all 0.3s ease-in-out;
 
+  &::after,
+  &::before {
+    position: absolute;
+    content: '';
+    transition: inherit;
+  }
+
   &::before {
     /* Rotating border gradient */
-    position: absolute;
     inset: 0;
-    content: '';
     background: conic-gradient(
       from var(--rotating-angle) at 50% 50%,
       var(--patagonia-color-5),
@@ -54,13 +59,10 @@
     box-shadow:
       0 2px 4px var(--shadow-dark-1),
       0 8px 16px var(--shadow-dark-1);
-    transition: inherit;
   }
 
   &::after {
-    position: absolute;
     inset: var(--border-width);
-    content: '';
     background: var(--surface-2);
     border-radius: calc(var(--radius-conditional-3) - var(--border-width));
 
@@ -69,7 +71,6 @@
       inset -2px -2px 2px var(--shadow-dark-1),
       0 -1px 2px var(--shadow-dark-2),
       0 2px 2px var(--shadow-dark-2);
-    transition: inherit;
   }
 
   /* Place content above the background */
