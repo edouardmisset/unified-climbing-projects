@@ -15,78 +15,64 @@
 }
 
 .card {
-  --border-width: calc(var(--size-fluid-0) / 2);
-  --shadow-light-1: hsl(0deg 0% 100% / 10%);
-  --shadow-light-2: hsl(0deg 0% 100% / 20%);
-  --shadow-dark-1: hsl(0deg 0% 0% / 10%);
-  --shadow-dark-2: hsl(0deg 0% 0% / 20%);
+  --border-width: calc(var(--size-fluid-0) / 3);
+  --glow-intensity: 0.1;
+  --glow-size: 0.5rem;
+  --conic-gradient: conic-gradient(
+    from var(--rotating-angle),
+    var(--patagonia-color-5),
+    var(--patagonia-color-1),
+    var(--patagonia-color-2),
+    var(--patagonia-color-3),
+    var(--patagonia-color-4),
+    var(--patagonia-color-5)
+  );
+
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-
-  inline-size: calc(100% - var(--border-width));
-  block-size: calc(100% - var(--border-width));
   padding: var(--size-fluid-2);
-
   text-overflow: clip;
-  border-radius: var(--radius-conditional-3);
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    var(--conic-gradient) border-box;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-size-4);
   isolation: isolate;
 
-  transition: all 0.3s ease-in-out;
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.4s ease-in-out;
+  }
 
   &::after,
   &::before {
     position: absolute;
     content: '';
+    border-radius: inherit;
+    filter: blur(var(--glow-size));
     transition: inherit;
   }
 
   &::before {
-    /* Rotating border gradient */
-    inset: 0;
-    background: conic-gradient(
-      from var(--rotating-angle) at 50% 50%,
-      var(--patagonia-color-5),
-      var(--patagonia-color-1),
-      var(--patagonia-color-2),
-      var(--patagonia-color-3),
-      var(--patagonia-color-4),
-      var(--patagonia-color-5)
-    );
-    border-radius: var(--radius-conditional-3);
-
-    box-shadow:
-      0 2px 4px var(--shadow-dark-1),
-      0 8px 16px var(--shadow-dark-1);
+    inset: calc(1 * var(--glow-size));
+    z-index: -1;
+    background: var(--surface-2);
   }
 
   &::after {
-    inset: var(--border-width);
-    background: var(--surface-2);
-    border-radius: calc(var(--radius-conditional-3) - var(--border-width));
-
-    box-shadow:
-      inset 2px 2px 2px var(--shadow-light-1),
-      inset -2px -2px 2px var(--shadow-dark-1),
-      0 -1px 2px var(--shadow-dark-2),
-      0 2px 2px var(--shadow-dark-2);
-  }
-
-  /* Place content above the background */
-  & * {
-    z-index: 1;
-    transition: inherit;
+    inset: calc(-1 * 2 * var(--glow-size));
+    z-index: -2;
+    opacity: 0;
   }
 
   &:hover,
   &:focus-within {
-    animation: rotating-gradient 10s linear infinite;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: rotating-gradient 10s linear infinite;
+    }
 
-    &::before {
-      box-shadow:
-        0 4px 6px var(--shadow-dark-2),
-        0 12px 16px var(--shadow-dark-2);
+    &::after {
+      background: var(--conic-gradient);
+      opacity: var(--glow-intensity);
     }
   }
 }

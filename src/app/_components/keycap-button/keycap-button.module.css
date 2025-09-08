@@ -23,7 +23,7 @@
   --white: hsl(0deg 0% 100%);
   --blackBorder: hsl(0deg 0% 0% / 20%);
 
-  all: unset;
+  all: revert;
 
   display: inline-grid;
   grid-template-areas: 'button';
