@@ -83,7 +83,7 @@
     "knip": "^5.61.3",
     "poku": "^3.0.2",
     "react-scan": "^0.4.3",
-    "repomix": "^1.2.1",
+    "repomix": "^1.4.2",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^39.0.0",
     "typescript": "^5.9.2"
