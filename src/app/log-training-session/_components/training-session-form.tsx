@@ -41,6 +41,7 @@ export default function TrainingSessionForm({
 }: {
   allLocations: string[]
 }) {
+  'use no memo'
   const { user } = useUser()
   const router = useTransitionRouter()
   const utils = api.useUtils()

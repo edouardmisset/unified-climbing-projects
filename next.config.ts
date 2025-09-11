@@ -4,11 +4,10 @@
  */
 import type { NextConfig } from 'next'
 import './src/env.js'
-// import { RsdoctorWebpackPlugin } from '@rsdoctor/webpack-plugin'
 
 const config: NextConfig = {
   experimental: {
-    // ppr: true,
+    reactCompiler: { compilationMode: 'infer' },
     routerBFCache: true,
     useCache: true,
     staleTimes: {
@@ -25,25 +24,6 @@ const config: NextConfig = {
       },
     ]
   },
-  // webpack: config => {
-  //   if (config.name === 'client') {
-  //     config.plugins.push(
-  //       new RsdoctorWebpackPlugin({
-  //         disableClientServer: true,
-  //       }),
-  //     )
-  //   } else if (config.name === 'server') {
-  //     config.plugins.push(
-  //       new RsdoctorWebpackPlugin({
-  //         disableClientServer: true,
-  //         output: {
-  //           reportDir: './.next/server',
-  //         },
-  //       }),
-  //     )
-  //   }
-  //   return config
-  // },
 }
 
 export default config

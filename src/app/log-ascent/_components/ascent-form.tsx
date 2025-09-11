@@ -80,6 +80,7 @@ export const recentDateOptions = [
 ]
 
 export default function AscentForm(props: AscentFormProps) {
+  'use no memo'
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
   const utils = api.useUtils()
