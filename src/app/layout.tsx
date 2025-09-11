@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Atkinson_Hyperlegible_Next } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { lazy, type ReactNode, Suspense, useMemo } from 'react'
@@ -43,6 +44,11 @@ const ReactQueryDevtools = lazy(() =>
 
 export const fetchCache = 'default-cache'
 
+const font = Atkinson_Hyperlegible_Next({
+  display: 'swap',
+  subsets: ['latin'],
+})
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   const { theme, toggleTheme } = useTheme()
 
@@ -57,7 +63,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <ClerkProvider appearance={appearance}>
-        <html data-color-scheme={theme} lang="en" suppressHydrationWarning>
+        <html
+          className={font.className}
+          data-color-scheme={theme}
+          lang="en"
+          suppressHydrationWarning
+        >
           <body className={styles.body}>
             <header className={styles.header}>
               <LightDarkSwitch
