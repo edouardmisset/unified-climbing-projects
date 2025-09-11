@@ -40,13 +40,6 @@ const ReactQueryDevtools = lazy(() =>
       }))
     : Promise.resolve({ default: () => <></> }),
 )
-const ReactScan = lazy(() =>
-  env.NEXT_PUBLIC_ENV === 'development'
-    ? import('~/app/_components/react-scan/react-scan.tsx').then(module => ({
-        default: module.ReactScan,
-      }))
-    : Promise.resolve({ default: () => <></> }),
-)
 
 export const fetchCache = 'default-cache'
 
@@ -83,7 +76,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                         initialIsOpen={false}
                         position="right"
                       />
-                      <ReactScan />
                     </Suspense>
                   )}
                   <NuqsAdapter>{children}</NuqsAdapter>
