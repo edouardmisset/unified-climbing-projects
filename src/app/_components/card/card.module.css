@@ -39,6 +39,9 @@
   border-radius: var(--border-size-4);
   isolation: isolate;
 
+  /* Prevents the card from being rendered when off-screen */
+  content-visibility: auto;
+
   @media (prefers-reduced-motion: no-preference) {
     transition: opacity 0.4s ease-in-out;
   }
