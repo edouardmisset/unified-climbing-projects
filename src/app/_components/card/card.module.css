@@ -67,15 +67,17 @@
     opacity: 0;
   }
 
-  &:hover,
-  &:focus-within {
-    @media (prefers-reduced-motion: no-preference) {
-      animation: rotating-gradient 10s linear infinite;
-    }
+  @media (hover: hover) {
+    &:hover,
+    &:focus-within {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: rotating-gradient 10s linear infinite;
+      }
 
-    &::after {
-      background: var(--conic-gradient);
-      opacity: var(--glow-intensity);
+      &::after {
+        background: var(--conic-gradient);
+        opacity: var(--glow-intensity);
+      }
     }
   }
 }

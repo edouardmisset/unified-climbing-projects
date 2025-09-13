@@ -27,9 +27,12 @@
   background-size: 6.5rem 100%;
   border: 0;
   border-radius: 1.5rem;
-  transition-timing-function: cubic-bezier(0.26, 0.75, 0.38, 0.45);
-  transition-duration: 125ms;
-  transition-property: background-position, box-shadow;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-timing-function: cubic-bezier(0.26, 0.75, 0.38, 0.45);
+    transition-duration: 125ms;
+    transition-property: background-position, box-shadow;
+  }
 
   &:active {
     background-color: var(--color-gray-100);

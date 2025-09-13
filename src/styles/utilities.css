@@ -61,7 +61,8 @@
   text-align: center;
 }
 
-.textNoWrap {
+.textNoWrap,
+.truncate, .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

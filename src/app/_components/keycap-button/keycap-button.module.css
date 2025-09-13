@@ -86,8 +86,9 @@
     filter: blur(var(--blur));
     transform: translate(var(--walk), var(--walk));
 
-    /* Conic rainbow gradient */
-    animation: rainbow 5s linear infinite;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: rainbow 5s linear infinite;
+    }
 
     &:disabled {
       animation-play-state: paused;
