@@ -45,6 +45,8 @@ export default function AscentsFilterBar({
     setPeriod,
     setStyle,
     setYear,
+    selectedRoute,
+    setRoute,
   } = useAscentsQueryState()
 
   const filters = useMemo<FilterConfig[]>(
@@ -56,13 +58,6 @@ export default function AscentsFilterBar({
           options: AVAILABLE_CLIMBING_DISCIPLINE,
           selectedValue: selectedDiscipline,
           title: 'Climbing Discipline',
-        },
-        {
-          handleChange: createChangeHandler(setStyle),
-          name: 'Style',
-          options: ASCENT_STYLE,
-          selectedValue: selectedStyle,
-          title: 'Ascent Style',
         },
         {
           handleChange: createChangeHandler(setYear),
@@ -77,6 +72,13 @@ export default function AscentsFilterBar({
           options: cragList,
           selectedValue: selectedCrag,
           title: 'Crag',
+        },
+        {
+          handleChange: createChangeHandler(setStyle),
+          name: 'Style',
+          options: ASCENT_STYLE,
+          selectedValue: selectedStyle,
+          title: 'Ascent Style',
         },
         {
           handleChange: createChangeHandler(setPeriod),
@@ -102,5 +104,11 @@ export default function AscentsFilterBar({
     ],
   )
 
-  return <StickyFilterBar filters={filters} />
+  return (
+    <StickyFilterBar
+      filters={filters}
+      search={selectedRoute}
+      setSearch={setRoute}
+    />
+  )
 }

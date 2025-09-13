@@ -45,6 +45,9 @@
   --surface-3: light-dark(var(--gray-3), var(--gray-7));
   --surface-4: light-dark(var(--gray-4), var(--gray-6));
 
+  /* Animation */
+  --rotating-angle: 0turn;
+
   /* Accent colors */
   accent-color: var(--accent, var(--link));
   caret-color: var(--accent, var(--link));

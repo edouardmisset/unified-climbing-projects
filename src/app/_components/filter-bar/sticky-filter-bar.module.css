@@ -63,18 +63,18 @@
   gap: var(--size-fluid-1);
   max-inline-size: min-content;
   padding-block: var(--size-fluid-1);
+  padding-inline: var(--size-fluid-0);
   margin: auto;
-
   overflow-x: auto;
+  isolation: isolate;
 }
 
 .reset {
-  z-index: 1;
   align-self: first baseline;
   min-width: max-content;
 
-  & > svg {
-    @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) {
+    & > svg {
       transition: opacity 2s var(--ease-elastic-in-1);
     }
   }

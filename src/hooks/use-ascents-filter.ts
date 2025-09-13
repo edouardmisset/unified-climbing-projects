@@ -1,4 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
+import { stringIncludesCaseInsensitive } from '@edouardmisset/text'
 import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
@@ -16,16 +17,16 @@ import { useAscentsQueryState } from './use-ascents-query-state'
 export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const {
     selectedYear,
-    selectedDiscipline,
-    selectedStyle,
     selectedCrag,
+    selectedDiscipline,
     selectedGrade,
     selectedPeriod,
+    selectedRoute,
+    selectedStyle,
   } = useAscentsQueryState()
 
   const filteredAscents = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
-
     return filterAscents(ascents, {
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       crag: normalizeFilterValue(selectedCrag),
@@ -47,5 +48,13 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedYear,
   ])
 
-  return filteredAscents
+  return useMemo(
+    () =>
+      selectedRoute === ''
+        ? filteredAscents
+        : filteredAscents.filter(({ routeName }) =>
+            stringIncludesCaseInsensitive(routeName, selectedRoute),
+          ),
+    [filteredAscents, selectedRoute],
+  )
 }

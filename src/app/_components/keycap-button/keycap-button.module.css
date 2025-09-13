@@ -1,14 +1,10 @@
-:root {
-  --angle: 0turn;
-}
-
 @keyframes rainbow {
   100% {
-    --angle: 1turn;
+    --rotating-angle: 1turn;
   }
 }
 
-@property --angle {
+@property --rotating-angle {
   syntax: '<angle>';
   inherits: false;
   initial-value: 0turn;
@@ -72,7 +68,7 @@
 
     content: '';
     background: conic-gradient(
-      from var(--angle),
+      from var(--rotating-angle),
       var(--patagonia-color-1),
       var(--patagonia-color-2),
       var(--patagonia-color-3),
