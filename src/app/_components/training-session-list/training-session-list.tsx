@@ -42,39 +42,37 @@ export const TrainingSessionList = memo(
           </tr>
         </thead>
         <tbody className={`${styles.body} gridFullWidth`}>
-          {trainingSessions.map(
-            ({ _id: id, sessionType, date, load, gymCrag }) => (
-              <tr className={`${styles.row} gridFullWidth`} key={id}>
-                <td
-                  className={`${styles.cell} monospace`}
-                  title={prettyLongDate(date)}
-                >
-                  {prettyShortDate(date)}
-                </td>
-                <td className={styles.cell} title={gymCrag}>
-                  {gymCrag || '—'}
-                </td>
-                <td
-                  className={styles.cell}
-                  title={
-                    sessionType === undefined
-                      ? undefined
-                      : fromSessionTypeToLabel(sessionType)
-                  }
-                >
-                  {sessionType === undefined
-                    ? '—'
-                    : fromSessionTypeToLabel(sessionType)}
-                </td>
-                <td
-                  className={styles.cell}
-                  title={load === undefined ? '—' : `${load}%`}
-                >
-                  {load === undefined ? '—' : `${load}%`}
-                </td>
-              </tr>
-            ),
-          )}
+          {trainingSessions.map(({ _id, sessionType, date, load, gymCrag }) => (
+            <tr className={`${styles.row} gridFullWidth`} key={_id}>
+              <td
+                className={`${styles.cell} monospace`}
+                title={prettyLongDate(date)}
+              >
+                {prettyShortDate(date)}
+              </td>
+              <td className={styles.cell} title={gymCrag}>
+                {gymCrag || '—'}
+              </td>
+              <td
+                className={styles.cell}
+                title={
+                  sessionType === undefined
+                    ? undefined
+                    : fromSessionTypeToLabel(sessionType)
+                }
+              >
+                {sessionType === undefined
+                  ? '—'
+                  : fromSessionTypeToLabel(sessionType)}
+              </td>
+              <td
+                className={styles.cell}
+                title={load === undefined ? '—' : `${load}%`}
+              >
+                {load === undefined ? '—' : `${load}%`}
+              </td>
+            </tr>
+          ))}
         </tbody>
         <tfoot className={`${styles.footer} gridFullWidth`}>
           <tr className={`${styles.row} gridFullWidth`}>
