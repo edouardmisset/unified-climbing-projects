@@ -82,7 +82,7 @@ function isLoadInLoadCategory(
     return 30 <= load && load < 70
   }
   if (loadCategory === 'High') {
-    return load >= 70
+    return 70 <= load
   }
   return false
 }

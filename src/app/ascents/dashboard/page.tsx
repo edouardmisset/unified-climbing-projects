@@ -3,10 +3,10 @@ import { Suspense } from 'react'
 import { Dashboard } from '~/app/_components/dashboard/dashboard'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
-import { getAllAscentsFromDB } from '~/services/convex'
+import { api } from '~/trpc/server'
 
 export default async function Page() {
-  const ascents = await getAllAscentsFromDB()
+  const ascents = await api.ascents.getAll()
 
   return (
     <GridLayout title="Dashboard">

@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
-import { getAllAscentsFromDB } from '~/services/convex'
+import { api } from '~/trpc/server'
 import { TableAndSelect } from './_components/table-and-select'
 
 export default async function Page() {
-  const ascents = await getAllAscentsFromDB()
+  const ascents = await api.ascents.getAll()
+
   return (
     <GridLayout title="Top Ten Ascents">
       <Suspense fallback={<Loader />}>
