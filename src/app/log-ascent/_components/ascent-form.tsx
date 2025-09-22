@@ -1,7 +1,6 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { validNumberWithFallback } from '@edouardmisset/math'
 import { useTransitionRouter } from 'next-view-transitions'
 import type { NumberFieldRoot } from 'node_modules/@base-ui-components/react/esm/number-field/root/NumberFieldRoot'
 import { type ChangeEventHandler, useCallback } from 'react'
@@ -25,6 +24,7 @@ import {
   fromNumberToGrade,
 } from '~/helpers/grade-converter.ts'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
+import { validPositiveNumber } from '~/helpers/valid-positive-number.ts'
 import {
   type Ascent,
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -453,9 +453,4 @@ export default function AscentForm(props: AscentFormProps) {
       <p>You are not authorized to log an ascent.</p>
     </section>
   )
-}
-
-function validPositiveNumber(value: unknown, fallback: number) {
-  const val = validNumberWithFallback(value, fallback)
-  return val <= 0 ? fallback : val
 }
