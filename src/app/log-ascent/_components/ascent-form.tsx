@@ -1,8 +1,8 @@
 'use client'
 
+import type { NumberField } from '@base-ui-components/react/number-field'
 import { useUser } from '@clerk/nextjs'
 import { useTransitionRouter } from 'next-view-transitions'
-import type { NumberFieldRoot } from 'node_modules/@base-ui-components/react/esm/number-field/root/NumberFieldRoot'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -49,8 +49,6 @@ import {
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 import styles from './ascent-form.module.css'
 import { DataList } from './data-list'
-
-type HandleGradeChange = NumberFieldRoot.Props['onValueChange']
 
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
@@ -454,3 +452,5 @@ export default function AscentForm(props: AscentFormProps) {
     </section>
   )
 }
+
+type HandleGradeChange = NumberField.Root.Props['onValueChange']
