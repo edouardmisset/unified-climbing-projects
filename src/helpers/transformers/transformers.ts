@@ -34,10 +34,10 @@ export function transformAscentFromGSToJS(
   rawAscent: Record<string, string>,
 ): Record<string, string | number | boolean> {
   const transformedAscent = Object.entries(rawAscent).reduce(
-    (acc, [key, value], index) => {
+    (acc, [key, value]) => {
       if (value === '') return acc
 
-      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+      const cleanedValue = cleanString(value)
 
       const transformedKey =
         TRANSFORMED_ASCENT_HEADER_NAMES[key as GSAscentKeys]
@@ -52,7 +52,6 @@ export function transformAscentFromGSToJS(
           ] ?? TRANSFORM_FUNCTIONS_GS_TO_JS.default
         acc[transformedKey] = transform(cleanedValue)
       }
-      acc.id = index
       return acc
     },
     {} as Record<string, string | number | boolean>,
@@ -64,7 +63,7 @@ export function transformAscentFromGSToJS(
 // Key = JS ascent object's key
 // Header = Google Sheet's ascent's header
 export function transformAscentFromJSToGS(
-  ascent: Omit<Ascent, 'id'>,
+  ascent: Omit<Ascent, '_id'>,
 ): GSAscentRecord {
   return ASCENT_HEADERS.reduce((accumulator, header) => {
     const key = TRANSFORMED_ASCENT_HEADER_NAMES[header]
@@ -101,7 +100,7 @@ export function transformTrainingSessionFromGSToJS(
     (acc, [key, value]) => {
       if (value === '') return acc
 
-      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+      const cleanedValue = cleanString(value)
 
       const transformedKey =
         TRANSFORMED_TRAINING_HEADER_NAMES[key as GSTrainingKeys]
@@ -121,7 +120,7 @@ export function transformTrainingSessionFromGSToJS(
 }
 
 export function transformTrainingSessionFromJSToGS(
-  trainingSession: Omit<TrainingSession, 'id'>,
+  trainingSession: Omit<TrainingSession, '_id'>,
 ): GSTrainingRecord {
   const filteredHeaders = TRAINING_HEADERS.filter(header => header !== 'LOAD')
   return filteredHeaders.reduce(
@@ -151,4 +150,8 @@ export function transformTrainingSessionFromJSToGS(
       'Weight (kg)': '',
     } as unknown as GSTrainingRecord,
   )
+}
+
+function cleanString(value: string) {
+  return value.trim().replaceAll('’', "'")
 }

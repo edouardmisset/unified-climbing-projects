@@ -57,12 +57,7 @@ export function GradeInput(
       <NumberField.Group className={styles.Group}>
         <NumberField.Decrement
           className={styles.Decrement}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            e.stopPropagation()
-            return onValueChange(value)
-          }}
-          title="decrease grade (-)"
+          title="Decrease grade (-)"
         >
           <MinusIcon />
         </NumberField.Decrement>
@@ -76,12 +71,7 @@ export function GradeInput(
         />
         <NumberField.Increment
           className={styles.Increment}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            e.stopPropagation()
-            return onValueChange(value)
-          }}
-          title="increase grade (+)"
+          title="Increase grade (+)"
         >
           <PlusIcon />
         </NumberField.Increment>

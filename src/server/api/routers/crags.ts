@@ -1,7 +1,6 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { mapObject } from '@edouardmisset/object/map-object.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import { z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import {
@@ -9,6 +8,7 @@ import {
   compareStringsDescending,
 } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
+import { z } from '~/helpers/zod'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'

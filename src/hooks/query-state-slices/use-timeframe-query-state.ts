@@ -10,7 +10,7 @@ export const useTimeframeQueryState = (): UseQueryStateReturn<
   useQueryState<Timeframe>('timeframe', {
     defaultValue: defaultTimeframe,
     parse: value => {
-      const result = timeframeSchema.safeParse(value)
-      return result.success ? result.data : defaultTimeframe
+      const parsedTimeframe = timeframeSchema.safeParse(value)
+      return parsedTimeframe.success ? parsedTimeframe.data : defaultTimeframe
     },
   })

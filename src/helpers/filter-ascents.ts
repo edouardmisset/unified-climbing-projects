@@ -35,7 +35,7 @@ export function filterAscents(
     period,
   } = filters ?? {}
 
-  if (!ascents || ascents.length === 0) {
+  if (ascents.length === 0) {
     globalThis.console.log('No ascents passed to `filterAscents`')
     return []
   }

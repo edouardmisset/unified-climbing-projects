@@ -12,7 +12,7 @@ import {
 } from '~/helpers/transformers/headers'
 import { SHEETS_INFO } from '~/services/google-sheets'
 
-const backupFilePath = './src/server/backup/'
+const backupFilePath = './src/backup/'
 const trainingFileName = 'training-data.json'
 const ascentFileName = 'ascent-data.json'
 
@@ -125,7 +125,7 @@ async function writeDataToFile(
 ): Promise<void> {
   await writeFile(
     `${backupFilePath}${fileName}`,
-    JSON.stringify({ data }, null, 2),
+    JSON.stringify(data, null, 2),
     { flag: 'w' },
   )
 }

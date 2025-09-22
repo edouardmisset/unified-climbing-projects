@@ -16,3 +16,4 @@ ignore:
   - '**/_components'
   - '**/{\[id\],\[year\],\[trpc\]}'
   - test-results
+  - convex/_generated

@@ -1,4 +1,3 @@
-import { isValidNumber } from '@edouardmisset/math'
 import type { Metadata } from 'next'
 import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
 import { isError } from '~/helpers/is-error'
@@ -9,21 +8,13 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>
 }) {
-  const id = (await params)?.id ?? ''
+  const _id = (await params)?.id ?? ''
+  if (_id.length === 0) return <h2>Invalid ascent ID</h2>
 
-  const numericId = Number(id)
-  if (
-    !isValidNumber(numericId) ||
-    Number.isInteger(numericId) ||
-    numericId <= 0
-  ) {
-    return <div>Invalid ascent ID: {id}</div>
-  }
-
-  const ascent = await api.ascents.getById({ id: numericId })
+  const ascent = await api.ascents.getById({ _id })
 
   if (isError(ascent)) {
-    return <div>{ascent.error}</div>
+    return <p>{ascent.error}</p>
   }
 
   return (

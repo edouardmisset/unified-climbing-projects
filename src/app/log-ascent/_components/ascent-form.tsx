@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 import { useTransitionRouter } from 'next-view-transitions'
+import type { NumberFieldRoot } from 'node_modules/@base-ui-components/react/esm/number-field/root/NumberFieldRoot'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -23,6 +24,7 @@ import {
   fromNumberToGrade,
 } from '~/helpers/grade-converter.ts'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
+import { validPositiveNumber } from '~/helpers/valid-positive-number.ts'
 import {
   type Ascent,
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -48,7 +50,7 @@ import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
 import styles from './ascent-form.module.css'
 import { DataList } from './data-list'
 
-type HandleGradeChange = (value: number | null, event?: Event) => void
+type HandleGradeChange = NumberFieldRoot.Props['onValueChange']
 
 const numberOfGradesBelowMinimum = 6
 const numberOfGradesAboveMaximum = 3
@@ -142,8 +144,9 @@ export default function AscentForm(props: AscentFormProps) {
   )
 
   const handleTopoGradeChange: HandleGradeChange = useCallback(
-    value => {
-      const val = value ?? fromGradeToNumber(minGrade)
+    (value: unknown) => {
+      const minGradeAsNumber = fromGradeToNumber(minGrade)
+      const val = validPositiveNumber(value, minGradeAsNumber)
       setValue('topoGrade', val)
 
       setValue('personalGrade', val)
@@ -151,8 +154,9 @@ export default function AscentForm(props: AscentFormProps) {
     [setValue, minGrade],
   )
   const handlePersonalGradeChange: HandleGradeChange = useCallback(
-    value => {
-      const val = value ?? fromGradeToNumber(minGrade)
+    (value: unknown) => {
+      const minGradeAsNumber = fromGradeToNumber(minGrade)
+      const val = validPositiveNumber(value, minGradeAsNumber)
       setValue('personalGrade', val)
     },
     [setValue, minGrade],
@@ -281,7 +285,7 @@ export default function AscentForm(props: AscentFormProps) {
           enterKeyHint="next"
           id="crag"
           list="crag-list"
-          placeholder="Ceüse, Fontainebleau, etc."
+          placeholder="Saint-Léger, Fontainebleau, etc."
           required
           title="The name of the crag"
           type="text"

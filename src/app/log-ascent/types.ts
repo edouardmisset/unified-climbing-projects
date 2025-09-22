@@ -1,7 +1,10 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { z } from 'zod'
+import { getDateAtNoon } from '~/helpers/date.ts'
+import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
+import { z } from '~/helpers/zod'
 import {
+  ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
   holdsSchema,
@@ -48,27 +51,18 @@ const numberGradeToGradeSchema = z
     fromNumberToGrade(Number(stringOrNumberGrade)),
   )
 
-export const ascentFormOutputSchema = z.object({
-  area: z.string().optional(),
-  climbingDiscipline: climbingDisciplineSchema,
-  comments: z.string().optional(),
-  crag: z.string().min(1).trim(),
-  date: z.string().transform(s => new Date(s).toISOString()),
+export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
+  comments: z.preprocess(emptyStringToUndefined, z.string().optional()),
+  date: z.string().transform(s => getDateAtNoon(new Date(s)).toISOString()),
   height: z
     .string()
-    .transform(height =>
-      height === undefined || height === '' ? undefined : Number(height),
-    ),
-  holds: holdsSchema.optional(),
+    .transform(height => (height === '' ? undefined : Number(height))),
+  holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
-  profile: profileSchema.optional(), // yyyy-mm-dd
+  profile: z.preprocess(emptyStringToUndefined, profileSchema.optional()),
   rating: z
     .string()
-    .transform(rating =>
-      rating === undefined || rating === '' ? undefined : Number(rating),
-    ),
-  routeName: z.string().trim(),
-  style: ascentStyleSchema.optional().default('Redpoint'),
+    .transform(rating => (rating === '' ? undefined : Number(rating))),
   topoGrade: numberGradeToGradeSchema,
   tries: numberOfTriesSchema,
 })

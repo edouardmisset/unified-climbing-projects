@@ -5,11 +5,16 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "backup": "bun run src/scripts/backup.ts && biome format --write ./src/backup",
+    "preseed": "bun run backup",
+    "seed": "bunx convex import --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --replace --table training ./src/backup/training-data.json",
+    "seed:prod": "bunx convex import --prod --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --prod --replace --table training ./src/backup/training-data.json",
     "format": "biome format --write ./src",
     "lint": "biome lint --write ./src",
     "check": "biome check --fix ./src && bun run style:lint && tsc --noEmit && ls-lint",
     "commitlint": "commitlint --edit",
     "dev": "next dev --turbo",
+    "convex:dev": "bunx convex dev",
     "preview": "bun run build && next start",
     "reset": "rm -rf node_modules bun.lock* && bun install --save-text-lockfile",
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
@@ -23,8 +28,6 @@
     "knip": "clear && knip",
     "ls-lint": "ls-lint",
     "validate": "clear && bun run check && bun run test:all && bun run build",
-    "client:rsdoctor": "rsdoctor analyze --profile .next/.rsdoctor/manifest.json",
-    "server:rsdoctor": "rsdoctor analyze --profile .next/server/chunks/.rsdoctor/manifest.json",
     "repo": "bun run repomix"
   },
   "dependencies": {
@@ -51,6 +54,8 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
+    "convex": "^1.26.2",
+    "convex-helpers": "^0.1.104",
     "fuzzysort": "^3.1.0",
     "google-auth-library": "^10.2.1",
     "google-spreadsheet": "^5.0.2",
@@ -73,8 +78,6 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@ls-lint/ls-lint": "^2.3.1",
     "@playwright/test": "^1.53.2",
-    "@rsdoctor/cli": "^1.1.7",
-    "@rsdoctor/webpack-plugin": "^1.1.7",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/humanize-duration": "^3.27.4",
     "@types/node": "^24.0.10",
@@ -98,6 +101,7 @@
     "core-js",
     "esbuild",
     "oxc-resolver",
+    "protobufjs",
     "sharp"
   ]
 }

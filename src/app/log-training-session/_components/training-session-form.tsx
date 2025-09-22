@@ -29,8 +29,7 @@ import {
   fromEnergySystemToLabel,
   fromSessionTypeToLabel,
   SESSION_TYPES,
-  type TrainingSession,
-  trainingSessionSchema,
+  type TrainingSessionForm as TrainingSessionFormType,
 } from '~/schema/training'
 import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
@@ -46,24 +45,17 @@ export default function TrainingSessionForm({
   const router = useTransitionRouter()
   const utils = api.useUtils()
 
-  const result = trainingSessionSchema
-    .omit({ id: true, load: true })
-    .safeParse({
-      date: stringifyDate(new Date()),
-    } satisfies Omit<TrainingSession, 'id'>)
-
-  if (!result.success) {
-    globalThis.console.log(result.error)
-  }
-
-  const { data: defaultTrainingSession } = result
+  const defaultDate = stringifyDate(new Date())
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { isSubmitting },
-  } = useForm({
-    defaultValues: defaultTrainingSession,
+  } = useForm<TrainingSessionFormType>({
+    defaultValues: {
+      date: defaultDate,
+    },
   })
 
   return user?.fullName === 'Edouard' ? (
@@ -82,8 +74,12 @@ export default function TrainingSessionForm({
           })
           if (!(await promise)) return
 
+          reset()
           await utils.training.invalidate()
-          router.push('/log-ascent')
+
+          if (data.sessionType === 'Out') {
+            router.push('/log-ascent')
+          }
         },
         error => {
           console.error(error)
@@ -213,7 +209,7 @@ export default function TrainingSessionForm({
       <div className={styles.field}>
         <label htmlFor="intensity">Intensity (%)</label>
         <input
-          {...register('intensity', { valueAsNumber: true })}
+          {...register('intensity')}
           className={styles.input}
           enterKeyHint="next"
           id="intensity"
@@ -230,7 +226,7 @@ export default function TrainingSessionForm({
       <div className={styles.field}>
         <label htmlFor="volume">Volume (%)</label>
         <input
-          {...register('volume', { valueAsNumber: true })}
+          {...register('volume')}
           className={styles.input}
           enterKeyHint="next"
           id="volume"

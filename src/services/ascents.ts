@@ -6,6 +6,7 @@ import {
   transformAscentFromJSToGS,
 } from '~/helpers/transformers/transformers'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { getAllAscentsFromDB } from './convex.ts'
 import { loadWorksheet } from './google-sheets.ts'
 
 /**
@@ -18,7 +19,7 @@ import { loadWorksheet } from './google-sheets.ts'
  * @returns A promise that resolves to an array of Ascent objects, each
  * representing a validated ascent record.
  */
-const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
+const _getAscentsFromGS = cache(async (): Promise<Ascent[]> => {
   'use cache'
 
   let rows:
@@ -35,7 +36,9 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
   if (rows === undefined) return []
 
   const rawAscents = rows.map((row, index) =>
-    Object.assign(transformAscentFromGSToJS(row.toObject()), { id: index }),
+    Object.assign(transformAscentFromGSToJS(row.toObject()), {
+      _id: String(index + 1),
+    }),
   )
 
   const parsedAscents = ascentSchema.array().safeParse(rawAscents)
@@ -57,11 +60,24 @@ const getAscentsFromDB = cache(async (): Promise<Ascent[]> => {
 })
 
 export async function getAllAscents(): Promise<Ascent[]> {
-  return await getAscentsFromDB()
+  return await getAllAscentsFromDB()
 }
 
-export async function addAscent(ascent: Omit<Ascent, 'id'>): Promise<void> {
+export async function addAscentToGS(
+  ascent: Omit<Ascent, '_id'>,
+): Promise<void> {
   const manualAscentsSheet = await loadWorksheet('ascents', { edit: true })
 
-  await manualAscentsSheet.addRow(transformAscentFromJSToGS(ascent))
+  const ascentInGS = transformAscentFromJSToGS(ascent)
+
+  try {
+    await manualAscentsSheet.addRow(ascentInGS)
+    globalThis.console.log(
+      `Ascent added to Google Sheets successfully (${new Date().getUTCMinutes()}):`,
+      ascentInGS,
+    )
+  } catch (error) {
+    globalThis.console.error('Error adding ascent to Google Sheets:', error)
+    throw error
+  }
 }
