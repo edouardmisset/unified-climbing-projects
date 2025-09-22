@@ -1,10 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-const port = process.env.PORT ?? 3000
-
 test.describe('Home page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}`)
+    await page.goto('/')
   })
 
   test('should load correctly', async ({ page }) => {
@@ -15,7 +13,7 @@ test.describe('Home page', () => {
 
 test.describe('Visualization page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}/visualization`)
+    await page.goto('/visualization')
   })
   test('should load correctly', async ({ page }) => {
     await expect(
@@ -26,7 +24,7 @@ test.describe('Visualization page', () => {
 
 test.describe('Ascents page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}/ascents`)
+    await page.goto('/ascents')
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Ascents/)
@@ -34,7 +32,8 @@ test.describe('Ascents page', () => {
   })
 
   test('should show a single ascent', async ({ page }) => {
-    await page.goto(`http://localhost:${port}/ascents/1`)
+    const levitationAscentId = 'j579f2mexz1j2s1esh1aee9gx17r3jde'
+    await page.goto(`/ascents/${levitationAscentId}`)
     await page.waitForSelector('text=Lévitation')
     await expect(
       page.getByRole('heading', { name: 'Lévitation' }),
@@ -44,7 +43,7 @@ test.describe('Ascents page', () => {
 
 test.describe('Dashboard page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}/ascents/dashboard`)
+    await page.goto('/ascents/dashboard')
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Dashboard/)
@@ -54,7 +53,7 @@ test.describe('Dashboard page', () => {
 
 test.describe('Top Ten page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}/ascents/top-ten`)
+    await page.goto('/ascents/top-ten')
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Top Ten/)
@@ -64,7 +63,7 @@ test.describe('Top Ten page', () => {
 
 test.describe('Training page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`http://localhost:${port}/training-sessions`)
+    await page.goto('/training-sessions')
   })
   test('should load correctly', async ({ page }) => {
     await expect(page).toHaveTitle(/Training/)
