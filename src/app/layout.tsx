@@ -32,9 +32,8 @@ import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
 import { LightDarkSwitch } from './_components/light-dark-switch/light-dark-switch'
-import { ConvexClientProvider } from './provider/convex'
 
-// Dynamic import for ReactQueryDevtools & React Scan - only loads in development
+// Dynamic import for ReactQueryDevtools - only loads in development
 const ReactQueryDevtools = lazy(() =>
   env.NEXT_PUBLIC_ENV === 'development'
     ? import('@tanstack/react-query-devtools').then(module => ({
@@ -85,20 +84,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </header>
             <main className={styles.main}>
               <Suspense fallback={<Loader />}>
-                <ConvexClientProvider>
-                  <TRPCReactProvider>
-                    {env.NEXT_PUBLIC_ENV === 'development' && (
-                      <Suspense fallback={null}>
-                        <ReactQueryDevtools
-                          buttonPosition="bottom-right"
-                          initialIsOpen={false}
-                          position="right"
-                        />
-                      </Suspense>
-                    )}
-                    <NuqsAdapter>{children}</NuqsAdapter>
-                  </TRPCReactProvider>
-                </ConvexClientProvider>
+                <TRPCReactProvider>
+                  {env.NEXT_PUBLIC_ENV === 'development' && (
+                    <Suspense fallback={null}>
+                      <ReactQueryDevtools
+                        buttonPosition="bottom-right"
+                        initialIsOpen={false}
+                        position="right"
+                      />
+                    </Suspense>
+                  )}
+                  <NuqsAdapter>{children}</NuqsAdapter>
+                </TRPCReactProvider>
               </Suspense>
             </main>
 
