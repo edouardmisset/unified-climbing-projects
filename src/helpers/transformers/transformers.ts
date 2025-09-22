@@ -37,7 +37,7 @@ export function transformAscentFromGSToJS(
     (acc, [key, value]) => {
       if (value === '') return acc
 
-      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+      const cleanedValue = cleanString(value)
 
       const transformedKey =
         TRANSFORMED_ASCENT_HEADER_NAMES[key as GSAscentKeys]
@@ -100,7 +100,7 @@ export function transformTrainingSessionFromGSToJS(
     (acc, [key, value]) => {
       if (value === '') return acc
 
-      const cleanedValue = value?.trim()?.replaceAll('’', "'")
+      const cleanedValue = cleanString(value)
 
       const transformedKey =
         TRANSFORMED_TRAINING_HEADER_NAMES[key as GSTrainingKeys]
@@ -150,4 +150,8 @@ export function transformTrainingSessionFromJSToGS(
       'Weight (kg)': '',
     } as unknown as GSTrainingRecord,
   )
+}
+
+function cleanString(value: string) {
+  return value.trim().replaceAll('’', "'")
 }
