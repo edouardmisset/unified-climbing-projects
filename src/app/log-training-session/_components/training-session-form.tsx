@@ -50,6 +50,7 @@ export default function TrainingSessionForm({
   const {
     handleSubmit,
     register,
+    reset,
     formState: { isSubmitting },
   } = useForm<TrainingSessionFormType>({
     defaultValues: {
@@ -73,8 +74,12 @@ export default function TrainingSessionForm({
           })
           if (!(await promise)) return
 
+          reset()
           await utils.training.invalidate()
-          router.push('/log-ascent')
+          
+          if (data.sessionType === 'Out') {
+            router.push('/log-ascent')
+          }
         },
         error => {
           console.error(error)
