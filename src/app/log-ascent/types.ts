@@ -1,4 +1,5 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
+import { getDateAtNoon } from '~/helpers/date.ts'
 import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
 import { z } from '~/helpers/zod'
 import {
@@ -54,11 +55,7 @@ export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
     v => (v === '' ? undefined : v),
     z.string().optional(),
   ),
-  date: z.string().transform(s => {
-    const date = new Date(s)
-    date.setUTCHours(12)
-    return date.toISOString()
-  }),
+  date: z.string().transform(s => getDateAtNoon(new Date(s)).toISOString()),
   height: z
     .string()
     .transform(height =>

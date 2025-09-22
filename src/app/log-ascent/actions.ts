@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '~/trpc/server.ts'
+import { api } from '~/trpc/server'
 import { ascentFormOutputSchema } from './types.ts'
 
 export const onSubmit = async (
@@ -13,7 +13,5 @@ export const onSubmit = async (
     return false
   }
 
-  const { data: form } = parsedFormData
-
-  return await api.ascents.addOne(form)
+  return await api.ascents.addOne(parsedFormData.data)
 }
