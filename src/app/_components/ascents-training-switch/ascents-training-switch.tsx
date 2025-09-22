@@ -1,20 +1,21 @@
-import { Switch } from '@base-ui-components/react/switch'
 import { memo } from 'react'
+import { Switch } from '../switch/switch'
 import styles from './ascents-training-switch.module.css'
 
 export const AscentsTrainingSwitch = memo(
   ({ toggle, isTraining }: { toggle: () => void; isTraining: boolean }) => (
-    <div className={styles.container}>
-      <label htmlFor="ascents-training-switch">Ascent</label>
-      <Switch.Root
+    <label className={styles.container} htmlFor="ascents-training-switch">
+      <span className={styles.option} data-is-selected={!isTraining}>
+        Ascent
+      </span>
+      <Switch
         checked={isTraining}
-        className={styles.switch}
         id="ascents-training-switch"
         onCheckedChange={toggle}
-      >
-        <Switch.Thumb className={styles.thumb} />
-      </Switch.Root>
-      <span>Training</span>
-    </div>
+      />
+      <span className={styles.option} data-is-selected={isTraining}>
+        Training
+      </span>
+    </label>
   ),
 )

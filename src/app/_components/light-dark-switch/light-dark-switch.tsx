@@ -1,4 +1,5 @@
-import { Switch } from '@base-ui-components/react/switch'
+import { Moon, Sun } from 'lucide-react'
+import { Switch } from '../switch/switch'
 import styles from './light-dark-switch.module.css'
 
 export function LightDarkSwitch({
@@ -9,13 +10,19 @@ export function LightDarkSwitch({
   onChange: (checked: boolean) => void
 }) {
   return (
-    <Switch.Root
-      aria-label="Toggle light/dark mode"
-      checked={checked}
-      className={styles.Switch}
-      onCheckedChange={onChange}
-    >
-      <Switch.Thumb className={styles.Thumb} />
-    </Switch.Root>
+    <label className={styles.label} htmlFor="light-dark-switch">
+      <span>
+        <Sun color={checked ? 'var(--text-2)' : 'var(--accent)'} />
+      </span>
+      <Switch
+        aria-label="Toggle light/dark mode"
+        checked={checked}
+        className={styles.switch}
+        onCheckedChange={onChange}
+      />
+      <span>
+        <Moon color={checked ? 'var(--accent)' : 'var(--text-2)'} />
+      </span>
+    </label>
   )
 }
