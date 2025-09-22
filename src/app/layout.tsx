@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Atkinson_Hyperlegible_Next } from 'next/font/google'
+import { Atkinson_Hyperlegible } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { lazy, type ReactNode, Suspense, useMemo } from 'react'
@@ -44,9 +44,14 @@ const ReactQueryDevtools = lazy(() =>
 
 export const fetchCache = 'default-cache'
 
-const font = Atkinson_Hyperlegible_Next({
+const font = Atkinson_Hyperlegible({
   display: 'swap',
   subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  preload: true,
+  variable: '--font-atkinson',
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 export default function RootLayout({ children }: { children: ReactNode }) {

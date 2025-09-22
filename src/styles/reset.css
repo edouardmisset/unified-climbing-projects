@@ -33,7 +33,6 @@
 
 :root {
   font-weight: var(--font-weight-4);
-  font-family: system-ui, sans-serif;
 
   --accent: light-dark(var(--patagonia-color-2), var(--patagonia-color-3));
   --link: light-dark(var(--indigo-7), var(--indigo-5));
