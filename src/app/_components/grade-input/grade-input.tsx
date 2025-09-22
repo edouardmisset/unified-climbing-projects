@@ -79,3 +79,5 @@ export function GradeInput(
     </NumberField.Root>
   )
 }
+
+export type HandleGradeChange = NumberField.Root.Props['onValueChange']

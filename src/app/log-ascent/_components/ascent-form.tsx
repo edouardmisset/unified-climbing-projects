@@ -1,13 +1,15 @@
 'use client'
 
-import type { NumberField } from '@base-ui-components/react/number-field'
 import { useUser } from '@clerk/nextjs'
 import { useTransitionRouter } from 'next-view-transitions'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
-import { GradeInput } from '~/app/_components/grade-input/grade-input.tsx'
+import {
+  GradeInput,
+  type HandleGradeChange,
+} from '~/app/_components/grade-input/grade-input.tsx'
 import { KeycapButton } from '~/app/_components/keycap-button/keycap-button.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
@@ -452,5 +454,3 @@ export default function AscentForm(props: AscentFormProps) {
     </section>
   )
 }
-
-type HandleGradeChange = NumberField.Root.Props['onValueChange']
