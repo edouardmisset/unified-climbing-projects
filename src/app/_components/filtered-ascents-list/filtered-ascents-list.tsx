@@ -1,19 +1,14 @@
 'use client'
 
-import { api } from 'convex/_generated/api'
-import { useQuery } from 'convex/react'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
-import { EMPTY_OPTIONS } from '~/constants/generic'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
-import { ascentSchema } from '~/schema/ascent'
+import { type AscentListProps, ascentSchema } from '~/schema/ascent'
 import { AscentList } from '../ascent-list/ascent-list'
 import AscentsFilterBar from '../filter-bar/_components/ascents-filter-bar'
 
-export function FilteredAscentList() {
-  const ascents = useQuery(api.ascents.get, EMPTY_OPTIONS)
-
+export function FilteredAscentList({ ascents }: AscentListProps) {
   const parsedAscents = ascents ? ascentSchema.array().parse(ascents) : []
 
   const filteredAscents = useAscentsFilter(parsedAscents)
