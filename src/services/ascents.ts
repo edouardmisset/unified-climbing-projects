@@ -6,6 +6,7 @@ import {
   transformAscentFromJSToGS,
 } from '~/helpers/transformers/transformers'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { getAllAscentsFromDB } from './convex.ts'
 import { loadWorksheet } from './google-sheets.ts'
 
 /**
@@ -18,7 +19,7 @@ import { loadWorksheet } from './google-sheets.ts'
  * @returns A promise that resolves to an array of Ascent objects, each
  * representing a validated ascent record.
  */
-const getAscentsFromGS = cache(async (): Promise<Ascent[]> => {
+const _getAscentsFromGS = cache(async (): Promise<Ascent[]> => {
   'use cache'
 
   let rows:
@@ -59,7 +60,7 @@ const getAscentsFromGS = cache(async (): Promise<Ascent[]> => {
 })
 
 export async function getAllAscents(): Promise<Ascent[]> {
-  return await getAscentsFromGS()
+  return await getAllAscentsFromDB()
 }
 
 export async function addAscentToGS(

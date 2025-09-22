@@ -5,6 +5,7 @@ import {
   transformTrainingSessionFromJSToGS,
 } from '~/helpers/transformers/transformers'
 import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
+import { getAllTrainingSessionsFromDB } from './convex.ts'
 import { loadWorksheet } from './google-sheets.ts'
 
 /**
@@ -16,7 +17,7 @@ import { loadWorksheet } from './google-sheets.ts'
  *
  * @returns A promise that resolves to an array of TrainingSessions objects.
  */
-const getTrainingSessionsFromGS = cache(
+const _getTrainingSessionsFromGS = cache(
   async (): Promise<TrainingSession[]> => {
     'use cache'
 
@@ -53,7 +54,7 @@ const getTrainingSessionsFromGS = cache(
 )
 
 export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
-  return await getTrainingSessionsFromGS()
+  return await getAllTrainingSessionsFromDB()
 }
 
 export async function addTrainingSessionToGS(
