@@ -14,7 +14,7 @@ export default async function Page({
   const ascent = await api.ascents.getById({ _id })
 
   if (isError(ascent)) {
-    return <div>{ascent.error}</div>
+    return <p>{ascent.error}</p>
   }
 
   return (
