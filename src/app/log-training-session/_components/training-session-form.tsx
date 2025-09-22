@@ -76,7 +76,7 @@ export default function TrainingSessionForm({
 
           reset()
           await utils.training.invalidate()
-          
+
           if (data.sessionType === 'Out') {
             router.push('/log-ascent')
           }

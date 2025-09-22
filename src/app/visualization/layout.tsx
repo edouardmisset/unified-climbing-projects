@@ -32,7 +32,9 @@ export default function Layout({ children }: { children: ReactNode }) {
     const visualizationTypeFromURL = pathname.split('/').at(-1)
     if (!visualizationTypeFromURL) return 'Calendar'
 
-    const parsedVisualizationPath = visualizationPathSchema.safeParse(visualizationTypeFromURL)
+    const parsedVisualizationPath = visualizationPathSchema.safeParse(
+      visualizationTypeFromURL,
+    )
     if (!parsedVisualizationPath.success) return 'Calendar'
     const visualizationType = parsedVisualizationPath.data
 

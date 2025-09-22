@@ -7,5 +7,4 @@ export const NON_BREAKING_SPACE = '\u00A0'
 export const DAYS_IN_WEEK = 7
 export const WEEKS_IN_YEAR = 53
 
-export const EMPTY_OPTIONS = Object.freeze({ options: {} })
 export const EMPTY_OBJECT = Object.freeze({})

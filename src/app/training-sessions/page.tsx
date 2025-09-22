@@ -5,7 +5,7 @@ import { FilteredTrainingSessionList } from '../_components/filtered-training-se
 import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
 
-export default async function TrainingSessionsPage(): Promise<React.JSX.Element> {
+export default async function TrainingSessionsPage() {
   const trainingSessions = await api.training.getAll()
 
   return (
