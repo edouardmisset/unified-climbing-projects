@@ -1,17 +1,17 @@
 .button {
   aspect-ratio: 1;
-
   padding: var(--size-1);
   margin: var(--size-fluid-1);
   color: var(--text-1);
   background-color: var(--surface-1);
   border-radius: 100vmax;
 
-  transition: all var(--sneeze) var(--ease-elastic-in-1);
+  @media (prefers-reduced-motion: no-preference) {
+    transition: all var(--sneeze) var(--ease-elastic-in-1);
+  }
 
   &:hover {
     background-color: var(--surface-2);
-
     transform: scale(1.1);
   }
 }

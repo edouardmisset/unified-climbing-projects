@@ -49,6 +49,7 @@
     "@trpc/server": "^11.4.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "convex": "^1.26.2",
     "convex-helpers": "^0.1.104",
     "fuzzysort": "^3.1.0",
@@ -81,8 +82,7 @@
     "cspell": "^9.1.3",
     "knip": "^5.61.3",
     "poku": "^3.0.2",
-    "react-scan": "^0.4.3",
-    "repomix": "^1.2.1",
+    "repomix": "^1.4.2",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^39.0.0",
     "typescript": "^5.9.2"

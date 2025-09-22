@@ -1,23 +1,144 @@
 # Copilot Instructions
 
-These instructions are designed to help you write code that adheres to the project's standards and best practices. Please follow them closely.
+This is a Next.js climbing analytics app focused on **European sport climbing and bouldering** using the French grading system. It features Google Sheets backend, tRPC API, and extensive data visualization with strong emphasis on type safety.
 
-## Folder Structure
+## Architecture Overview
+
+**Data Flow:** Google Sheets → CSV/API → tRPC → React components → Nivo charts
+- **Backend:** Google Sheets as database via service account authentication
+- **API:** tRPC routers in `src/server/api/routers/` with strong typing
+- **Frontend:** Next.js App Router with Base UI components and CSS modules
+- **Auth:** Clerk with sign-in protection on `/log-*` routes
+- **Type Safety:** Zod schemas validate all data boundaries and runtime validation
+
+## Critical Systems
+
+### Grade Conversion & Scoring
+The app uses the **French climbing grade system** with point conversions:
+```typescript
+// French grade conversion: '7a' → 37 (number) → 700 (points)
+fromGradeToNumber('7a') // 37
+GRADE_TO_POINTS['7a'] // 700 + style points + discipline bonus
+```
+- `src/schema/ascent.ts` defines French grade mappings and point systems
+- `src/helpers/grade-converter.ts` handles conversions
+- Style points: Onsight (+150), Flash (+50), Redpoint (+0)
+- Boulder bonus: +100 points
+
+### Google Sheets Integration
+All data flows through Google Sheets transformers:
+```typescript
+// src/helpers/transformers/
+// GS format ↔ JS format with header mappings
+transformAscentFromGSToJS(rawRow) // Sheets → typed objects
+transformAscentFromJSToGS(ascent) // Form data → Sheets format
+```
+- Headers defined in `src/helpers/transformers/headers.ts`
+- Authentication via service account in `src/services/google-sheets.ts`
+- Cache data fetching with React's `cache()` for performance
+
+### Chart Data Transformations
+Chart helpers follow this pattern:
+```typescript
+// src/app/_components/charts/[chart-name]/get-[chart-name].ts
+export function getChartData(ascents: Ascent[]): ChartDataType {
+  // 1. Create grade scale from min/max grades
+  // 2. Group/filter ascents 
+  // 3. Transform to chart format with colors
+}
+```
+
+## Component Structure
 
 ```
-component-name
-├── helpers.ts               // MUST contain handler functions and other functions needed in the component
-├── component-name.tsx       // MUST contain the actual component
-├── component-name.module.ts // MUST contain the styled component
-├── constants.ts             // MUST contain the constants used in the component
-├── types.ts                 // MUST contain the types (props and others) used in the component or the helpers
-├── hooks.ts                 // MUST contain the custom hooks used in the component
-└── component-name.tests.ts  // MUST contain the unit tests for the component
+component-name/
+├── helpers.ts               // Handler functions and component logic
+├── component-name.tsx       // React component (function declaration)
+├── component-name.module.css // CSS modules with design tokens
+├── constants.ts             // Component constants
+├── types.ts                 // TypeScript interfaces
+├── hooks.ts                 // Custom hooks (prefix with 'use')
+└── component-name.test.ts   // Unit tests with poku
 ```
 
-- `default export`s MUST be used for pages.
-- Folders and files MUST use kebab-case to avoid cross-OS issues.
-  - **Example:** `my-component/my-component.tsx`
+**Pages:** Use `default export`, fetch data with `api.` calls in async components
+
+## Development Workflows
+
+### Key Commands
+```bash
+bun run dev          # Development with Turbo
+bun run check        # Quick validation (lint + typecheck + style) - use frequently
+bun run validate     # Full validation (check + test + build)
+bun run test:unit    # Poku unit tests in src/**/*.test.ts
+bun run test:e2e     # Playwright tests in tests/
+```
+
+### Data Operations
+- **Backup:** `bun run scripts/backup.ts` exports Google Sheets to JSON
+- **Environment:** Requires Google Sheets service account credentials
+- **Schema:** Zod schemas in `src/schema/` with strict validation
+
+### Filter Patterns
+Use consistent filter helpers:
+```typescript
+// src/helpers/filter-*.ts pattern
+filterAscents(ascents, { year: 2024, climbingDiscipline: 'Route' })
+filterTrainingSessions(sessions, { sessionType: 'Out' })
+```
+
+## Design System
+
+**CSS:** Use design tokens from `src/styles/`:
+- Colors: `var(--blue-5)`, `var(--gray-800)` 
+- Sizes: `var(--size-3)`, `var(--size-fluid-2)`
+- Climbing-specific: `var(--route)`, `var(--boulder)`, `var(--flash)`
+
+**Components:** Base UI components + custom wrappers in `src/app/_components/`
+
+## Testing Patterns
+
+**Unit Tests:** Test data transformation helpers extensively:
+```typescript
+// src/helpers/*.test.ts with poku
+import { assert, describe, it } from 'poku'
+assert.equal(fromGradeToNumber('7a'), 37)
+```
+
+**E2E:** Smoke tests for main pages with Playwright
+
+## Common Gotchas
+
+- **Grade System:** Always use helper functions, never manual conversions
+- **Google Sheets:** Headers order matters, defined in `headers.ts`
+- **tRPC:** Server calls use `api.` (RSC), client uses `trpc.`
+- **Caching:** React `cache()` for data fetching, 'use cache' directive
+- **Auth:** Clerk `<SignedIn>` wrapper for protected routes
+
+## TypeScript & Type Safety
+
+**Critical Rules:**
+- **Avoid `any`** - use proper typing or `unknown` with type guards
+- **Type all function return types** (except React components)
+- **Use TypeScript generics** to improve type inference and reusability
+- **Zod schemas** validate all data boundaries and provide runtime safety
+
+```typescript
+// Good: Typed function with generic
+function filterData<T extends { date: string }>(
+  items: T[], 
+  predicate: (item: T) => boolean
+): T[] {
+  return items.filter(predicate)
+}
+
+// Good: Zod validation at boundaries
+const ascentSchema = z.object({
+  topoGrade: gradeSchema,
+  style: ascentStyleSchema,
+  // ...
+})
+```
 
 ## Naming Conventions
 
@@ -41,6 +162,7 @@ component-name
     - **Example:** `handleClick`.
 - **Hooks:** MUST start with `use<Name>`.
   - **Example:** `useBooleanState`.
+- **Handlers:** `handle<EventName>`
 - **Function Parameters:**
   - General functions MUST use `params`.
 

@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Atkinson_Hyperlegible } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { lazy, type ReactNode, Suspense, useMemo } from 'react'
@@ -41,15 +42,18 @@ const ReactQueryDevtools = lazy(() =>
       }))
     : Promise.resolve({ default: () => <></> }),
 )
-const ReactScan = lazy(() =>
-  env.NEXT_PUBLIC_ENV === 'development'
-    ? import('~/app/_components/react-scan/react-scan.tsx').then(module => ({
-        default: module.ReactScan,
-      }))
-    : Promise.resolve({ default: () => <></> }),
-)
 
 export const fetchCache = 'default-cache'
+
+const font = Atkinson_Hyperlegible({
+  display: 'swap',
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  preload: true,
+  variable: '--font-atkinson',
+  fallback: ['system-ui', 'sans-serif'],
+})
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const { theme, toggleTheme } = useTheme()
@@ -65,7 +69,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <ClerkProvider appearance={appearance}>
-        <html data-color-scheme={theme} lang="en" suppressHydrationWarning>
+        <html
+          className={font.className}
+          data-color-scheme={theme}
+          lang="en"
+          suppressHydrationWarning
+        >
           <body className={styles.body}>
             <header className={styles.header}>
               <LightDarkSwitch
@@ -85,7 +94,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                           initialIsOpen={false}
                           position="right"
                         />
-                        <ReactScan />
                       </Suspense>
                     )}
                     <NuqsAdapter>{children}</NuqsAdapter>

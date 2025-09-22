@@ -15,6 +15,9 @@
   max-inline-size: var(--size-content-2);
   aspect-ratio: 1;
   background-color: var(--bg-color);
+
+  /* Prevents the calendar from being rendered when off-screen */
+  content-visibility: auto;
 }
 
 .image {

@@ -6,6 +6,9 @@
   margin-inline: auto;
   overflow: hidden;
 
+  /* Prevents the chart from being rendered when off-screen */
+  content-visibility: auto;
+
   & > div {
     flex: 1;
   }

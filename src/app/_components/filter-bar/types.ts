@@ -10,4 +10,6 @@ export type FilterConfig<T extends string | number = string> = {
 
 export type BaseFilterBarProps<T extends string | number = string> = {
   filters: FilterConfig<T>[]
+  search?: string
+  setSearch?: (value: string) => void
 }

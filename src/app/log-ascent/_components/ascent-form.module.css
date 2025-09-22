@@ -4,7 +4,8 @@
   grid-column: 1 / -1;
   gap: var(--size-fluid-1);
   inline-size: clamp(15ch, 75ch, 100%);
-  padding-block: var(--size-fluid-2);
+  padding-block-start: var(--size-fluid-2);
+  padding-block-end: var(--size-fluid-4);
   padding-inline: clamp(var(--size-2), 5vw, var(--size-10));
   margin-inline: auto;
   overflow: scroll;
@@ -104,7 +105,10 @@
   font-weight: var(--font-weight-6);
   line-height: 2;
   background-color: var(--accent);
-  transition: background var(--blink);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background var(--blink);
+  }
 
   &:disabled {
     cursor: not-allowed;

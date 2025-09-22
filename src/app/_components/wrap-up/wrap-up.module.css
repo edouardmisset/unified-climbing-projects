@@ -10,7 +10,6 @@
 
     & > p {
       padding-block-start: var(--size-fluid-1);
-      border-block-start: 1px solid currentcolor;
     }
   }
 }

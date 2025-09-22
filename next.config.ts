@@ -7,7 +7,7 @@ import './src/env.js'
 
 const config: NextConfig = {
   experimental: {
-    // ppr: true,
+    reactCompiler: { compilationMode: 'infer' },
     routerBFCache: true,
     useCache: true,
     staleTimes: {

@@ -15,62 +15,69 @@
 }
 
 .card {
-  --border-width: calc(var(--size-fluid-0) / 2);
-  --half-line-width: .75%;
-  --line-color: transparent;
+  --border-width: calc(var(--size-fluid-0) / 3);
+  --glow-intensity: 0.1;
+  --glow-size: 0.5rem;
+  --conic-gradient: conic-gradient(
+    from var(--rotating-angle),
+    var(--patagonia-color-5),
+    var(--patagonia-color-1),
+    var(--patagonia-color-2),
+    var(--patagonia-color-3),
+    var(--patagonia-color-4),
+    var(--patagonia-color-5)
+  );
+
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-
-  inline-size: calc(100% - var(--border-width));
-  block-size: calc(100% - var(--border-width));
   padding: var(--size-fluid-2);
-  overflow: hidden;
-  border-radius: var(--radius-conditional-3);
+  text-overflow: clip;
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    var(--conic-gradient) border-box;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-size-4);
   isolation: isolate;
 
-  &::before {
-    position: absolute;
-    inset: 0;
-    content: '';
-    background: linear-gradient(
-      calc(var(--rotating-angle) + 135deg),
-      var(--patagonia-color-1) 0%,
-      var(--patagonia-color-1) calc(20% - var(--half-line-width)),
-      var(--line-color) calc(20% - var(--half-line-width)),
-      var(--line-color) calc(20% + var(--half-line-width)),
-      var(--patagonia-color-2) calc(20% + var(--half-line-width)),
-      var(--patagonia-color-2) calc(40% - var(--half-line-width)),
-      var(--line-color) calc(40% - var(--half-line-width)),
-      var(--line-color) calc(40% + var(--half-line-width)),
-      var(--patagonia-color-3) calc(40% + var(--half-line-width)),
-      var(--patagonia-color-3) calc(60% - var(--half-line-width)),
-      var(--line-color) calc(60% - var(--half-line-width)),
-      var(--line-color) calc(60% + var(--half-line-width)),
-      var(--patagonia-color-4) calc(60% + var(--half-line-width)),
-      var(--patagonia-color-4) calc(80% - var(--half-line-width)),
-      var(--line-color) calc(80% - var(--half-line-width)),
-      var(--line-color) calc(80% + var(--half-line-width)),
-      var(--patagonia-color-5) calc(80% + var(--half-line-width))
-    );
-    border-radius: var(--radius-conditional-3);
+  /* Prevents the card from being rendered when off-screen */
+  content-visibility: auto;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.4s ease-in-out;
   }
 
-  &:hover {
-    animation: rotating-gradient 40s linear infinite;
+  &::after,
+  &::before {
+    position: absolute;
+    content: '';
+    border-radius: inherit;
+    filter: blur(var(--glow-size));
+    transition: inherit;
+  }
+
+  &::before {
+    inset: calc(1 * var(--glow-size));
+    z-index: -1;
+    background: var(--surface-2);
   }
 
   &::after {
-    position: absolute;
-    inset: var(--border-width);
-    content: '';
-    background: var(--surface-2);
-    border-radius: calc(var(--radius-conditional-3) - var(--border-width));
+    inset: calc(-1 * 2 * var(--glow-size));
+    z-index: -2;
+    opacity: 0;
   }
 
-  /* Place content above the background */
-  & > * {
-    z-index: 1;
+  @media (hover: hover) {
+    &:hover,
+    &:focus-within {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: rotating-gradient 10s linear infinite;
+      }
+
+      &::after {
+        background: var(--conic-gradient);
+        opacity: var(--glow-intensity);
+      }
+    }
   }
 }
