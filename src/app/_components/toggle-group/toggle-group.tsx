@@ -5,7 +5,10 @@ import styles from './toggle-group.module.css'
 
 type ToggleGroupProps<T extends string> = {
   values: readonly T[]
-  onValueChange: (groupValue: unknown[], event: Event) => void
+  onValueChange: (
+    groupValue: unknown[],
+    event: BaseToggleGroup.ChangeEventDetails,
+  ) => void
   selectedValue: T
 }
 
