@@ -5,6 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "backup": "bun run src/scripts/backup.ts && biome format --write ./src/backup",
+    "preseed": "bun run backup",
+    "seed": "bunx convex import --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --replace --table training ./src/backup/training-data.json",
+    "seed:prod": "bunx convex import --prod --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --prod --replace --table training ./src/backup/training-data.json",
     "format": "biome format --write ./src",
     "lint": "biome lint --write ./src",
     "check": "biome check --fix ./src && bun run style:lint && tsc --noEmit && ls-lint",
