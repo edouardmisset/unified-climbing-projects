@@ -3,6 +3,7 @@
 import { Suspense, useDeferredValue, useMemo } from 'react'
 import { AscentList } from '~/app/_components/ascent-list/ascent-list'
 import { Loader } from '~/app/_components/loader/loader'
+import NotFound from '~/app/not-found'
 import { getTopTenAscents } from '~/helpers/get-top-ten-ascents'
 import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'
 import type { AscentListProps } from '~/schema/ascent'
@@ -21,7 +22,7 @@ export function TableAndSelect({ ascents }: AscentListProps) {
     [ascents, deferredTimeframe],
   )
 
-  if (!ascents) return <Loader />
+  if (ascents.length === 0) return <NotFound />
 
   return (
     <div className="flex flexColumn gap gridFullWidth padding">

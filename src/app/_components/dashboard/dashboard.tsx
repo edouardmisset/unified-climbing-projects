@@ -3,6 +3,7 @@
 import { Link } from 'next-view-transitions'
 import { memo, Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/filter-bar/_components/ascents-filter-bar.tsx'
+import NotFound from '~/app/not-found.tsx'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
@@ -20,7 +21,7 @@ import styles from './dashboard.module.css'
 export function Dashboard({ ascents }: AscentListProps) {
   const filteredAscents = useAscentsFilter(ascents ?? [])
 
-  if (!ascents) return <Loader />
+  if (ascents.length === 0) return <NotFound />
 
   return (
     <div className="flex flexColumn alignCenter gridFullWidth">
