@@ -1,4 +1,5 @@
 import { getDateAtNoon } from '~/helpers/date.ts'
+import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
 import { percentSchema } from './generic.ts'
@@ -101,8 +102,6 @@ export const trainingSessionSchema = z.object({
   volume: percentSchema.optional(),
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
-
-const emptyStringToUndefined = (v: unknown) => (v === '' ? undefined : v)
 
 export const trainingSessionFormSchema = z.object({
   anatomicalRegion: z.preprocess(

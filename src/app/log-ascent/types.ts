@@ -1,5 +1,6 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { getDateAtNoon } from '~/helpers/date.ts'
+import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
 import { z } from '~/helpers/zod'
 import {
@@ -51,27 +52,17 @@ const numberGradeToGradeSchema = z
   )
 
 export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
-  comments: z.preprocess(
-    v => (v === '' ? undefined : v),
-    z.string().optional(),
-  ),
+  comments: z.preprocess(emptyStringToUndefined, z.string().optional()),
   date: z.string().transform(s => getDateAtNoon(new Date(s)).toISOString()),
   height: z
     .string()
-    .transform(height =>
-      height === undefined || height === '' ? undefined : Number(height),
-    ),
-  holds: z.preprocess(v => (v === '' ? undefined : v), holdsSchema.optional()),
+    .transform(height => (height === '' ? undefined : Number(height))),
+  holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
-  profile: z.preprocess(
-    v => (v === '' ? undefined : v),
-    profileSchema.optional(),
-  ),
+  profile: z.preprocess(emptyStringToUndefined, profileSchema.optional()),
   rating: z
     .string()
-    .transform(rating =>
-      rating === undefined || rating === '' ? undefined : Number(rating),
-    ),
+    .transform(rating => (rating === '' ? undefined : Number(rating))),
   topoGrade: numberGradeToGradeSchema,
   tries: numberOfTriesSchema,
 })
