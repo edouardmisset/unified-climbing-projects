@@ -9,7 +9,6 @@
 }
 
 .patagonia {
-  --ruffwear-overlap: 6%;
   --patagonia-line-width: 2%;
   --patagonia-line-color: hsl(0deg 0% 3%);
   --mountains-outline: 5%;

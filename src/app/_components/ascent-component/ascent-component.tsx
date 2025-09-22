@@ -1,7 +1,7 @@
 import { formatGrade } from '~/helpers/format-grade'
 import type { Ascent } from '~/schema/ascent'
 import { AscentCard } from '../ascent-card/ascent-card'
-import AscentDialog from './_components/ascent-dialog'
+import { Dialog } from '../dialog/dialog'
 import styles from './ascent-component.module.css'
 
 export function AscentComponent({
@@ -13,7 +13,7 @@ export function AscentComponent({
 }) {
   const { topoGrade, climbingDiscipline, routeName } = ascent
   return (
-    <AscentDialog
+    <Dialog
       content={<AscentCard ascent={ascent} />}
       triggerClassName={styles.trigger}
       triggerText={

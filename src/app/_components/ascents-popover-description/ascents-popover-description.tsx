@@ -43,16 +43,18 @@ export function AscentsPopoverDescription({
 
   return (
     <ul className={styles.list}>
-      {ascents.map(({ routeName, topoGrade, climbingDiscipline, crag }) => (
-        <AscentPopoverItem
-          climbingDiscipline={climbingDiscipline}
-          crag={crag}
-          key={routeName}
-          routeName={routeName}
-          showCrag={showCrag}
-          topoGrade={topoGrade}
-        />
-      ))}
+      {ascents.map(
+        ({ _id, routeName, topoGrade, climbingDiscipline, crag }) => (
+          <AscentPopoverItem
+            climbingDiscipline={climbingDiscipline}
+            crag={crag}
+            key={_id}
+            routeName={routeName}
+            showCrag={showCrag}
+            topoGrade={topoGrade}
+          />
+        ),
+      )}
     </ul>
   )
 }

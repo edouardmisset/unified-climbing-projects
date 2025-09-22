@@ -10,7 +10,7 @@ export function DataList({ id, options }: DataListProps) {
   return (
     <datalist id={id}>
       {options.map(({ value, label }) => (
-        <option key={`${label} - ${String(value)}`} value={String(value)}>
+        <option key={`${String(value)}-${label ?? ''}`} value={String(value)}>
           {label}
         </option>
       ))}

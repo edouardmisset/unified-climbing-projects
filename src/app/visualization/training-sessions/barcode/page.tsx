@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Dialog } from '~/app/_components/dialog/dialog'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
@@ -24,16 +23,7 @@ export default async function TrainingSessionsBarcodePage() {
     .sort(([a], [b]) => Number(b) - Number(a))
     .map(([year, yearTraining]) => (
       <div className="flexColumn w100" key={year}>
-        <h2 className="centerText">
-          <Dialog
-            content={
-              <Suspense fallback={<Loader />}>
-                <TrainingSessionsBarcode yearlyTraining={yearTraining} />
-              </Suspense>
-            }
-            title={year}
-          />
-        </h2>
+        <h2 className="centerText">{year}</h2>
         <Suspense fallback={<Loader />}>
           <TrainingSessionsBarcode yearlyTraining={yearTraining} />
         </Suspense>
