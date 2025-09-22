@@ -1,6 +1,6 @@
 'use server'
 
-import { getDateAtNoon } from '~/helpers/date'
+import { calculateLoad } from '~/helpers/calculate-load'
 import {
   type TrainingSession,
   trainingSessionFormSchema,
@@ -23,11 +23,7 @@ export const onSubmit = async (
 
   const newTrainingSession = {
     ...form,
-    load:
-      volume === undefined || intensity === undefined
-        ? undefined
-        : Math.round((volume * intensity) / 100),
-    date: getDateAtNoon(new Date(form.date)).toISOString(),
+    load: calculateLoad(volume, intensity),
   } satisfies Omit<TrainingSession, '_id'>
 
   return await api.training.addOne(newTrainingSession)
