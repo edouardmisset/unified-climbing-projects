@@ -1,3 +1,4 @@
+import { getDateAtNoon } from '~/helpers/date.ts'
 import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
 import { percentSchema } from './generic.ts'
@@ -101,34 +102,32 @@ export const trainingSessionSchema = z.object({
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
 
+const emptyStringToUndefined = (v: unknown) => (v === '' ? undefined : v)
+
 export const trainingSessionFormSchema = z.object({
   anatomicalRegion: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
+    emptyStringToUndefined,
     anatomicalRegionSchema.optional(),
   ),
   climbingDiscipline: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
+    emptyStringToUndefined,
     climbingDisciplineSchema.optional(),
   ),
-  comments: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
-    z.string().optional(),
-  ),
-  date: z.string().transform(date => new Date(date).toISOString()),
+  comments: z.preprocess(emptyStringToUndefined, z.string().optional()),
+  date: z
+    .string()
+    .transform(date => getDateAtNoon(new Date(date)).toISOString()),
   energySystem: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
+    emptyStringToUndefined,
     energySystemSchema.optional(),
   ),
-  gymCrag: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
-    z.string().optional(),
-  ),
+  gymCrag: z.preprocess(emptyStringToUndefined, z.string().optional()),
   intensity: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),
   ),
   sessionType: z.preprocess(
-    (v: unknown) => (v === '' ? undefined : v),
+    emptyStringToUndefined,
     sessionTypeSchema.optional(),
   ),
   volume: z.preprocess(
