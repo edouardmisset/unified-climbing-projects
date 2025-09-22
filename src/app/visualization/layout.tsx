@@ -32,9 +32,9 @@ export default function Layout({ children }: { children: ReactNode }) {
     const visualizationTypeFromURL = pathname.split('/').at(-1)
     if (!visualizationTypeFromURL) return 'Calendar'
 
-    const res = visualizationPathSchema.safeParse(visualizationTypeFromURL)
-    if (!res.success) return 'Calendar'
-    const visualizationType = res.data
+    const parsedVisualizationPath = visualizationPathSchema.safeParse(visualizationTypeFromURL)
+    if (!parsedVisualizationPath.success) return 'Calendar'
+    const visualizationType = parsedVisualizationPath.data
 
     return PATH_TO_VISUALIZATION[visualizationType] ?? 'Calendar'
   }, [pathname])
@@ -57,9 +57,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const handleVisualizationChange = useCallback(
     ([value]: unknown[]) => {
-      const result = visualizationSchema.safeParse(value)
-      if (!result.success) return
-      const visualizationType = result.data
+      const parsedVisualization = visualizationSchema.safeParse(value)
+      if (!parsedVisualization.success) return
+      const visualizationType = parsedVisualization.data
 
       startTransition(() => {
         router.push(

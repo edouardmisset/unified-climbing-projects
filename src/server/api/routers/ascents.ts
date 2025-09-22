@@ -200,7 +200,7 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { query, limit } = input
 
-      const results = fuzzySort.go(
+      const fuzzySearchResults = fuzzySort.go(
         removeAccents(query),
         await getAllAscents(),
         {
@@ -210,7 +210,7 @@ export const ascentsRouter = createTRPCRouter({
         },
       )
 
-      return results.map(result =>
+      return fuzzySearchResults.map(result =>
         Object.assign(result.obj, {
           highlight: result.highlight(),
           target: result.target,

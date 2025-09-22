@@ -99,7 +99,7 @@ export function calculateProgressionPercentage({
 export function createHardestGradeMap(
   ascents: Ascent[],
 ): Map<ReturnType<typeof generateCategoryKey>, Grade> {
-  const result = new Map<ReturnType<typeof generateCategoryKey>, Grade>()
+  const gradeMap = new Map<ReturnType<typeof generateCategoryKey>, Grade>()
 
   // Group ascents by category
   const categoryGroups = new Map<
@@ -121,10 +121,10 @@ export function createHardestGradeMap(
   // Get hardest grade for each category
   for (const [key, categoryAscents] of categoryGroups.entries()) {
     const [, hardestGrade] = minMaxGrades(categoryAscents)
-    result.set(key, hardestGrade)
+    gradeMap.set(key, hardestGrade)
   }
 
-  return result
+  return gradeMap
 }
 
 function generateCategoryKey(
