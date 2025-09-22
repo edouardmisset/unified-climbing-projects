@@ -38,13 +38,7 @@ export const trainingRouter = createTRPCRouter({
         allTrainingSessions,
         input,
       )
-      return filteredTrainingSessions.sort(
-        ({ date: leftDate }, { date: rightDate }) => {
-          if (leftDate === rightDate) return 0
-
-          return new Date(leftDate) < new Date(rightDate) ? 1 : -1
-        },
-      )
+      return filteredTrainingSessions.sort(sortByDate)
     }),
   getAllLocations: publicProcedure
     .output(z.array(trainingSessionSchema.required().shape.gymCrag))
