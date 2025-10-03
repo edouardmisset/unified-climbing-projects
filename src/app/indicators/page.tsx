@@ -1,5 +1,6 @@
 import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
+import GridLayout from '../_components/grid-layout/grid-layout'
 
 async function getIndicators() {
   const allAscents = await api.ascents.getAll()
@@ -30,8 +31,7 @@ async function getIndicators() {
 export default async function Page() {
   const indicators = await getIndicators()
   return (
-    <div>
-      <h1>Indicators</h1>
+    <GridLayout title="Indicators">
       {indicators.map(
         ({ year, progression, efficiency, versatility, score }) => (
           <div key={year}>
@@ -47,6 +47,6 @@ export default async function Page() {
           </div>
         ),
       )}
-    </div>
+    </GridLayout>
   )
 }
