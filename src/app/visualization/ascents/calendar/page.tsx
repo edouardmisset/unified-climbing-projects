@@ -1,39 +1,32 @@
+import { filterByDate } from '@edouardmisset/array'
 import type { Metadata } from 'next'
-import { Fragment, Suspense } from 'react'
-import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { GridBreakOutWrapper } from '~/app/visualization/_components/grid-break-out-wrapper/grid-break-out-wrapper'
-import { createYearList, groupDataDaysByYear } from '~/data/helpers'
-import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
-import type { Ascent } from '~/schema/ascent'
+import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
+import { AscentCalendar } from './calendar'
 
 export default async function AscentsCalendarPage() {
   const allAscents = await api.ascents.getAll()
 
   if (!allAscents) return <NotFound />
 
-  const ascentYears = createYearList(allAscents, { continuous: false })
+  const ascentYearsData = createYearList(allAscents, {
+    continuous: false,
+    descending: true,
+  }).map(
+    year => [year, allAscents.filter(filterByDate('date', { year }))] as const,
+  )
 
   return (
     <GridBreakOutWrapper>
-      {ascentYears.map(year => (
-        <Fragment key={year}>
-          <h2 className="superCenter">{year}</h2>
-          <Suspense fallback={<Loader />}>
-            <DataCalendar
-              data={allAscents}
-              dataTransformationFunction={groupDataDaysByYear}
-              fromDataToCalendarEntries={(year, ascents) =>
-                fromAscentsToCalendarEntries(year, ascents as Ascent[][])
-              }
-              key={year}
-              year={year}
-            />
-          </Suspense>
-        </Fragment>
-      ))}
+      <Suspense fallback={<Loader />}>
+        {ascentYearsData.map(([year, ascents]) => (
+          <AscentCalendar allAscents={ascents} key={year} year={year} />
+        ))}
+      </Suspense>
     </GridBreakOutWrapper>
   )
 }
