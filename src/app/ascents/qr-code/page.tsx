@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
@@ -20,23 +21,27 @@ export default async function AscentsQRCodePage() {
 
   const groupedAscentsDaily = groupDataDaysByYear(allAscents)
 
-  return Object.entries(groupedAscentsDaily)
-    .sort(([a], [b]) => Number(b) - Number(a))
-    .map(([year, yearlyAscents]) => {
-      if (yearlyAscents === undefined)
-        return <span key="unexpected-error">Unexpected error</span>
-      const sortedAscents = yearlyAscents.map(ascents =>
-        ascents.toSorted((a, b) => sortByGrade(a, b)),
-      )
-      return (
-        <div className="flexColumn alignCenter" key={year}>
-          <h2 className="centerText">{year}</h2>
-          <Suspense fallback={<Loader />}>
-            <AscentsQRCode yearlyAscents={sortedAscents} />
-          </Suspense>
-        </div>
-      )
-    })
+  return (
+    <GridLayout title="Ascents QR Code">
+      {Object.entries(groupedAscentsDaily)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearlyAscents]) => {
+          if (yearlyAscents === undefined)
+            return <span key="unexpected-error">Unexpected error</span>
+          const sortedAscents = yearlyAscents.map(ascents =>
+            ascents.toSorted((a, b) => sortByGrade(a, b)),
+          )
+          return (
+            <div className="flexColumn alignCenter" key={year}>
+              <h2 className="centerText">{year}</h2>
+              <Suspense fallback={<Loader />}>
+                <AscentsQRCode yearlyAscents={sortedAscents} />
+              </Suspense>
+            </div>
+          )
+        })}
+    </GridLayout>
+  )
 }
 
 export const metadata: Metadata = {

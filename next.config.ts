@@ -15,15 +15,6 @@ const config: NextConfig = {
       static: 5 * 60,
     },
   },
-  async redirects() {
-    return [
-      {
-        source: '/visualization',
-        destination: '/visualization/ascents/calendar',
-        permanent: false,
-      },
-    ]
-  },
 }
 
 export default config

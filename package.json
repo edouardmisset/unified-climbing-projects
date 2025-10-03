@@ -54,7 +54,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "babel-plugin-react-compiler": "^19.1.0-rc.3",
-    "convex": "^1.26.2",
+    "convex": "^1.27.3",
     "convex-helpers": "^0.1.104",
     "fuzzysort": "^3.1.0",
     "google-auth-library": "^10.2.1",

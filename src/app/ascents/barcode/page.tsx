@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
@@ -19,16 +20,20 @@ export default async function AscentBarcodePage() {
 
   const groupedAscentsWeekly = groupDataWeeksByYear(allAscents)
 
-  return Object.entries(groupedAscentsWeekly)
-    .sort(([a], [b]) => Number(b) - Number(a))
-    .map(([year, yearAscents]) => (
-      <div className="flexColumn w100" key={year}>
-        <h2 className="centerText">{year}</h2>
-        <Suspense fallback={<Loader />}>
-          <AscentsBarcode yearlyAscents={yearAscents} />
-        </Suspense>
-      </div>
-    ))
+  return (
+    <GridLayout title="Ascents Barcode">
+      {Object.entries(groupedAscentsWeekly)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearAscents]) => (
+          <div className="flexColumn w100" key={year}>
+            <h2 className="centerText">{year}</h2>
+            <Suspense fallback={<Loader />}>
+              <AscentsBarcode yearlyAscents={yearAscents} />
+            </Suspense>
+          </div>
+        ))}
+    </GridLayout>
+  )
 }
 
 export const metadata: Metadata = {

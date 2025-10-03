@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
@@ -19,16 +20,20 @@ export default async function TrainingSessionsQRCodePage() {
 
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 
-  return Object.entries(groupedTrainingDaily)
-    .sort(([a], [b]) => Number(b) - Number(a))
-    .map(([year, yearlyTraining]) => (
-      <div className="flexColumn alignCenter" key={year}>
-        <h2 className="centerText">{year}</h2>
-        <Suspense fallback={<Loader />}>
-          <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
-        </Suspense>
-      </div>
-    ))
+  return (
+    <GridLayout title="Training Sessions QR Code">
+      {Object.entries(groupedTrainingDaily)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearlyTraining]) => (
+          <div className="flexColumn alignCenter" key={year}>
+            <h2 className="centerText">{year}</h2>
+            <Suspense fallback={<Loader />}>
+              <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
+            </Suspense>
+          </div>
+        ))}
+    </GridLayout>
+  )
 }
 
 export const metadata: Metadata = {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
+import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
@@ -19,16 +20,20 @@ export default async function TrainingSessionsBarcodePage() {
 
   const groupedTrainingWeekly = groupDataWeeksByYear(trainingSessions)
 
-  return Object.entries(groupedTrainingWeekly)
-    .sort(([a], [b]) => Number(b) - Number(a))
-    .map(([year, yearTraining]) => (
-      <div className="flexColumn w100" key={year}>
-        <h2 className="centerText">{year}</h2>
-        <Suspense fallback={<Loader />}>
-          <TrainingSessionsBarcode yearlyTraining={yearTraining} />
-        </Suspense>
-      </div>
-    ))
+  return (
+    <GridLayout title="Training Sessions Barcode">
+      {Object.entries(groupedTrainingWeekly)
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearTraining]) => (
+          <div className="flexColumn w100" key={year}>
+            <h2 className="centerText">{year}</h2>
+            <Suspense fallback={<Loader />}>
+              <TrainingSessionsBarcode yearlyTraining={yearTraining} />
+            </Suspense>
+          </div>
+        ))}
+    </GridLayout>
+  )
 }
 
 export const metadata: Metadata = {
