@@ -14,4 +14,8 @@
   gap: var(--size-2);
   align-items: center;
   justify-content: center;
+
+  @media (width <= 640px) {
+    display: none;
+  }
 }
