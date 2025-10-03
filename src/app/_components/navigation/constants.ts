@@ -24,6 +24,7 @@ export const NAVIGATION_ITEMS: NavigationElement[] = [
   { type: 'link', href: '/', label: '🏠 Home' },
   { type: 'link', href: '/log-ascent', label: '📋 Log Ascent' },
   { type: 'link', href: '/log-training-session', label: '📋 Log Training' },
+  { type: 'link', href: '/indicators', label: '📈 Indicators' },
   { type: 'separator' },
   {
     type: 'group',
