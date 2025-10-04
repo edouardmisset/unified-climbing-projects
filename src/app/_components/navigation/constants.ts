@@ -1,30 +1,7 @@
-type NavigationLink = {
-  type: 'link'
-  href: string
-  label: string
-  shortLabel?: string
-}
-
-type NavigationSeparator = {
-  type: 'separator'
-}
-
-type NavigationGroup = {
-  type: 'group'
-  label: string
-  links: NavigationLink[]
-}
-
-export type NavigationElement =
-  | NavigationLink
-  | NavigationSeparator
-  | NavigationGroup
-
 export const NAVIGATION_ITEMS: NavigationElement[] = [
   { type: 'link', href: '/', label: '🏠 Home' },
   { type: 'link', href: '/log-ascent', label: '📋 Log Ascent' },
   { type: 'link', href: '/log-training-session', label: '📋 Log Training' },
-  { type: 'link', href: '/indicators', label: '📈 Indicators' },
   { type: 'separator' },
   {
     type: 'group',
@@ -51,6 +28,8 @@ export const NAVIGATION_ITEMS: NavigationElement[] = [
       },
     ],
   },
+  { type: 'separator' },
+  { type: 'link', href: '/indicators', label: '📈 Indicators' },
   { type: 'separator' },
   {
     type: 'group',
@@ -80,3 +59,25 @@ export const NAVIGATION_ITEMS: NavigationElement[] = [
     ],
   },
 ] as const
+
+type NavigationLink = {
+  type: 'link'
+  href: string
+  label: string
+  shortLabel?: string
+}
+
+type NavigationSeparator = {
+  type: 'separator'
+}
+
+type NavigationGroup = {
+  type: 'group'
+  label: string
+  links: NavigationLink[]
+}
+
+export type NavigationElement =
+  | NavigationLink
+  | NavigationSeparator
+  | NavigationGroup
