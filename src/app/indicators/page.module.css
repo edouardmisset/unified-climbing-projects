@@ -1,9 +1,8 @@
 .container {
-  padding: var(--size-fluid-1);
+  padding: var(--size-fluid-4);
 }
 
 .list {
-  min-width: 300px;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -16,4 +15,5 @@
 .hr {
   margin-block: var(--size-fluid-1);
   background-color: var(--text-2);
+  max-inline-size: 75%;
 }

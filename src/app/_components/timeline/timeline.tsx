@@ -1,11 +1,17 @@
 import { memo, type ReactNode } from 'react'
 import styles from './timeline.module.css'
 
-function TimelineComponent({ children, direction = 'vertical' }: { children: ReactNode, direction?: 'vertical' | 'horizontal' }) {
+function TimelineComponent({
+  children,
+  direction = 'vertical',
+}: {
+  children: ReactNode
+  direction?: 'vertical' | 'horizontal'
+}) {
   return (
-    <div className={styles.container}>
-      <ul className={styles.timeline} data-direction={direction}>{children}</ul>
-    </div>
+    <ul className={styles.timeline} data-direction={direction}>
+      {children}
+    </ul>
   )
 }
 
@@ -24,10 +30,10 @@ function EventComponent({
     <li className={styles.event}>
       <span aria-hidden="true" className={styles.icon} />
       <div className={styles.body}>
-        <p className={styles.date}>{interval}</p>
-        <h3>{title}</h3>
+        <time className={styles.date}>{interval}</time>
+        {title && <h3>{title}</h3>}
         {subtitle && <h4>{subtitle}</h4>}
-        <div className={styles.description}>{children}</div>
+        {children}
       </div>
     </li>
   )

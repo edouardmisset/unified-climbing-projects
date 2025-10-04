@@ -5,8 +5,7 @@
       "source": {
         "organizeImports": "on",
         "recommended": true,
-        "useSortedAttributes": "on",
-        "useSortedProperties": "on"
+        "useSortedAttributes": "on"
       }
     },
     "enabled": true
