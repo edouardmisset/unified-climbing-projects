@@ -45,7 +45,9 @@ yarn-error.log*
 # idea files
 .idea
 
+# Caches
 .stylelintcache
+.eslintcache
 
 # Playwright
 node_modules/

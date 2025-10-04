@@ -10,8 +10,9 @@
     "seed": "bunx convex import --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --replace --table training ./src/backup/training-data.json",
     "seed:prod": "bunx convex import --prod --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --prod --replace --table training ./src/backup/training-data.json",
     "format": "biome format --write ./src",
-    "lint": "biome lint --write ./src",
-    "check": "biome check --fix ./src && bun run style:lint && tsc --noEmit && ls-lint",
+    "lint": "biome lint --write ./src && bun run eslint",
+    "eslint": "eslint --cache --fix ./src",
+    "check": "biome check --fix ./src && bun run eslint && bun run style:lint && tsc --noEmit && ls-lint",
     "commitlint": "commitlint --edit",
     "dev": "next dev --turbo",
     "convex:dev": "bunx convex dev",
@@ -84,12 +85,15 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "cspell": "^9.1.3",
+    "eslint": "^9.37.0",
+    "eslint-plugin-react-hooks": "^6.1.1",
     "knip": "^5.61.3",
     "poku": "^3.0.2",
     "repomix": "^1.4.2",
     "stylelint": "^16.21.1",
     "stylelint-config-standard": "^39.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.45.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"

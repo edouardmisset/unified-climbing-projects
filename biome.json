@@ -45,7 +45,8 @@
       "correctness": {
         "noUnusedImports": "error",
         "noUnusedVariables": "warn",
-        "useUniqueElementIds": "off"
+        "useUniqueElementIds": "off",
+        "useExhaustiveDependencies": "off"
       },
       "nursery": {},
       "recommended": true,
