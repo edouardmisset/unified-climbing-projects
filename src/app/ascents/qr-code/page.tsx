@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
+import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { sortByGrade } from '~/helpers/sorter'
@@ -22,7 +22,7 @@ export default async function AscentsQRCodePage() {
   const groupedAscentsDaily = groupDataDaysByYear(allAscents)
 
   return (
-    <GridLayout title="Ascents QR Code">
+    <Layout title="Ascents QR Code">
       {Object.entries(groupedAscentsDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {
@@ -40,7 +40,7 @@ export default async function AscentsQRCodePage() {
             </div>
           )
         })}
-    </GridLayout>
+    </Layout>
   )
 }
 

@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
 import { api } from '~/trpc/server.ts'
-import GridLayout from '../_components/grid-layout/grid-layout.tsx'
+import Layout from '../_components/page-layout/page-layout.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
 export default async function LogTrainingSession() {
@@ -13,14 +13,14 @@ export default async function LogTrainingSession() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <GridLayout gridClassName="padding" title="Train Hard 💪">
+        <Layout gridClassName="padding" title="Train Hard 💪">
           <span aria-describedby="form-description" className="visuallyHidden">
             Form to log a training session
           </span>
           <Suspense fallback={<Loader />}>
             <TrainingSessionForm allLocations={allLocations} />
           </Suspense>
-        </GridLayout>
+        </Layout>
       </SignedIn>
       <SignedOut>
         <section className="flexColumn gap">

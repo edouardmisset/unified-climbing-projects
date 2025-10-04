@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
+import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
@@ -21,7 +21,7 @@ export default async function AscentBarcodePage() {
   const groupedAscentsWeekly = groupDataWeeksByYear(allAscents)
 
   return (
-    <GridLayout title="Ascents Barcode">
+    <Layout title="Ascents Barcode">
       {Object.entries(groupedAscentsWeekly)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearAscents]) => (
@@ -32,7 +32,7 @@ export default async function AscentBarcodePage() {
             </Suspense>
           </div>
         ))}
-    </GridLayout>
+    </Layout>
   )
 }
 

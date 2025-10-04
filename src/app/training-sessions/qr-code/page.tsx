@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
+import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { api } from '~/trpc/server'
@@ -21,7 +21,7 @@ export default async function TrainingSessionsQRCodePage() {
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 
   return (
-    <GridLayout title="Training Sessions QR Code">
+    <Layout title="Training Sessions QR Code">
       {Object.entries(groupedTrainingDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (
@@ -32,7 +32,7 @@ export default async function TrainingSessionsQRCodePage() {
             </Suspense>
           </div>
         ))}
-    </GridLayout>
+    </Layout>
   )
 }
 

@@ -1,9 +1,8 @@
 import { filterByDate } from '@edouardmisset/array'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { GridBreakOutWrapper } from '~/app/_components/grid-break-out-wrapper/grid-break-out-wrapper'
-import GridLayout from '~/app/_components/grid-layout/grid-layout'
 import { Loader } from '~/app/_components/loader/loader'
+import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
@@ -22,15 +21,13 @@ export default async function AscentsCalendarPage() {
   )
 
   return (
-    <GridLayout title="Ascents Calendar">
-      <GridBreakOutWrapper>
-        <Suspense fallback={<Loader />}>
-          {ascentYearsData.map(([year, ascents]) => (
-            <AscentCalendar allAscents={ascents} key={year} year={year} />
-          ))}
-        </Suspense>
-      </GridBreakOutWrapper>
-    </GridLayout>
+    <Layout layout="flexColumn" title="Ascents Calendar">
+      <Suspense fallback={<Loader />}>
+        {ascentYearsData.map(([year, ascents]) => (
+          <AscentCalendar allAscents={ascents} key={year} year={year} />
+        ))}
+      </Suspense>
+    </Layout>
   )
 }
 

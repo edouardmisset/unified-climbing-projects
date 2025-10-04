@@ -4,13 +4,14 @@ import { Loader } from '../loader/loader'
 import { ALL_TIME } from '../wrap-up/constants'
 import { YearNavigationButton } from '../year-navigation-button/year-navigation-button'
 import { YEAR_OF_FIRST_ASCENT } from './constants'
-import styles from './grid-layout.module.css'
+import styles from './page-layout.module.css'
 
-export default function GridLayout({
+export default function Layout({
   gridClassName = '',
+  layout = 'grid',
   children,
   title,
-  additionalContent,
+  banner,
 }: GridLayoutProps) {
   const titleIsValidNumber = isValidNumber(title)
 
@@ -40,9 +41,9 @@ export default function GridLayout({
   return (
     <section className="flexColumn w100 h100 overflowXClip">
       <Header afterTitle={afterTitle} beforeTitle={beforeTitle} title={title} />
-      {additionalContent}
+      {banner}
       <Suspense fallback={<Loader />}>
-        <div className={`grid ${gridClassName}`}>{children}</div>
+        <div className={`${layout} ${gridClassName}`}>{children}</div>
       </Suspense>
     </section>
   )
@@ -69,6 +70,10 @@ const Header = memo(
 type GridLayoutProps = {
   gridClassName?: string
   children: ReactNode
+  layout?: 'grid' | 'flexColumn' | 'flexRow'
   title: ReactNode
-  additionalContent?: ReactNode
+  /**
+   * Optional content to display between the header and the grid
+   */
+  banner?: ReactNode
 }

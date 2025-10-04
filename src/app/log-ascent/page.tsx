@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
 import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
 import { api } from '~/trpc/server.ts'
-import GridLayout from '../_components/grid-layout/grid-layout.tsx'
+import Layout from '../_components/page-layout/page-layout.tsx'
 import AscentForm from './_components/ascent-form.tsx'
 
 async function fetchAscentData() {
@@ -25,7 +25,7 @@ export default async function Log() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <GridLayout gridClassName="padding" title="Congrats 🎉">
+        <Layout gridClassName="padding" title="Congrats 🎉">
           <span aria-describedby="form-description" className="visuallyHidden">
             Form to log a climbing ascent
           </span>
@@ -38,7 +38,7 @@ export default async function Log() {
               minGrade={minGrade}
             />
           </Suspense>
-        </GridLayout>
+        </Layout>
       </SignedIn>
       <SignedOut>
         <section className="flexColumn gap">

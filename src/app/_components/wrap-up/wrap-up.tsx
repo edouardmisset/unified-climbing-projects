@@ -2,7 +2,7 @@ import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { api } from '~/trpc/server'
 import { Card } from '../card/card'
-import GridLayout from '../grid-layout/grid-layout'
+import Layout from '../page-layout/page-layout'
 import { AscentSummary } from './_components/ascent-summary'
 import { CragsSummary } from './_components/crags-summary'
 import { DaysOutsideSummary } from './_components/days-outside-summary'
@@ -30,7 +30,7 @@ export default async function WrapUp({ year }: { year?: number }) {
 
   if (isAscentsEmpty && isTrainingEmpty) {
     return (
-      <GridLayout title={year ?? ALL_TIME}>
+      <Layout title={year ?? ALL_TIME}>
         <Card>
           <h2>No Data</h2>
           <p>
@@ -39,15 +39,12 @@ export default async function WrapUp({ year }: { year?: number }) {
             {isTrainingEmpty ? 'Go train!' : ''}
           </p>
         </Card>
-      </GridLayout>
+      </Layout>
     )
   }
 
   return (
-    <GridLayout
-      gridClassName={`padding ${styles.wrapUp}`}
-      title={year ?? ALL_TIME}
-    >
+    <Layout gridClassName={`padding ${styles.wrapUp}`} title={year ?? ALL_TIME}>
       <DaysOutsideSummary
         ascents={ascents}
         trainingSessions={trainingSessions}
@@ -57,6 +54,6 @@ export default async function WrapUp({ year }: { year?: number }) {
       <VerticalMilestoneSummary ascents={ascents} />
       <CragsSummary ascents={ascents} trainingSessions={trainingSessions} />
       <TopTenSummary ascents={ascents} />
-    </GridLayout>
+    </Layout>
   )
 }

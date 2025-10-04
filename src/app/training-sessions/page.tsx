@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { api } from '~/trpc/server'
 import { FilteredTrainingSessionList } from '../_components/filtered-training-sessions-list/filtered-training-sessions-list'
-import GridLayout from '../_components/grid-layout/grid-layout'
 import { Loader } from '../_components/loader/loader'
+import Layout from '../_components/page-layout/page-layout'
 
 export default async function TrainingSessionsPage() {
   const trainingSessions = await api.training.getAll()
 
   return (
-    <GridLayout title="Training Sessions">
+    <Layout title="Training Sessions">
       <Suspense fallback={<Loader />}>
         <FilteredTrainingSessionList trainingSessions={trainingSessions} />
       </Suspense>
-    </GridLayout>
+    </Layout>
   )
 }
 
