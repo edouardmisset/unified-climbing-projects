@@ -1,6 +1,38 @@
 import { createYearList } from '~/data/helpers'
 import { api } from '~/trpc/server'
-import GridLayout from '../_components/grid-layout/grid-layout'
+import Layout from '../_components/page-layout/page-layout'
+import { Event, Timeline } from '../_components/timeline/timeline'
+import styles from './page.module.css'
+
+// TODO: remove me
+const displayTimeline = true
+
+export default async function Page() {
+  const indicators = await getIndicators()
+  return (
+    <Layout gridClassName={styles.container} layout="flexRow" title="Indicators">
+      {displayTimeline && (
+        <Timeline>
+          {indicators.map(
+            ({ year, progression, efficiency, versatility, score }) => (
+              <Event interval={String(year)} key={year} title={''}>
+                <ul className={styles.list}>
+                  <li className={styles.item}>Progression: {progression}%</li>
+                  <li className={styles.item}>Efficiency: {efficiency}%</li>
+                  <li className={styles.item}>Versatility: {versatility}%</li>
+                  <hr className={styles.hr} />
+                  <li className={styles.item}>
+                    <strong>Score</strong>: {score}
+                  </li>
+                </ul>
+              </Event>
+            ),
+          )}
+        </Timeline>
+      )}
+    </Layout>
+  )
+}
 
 async function getIndicators() {
   const allAscents = await api.ascents.getAll()
@@ -25,28 +57,5 @@ async function getIndicators() {
         year,
       }
     }),
-  )
-}
-
-export default async function Page() {
-  const indicators = await getIndicators()
-  return (
-    <GridLayout title="Indicators">
-      {indicators.map(
-        ({ year, progression, efficiency, versatility, score }) => (
-          <div key={year}>
-            <h2>{year}</h2>
-            <ul>
-              <li>Progression: {progression}%</li>
-              <li>Efficiency: {efficiency}%</li>
-              <li>Versatility: {versatility}%</li>
-              <li>
-                <strong>Score</strong>: {score}
-              </li>
-            </ul>
-          </div>
-        ),
-      )}
-    </GridLayout>
   )
 }
