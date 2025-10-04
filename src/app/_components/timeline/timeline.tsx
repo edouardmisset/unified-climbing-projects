@@ -21,8 +21,8 @@ function EventComponent({
   interval,
   children,
 }: {
-  title: string
-  subtitle?: string
+  title: ReactNode
+  subtitle?: ReactNode
   interval: string
   children: ReactNode
 }) {

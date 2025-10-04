@@ -1,9 +1,11 @@
 .timeline {
+  --size-0: 0.5rem;
   --size-1: 1rem;
-  --gap: 3rem;
-  --line-inline-size: 2px;
-  --background-color: var(--surface-1, light-dark(white, black));
-  --text-color: var(--text-1, light-dark(black, white));
+  --size-2: 2rem;
+  --gap: 2rem;
+  --line-width: 2px;
+  --background: var(--surface-1, light-dark(white, black));
+  --text: var(--text-1, light-dark(black, white));
   position: relative;
 
   display: flex;
@@ -12,60 +14,60 @@
   padding: 0;
   margin: 0;
   list-style: none;
-
-  &::before {
-    position: absolute;
-    inset: 0;
-
-    inline-size: var(--line-inline-size);
-    block-size: 100%;
-    content: '';
-
-    background-color: var(--text-color, black);
-  }
+  overflow-y: clip;
 
   &[data-direction='horizontal'] {
     flex-direction: row;
-
-    &::before {
-      inset: 0;
-      inset-block-start: calc(var(--size-1) - var(--line-inline-size) / 2);
-      inline-size: auto;
-      block-size: var(--line-inline-size);
-    }
+    overflow-x: clip;
+    overflow-y: visible;
   }
 }
 
 .event {
   position: relative;
-  min-width: 250px;
-  padding: 0;
+  min-inline-size: 250px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    inline-size: var(--line-width);
+
+    /* Probably a bit too "magic number" here also */
+    block-size: 150%;
+
+    background: var(--text);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block-start: calc(var(--size-1) / 2);
+    inset-inline-start: calc(var(--size-1) / -2 + var(--line-width) / 2);
+
+    inline-size: var(--size-1);
+    block-size: var(--size-1);
+
+    outline: var(--size-1) solid var(--background);
+    background: var(--text);
+    transform: rotate(45deg);
+  }
 }
 
 .timeline[data-direction='horizontal'] .event {
-  inset: 0;
-  inset-block-start: calc(var(--gap) * 2);
-}
+  &::before {
+    inset: 0;
+    inline-size: 150%;
+    block-size: var(--line-width);
+  }
 
-.icon {
-  position: absolute;
-  inset-block-start: calc(var(--size-1) / 2);
-  inset-inline-start: calc(var(--size-1) / -2);
-  display: block;
-  inline-size: var(--size-1);
-  block-size: var(--size-1);
-
-  outline: var(--size-1) solid var(--background-color, white);
-  background-color: var(--text-color, black);
-  transform: rotate(45deg);
-}
-
-.timeline[data-direction='horizontal'] .icon {
-  inset: 0;
-
-  /*! FIXME Magic number */
-  inset-block-start: calc(var(--gap) * -1.825);
-  inset-inline-start: calc(var(--size-1) * 6);
+  &::after {
+    inset: 0;
+    inset-block-start: calc(var(--size-1) / -2 + var(--line-width) / 2);
+    inset-inline-start: 50%;
+  }
 }
 
 .body {
@@ -74,13 +76,20 @@
   flex-direction: column;
   gap: var(--size-1);
 
-  inset-inline-start: calc(var(--size-1) * 4);
+  padding-inline-start: var(--size-2);
+}
+
+.timeline[data-direction='horizontal'] .body {
+  padding-inline-start: 0;
+  padding-block-start: var(--size-2);
 }
 
 .date {
   max-inline-size: fit-content;
-  padding: 0.25rem 1rem;
+  padding-block: calc(var(--size-1) / 4);
+  padding-inline: var(--size-1);
+  margin: auto;
 
-  color: var(--background-color, white);
-  background-color: var(--text-color, black);
+  color: var(--background);
+  background: var(--text);
 }

@@ -12,7 +12,7 @@ export default async function Page() {
       layout="flexRow"
       title="Indicators"
     >
-      <Timeline direction="vertical">
+      <Timeline direction="horizontal">
         {indicators.map(
           ({ year, progression, efficiency, versatility, score }) => (
             <Event interval={String(year)} key={year} title={''}>

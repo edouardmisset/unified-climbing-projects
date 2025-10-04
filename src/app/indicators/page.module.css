@@ -1,5 +1,6 @@
 .container {
-  padding: var(--size-fluid-4);
+  padding: var(--size-fluid-3);
+  overflow-x: auto;
 }
 
 .list {
@@ -15,5 +16,4 @@
 .hr {
   margin-block: var(--size-fluid-1);
   background-color: var(--text-2);
-  max-inline-size: 75%;
 }
