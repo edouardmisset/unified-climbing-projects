@@ -18,7 +18,7 @@ async function fetchAscentData() {
   return { latestAscent, minGrade, maxGrade, allCrags, allAreas }
 }
 
-export default async function Log() {
+export default async function AscentFormPage() {
   const { latestAscent, minGrade, maxGrade, allCrags, allAreas } =
     await fetchAscentData()
 

@@ -5,8 +5,8 @@
  */
 export const LINKS = {
   home: '/',
-  logAscent: '/log-ascent',
-  logTrainingSession: '/log-training-session',
+  ascentForm: '/ascent-form',
+  trainingSessionForm: '/training-session-form',
   indicators: '/indicators',
   wrapUp: '/wrap-up',
   ascentsList: '/ascents',

@@ -2,8 +2,8 @@ import { LINKS } from '~/constants/links'
 
 export const NAVIGATION_ITEMS = [
   { type: 'link', href: LINKS.home, label: '🏠 Home' },
-  { type: 'link', href: LINKS.logAscent, label: '📋 Log Ascent' },
-  { type: 'link', href: LINKS.logTrainingSession, label: '📋 Log Training' },
+  { type: 'link', href: LINKS.ascentForm, label: '📋 Log Ascent' },
+  { type: 'link', href: LINKS.trainingSessionForm, label: '📋 Log Training' },
   { type: 'separator' },
   {
     type: 'group',

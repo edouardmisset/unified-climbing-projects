@@ -12,13 +12,13 @@ import {
 } from '~/app/_components/grade-input/grade-input.tsx'
 import { KeycapButton } from '~/app/_components/keycap-button/keycap-button.tsx'
 import { Loader } from '~/app/_components/loader/loader.tsx'
+import { Option } from '~/app/_components/option/option.tsx'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
 import { _0To100RegEx } from '~/constants/generic.ts'
+import { createValueAndLabel } from '~/helpers/create-value-and-label.ts'
 import {
+  createRecentDateOptions,
   fromDateToStringDate,
-  getLastSaturday,
-  getLastSunday,
-  getYesterday,
 } from '~/helpers/date.ts'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
 import {
@@ -67,19 +67,8 @@ type AscentFormProps = {
   crags?: string[]
 }
 
-const holdOptions = HOLDS.map(hold => ({ value: hold }))
-const profileOptions = PROFILES.map(profile => ({ value: profile }))
-export const recentDateOptions = [
-  { label: 'Yesterday', value: fromDateToStringDate(getYesterday()) },
-  {
-    label: 'Last Saturday',
-    value: fromDateToStringDate(getLastSaturday()),
-  },
-  {
-    label: 'Last Sunday',
-    value: fromDateToStringDate(getLastSunday()),
-  },
-]
+const holdOptions = createValueAndLabel(HOLDS)
+const profileOptions = createValueAndLabel(PROFILES)
 
 export default function AscentForm(props: AscentFormProps) {
   'use no memo'
@@ -194,8 +183,8 @@ export default function AscentForm(props: AscentFormProps) {
     return <Loader />
   }
 
-  const cragOptions = crags?.map(crag => ({ value: crag })) ?? []
-  const areaOptions = areas?.map(area => ({ value: area })) ?? []
+  const cragOptions = createValueAndLabel(crags)
+  const areaOptions = createValueAndLabel(areas)
   return user?.fullName === 'Edouard' ? (
     <form
       aria-describedby="form-description"
@@ -241,7 +230,7 @@ export default function AscentForm(props: AscentFormProps) {
           title="Date"
           type="date"
         />
-        <DataList id="date-list" options={recentDateOptions} />
+        <DataList id="date-list" options={createRecentDateOptions()} />
       </div>
       <div className={styles.field}>
         <label htmlFor="routeName">Route Name</label>
@@ -269,9 +258,11 @@ export default function AscentForm(props: AscentFormProps) {
           title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
         >
           {AVAILABLE_CLIMBING_DISCIPLINE.map(discipline => (
-            <option key={discipline} value={discipline}>
-              {`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
-            </option>
+            <Option
+              key={discipline}
+              label={`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
+              value={discipline}
+            />
           ))}
         </select>
       </div>

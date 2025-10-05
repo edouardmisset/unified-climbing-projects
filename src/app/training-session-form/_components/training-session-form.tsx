@@ -7,22 +7,18 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { KeycapButton } from '~/app/_components/keycap-button/keycap-button'
 import { Spacer } from '~/app/_components/spacer/spacer.tsx'
-import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
-import styles from '~/app/log-ascent/_components/ascent-form.module.css'
-import { DataList } from '~/app/log-ascent/_components/data-list'
+import styles from '~/app/ascent-form/_components/ascent-form.module.css'
+import { DataList } from '~/app/ascent-form/_components/data-list'
 import { _0To100RegEx } from '~/constants/generic'
 import { LINKS } from '~/constants/links'
-import { fromDateToStringDate } from '~/helpers/date'
+import { createValueAndLabel } from '~/helpers/create-value-and-label'
+import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
 import {
   fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
-import { disjunctiveListFormatter } from '~/helpers/list-formatter'
-import {
-  AVAILABLE_CLIMBING_DISCIPLINE,
-  CLIMBING_DISCIPLINE,
-} from '~/schema/ascent'
+import { CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import {
   ANATOMICAL_REGIONS,
   ENERGY_SYSTEMS,
@@ -35,6 +31,12 @@ import {
 import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
+import {
+  anatomicalRegionFormattedList,
+  climbingDisciplineFormattedList,
+  energySystemFormattedList,
+  sessionTypeFormattedList,
+} from './constants'
 
 export default function TrainingSessionForm({
   allLocations,
@@ -79,7 +81,7 @@ export default function TrainingSessionForm({
           await utils.training.invalidate()
 
           if (data.sessionType === 'Out') {
-            router.push(LINKS.logAscent)
+            router.push(LINKS.ascentForm)
           }
         },
         error => {
@@ -106,7 +108,7 @@ export default function TrainingSessionForm({
           title="Date"
           type="date"
         />
-        <DataList id="date-list" options={recentDateOptions} />
+        <DataList id="date-list" options={createRecentDateOptions()} />
       </div>
       <div className={styles.field}>
         <label htmlFor="session-type">Session Type</label>
@@ -142,11 +144,7 @@ export default function TrainingSessionForm({
         />
         <DataList
           id="gym-crag-list"
-          options={
-            allLocations.map(location => ({
-              value: location,
-            })) ?? []
-          }
+          options={createValueAndLabel(allLocations)}
         />
       </div>
       <div className={styles.field}>
@@ -264,30 +262,7 @@ export default function TrainingSessionForm({
     </form>
   ) : (
     <section className="flexColumn gap">
-      <p>You are not authorized to log an ascent.</p>
+      <p>You are not authorized to log a training session.</p>
     </section>
   )
 }
-
-function getFormattedList<T extends string>(
-  list: readonly T[],
-  transform: (item: T) => string,
-) {
-  return disjunctiveListFormatter(list.map(transform))
-}
-
-const climbingDisciplineFormattedList = disjunctiveListFormatter(
-  AVAILABLE_CLIMBING_DISCIPLINE,
-)
-const anatomicalRegionFormattedList = getFormattedList(
-  ANATOMICAL_REGIONS,
-  fromAnatomicalRegionToLabel,
-)
-const energySystemFormattedList = getFormattedList(
-  ENERGY_SYSTEMS,
-  fromEnergySystemToLabel,
-)
-const sessionTypeFormattedList = getFormattedList(
-  SESSION_TYPES,
-  fromSessionTypeToLabel,
-)

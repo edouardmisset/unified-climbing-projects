@@ -7,7 +7,7 @@ import { api } from '~/trpc/server.ts'
 import Layout from '../_components/page-layout/page-layout.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
-export default async function LogTrainingSession() {
+export default async function TrainingSessionFormPage() {
   const allLocations = await api.training.getAllLocations()
 
   return (
