@@ -1,7 +1,9 @@
-export const NAVIGATION_ITEMS: NavigationElement[] = [
-  { type: 'link', href: '/', label: '🏠 Home' },
-  { type: 'link', href: '/log-ascent', label: '📋 Log Ascent' },
-  { type: 'link', href: '/log-training-session', label: '📋 Log Training' },
+import { LINKS } from '~/constants/links'
+
+export const NAVIGATION_ITEMS = [
+  { type: 'link', href: LINKS.home, label: '🏠 Home' },
+  { type: 'link', href: LINKS.logAscent, label: '📋 Log Ascent' },
+  { type: 'link', href: LINKS.logTrainingSession, label: '📋 Log Training' },
   { type: 'separator' },
   {
     type: 'group',
@@ -9,27 +11,27 @@ export const NAVIGATION_ITEMS: NavigationElement[] = [
     links: [
       {
         type: 'link',
-        href: '/ascents',
+        href: LINKS.ascentsList,
         label: '📇 Ascents List',
         shortLabel: '📇 List',
       },
-      { type: 'link', href: '/ascents/top-ten', label: '🔟 Top Ten' },
-      { type: 'link', href: '/ascents/dashboard', label: '📊 Dashboard' },
-      { type: 'link', href: '/ascents/calendar', label: '📅 Calendar' },
+      { type: 'link', href: LINKS.ascentsTopTen, label: '🔟 Top Ten' },
+      { type: 'link', href: LINKS.ascentsDashboard, label: '📊 Dashboard' },
+      { type: 'link', href: LINKS.ascentsCalendar, label: '📅 Calendar' },
       {
         type: 'link',
-        href: '/ascents/barcode',
+        href: LINKS.ascentsBarcode,
         label: '🏷️ Barcode',
       },
       {
         type: 'link',
-        href: '/ascents/qr-code',
+        href: LINKS.ascentsQrCode,
         label: '💠 QR Code',
       },
     ],
   },
   { type: 'separator' },
-  { type: 'link', href: '/indicators', label: '📈 Indicators' },
+  { type: 'link', href: LINKS.indicators, label: '📈 Indicators' },
   { type: 'separator' },
   {
     type: 'group',
@@ -37,32 +39,32 @@ export const NAVIGATION_ITEMS: NavigationElement[] = [
     links: [
       {
         type: 'link',
-        href: '/training-sessions',
+        href: LINKS.trainingSessionsList,
         label: '📇 Training List',
         shortLabel: '📇 List',
       },
       {
         type: 'link',
-        href: '/training-sessions/calendar',
+        href: LINKS.trainingSessionsCalendar,
         label: '📅 Calendar',
       },
       {
         type: 'link',
-        href: '/training-sessions/barcode',
+        href: LINKS.trainingSessionsBarcode,
         label: '🏷️ Barcode',
       },
       {
         type: 'link',
-        href: '/training-sessions/qr-code',
+        href: LINKS.trainingSessionsQrCode,
         label: '💠 QR Code',
       },
     ],
   },
-] as const
+] as const satisfies NavigationElement[]
 
 type NavigationLink = {
   type: 'link'
-  href: string
+  href: (typeof LINKS)[keyof typeof LINKS]
   label: string
   shortLabel?: string
 }

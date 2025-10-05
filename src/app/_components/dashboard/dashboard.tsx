@@ -4,6 +4,7 @@ import { Link } from 'next-view-transitions'
 import { memo, Suspense } from 'react'
 import AscentsFilterBar from '~/app/_components/filter-bar/_components/ascents-filter-bar.tsx'
 import NotFound from '~/app/not-found.tsx'
+import { LINKS } from '~/constants/links'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
@@ -40,7 +41,7 @@ const DashboardStatistics = memo(({ ascents }: AscentListProps) => {
         <h2>Nothing there...</h2>
         <p>
           Try adjusting your filters or{' '}
-          <Link href={'/log-ascent'}>logging new ascents</Link>.
+          <Link href={LINKS.logAscent}>logging new ascents</Link>.
         </p>
       </div>
     )

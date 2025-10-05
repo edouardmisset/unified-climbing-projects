@@ -11,6 +11,7 @@ import { recentDateOptions } from '~/app/log-ascent/_components/ascent-form'
 import styles from '~/app/log-ascent/_components/ascent-form.module.css'
 import { DataList } from '~/app/log-ascent/_components/data-list'
 import { _0To100RegEx } from '~/constants/generic'
+import { LINKS } from '~/constants/links'
 import { fromDateToStringDate } from '~/helpers/date'
 import {
   fromAnatomicalRegionToEmoji,
@@ -78,7 +79,7 @@ export default function TrainingSessionForm({
           await utils.training.invalidate()
 
           if (data.sessionType === 'Out') {
-            router.push('/log-ascent')
+            router.push(LINKS.logAscent)
           }
         },
         error => {
