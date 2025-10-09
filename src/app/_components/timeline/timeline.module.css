@@ -1,3 +1,11 @@
+.container {
+  container-name: timeline;
+  container-type: inline-size;
+  display: flex;
+  flex: 1;
+}
+
+/* Timeline core variables and layout */
 .timeline {
   --size-0: 0.5rem;
   --size-1: 1rem;
@@ -6,38 +14,35 @@
   --line-width: 2px;
   --background: var(--surface-1, light-dark(white, black));
   --text: var(--text-1, light-dark(black, white));
+  --timeline-direction: column;
   position: relative;
-
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: var(--timeline-direction);
   gap: var(--gap);
   padding: 0;
   margin: 0;
   list-style: none;
-  overflow-y: clip;
 
-  &[data-direction='horizontal'] {
-    flex-direction: row;
-    overflow-x: clip;
-    overflow-y: visible;
+  /* Container query: large containers default to horizontal */
+  @container timeline (width > 40rem) {
+    --timeline-direction: row;
   }
 }
 
+/* Event styles */
 .event {
   position: relative;
-  min-inline-size: 250px;
+  padding: 0;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -2;
-    inline-size: var(--line-width);
-
-    /* Probably a bit too "magic number" here also */
-    block-size: 150%;
-
     background: var(--text);
+    inline-size: var(--line-width);
+    block-size: 150%;
   }
 
   &::after {
@@ -46,50 +51,46 @@
     z-index: -1;
     inset-block-start: calc(var(--size-1) / 2);
     inset-inline-start: calc(var(--size-1) / -2 + var(--line-width) / 2);
-
     inline-size: var(--size-1);
     block-size: var(--size-1);
-
     outline: var(--size-1) solid var(--background);
     background: var(--text);
     transform: rotate(45deg);
   }
+
+  @container timeline (width > 40rem) {
+    &::before {
+      inline-size: 150%;
+      block-size: var(--line-width);
+    }
+
+    &::after {
+      inset: 0;
+      inset-block-start: calc(var(--size-1) / -2 + var(--line-width) / 2);
+      inset-inline-start: 50%;
+    }
+  }
 }
 
-.timeline[data-direction='horizontal'] .event {
-  &::before {
-    inset: 0;
-    inline-size: 150%;
-    block-size: var(--line-width);
-  }
-
-  &::after {
-    inset: 0;
-    inset-block-start: calc(var(--size-1) / -2 + var(--line-width) / 2);
-    inset-inline-start: 50%;
-  }
-}
-
+/* Body styles */
 .body {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--size-1);
-
   padding-inline-start: var(--size-2);
-}
 
-.timeline[data-direction='horizontal'] .body {
-  padding-inline-start: 0;
-  padding-block-start: var(--size-2);
+  @container timeline (width > 40rem) {
+    && {
+      padding-inline-start: 0;
+      padding-block-start: var(--size-2);
+    }
+  }
 }
 
 .date {
-  max-inline-size: fit-content;
-  padding-block: calc(var(--size-1) / 4);
-  padding-inline: var(--size-1);
-  margin: auto;
-
   color: var(--background);
-  background: var(--text);
+  background-color: var(--text);
+  inline-size: fit-content;
+  align-self: center;
 }

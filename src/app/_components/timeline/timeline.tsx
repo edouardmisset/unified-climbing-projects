@@ -1,17 +1,11 @@
 import { memo, type ReactNode } from 'react'
 import styles from './timeline.module.css'
 
-function TimelineComponent({
-  children,
-  direction = 'vertical',
-}: {
-  children: ReactNode
-  direction?: 'vertical' | 'horizontal'
-}) {
+function TimelineComponent({ children }: { children: ReactNode }) {
   return (
-    <ul className={styles.timeline} data-direction={direction}>
-      {children}
-    </ul>
+    <div className={styles.container}>
+      <ul className={styles.timeline}>{children}</ul>
+    </div>
   )
 }
 

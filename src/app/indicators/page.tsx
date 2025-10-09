@@ -12,16 +12,22 @@ export default async function Page() {
       layout="flexRow"
       title="Indicators"
     >
-      <Timeline direction="horizontal">
+      <Timeline>
         {indicators.map(
           ({ year, progression, efficiency, versatility, score }) => (
             <Event interval={String(year)} key={year} title={''}>
               <ul className={styles.list}>
-                <li className={styles.item}>Progression: {progression}%</li>
-                <li className={styles.item}>Efficiency: {efficiency}%</li>
-                <li className={styles.item}>Versatility: {versatility}%</li>
+                <li className={`${styles.item} textNoWrap`}>
+                  Progression: {progression}%
+                </li>
+                <li className={`${styles.item} textNoWrap`}>
+                  Efficiency: {efficiency}%
+                </li>
+                <li className={`${styles.item} textNoWrap`}>
+                  Versatility: {versatility}%
+                </li>
                 <hr className={styles.hr} />
-                <li className={styles.item}>
+                <li className={`${styles.item} textNoWrap`}>
                   <strong>Score</strong>: {score}
                 </li>
               </ul>
