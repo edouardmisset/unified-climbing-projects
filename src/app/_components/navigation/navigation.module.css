@@ -17,7 +17,7 @@
 .mobileMenu {
   display: none;
 
-  @media (width <= 640px) {
+  @media (width <= 40rem) {
     position: absolute;
     inset: 0;
     z-index: var(--layer-3);
@@ -42,7 +42,7 @@
     padding: 0;
   }
 
-  @media (width <= 640px) {
+  @media (width <= 40rem) {
     display: none;
   }
 }

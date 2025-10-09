@@ -7,7 +7,7 @@
   /* Prevents the calendar from being rendered when off-screen */
   content-visibility: auto;
 
-  @media (width > 640px) {
+  @media (width > 40rem) {
     overflow-x: auto;
   }
 }
