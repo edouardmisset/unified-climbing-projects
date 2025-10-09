@@ -9,7 +9,7 @@ export default async function TrainingSessionsPage() {
   const trainingSessions = await api.training.getAll()
 
   return (
-    <Layout title="Training Sessions">
+    <Layout title="Training">
       <Suspense fallback={<Loader />}>
         <FilteredTrainingSessionList trainingSessions={trainingSessions} />
       </Suspense>
