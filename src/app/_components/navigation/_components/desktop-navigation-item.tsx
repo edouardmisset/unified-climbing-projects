@@ -29,14 +29,18 @@ export function DesktopNavigationItem({
   }
 
   if (item.type === 'group') {
-    const { links: items } = item
-    return items.map(({ href, label }) => (
-      <li key={href}>
-        <Link className={styles.link} href={href}>
-          {label}
-        </Link>
-      </li>
-    ))
+    const { links } = item
+    return (
+      <>
+        {links.map(({ href, label }) => (
+          <li key={href}>
+            <Link className={styles.link} href={href}>
+              {label}
+            </Link>
+          </li>
+        ))}
+      </>
+    )
   }
 
   return null
