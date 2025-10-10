@@ -42,8 +42,6 @@ const ReactQueryDevtools = lazy(() =>
     : Promise.resolve({ default: () => <></> }),
 )
 
-export const fetchCache = 'default-cache'
-
 const font = Atkinson_Hyperlegible({
   display: 'swap',
   subsets: ['latin'],
