@@ -10,7 +10,6 @@
   flex-direction: column;
   gap: var(--size-3);
   align-items: center;
-  justify-content: center;
   padding-block-start: var(--size-3);
 
   background-color: var(--surface-2);
@@ -18,12 +17,14 @@
   box-shadow: var(--shadow-4);
   isolation: isolate;
 
+  @media (width > 40rem) {
+    overflow-y: auto;
+  }
+
   @media (width <= 40rem) {
     position: absolute;
-
     inset: 0 0 auto auto;
     z-index: var(--layer-3);
-
     background-color: transparent;
     box-shadow: none;
   }
