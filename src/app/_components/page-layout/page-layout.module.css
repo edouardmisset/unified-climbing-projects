@@ -3,16 +3,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  & > * {
-    flex: 1;
-  }
-
   box-shadow: var(--shadow-3);
   isolation: isolate;
 }
 
 .h1 {
+  flex: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
