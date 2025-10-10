@@ -14,8 +14,10 @@ import type { FilterConfig } from '../types'
 
 export default function AscentsFilterBar({
   allAscents,
+  showSearch,
 }: {
   allAscents: Ascent[]
+  showSearch: boolean
 }) {
   const yearList = useMemo(
     () =>
@@ -109,6 +111,7 @@ export default function AscentsFilterBar({
       filters={filters}
       search={selectedRoute}
       setSearch={setRoute}
+      showSearch={showSearch}
     />
   )
 }

@@ -26,7 +26,7 @@ export function Dashboard({ ascents }: AscentListProps) {
 
   return (
     <div className="flex flexColumn alignCenter gridFullWidth">
-      <AscentsFilterBar allAscents={ascents} />
+      <AscentsFilterBar allAscents={ascents} showSearch={false} />
       <Suspense fallback={<Loader />}>
         <DashboardStatistics ascents={filteredAscents} />
       </Suspense>

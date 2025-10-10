@@ -10,6 +10,7 @@ export function StickyFilterBar({
   filters,
   search,
   setSearch,
+  showSearch,
 }: BaseFilterBarProps) {
   const clearFilters = useCallback(() => {
     for (const filter of filters) {
@@ -34,7 +35,9 @@ export function StickyFilterBar({
       <div className={styles.background} />
       <div className={styles.edge} />
       <div className={styles.filters}>
-        {setSearch === undefined || search === undefined ? null : (
+        {setSearch === undefined ||
+        search === undefined ||
+        showSearch === false ? null : (
           <CustomInput
             name="search route"
             onChange={e => setSearch(e.target.value)}
