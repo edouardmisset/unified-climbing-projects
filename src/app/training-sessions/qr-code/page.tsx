@@ -21,7 +21,7 @@ export default async function TrainingSessionsQRCodePage() {
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 
   return (
-    <Layout title="Training Sessions QR Code">
+    <Layout title="Training QR">
       {Object.entries(groupedTrainingDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (

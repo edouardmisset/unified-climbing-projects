@@ -9,7 +9,7 @@ export default async function Page() {
   const ascents = await api.ascents.getAll()
 
   return (
-    <Layout title="Top Ten Ascents">
+    <Layout title="Top Ten">
       <Suspense fallback={<Loader />}>
         <TableAndSelect ascents={ascents} />
       </Suspense>

@@ -61,7 +61,12 @@ const Header = memo(
   }) => (
     <div className={`${styles.header} ${styles.patagonia}`}>
       {beforeTitle}
-      <h1 className="centerText w100">{title}</h1>
+      <h1
+        className={styles.h1}
+        title={typeof title === 'string' ? title : undefined}
+      >
+        {title}
+      </h1>
       {afterTitle}
     </div>
   ),

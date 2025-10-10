@@ -22,7 +22,7 @@ export default async function AscentsQRCodePage() {
   const groupedAscentsDaily = groupDataDaysByYear(allAscents)
 
   return (
-    <Layout title="Ascents QR Code">
+    <Layout title="Ascents QR">
       {Object.entries(groupedAscentsDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {

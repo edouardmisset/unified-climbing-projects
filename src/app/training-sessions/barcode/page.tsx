@@ -21,7 +21,7 @@ export default async function TrainingSessionsBarcodePage() {
   const groupedTrainingWeekly = groupDataWeeksByYear(trainingSessions)
 
   return (
-    <Layout title="Training Sessions Barcode">
+    <Layout title="Training Barcode">
       {Object.entries(groupedTrainingWeekly)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearTraining]) => (

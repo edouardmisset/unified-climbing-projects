@@ -16,7 +16,7 @@ export default async function TrainingSessionsCalendarPage() {
   const trainingYears = createYearList(trainingSessions, { continuous: false })
 
   return (
-    <Layout layout="flexColumn" title="Training Sessions Calendar">
+    <Layout layout="flexColumn" title="Training Calendar">
       {trainingYears.map(year => (
         <Fragment key={year}>
           <h2 className="superCenter">{year}</h2>

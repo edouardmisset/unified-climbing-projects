@@ -4,8 +4,20 @@
   align-items: center;
   justify-content: space-between;
 
+  & > * {
+    flex: 1;
+  }
+
   box-shadow: var(--shadow-3);
   isolation: isolate;
+}
+
+.h1 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  padding-inline: var(--font-size-fluid-0);
 }
 
 .patagonia {
