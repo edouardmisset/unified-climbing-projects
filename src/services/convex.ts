@@ -7,6 +7,7 @@ import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
 /** ASCENTS */
 
 export async function getAllAscentsFromDB(): Promise<Ascent[]> {
+  'use cache'
   try {
     const ascentData = await fetchQuery(api.ascents.get, EMPTY_OBJECT)
 
@@ -39,6 +40,7 @@ export async function addAscentToDB(ascent: Omit<Ascent, '_id'>) {
 export async function getAllTrainingSessionsFromDB(): Promise<
   TrainingSession[]
 > {
+  'use cache'
   try {
     const trainingData = await fetchQuery(api.training.get, EMPTY_OBJECT)
     const parsedTraining = trainingSessionSchema.array().safeParse(trainingData)
