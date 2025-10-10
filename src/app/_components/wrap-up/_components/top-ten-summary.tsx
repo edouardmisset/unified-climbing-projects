@@ -4,7 +4,7 @@ import {
   fromAscentToPoints,
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
-import { frenchNumberFormatter } from '~/helpers/number-formatter'
+import { frenchNumberCollator } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
 import { Card } from '../../card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
@@ -45,7 +45,8 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your score is <strong>{frenchNumberFormatter(topTenScore)}</strong>
+        Your score is{' '}
+        <strong>{frenchNumberCollator.format(topTenScore)}</strong>
         {displayHowToImprove && (
           <>
             <strong className="block">Improve by</strong>

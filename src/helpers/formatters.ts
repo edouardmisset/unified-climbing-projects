@@ -3,9 +3,7 @@ import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
-export function formatComments(
-  comments: Ascent['comments'] | TrainingSession['comments'],
-): string {
+export function formatComments(comments: Ascent['comments']): string {
   return comments ? `💬 “${comments}”` : ''
 }
 

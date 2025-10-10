@@ -1,5 +1,6 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
+import { sortByDate } from '~/helpers/sort-by-date'
 import {
   compareStringsAscending,
   compareStringsDescending,
@@ -13,7 +14,10 @@ import { getAllAscents } from '~/services/ascents'
 
 async function getAllAreas(): Promise<NonNullable<Ascent['area']>[]> {
   const ascents = await getAllAscents()
-  return ascents.map(({ area }) => area?.trim()).filter(Boolean)
+  return ascents
+    .sort((a, b) => sortByDate(a, b, true))
+    .map(({ area }) => area?.trim())
+    .filter(Boolean)
 }
 
 export const areasRouter = createTRPCRouter({
@@ -27,7 +31,7 @@ export const areasRouter = createTRPCRouter({
     )
     .output(ascentSchema.required().shape.area.array())
     .query(async ({ input }) => {
-      const { sortOrder } = input ?? {}
+      const { sortOrder = 'newest' } = input ?? {}
       const validAreas = await getAllAreas()
       const uniqueAreas = [...new Set(validAreas)]
 

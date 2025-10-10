@@ -41,7 +41,6 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       try {
         await addAscentToDB(input)
-        // await addAscentToGS(input)
         return true
       } catch (error) {
         globalThis.console.error('Error adding ascent:', error)

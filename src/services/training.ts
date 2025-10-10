@@ -57,7 +57,7 @@ export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
   return await getAllTrainingSessionsFromDB()
 }
 
-export async function addTrainingSessionToGS(
+async function _addTrainingSessionToGS(
   trainingSession: Omit<TrainingSession, '_id'>,
 ): Promise<void> {
   const manualTrainingSessionsSheet = await loadWorksheet('training', {

@@ -3,6 +3,7 @@ import { mapObject } from '@edouardmisset/object/map-object.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
+import { sortByDate } from '~/helpers/sort-by-date'
 import {
   compareStringsAscending,
   compareStringsDescending,
@@ -25,7 +26,7 @@ export const cragsRouter = createTRPCRouter({
     )
     .output(ascentSchema.shape.crag.array())
     .query(async ({ input }) => {
-      const { sortOrder } = input ?? {}
+      const { sortOrder = 'newest' } = input ?? {}
       const allCrags = await getAllCrags()
       const uniqueCrags = [...new Set(allCrags)]
 
@@ -130,5 +131,8 @@ export const cragsRouter = createTRPCRouter({
 
 async function getAllCrags(): Promise<Ascent['crag'][]> {
   const ascents = await getAllAscents()
-  return ascents.map(({ crag }) => crag.trim()).filter(Boolean)
+  return ascents
+    .sort((a, b) => sortByDate(a, b, true))
+    .map(({ crag }) => crag.trim())
+    .filter(Boolean)
 }

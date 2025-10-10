@@ -14,7 +14,6 @@ export const trainingRouter = createTRPCRouter({
     .output(z.boolean())
     .mutation(async ({ input: trainingSession }) => {
       try {
-        // await addTrainingSessionToGS(trainingSession)
         await addTrainingSessionToDB(trainingSession)
         return true
       } catch (error) {

@@ -63,9 +63,7 @@ export async function getAllAscents(): Promise<Ascent[]> {
   return await getAllAscentsFromDB()
 }
 
-export async function addAscentToGS(
-  ascent: Omit<Ascent, '_id'>,
-): Promise<void> {
+async function _addAscentToGS(ascent: Omit<Ascent, '_id'>): Promise<void> {
   const manualAscentsSheet = await loadWorksheet('ascents', { edit: true })
 
   const ascentInGS = transformAscentFromJSToGS(ascent)
