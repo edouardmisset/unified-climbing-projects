@@ -15,7 +15,7 @@ import {
   prettyLongDate,
   prettyShortDate,
 } from '~/helpers/formatters'
-import { frenchNumberCollator } from '~/helpers/number-formatter'
+import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
@@ -242,7 +242,7 @@ export const AscentList = memo(
                 <td className={`${styles.footerCell} ${styles.cell}`} />
                 <td className={`${styles.footerCell} ${styles.cell}`}>
                   <strong>
-                    {frenchNumberCollator.format(totalAscentPoints)}
+                    {frenchNumberFormatter.format(totalAscentPoints)}
                   </strong>
                 </td>
               </>

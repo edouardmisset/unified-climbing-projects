@@ -1,5 +1,5 @@
 import { FR_LOCALE } from '~/constants/generic'
 
-export const frenchNumberCollator = new Intl.NumberFormat(FR_LOCALE, {
+export const frenchNumberFormatter = new Intl.NumberFormat(FR_LOCALE, {
   useGrouping: true,
 })
