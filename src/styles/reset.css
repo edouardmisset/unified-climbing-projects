@@ -96,7 +96,7 @@
 
 :where(body) {
   min-block-size: 100svh;
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
   line-height: 1.5;
 }
 
@@ -239,23 +239,23 @@ not to see them */
 }
 
 :where(h1) {
-  font-size: var(--font-size-8);
+  font-size: clamp(2rem, 3.5vw + 1rem, 3.5rem);
 }
 
 :where(h2) {
-  font-size: var(--font-size-6);
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
 }
 
 :where(h3) {
-  font-size: var(--font-size-5);
+  font-size: clamp(1.25rem, 1.5vw + 1rem, 2rem);
 }
 
 :where(h4) {
-  font-size: var(--font-size-4);
+  font-size: clamp(1rem, 1vw + 1rem, 1.5rem);
 }
 
 :where(h5) {
-  font-size: var(--font-size-3);
+  font-size: clamp(0.875rem, 0.5vw + 1rem, 1.25rem);
 }
 
 :where(h3, h4, h5, h6, dt) {
@@ -263,7 +263,7 @@ not to see them */
 }
 
 :where(p, ul, ol, dl, h6) {
-  font-size: var(--font-size-2);
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
 }
 
 @supports (-moz-appearance: none) {
