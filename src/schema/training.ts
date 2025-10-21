@@ -112,15 +112,16 @@ export const trainingSessionFormSchema = z.object({
     emptyStringToUndefined,
     climbingDisciplineSchema.optional(),
   ),
-  comments: z.preprocess(emptyStringToUndefined, z.string().optional()),
+  comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   date: z
     .string()
+    .trim()
     .transform(date => getDateAtNoon(new Date(date)).toISOString()),
   energySystem: z.preprocess(
     emptyStringToUndefined,
     energySystemSchema.optional(),
   ),
-  gymCrag: z.preprocess(emptyStringToUndefined, z.string().optional()),
+  gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   intensity: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),

@@ -1,1 +1,2 @@
-export const emptyStringToUndefined = (v: unknown) => (v === '' ? undefined : v)
+export const emptyStringToUndefined = (v: unknown) =>
+  typeof v === 'string' && v.trim() === '' ? undefined : v

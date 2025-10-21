@@ -1,6 +1,7 @@
 'use server'
 
 import { calculateLoad } from '~/helpers/calculate-load'
+import { trimAndNormalizeStringsInObject } from '~/helpers/trim-and-normalize-string-in-object'
 import {
   type TrainingSession,
   trainingSessionFormSchema,
@@ -10,7 +11,9 @@ import { api } from '~/trpc/server'
 export const onSubmit = async (
   formData: Record<string, unknown>,
 ): Promise<boolean> => {
-  const parsedFormData = trainingSessionFormSchema.safeParse(formData)
+  const normalizedFormData = trimAndNormalizeStringsInObject(formData)
+
+  const parsedFormData = trainingSessionFormSchema.safeParse(normalizedFormData)
 
   if (!parsedFormData.success) {
     globalThis.console.error(parsedFormData.error)

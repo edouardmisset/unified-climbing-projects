@@ -26,17 +26,17 @@ const numberOfTriesSchema = z
   })
   .transform(Number)
 export const ascentFormInputSchema = z.object({
-  area: z.string().optional(),
+  area: z.string().trim().optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
-  comments: z.string().optional(),
-  crag: z.string().optional(),
+  comments: z.string().trim().optional(),
+  crag: z.string().trim().optional(),
   date: z.date().transform(date => stringifyDate(date)),
   height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
   holds: holdsSchema.optional(),
   personalGrade: optionalNumberGradeSchema,
   profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
-  routeName: z.string().optional(),
+  routeName: z.string().trim().optional(),
   style: ascentStyleSchema.optional(),
   topoGrade: optionalNumberGradeSchema,
   tries: numberOfTriesSchema.transform(num => num?.toString()),
@@ -52,10 +52,10 @@ const numberGradeToGradeSchema = z
   )
 
 export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
-  comments: z.preprocess(emptyStringToUndefined, z.string().optional()),
-  date: z.string().transform(s => getDateAtNoon(new Date(s)).toISOString()),
+  comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
+  date: z.string().trim().transform(s => getDateAtNoon(new Date(s)).toISOString()),
   height: z
-    .string()
+    .string().trim()
     .transform(height => (height === '' ? undefined : Number(height))),
   holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
