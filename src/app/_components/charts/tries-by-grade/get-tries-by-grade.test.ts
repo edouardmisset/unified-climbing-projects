@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getTriesByGrade } from './get-tries-by-grade'
 
 describe('getTriesByGrade', () => {
   it('should return empty array for empty input', () => {
     const result = getTriesByGrade([])
-    assert.deepEqual(result, [])
+    expect(result).toEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -138,6 +138,6 @@ describe('getTriesByGrade', () => {
       },
     ]
     const result = getTriesByGrade(sampleAscents)
-    assert.deepEqual(result, expected)
+    expect(result).toEqual(expected)
   })
 })

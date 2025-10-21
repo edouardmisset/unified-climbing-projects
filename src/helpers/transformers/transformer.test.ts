@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import {
   transformAscentFromGSToJS,
   transformAscentFromJSToGS,
@@ -18,7 +18,7 @@ const customDeepEquals = <
     delete leftObj[key]
     delete rightObj[key]
   }
-  assert.deepEqual(leftObj, rightObj)
+  expect(leftObj).toEqual(rightObj)
 }
 
 describe('transformAscentFromJSToGS', () => {

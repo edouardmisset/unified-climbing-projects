@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { NOT_AVAILABLE } from '~/constants/generic'
 import type { Ascent } from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'
@@ -62,25 +62,25 @@ const ascent3: Ascent = {
 describe('getAverageGrade', () => {
   it('should return NOT_AVAILABLE when no ascents are provided', () => {
     const result = getAverageGrade([])
-    assert.equal(result, NOT_AVAILABLE)
+    expect(result).toBe(NOT_AVAILABLE)
   })
 
   it('should return the grade of the single ascent when only one is provided', () => {
     const ascents: Ascent[] = [ascent1]
     // Expecting that the conversion functions return the same grade for a sole ascent.
     const result = getAverageGrade(ascents)
-    assert.equal(result, '7a')
+    expect(result).toBe('7a')
   })
 
   it('should return the correct average grade when multiple ascents are provided', () => {
     const ascents: Ascent[] = [ascent1, ascent2]
     const result = getAverageGrade(ascents)
-    assert.equal(result, '7a+')
+    expect(result).toBe('7a+')
   })
 
   it('should return the same grade if all ascents have identical grades', () => {
     const ascents: Ascent[] = [ascent2, ascent3]
     const result = getAverageGrade(ascents)
-    assert.equal(result, '7b')
+    expect(result).toBe('7b')
   })
 })

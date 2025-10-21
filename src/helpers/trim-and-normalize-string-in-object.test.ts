@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { trimAndNormalizeStringsInObject } from './trim-and-normalize-string-in-object.js'
 
 describe('trimAndNormalizeStringsInObject', () => {
@@ -9,8 +9,8 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.name, 'John Doe')
-    assert.equal(result.email, 'john@example.com')
+    expect(result.name).toBe('John Doe')
+    expect(result.email).toBe('john@example.com')
   })
 
   it('should handle mixed value types', () => {
@@ -21,29 +21,29 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.name, 'Alice')
-    assert.equal(result.age, 30)
-    assert.equal(result.isActive, true)
+    expect(result.name).toBe('Alice')
+    expect(result.age).toBe(30)
+    expect(result.isActive).toBe(true)
   })
 
   it('should handle empty objects', () => {
     const result = trimAndNormalizeStringsInObject({})
 
-    assert.deepEqual(result, {})
+    expect(result).toEqual({})
   })
 
   it('should trim various whitespace types', () => {
     const input = { text: ' \t\ntext with tabs and newlines\t\n ' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'text with tabs and newlines')
+    expect(result.text).toBe('text with tabs and newlines')
   })
 
   it('should preserve internal whitespace', () => {
     const input = { text: '  multiple   internal   spaces  ' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'multiple   internal   spaces')
+    expect(result.text).toBe('multiple   internal   spaces')
   })
 
   it('should handle empty and whitespace-only strings', () => {
@@ -53,19 +53,19 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.empty, '')
-    assert.equal(result.whitespace, '')
+    expect(result.empty).toBe('')
+    expect(result.whitespace).toBe('')
   })
 
   it('should normalize combining characters to NFC', () => {
     const input = { text: 'cafe\u0301' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'café')
+    expect(result.text).toBe('café')
 
-    assert.equal(typeof result.text, 'string')
+    expect(typeof result.text).toBe('string')
     if (typeof result.text === 'string') {
-      assert.equal(result.text.length, 4)
+      expect(result.text.length).toBe(4)
     }
   })
 
@@ -73,7 +73,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     const input = { text: '  cafe\u0301  ' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'café')
+    expect(result.text).toBe('café')
   })
 
   it('should process multiple string properties', () => {
@@ -84,9 +84,9 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.firstName, 'John')
-    assert.equal(result.lastName, 'Doe')
-    assert.equal(result.city, 'Paris')
+    expect(result.firstName).toBe('John')
+    expect(result.lastName).toBe('Doe')
+    expect(result.city).toBe('Paris')
   })
 
   it('should preserve null and undefined values', () => {
@@ -96,8 +96,8 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.nullValue, null)
-    assert.equal(result.undefinedValue, undefined)
+    expect(result.nullValue).toBe(null)
+    expect(result.undefinedValue).toBe(undefined)
   })
 
   it('should preserve arrays without processing', () => {
@@ -106,7 +106,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.deepEqual(result.items, ['  item1  ', '  item2  '])
+    expect(result.items).toEqual(['  item1  ', '  item2  '])
   })
 
   it('should preserve nested objects without processing', () => {
@@ -117,22 +117,22 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.deepEqual(result.nested, { value: '  untrimmed  ' })
+    expect(result.nested).toEqual({ value: '  untrimmed  ' })
   })
 
   it('should return a new object without mutating original', () => {
     const input = { text: '  original  ' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'original')
-    assert.equal(input.text, '  original  ')
-    assert.notEqual(result, input)
+    expect(result.text).toBe('original')
+    expect(input.text).toBe('  original  ')
+    expect(result).not.toBe(input)
   })
 
   it('should handle strings with emoji', () => {
     const input = { text: '  Hello 👋  ' }
     const result = trimAndNormalizeStringsInObject(input)
 
-    assert.equal(result.text, 'Hello 👋')
+    expect(result.text).toBe('Hello 👋')
   })
 })

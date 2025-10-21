@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import {
   COEFFICIENT_TOP_TEN,
   COEFFICIENT_VOLUME,
@@ -37,7 +37,7 @@ describe('calculateScore', () => {
       year: -1,
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 0 when ascents array is empty', () => {
@@ -49,7 +49,7 @@ describe('calculateScore', () => {
       year: 2023,
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should calculate score correctly for a simple case', () => {
@@ -139,7 +139,7 @@ describe('calculateScore', () => {
         (1 + progressionPercentage / 100),
     )
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 
   it('should calculate score consistently with the same inputs', () => {
@@ -192,6 +192,6 @@ describe('calculateScore', () => {
     })
 
     // Function should be deterministic with the same inputs
-    assert.equal(firstResult, secondResult)
+    expect(firstResult).toBe(secondResult)
   })
 })

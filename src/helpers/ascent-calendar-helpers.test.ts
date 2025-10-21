@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
@@ -6,16 +6,16 @@ describe('fromAscentsToCalendarEntries', () => {
   it('should return an empty array when ascentsArray is undefined', () => {
     const year = 2024
     const result = fromAscentsToCalendarEntries(year, undefined)
-    assert.deepEqual(result, [])
+    expect(result).toEqual([])
   })
 
   it('should return calendar entries with empty shortText when ascents are undefined', () => {
     const year = 2024
     const ascentsArray: Ascent[][] = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
-    assert.equal(result.length, 3)
+    expect(result.length).toBe(3)
     for (const { shortText } of result) {
-      assert.equal(shortText, '')
+      expect(shortText).toBe('')
     }
   })
 
@@ -65,9 +65,9 @@ describe('fromAscentsToCalendarEntries', () => {
       ],
     ]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
-    assert.equal(result.length, 2)
+    expect(result.length).toBe(2)
 
-    assert.equal(result[0]?.shortText, '7a')
-    assert.equal(result[1]?.shortText, '7b')
+    expect(result[0]?.shortText).toBe('7a')
+    expect(result[1]?.shortText).toBe('7b')
   })
 })

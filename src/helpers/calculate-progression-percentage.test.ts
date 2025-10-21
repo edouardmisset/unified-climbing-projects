@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
 import { calculateProgressionPercentage } from './calculate-progression-percentage'
 
@@ -8,7 +8,7 @@ describe('calculateProgressionPercentage', () => {
       ascents: [],
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 40% when there are no ascents in the previous year but two in the current year', () => {
@@ -39,7 +39,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 40)
+    expect(result).toBe(40)
   })
 
   it('should return 0 when there are no ascents in the current year', () => {
@@ -70,7 +70,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 100% when all categories show progression', () => {
@@ -184,7 +184,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 
   it('should return 60% when 3 out of 5 categories show progression', () => {
@@ -298,7 +298,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 60)
+    expect(result).toBe(60)
   })
 
   it('should return 0% when all categories show regression', () => {
@@ -412,7 +412,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should handle categories with missing data', () => {
@@ -507,6 +507,6 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 })

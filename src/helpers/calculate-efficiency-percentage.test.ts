@@ -1,5 +1,5 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import {
   COEFFICIENT_ASCENTS_PER_DAY,
   COEFFICIENT_ONSIGHT_FLASH_RATIO,
@@ -17,7 +17,7 @@ describe('calculateEfficiencyPercentage', () => {
       ],
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 0 when there are no training sessions', () => {
@@ -37,7 +37,7 @@ describe('calculateEfficiencyPercentage', () => {
       trainingSessions: [],
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should calculate efficiency percentage correctly for a simple case', () => {
@@ -82,7 +82,7 @@ describe('calculateEfficiencyPercentage', () => {
       ) * 100,
     )
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 
   it('should handle multiple days and ascents correctly', () => {
@@ -153,7 +153,7 @@ describe('calculateEfficiencyPercentage', () => {
     )
     const expected = Math.round(average(ratios))
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 
   it('should handle a high efficiency scenario correctly', () => {
@@ -241,10 +241,7 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // High efficiency scenario should have a higher result
-    assert.ok(
-      highEfficiencyResult > lowEfficiencyResult,
-      `Expected ${highEfficiencyResult} to be greater than ${lowEfficiencyResult}`,
-    )
+    expect(highEfficiencyResult).toBeGreaterThan(lowEfficiencyResult)
   })
 
   it('should handle edge case with very high number of tries', () => {
@@ -271,14 +268,8 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // Should still return a valid percentage
-    assert.ok(
-      result >= 0,
-      `Expected ${result} to be greater than or equal to 0`,
-    )
-    assert.ok(
-      result <= 100,
-      `Expected ${result} to be less than or equal to 100`,
-    )
+    expect(result).toBeGreaterThanOrEqual(0)
+    expect(result).toBeLessThanOrEqual(100)
   })
 
   it('should handle multiple days but same date ascents correctly', () => {
@@ -333,6 +324,6 @@ describe('calculateEfficiencyPercentage', () => {
       ) * 100,
     )
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 })

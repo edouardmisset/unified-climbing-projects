@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
@@ -41,17 +41,17 @@ describe('filterTrainingSessions', () => {
 
   it('should return all training sessions when no filters are applied', () => {
     const result = filterTrainingSessions(trainingSessions, {})
-    assert.deepEqual(result, trainingSessions)
+    expect(result).toEqual(trainingSessions)
   })
 
   it('should filter training sessions by gymCrag', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
       gymCrag: 'Gym 1',
     })
-    assert.equal(sessions.length, 2)
+    expect(sessions.length).toBe(2)
 
     for (const { gymCrag } of sessions) {
-      assert.equal(gymCrag, 'Gym 1')
+      expect(gymCrag).toBe('Gym 1')
     }
   })
 
@@ -59,15 +59,15 @@ describe('filterTrainingSessions', () => {
     const result = filterTrainingSessions(trainingSessions, {
       climbingDiscipline: 'Boulder',
     })
-    assert.equal(result.length, 1)
-    assert.equal(result[0]?.climbingDiscipline, 'Boulder')
+    expect(result.length).toBe(1)
+    expect(result[0]?.climbingDiscipline).toBe('Boulder')
   })
 
   it('should filter training sessions by year', () => {
     const result = filterTrainingSessions(trainingSessions, { year: 2024 })
-    assert.equal(result.length, 1)
+    expect(result.length).toBe(1)
     if (result[0]) {
-      assert.equal(new Date(result[0].date).getFullYear(), 2024)
+      expect(new Date(result[0].date).getFullYear()).toBe(2024)
     } else {
       throw new Error('result[0] is undefined')
     }
@@ -77,23 +77,23 @@ describe('filterTrainingSessions', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
       gymCrag: 'This gym does not exist',
     })
-    assert.deepEqual(sessions, [])
+    expect(sessions).toEqual([])
   })
 
   it('should filter training sessions by sessionType', () => {
     const result = filterTrainingSessions(trainingSessions, {
       sessionType: 'CS',
     })
-    assert.equal(result.length, 1)
-    assert.equal(result[0]?.sessionType, 'CS')
+    expect(result.length).toBe(1)
+    expect(result[0]?.sessionType).toBe('CS')
   })
 
   it('should filter training sessions by energySystem', () => {
     const result = filterTrainingSessions(trainingSessions, {
       energySystem: 'AA',
     })
-    assert.equal(result.length, 1)
-    assert.equal(result[0]?.energySystem, 'AA')
+    expect(result.length).toBe(1)
+    expect(result[0]?.energySystem).toBe('AA')
   })
 
   it('should filter training sessions by multiple criteria', () => {
@@ -101,8 +101,8 @@ describe('filterTrainingSessions', () => {
       gymCrag: 'Gym 1',
       sessionType: 'CS',
     })
-    assert.equal(result.length, 1)
-    assert.equal(result[0]?.sessionType, 'CS')
-    assert.equal(result[0]?.gymCrag, 'Gym 1')
+    expect(result.length).toBe(1)
+    expect(result[0]?.sessionType).toBe('CS')
+    expect(result[0]?.gymCrag).toBe('Gym 1')
   })
 })

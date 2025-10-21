@@ -11,14 +11,12 @@ test.describe('Home page', () => {
   })
 })
 
-test.describe('Visualization page', () => {
+test.describe('Calendar page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/visualization')
+    await page.goto('/ascents/calendar')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(
-      page.getByRole('heading', { name: 'Visualization' }),
-    ).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Calendar' })).toBeVisible()
   })
 })
 

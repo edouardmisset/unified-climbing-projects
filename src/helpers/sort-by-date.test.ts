@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sortByDate } from './sort-by-date'
 
 describe('sortByDate', () => {
@@ -13,8 +13,7 @@ describe('sortByDate', () => {
     const unsortedArray = [dateA, dateB, dateC]
     const sortedArray = [...unsortedArray].sort(sortByDate)
 
-    assert.deepEqual(
-      sortedArray.map(item => item.id),
+    expect(sortedArray.map(item => item.id)).toEqual(
       [2, 1, 3], // dateB (Feb), dateA (Jan), dateC (Dec)
     )
   })
@@ -25,21 +24,20 @@ describe('sortByDate', () => {
       sortByDate(a, b, false),
     )
 
-    assert.deepEqual(
-      sortedArray.map(item => item.id),
+    expect(sortedArray.map(item => item.id)).toEqual(
       [3, 1, 2], // dateC (Dec), dateA (Jan), dateB (Feb)
     )
   })
 
   it('should return 0 for equal dates', () => {
     const result = sortByDate(equalDate1, equalDate2)
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should handle invalid dates by returning 0', () => {
     const result = sortByDate(dateA, invalidDate)
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should sort an array with multiple dates correctly', () => {
@@ -47,9 +45,6 @@ describe('sortByDate', () => {
     const sortedArray = [...unsortedArray].sort(sortByDate)
 
     // Expected order: equalDate1/2 (Mar), dateB (Feb), dateA (Jan), dateC (Dec)
-    assert.deepEqual(
-      sortedArray.map(item => item.id),
-      [4, 5, 2, 1, 3],
-    )
+    expect(sortedArray.map(item => item.id)).toEqual([4, 5, 2, 1, 3])
   })
 })

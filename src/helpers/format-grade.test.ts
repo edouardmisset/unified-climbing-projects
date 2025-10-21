@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 
@@ -14,13 +14,12 @@ describe('formatGrade', () => {
         climbingDiscipline: 'Boulder',
         topoGrade: input,
       } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-      assert.strictEqual(
+      expect(
         formatGrade({
           climbingDiscipline: ascentDetails.climbingDiscipline,
           grade: ascentDetails.topoGrade,
         }),
-        expected,
-      )
+      ).toStrictEqual(expected)
     })
   }
 
@@ -36,13 +35,12 @@ describe('formatGrade', () => {
         climbingDiscipline: 'Route',
         topoGrade: input,
       } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-      assert.strictEqual(
+      expect(
         formatGrade({
           climbingDiscipline: ascentDetails.climbingDiscipline,
           grade: ascentDetails.topoGrade,
         }),
-        expected,
-      )
+      ).toStrictEqual(expected)
     })
   }
 
@@ -51,12 +49,11 @@ describe('formatGrade', () => {
       climbingDiscipline: 'Multi-Pitch',
       topoGrade: '8a',
     } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
-    assert.strictEqual(
+    expect(
       formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
-      '8a',
-    )
+    ).toStrictEqual('8a')
   })
 })

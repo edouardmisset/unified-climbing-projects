@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { ASCENT_STYLE, type Ascent, HOLDS, PROFILES } from '~/schema/ascent'
 import { calculateVersatilityPercentage } from './calculate-versatility-percentage'
 
 describe('calculateVersatilityPercentage', () => {
   it('should return 0 for empty ascents array', () => {
     const result = calculateVersatilityPercentage([])
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should handle ascents with undefined properties', () => {
@@ -38,7 +38,7 @@ describe('calculateVersatilityPercentage', () => {
 
     // With missing properties, the ratios for holds, profile, and height will be 0
     // Only style and crag will contribute to versatility
-    assert.ok(result > 0)
+    expect(result > 0).toBe(true)
   })
 
   it('should calculate versatility correctly for a variety of ascents', () => {
@@ -90,8 +90,8 @@ describe('calculateVersatilityPercentage', () => {
     // 3 different heights (3/10), and 3 different crags (3/15)
     // Expected ratios: [3/7, 3/10, 3/7, 1, 0.2]
     // Average: ~0.47 -> 47%
-    assert.ok(result > 0)
-    assert.ok(result < 100)
+    expect(result > 0).toBe(true)
+    expect(result < 100).toBe(true)
   })
 
   it('should handle maximum versatility', () => {
@@ -194,6 +194,6 @@ describe('calculateVersatilityPercentage', () => {
     const result = calculateVersatilityPercentage(ascents)
 
     // With all possible values represented, we should get 100%
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 })

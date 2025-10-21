@@ -53,9 +53,13 @@ const numberGradeToGradeSchema = z
 
 export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
-  date: z.string().trim().transform(s => getDateAtNoon(new Date(s)).toISOString()),
+  date: z
+    .string()
+    .trim()
+    .transform(s => getDateAtNoon(new Date(s)).toISOString()),
   height: z
-    .string().trim()
+    .string()
+    .trim()
     .transform(height => (height === '' ? undefined : Number(height))),
   holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
