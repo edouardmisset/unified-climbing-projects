@@ -3,85 +3,55 @@ import {
   COEFFICIENT_ASCENTS_PER_DAY,
   COEFFICIENT_ONSIGHT_FLASH_RATIO,
 } from '~/constants/ascents'
-import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
-import { extractDateFromISODateString } from './date'
-
-type CalculateEfficiencyPercentageParams = {
-  /** List of filtered ascents to calculate efficiency for */
-  ascents: Ascent[]
-  /** List of filtered training sessions (outdoor only) */
-  trainingSessions: TrainingSession[]
-}
+import type { AscentListProps } from '~/schema/ascent'
+import type { TrainingSessionListProps } from '~/schema/training'
+import { calculateAscentDayPerDayOutside } from './calculate-ascent-day-per-day-outside'
+import { calculateAscentsPerDay } from './calculate-ascents-per-day'
+import { calculateAverageTries } from './calculate-average-tries'
+import { calculateOnsightFlashRatio } from './calculate-onsight-flash-ratio'
+import { countOutdoorDays } from './count-outdoor-days'
 
 /**
  * Calculates the climbing efficiency percentage based on multiple factors
  *
  * The efficiency score combines four metrics:
  * 1. Ratio of ascent days to days spent climbing outside
- * 2. Number of ascents per day outside
+ * 2. Number of ascents per day outside (with coefficient applied)
  * 3. Average number of tries per ascent
- * 4. Ratio of onsight and flash ascents to total ascents
+ * 4. Ratio of onsight and flash ascents to total ascents (with coefficient applied)
  *
  * @param {CalculateEfficiencyPercentageParams} params - The input parameters
  * @returns {number} The efficiency percentage (0-100)
  */
-export function calculateEfficiencyPercentage(
-  params: CalculateEfficiencyPercentageParams,
-): number {
-  const { ascents, trainingSessions } = params
-
+export function calculateEfficiencyPercentage({
+  ascents,
+  trainingSessions,
+}: AscentListProps & TrainingSessionListProps): number {
   const ascentsCount = ascents.length
   if (ascentsCount === 0) return 0
 
-  // Get unique dates for training sessions (days outside)
-  const daysOutsideSet = new Set<string>()
-  for (const { date, sessionType } of trainingSessions) {
-    const dateAsString = extractDateFromISODateString(date)
-    if (dateAsString === undefined || sessionType !== 'Out') continue
-
-    daysOutsideSet.add(dateAsString)
-  }
-  const daysOutside = daysOutsideSet.size
-
+  const daysOutside = countOutdoorDays(trainingSessions)
   if (daysOutside === 0) return 0
 
-  const ascentDaysSet = new Set<string>()
-
-  let onsightFlashCount = 0
-  let totalTries = 0
-
-  for (const { date, style, tries } of ascents) {
-    const dateAsString = extractDateFromISODateString(date)
-    if (dateAsString === undefined) continue
-
-    ascentDaysSet.add(dateAsString)
-
-    if (style === 'Flash' || style === 'Onsight') {
-      onsightFlashCount++
-    }
-
-    totalTries += tries
-  }
-
-  const ascentDayPerDayOutside = ascentDaysSet.size / daysOutside
-
+  const ascentDayPerDayOutside = calculateAscentDayPerDayOutside(
+    ascents,
+    trainingSessions,
+  )
   const ascentsPerDay =
-    (ascentsCount / daysOutside) * COEFFICIENT_ASCENTS_PER_DAY
-
-  const averageTries = ascentsCount / totalTries
-
+    calculateAscentsPerDay(ascents, trainingSessions) *
+    COEFFICIENT_ASCENTS_PER_DAY
+  const averageTries = calculateAverageTries(ascents)
   const onsightFlashRatio =
-    (onsightFlashCount / ascentsCount) * COEFFICIENT_ONSIGHT_FLASH_RATIO
+    calculateOnsightFlashRatio(ascents) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
-  const clampedRatios = [
+  const percentages = [
     ascentDayPerDayOutside,
     ascentsPerDay,
     averageTries,
     onsightFlashRatio,
   ].map(ratio =>
-    clampValueInRange({ maximum: 100, minimum: 0, value: ratio * 100 }),
+    clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
   )
 
-  return Math.round(average(clampedRatios))
+  return Math.round(average(percentages))
 }

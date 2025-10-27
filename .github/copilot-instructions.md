@@ -58,7 +58,7 @@ component-name/
 ├── constants.ts             // Component constants
 ├── types.ts                 // TypeScript interfaces
 ├── hooks.ts                 // Custom hooks (prefix with 'use')
-└── component-name.test.ts   // Unit tests with poku
+└── component-name.test.ts   // Unit tests with vitest
 ```
 
 **Pages:** Use `default export`, fetch data with `api.` calls in async components
@@ -70,7 +70,7 @@ component-name/
 bun run dev          # Development with Turbo
 bun run check        # Quick validation (lint + typecheck + style) - use frequently
 bun run validate     # Full validation (check + test + build)
-bun run test:unit    # Poku unit tests in src/**/*.test.ts
+bun run test:unit    # Vitest unit tests in src/**/*.test.ts
 bun run test:e2e     # Playwright tests in tests/
 ```
 
@@ -100,9 +100,15 @@ filterTrainingSessions(sessions, { sessionType: 'Out' })
 
 **Unit Tests:** Test data transformation helpers extensively:
 ```typescript
-// src/helpers/*.test.ts with poku
-import { assert, describe, it } from 'poku'
-assert.equal(fromGradeToNumber('7a'), 37)
+// src/helpers/*.test.ts
+import { expect, describe, it } from 'vitest'
+
+describe('fromGradeToNumber', () => {
+  it('converts French grades to numbers correctly', () => {
+    expect(fromGradeToNumber('5a')).toBe(21)
+    expect(fromGradeToNumber('6c+')).toBe(33)
+  })
+})
 ```
 
 **E2E:** Smoke tests for main pages with Playwright
@@ -263,7 +269,7 @@ Each section MUST be separated by an empty line.
 
 ## Testing
 
-- **Unit Tests:** MUST use `poku`.
+- **Unit Tests:** MUST use `vitest`.
 - **End-to-End Tests:** MUST use `playwright`.
 - Tests MUST be written for:
   - Every new function

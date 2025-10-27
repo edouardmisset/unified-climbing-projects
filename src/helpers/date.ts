@@ -90,13 +90,13 @@ export const getDayOfYear = (date: Date): number => {
 /**
  * Returns the most frequent date from an array of objects containing a date field.
  *
- * @template Type
- * @param {Type[]} data - The array of objects that contain a 'date' string field
+ * @template TypeWithDate
+ * @param {TypeWithDate[]} data - The array of objects that contain a 'date' string field
  * @returns {[string, number]} A tuple where the first element is the date and
  * the second element is the frequency
  */
-export function getMostFrequentDate<Type extends { date: string }>(
-  data: Type[],
+export function getMostFrequentDate<TypeWithDate extends { date: string }>(
+  data: TypeWithDate[],
 ): [string, number] {
   const dateFrequency = frequencyBy(data, 'date')
   const sortedDateByFrequency = sortNumericalValues(dateFrequency, {

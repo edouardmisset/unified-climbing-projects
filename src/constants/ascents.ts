@@ -51,5 +51,5 @@ export const COEFFICIENT_ASCENTS_PER_DAY = 0.5 as const
 export const COEFFICIENT_TOP_TEN = 0.000_01 as const
 export const COEFFICIENT_VOLUME = 0.001 as const
 export const COEFFICIENT_NUMBER_OF_CRAGS = 15 as const
-/** From 5m to 50m in 5m intervals */
+/** From 5m to 50m in 5m intervals: (50 - 5) / 5 + 1 = 10 */
 export const COEFFICIENT_DISCRETE_HEIGHTS = 10 as const
