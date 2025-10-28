@@ -7,10 +7,9 @@ import {
   trainingSessionFormSchema,
 } from '~/schema/training'
 import { api } from '~/trpc/server'
+import type { Object_ } from '~/types/generic'
 
-export const onSubmit = async (
-  formData: Record<string, unknown>,
-): Promise<boolean> => {
+export const onSubmit = async (formData: Object_): Promise<boolean> => {
   const normalizedFormData = trimAndNormalizeStringsInObject(formData)
 
   const parsedFormData = trainingSessionFormSchema.safeParse(normalizedFormData)

@@ -1,3 +1,5 @@
+import type { Object_ } from '~/types/generic'
+
 /* Trim whitespace and normalize to NFC */
 function trimAndNormalizeString(value: string) {
   return value.trim().normalize('NFC')
@@ -25,9 +27,7 @@ function trimAndNormalizeString(value: string) {
  * // }
  * ```
  */
-export function trimAndNormalizeStringsInObject(
-  obj: Record<string, unknown>,
-): Record<string, unknown> {
+export function trimAndNormalizeStringsInObject(obj: Object_): Object_ {
   return Object.fromEntries(
     Object.entries(obj).map(([key, value]) => {
       return [

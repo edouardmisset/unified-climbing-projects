@@ -1,3 +1,5 @@
+import type { Object_ } from '~/types/generic'
+
 /**
  * Finds the most frequently occurring value for a specific property in an array
  * of records.
@@ -14,7 +16,7 @@
  * const mostCommonProfile = mostFrequentBy(ascents, 'profile');
  */
 export function mostFrequentBy<
-  Type extends Record<string, unknown>,
+  Type extends Object_,
   Key extends keyof Type,
   Value = Type[Key],
 >(records: Type[], property: Key): Value | undefined {

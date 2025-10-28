@@ -1,3 +1,5 @@
+import type { Object_ } from '~/types/generic'
+
 /*
  * TODO: One might want to improve upon this design by creating a function that
  * generates the links which would accept parameters for dynamic segments (like
@@ -19,4 +21,4 @@ export const LINKS = {
   trainingSessionsCalendar: '/training-sessions/calendar',
   trainingSessionsBarcode: '/training-sessions/barcode',
   trainingSessionsQrCode: '/training-sessions/qr-code',
-} as const satisfies Record<string, string>
+} as const satisfies Object_<string>

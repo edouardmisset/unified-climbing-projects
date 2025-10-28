@@ -1,24 +1,11 @@
+import { objectKeys } from '@edouardmisset/object'
 import { JWT } from 'google-auth-library'
 import {
   GoogleSpreadsheet,
   type GoogleSpreadsheetWorksheet,
 } from 'google-spreadsheet'
 import { env } from '~/env'
-
-export const SHEETS_INFO = {
-  ascents: {
-    csvExportURL: env.GOOGLE_SHEET_ASCENTS_URL_CSV,
-    editSheetTitle: env.GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE,
-    id: env.GOOGLE_SHEET_ID_ASCENTS,
-    sheetTitle: env.GOOGLE_SHEET_ASCENTS_SHEET_TITLE,
-  },
-  training: {
-    csvExportURL: env.GOOGLE_SHEET_TRAINING_URL_CSV,
-    editSheetTitle: env.GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE,
-    id: env.GOOGLE_SHEET_ID_TRAINING,
-    sheetTitle: env.GOOGLE_SHEET_TRAINING_SHEET_TITLE,
-  },
-} as const
+import type { Object_ } from '~/types/generic'
 
 const serviceAccountAuth = new JWT({
   email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -26,22 +13,54 @@ const serviceAccountAuth = new JWT({
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 })
 
-export const loadWorksheet = async (
-  climbingDataType: keyof typeof SHEETS_INFO,
-  options?: { edit?: boolean },
-): Promise<GoogleSpreadsheetWorksheet> => {
-  const { id, sheetTitle, editSheetTitle } = SHEETS_INFO[climbingDataType]
-  const { edit = false } = options ?? {}
+export async function loadBackupSpreadsheet(
+  climbingDataType: 'ascent' | 'training',
+): Promise<GoogleSpreadsheet> {
+  const id =
+    climbingDataType === 'ascent'
+      ? env.GOOGLE_SHEET_ID_ASCENTS_BACKUP
+      : env.GOOGLE_SHEET_ID_TRAINING_BACKUP
 
-  const sheet = new GoogleSpreadsheet(id, serviceAccountAuth)
-  await sheet.loadInfo()
+  try {
+    const doc = new GoogleSpreadsheet(id, serviceAccountAuth)
+    await doc.loadInfo()
+    return doc
+  } catch (error) {
+    throw new Error(
+      `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`,
+    )
+  }
+}
 
-  const title = edit ? editSheetTitle : sheetTitle
-  const worksheet = sheet.sheetsByTitle?.[title]
-
-  if (!worksheet) {
-    throw new Error(`Sheet "${title}" not found`)
+export async function createOrReplaceWorksheet(
+  spreadsheet: GoogleSpreadsheet,
+  title: string,
+): Promise<GoogleSpreadsheetWorksheet> {
+  const existingSheet = spreadsheet.sheetsByTitle[title]
+  if (existingSheet) {
+    await existingSheet.delete()
   }
 
-  return worksheet
+  return await spreadsheet.addSheet({ title })
+}
+
+export async function backupDataToWorksheet<T extends Object_>(
+  sheet: GoogleSpreadsheetWorksheet,
+  data: T[],
+): Promise<void> {
+  if (data.length === 0) {
+    return
+  }
+
+  const headersSet = new Set<string>()
+  for (const element of data) {
+    for (const key of objectKeys(element)) {
+      headersSet.add(key as string)
+    }
+  }
+
+  await sheet.setHeaderRow([...headersSet])
+  await sheet.addRows(
+    data as Parameters<GoogleSpreadsheetWorksheet['addRows']>[0],
+  )
 }
