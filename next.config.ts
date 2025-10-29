@@ -6,14 +6,9 @@ import type { NextConfig } from 'next'
 import './src/env.js'
 
 const config: NextConfig = {
+  reactCompiler: { compilationMode: 'infer' },
   experimental: {
-    reactCompiler: { compilationMode: 'infer' },
-    routerBFCache: true,
     useCache: true,
-    staleTimes: {
-      dynamic: 60,
-      static: 5 * 60,
-    },
   },
 }
 

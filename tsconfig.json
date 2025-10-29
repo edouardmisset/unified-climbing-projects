@@ -22,7 +22,7 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
@@ -45,7 +45,8 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    "convex/_generated/**/*.ts"
+    "convex/_generated/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
