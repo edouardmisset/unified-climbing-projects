@@ -90,7 +90,7 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/coverage-v8": "^4.0.5",
-    "@vitest/ui": "3.2.4",
+    "@vitest/ui": "4.0.5",
     "cspell": "^9.2.2",
     "eslint": "^9.38.0",
     "eslint-plugin-react-hooks": "^6.1.1",
@@ -101,7 +101,7 @@
     "stylelint-config-standard": "^39.0.0",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.46.2",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.5"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"
