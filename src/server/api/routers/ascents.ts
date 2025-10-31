@@ -119,7 +119,7 @@ export const ascentsRouter = createTRPCRouter({
     const ascents = await getAllAscents()
 
     for (const ascent of ascents) {
-      const { routeName, crag, topoGrade } = ascent
+      const { name: routeName, crag, grade: topoGrade } = ascent
       // We ignore the "+" in the topoGrade in case it was logged inconsistently
       const key = [routeName, topoGrade.replace('+', ''), crag]
         .map(string => removeAccents(string.toLocaleLowerCase()))
@@ -173,7 +173,7 @@ export const ascentsRouter = createTRPCRouter({
       const ascents = await getAllAscents()
       const similarAscents = Array.from(
         groupSimilarStrings(
-          ascents.map(({ routeName }) => routeName),
+          ascents.map(({ name: routeName }) => routeName),
           2,
         ).entries(),
       )
@@ -203,7 +203,7 @@ export const ascentsRouter = createTRPCRouter({
         removeAccents(query),
         await getAllAscents(),
         {
-          key: ({ routeName }) => routeName,
+          key: ({ name: routeName }) => routeName,
           limit,
           threshold: 0.7,
         },

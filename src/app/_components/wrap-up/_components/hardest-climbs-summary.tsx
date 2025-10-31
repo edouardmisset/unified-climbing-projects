@@ -8,15 +8,15 @@ export function HardestClimbsSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0) return undefined
 
   const highestDegree = Math.max(
-    ...ascents.map(({ topoGrade }) => Number(topoGrade[0])),
+    ...ascents.map(({ grade: topoGrade }) => Number(topoGrade[0])),
   )
 
-  const ascentsInTheHardestDegree = ascents.filter(({ topoGrade }) =>
+  const ascentsInTheHardestDegree = ascents.filter(({ grade: topoGrade }) =>
     topoGrade.startsWith(highestDegree.toString()),
   )
 
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { discipline: 'Bouldering' })
+  const routes = filterAscents(ascents, { discipline: 'Sport' })
 
   const hardestRoute = routes.length > 0 ? getHardestAscent(routes) : undefined
   const hardestBoulder =

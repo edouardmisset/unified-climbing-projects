@@ -4,10 +4,10 @@ import type { OrAll } from '~/app/_components/dashboard/types'
 import { type Ascent, climbingDisciplineSchema } from '~/schema/ascent'
 
 export const useDisciplineQueryState = (): UseQueryStateReturn<
-  OrAll<Ascent['climbingDiscipline']>,
+  OrAll<Ascent['discipline']>,
   typeof ALL_VALUE
 > =>
-  useQueryState<OrAll<Ascent['climbingDiscipline']>>('discipline', {
+  useQueryState<OrAll<Ascent['discipline']>>('discipline', {
     defaultValue: ALL_VALUE,
     parse: value =>
       value === ALL_VALUE ? ALL_VALUE : climbingDisciplineSchema.parse(value),

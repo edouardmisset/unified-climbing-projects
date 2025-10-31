@@ -1,25 +1,21 @@
 import { objectKeys } from '@edouardmisset/object'
 import { frequencyBy } from '~/helpers/frequency-by'
 import type { AscentListProps } from '~/schema/ascent'
-import type {
-  TrainingSession,
-  TrainingSessionListProps,
+import {
+  OUTDOOR,
+  SESSION_TYPE,
+  type TrainingSessionListProps,
 } from '~/schema/training'
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
 
-const INDOOR_SESSION_TYPES = [
-  'CS',
-  'En',
-  'MS',
-  'PE',
-  'Po',
-  'SE',
-  'Sk',
-  'St',
-  'Ta',
-] as const satisfies TrainingSession['sessionType'][]
+const INDOOR_SESSION_TYPES = Object.entries(SESSION_TYPE)
+  .filter(
+    ([_, value]) =>
+      value.category !== 'outdoor' && value.category !== 'otherTraining',
+  )
+  .map(([key]) => key) as (keyof typeof SESSION_TYPE)[]
 
 export function CragsSummary({
   ascents,
@@ -33,17 +29,15 @@ export function CragsSummary({
   const cragsWithAscents = new Set(crags)
   const cragsWithTrainingSessions = new Set(
     trainingSessions
-      .filter(({ sessionType }) => sessionType === 'Out')
-      .map(({ gymCrag = '' }) => gymCrag),
+      .filter(({ type }) => type === OUTDOOR)
+      .map(({ location = '' }) => location),
   )
   const cragsWithoutAscents = [...cragsWithTrainingSessions].filter(
     crag => crag.trim() !== '' && !cragsWithAscents.has(crag),
   )
 
-  const numberOfSessionsIndoor = trainingSessions.filter(({ sessionType }) =>
-    sessionType === undefined
-      ? false
-      : INDOOR_SESSION_TYPES.includes(sessionType),
+  const numberOfSessionsIndoor = trainingSessions.filter(({ type }) =>
+    type === undefined ? false : INDOOR_SESSION_TYPES.includes(type),
   ).length
 
   if (

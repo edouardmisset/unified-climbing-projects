@@ -1,13 +1,11 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import {
   formatComments,
-  fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
-  fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
-import { roundToTen } from '~/helpers/math'
 import {
-  fromSessionTypeToLabel,
+  ANATOMICAL_REGION,
+  ENERGY_SYSTEM,
   type TrainingSessionListProps,
 } from '~/schema/training'
 import styles from './training-popover-description.module.css'
@@ -23,13 +21,12 @@ export function TrainingPopoverDescription({
       {trainingSessions.map(
         ({
           anatomicalRegion,
-          climbingDiscipline,
+          discipline: climbingDiscipline,
           comments,
           energySystem,
-          gymCrag,
+          location,
           intensity,
-          load,
-          sessionType,
+          type,
           volume,
           _id,
         }) => (
@@ -41,23 +38,16 @@ export function TrainingPopoverDescription({
                 {fromClimbingDisciplineToEmoji(climbingDiscipline)}
               </span>
             )}{' '}
-            {gymCrag}{' '}
-            {sessionType ? (
-              <span title={fromSessionTypeToLabel(sessionType)}>
-                {wrapInParentheses(fromSessionTypeToLabel(sessionType))}
-              </span>
-            ) : (
-              ''
-            )}{' '}
+            {location}{' '}
+            {type ? <span title={type}>{wrapInParentheses(type)}</span> : ''}{' '}
             {volume === undefined ? '' : `Volume: ${volume}%`}{' '}
             {intensity === undefined ? '' : `Intensity: ${intensity}%`}{' '}
-            {load === undefined ? '' : `Load: ${roundToTen(load)}%`}{' '}
             {anatomicalRegion === undefined
               ? ''
-              : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
+              : `| ${ANATOMICAL_REGION[anatomicalRegion].emoji}`}{' '}
             {energySystem === undefined
               ? ''
-              : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
+              : `| ${ENERGY_SYSTEM[energySystem].emoji}`}{' '}
             {comments === undefined || trainingSessions.length > 1 ? (
               ''
             ) : (

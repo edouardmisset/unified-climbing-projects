@@ -26,7 +26,7 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
     }
 
     const { Flash, Onsight, Redpoint } = ascents.reduce(
-      (acc, { topoGrade, style }) => {
+      (acc, { grade: topoGrade, style }) => {
         if (topoGrade !== grade) {
           return acc
         }

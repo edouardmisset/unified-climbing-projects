@@ -80,12 +80,12 @@ export default function AscentForm(props: AscentFormProps) {
 
   const defaultAscentToParse = {
     area: latestAscent?.area,
-    climbingDiscipline: latestAscent?.climbingDiscipline,
+    climbingDiscipline: latestAscent?.discipline,
     crag: latestAscent?.crag,
     date: new Date(),
     personalGrade: fromGradeToNumber(minGrade),
     routeName: '',
-    style: latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+    style: latestAscent?.discipline === 'Bouldering' ? 'Flash' : 'Onsight',
     topoGrade: fromGradeToNumber(minGrade),
     tries: '1',
   } satisfies AscentFormInput
@@ -121,7 +121,7 @@ export default function AscentForm(props: AscentFormProps) {
   const numberOfTries = watch('tries') ?? '1'
   const styleValue = watch('style')
   const discipline = watch('climbingDiscipline')
-  const isBoulder = discipline === 'Boulder'
+  const isBoulder = discipline === 'Bouldering'
 
   const adjustedMinGrade = Math.max(
     fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,
@@ -179,9 +179,7 @@ export default function AscentForm(props: AscentFormProps) {
     [handleTriesChangeRegister, isBoulder, setValue],
   )
 
-  if (!isUserLoaded) {
-    return <Loader />
-  }
+  if (!isUserLoaded) return <Loader />
 
   const cragOptions = createValueAndLabel(crags)
   const areaOptions = createValueAndLabel(areas)

@@ -1,104 +1,165 @@
+import { objectKeys } from '@edouardmisset/object'
 import { getDateAtNoon } from '~/helpers/date.ts'
 import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
 import { percentSchema } from './generic.ts'
 
-export const SESSION_TYPES = [
-  'Out',
+/** emoji representation of the string */
+type Emoji = { emoji: string }
 
-  'En',
-  'PE',
-  'SE',
+/** short text representation of the string */
+type ShortText = { shortText: string }
 
-  'MS',
-  'Po',
-  'CS',
-
-  'Ta',
-  'St',
-  'Sk',
-
-  'Ro',
-  'Sg',
-  'Co',
-  'FB',
-] as const
-
-const SESSION_TYPES_TO_TEXT = {
-  Co: 'Core',
-  CS: 'Contact Strength',
-
-  En: 'Endurance',
-  FB: 'Finger Boarding',
-
-  MS: 'Max Strength',
-  Out: 'Outdoor',
-  PE: 'Power Endurance',
-  Po: 'Power',
-
-  Ro: 'Routine',
-  SE: 'Strength Endurance',
-  Sg: 'Stretching',
-  Sk: 'Skill',
-  St: 'Stamina',
-
-  Ta: 'Tapper',
-} as const satisfies Record<(typeof SESSION_TYPES)[number], string>
-
-export function fromSessionTypeToLabel(
-  sessionType: (typeof SESSION_TYPES)[number],
-) {
-  return SESSION_TYPES_TO_TEXT[sessionType]
+type SessionType = {
+  /** category of the training session type */
+  category: string
+  color: string
+  order: number
 }
 
-export const ANATOMICAL_REGIONS = ['Ar', 'Fi', 'Ge'] as const
+export const OUTDOOR = 'Outdoor' as const
 
-const ANATOMICAL_REGIONS_TO_TEXT = {
-  Ar: 'Arms',
-  Fi: 'Fingers',
-  Ge: 'General',
-} as const satisfies Record<(typeof ANATOMICAL_REGIONS)[number], string>
+export const SESSION_TYPE = {
+  [OUTDOOR]: {
+    shortText: 'Out',
+    category: 'outdoor',
+    color: 'var(--outdoor)',
+    order: 1,
+  },
 
-export function fromAnatomicalRegionToLabel(
-  anatomicalRegion: (typeof ANATOMICAL_REGIONS)[number],
-) {
-  return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion]
-}
+  'Contact Strength': {
+    shortText: 'CS',
+    category: 'strength',
+    color: 'var(--strength)',
+    order: 2,
+  },
+  Power: {
+    shortText: 'Po',
+    category: 'strength',
+    color: 'var(--strength)',
+    order: 2,
+  },
+  'Max Strength': {
+    shortText: 'MS',
+    category: 'strength',
+    color: 'var(--strength)',
+    order: 2,
+  },
 
-export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
+  Endurance: {
+    shortText: 'En',
+    category: 'endurance',
+    color: 'var(--endurance)',
+    order: 3,
+  },
+  'Power Endurance': {
+    shortText: 'PE',
+    category: 'endurance',
+    color: 'var(--endurance)',
+    order: 3,
+  },
+  'Strength Endurance': {
+    shortText: 'SE',
+    category: 'endurance',
+    color: 'var(--endurance)',
+    order: 3,
+  },
 
-const ENERGY_SYSTEMS_TO_TEXT = {
-  AA: 'Anaerobic Alactic',
-  AE: 'Aerobic',
-  AL: 'Anaerobic Lactic',
-} as const satisfies Record<(typeof ENERGY_SYSTEMS)[number], string>
+  Routine: {
+    shortText: 'Ro',
+    category: 'otherTraining',
+    color: 'var(--otherTraining)',
+    order: 7,
+  },
+  'Finger Board': {
+    shortText: 'FB',
+    category: 'otherTraining',
+    color: 'var(--otherTraining)',
+    order: 7,
+  },
+  Core: {
+    shortText: 'Co',
+    category: 'otherTraining',
+    color: 'var(--otherTraining)',
+    order: 7,
+  },
+  Stretching: {
+    shortText: 'Sg',
+    category: 'otherTraining',
+    color: 'var(--otherTraining)',
+    order: 7,
+  },
 
-export function fromEnergySystemToLabel(
-  energySystem: (typeof ENERGY_SYSTEMS)[number],
-) {
-  return ENERGY_SYSTEMS_TO_TEXT[energySystem]
-}
+  Skill: {
+    shortText: 'Sk',
+    category: 'stamina',
+    color: 'var(--stamina)',
+    order: 4,
+  },
+  Stamina: {
+    shortText: 'St',
+    category: 'stamina',
+    color: 'var(--stamina)',
+    order: 5,
+  },
+
+  Chill: {
+    shortText: 'Ch',
+    category: 'chill',
+    color: 'var(--chill)',
+    order: 6,
+  },
+} as const satisfies Record<string, SessionType & ShortText>
+
+export const ANATOMICAL_REGION = {
+  Arms: { shortText: 'Ar', emoji: '💪' },
+  Fingers: { shortText: 'Fi', emoji: '🖐️' },
+  General: { shortText: 'Ge', emoji: '🦵' },
+} as const satisfies Record<string, ShortText & Emoji>
+
+export const ENERGY_SYSTEM = {
+  'Anaerobic Alactic': { shortText: 'AA', emoji: '🔥' },
+  Aerobic: { shortText: 'AE', emoji: '🏃‍♂️' },
+  'Anaerobic Lactic': { shortText: 'AL', emoji: '🪫' },
+} as const satisfies Record<string, ShortText & Emoji>
 
 export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
 export const loadCategorySchema = z.enum(LOAD_CATEGORIES)
 export type LoadCategory = z.infer<typeof loadCategorySchema>
 
-const sessionTypeSchema = z.enum(SESSION_TYPES)
-const energySystemSchema = z.enum(ENERGY_SYSTEMS)
-const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
+export const SESSION_TYPES = objectKeys(SESSION_TYPE)
+const sessionTypeSchema = z.enum(
+  SESSION_TYPES as [
+    keyof typeof SESSION_TYPE,
+    ...(keyof typeof SESSION_TYPE)[],
+  ],
+)
+export const ENERGY_SYSTEMS = objectKeys(ENERGY_SYSTEM)
+const energySystemSchema = z.enum(
+  ENERGY_SYSTEMS as [
+    keyof typeof ENERGY_SYSTEM,
+    ...(keyof typeof ENERGY_SYSTEM)[],
+  ],
+)
+export const ANATOMICAL_REGIONS = objectKeys(ANATOMICAL_REGION)
+const anatomicalRegionSchema = z.enum(
+  ANATOMICAL_REGIONS as [
+    keyof typeof ANATOMICAL_REGION,
+    ...(keyof typeof ANATOMICAL_REGION)[],
+  ],
+)
 
 export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
-  climbingDiscipline: climbingDisciplineSchema.optional(),
+  discipline: climbingDisciplineSchema.optional(),
   comments: z.string().optional(),
   date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
   energySystem: energySystemSchema.optional(),
-  gymCrag: z.string().optional(),
+  location: z.string().optional(),
   _id: z.string(),
   intensity: percentSchema.optional(),
-  load: percentSchema.optional(),
-  sessionType: sessionTypeSchema.optional(),
+  type: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
 })
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
@@ -121,15 +182,12 @@ export const trainingSessionFormSchema = z.object({
     emptyStringToUndefined,
     energySystemSchema.optional(),
   ),
-  gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
+  location: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   intensity: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),
   ),
-  sessionType: z.preprocess(
-    emptyStringToUndefined,
-    sessionTypeSchema.optional(),
-  ),
+  type: z.preprocess(emptyStringToUndefined, sessionTypeSchema.optional()),
   volume: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),

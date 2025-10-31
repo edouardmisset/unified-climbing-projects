@@ -14,7 +14,7 @@ export function minMaxGrades(ascents: Ascent[]): [Grade, Grade] {
     return [fromNumberToGrade(1), fromNumberToGrade(_GRADES.length)]
   }
 
-  const numberGrades = ascents.map(({ topoGrade }) =>
+  const numberGrades = ascents.map(({ grade: topoGrade }) =>
     fromGradeToNumber(topoGrade),
   )
 

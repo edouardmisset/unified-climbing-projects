@@ -27,7 +27,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
     }
 
     // Calculate frequency counts in a single pass over the ascents
-    for (const { topoGrade } of ascentsForYear) {
+    for (const { grade: topoGrade } of ascentsForYear) {
       if (
         frequency?.[topoGrade] === undefined ||
         typeof frequency[topoGrade] !== 'number'

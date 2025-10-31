@@ -8,7 +8,7 @@ export function getAverageGrade(
 ): Grade | typeof NOT_AVAILABLE {
   if (ascents.length === 0) return NOT_AVAILABLE
 
-  const numericGrades = ascents.map(({ topoGrade }) =>
+  const numericGrades = ascents.map(({ grade: topoGrade }) =>
     fromGradeToNumber(topoGrade),
   )
   const avg = average(...numericGrades)

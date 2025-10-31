@@ -11,13 +11,13 @@ describe('formatGrade', () => {
   for (const { input, expected } of BOULDER_TEST_CASES) {
     it(`should return uppercase grade for Bouldering (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        climbingDiscipline: 'Boulder',
-        topoGrade: input,
-      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+        discipline: 'Bouldering',
+        grade: input,
+      } as const satisfies Pick<Ascent, 'grade' | 'discipline'>
       expect(
         formatGrade({
-          climbingDiscipline: ascentDetails.climbingDiscipline,
-          grade: ascentDetails.topoGrade,
+          discipline: ascentDetails.discipline,
+          grade: ascentDetails.grade,
         }),
       ).toStrictEqual(expected)
     })
@@ -32,13 +32,13 @@ describe('formatGrade', () => {
   for (const { input, expected } of ROUTE_TEST_CASES) {
     it(`should return grade as is for Route (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        climbingDiscipline: 'Route',
-        topoGrade: input,
-      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+        discipline: 'Sport',
+        grade: input,
+      } as const satisfies Pick<Ascent, 'grade' | 'discipline'>
       expect(
         formatGrade({
-          climbingDiscipline: ascentDetails.climbingDiscipline,
-          grade: ascentDetails.topoGrade,
+          discipline: ascentDetails.discipline,
+          grade: ascentDetails.grade,
         }),
       ).toStrictEqual(expected)
     })
@@ -46,13 +46,13 @@ describe('formatGrade', () => {
 
   it('should return grade as is for Multi-Pitch (e.g., 8a -> 8a)', () => {
     const ascentDetails = {
-      climbingDiscipline: 'Multi-Pitch',
-      topoGrade: '8a',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+      discipline: 'Multi-Pitch',
+      grade: '8a',
+    } as const satisfies Pick<Ascent, 'grade' | 'discipline'>
     expect(
       formatGrade({
-        climbingDiscipline: ascentDetails.climbingDiscipline,
-        grade: ascentDetails.topoGrade,
+        discipline: ascentDetails.discipline,
+        grade: ascentDetails.grade,
       }),
     ).toStrictEqual('8a')
   })

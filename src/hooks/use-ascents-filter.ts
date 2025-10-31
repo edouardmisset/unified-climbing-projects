@@ -28,7 +28,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const filteredAscents = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
     return filterAscents(ascents, {
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      discipline: normalizeFilterValue(selectedDiscipline),
       crag: normalizeFilterValue(selectedCrag),
       grade: normalizeFilterValue(selectedGrade),
       style: normalizeFilterValue(selectedStyle),
@@ -52,7 +52,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     () =>
       selectedRoute === ''
         ? filteredAscents
-        : filteredAscents.filter(({ routeName }) =>
+        : filteredAscents.filter(({ name: routeName }) =>
             stringIncludesCaseInsensitive(routeName, selectedRoute),
           ),
     [filteredAscents, selectedRoute],

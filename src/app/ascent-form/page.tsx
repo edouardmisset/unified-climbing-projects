@@ -54,6 +54,13 @@ export default async function AscentFormPage() {
 export const metadata: Metadata = {
   description:
     'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
-  keywords: ['climbing', 'route', 'boulder', 'outdoor', 'multi-pitch', 'log'],
+  keywords: [
+    'climbing',
+    'Sport',
+    'Bouldering',
+    'outdoor',
+    'multi-pitch',
+    'log',
+  ],
   title: 'Log ascent 📋',
 }

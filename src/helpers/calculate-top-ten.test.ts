@@ -44,25 +44,25 @@ describe('calculateTopTenScore', () => {
     // Create mock ascents with known point values
     const mockAscents = [
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: new Date().toISOString(),
         _id: '1',
         style: 'Redpoint',
-        topoGrade: '5c',
+        grade: '5c',
       },
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: new Date().toISOString(),
         _id: '2',
         style: 'Onsight',
-        topoGrade: '7a',
+        grade: '7a',
       },
       {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         date: new Date().toISOString(),
         _id: '3',
         style: 'Flash',
-        topoGrade: '6a',
+        grade: '6a',
       },
     ] as Ascent[]
 

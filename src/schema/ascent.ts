@@ -181,9 +181,19 @@ export const gradeSchema = z.enum(_GRADES)
 export type Grade = z.infer<typeof gradeSchema>
 
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
-export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
-const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['climbingDiscipline']> =
-  new Set(['Multi-Pitch'])
+const SPORT = 'Sport' as const
+const BOULDERING = 'Bouldering' as const
+const MULTI_PITCH = 'Multi-Pitch' as const
+const DEEP_WATER_SOLOING = 'Deep Water Soloing' as const
+export const CLIMBING_DISCIPLINE = [
+  SPORT,
+  BOULDERING,
+  MULTI_PITCH,
+  DEEP_WATER_SOLOING,
+] as const
+const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['discipline']> = new Set([
+  MULTI_PITCH,
+])
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
   d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )
@@ -215,13 +225,10 @@ export const profileSchema = z.enum(PROFILES)
 export const holdsSchema = z.enum(HOLDS)
 const optionalStringSchema = z.string().optional()
 
+const DEFAULT_ROUTE_NAME = 'No Name' as const
 export const ascentSchema = z.object({
   area: z.string().trim().optional(),
-  climber: z
-    .string()
-    .transform(() => 'Edouard Misset')
-    .optional(),
-  climbingDiscipline: climbingDisciplineSchema,
+  discipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
   crag: z.string().trim().min(1),
   date: z.string(), // ISO 8601 date format
@@ -229,13 +236,13 @@ export const ascentSchema = z.object({
   holds: holdsSchema.optional(),
   _id: z.string(),
   personalGrade: gradeSchema.optional(),
-  points: positiveInteger.optional(),
   profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(5).optional(),
-  region: optionalStringSchema,
-  routeName: z.string().trim().min(1).default('No Name'),
+  /** The name of the route (or boulder, multi-pitch, etc.) as it appears on the topo (or other "official" source) */
+  name: z.string().trim().min(1).default(DEFAULT_ROUTE_NAME),
   style: ascentStyleSchema,
-  topoGrade: gradeSchema,
+  /** The grade as it appears on the topo (or other "official" source) */
+  grade: gradeSchema,
   tries: z.number().int().min(1),
 })
 export type Ascent = z.infer<typeof ascentSchema>

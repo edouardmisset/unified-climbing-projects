@@ -14,8 +14,8 @@ import {
 import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per-year'
 
 const ROUTE_AND_BOULDER = [
-  'Boulder',
-  'Route',
+  'Bouldering',
+  'Sport',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
 export function AscentsPerDisciplinePerYear({
@@ -23,14 +23,14 @@ export function AscentsPerDisciplinePerYear({
 }: {
   ascents: Ascent[]
 }) {
-  const data = useMemo(() => getAscentsPerDisciplinePerYear(ascents), [ascents])
-
-  if (data.length === 0) return null
-  const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
-  if (uniqueYearsCount <= 1) return null
+  const ascentsByDisciplinePerYear = useMemo(
+    () => getAscentsPerDisciplinePerYear(ascents),
+    [ascents],
+  )
+  if (ascentsByDisciplinePerYear.length <= 1) return null
 
   const isSingleDiscipline =
-    data.every(({ Boulder }) => !Boulder) || data.every(({ Route }) => !Route)
+    new Set(ascents.map(({ discipline }) => discipline)).size === 1
 
   if (isSingleDiscipline) return null
 
@@ -41,7 +41,7 @@ export function AscentsPerDisciplinePerYear({
         axisLeft={numberOfAscentsAxisLeft}
         // @ts-expect-error
         colors={chartColorGetter}
-        data={data}
+        data={ascentsByDisciplinePerYear}
         enableGridY={false}
         enableLabel={false}
         groupMode="grouped"

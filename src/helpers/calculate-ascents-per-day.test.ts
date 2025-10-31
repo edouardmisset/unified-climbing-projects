@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { calculateAscentsPerDay } from './calculate-ascents-per-day'
 
 describe('calculateAscentsPerDay', () => {
@@ -16,8 +16,8 @@ describe('calculateAscentsPerDay', () => {
   it('should return 0 when there are no ascents', () => {
     const ascents: Ascent[] = []
     const trainingSessions: TrainingSession[] = [
-      { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
-      { date: '2024-01-02', sessionType: 'Out' } as TrainingSession,
+      { date: '2024-01-01', _id: '1', type: OUTDOOR } as TrainingSession,
+      { date: '2024-01-02', _id: '2', type: OUTDOOR } as TrainingSession,
     ]
 
     const result = calculateAscentsPerDay(ascents, trainingSessions)
@@ -34,8 +34,8 @@ describe('calculateAscentsPerDay', () => {
       {} as Ascent,
     ]
     const trainingSessions: TrainingSession[] = [
-      { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
-      { date: '2024-01-02', sessionType: 'Out' } as TrainingSession,
+      { date: '2024-01-01', _id: '1', type: OUTDOOR } as TrainingSession,
+      { date: '2024-01-02', _id: '2', type: OUTDOOR } as TrainingSession,
     ]
 
     const result = calculateAscentsPerDay(ascents, trainingSessions)
@@ -47,9 +47,9 @@ describe('calculateAscentsPerDay', () => {
   it('should only count outdoor training sessions', () => {
     const ascents: Ascent[] = [{} as Ascent, {} as Ascent]
     const trainingSessions: TrainingSession[] = [
-      { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
-      { date: '2024-01-02', sessionType: 'En' } as TrainingSession,
-      { date: '2024-01-03', sessionType: 'En' } as TrainingSession,
+      { date: '2024-01-01', _id: '1', type: OUTDOOR } as TrainingSession,
+      { date: '2024-01-02', _id: '2', type: 'Endurance' } as TrainingSession,
+      { date: '2024-01-03', _id: '3', type: 'Endurance' } as TrainingSession,
     ]
 
     const result = calculateAscentsPerDay(ascents, trainingSessions)
@@ -61,8 +61,8 @@ describe('calculateAscentsPerDay', () => {
   it('should handle fractional results', () => {
     const ascents: Ascent[] = [{} as Ascent, {} as Ascent, {} as Ascent]
     const trainingSessions: TrainingSession[] = [
-      { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
-      { date: '2024-01-02', sessionType: 'Out' } as TrainingSession,
+      { date: '2024-01-01', _id: '1', type: OUTDOOR } as TrainingSession,
+      { date: '2024-01-02', _id: '2', type: OUTDOOR } as TrainingSession,
     ]
 
     const result = calculateAscentsPerDay(ascents, trainingSessions)

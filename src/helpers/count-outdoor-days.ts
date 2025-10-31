@@ -1,4 +1,4 @@
-import type { TrainingSession } from '~/schema/training'
+import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { countUniqueDates } from './count-unique-dates'
 
 /**
@@ -9,7 +9,7 @@ import { countUniqueDates } from './count-unique-dates'
  */
 export function countOutdoorDays(trainingSessions: TrainingSession[]): number {
   const outdoorSessions = trainingSessions.filter(
-    ({ sessionType }) => sessionType === 'Out',
+    ({ type }) => type === OUTDOOR,
   )
   return countUniqueDates(outdoorSessions)
 }

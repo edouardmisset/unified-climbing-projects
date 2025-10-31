@@ -13,16 +13,16 @@ describe('filterAscents', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
     expect(result.length).toBe(38)
 
-    for (const { topoGrade } of result) {
+    for (const { grade: topoGrade } of result) {
       expect(topoGrade).toBe('7a')
     }
   })
 
   it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
+    const result = filterAscents(sampleAscents, { discipline: 'Sport' })
     expect(result.length).toBe(84)
-    for (const { climbingDiscipline } of result) {
-      expect(climbingDiscipline).toBe('Route')
+    for (const { discipline: climbingDiscipline } of result) {
+      expect(climbingDiscipline).toBe('Sport')
     }
   })
 
@@ -36,12 +36,12 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      climbingDiscipline: 'Route',
+      discipline: 'Sport',
       style: 'Redpoint',
     })
     expect(result.length).toBe(27)
-    for (const { climbingDiscipline, style } of result) {
-      expect(climbingDiscipline).toBe('Route')
+    for (const { discipline: climbingDiscipline, style } of result) {
+      expect(climbingDiscipline).toBe('Sport')
       expect(style).toBe('Redpoint')
     }
   })
@@ -55,6 +55,6 @@ describe('filterAscents', () => {
 describe('getHardestAscent', () => {
   it('should return the ascent with the highest grade', () => {
     const hardest = getHardestAscent(sampleAscents)
-    expect(hardest.topoGrade).toBe('8b+')
+    expect(hardest.grade).toBe('8b+')
   })
 })

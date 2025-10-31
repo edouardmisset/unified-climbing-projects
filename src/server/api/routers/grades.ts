@@ -15,7 +15,9 @@ export const gradesRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      const filteredGrades = filteredAscents.map(({ topoGrade }) => topoGrade)
+      const filteredGrades = filteredAscents.map(
+        ({ grade: topoGrade }) => topoGrade,
+      )
 
       return [...new Set(filteredGrades)].sort((a, b) =>
         compareStringsAscending(a, b),
@@ -27,7 +29,7 @@ export const gradesRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      const filteredNumberGrades = filteredAscents.map(({ topoGrade }) =>
+      const filteredNumberGrades = filteredAscents.map(({ grade: topoGrade }) =>
         fromGradeToNumber(topoGrade),
       )
 

@@ -18,8 +18,7 @@ describe('minMaxGrades', () => {
     const ascents: Ascent[] = [
       {
         area: 'Wig Wam',
-        climber: 'Edouard Misset',
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         comments: 'À la fois superbe grimpe et passage terrifiant. ',
         crag: 'Ewige Jagdgründe',
         date: '2024-10-27T12:00:00.000Z',
@@ -29,20 +28,20 @@ describe('minMaxGrades', () => {
         personalGrade: '6c+',
         profile: 'Arête',
         rating: 4,
-        routeName: 'Black Knight',
+        name: 'Black Knight',
         style: 'Onsight',
-        topoGrade: '7a',
+        grade: '7a',
         tries: 1,
       },
     ]
     const [min, max] = minMaxGrades(ascents)
-    expect(min).toBe(ascents[0]?.topoGrade)
-    expect(max).toBe(ascents[0]?.topoGrade)
+    expect(min).toBe(ascents[0]?.grade)
+    expect(max).toBe(ascents[0]?.grade)
   })
 
   it('should correctly calculate min and max grades for multiple ascents', () => {
-    const numericGrades = sampleAscents.map(({ topoGrade }) =>
-      fromGradeToNumber(topoGrade),
+    const numericGrades = sampleAscents.map(({ grade }) =>
+      fromGradeToNumber(grade),
     )
     const expectedMin = fromNumberToGrade(Math.min(...numericGrades))
     const expectedMax = fromNumberToGrade(Math.max(...numericGrades))

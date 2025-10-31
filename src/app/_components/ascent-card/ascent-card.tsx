@@ -18,7 +18,7 @@ import styles from './ascent-card.module.css'
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     area,
-    climbingDiscipline,
+    discipline: climbingDiscipline,
     comments,
     crag,
     date,
@@ -26,9 +26,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     holds,
     profile,
     rating,
-    routeName,
+    name: routeName,
     style,
-    topoGrade,
+    grade: topoGrade,
     tries,
   } = ascent
 
@@ -40,7 +40,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
   }, [comments])
 
   const formattedGrade = useMemo(
-    () => formatGrade({ climbingDiscipline, grade: topoGrade }),
+    () => formatGrade({ discipline: climbingDiscipline, grade: topoGrade }),
     [climbingDiscipline, topoGrade],
   )
 

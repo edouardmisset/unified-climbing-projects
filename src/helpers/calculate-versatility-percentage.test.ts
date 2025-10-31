@@ -11,24 +11,24 @@ describe('calculateVersatilityPercentage', () => {
   it('should handle ascents with undefined properties', () => {
     const ascents = [
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: 'Crag 1',
         date: '2023-01-01',
         _id: '1',
-        routeName: 'Route 1',
+        name: 'Route 1',
         style: 'Redpoint',
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
         // Missing holds, profile, height
       },
       {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         crag: 'Crag 2',
         date: '2023-01-02',
         _id: '2',
-        routeName: 'Route 2',
+        name: 'Route 2',
         style: 'Flash',
-        topoGrade: '6a+',
+        grade: '6a+',
         tries: 1,
         // Missing holds, profile, height
       },
@@ -44,42 +44,42 @@ describe('calculateVersatilityPercentage', () => {
   it('should calculate versatility correctly for a variety of ascents', () => {
     const ascents = [
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: 'Crag 1',
         date: '2023-01-01',
         height: 15,
         holds: 'Crimp',
         _id: '1',
         profile: 'Vertical',
-        routeName: 'Route 1',
+        name: 'Route 1',
         style: 'Redpoint',
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       },
       {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Boulder',
         crag: 'Crag 2',
         date: '2023-01-02',
         height: 5,
         holds: 'Jug',
         _id: '2',
         profile: 'Overhang',
-        routeName: 'Route 2',
+        name: 'Route 2',
         style: 'Flash',
-        topoGrade: '6a+',
+        grade: '6a+',
         tries: 1,
       },
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: 'Crag 3',
         date: '2023-01-03',
         height: 20,
         holds: 'Pocket',
         _id: '3',
         profile: 'Slab',
-        routeName: 'Route 3',
+        name: 'Route 3',
         style: 'Onsight',
-        topoGrade: '6b',
+        grade: '6b',
         tries: 1,
       },
     ] as Ascent[]
@@ -109,16 +109,16 @@ describe('calculateVersatilityPercentage', () => {
     // Create one ascent for each hold
     for (const hold of HOLDS) {
       ascents.push({
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: crags[0],
         date: '2023-01-01',
         height: heights[0],
         holds: hold,
         _id: String(id++),
         profile: PROFILES[0],
-        routeName: `Route with ${hold}`,
+        name: `Route with ${hold}`,
         style: ASCENT_STYLE[0],
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       } as Ascent)
     }
@@ -126,16 +126,16 @@ describe('calculateVersatilityPercentage', () => {
     // Create one ascent for each profile
     for (const profile of PROFILES) {
       ascents.push({
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: crags[1],
         date: '2023-01-01',
         height: heights[1],
         holds: HOLDS[0],
         _id: String(id++),
         profile,
-        routeName: `Route with ${profile}`,
+        name: `Route with ${profile}`,
         style: ASCENT_STYLE[0],
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       } as Ascent)
     }
@@ -143,16 +143,16 @@ describe('calculateVersatilityPercentage', () => {
     // Create one ascent for each style
     for (const style of ASCENT_STYLE) {
       ascents.push({
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: crags[2],
         date: '2023-01-01',
         height: heights[2],
         holds: HOLDS[1],
         _id: String(id++),
         profile: PROFILES[1],
-        routeName: `Route with ${style}`,
+        name: `Route with ${style}`,
         style: style,
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       } as Ascent)
     }
@@ -160,16 +160,16 @@ describe('calculateVersatilityPercentage', () => {
     // Create one ascent for each crag
     for (const crag of crags) {
       ascents.push({
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag,
         date: '2023-01-01',
         height: heights[3],
         holds: HOLDS[2],
         _id: String(id++),
         profile: PROFILES[2],
-        routeName: `Route at ${crag}`,
+        name: `Route at ${crag}`,
         style: ASCENT_STYLE[0],
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       } as Ascent)
     }
@@ -177,16 +177,16 @@ describe('calculateVersatilityPercentage', () => {
     // Create one ascent for each height
     for (const height of heights) {
       ascents.push({
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         crag: crags[3],
         date: '2023-01-01',
         height,
         holds: HOLDS[3],
         _id: String(id++),
         profile: PROFILES[3],
-        routeName: `Route with height ${height}`,
+        name: `Route with height ${height}`,
         style: ASCENT_STYLE[0],
-        topoGrade: '6a',
+        grade: '6a',
         tries: 1,
       } as Ascent)
     }

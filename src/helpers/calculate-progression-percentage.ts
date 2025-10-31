@@ -39,12 +39,12 @@ export function calculateProgressionPercentage({
   const previousYear = year - 1
 
   const categories = [
-    { climbingDiscipline: 'Boulder', style: 'Redpoint' },
-    { climbingDiscipline: 'Boulder', style: 'Flash' },
-    { climbingDiscipline: 'Route', style: 'Redpoint' },
-    { climbingDiscipline: 'Route', style: 'Flash' },
-    { climbingDiscipline: 'Route', style: 'Onsight' },
-  ] as const satisfies Pick<Ascent, 'climbingDiscipline' | 'style'>[]
+    { discipline: 'Bouldering', style: 'Redpoint' },
+    { discipline: 'Bouldering', style: 'Flash' },
+    { discipline: 'Sport', style: 'Redpoint' },
+    { discipline: 'Sport', style: 'Flash' },
+    { discipline: 'Sport', style: 'Onsight' },
+  ] as const satisfies Pick<Ascent, 'discipline' | 'style'>[]
 
   // Create lookup maps by year for quick filtering
   const currentYearAscents: Ascent[] = []
@@ -70,8 +70,8 @@ export function calculateProgressionPercentage({
 
   let progressionCount = 0
 
-  for (const { climbingDiscipline, style } of categories) {
-    const categoryKey = generateCategoryKey(climbingDiscipline, style)
+  for (const { discipline, style } of categories) {
+    const categoryKey = generateCategoryKey(discipline, style)
 
     const currentYearHardest = currentYearMap.get(categoryKey)
     const previousYearHardest = previousYearMap.get(categoryKey)
@@ -108,7 +108,7 @@ export function createHardestGradeMap(
   >()
 
   for (const ascent of ascents) {
-    const key = generateCategoryKey(ascent.climbingDiscipline, ascent.style)
+    const key = generateCategoryKey(ascent.discipline, ascent.style)
 
     if (!categoryGroups.has(key)) categoryGroups.set(key, [])
 
@@ -128,8 +128,8 @@ export function createHardestGradeMap(
 }
 
 function generateCategoryKey(
-  climbingDiscipline: Ascent['climbingDiscipline'],
+  climbingDiscipline: Ascent['discipline'],
   style: Ascent['style'],
-): `${Ascent['climbingDiscipline']}-${Ascent['style']}` {
+): `${Ascent['discipline']}-${Ascent['style']}` {
   return `${climbingDiscipline}-${style}`
 }

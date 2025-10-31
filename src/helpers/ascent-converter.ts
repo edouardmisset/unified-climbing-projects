@@ -29,12 +29,12 @@ export function fromGradeToBackgroundColor(grade?: Grade): string {
  * Otherwise, returns a string where any '+' characters in the grade are
  * replaced by underscores. The class name is also prefixed with an underscore.
  *
- * @param {Ascent['topoGrade']} [grade] - The climbing grade.
+ * @param {Ascent['grade']} [grade] - The climbing grade.
  * @returns {string | undefined} The CSS class name for the given grade, or
  * undefined if no grade is provided.
  */
 export function fromGradeToClassName(
-  grade?: Ascent['topoGrade'],
+  grade?: Ascent['grade'],
 ): string | undefined {
   return grade === undefined ? undefined : `_${grade.replaceAll('+', '_')}`
 }
@@ -45,21 +45,21 @@ export function fromGradeToClassName(
  * Combines the points defined for the given climbing grade, style, and discipline.
  *
  * @param {Ascent} params - The ascent object containing climb details.
- * @param {Grade} params.topoGrade - The topo grade of the ascent.
+ * @param {Grade} params.grade - The topo grade of the ascent.
  * @param {string} params.style - The style of the ascent.
- * @param {string} params.climbingDiscipline - The discipline of the climb.
+ * @param {string} params.discipline - The discipline of the climb.
  * @returns {number} The total points for the ascent.
  */
 export function fromAscentToPoints({
-  topoGrade,
+  grade,
   style,
-  climbingDiscipline,
+  discipline,
 }: Ascent): number {
   const gradePoints =
-    GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
+    GRADE_TO_POINTS[grade as keyof typeof GRADE_TO_POINTS] ?? 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus =
-    climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
+    discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
@@ -76,23 +76,23 @@ export function fromAscentToPoints({
  *
  * @param {number} points - The points value to convert to a grade.
  * @param {Object} [to] - Optional parameters to adjust the conversion.
- * @param {string} [to.climbingDiscipline='Route'] - The climbing discipline ('Route' or 'Boulder').
+ * @param {string} [to.discipline='Sport'] - The climbing discipline ('Sport' or 'Bouldering').
  * @param {string} [to.style='Redpoint'] - The climbing style.
  * @returns {Grade} The climbing grade corresponding to the points value, or
  * DEFAULT_GRADE if no match is found.
  */
 export function fromPointToGrade(
   points: number,
-  to?: Pick<Partial<Ascent>, 'climbingDiscipline' | 'style'>,
+  to?: Pick<Partial<Ascent>, 'discipline' | 'style'>,
 ): Grade {
-  const { climbingDiscipline = 'Route', style = 'Redpoint' } = to ?? {}
+  const { discipline = 'Sport', style = 'Redpoint' } = to ?? {}
 
   const listOfPoints = Object.values(GRADE_TO_POINTS)
 
   const adjustedPoints =
     points -
     (STYLE_TO_POINTS[style] ?? 0) -
-    (climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0)
+    (discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0)
 
   if (!listOfPoints.includes(adjustedPoints)) {
     globalThis.console.log(

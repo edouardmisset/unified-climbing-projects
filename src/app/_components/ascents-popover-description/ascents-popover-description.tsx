@@ -12,21 +12,18 @@ const AscentPopoverItem = memo(
     showCrag,
     topoGrade,
   }: {
-    climbingDiscipline: Ascent['climbingDiscipline']
+    climbingDiscipline: Ascent['discipline']
     crag: Ascent['crag']
-    routeName: Ascent['routeName']
+    routeName: Ascent['name']
     showCrag: boolean
-    topoGrade: Ascent['topoGrade']
+    topoGrade: Ascent['grade']
   }) => {
     const cragDescription = showCrag ? `- ${crag}` : ''
     return (
       <li className={styles.item}>
         {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
-        <DisplayGrade
-          climbingDiscipline={climbingDiscipline}
-          grade={topoGrade}
-        />
-        ) {cragDescription}
+        <DisplayGrade discipline={climbingDiscipline} grade={topoGrade} />){' '}
+        {cragDescription}
       </li>
     )
   },
@@ -44,7 +41,13 @@ export function AscentsPopoverDescription({
   return (
     <ul className={styles.list}>
       {ascents.map(
-        ({ _id, routeName, topoGrade, climbingDiscipline, crag }) => (
+        ({
+          _id,
+          name: routeName,
+          grade: topoGrade,
+          discipline: climbingDiscipline,
+          crag,
+        }) => (
           <AscentPopoverItem
             climbingDiscipline={climbingDiscipline}
             crag={crag}

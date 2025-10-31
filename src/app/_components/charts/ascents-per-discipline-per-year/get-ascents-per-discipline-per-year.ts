@@ -3,10 +3,11 @@ import { createYearList } from '~/data/helpers'
 import type { Ascent } from '~/schema/ascent'
 
 type AscentsPerDisciplinePerYear = {
-  Boulder: number
-  BoulderColor: string
-  Route: number
-  RouteColor: string
+  bouldering: number
+  boulderingColor: string
+  sport: number
+  sportColor: string
+
   year: number
 }
 
@@ -18,21 +19,21 @@ export const getAscentsPerDisciplinePerYear = (
   const years = createYearList(ascents, { descending: false, continuous: true })
 
   return years.map(year => {
-    const { Boulder = 0, Route = 0 } = ascents.reduce(
-      (acc, { date, climbingDiscipline }) => {
+    const { Bouldering = 0, Sport = 0 } = ascents.reduce(
+      (acc, { date, discipline }) => {
         if (!isDateInYear(date, year)) return acc
 
-        acc[climbingDiscipline] = (acc[climbingDiscipline] ?? 0) + 1
+        acc[discipline] = (acc[discipline] ?? 0) + 1
         return acc
       },
-      {} as Record<Ascent['climbingDiscipline'], number>,
+      {} as Record<Ascent['discipline'], number>,
     )
 
     return {
-      Boulder,
-      BoulderColor: 'var(--boulder)',
-      Route,
-      RouteColor: 'var(--route)',
+      bouldering: Bouldering,
+      boulderingColor: 'var(--bouldering)',
+      sport: Sport,
+      sportColor: 'var(--sport)',
       year,
     }
   })

@@ -53,25 +53,25 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className="block">
               Lead climb{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                discipline="Sport"
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
+                  discipline: 'Sport',
                   style: 'Onsight',
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Onsight" />,{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                discipline="Sport"
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
+                  discipline: 'Sport',
                   style: 'Flash',
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                discipline="Sport"
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
+                  discipline: 'Sport',
                   style: 'Redpoint',
                 })}
               />{' '}
@@ -81,17 +81,17 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className="block">
               Boulder{' '}
               <DisplayGrade
-                climbingDiscipline="Boulder"
+                discipline="Bouldering"
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+                  discipline: 'Bouldering',
                   style: 'Flash',
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
-                climbingDiscipline="Boulder"
+                discipline="Bouldering"
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
+                  discipline: 'Bouldering',
                   style: 'Redpoint',
                 })}
               />{' '}

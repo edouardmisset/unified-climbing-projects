@@ -11,15 +11,15 @@ describe('getAscentsPerDiscipline', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        color: 'var(--route)',
-        id: 'Route',
-        label: 'Route',
+        color: 'var(--sport)',
+        id: 'Sport',
+        label: 'Sport',
         value: 84,
       },
       {
-        color: 'var(--boulder)',
-        id: 'Boulder',
-        label: 'Boulder',
+        color: 'var(--bouldering)',
+        id: 'Bouldering',
+        label: 'Bouldering',
         value: 16,
       },
     ]

@@ -11,10 +11,10 @@ describe('getAscentsPerDisciplinePerYear', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        Boulder: 1,
-        BoulderColor: 'var(--boulder)',
-        Route: 19,
-        RouteColor: 'var(--route)',
+        bouldering: 1,
+        boulderingColor: 'var(--bouldering)',
+        sport: 19,
+        sportColor: 'var(--sport)',
         year: 2024,
       },
     ]

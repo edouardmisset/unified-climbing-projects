@@ -8,8 +8,8 @@ import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popo
 import { Card } from '../../card/card'
 
 export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { discipline: 'Bouldering' })
+  const routes = filterAscents(ascents, { discipline: 'Sport' })
 
   if (boulders.length === 0 && routes.length === 0) return undefined
 

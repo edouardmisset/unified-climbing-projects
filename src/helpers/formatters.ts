@@ -89,51 +89,18 @@ export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
     : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
 }
 
-const ENERGY_SYSTEM_TO_EMOJI: Record<
-  Exclude<TrainingSession['energySystem'], undefined>,
-  Emoji
-> = {
-  AA: '🔥',
-  AE: '🫀',
-  AL: '🪫',
-}
-
-export function fromEnergySystemToEmoji(
-  energySystem: TrainingSession['energySystem'],
-): Emoji | '' {
-  return energySystem === undefined
-    ? ''
-    : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
-}
-
-const ANATOMICAL_REGION_TO_EMOJI: Record<
-  Exclude<TrainingSession['anatomicalRegion'], undefined>,
-  Emoji
-> = {
-  Ar: '💪',
-  Fi: '🖐️',
-  Ge: '🦵',
-}
-
-export function fromAnatomicalRegionToEmoji(
-  anatomicalRegion: TrainingSession['anatomicalRegion'],
-): Emoji | '' {
-  return anatomicalRegion === undefined
-    ? ''
-    : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
-}
-
 const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
-  NonNullable<TrainingSession['climbingDiscipline']>,
+  NonNullable<TrainingSession['discipline']>,
   Emoji
 > = {
-  Boulder: '🪨',
+  Bouldering: '🪨',
   'Multi-Pitch': '⛰️',
-  Route: '🧗',
+  Sport: '🧗',
+  'Deep Water Soloing': '🌊',
 }
 
 export function fromClimbingDisciplineToEmoji(
-  climbingDiscipline: TrainingSession['climbingDiscipline'],
+  climbingDiscipline: TrainingSession['discipline'],
 ): Emoji | '' {
   return climbingDiscipline === undefined
     ? ''

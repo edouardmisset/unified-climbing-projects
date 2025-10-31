@@ -1,11 +1,6 @@
 import { lazy, memo, Suspense, useMemo } from 'react'
 import { getWeekNumber } from '~/helpers/date'
-import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
-import {
-  fromSessionTypeToBackgroundColor,
-  fromSessionTypeToClassName,
-} from '~/helpers/training-converter'
-import type { TrainingSession } from '~/schema/training'
+import { SESSION_TYPE, type TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
 import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
@@ -25,11 +20,10 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
     () =>
       weeklyTraining
         .filter(Boolean)
-        .sort(({ sessionType: aType }, { sessionType: bType }) =>
+        .sort(({ type: aType }, { type: bType }) =>
           aType === undefined || bType === undefined
             ? 0
-            : fromSessionTypeToSortOrder(bType) -
-              fromSessionTypeToSortOrder(aType),
+            : SESSION_TYPE[bType].order - SESSION_TYPE[aType].order,
         ),
     [weeklyTraining],
   )
@@ -41,8 +35,8 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       background: isSingleWeekTraining
         ? undefined
         : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
-            .map(({ sessionType }) =>
-              fromSessionTypeToBackgroundColor(sessionType),
+            .map(({ type }) =>
+              type ? SESSION_TYPE[type].color : 'var(--surface-1)',
             )
             .join(', ')})`,
       inlineSize: `${numberOfTraining / 2}%`,
@@ -65,8 +59,8 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   if (firstTraining === undefined) return <span />
 
   const trainingBarClassName = `${
-    isSingleWeekTraining
-      ? fromSessionTypeToClassName(firstTraining?.sessionType)
+    isSingleWeekTraining && firstTraining?.type
+      ? SESSION_TYPE[firstTraining.type].category
       : ''
   } ${styles.bar}`
 

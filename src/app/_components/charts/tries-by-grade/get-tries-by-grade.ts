@@ -11,7 +11,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
     { min: number; max: number; sum: number; count: number }
   >
 
-  for (const { topoGrade, tries } of ascents) {
+  for (const { grade: topoGrade, tries } of ascents) {
     const topoGradeStat = gradeStats[topoGrade]
     if (!topoGradeStat) {
       gradeStats[topoGrade] = { count: 1, max: tries, min: tries, sum: tries }

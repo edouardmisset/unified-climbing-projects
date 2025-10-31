@@ -1,58 +1,30 @@
 import { describe, expect, it } from 'vitest'
-import {
-  fromSessionTypeToBackgroundColor,
-  fromSessionTypeToClassName,
-  getSessionTypeColors,
-} from './training-converter'
+import { getSessionColor } from './training-converter'
 
-describe('fromSessionTypeToBackgroundColor', () => {
-  it('should return a default surface color when sessionType is undefined', () => {
-    const result = fromSessionTypeToBackgroundColor(undefined)
-    expect(result).toBe('var(--surface-1)')
-  })
-
-  it('should return the correct background color based on sessionType', () => {
-    const result = fromSessionTypeToBackgroundColor('CS')
-    expect(result).toBe('var(--strength)')
-  })
-})
-
-describe('fromSessionTypeToClassName', () => {
-  it('should return undefined when sessionType is undefined', () => {
-    const result = fromSessionTypeToClassName(undefined)
-    expect(result).toBe(undefined)
-  })
-
-  it('should return a class name based on sessionType', () => {
-    const result = fromSessionTypeToClassName('CS')
-    expect(result).toBe('strength')
-  })
-})
-
-describe('getSessionTypeColors', () => {
+describe('getSessionColor', () => {
   it('should return default cell color when sessionType is undefined', () => {
-    const result = getSessionTypeColors({ sessionType: undefined })
+    const result = getSessionColor({ sessionType: undefined })
     expect(result).toBe('var(--cellColor)')
   })
 
   it('should return the correct color based on intensity and volume', () => {
-    let result = getSessionTypeColors({
+    let result = getSessionColor({
       intensityPercent: 40,
-      sessionType: 'CS',
+      sessionType: 'Contact Strength',
       volumePercent: 40,
     })
     expect(result).toBe('var(--strengthLow)')
 
-    result = getSessionTypeColors({
+    result = getSessionColor({
       intensityPercent: 90,
-      sessionType: 'CS',
+      sessionType: 'Contact Strength',
       volumePercent: 90,
     })
     expect(result).toBe('var(--strengthHigh)')
 
-    result = getSessionTypeColors({
+    result = getSessionColor({
       intensityPercent: 65,
-      sessionType: 'CS',
+      sessionType: 'Contact Strength',
       volumePercent: 65,
     })
     expect(result).toBe('var(--strength)')

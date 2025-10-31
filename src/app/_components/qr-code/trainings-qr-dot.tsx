@@ -1,7 +1,6 @@
 import { lazy, memo, Suspense, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
-import { fromSessionTypeToClassName } from '~/helpers/training-converter'
-import type { TrainingSession } from '~/schema/training'
+import { SESSION_TYPE, type TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
 
 // Lazy load the popover component
@@ -17,10 +16,10 @@ export const TrainingsQRDot = memo(
 
     const sessionClassName = useMemo(
       () =>
-        firstSession?.sessionType === undefined
+        firstSession?.type === undefined
           ? ''
-          : fromSessionTypeToClassName(firstSession.sessionType),
-      [firstSession?.sessionType],
+          : SESSION_TYPE[firstSession.type].category,
+      [firstSession?.type],
     )
     const formattedDate = useMemo(
       () =>

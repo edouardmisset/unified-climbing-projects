@@ -3,10 +3,10 @@ import type { Ascent, Grade } from '~/schema/ascent'
 
 type AscentsPerDisciplinePerGrade = {
   grade: Grade
-  Boulder: number
-  BoulderColor: string
-  Route: number
-  RouteColor: string
+  Bouldering: number
+  BoulderingColor: string
+  Sport: number
+  SportColor: string
 }[]
 
 export const getAscentsPerDisciplinePerGrade = (
@@ -17,12 +17,14 @@ export const getAscentsPerDisciplinePerGrade = (
   const grades = createGradeScaleFromAscents(ascents)
   const validGrades = new Set(grades)
 
-  const groupByGrade = new Map<
-    Grade,
-    Record<Ascent['climbingDiscipline'], number>
-  >(grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]))
+  const groupByGrade = new Map<Grade, Record<Ascent['discipline'], number>>(
+    grades.map(grade => [
+      grade,
+      { Bouldering: 0, 'Deep Water Soloing': 0, 'Multi-Pitch': 0, Sport: 0 },
+    ]),
+  )
 
-  for (const { topoGrade, climbingDiscipline } of ascents) {
+  for (const { grade: topoGrade, discipline: climbingDiscipline } of ascents) {
     if (!validGrades.has(topoGrade)) continue
 
     const ascentCountsByGrade = groupByGrade.get(topoGrade)
@@ -32,14 +34,14 @@ export const getAscentsPerDisciplinePerGrade = (
   }
 
   return grades.map(grade => {
-    const { Boulder = 0, Route = 0 } = groupByGrade.get(grade) ?? {}
+    const { Bouldering = 0, Sport = 0 } = groupByGrade.get(grade) ?? {}
 
     return {
-      Boulder,
-      BoulderColor: 'var(--boulder)',
+      Bouldering,
+      BoulderingColor: 'var(--bouldering)',
       grade,
-      Route,
-      RouteColor: 'var(--route)',
+      Sport,
+      SportColor: 'var(--sport)',
     }
   })
 }

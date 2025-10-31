@@ -12,7 +12,7 @@ export const getDistanceClimbedPerYear = (
 ): DistanceClimbedPerYear[] => {
   const filteredAscents = ascents.filter(
     ascent =>
-      ascent.climbingDiscipline === 'Route' &&
+      ascent.discipline === 'Sport' &&
       ascent.height !== undefined &&
       ascent.height > 0,
   )

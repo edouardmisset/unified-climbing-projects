@@ -12,7 +12,6 @@ export function useTrainingSessionsFilter(
   const {
     selectedYear,
     selectedSessionType,
-    selectedLoad,
     selectedLocation,
     selectedPeriod,
   } = useTrainingSessionsQueryState()
@@ -20,9 +19,8 @@ export function useTrainingSessionsFilter(
   const filteredTrainingSessions = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
     return filterTrainingSessions(trainingSessions, {
-      gymCrag: normalizeFilterValue(selectedLocation),
-      load: normalizeFilterValue(selectedLoad),
-      sessionType: normalizeFilterValue(selectedSessionType),
+      location: normalizeFilterValue(selectedLocation),
+      type: normalizeFilterValue(selectedSessionType),
       year:
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
@@ -30,7 +28,6 @@ export function useTrainingSessionsFilter(
       period: normalizeFilterValue(selectedPeriod),
     })
   }, [
-    selectedLoad,
     selectedLocation,
     selectedPeriod,
     selectedSessionType,
