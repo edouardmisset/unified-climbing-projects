@@ -14,18 +14,17 @@ export function getAscentsPerDiscipline(
   if (ascents.length === 0) return []
 
   const initialValue: AscentsPerDiscipline = CLIMBING_DISCIPLINE.map(
-    climbingDiscipline => ({
-      color:
-        CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
-      id: climbingDiscipline,
-      label: climbingDiscipline,
+    discipline => ({
+      color: CLIMBING_DISCIPLINE_TO_COLOR[discipline],
+      id: discipline,
+      label: discipline,
       value: 0,
     }),
   )
 
   return ascents
-    .reduce((acc, { discipline: climbingDiscipline }) => {
-      const disciplineData = acc.find(({ id }) => id === climbingDiscipline)
+    .reduce((acc, { discipline }) => {
+      const disciplineData = acc.find(({ id }) => id === discipline)
 
       if (!disciplineData) return acc
 

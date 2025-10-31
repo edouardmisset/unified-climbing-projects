@@ -1,5 +1,13 @@
+import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
-import type { Ascent, Grade } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  DEEP_WATER_SOLOING,
+  type Grade,
+  MULTI_PITCH,
+  SPORT,
+} from '~/schema/ascent'
 
 type AscentsPerDisciplinePerGrade = {
   grade: Grade
@@ -7,6 +15,10 @@ type AscentsPerDisciplinePerGrade = {
   BoulderingColor: string
   Sport: number
   SportColor: string
+  MultiPitch?: number
+  MultiPitchColor?: string
+  DeepWaterSoloing?: number
+  DeepWaterSoloingColor?: string
 }[]
 
 export const getAscentsPerDisciplinePerGrade = (
@@ -20,28 +32,42 @@ export const getAscentsPerDisciplinePerGrade = (
   const groupByGrade = new Map<Grade, Record<Ascent['discipline'], number>>(
     grades.map(grade => [
       grade,
-      { Bouldering: 0, 'Deep Water Soloing': 0, 'Multi-Pitch': 0, Sport: 0 },
+      {
+        [BOULDERING]: 0,
+        [DEEP_WATER_SOLOING]: 0,
+        [MULTI_PITCH]: 0,
+        [SPORT]: 0,
+      },
     ]),
   )
 
-  for (const { grade: topoGrade, discipline: climbingDiscipline } of ascents) {
-    if (!validGrades.has(topoGrade)) continue
+  for (const { grade, discipline } of ascents) {
+    if (!validGrades.has(grade)) continue
 
-    const ascentCountsByGrade = groupByGrade.get(topoGrade)
+    const ascentCountsByGrade = groupByGrade.get(grade)
     if (ascentCountsByGrade === undefined) continue
 
-    ascentCountsByGrade[climbingDiscipline] += 1
+    ascentCountsByGrade[discipline] += 1
   }
 
   return grades.map(grade => {
-    const { Bouldering = 0, Sport = 0 } = groupByGrade.get(grade) ?? {}
+    const {
+      [BOULDERING]: Bouldering = 0,
+      [SPORT]: Sport = 0,
+      [DEEP_WATER_SOLOING]: DeepWaterSoloing = 0,
+      [MULTI_PITCH]: MultiPitch = 0,
+    } = groupByGrade.get(grade) ?? {}
 
     return {
       Bouldering,
-      BoulderingColor: 'var(--bouldering)',
+      BoulderingColor: CLIMBING_DISCIPLINE_TO_COLOR[BOULDERING],
       grade,
       Sport,
-      SportColor: 'var(--sport)',
+      SportColor: CLIMBING_DISCIPLINE_TO_COLOR[SPORT],
+      MultiPitch,
+      MultiPitchColor: CLIMBING_DISCIPLINE_TO_COLOR[MULTI_PITCH],
+      DeepWaterSoloing,
+      DeepWaterSoloingColor: CLIMBING_DISCIPLINE_TO_COLOR[DEEP_WATER_SOLOING],
     }
   })
 }

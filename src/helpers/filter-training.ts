@@ -26,7 +26,7 @@ export function filterTrainingSessions(
 ): TrainingSession[] {
   const {
     anatomicalRegion,
-    discipline: climbingDiscipline,
+    discipline,
     energySystem,
     location,
     intensity,
@@ -51,8 +51,7 @@ export function filterTrainingSessions(
           trainingSession?.location ?? '',
           location,
         )) &&
-      (climbingDiscipline === undefined ||
-        trainingSession.discipline === climbingDiscipline) &&
+      (discipline === undefined || trainingSession.discipline === discipline) &&
       (year === undefined || isDateInYear(trainingSessionDate, year)) &&
       (anatomicalRegion === undefined ||
         trainingSession.anatomicalRegion === anatomicalRegion) &&

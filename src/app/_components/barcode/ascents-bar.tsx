@@ -31,9 +31,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       background: isSingleAscent
         ? undefined
         : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
-            .map(({ grade: topoGrade }) =>
-              fromGradeToBackgroundColor(topoGrade),
-            )
+            .map(({ grade }) => fromGradeToBackgroundColor(grade))
             .join(', ')})`,
       inlineSize: `${numberOfAscents / 2}%`,
     }),

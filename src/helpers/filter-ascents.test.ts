@@ -14,16 +14,16 @@ describe('filterAscents', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
     expect(result.length).toBe(38)
 
-    for (const { grade: topoGrade } of result) {
-      expect(topoGrade).toBe('7a')
+    for (const { grade } of result) {
+      expect(grade).toBe('7a')
     }
   })
 
-  it('should filter ascents by climbingDiscipline', () => {
+  it('should filter ascents by discipline', () => {
     const result = filterAscents(sampleAscents, { discipline: SPORT })
     expect(result.length).toBe(84)
-    for (const { discipline: climbingDiscipline } of result) {
-      expect(climbingDiscipline).toBe(SPORT)
+    for (const { discipline } of result) {
+      expect(discipline).toBe(SPORT)
     }
   })
 
@@ -41,8 +41,8 @@ describe('filterAscents', () => {
       style: REDPOINT,
     })
     expect(result.length).toBe(27)
-    for (const { discipline: climbingDiscipline, style } of result) {
-      expect(climbingDiscipline).toBe(SPORT)
+    for (const { discipline, style } of result) {
+      expect(discipline).toBe(SPORT)
       expect(style).toBe(REDPOINT)
     }
   })

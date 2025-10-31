@@ -45,15 +45,15 @@ export function getAscentsByGradesPerCrag(
       frequency[`${grade}Color`] = fromGradeToBackgroundColor(grade)
     }
 
-    for (const { grade: topoGrade } of ascents) {
+    for (const { grade } of ascents) {
       if (
-        frequency[topoGrade] === undefined ||
-        typeof frequency[topoGrade] !== 'number'
+        frequency[grade] === undefined ||
+        typeof frequency[grade] !== 'number'
       ) {
         continue
       }
 
-      frequency[topoGrade] += 1
+      frequency[grade] += 1
     }
 
     return frequency

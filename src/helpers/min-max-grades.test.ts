@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { type Ascent, GRADE_TO_NUMBER, SPORT } from '~/schema/ascent'
+import {
+  ARETE,
+  type Ascent,
+  CRIMP,
+  GRADE_TO_NUMBER,
+  SPORT,
+} from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'
 
@@ -23,10 +29,10 @@ describe('minMaxGrades', () => {
         crag: 'Ewige Jagdgründe',
         date: '2024-10-27T12:00:00.000Z',
         height: 25,
-        holds: 'Crimp',
+        holds: CRIMP,
         _id: '1',
         personalGrade: '6c+',
-        profile: 'Arête',
+        profile: ARETE,
         rating: 4,
         name: 'Black Knight',
         style: 'Onsight',

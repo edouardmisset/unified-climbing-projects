@@ -21,7 +21,7 @@ export function TrainingPopoverDescription({
       {trainingSessions.map(
         ({
           anatomicalRegion,
-          discipline: climbingDiscipline,
+          discipline,
           comments,
           energySystem,
           location,
@@ -31,11 +31,11 @@ export function TrainingPopoverDescription({
           _id,
         }) => (
           <li className={styles.item} key={_id}>
-            {climbingDiscipline === undefined ? (
+            {discipline === undefined ? (
               ''
             ) : (
-              <span title={climbingDiscipline}>
-                {fromClimbingDisciplineToEmoji(climbingDiscipline)}
+              <span title={discipline}>
+                {fromClimbingDisciplineToEmoji(discipline)}
               </span>
             )}{' '}
             {location}{' '}

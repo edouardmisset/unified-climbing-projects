@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { NOT_AVAILABLE } from '~/constants/generic'
-import { type Ascent, SPORT } from '~/schema/ascent'
+import {
+  ARETE,
+  type Ascent,
+  CRIMP,
+  OVERHANG,
+  POCKET,
+  SPORT,
+} from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'
 
 const ascent1: Ascent = {
@@ -10,10 +17,10 @@ const ascent1: Ascent = {
   crag: 'Ewige Jagdgründe',
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
-  holds: 'Crimp',
+  holds: CRIMP,
   _id: '1',
   personalGrade: '6c+',
-  profile: 'Arête',
+  profile: ARETE,
   rating: 4,
   name: 'Black Knight',
   style: 'Onsight',
@@ -27,10 +34,10 @@ const ascent2: Ascent = {
   crag: 'Rue des masques',
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
-  holds: 'Pocket',
+  holds: POCKET,
   _id: '2',
   personalGrade: '7b+',
-  profile: 'Overhang',
+  profile: OVERHANG,
   rating: 3,
   name: 'Flash dans ta gueule',
   style: 'Redpoint',
@@ -43,10 +50,10 @@ const ascent3: Ascent = {
   crag: 'Claret',
   date: '2024-01-01T12:00:00.000Z',
   height: 25,
-  holds: 'Crimp',
+  holds: CRIMP,
   _id: '3',
   personalGrade: '7b',
-  profile: 'Overhang',
+  profile: OVERHANG,
   rating: 4,
   name: 'Linéa',
   style: 'Onsight',

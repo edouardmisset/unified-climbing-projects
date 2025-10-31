@@ -8,11 +8,11 @@ export function HardestClimbsSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0) return undefined
 
   const highestDegree = Math.max(
-    ...ascents.map(({ grade: topoGrade }) => Number(topoGrade[0])),
+    ...ascents.map(({ grade }) => Number(grade[0])),
   )
 
-  const ascentsInTheHardestDegree = ascents.filter(({ grade: topoGrade }) =>
-    topoGrade.startsWith(highestDegree.toString()),
+  const ascentsInTheHardestDegree = ascents.filter(({ grade }) =>
+    grade.startsWith(highestDegree.toString()),
   )
 
   const boulders = filterAscents(ascents, { discipline: BOULDERING })

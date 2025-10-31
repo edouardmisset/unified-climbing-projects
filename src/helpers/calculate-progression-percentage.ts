@@ -136,8 +136,8 @@ export function createHardestGradeMap(
 }
 
 function generateCategoryKey(
-  climbingDiscipline: Ascent['discipline'],
+  discipline: Ascent['discipline'],
   style: Ascent['style'],
 ): `${Ascent['discipline']}-${Ascent['style']}` {
-  return `${climbingDiscipline}-${style}`
+  return `${discipline}-${style}`
 }

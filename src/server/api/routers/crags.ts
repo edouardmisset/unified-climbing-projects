@@ -70,15 +70,15 @@ export const cragsRouter = createTRPCRouter({
         )
 
         let cragTotal = 0
-        for (const { grade: topoGrade } of listOfAscentsInCrag) {
+        for (const { grade } of listOfAscentsInCrag) {
           if (weightedByGrade) {
             const hightestGradeNumber = Math.max(
-              ...ascents.map(({ grade: topoGrade }) =>
-                fromGradeToNumber(topoGrade),
-              ),
+              ...ascents.map(({ grade }) => fromGradeToNumber(grade)),
             )
-            cragTotal += fromGradeToNumber(topoGrade) / hightestGradeNumber
-          } else cragTotal++
+            cragTotal += fromGradeToNumber(grade) / hightestGradeNumber
+          } else {
+            cragTotal++
+          }
         }
 
         weightedByGradeAndSortedCrags[crag] = cragTotal

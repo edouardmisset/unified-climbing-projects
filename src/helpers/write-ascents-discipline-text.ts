@@ -1,4 +1,10 @@
-import { type Ascent, BOULDERING, SPORT } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  DEEP_WATER_SOLOING,
+  MULTI_PITCH,
+  SPORT,
+} from '~/schema/ascent'
 
 type ClimbingActivity =
   `${Lowercase<Ascent['discipline']> | 'ascent'}${'s' | ''}`
@@ -23,8 +29,8 @@ export function writeAscentsDisciplineText<
   const maybePlural = ascents.length > 1 ? 's' : ''
 
   const firstDiscipline = ascents[0].discipline
-  for (const { discipline: climbingDiscipline } of ascents) {
-    if (climbingDiscipline !== firstDiscipline) return `ascent${maybePlural}`
+  for (const { discipline } of ascents) {
+    if (discipline !== firstDiscipline) return `ascent${maybePlural}`
   }
 
   const activity =
@@ -32,10 +38,10 @@ export function writeAscentsDisciplineText<
       ? 'boulder'
       : firstDiscipline === SPORT
         ? 'route'
-        : firstDiscipline === 'Deep Water Soloing'
+        : firstDiscipline === DEEP_WATER_SOLOING
           ? 'deep water solo'
-          : firstDiscipline === 'Multi-Pitch'
-            ? 'multi-pitch'
+          : firstDiscipline === MULTI_PITCH
+            ? 'multi-pitch route'
             : firstDiscipline
 
   return `${activity}${maybePlural}` as ClimbingActivity

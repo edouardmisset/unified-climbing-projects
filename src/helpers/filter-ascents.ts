@@ -22,7 +22,7 @@ export function filterAscents(
   filters?: OptionalAscentFilter,
 ): Ascent[] {
   const {
-    discipline: climbingDiscipline,
+    discipline,
     crag,
     grade,
     height,
@@ -45,8 +45,7 @@ export function filterAscents(
     return (
       (grade === undefined ||
         stringEqualsCaseInsensitive(ascent.grade, grade)) &&
-      (climbingDiscipline === undefined ||
-        ascent.discipline === climbingDiscipline) &&
+      (discipline === undefined || ascent.discipline === discipline) &&
       (year === undefined || isDateInYear(ascentDate, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&

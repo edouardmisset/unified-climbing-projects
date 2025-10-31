@@ -22,9 +22,9 @@ export function fromAscentsToCalendarEntries(
         }
       }
 
-      const { date, crag, discipline: climbingDiscipline } = firstAscent
-      const { grade: topoGrade } = getHardestAscent(ascents)
-      const backgroundColor = fromGradeToBackgroundColor(topoGrade)
+      const { date, crag, discipline } = firstAscent
+      const { grade } = getHardestAscent(ascents)
+      const backgroundColor = fromGradeToBackgroundColor(grade)
       const dateAndCrag = `${prettyLongDate(date)} - ${crag}`
 
       return {
@@ -34,8 +34,8 @@ export function fromAscentsToCalendarEntries(
           ascent => ascent.discipline === BOULDERING,
         ),
         shortText: formatGrade({
-          discipline: climbingDiscipline,
-          grade: topoGrade,
+          discipline,
+          grade,
         }),
         title: dateAndCrag,
         ascents,

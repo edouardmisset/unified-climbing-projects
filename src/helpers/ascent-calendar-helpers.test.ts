@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { type Ascent, SPORT } from '~/schema/ascent'
+import {
+  ARETE,
+  type Ascent,
+  CRIMP,
+  OVERHANG,
+  POCKET,
+  SPORT,
+} from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
@@ -30,10 +37,10 @@ describe('fromAscentsToCalendarEntries', () => {
           crag: 'Ewige Jagdgründe',
           date: '2024-10-27T12:00:00.000Z',
           height: 25,
-          holds: 'Crimp',
+          holds: CRIMP,
           _id: '1',
           personalGrade: '6c+',
-          profile: 'Arête',
+          profile: ARETE,
           rating: 4,
           name: 'Black Knight',
           style: 'Onsight',
@@ -49,10 +56,10 @@ describe('fromAscentsToCalendarEntries', () => {
           crag: 'Rue des masques',
           date: '2023-08-01T12:00:00.000Z',
           height: 25,
-          holds: 'Pocket',
+          holds: POCKET,
           _id: '2',
           personalGrade: '7b+',
-          profile: 'Overhang',
+          profile: OVERHANG,
           rating: 3,
           name: 'Flash dans ta gueule',
           style: 'Redpoint',

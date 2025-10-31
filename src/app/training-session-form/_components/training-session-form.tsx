@@ -141,18 +141,18 @@ export default function TrainingSessionForm({
         <DataList id="locations" options={createValueAndLabel(allLocations)} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="climbing-discipline">Climbing Discipline</label>
+        <label htmlFor="discipline">Climbing Discipline</label>
         <input
-          {...register('climbingDiscipline')}
+          {...register('discipline')}
           className={styles.input}
           enterKeyHint="next"
-          id="climbing-discipline"
-          list="climbing-discipline-list"
+          id="discipline"
+          list="discipline-list"
           placeholder="Route"
           title={`The climbing discipline of the session (e.g. ${climbingDisciplineFormattedList})`}
         />
         <DataList
-          id="climbing-discipline-list"
+          id="discipline-list"
           options={CLIMBING_DISCIPLINE.map(discipline => ({
             label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
             value: discipline,

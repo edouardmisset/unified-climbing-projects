@@ -52,8 +52,8 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     () =>
       selectedRoute === ''
         ? filteredAscents
-        : filteredAscents.filter(({ name: routeName }) =>
-            stringIncludesCaseInsensitive(routeName, selectedRoute),
+        : filteredAscents.filter(({ name }) =>
+            stringIncludesCaseInsensitive(name, selectedRoute),
           ),
     [filteredAscents, selectedRoute],
   )

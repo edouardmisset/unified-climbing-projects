@@ -169,7 +169,7 @@ export const trainingSessionFormSchema = z.object({
     emptyStringToUndefined,
     anatomicalRegionSchema.optional(),
   ),
-  climbingDiscipline: z.preprocess(
+  discipline: z.preprocess(
     emptyStringToUndefined,
     climbingDisciplineSchema.optional(),
   ),

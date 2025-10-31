@@ -177,13 +177,13 @@ export const STYLE_TO_POINTS = {
 export const BOULDERING_BONUS_POINTS = 100 as const
 
 export const gradeSchema = z.enum(_GRADES)
-
 export type Grade = z.infer<typeof gradeSchema>
 
 export const ONSIGHT = 'Onsight' as const
 export const FLASH = 'Flash' as const
 export const REDPOINT = 'Redpoint' as const
 export const ASCENT_STYLE = [ONSIGHT, FLASH, REDPOINT] as const
+
 export const SPORT = 'Sport' as const
 export const BOULDERING = 'Bouldering' as const
 export const MULTI_PITCH = 'Multi-Pitch' as const
@@ -203,24 +203,38 @@ export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
 
 export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
+export const CRIMP = 'Crimp' as const
+export const JUG = 'Jug' as const
+export const POCKET = 'Pocket' as const
+const SLOPER = 'Sloper' as const
+const PINCH = 'Pinch' as const
+const CRACK = 'Crack' as const
+const UNDERCLING = 'Undercling' as const
 export const HOLDS = [
-  'Crimp',
-  'Jug',
-  'Pocket',
-  'Sloper',
-  'Pinch',
-  'Crack',
-  'Undercling',
+  CRIMP,
+  JUG,
+  POCKET,
+  SLOPER,
+  PINCH,
+  CRACK,
+  UNDERCLING,
 ] as const
 
+export const VERTICAL = 'Vertical' as const
+export const OVERHANG = 'Overhang' as const
+export const SLAB = 'Slab' as const
+const ROOF = 'Roof' as const
+export const ARETE = 'Arête' as const
+const DIHEDRAL = 'Dihedral' as const
+const TRAVERSE = 'Traverse' as const
 export const PROFILES = [
-  'Vertical',
-  'Overhang',
-  'Slab',
-  'Roof',
-  'Arête',
-  'Dihedral',
-  'Traverse',
+  VERTICAL,
+  OVERHANG,
+  SLAB,
+  ROOF,
+  ARETE,
+  DIHEDRAL,
+  TRAVERSE,
 ] as const
 
 export const ascentStyleSchema = z.enum(ASCENT_STYLE)

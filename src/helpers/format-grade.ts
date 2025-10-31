@@ -11,6 +11,6 @@ import { type Ascent, BOULDERING } from '~/schema/ascent'
 export function formatGrade(
   params: Pick<Ascent, 'discipline' | 'grade'>,
 ): string {
-  const { discipline: climbingDiscipline, grade } = params
-  return climbingDiscipline === BOULDERING ? grade.toUpperCase() : grade
+  const { discipline, grade } = params
+  return discipline === BOULDERING ? grade.toUpperCase() : grade
 }

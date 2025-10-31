@@ -81,13 +81,13 @@ export default function AscentForm(props: AscentFormProps) {
 
   const defaultAscentToParse = {
     area: latestAscent?.area,
-    climbingDiscipline: latestAscent?.discipline,
+    discipline: latestAscent?.discipline,
     crag: latestAscent?.crag,
     date: new Date(),
     personalGrade: fromGradeToNumber(minGrade),
-    routeName: '',
+    name: '',
     style: latestAscent?.discipline === BOULDERING ? 'Flash' : 'Onsight',
-    topoGrade: fromGradeToNumber(minGrade),
+    grade: fromGradeToNumber(minGrade),
     tries: '1',
   } satisfies AscentFormInput
 
@@ -111,17 +111,17 @@ export default function AscentForm(props: AscentFormProps) {
     defaultValues: defaultAscent,
   })
 
-  const { ref: _unusedRef, ...topoGradeRegister } = register('topoGrade')
+  const { ref: _unusedRef, ...gradeRegister } = register('grade')
   const { ref: _unusedRef2, ...personalGradeRegister } =
     register('personalGrade')
   const { onChange: handleTriesChangeRegister, ...triesRegister } =
     register('tries')
 
-  const numberTopoGrade = watch('topoGrade') ?? fromGradeToNumber(minGrade)
+  const numberTopoGrade = watch('grade') ?? fromGradeToNumber(minGrade)
   const personalNumberGrade = watch('personalGrade') ?? numberTopoGrade
   const numberOfTries = watch('tries') ?? '1'
   const styleValue = watch('style')
-  const discipline = watch('climbingDiscipline')
+  const discipline = watch('discipline')
   const isBoulder = discipline === BOULDERING
 
   const adjustedMinGrade = Math.max(
@@ -137,7 +137,7 @@ export default function AscentForm(props: AscentFormProps) {
     (value: unknown) => {
       const minGradeAsNumber = fromGradeToNumber(minGrade)
       const val = validPositiveNumber(value, minGradeAsNumber)
-      setValue('topoGrade', val)
+      setValue('grade', val)
 
       setValue('personalGrade', val)
     },
@@ -196,7 +196,7 @@ export default function AscentForm(props: AscentFormProps) {
           toast.promise(promise, {
             error: 'Submission failed, please try again.',
             pending: 'Submitting...',
-            success: `You sent ${data.routeName} (${fromNumberToGrade(data?.topoGrade ?? 1)})`,
+            success: `You sent ${data.name} (${fromNumberToGrade(data?.grade ?? 1)})`,
           })
 
           if (!(await promise)) return
@@ -232,15 +232,15 @@ export default function AscentForm(props: AscentFormProps) {
         <DataList id="date-list" options={createRecentDateOptions()} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="routeName">Route Name</label>
+        <label htmlFor="name">Route Name</label>
         <input
-          {...register('routeName')}
+          {...register('name')}
           autoCapitalize="on"
           autoComplete="off"
           autoCorrect="off"
           className={`${styles.input} contrastColor`}
           enterKeyHint="next"
-          id="routeName"
+          id="name"
           placeholder="Biographie, La Dura Dura, etc."
           required
           title="The name of the route or boulder climbed (use `N/A` for routes without name)"
@@ -248,12 +248,12 @@ export default function AscentForm(props: AscentFormProps) {
         />
       </div>
       <div className={styles.field}>
-        <label htmlFor="climbingDiscipline">Climbing Discipline</label>
+        <label htmlFor="discipline">Climbing Discipline</label>
         <select
-          {...register('climbingDiscipline')}
+          {...register('discipline')}
           className={`${styles.input} contrastColor`}
           enterKeyHint="next"
-          id="climbingDiscipline"
+          id="discipline"
           title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
         >
           {AVAILABLE_CLIMBING_DISCIPLINE.map(discipline => (
@@ -327,12 +327,13 @@ export default function AscentForm(props: AscentFormProps) {
         </div>
       </div>
       <div className={styles.field}>
-        <label className="required" htmlFor="topoGrade">
+        <label className="required" htmlFor="grade">
           Topo Grade
         </label>
         <GradeInput
-          {...topoGradeRegister}
+          {...gradeRegister}
           gradeType="Topo"
+          id="grade"
           max={adjustedMaxGrade}
           min={adjustedMinGrade}
           onValueChange={handleTopoGradeChange}
@@ -346,6 +347,7 @@ export default function AscentForm(props: AscentFormProps) {
         <GradeInput
           {...personalGradeRegister}
           gradeType="Personal"
+          id="personalGrade"
           max={adjustedMaxGrade}
           min={adjustedMinGrade}
           onValueChange={handlePersonalGradeChange}
