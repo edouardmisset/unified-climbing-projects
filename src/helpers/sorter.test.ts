@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, SPORT } from '~/schema/ascent'
 import { sortByGrade } from './sorter'
 
 const easierAscent: Ascent = {
   area: 'Wig Wam',
-  discipline: 'Sport',
+  discipline: SPORT,
   comments: 'À la fois superbe grimpe et passage terrifiant.',
   crag: 'Ewige Jagdgründe',
   date: '2024-10-27T12:00:00.000Z',
@@ -22,7 +22,7 @@ const easierAscent: Ascent = {
 
 const harderAscent: Ascent = {
   area: 'Envers du canyon',
-  discipline: 'Sport',
+  discipline: SPORT,
   comments: 'Dur :(',
   crag: 'Rue des masques',
   date: '2023-08-01T12:00:00.000Z',

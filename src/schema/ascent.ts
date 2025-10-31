@@ -180,11 +180,14 @@ export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
 
-export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
-const SPORT = 'Sport' as const
-const BOULDERING = 'Bouldering' as const
-const MULTI_PITCH = 'Multi-Pitch' as const
-const DEEP_WATER_SOLOING = 'Deep Water Soloing' as const
+export const ONSIGHT = 'Onsight' as const
+export const FLASH = 'Flash' as const
+export const REDPOINT = 'Redpoint' as const
+export const ASCENT_STYLE = [ONSIGHT, FLASH, REDPOINT] as const
+export const SPORT = 'Sport' as const
+export const BOULDERING = 'Bouldering' as const
+export const MULTI_PITCH = 'Multi-Pitch' as const
+export const DEEP_WATER_SOLOING = 'Deep Water Soloing' as const
 export const CLIMBING_DISCIPLINE = [
   SPORT,
   BOULDERING,

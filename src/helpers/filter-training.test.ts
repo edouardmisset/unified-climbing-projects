@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { BOULDERING, SPORT } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
@@ -6,7 +7,7 @@ describe('filterTrainingSessions', () => {
   const trainingSessions = [
     {
       anatomicalRegion: 'Arms',
-      discipline: 'Sport',
+      discipline: SPORT,
       comments: 'Good session',
       date: '2023-01-01',
       energySystem: 'Anaerobic Alactic',
@@ -17,7 +18,7 @@ describe('filterTrainingSessions', () => {
     },
     {
       anatomicalRegion: 'Fingers',
-      discipline: 'Bouldering',
+      discipline: BOULDERING,
       comments: 'Hard session',
       date: '2023-02-01',
       energySystem: 'Anaerobic Lactic',
@@ -28,7 +29,7 @@ describe('filterTrainingSessions', () => {
     },
     {
       anatomicalRegion: 'General',
-      discipline: 'Sport',
+      discipline: SPORT,
       comments: 'Easy session',
       date: '2024-01-01',
       energySystem: 'Aerobic',
@@ -57,10 +58,10 @@ describe('filterTrainingSessions', () => {
 
   it('should filter training sessions by discipline', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      discipline: 'Bouldering',
+      discipline: BOULDERING,
     })
     expect(result.length).toBe(1)
-    expect(result[0]?.discipline).toBe('Bouldering')
+    expect(result[0]?.discipline).toBe(BOULDERING)
   })
 
   it('should filter training sessions by year', () => {

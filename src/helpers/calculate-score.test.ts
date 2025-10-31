@@ -4,7 +4,7 @@ import {
   COEFFICIENT_VOLUME,
   DEFAULT_GRADE,
 } from '~/constants/ascents'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING, FLASH, REDPOINT } from '~/schema/ascent'
 import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 import {
@@ -21,12 +21,12 @@ describe('calculateScore', () => {
     const result = calculateScore({
       ascents: [
         {
-          discipline: 'Bouldering',
+          discipline: BOULDERING,
           crag: 'Test',
           date: '2023-01-01T00:00:00Z',
           _id: '1',
           name: 'A',
-          style: 'Redpoint',
+          style: REDPOINT,
           grade: '5a',
           tries: 1,
         } as Ascent,
@@ -58,18 +58,18 @@ describe('calculateScore', () => {
     const previousYear = year - 1
 
     const currentYearAscent: Ascent = {
-      discipline: 'Bouldering',
+      discipline: BOULDERING,
       crag: 'Test Crag',
       date: `${year}-01-01T10:00:00Z`,
       _id: '1',
       name: 'Test Route 1',
-      style: 'Flash',
+      style: FLASH,
       grade: '7a',
       tries: 1,
     }
 
     const previousYearAscent: Ascent = {
-      discipline: 'Bouldering',
+      discipline: BOULDERING,
       crag: 'Test Crag',
       date: `${previousYear}-01-01T10:00:00Z`,
       _id: '2',
@@ -149,23 +149,23 @@ describe('calculateScore', () => {
     const ascents: Ascent[] = [
       // Current year ascents
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: `${year}-01-01T10:00:00Z`,
         _id: '1',
         name: 'Test Route 1',
-        style: 'Flash',
+        style: FLASH,
         grade: '7a',
         tries: 1,
       },
       // Previous year ascent
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: `${previousYear}-01-01T10:00:00Z`,
         _id: '2',
         name: 'Test Route 2',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '6c',
         tries: 3,
       },

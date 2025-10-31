@@ -4,7 +4,14 @@ import {
   COEFFICIENT_ASCENTS_PER_DAY,
   COEFFICIENT_ONSIGHT_FLASH_RATIO,
 } from '~/constants/ascents'
-import type { Ascent } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  FLASH,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 
@@ -24,12 +31,12 @@ describe('calculateEfficiencyPercentage', () => {
     const result = calculateEfficiencyPercentage({
       ascents: [
         {
-          discipline: 'Bouldering',
+          discipline: BOULDERING,
           crag: 'Test Crag',
           date: '2023-01-01T11:00:00Z',
           _id: '1',
           name: 'Test Route 1',
-          style: 'Flash',
+          style: FLASH,
           grade: '6b',
           tries: 1,
         },
@@ -44,12 +51,12 @@ describe('calculateEfficiencyPercentage', () => {
     // Scenario: 1 day outside, 1 ascent Flash, 1 try
     const ascents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
         name: 'Test Route 1',
-        style: 'Flash',
+        style: FLASH,
         grade: '6b',
         tries: 1,
       },
@@ -97,33 +104,33 @@ describe('calculateEfficiencyPercentage', () => {
     const ascents: Ascent[] = [
       // Day 1: 2 ascents
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
         name: 'Test Route 1',
-        style: 'Flash',
+        style: FLASH,
         grade: '6b',
         tries: 1,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T12:00:00Z',
         _id: '2',
         name: 'Test Route 2',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '6c',
         tries: 3,
       },
       // Day 2: 1 ascent
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
         _id: '3',
         name: 'Test Route 3',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6a+',
         tries: 1,
       },
@@ -165,42 +172,42 @@ describe('calculateEfficiencyPercentage', () => {
     // High efficiency: all days with ascents, all onsight/flash, low tries
     const highEfficiencyAscents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
         name: 'Test Route 1',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6b',
         tries: 1,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
         _id: '2',
         name: 'Test Route 2',
-        style: 'Flash',
+        style: FLASH,
         grade: '6b',
         tries: 1,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
         _id: '3',
         name: 'Test Route 3',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6b',
         tries: 1,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-02T14:00:00Z',
         _id: '4',
         name: 'Test Route 4',
-        style: 'Flash',
+        style: FLASH,
         grade: '6b',
         tries: 1,
       },
@@ -214,17 +221,17 @@ describe('calculateEfficiencyPercentage', () => {
     // Low efficiency: fewer days with ascents, all redpoint, high tries
     const lowEfficiencyAscents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
         name: 'Test Route 1',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '6b',
         tries: 8,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
         _id: '2',
@@ -251,7 +258,7 @@ describe('calculateEfficiencyPercentage', () => {
 
     const highTriesAscents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
@@ -282,7 +289,7 @@ describe('calculateEfficiencyPercentage', () => {
 
     const ascents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
         _id: '1',
@@ -292,7 +299,7 @@ describe('calculateEfficiencyPercentage', () => {
         tries: 1,
       },
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-01-01T13:00:00Z',
         _id: '2',

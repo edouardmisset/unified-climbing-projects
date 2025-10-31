@@ -1,4 +1,4 @@
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING } from '~/schema/ascent'
 
 /**
  * Formats the grade based on the climbing discipline.
@@ -12,5 +12,5 @@ export function formatGrade(
   params: Pick<Ascent, 'discipline' | 'grade'>,
 ): string {
   const { discipline: climbingDiscipline, grade } = params
-  return climbingDiscipline === 'Bouldering' ? grade.toUpperCase() : grade
+  return climbingDiscipline === BOULDERING ? grade.toUpperCase() : grade
 }

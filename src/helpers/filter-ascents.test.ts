@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
+import { REDPOINT, SPORT } from '~/schema/ascent'
 import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
@@ -19,10 +20,10 @@ describe('filterAscents', () => {
   })
 
   it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { discipline: 'Sport' })
+    const result = filterAscents(sampleAscents, { discipline: SPORT })
     expect(result.length).toBe(84)
     for (const { discipline: climbingDiscipline } of result) {
-      expect(climbingDiscipline).toBe('Sport')
+      expect(climbingDiscipline).toBe(SPORT)
     }
   })
 
@@ -36,13 +37,13 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      discipline: 'Sport',
-      style: 'Redpoint',
+      discipline: SPORT,
+      style: REDPOINT,
     })
     expect(result.length).toBe(27)
     for (const { discipline: climbingDiscipline, style } of result) {
-      expect(climbingDiscipline).toBe('Sport')
-      expect(style).toBe('Redpoint')
+      expect(climbingDiscipline).toBe(SPORT)
+      expect(style).toBe(REDPOINT)
     }
   })
 

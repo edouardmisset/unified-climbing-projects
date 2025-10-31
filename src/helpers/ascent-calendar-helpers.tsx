@@ -1,7 +1,7 @@
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 import { formatShortDate, prettyLongDate } from './formatters'
 
@@ -31,7 +31,7 @@ export function fromAscentsToCalendarEntries(
         backgroundColor,
         date,
         isSpecialCase: ascents.every(
-          ascent => ascent.discipline === 'Bouldering',
+          ascent => ascent.discipline === BOULDERING,
         ),
         shortText: formatGrade({
           discipline: climbingDiscipline,

@@ -1,4 +1,5 @@
 import { z } from '~/helpers/zod'
+import { BOULDERING, SPORT } from '~/schema/ascent'
 
 const _GRADES = [
   '1a',
@@ -68,7 +69,7 @@ const _GRADES = [
 const gradeSchema = z.enum(_GRADES)
 
 const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
-const CLIMBING_DISCIPLINE = ['Sport', 'Bouldering', 'Multi-Pitch'] as const
+const CLIMBING_DISCIPLINE = [SPORT, BOULDERING, 'Multi-Pitch'] as const
 const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 const HOLDS = [
   'Crimp',

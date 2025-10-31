@@ -5,7 +5,14 @@ import {
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { AscentListProps } from '~/schema/ascent'
+import {
+  type AscentListProps,
+  BOULDERING,
+  FLASH,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 import { Card } from '../../card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
@@ -53,26 +60,26 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className="block">
               Lead climb{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline={SPORT}
                 grade={fromPointToGrade(nextStepPoints, {
-                  discipline: 'Sport',
-                  style: 'Onsight',
+                  discipline: SPORT,
+                  style: ONSIGHT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Onsight" />,{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline={SPORT}
                 grade={fromPointToGrade(nextStepPoints, {
-                  discipline: 'Sport',
-                  style: 'Flash',
+                  discipline: SPORT,
+                  style: FLASH,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline={SPORT}
                 grade={fromPointToGrade(nextStepPoints, {
-                  discipline: 'Sport',
-                  style: 'Redpoint',
+                  discipline: SPORT,
+                  style: REDPOINT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Redpoint" />
@@ -81,18 +88,18 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className="block">
               Boulder{' '}
               <DisplayGrade
-                discipline="Bouldering"
+                discipline={BOULDERING}
                 grade={fromPointToGrade(nextStepPoints, {
-                  discipline: 'Bouldering',
-                  style: 'Flash',
+                  discipline: BOULDERING,
+                  style: FLASH,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
-                discipline="Bouldering"
+                discipline={BOULDERING}
                 grade={fromPointToGrade(nextStepPoints, {
-                  discipline: 'Bouldering',
-                  style: 'Redpoint',
+                  discipline: BOULDERING,
+                  style: REDPOINT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle="Redpoint" />

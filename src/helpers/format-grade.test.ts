@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING, SPORT } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 
 describe('formatGrade', () => {
@@ -11,7 +11,7 @@ describe('formatGrade', () => {
   for (const { input, expected } of BOULDER_TEST_CASES) {
     it(`should return uppercase grade for Bouldering (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         grade: input,
       } as const satisfies Pick<Ascent, 'grade' | 'discipline'>
       expect(
@@ -32,7 +32,7 @@ describe('formatGrade', () => {
   for (const { input, expected } of ROUTE_TEST_CASES) {
     it(`should return grade as is for Route (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        discipline: 'Sport',
+        discipline: SPORT,
         grade: input,
       } as const satisfies Pick<Ascent, 'grade' | 'discipline'>
       expect(

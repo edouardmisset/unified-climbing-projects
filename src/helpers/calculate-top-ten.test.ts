@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import type { Ascent } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  FLASH,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 import { fromAscentToPoints } from './ascent-converter'
 import { calculateTopTenScore } from './calculate-top-ten'
 
@@ -44,24 +51,24 @@ describe('calculateTopTenScore', () => {
     // Create mock ascents with known point values
     const mockAscents = [
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         date: new Date().toISOString(),
         _id: '1',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '5c',
       },
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         date: new Date().toISOString(),
         _id: '2',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '7a',
       },
       {
-        discipline: 'Boulder',
+        discipline: BOULDERING,
         date: new Date().toISOString(),
         _id: '3',
-        style: 'Flash',
+        style: FLASH,
         grade: '6a',
       },
     ] as Ascent[]

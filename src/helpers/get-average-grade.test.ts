@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { NOT_AVAILABLE } from '~/constants/generic'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, SPORT } from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'
 
 const ascent1: Ascent = {
   area: 'Wig Wam',
-  discipline: 'Sport',
+  discipline: SPORT,
   comments: 'À la fois superbe grimpe et passage terrifiant. ',
   crag: 'Ewige Jagdgründe',
   date: '2024-10-27T12:00:00.000Z',
@@ -22,7 +22,7 @@ const ascent1: Ascent = {
 }
 const ascent2: Ascent = {
   area: 'Envers du canyon',
-  discipline: 'Sport',
+  discipline: SPORT,
   comments: 'Dur :(',
   crag: 'Rue des masques',
   date: '2023-08-01T12:00:00.000Z',
@@ -39,7 +39,7 @@ const ascent2: Ascent = {
 }
 const ascent3: Ascent = {
   area: 'Tarzoon',
-  discipline: 'Sport',
+  discipline: SPORT,
   crag: 'Claret',
   date: '2024-01-01T12:00:00.000Z',
   height: 25,

@@ -1,4 +1,4 @@
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING, SPORT } from '~/schema/ascent'
 
 type ClimbingActivity =
   `${Lowercase<Ascent['discipline']> | 'ascent'}${'s' | ''}`
@@ -12,8 +12,8 @@ type ClimbingActivity =
  *   or with an "s" if there are multiple ascents.
  *
  * @param {Ascent[]} ascents - The list of ascent objects.
- * @returns {ClimbingActivity} The text for the ascents ('Bouldering', 'boulders',
- * 'Sport', etc).
+ * @returns {ClimbingActivity} The text for the ascents (BOULDERING, 'boulders',
+ * SPORT, etc).
  */
 export function writeAscentsDisciplineText<
   T extends Pick<Ascent, 'discipline'>,
@@ -28,9 +28,9 @@ export function writeAscentsDisciplineText<
   }
 
   const activity =
-    firstDiscipline === 'Bouldering'
+    firstDiscipline === BOULDERING
       ? 'boulder'
-      : firstDiscipline === 'Sport'
+      : firstDiscipline === SPORT
         ? 'route'
         : firstDiscipline === 'Deep Water Soloing'
           ? 'deep water solo'

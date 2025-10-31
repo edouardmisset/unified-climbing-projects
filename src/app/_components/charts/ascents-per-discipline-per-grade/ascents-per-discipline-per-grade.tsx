@@ -1,6 +1,11 @@
 import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  type CLIMBING_DISCIPLINE,
+  SPORT,
+} from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
   chartColorGetter,
@@ -14,8 +19,8 @@ import {
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 
 const ROUTE_AND_BOULDER = [
-  'Bouldering',
-  'Sport',
+  BOULDERING,
+  SPORT,
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
 export function AscentsPerDisciplinePerGrade({

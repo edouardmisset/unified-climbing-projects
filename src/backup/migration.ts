@@ -1,7 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import {
+  BOULDERING,
   type Ascent as NewAscent,
   ascentSchema as newAscentSchema,
+  SPORT,
 } from '~/schema/ascent'
 import { oldAscentSchema } from './migration-helpers'
 
@@ -22,10 +24,10 @@ const updateClimbingDiscipline = (ascent: {
     newDiscipline = 'Deep Water Soloing'
   }
 
-  if (oldDiscipline === 'Sport') {
-    newDiscipline = 'Sport'
-  } else if (oldDiscipline === 'Bouldering') {
-    newDiscipline = 'Bouldering'
+  if (oldDiscipline === SPORT) {
+    newDiscipline = SPORT
+  } else if (oldDiscipline === BOULDERING) {
+    newDiscipline = BOULDERING
   } else if (oldDiscipline === 'Multi-Pitch') {
     newDiscipline = 'Multi-Pitch'
   } else if (oldDiscipline === 'Deep Water Soloing') {

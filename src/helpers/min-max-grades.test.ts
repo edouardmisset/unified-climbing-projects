@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { type Ascent, GRADE_TO_NUMBER } from '~/schema/ascent'
+import { type Ascent, GRADE_TO_NUMBER, SPORT } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'
 
@@ -18,7 +18,7 @@ describe('minMaxGrades', () => {
     const ascents: Ascent[] = [
       {
         area: 'Wig Wam',
-        discipline: 'Sport',
+        discipline: SPORT,
         comments: 'À la fois superbe grimpe et passage terrifiant. ',
         crag: 'Ewige Jagdgründe',
         date: '2024-10-27T12:00:00.000Z',

@@ -1,9 +1,11 @@
 import { ASCENT_GRADE_TO_COLOR, DEFAULT_GRADE } from '~/constants/ascents'
 import {
   type Ascent,
+  BOULDERING,
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   type Grade,
+  SPORT,
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
 
@@ -59,7 +61,7 @@ export function fromAscentToPoints({
     GRADE_TO_POINTS[grade as keyof typeof GRADE_TO_POINTS] ?? 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus =
-    discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0
+    discipline === BOULDERING ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
@@ -76,7 +78,7 @@ export function fromAscentToPoints({
  *
  * @param {number} points - The points value to convert to a grade.
  * @param {Object} [to] - Optional parameters to adjust the conversion.
- * @param {string} [to.discipline='Sport'] - The climbing discipline ('Sport' or 'Bouldering').
+ * @param {string} [to.discipline=SPORT] - The climbing discipline (SPORT or BOULDERING).
  * @param {string} [to.style='Redpoint'] - The climbing style.
  * @returns {Grade} The climbing grade corresponding to the points value, or
  * DEFAULT_GRADE if no match is found.
@@ -85,14 +87,14 @@ export function fromPointToGrade(
   points: number,
   to?: Pick<Partial<Ascent>, 'discipline' | 'style'>,
 ): Grade {
-  const { discipline = 'Sport', style = 'Redpoint' } = to ?? {}
+  const { discipline = SPORT, style = 'Redpoint' } = to ?? {}
 
   const listOfPoints = Object.values(GRADE_TO_POINTS)
 
   const adjustedPoints =
     points -
     (STYLE_TO_POINTS[style] ?? 0) -
-    (discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0)
+    (discipline === BOULDERING ? BOULDERING_BONUS_POINTS : 0)
 
   if (!listOfPoints.includes(adjustedPoints)) {
     globalThis.console.log(

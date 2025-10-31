@@ -31,6 +31,7 @@ import {
   type Ascent,
   AVAILABLE_CLIMBING_DISCIPLINE,
   ascentStyleSchema,
+  BOULDERING,
   GRADE_TO_NUMBER,
   type Grade,
   HOLDS,
@@ -85,7 +86,7 @@ export default function AscentForm(props: AscentFormProps) {
     date: new Date(),
     personalGrade: fromGradeToNumber(minGrade),
     routeName: '',
-    style: latestAscent?.discipline === 'Bouldering' ? 'Flash' : 'Onsight',
+    style: latestAscent?.discipline === BOULDERING ? 'Flash' : 'Onsight',
     topoGrade: fromGradeToNumber(minGrade),
     tries: '1',
   } satisfies AscentFormInput
@@ -121,7 +122,7 @@ export default function AscentForm(props: AscentFormProps) {
   const numberOfTries = watch('tries') ?? '1'
   const styleValue = watch('style')
   const discipline = watch('climbingDiscipline')
-  const isBoulder = discipline === 'Bouldering'
+  const isBoulder = discipline === BOULDERING
 
   const adjustedMinGrade = Math.max(
     fromGradeToNumber(minGrade) - numberOfGradesBelowMinimum,

@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  FLASH,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 import { calculateProgressionPercentage } from './calculate-progression-percentage'
 
 describe('calculateProgressionPercentage', () => {
@@ -14,22 +21,22 @@ describe('calculateProgressionPercentage', () => {
   it('should return 40% when there are no ascents in the previous year but two in the current year', () => {
     const ascents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '1',
         name: 'Test Route 1',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7a',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '2',
         name: 'Test Route 2',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6c',
         tries: 1,
       } as Ascent,
@@ -45,22 +52,22 @@ describe('calculateProgressionPercentage', () => {
   it('should return 0 when there are no ascents in the current year', () => {
     const ascents: Ascent[] = [
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '3',
         name: 'Test Route 3',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7a',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '4',
         name: 'Test Route 4',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6c',
         tries: 1,
       } as Ascent,
@@ -77,104 +84,104 @@ describe('calculateProgressionPercentage', () => {
     const ascents: Ascent[] = [
       // Previous year ascents
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '5',
         name: 'Boulder Redpoint 2022',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7a',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '6',
         name: 'Boulder Flash 2022',
-        style: 'Flash',
+        style: FLASH,
         grade: '6c',
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '7',
         name: 'Route Redpoint 2022',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7b',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '8',
         name: 'Route Flash 2022',
-        style: 'Flash',
+        style: FLASH,
         grade: '7a',
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '9',
         name: 'Route Onsight 2022',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '6c+',
         tries: 1,
       } as Ascent,
 
       // Current year ascents - all harder
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '10',
         name: 'Boulder Redpoint 2023',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7a+',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '11',
         name: 'Boulder Flash 2023',
-        style: 'Flash',
+        style: FLASH,
         grade: '7a',
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '12',
         name: 'Route Redpoint 2023',
-        style: 'Redpoint',
+        style: REDPOINT,
         grade: '7b+',
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '13',
         name: 'Route Flash 2023',
-        style: 'Flash',
+        style: FLASH,
         grade: '7a+',
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '14',
         name: 'Route Onsight 2023',
-        style: 'Onsight',
+        style: ONSIGHT,
         grade: '7a',
         tries: 1,
       } as Ascent,
@@ -191,7 +198,7 @@ describe('calculateProgressionPercentage', () => {
     const ascents: Ascent[] = [
       // Previous year ascents
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '15',
@@ -201,7 +208,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '16',
@@ -211,7 +218,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '17',
@@ -221,7 +228,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '18',
@@ -231,7 +238,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '19',
@@ -243,7 +250,7 @@ describe('calculateProgressionPercentage', () => {
 
       // Current year ascents - 3 harder, 2 same
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '20',
@@ -253,7 +260,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '21',
@@ -263,7 +270,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '22',
@@ -273,7 +280,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '23',
@@ -283,7 +290,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '24',
@@ -305,7 +312,7 @@ describe('calculateProgressionPercentage', () => {
     const ascents: Ascent[] = [
       // Previous year ascents
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '25',
@@ -315,7 +322,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '26',
@@ -325,7 +332,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '27',
@@ -335,7 +342,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '28',
@@ -345,7 +352,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '29',
@@ -357,7 +364,7 @@ describe('calculateProgressionPercentage', () => {
 
       // Current year ascents - all easier
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '30',
@@ -367,7 +374,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '31',
@@ -377,7 +384,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '32',
@@ -387,7 +394,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '33',
@@ -397,7 +404,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '34',
@@ -419,7 +426,7 @@ describe('calculateProgressionPercentage', () => {
     const ascents: Ascent[] = [
       // Previous year - only 3 categories
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '35',
@@ -429,7 +436,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '36',
@@ -439,7 +446,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
         _id: '37',
@@ -451,7 +458,7 @@ describe('calculateProgressionPercentage', () => {
 
       // Current year - all 5 categories, all better
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '38',
@@ -461,7 +468,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Bouldering',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '39',
@@ -471,7 +478,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '40',
@@ -481,7 +488,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 2,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '41',
@@ -491,7 +498,7 @@ describe('calculateProgressionPercentage', () => {
         tries: 1,
       } as Ascent,
       {
-        discipline: 'Sport',
+        discipline: SPORT,
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
         _id: '42',

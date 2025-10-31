@@ -1,4 +1,12 @@
-import type { Ascent, Grade } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  FLASH,
+  type Grade,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 import { fromGradeToNumber } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'
 
@@ -39,11 +47,11 @@ export function calculateProgressionPercentage({
   const previousYear = year - 1
 
   const categories = [
-    { discipline: 'Bouldering', style: 'Redpoint' },
-    { discipline: 'Bouldering', style: 'Flash' },
-    { discipline: 'Sport', style: 'Redpoint' },
-    { discipline: 'Sport', style: 'Flash' },
-    { discipline: 'Sport', style: 'Onsight' },
+    { discipline: BOULDERING, style: REDPOINT },
+    { discipline: BOULDERING, style: FLASH },
+    { discipline: SPORT, style: REDPOINT },
+    { discipline: SPORT, style: FLASH },
+    { discipline: SPORT, style: ONSIGHT },
   ] as const satisfies Pick<Ascent, 'discipline' | 'style'>[]
 
   // Create lookup maps by year for quick filtering

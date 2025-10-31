@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { BOULDERING } from '~/schema/ascent'
 import {
   extractDateFromISODateString,
   findLongestGap,
@@ -310,7 +311,7 @@ describe('findLongestStreak', () => {
   it('should work with objects containing additional properties', () => {
     const data = [
       { date: '2024-01-01', activity: 'climbing', grade: '5.10a' },
-      { date: '2024-01-02', activity: 'bouldering', grade: 'V4' },
+      { date: '2024-01-02', activity: BOULDERING, grade: 'V4' },
       { date: '2024-01-03', activity: 'climbing', grade: '5.11b' },
     ]
     const result = findLongestStreak(data)
@@ -433,7 +434,7 @@ describe('findLongestGap', () => {
   it('should work with objects containing additional properties', () => {
     const data = [
       { date: '2024-01-01', activity: 'climbing', grade: '5.10a' },
-      { date: '2024-01-08', activity: 'bouldering', grade: 'V4' }, // 6-day gap
+      { date: '2024-01-08', activity: BOULDERING, grade: 'V4' }, // 6-day gap
     ]
     const result = findLongestGap(data)
     expect(result).toBe(6)

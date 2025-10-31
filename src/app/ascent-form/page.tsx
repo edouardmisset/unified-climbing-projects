@@ -56,8 +56,8 @@ export const metadata: Metadata = {
     'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
   keywords: [
     'climbing',
-    'Sport',
-    'Bouldering',
+    'sport climbing',
+    'bouldering',
     'outdoor',
     'multi-pitch',
     'log',
