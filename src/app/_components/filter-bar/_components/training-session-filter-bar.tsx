@@ -4,7 +4,6 @@ import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { PERIOD } from '~/schema/generic'
 import {
-  LOAD_CATEGORIES,
   SESSION_TYPES,
   type TrainingSessionListProps,
 } from '~/schema/training.ts'
@@ -25,7 +24,7 @@ export function TrainingSessionFilterBar({
       [
         ...new Set(
           trainingSessions
-            .map(({ gymCrag }) => gymCrag?.trim())
+            .map(({ location }) => location?.trim())
             .filter(Boolean),
         ),
       ].sort(compareStringsAscending),
@@ -33,12 +32,10 @@ export function TrainingSessionFilterBar({
   )
 
   const {
-    selectedLoad,
     selectedLocation,
     selectedPeriod,
     selectedSessionType,
     selectedYear,
-    setLoad,
     setLocation,
     setPeriod,
     setSessionType,
@@ -54,13 +51,6 @@ export function TrainingSessionFilterBar({
           options: SESSION_TYPES,
           selectedValue: selectedSessionType,
           title: 'Session Type',
-        },
-        {
-          handleChange: createChangeHandler(setLoad),
-          name: 'Load',
-          options: LOAD_CATEGORIES,
-          selectedValue: selectedLoad,
-          title: 'Load',
         },
         {
           handleChange: createChangeHandler(setYear),
@@ -86,12 +76,10 @@ export function TrainingSessionFilterBar({
       ] as const satisfies FilterConfig[],
     [
       locationList,
-      selectedLoad,
       selectedLocation,
       selectedPeriod,
       selectedSessionType,
       selectedYear,
-      setLoad,
       setLocation,
       setPeriod,
       setSessionType,

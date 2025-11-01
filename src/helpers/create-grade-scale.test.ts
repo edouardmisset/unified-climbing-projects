@@ -14,10 +14,10 @@ describe('createGradeScaleFromAscents', () => {
 
   it('should return a grade scale between the min and max grades from ascents', () => {
     const ascents: Ascent[] = [
-      { topoGrade: '6c' } as Ascent,
-      { topoGrade: '6a' } as Ascent,
-      { topoGrade: '7a' } as Ascent,
-      { topoGrade: '6b+' } as Ascent,
+      { grade: '6c' } as Ascent,
+      { grade: '6a' } as Ascent,
+      { grade: '7a' } as Ascent,
+      { grade: '6b+' } as Ascent,
     ]
     const expectedScale: Grade[] = ['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a']
     const result = createGradeScaleFromAscents(ascents)
@@ -25,7 +25,7 @@ describe('createGradeScaleFromAscents', () => {
   })
 
   it('should handle single ascent', () => {
-    const ascents: Ascent[] = [{ topoGrade: '7a' } as Ascent]
+    const ascents: Ascent[] = [{ grade: '7a' } as Ascent]
     const expectedScale: Grade[] = ['7a']
     const result = createGradeScaleFromAscents(ascents)
     expect(result).toEqual(expectedScale)
@@ -33,9 +33,9 @@ describe('createGradeScaleFromAscents', () => {
 
   it('should handle ascents with same grade', () => {
     const ascents: Ascent[] = [
-      { topoGrade: '6b' } as Ascent,
-      { topoGrade: '6b' } as Ascent,
-      { topoGrade: '6b' } as Ascent,
+      { grade: '6b' } as Ascent,
+      { grade: '6b' } as Ascent,
+      { grade: '6b' } as Ascent,
     ]
     const expectedScale: Grade[] = ['6b']
     const result = createGradeScaleFromAscents(ascents)
