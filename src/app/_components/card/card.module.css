@@ -1,34 +1,45 @@
-@property --rotating-angle {
+@property --sun-angle {
   syntax: '<angle>';
-  inherits: true;
-  initial-value: 0deg;
+  inherits: false;
+  initial-value: 20deg;
 }
 
-@keyframes rotating-gradient {
+@keyframes rising-sun {
   from {
-    --rotating-angle: 180deg;
+    --sun-angle: 20deg;
   }
 
   to {
-    --rotating-angle: calc(180deg + 360deg);
+    --sun-angle: 60deg;
   }
 }
 
 .card {
-  --rotating-angle: 180deg;
+  --sun-angle: 20deg;
+  --first-angle: 20deg;
+  --second-angle: 35deg;
+  --forth-angle: 45deg;
   --border-width: calc(var(--size-fluid-0) / 3);
-  --glow-intensity: 0.1;
-  --glow-size: 0.5rem;
+  --glow-intensity: 0.2;
+  --glow-size: 0.7rem;
   --conic-gradient: conic-gradient(
-    from var(--rotating-angle),
+    from 180deg,
     var(--patagonia-color-5),
+    var(--sun-angle),
     var(--patagonia-color-4),
+    calc(var(--sun-angle) + var(--first-angle)),
     var(--patagonia-color-3),
+    calc(var(--sun-angle) + var(--second-angle)),
     var(--patagonia-color-2),
+    calc(var(--sun-angle) + var(--forth-angle)),
     var(--patagonia-color-1),
+    calc(360deg - var(--sun-angle) - var(--forth-angle)),
     var(--patagonia-color-2),
+    calc(360deg - var(--sun-angle) - var(--second-angle)),
     var(--patagonia-color-3),
+    calc(360deg - var(--sun-angle) - var(--first-angle)),
     var(--patagonia-color-4),
+    calc(360deg - var(--sun-angle)),
     var(--patagonia-color-5)
   );
 
@@ -75,7 +86,7 @@
     &:hover,
     &:focus-within {
       @media (prefers-reduced-motion: no-preference) {
-        animation: rotating-gradient 10s linear infinite;
+        animation: rising-sun 3s ease-in-out forwards;
       }
 
       &::after {
