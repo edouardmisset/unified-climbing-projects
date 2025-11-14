@@ -6,21 +6,25 @@
 
 @keyframes rotating-gradient {
   from {
-    --rotating-angle: 0deg;
+    --rotating-angle: 180deg;
   }
 
   to {
-    --rotating-angle: 360deg;
+    --rotating-angle: calc(180deg + 360deg);
   }
 }
 
 .card {
+  --rotating-angle: 180deg;
   --border-width: calc(var(--size-fluid-0) / 3);
   --glow-intensity: 0.1;
   --glow-size: 0.5rem;
   --conic-gradient: conic-gradient(
     from var(--rotating-angle),
     var(--patagonia-color-5),
+    var(--patagonia-color-4),
+    var(--patagonia-color-3),
+    var(--patagonia-color-2),
     var(--patagonia-color-1),
     var(--patagonia-color-2),
     var(--patagonia-color-3),
