@@ -9,7 +9,7 @@ import { DaysOutsideSummary } from './_components/days-outside-summary'
 import { HardestClimbsSummary } from './_components/hardest-climbs-summary'
 import { TopTenSummary } from './_components/top-ten-summary'
 import { VerticalMilestoneSummary } from './_components/vertical-milestone-summary'
-import { ALL_TIME } from './constants'
+import { WrapUpHeader } from './_components/wrap-up-header'
 import styles from './wrap-up.module.css'
 
 async function getAscentsAndTraining(
@@ -30,7 +30,7 @@ export default async function WrapUp({ year }: { year?: number }) {
 
   if (isAscentsEmpty && isTrainingEmpty) {
     return (
-      <Layout title={year ?? ALL_TIME}>
+      <Layout title={<WrapUpHeader year={year} />}>
         <Card>
           <h2>No Data</h2>
           <p>
@@ -44,7 +44,10 @@ export default async function WrapUp({ year }: { year?: number }) {
   }
 
   return (
-    <Layout gridClassName={`padding ${styles.wrapUp}`} title={year ?? ALL_TIME}>
+    <Layout
+      gridClassName={`padding ${styles.wrapUp}`}
+      title={<WrapUpHeader year={year} />}
+    >
       <DaysOutsideSummary
         ascents={ascents}
         trainingSessions={trainingSessions}
