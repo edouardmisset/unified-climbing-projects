@@ -2,9 +2,9 @@ import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
-import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
 import { api } from '~/trpc/server.ts'
 import Layout from '../_components/page-layout/page-layout.tsx'
+import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
 import AscentForm from './_components/ascent-form.tsx'
 
 async function fetchAscentData() {
@@ -41,11 +41,7 @@ export default async function AscentFormPage() {
         </Layout>
       </SignedIn>
       <SignedOut>
-        <section className="flexColumn gap">
-          <h2>Unauthorized</h2>
-          <p>You need to be signed in to log an ascent.</p>
-          <SignInButton />
-        </section>
+        <UnauthorizedAccess />
       </SignedOut>
     </Suspense>
   )

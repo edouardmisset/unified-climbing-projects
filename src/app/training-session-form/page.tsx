@@ -2,9 +2,9 @@ import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
-import { SignInButton } from '~/app/_components/sign-in-button/sign-in-button.tsx'
 import { api } from '~/trpc/server.ts'
 import Layout from '../_components/page-layout/page-layout.tsx'
+import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
 import TrainingSessionForm from './_components/training-session-form.tsx'
 
 export default async function TrainingSessionFormPage() {
@@ -23,10 +23,7 @@ export default async function TrainingSessionFormPage() {
         </Layout>
       </SignedIn>
       <SignedOut>
-        <section className="flexColumn gap">
-          <p>You need to be signed in to log a training session.</p>
-          <SignInButton />
-        </section>
+        <UnauthorizedAccess />
       </SignedOut>
     </Suspense>
   )
