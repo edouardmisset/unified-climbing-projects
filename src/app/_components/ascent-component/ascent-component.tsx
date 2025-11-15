@@ -11,15 +11,13 @@ export function AscentComponent({
   ascent: Ascent
   showGrade?: boolean
 }) {
-  const { topoGrade, climbingDiscipline, routeName } = ascent
+  const { grade, discipline, name } = ascent
   return (
     <Dialog
       content={<AscentCard ascent={ascent} />}
       triggerClassName={styles.trigger}
       triggerText={
-        showGrade
-          ? `${routeName} (${formatGrade({ climbingDiscipline, grade: topoGrade })})`
-          : routeName
+        showGrade ? `${name} (${formatGrade({ discipline, grade })})` : name
       }
     />
   )

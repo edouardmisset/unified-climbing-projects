@@ -1,8 +1,8 @@
 import type { Ascent } from '~/schema/ascent'
 
 export type ClimbingDisciplineMetric = {
-  id: Ascent['climbingDiscipline']
-  label: Ascent['climbingDiscipline']
+  id: Ascent['discipline']
+  label: Ascent['discipline']
   value: number
   color: string
 }

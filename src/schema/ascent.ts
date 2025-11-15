@@ -177,37 +177,64 @@ export const STYLE_TO_POINTS = {
 export const BOULDERING_BONUS_POINTS = 100 as const
 
 export const gradeSchema = z.enum(_GRADES)
-
 export type Grade = z.infer<typeof gradeSchema>
 
-export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
-export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
-const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['climbingDiscipline']> =
-  new Set(['Multi-Pitch'])
+export const ONSIGHT = 'Onsight' as const
+export const FLASH = 'Flash' as const
+export const REDPOINT = 'Redpoint' as const
+export const ASCENT_STYLE = [ONSIGHT, FLASH, REDPOINT] as const
+
+export const SPORT = 'Sport' as const
+export const BOULDERING = 'Bouldering' as const
+export const MULTI_PITCH = 'Multi-Pitch' as const
+export const DEEP_WATER_SOLOING = 'Deep Water Soloing' as const
+export const CLIMBING_DISCIPLINE = [
+  SPORT,
+  BOULDERING,
+  MULTI_PITCH,
+  DEEP_WATER_SOLOING,
+] as const
+const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['discipline']> = new Set([
+  MULTI_PITCH,
+])
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
   d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )
 
 export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
+export const CRIMP = 'Crimp' as const
+export const JUG = 'Jug' as const
+export const POCKET = 'Pocket' as const
+const SLOPER = 'Sloper' as const
+const PINCH = 'Pinch' as const
+const CRACK = 'Crack' as const
+const UNDERCLING = 'Undercling' as const
 export const HOLDS = [
-  'Crimp',
-  'Jug',
-  'Pocket',
-  'Sloper',
-  'Pinch',
-  'Crack',
-  'Undercling',
+  CRIMP,
+  JUG,
+  POCKET,
+  SLOPER,
+  PINCH,
+  CRACK,
+  UNDERCLING,
 ] as const
 
+export const VERTICAL = 'Vertical' as const
+export const OVERHANG = 'Overhang' as const
+export const SLAB = 'Slab' as const
+const ROOF = 'Roof' as const
+export const ARETE = 'Arête' as const
+const DIHEDRAL = 'Dihedral' as const
+const TRAVERSE = 'Traverse' as const
 export const PROFILES = [
-  'Vertical',
-  'Overhang',
-  'Slab',
-  'Roof',
-  'Arête',
-  'Dihedral',
-  'Traverse',
+  VERTICAL,
+  OVERHANG,
+  SLAB,
+  ROOF,
+  ARETE,
+  DIHEDRAL,
+  TRAVERSE,
 ] as const
 
 export const ascentStyleSchema = z.enum(ASCENT_STYLE)
@@ -215,13 +242,10 @@ export const profileSchema = z.enum(PROFILES)
 export const holdsSchema = z.enum(HOLDS)
 const optionalStringSchema = z.string().optional()
 
+const DEFAULT_ROUTE_NAME = 'No Name' as const
 export const ascentSchema = z.object({
   area: z.string().trim().optional(),
-  climber: z
-    .string()
-    .transform(() => 'Edouard Misset')
-    .optional(),
-  climbingDiscipline: climbingDisciplineSchema,
+  discipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
   crag: z.string().trim().min(1),
   date: z.string(), // ISO 8601 date format
@@ -229,13 +253,13 @@ export const ascentSchema = z.object({
   holds: holdsSchema.optional(),
   _id: z.string(),
   personalGrade: gradeSchema.optional(),
-  points: positiveInteger.optional(),
   profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(5).optional(),
-  region: optionalStringSchema,
-  routeName: z.string().trim().min(1).default('No Name'),
+  /** The name of the route (or boulder, multi-pitch, etc.) as it appears on the topo (or other "official" source) */
+  name: z.string().trim().min(1).default(DEFAULT_ROUTE_NAME),
   style: ascentStyleSchema,
-  topoGrade: gradeSchema,
+  /** The grade as it appears on the topo (or other "official" source) */
+  grade: gradeSchema,
   tries: z.number().int().min(1),
 })
 export type Ascent = z.infer<typeof ascentSchema>

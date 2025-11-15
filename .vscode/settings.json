@@ -1,9 +1,8 @@
 {
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
     "source.fixAll.biome": "explicit",
     "source.addMissingImports.ts": "explicit",
-    "source.organizeImports.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "editor.formatOnSave": true,
   "[javascript]": {
@@ -46,5 +45,8 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#9109cf",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "psicobloc"
+  ]
 }

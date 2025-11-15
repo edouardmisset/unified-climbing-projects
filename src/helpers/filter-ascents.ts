@@ -22,7 +22,7 @@ export function filterAscents(
   filters?: OptionalAscentFilter,
 ): Ascent[] {
   const {
-    climbingDiscipline,
+    discipline,
     crag,
     grade,
     height,
@@ -44,9 +44,8 @@ export function filterAscents(
     const ascentDate = new Date(ascent.date)
     return (
       (grade === undefined ||
-        stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
-      (climbingDiscipline === undefined ||
-        ascent.climbingDiscipline === climbingDiscipline) &&
+        stringEqualsCaseInsensitive(ascent.grade, grade)) &&
+      (discipline === undefined || ascent.discipline === discipline) &&
       (year === undefined || isDateInYear(ascentDate, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&
@@ -64,8 +63,8 @@ export function filterAscents(
 export function getHardestAscent(ascents: Ascent[]): Ascent {
   return ascents.reduce(
     (hardestAscent, currentAscent) => {
-      const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
-      const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
+      const hardestGrade = fromGradeToNumber(hardestAscent.grade)
+      const currentGrade = fromGradeToNumber(currentAscent.grade)
 
       const isCurrentAscentHarder = hardestGrade < currentGrade
 
@@ -73,6 +72,6 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
 
       return hardestAscent
     },
-    { topoGrade: DEFAULT_GRADE } as Ascent,
+    { grade: DEFAULT_GRADE } as Ascent,
   )
 }

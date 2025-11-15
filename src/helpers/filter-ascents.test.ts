@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
+import { REDPOINT, SPORT } from '~/schema/ascent'
 import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
@@ -13,16 +14,16 @@ describe('filterAscents', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
     expect(result.length).toBe(38)
 
-    for (const { topoGrade } of result) {
-      expect(topoGrade).toBe('7a')
+    for (const { grade } of result) {
+      expect(grade).toBe('7a')
     }
   })
 
-  it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
+  it('should filter ascents by discipline', () => {
+    const result = filterAscents(sampleAscents, { discipline: SPORT })
     expect(result.length).toBe(84)
-    for (const { climbingDiscipline } of result) {
-      expect(climbingDiscipline).toBe('Route')
+    for (const { discipline } of result) {
+      expect(discipline).toBe(SPORT)
     }
   })
 
@@ -36,13 +37,13 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      climbingDiscipline: 'Route',
-      style: 'Redpoint',
+      discipline: SPORT,
+      style: REDPOINT,
     })
     expect(result.length).toBe(27)
-    for (const { climbingDiscipline, style } of result) {
-      expect(climbingDiscipline).toBe('Route')
-      expect(style).toBe('Redpoint')
+    for (const { discipline, style } of result) {
+      expect(discipline).toBe(SPORT)
+      expect(style).toBe(REDPOINT)
     }
   })
 
@@ -55,6 +56,6 @@ describe('filterAscents', () => {
 describe('getHardestAscent', () => {
   it('should return the ascent with the highest grade', () => {
     const hardest = getHardestAscent(sampleAscents)
-    expect(hardest.topoGrade).toBe('8b+')
+    expect(hardest.grade).toBe('8b+')
   })
 })
