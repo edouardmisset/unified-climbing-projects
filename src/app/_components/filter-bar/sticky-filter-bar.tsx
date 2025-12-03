@@ -42,6 +42,7 @@ export function StickyFilterBar({
             name="search route"
             onChange={e => setSearch(e.target.value)}
             placeholder="Biographie"
+            type="search"
             value={search}
           />
         )}
