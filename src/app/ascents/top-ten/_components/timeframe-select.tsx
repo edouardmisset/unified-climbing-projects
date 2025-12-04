@@ -9,7 +9,7 @@ import styles from './timeframe-select.module.css'
 export function TimeframeSelect() {
   const [timeframe, setTimeframe] = useTimeframeQueryState()
 
-  const handleTimeframeChange = (value: Timeframe) => setTimeframe(value)
+  const handleTimeframeChange = (value: Timeframe | null) => setTimeframe(value)
 
   return (
     <Select.Root onValueChange={handleTimeframeChange} value={timeframe}>

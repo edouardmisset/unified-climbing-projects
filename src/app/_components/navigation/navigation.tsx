@@ -30,10 +30,11 @@ export const Navigation = memo(() => (
 
     {/* Mobile hamburger menu */}
     <div className={styles.mobileMenu}>
-      <Menu.Root openOnHover>
+      <Menu.Root>
         <Menu.Trigger
           aria-label="navigation"
           className={styles.Button}
+          openOnHover
           tabIndex={0}
         >
           <MenuIcon />
