@@ -14,11 +14,11 @@ export function fromAscentsToCalendarEntries(
       const [firstAscent] = ascents
 
       if (firstAscent === undefined || ascents === undefined) {
-        const date = new Date(year, 0, index + 1, 12).toISOString()
+        const emptyDate = new Date(year, 0, index + 1, 12).toISOString()
         return {
-          date,
+          date: emptyDate,
           shortText: '',
-          title: formatShortDate(date),
+          title: formatShortDate(emptyDate),
         }
       }
 

@@ -32,11 +32,13 @@ export async function writeClimbingDBToBackupJson(): Promise<{
     },
   ] as const
 
-  for (const { path, content } of files) {
-    await writeFile(path, JSON.stringify(content), {
-      flag: 'w',
-    })
-  }
+  await Promise.all(
+    files.map(({ path, content }) =>
+      writeFile(path, JSON.stringify(content), {
+        flag: 'w',
+      }),
+    ),
+  )
 
   return { ascentFile: ascentDated, trainingFile: trainingDated }
 }

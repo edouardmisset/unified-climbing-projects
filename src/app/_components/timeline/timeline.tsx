@@ -25,8 +25,8 @@ function EventComponent({
       <span aria-hidden="true" className={styles.icon} />
       <div className={styles.body}>
         <time className={styles.date}>{interval}</time>
-        {title && <h3>{title}</h3>}
-        {subtitle && <h4>{subtitle}</h4>}
+        {Boolean(title) && <h3>{title}</h3>}
+        {Boolean(subtitle) && <h4>{subtitle}</h4>}
         {children}
       </div>
     </li>

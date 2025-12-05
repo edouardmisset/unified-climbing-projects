@@ -3,11 +3,16 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { KeycapButton } from './keycap-button'
 
+const SUBMIT_REGEX = /submit/i
+const CLICK_ME_REGEX = /click me/i
+const DISABLED_REGEX = /disabled/i
+const KEYBOARD_TEST_REGEX = /keyboard test/i
+
 describe('KeycapButton Component', () => {
   it('renders button with label', () => {
     render(<KeycapButton label="Submit" type="button" />)
 
-    const button = screen.getByRole('button', { name: /submit/i })
+    const button = screen.getByRole('button', { name: SUBMIT_REGEX })
     expect(button).toBeInTheDocument()
     expect(button).toHaveTextContent('Submit')
   })
@@ -19,7 +24,7 @@ describe('KeycapButton Component', () => {
       <KeycapButton label="Click me" onClick={handleClick} type="button" />,
     )
 
-    const button = screen.getByRole('button', { name: /click me/i })
+    const button = screen.getByRole('button', { name: CLICK_ME_REGEX })
     await userEvent.click(button)
 
     expect(handleClick).toHaveBeenCalledTimes(1)
@@ -28,7 +33,7 @@ describe('KeycapButton Component', () => {
   it('can be disabled', () => {
     render(<KeycapButton disabled label="Disabled" type="button" />)
 
-    const button = screen.getByRole('button', { name: /disabled/i })
+    const button = screen.getByRole('button', { name: DISABLED_REGEX })
     expect(button).toBeDisabled()
   })
 
@@ -58,7 +63,7 @@ describe('KeycapButton Component', () => {
       />,
     )
 
-    const button = screen.getByRole('button', { name: /keyboard test/i })
+    const button = screen.getByRole('button', { name: KEYBOARD_TEST_REGEX })
     button.focus()
     await userEvent.keyboard('{Enter}')
 

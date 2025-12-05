@@ -1,5 +1,6 @@
 import { objectKeys } from '@edouardmisset/object'
 import { frequencyBy } from '~/helpers/frequency-by'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { AscentListProps } from '~/schema/ascent'
 import type {
   TrainingSession,
@@ -51,7 +52,7 @@ export function CragsSummary({
     mostFrequentCrag === undefined ||
     mostFrequentCrag === ''
   )
-    return undefined
+    return
 
   return (
     <Card>
@@ -61,7 +62,7 @@ export function CragsSummary({
         <Popover
           popoverDescription={
             <ul className={ascentsWithPopoverStyles.list}>
-              {crags.toSorted().map(crag => (
+              {crags.toSorted(compareStringsAscending).map(crag => (
                 <li className={ascentsWithPopoverStyles.item} key={crag}>
                   {crag}
                 </li>

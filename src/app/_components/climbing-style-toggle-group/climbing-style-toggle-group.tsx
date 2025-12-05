@@ -10,7 +10,7 @@ export function ClimbingStyleToggleGroup(
 ) {
   const { display, onValueChange, value, isOnsightDisable, ...rest } = props
 
-  if (!display) return undefined
+  if (!display) return
 
   return (
     <ToggleGroup

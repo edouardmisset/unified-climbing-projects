@@ -1,5 +1,5 @@
 import { NoOp } from 'convex-helpers/server/customFunctions'
-import { zCustomQuery } from 'convex-helpers/server/zod'
+import { zCustomQuery } from 'convex-helpers/server/zod3'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { ascentSchema } from '~/schema/ascent'
 import { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'

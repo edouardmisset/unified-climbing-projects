@@ -57,8 +57,8 @@ export function groupSimilarStrings(
     }
 
     seen.add(str)
-    for (const str of similarStrings) {
-      seen.add(str)
+    for (const similarStr of similarStrings) {
+      seen.add(similarStr)
     }
   }
 

@@ -15,8 +15,7 @@ import styles from './training-popover-description.module.css'
 export function TrainingPopoverDescription({
   trainingSessions,
 }: TrainingSessionListProps) {
-  if (trainingSessions.length === 0 || trainingSessions[0] === undefined)
-    return undefined
+  if (trainingSessions.length === 0 || trainingSessions[0] === undefined) return
 
   return (
     <ul className={styles.list}>

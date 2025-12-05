@@ -1,13 +1,20 @@
 import { expect, test } from '@playwright/test'
 
+const HOME_REGEX = /Home/
+const ALL_TIME_REGEX = /All Time/
+const ASCENTS_REGEX = /Ascents/
+const DASHBOARD_REGEX = /Dashboard/
+const TOP_TEN_REGEX = /Top Ten/
+const TRAINING_REGEX = /Training/
+
 test.describe('Home page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
   })
 
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Home/)
-    await expect(page.getByText(/All Time/)).toBeVisible()
+    await expect(page).toHaveTitle(HOME_REGEX)
+    await expect(page.getByText(ALL_TIME_REGEX)).toBeVisible()
   })
 })
 
@@ -25,7 +32,7 @@ test.describe('Ascents page', () => {
     await page.goto('/ascents')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Ascents/)
+    await expect(page).toHaveTitle(ASCENTS_REGEX)
     await expect(page.getByRole('heading', { name: 'Ascents' })).toBeVisible()
   })
 
@@ -44,7 +51,7 @@ test.describe('Dashboard page', () => {
     await page.goto('/ascents/dashboard')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Dashboard/)
+    await expect(page).toHaveTitle(DASHBOARD_REGEX)
     await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
   })
 })
@@ -54,7 +61,7 @@ test.describe('Top Ten page', () => {
     await page.goto('/ascents/top-ten')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Top Ten/)
+    await expect(page).toHaveTitle(TOP_TEN_REGEX)
     await expect(page.getByRole('heading', { name: 'Top Ten' })).toBeVisible()
   })
 })
@@ -64,7 +71,7 @@ test.describe('Training page', () => {
     await page.goto('/training-sessions')
   })
   test('should load correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Training/)
+    await expect(page).toHaveTitle(TRAINING_REGEX)
     await expect(page.getByRole('heading', { name: 'Training' })).toBeVisible()
   })
 })

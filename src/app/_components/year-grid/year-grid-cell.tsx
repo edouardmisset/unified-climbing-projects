@@ -93,7 +93,7 @@ const EmptyGridCell = memo(
       className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
       style={cellStyle}
       // Here no data is available for the date, so we only display the date itself
-      title={date ? prettyLongDate(date) : undefined}
+      title={prettyLongDate(date)}
     />
   ),
 )
@@ -113,15 +113,15 @@ const getAdjustedBackgroundColor = ({
   if (date === '') return 'transparent'
   if (isWeekend) return 'var(--surface-3)'
 
-  return undefined
+  return
 }
 
 const getOutlineForToday = (date: string): CSSProperties['outline'] => {
-  if (date === '') return undefined
+  if (date === '') return
 
   if (datesEqual(new Date(date), new Date())) return '2px solid var(--text-1)'
 
-  return undefined
+  return
 }
 
 type YearGridCellProps = Omit<DayDescriptor, 'shortText' | 'title'> & {

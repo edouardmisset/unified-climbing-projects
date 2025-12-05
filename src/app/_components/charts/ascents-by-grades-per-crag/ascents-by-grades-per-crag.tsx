@@ -12,7 +12,11 @@ import {
 } from '../constants'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
-const chartMarginSettings = { ...DEFAULT_CHART_MARGIN, left: 150, right: 40 }
+const CHART_MARGIN_SETTING = {
+  ...DEFAULT_CHART_MARGIN,
+  left: 150,
+  right: 40,
+}
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   const ascentsByGradesPerCrag = useMemo(
@@ -41,7 +45,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
         indexBy="crag"
         keys={_GRADES}
         layout="horizontal"
-        margin={chartMarginSettings}
+        margin={CHART_MARGIN_SETTING}
         motionConfig={defaultMotionConfig}
         padding={defaultBarChartPadding}
         theme={theme}

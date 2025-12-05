@@ -25,7 +25,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     [ascentsWithPoints],
   )
 
-  if (ascents.length === 0 || ascentsWithPoints.length === 0) return undefined
+  if (ascents.length === 0 || ascentsWithPoints.length === 0) return
 
   const lowestTopTenAscent = topTenAscents.findLast(
     ascent =>
@@ -47,7 +47,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
       <p>
         Your score is{' '}
         <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
-        {displayHowToImprove && (
+        {displayHowToImprove === true && (
           <>
             <strong className="block">Improve by</strong>
             <span className="block">

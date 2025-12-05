@@ -20,10 +20,7 @@ export default function Layout({
 
 const Header = memo(({ title }: { title: ReactNode }) => (
   <div className={`${styles.header} ${styles.patagonia}`}>
-    <h1
-      className={styles.h1}
-      title={typeof title === 'string' ? title : undefined}
-    >
+    <h1 className={styles.h1} title={title?.toString()}>
       {title}
     </h1>
   </div>

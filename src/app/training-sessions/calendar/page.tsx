@@ -23,9 +23,9 @@ export default async function TrainingSessionsCalendarPage() {
           <DataCalendar
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear}
-            fromDataToCalendarEntries={(year, sessions) =>
+            fromDataToCalendarEntries={(calendarYear, sessions) =>
               fromTrainingSessionsToCalendarEntries(
-                year,
+                calendarYear,
                 sessions as TrainingSession[][],
               )
             }

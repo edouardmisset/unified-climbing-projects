@@ -30,7 +30,7 @@ export async function DaysOutsideSummary({
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)
   const longestGap = findLongestGap(outdoorSessions)
 
-  if (ascents.length === 0 || outdoorSessions.length === 0) return undefined
+  if (ascents.length === 0 || outdoorSessions.length === 0) return
 
   const [mostAscentDate] = getMostFrequentDate(ascents)
 
@@ -50,6 +50,7 @@ export async function DaysOutsideSummary({
     trainingSessions,
   ).toFixed(1)
 
+  const isBelowMinGapThreshold = MIN_GAP_THRESHOLD < longestGap
   return (
     <Card>
       <h2>Days outside</h2>
@@ -82,7 +83,7 @@ export async function DaysOutsideSummary({
             days.
           </span>
         )}
-        {longestGap >= MIN_GAP_THRESHOLD ? (
+        {isBelowMinGapThreshold ? undefined : (
           <span className="block">
             Your longest gap without climbing was{' '}
             <strong>
@@ -95,7 +96,7 @@ export async function DaysOutsideSummary({
             </strong>
             .
           </span>
-        ) : undefined}
+        )}
       </p>
     </Card>
   )

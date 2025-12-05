@@ -11,7 +11,7 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
   const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
 
-  if (boulders.length === 0 && routes.length === 0) return undefined
+  if (boulders.length === 0 && routes.length === 0) return
 
   const totalHeight = sum(
     ...routes.map(({ height }) => height ?? 0),

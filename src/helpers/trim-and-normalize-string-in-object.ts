@@ -29,11 +29,9 @@ function trimAndNormalizeString(value: string) {
  */
 export function trimAndNormalizeStringsInObject(obj: Object_): Object_ {
   return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => {
-      return [
-        key,
-        typeof value === 'string' ? trimAndNormalizeString(value) : value,
-      ]
-    }),
+    Object.entries(obj).map(([key, value]) => [
+      key,
+      typeof value === 'string' ? trimAndNormalizeString(value) : value,
+    ]),
   )
 }

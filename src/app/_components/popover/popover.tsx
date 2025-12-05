@@ -12,24 +12,22 @@ const PopoverContent = memo(
   }: {
     popoverTitle: ReactNode
     popoverDescription: ReactNode
-  }) => {
-    return (
-      <BasePopover.Positioner sideOffset={8}>
-        <BasePopover.Popup className={styles.popup}>
-          <BasePopover.Arrow className={styles.arrow}>
-            <Arrow />
-          </BasePopover.Arrow>
-          <BasePopover.Title className={styles.title}>
-            {popoverTitle}
-          </BasePopover.Title>
-          <BasePopover.Description
-            className={styles.description}
-            render={<div>{popoverDescription}</div>}
-          />
-        </BasePopover.Popup>
-      </BasePopover.Positioner>
-    )
-  },
+  }) => (
+    <BasePopover.Positioner sideOffset={8}>
+      <BasePopover.Popup className={styles.popup}>
+        <BasePopover.Arrow className={styles.arrow}>
+          <Arrow />
+        </BasePopover.Arrow>
+        <BasePopover.Title className={styles.title}>
+          {popoverTitle}
+        </BasePopover.Title>
+        <BasePopover.Description
+          className={styles.description}
+          render={<div>{popoverDescription}</div>}
+        />
+      </BasePopover.Popup>
+    </BasePopover.Positioner>
+  ),
 )
 
 export const Popover = memo(

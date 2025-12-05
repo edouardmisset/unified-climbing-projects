@@ -59,10 +59,12 @@ const meaninglessWords = [
   'voie',
 ] as const
 
+const WORD_SPLIT_REGEX = /\s|-|’|'|\(|\)|,|>|<|\.|"|:|\?|!|¡|#|,|=|\+|\/|\\/
+
 const words = ascents.flatMap(({ routeName }) =>
   removeAccents(routeName)
     .toLowerCase()
-    .split(/\s|-|’|'|\(|\)|,|>|<|\.|"|:|\?|!|¡|#|,|=|\+|\/|\\/)
+    .split(WORD_SPLIT_REGEX)
     .filter(word => word.length > 2 && !meaninglessWords.includes(word)),
 )
 

@@ -58,3 +58,6 @@ node_modules/
 
 # AI
 repomix-output.xml
+
+# Convex
+/convex/_generated/

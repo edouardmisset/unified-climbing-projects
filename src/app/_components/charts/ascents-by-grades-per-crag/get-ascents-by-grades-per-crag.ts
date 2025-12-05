@@ -31,12 +31,16 @@ export function getAscentsByGradesPerCrag(
   }
 
   const crags = Object.entries(cragMap)
-    .map(([crag, ascents]) => ({ ascents, count: ascents.length, crag }))
+    .map(([crag, cragAscents]) => ({
+      ascents: cragAscents,
+      count: cragAscents.length,
+      crag,
+    }))
     .sort((a, b) => b.count - a.count)
     .slice(0, 10)
 
-  return crags.map(({ crag, ascents }) => {
-    const gradeScale = createGradeScaleFromAscents(ascents)
+  return crags.map(({ crag, ascents: cragAscents }) => {
+    const gradeScale = createGradeScaleFromAscents(cragAscents)
 
     const frequency: Record<string, string | number> = { crag }
 

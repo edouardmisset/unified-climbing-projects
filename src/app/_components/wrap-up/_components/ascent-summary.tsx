@@ -10,7 +10,7 @@ import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 export function AscentSummary({ ascents }: AscentListProps) {
   const mostRecentAscent = ascents.toSorted((a, b) => sortByDate(a, b))[0]
 
-  if (ascents.length === 0 || mostRecentAscent === undefined) return undefined
+  if (ascents.length === 0 || mostRecentAscent === undefined) return
 
   const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style)
   const ascentsByDiscipline = Object.groupBy(
@@ -35,7 +35,7 @@ export function AscentSummary({ ascents }: AscentListProps) {
       <p>
         <span className="block">
           Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
-          <AscentComponent ascent={mostRecentAscent} showGrade />
+          <AscentComponent ascent={mostRecentAscent} />
         </span>
 
         {onsightAscents.length === 0 ? undefined : (

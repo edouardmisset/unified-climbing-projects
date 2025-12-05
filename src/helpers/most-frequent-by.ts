@@ -20,7 +20,7 @@ export function mostFrequentBy<
   Key extends keyof Type,
   Value = Type[Key],
 >(records: Type[], property: Key): Value | undefined {
-  if (records.length === 0) return undefined
+  if (records.length === 0) return
 
   const occurrenceMap = new Map<Value, number>()
   let mostFrequentValue: Value | undefined

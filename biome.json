@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+  "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -40,15 +40,51 @@
   },
   "linter": {
     "enabled": true,
+    "domains": {
+      "next": "all"
+    },
     "rules": {
+      "performance": {
+        "noAwaitInLoops": "warn",
+        "noDelete": "warn",
+        "useTopLevelRegex": "warn",
+        "noAccumulatingSpread": "warn",
+        "noDynamicNamespaceImportAccess": "warn"
+      },
+      "recommended": true,
       "correctness": {
         "noUnusedImports": "error",
         "noUnusedVariables": "warn",
         "useUniqueElementIds": "off",
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noConstantCondition": "error",
+        "noConstantMathMinMaxClamp": "warn",
+        "noInvalidGridAreas": "error",
+        "noSwitchDeclarations": "warn",
+        "useParseIntRadix": "error",
+        "useIsNan": "error",
+        "useHookAtTopLevel": "error",
+        "noPrecisionLoss": "warn"
       },
-      "nursery": {},
-      "recommended": true,
+      "nursery": {
+        "noShadow": "warn",
+        "noDeprecatedImports": "warn",
+        "noFloatingPromises": "warn",
+        "noDuplicateDependencies": "warn",
+        "noDuplicatedSpreadProps": "warn",
+        "noEqualsToNull": "off",
+        "noImportCycles": "warn",
+        "noMisusedPromises": "warn",
+        "noProto": "warn",
+        "noMultiStr": "warn",
+        "noUnnecessaryConditions": "warn",
+        "noUselessUndefined": "warn",
+        "noUnusedExpressions": "warn",
+        "noUselessCatchBinding": "warn",
+        "useArraySortCompare": "warn",
+        "useConsistentArrowReturn": "warn",
+        "useDeprecatedDate": "warn"
+      },
       "style": {
         "noInferrableTypes": "error",
         "noParameterAssign": "error",
@@ -60,11 +96,38 @@
         "useNumberNamespace": "error",
         "useSelfClosingElements": "error",
         "useSingleVarDeclarator": "error",
-        "noMagicNumbers": "off"
+        "noMagicNumbers": "off",
+        "noCommonJs": "error",
+        "noDoneCallback": "warn",
+        "noEnum": "error",
+        "noExportedImports": "warn",
+        "noNegationElse": "warn",
+        "noShoutyConstants": "warn"
       },
       "suspicious": {
         "noShadowRestrictedNames": "error",
-        "noUnassignedVariables": "warn"
+        "noUnassignedVariables": "warn",
+        "noAlert": "warn",
+        "noApproximativeNumericConstant": "warn",
+        "noAssignInExpressions": "warn",
+        "noCommentText": "warn",
+        "useStrictMode": "error",
+        "useIsArray": "warn",
+        "useGuardForIn": "warn",
+        "noConfusingLabels": "warn",
+        "noConfusingVoidType": "warn",
+        "noExtraNonNullAssertion": "warn",
+        "noGlobalIsFinite": "error",
+        "noGlobalIsNan": "error",
+        "noImplicitAnyLet": "error"
+      },
+      "a11y": {
+        "useAltText": "warn",
+        "noAutofocus": "warn",
+        "useSemanticElements": "warn",
+        "noLabelWithoutControl": "warn",
+        "noSvgWithoutTitle": "warn",
+        "useButtonType": "warn"
       }
     }
   },
