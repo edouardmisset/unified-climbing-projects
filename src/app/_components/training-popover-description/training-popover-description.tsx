@@ -31,9 +31,9 @@ export function TrainingPopoverDescription({
           load,
           sessionType,
           volume,
-          id,
+          _id,
         }) => (
-          <li className={styles.item} key={id}>
+          <li className={styles.item} key={_id}>
             {climbingDiscipline === undefined ? (
               ''
             ) : (

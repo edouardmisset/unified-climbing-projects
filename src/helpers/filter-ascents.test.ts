@@ -1,40 +1,36 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import {
-  filterAscents,
-  getCragsDetails,
-  getHardestAscent,
-} from './filter-ascents'
+import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
   it('should return all ascents when no filters are provided', () => {
     const result = filterAscents(sampleAscents)
-    assert.equal(result.length, sampleAscents.length)
-    assert.deepEqual(result, sampleAscents)
+    expect(result.length).toBe(sampleAscents.length)
+    expect(result).toEqual(sampleAscents)
   })
 
   it('should filter ascents by grade using case insensitive matching', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
-    assert.equal(result.length, 38)
+    expect(result.length).toBe(38)
 
     for (const { topoGrade } of result) {
-      assert.equal(topoGrade, '7a')
+      expect(topoGrade).toBe('7a')
     }
   })
 
   it('should filter ascents by climbingDiscipline', () => {
     const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
-    assert.equal(result.length, 84)
+    expect(result.length).toBe(84)
     for (const { climbingDiscipline } of result) {
-      assert.equal(climbingDiscipline, 'Route')
+      expect(climbingDiscipline).toBe('Route')
     }
   })
 
   it('should filter ascents by year', () => {
     const result = filterAscents(sampleAscents, { year: 2022 })
-    assert.equal(result.length, 13)
+    expect(result.length).toBe(13)
     for (const { date } of result) {
-      assert.equal(new Date(date).getFullYear(), 2022)
+      expect(new Date(date).getFullYear()).toBe(2022)
     }
   })
 
@@ -43,36 +39,22 @@ describe('filterAscents', () => {
       climbingDiscipline: 'Route',
       style: 'Redpoint',
     })
-    assert.equal(result.length, 27)
+    expect(result.length).toBe(27)
     for (const { climbingDiscipline, style } of result) {
-      assert.equal(climbingDiscipline, 'Route')
-      assert.equal(style, 'Redpoint')
+      expect(climbingDiscipline).toBe('Route')
+      expect(style).toBe('Redpoint')
     }
   })
 
   it('should return an empty array when no ascents are passed', () => {
     const result = filterAscents([])
-    assert.equal(result.length, 0)
+    expect(result.length).toBe(0)
   })
 })
 
 describe('getHardestAscent', () => {
   it('should return the ascent with the highest grade', () => {
     const hardest = getHardestAscent(sampleAscents)
-    assert.equal(hardest.topoGrade, '8b+')
-  })
-})
-
-describe('getMostFrequentCrag', () => {
-  it('should return the most frequent crag and the correct number of distinct crags', () => {
-    const result = getCragsDetails(sampleAscents)
-    assert.equal(result.mostFrequentCrag, 'Fontainebleau')
-    assert.equal(result.numberOfCrags, 43)
-  })
-
-  it('should handle an empty array and return undefined mostFrequentCrag', () => {
-    const result = getCragsDetails([])
-    assert.equal(result.numberOfCrags, 0)
-    assert.equal(result.mostFrequentCrag, undefined)
+    expect(hardest.topoGrade).toBe('8b+')
   })
 })

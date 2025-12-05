@@ -1,16 +1,16 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { mostFrequentBy } from './most-frequent-by'
 
 describe('mostFrequentBy', () => {
   it('should return undefined for an empty array', () => {
     const result = mostFrequentBy([], 'property')
-    assert.equal(result, undefined)
+    expect(result).toBe(undefined)
   })
 
   it('should return the property value for an array with one record', () => {
     const records = [{ property: 'value' }]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, 'value')
+    expect(result).toBe('value')
   })
 
   it('should return the most frequent value for a property', () => {
@@ -22,7 +22,7 @@ describe('mostFrequentBy', () => {
       { property: 'a' },
     ]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, 'a')
+    expect(result).toBe('a')
   })
 
   it('should return the first most frequent value in case of a tie', () => {
@@ -33,7 +33,7 @@ describe('mostFrequentBy', () => {
       { property: 'b' },
     ]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, 'a') // 'a' appears first
+    expect(result).toBe('a') // 'a' appears first
   })
 
   it('should skip records with undefined property values', () => {
@@ -46,7 +46,7 @@ describe('mostFrequentBy', () => {
       { property: 'b' },
     ]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, 'a')
+    expect(result).toBe('a')
   })
 
   it('should handle mixed data types for property values', () => {
@@ -58,19 +58,19 @@ describe('mostFrequentBy', () => {
       { property: 1 },
     ]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, 1)
+    expect(result).toBe(1)
   })
 
   it('should return undefined if all property values are undefined', () => {
     const records = [{ property: undefined }, { property: undefined }]
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, undefined)
+    expect(result).toBe(undefined)
   })
 
   it('should handle objects with missing properties gracefully', () => {
     const records = [{ otherProperty: 'a' }, { otherProperty: 'b' }]
     // @ts-expect-error: Intentionally testing behavior when the specified property is missing
     const result = mostFrequentBy(records, 'property')
-    assert.equal(result, undefined)
+    expect(result).toBe(undefined)
   })
 })

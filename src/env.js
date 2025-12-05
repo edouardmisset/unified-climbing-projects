@@ -1,5 +1,5 @@
 import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const env = createEnv({
   /**
@@ -9,6 +9,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_ENV: z.string(),
+    NEXT_PUBLIC_CONVEX_URL: z.string().url(),
   },
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
@@ -23,20 +24,12 @@ export const env = createEnv({
   runtimeEnv: {
     GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
     GOOGLE_SERVICE_ACCOUNT_EMAIL: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE:
-      process.env.GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE,
-    GOOGLE_SHEET_ASCENTS_SHEET_TITLE:
-      process.env.GOOGLE_SHEET_ASCENTS_SHEET_TITLE,
-    GOOGLE_SHEET_ASCENTS_URL_CSV: process.env.GOOGLE_SHEET_ASCENTS_URL_CSV,
-    GOOGLE_SHEET_ID_ASCENTS: process.env.GOOGLE_SHEET_ID_ASCENTS,
-    GOOGLE_SHEET_ID_TRAINING: process.env.GOOGLE_SHEET_ID_TRAINING,
-    GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE:
-      process.env.GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE,
-    GOOGLE_SHEET_TRAINING_SHEET_TITLE:
-      process.env.GOOGLE_SHEET_TRAINING_SHEET_TITLE,
-    GOOGLE_SHEET_TRAINING_URL_CSV: process.env.GOOGLE_SHEET_TRAINING_URL_CSV,
+    GOOGLE_SHEET_ID_ASCENTS_BACKUP: process.env.GOOGLE_SHEET_ID_ASCENTS_BACKUP,
+    GOOGLE_SHEET_ID_TRAINING_BACKUP:
+      process.env.GOOGLE_SHEET_ID_TRAINING_BACKUP,
     // Client-side env
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
+    NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
     // Server-side env
     NODE_ENV: process.env.NODE_ENV,
   },
@@ -47,14 +40,8 @@ export const env = createEnv({
   server: {
     GOOGLE_PRIVATE_KEY: z.string(),
     GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string(),
-    GOOGLE_SHEET_ASCENTS_EDIT_SHEET_TITLE: z.string(),
-    GOOGLE_SHEET_ASCENTS_SHEET_TITLE: z.string(),
-    GOOGLE_SHEET_ASCENTS_URL_CSV: z.string(),
-    GOOGLE_SHEET_ID_ASCENTS: z.string(),
-    GOOGLE_SHEET_ID_TRAINING: z.string(),
-    GOOGLE_SHEET_TRAINING_EDIT_SHEET_TITLE: z.string(),
-    GOOGLE_SHEET_TRAINING_SHEET_TITLE: z.string(),
-    GOOGLE_SHEET_TRAINING_URL_CSV: z.string(),
+    GOOGLE_SHEET_ID_ASCENTS_BACKUP: z.string(),
+    GOOGLE_SHEET_ID_TRAINING_BACKUP: z.string(),
     NODE_ENV: z.enum(['development', 'test', 'production']),
   },
   /**

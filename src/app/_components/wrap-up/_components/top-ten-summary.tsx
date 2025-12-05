@@ -17,6 +17,9 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     points: fromAscentToPoints(ascent),
   }))
 
+  const isMultipleYears =
+    new Set(ascents.map(ascent => new Date(ascent.date).getFullYear())).size > 1
+
   const topTenAscents = useMemo(
     () => ascentsWithPoints.sort((a, b) => b.points - a.points).slice(0, 10),
     [ascentsWithPoints],
@@ -32,16 +35,23 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
 
   const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
+  const displayHowToImprove =
+    lowestTopTenAscent &&
+    (new Date().getFullYear() ===
+      new Date(lowestTopTenAscent.date).getFullYear() ||
+      isMultipleYears)
+
   return (
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your score is <strong>{frenchNumberFormatter(topTenScore)}</strong>
-        {lowestTopTenAscent && (
+        Your score is{' '}
+        <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
+        {displayHowToImprove && (
           <>
             <strong className="block">Improve by</strong>
             <span className="block">
-              <ClimbingStyle climbingStyle="Onsighting" /> a{' '}
+              Lead climb{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -49,10 +59,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
                   style: 'Onsight',
                 })}
               />{' '}
-              route
-            </span>
-            <span className="block">
-              <ClimbingStyle climbingStyle="Flashing" /> a{' '}
+              <ClimbingStyle climbingStyle="Onsight" />,{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -60,10 +67,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
                   style: 'Flash',
                 })}
               />{' '}
-              route
-            </span>
-            <span className="block">
-              <ClimbingStyle climbingStyle="Redpointing" /> a{' '}
+              <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
                 climbingDiscipline="Route"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -71,10 +75,11 @@ export function TopTenSummary({ ascents }: AscentListProps) {
                   style: 'Redpoint',
                 })}
               />{' '}
-              route
+              <ClimbingStyle climbingStyle="Redpoint" />
             </span>
+
             <span className="block">
-              <ClimbingStyle climbingStyle="Flashing" /> a{' '}
+              Boulder{' '}
               <DisplayGrade
                 climbingDiscipline="Boulder"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -82,10 +87,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
                   style: 'Flash',
                 })}
               />{' '}
-              boulder
-            </span>
-            <span className="block">
-              <ClimbingStyle climbingStyle="Redpointing" /> a{' '}
+              <ClimbingStyle climbingStyle="Flash" /> or{' '}
               <DisplayGrade
                 climbingDiscipline="Boulder"
                 grade={fromPointToGrade(nextStepPoints, {
@@ -93,7 +95,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
                   style: 'Redpoint',
                 })}
               />{' '}
-              boulder
+              <ClimbingStyle climbingStyle="Redpoint" />
             </span>
           </>
         )}

@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentToPoints } from './ascent-converter'
@@ -7,7 +7,7 @@ import { calculateTopTenScore } from './calculate-top-ten'
 describe('calculateTopTenScore', () => {
   it('should return 0 for empty array', () => {
     const result = calculateTopTenScore([])
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should sum all points if fewer than 10 ascents', () => {
@@ -21,7 +21,7 @@ describe('calculateTopTenScore', () => {
 
     const result = calculateTopTenScore(fewAscents)
 
-    assert.equal(result, expectedTotal)
+    expect(result).toBe(expectedTotal)
   })
 
   it('should sum only the top 10 scores if more than 10 ascents', () => {
@@ -37,7 +37,7 @@ describe('calculateTopTenScore', () => {
 
     const result = calculateTopTenScore(manyAscents)
 
-    assert.equal(result, expectedTotal)
+    expect(result).toBe(expectedTotal)
   })
 
   it('should correctly handle ascents with different point values', () => {
@@ -46,21 +46,21 @@ describe('calculateTopTenScore', () => {
       {
         climbingDiscipline: 'Route',
         date: new Date().toISOString(),
-        id: 1,
+        _id: '1',
         style: 'Redpoint',
         topoGrade: '5c',
       },
       {
         climbingDiscipline: 'Route',
         date: new Date().toISOString(),
-        id: 2,
+        _id: '2',
         style: 'Onsight',
         topoGrade: '7a',
       },
       {
         climbingDiscipline: 'Boulder',
         date: new Date().toISOString(),
-        id: 3,
+        _id: '3',
         style: 'Flash',
         topoGrade: '6a',
       },
@@ -75,6 +75,6 @@ describe('calculateTopTenScore', () => {
       .slice(0, 10)
       .reduce((sum, points) => sum + points, 0)
 
-    assert.equal(result, expectedTotal)
+    expect(result).toBe(expectedTotal)
   })
 })

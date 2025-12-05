@@ -1,13 +1,10 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
-import { objectKeys } from '@edouardmisset/object'
-import { objectSize } from '@edouardmisset/object/object-size.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { DEFAULT_GRADE } from '~/constants/ascents.ts'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'
 import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
-import { frequencyBy } from './frequency-by.ts'
 import { fromGradeToNumber } from './grade-converter.ts'
 
 /**
@@ -38,7 +35,7 @@ export function filterAscents(
     period,
   } = filters ?? {}
 
-  if (!ascents || ascents.length === 0) {
+  if (ascents.length === 0) {
     globalThis.console.log('No ascents passed to `filterAscents`')
     return []
   }
@@ -78,20 +75,4 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
     },
     { topoGrade: DEFAULT_GRADE } as Ascent,
   )
-}
-
-export function getCragsDetails(ascents: Ascent[]): {
-  numberOfCrags: number
-  mostFrequentCrag: string | undefined
-  crags: Ascent['crag'][]
-} {
-  const cragsByFrequency = frequencyBy(ascents, 'crag', { ascending: false })
-  const crags = objectKeys(cragsByFrequency)
-  const [mostFrequentCrag] = crags
-
-  return {
-    crags,
-    mostFrequentCrag,
-    numberOfCrags: objectSize(cragsByFrequency),
-  }
 }

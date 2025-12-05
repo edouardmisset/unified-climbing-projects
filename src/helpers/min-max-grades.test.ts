@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { type Ascent, GRADE_TO_NUMBER } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
@@ -10,8 +10,8 @@ describe('minMaxGrades', () => {
     const expectedMin = fromNumberToGrade(Math.min(...gradeValues))
     const expectedMax = fromNumberToGrade(Math.max(...gradeValues))
     const [min, max] = minMaxGrades([])
-    assert.equal(min, expectedMin)
-    assert.equal(max, expectedMax)
+    expect(min).toBe(expectedMin)
+    expect(max).toBe(expectedMax)
   })
 
   it('should return the same grade for both min and max with a single ascent', () => {
@@ -25,7 +25,7 @@ describe('minMaxGrades', () => {
         date: '2024-10-27T12:00:00.000Z',
         height: 25,
         holds: 'Crimp',
-        id: 1,
+        _id: '1',
         personalGrade: '6c+',
         profile: 'Arête',
         rating: 4,
@@ -36,8 +36,8 @@ describe('minMaxGrades', () => {
       },
     ]
     const [min, max] = minMaxGrades(ascents)
-    assert.equal(min, ascents[0]?.topoGrade)
-    assert.equal(max, ascents[0]?.topoGrade)
+    expect(min).toBe(ascents[0]?.topoGrade)
+    expect(max).toBe(ascents[0]?.topoGrade)
   })
 
   it('should correctly calculate min and max grades for multiple ascents', () => {
@@ -47,7 +47,7 @@ describe('minMaxGrades', () => {
     const expectedMin = fromNumberToGrade(Math.min(...numericGrades))
     const expectedMax = fromNumberToGrade(Math.max(...numericGrades))
     const [min, max] = minMaxGrades(sampleAscents)
-    assert.equal(min, expectedMin)
-    assert.equal(max, expectedMax)
+    expect(min).toBe(expectedMin)
+    expect(max).toBe(expectedMax)
   })
 })

@@ -1,4 +1,3 @@
-import { filterAscents } from '~/helpers/filter-ascents'
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { sortByDate } from '~/helpers/sort-by-date'
 import type { AscentListProps } from '~/schema/ascent'
@@ -13,16 +12,18 @@ export function AscentSummary({ ascents }: AscentListProps) {
 
   if (ascents.length === 0 || mostRecentAscent === undefined) return undefined
 
-  const onsightAscents = filterAscents(ascents, {
-    style: 'Onsight',
-  })
-  const flashAscents = filterAscents(ascents, { style: 'Flash' })
-  const redpointAscents = filterAscents(ascents, {
-    style: 'Redpoint',
-  })
+  const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style)
+  const ascentsByDiscipline = Object.groupBy(
+    ascents,
+    ascent => ascent.climbingDiscipline,
+  )
 
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const onsightAscents = ascentsByStyle.Onsight ?? []
+  const flashAscents = ascentsByStyle.Flash ?? []
+  const redpointAscents = ascentsByStyle.Redpoint ?? []
+
+  const boulders = ascentsByDiscipline.Boulder ?? []
+  const routes = ascentsByDiscipline.Route ?? []
 
   const averageRouteGrade = getAverageGrade(routes)
   const averageBoulderGrade = getAverageGrade(boulders)

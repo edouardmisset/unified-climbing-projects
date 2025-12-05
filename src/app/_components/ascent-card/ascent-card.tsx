@@ -34,9 +34,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
 
   const stylesDependingOnComments: CSSProperties = useMemo(() => {
     const maxCommentLength = 120
-    return comments && comments.length > maxCommentLength
-      ? ({ '--direction': 'row' } as CSSProperties)
-      : ({ '--direction': 'column' } as CSSProperties)
+    const isLongComment = comments && comments.length > maxCommentLength
+
+    return { '--direction': isLongComment ? 'row' : 'column' } as CSSProperties
   }, [comments])
 
   const formattedGrade = useMemo(

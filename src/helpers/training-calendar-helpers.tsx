@@ -1,4 +1,3 @@
-import { TrainingPopoverDescription } from '~/app/_components/training-popover-description/training-popover-description'
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { getSessionTypeColors } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
@@ -15,7 +14,6 @@ export function fromTrainingSessionsToCalendarEntries(
       if (firstSession === undefined) {
         return {
           date: new Date(year, 0, index + 1, 12).toISOString(),
-          description: '',
           shortText: '',
           title: '',
         }
@@ -31,9 +29,9 @@ export function fromTrainingSessionsToCalendarEntries(
       return {
         backgroundColor,
         date,
-        description: <TrainingPopoverDescription trainingSessions={sessions} />,
         shortText: sessionType ?? '',
         title: prettyLongDate(date),
+        trainingSessions: sessions,
       }
     }) ?? []
   )

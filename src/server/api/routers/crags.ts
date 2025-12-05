@@ -1,14 +1,15 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { mapObject } from '@edouardmisset/object/map-object.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import { z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
+import { sortByDate } from '~/helpers/sort-by-date'
 import {
   compareStringsAscending,
   compareStringsDescending,
 } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
+import { z } from '~/helpers/zod'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -25,7 +26,7 @@ export const cragsRouter = createTRPCRouter({
     )
     .output(ascentSchema.shape.crag.array())
     .query(async ({ input }) => {
-      const { sortOrder } = input ?? {}
+      const { sortOrder = 'newest' } = input ?? {}
       const allCrags = await getAllCrags()
       const uniqueCrags = [...new Set(allCrags)]
 
@@ -130,5 +131,8 @@ export const cragsRouter = createTRPCRouter({
 
 async function getAllCrags(): Promise<Ascent['crag'][]> {
   const ascents = await getAllAscents()
-  return ascents.map(({ crag }) => crag.trim()).filter(Boolean)
+  return ascents
+    .sort((a, b) => sortByDate(a, b, true))
+    .map(({ crag }) => crag.trim())
+    .filter(Boolean)
 }

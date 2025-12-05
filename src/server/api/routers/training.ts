@@ -1,22 +1,23 @@
-import { z } from 'zod'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { sortByDate } from '~/helpers/sort-by-date'
 import { compareStringsAscending } from '~/helpers/sort-strings'
+import { z } from '~/helpers/zod'
 import { optionalAscentYear } from '~/schema/generic'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { addTrainingSession, getAllTrainingSessions } from '~/services/training'
+import { addTrainingSessionToDB } from '~/services/convex'
+import { getAllTrainingSessions } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
   addOne: publicProcedure
-    .input(trainingSessionSchema.omit({ id: true }))
+    .input(trainingSessionSchema.omit({ _id: true }))
     .output(z.boolean())
     .mutation(async ({ input: trainingSession }) => {
       try {
-        await addTrainingSession(trainingSession)
+        await addTrainingSessionToDB(trainingSession)
         return true
       } catch (error) {
-        globalThis.console.error(error)
+        globalThis.console.error('Error adding training session:', error)
         return false
       }
     }),
@@ -36,16 +37,10 @@ export const trainingRouter = createTRPCRouter({
         allTrainingSessions,
         input,
       )
-      return filteredTrainingSessions.sort(
-        ({ date: leftDate }, { date: rightDate }) => {
-          if (leftDate === rightDate) return 0
-
-          return new Date(leftDate) < new Date(rightDate) ? 1 : -1
-        },
-      )
+      return filteredTrainingSessions.sort(sortByDate)
     }),
   getAllLocations: publicProcedure
-    .output(z.array(trainingSessionSchema.shape.gymCrag.nonoptional()))
+    .output(z.array(trainingSessionSchema.required().shape.gymCrag))
     .query(async () => {
       const allTrainingSessions = await getAllTrainingSessions()
       return [

@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import {
   extractDateFromISODateString,
   findLongestGap,
@@ -18,7 +18,7 @@ describe('getWeekNumber', () => {
   it('should return the correct week number for a given date', () => {
     const date = new Date(2024, 0, 20)
     const result = getWeekNumber(date)
-    assert.equal(result, 4)
+    expect(result).toBe(4)
   })
 })
 
@@ -26,7 +26,7 @@ describe('getWeeksInYear', () => {
   it('should return the correct number of weeks in a year', () => {
     const year = 2023
     const result = getWeeksInYear(year)
-    assert.equal(result, 52)
+    expect(result).toBe(52)
   })
 })
 
@@ -34,13 +34,13 @@ describe('getDaysInYear', () => {
   it('should return the correct number of days in a non-leap year', () => {
     const year = 2023
     const result = getDaysInYear(year)
-    assert.equal(result, 365)
+    expect(result).toBe(365)
   })
 
   it('should return the correct number of days in a leap year', () => {
     const year = 2024
     const result = getDaysInYear(year)
-    assert.equal(result, 366)
+    expect(result).toBe(366)
   })
 })
 
@@ -48,7 +48,7 @@ describe('getDayOfYear', () => {
   it('should return the correct day of the year for a given date', () => {
     const date = new Date(2024, 5, 20)
     const result = getDayOfYear(date)
-    assert.equal(result, 171)
+    expect(result).toBe(171)
   })
 })
 
@@ -63,12 +63,12 @@ describe('getMostFrequentDate', () => {
       { date: '2024-01-03' },
     ]
     const result = getMostFrequentDate(data)
-    assert.deepEqual(result, ['2024-01-03', 3])
+    expect(result).toEqual(['2024-01-03', 3])
   })
 
   it('should return a default value when the input array is empty', () => {
     const result = getMostFrequentDate([])
-    assert.deepEqual(result, ['', 0])
+    expect(result).toEqual(['', 0])
   })
 })
 
@@ -79,13 +79,13 @@ describe('getYesterday', () => {
     expected.setDate(today.getDate() - 1)
     expected.setHours(12, 0, 0, 0)
     const actual = getYesterday()
-    assert.equal(actual.getFullYear(), expected.getFullYear())
-    assert.equal(actual.getMonth(), expected.getMonth())
-    assert.equal(actual.getDate(), expected.getDate())
-    assert.equal(actual.getHours(), 12)
-    assert.equal(actual.getMinutes(), 0)
-    assert.equal(actual.getSeconds(), 0)
-    assert.equal(actual.getMilliseconds(), 0)
+    expect(actual.getFullYear()).toBe(expected.getFullYear())
+    expect(actual.getMonth()).toBe(expected.getMonth())
+    expect(actual.getDate()).toBe(expected.getDate())
+    expect(actual.getHours()).toBe(12)
+    expect(actual.getMinutes()).toBe(0)
+    expect(actual.getSeconds()).toBe(0)
+    expect(actual.getMilliseconds()).toBe(0)
   })
 })
 
@@ -98,13 +98,13 @@ describe('getLastSaturday', () => {
     expected.setDate(today.getDate() - daysSinceSaturday)
     expected.setHours(12, 0, 0, 0)
     const actual = getLastSaturday()
-    assert.equal(actual.getFullYear(), expected.getFullYear())
-    assert.equal(actual.getMonth(), expected.getMonth())
-    assert.equal(actual.getDate(), expected.getDate())
-    assert.equal(actual.getHours(), 12)
-    assert.equal(actual.getMinutes(), 0)
-    assert.equal(actual.getSeconds(), 0)
-    assert.equal(actual.getMilliseconds(), 0)
+    expect(actual.getFullYear()).toBe(expected.getFullYear())
+    expect(actual.getMonth()).toBe(expected.getMonth())
+    expect(actual.getDate()).toBe(expected.getDate())
+    expect(actual.getHours()).toBe(12)
+    expect(actual.getMinutes()).toBe(0)
+    expect(actual.getSeconds()).toBe(0)
+    expect(actual.getMilliseconds()).toBe(0)
   })
 })
 
@@ -117,69 +117,66 @@ describe('getLastSunday', () => {
     expected.setDate(today.getDate() - daysSinceSunday)
     expected.setHours(12, 0, 0, 0)
     const actual = getLastSunday()
-    assert.equal(actual.getFullYear(), expected.getFullYear())
-    assert.equal(actual.getMonth(), expected.getMonth())
-    assert.equal(actual.getDate(), expected.getDate())
-    assert.equal(actual.getHours(), 12)
-    assert.equal(actual.getMinutes(), 0)
-    assert.equal(actual.getSeconds(), 0)
-    assert.equal(actual.getMilliseconds(), 0)
+    expect(actual.getFullYear()).toBe(expected.getFullYear())
+    expect(actual.getMonth()).toBe(expected.getMonth())
+    expect(actual.getDate()).toBe(expected.getDate())
+    expect(actual.getHours()).toBe(12)
+    expect(actual.getMinutes()).toBe(0)
+    expect(actual.getSeconds()).toBe(0)
+    expect(actual.getMilliseconds()).toBe(0)
   })
 })
 
 describe('fromDateToISOString', () => {
   it('returns correct ISO string for a valid date', () => {
     const date = new Date('2024-05-23T15:30:00Z')
-    assert.equal(fromDateToStringDate(date), '2024-05-23')
+    expect(fromDateToStringDate(date)).toBe('2024-05-23')
   })
 
   it('throws for an invalid date', () => {
-    assert.throws(
-      () => fromDateToStringDate(new Date('invalid-date')),
+    expect(() => fromDateToStringDate(new Date('invalid-date'))).toThrow(
       /Invalid date/,
     )
   })
 
   it('throws for a non-Date object', () => {
     // @ts-expect-error purposely passing string
-    assert.throws(() => fromDateToStringDate('2024-05-23'), /Invalid date/)
+    expect(() => fromDateToStringDate('2024-05-23')).toThrow(/Invalid date/)
   })
 
   it('returns correct ISO string for a leap year date', () => {
     const date = new Date('2020-02-29T23:59:59Z')
-    assert.equal(fromDateToStringDate(date), '2020-02-29')
+    expect(fromDateToStringDate(date)).toBe('2020-02-29')
   })
 })
 
 describe('extractDateFromISODateString', () => {
   it('returns YYYY-MM-DD for a valid ISO string', () => {
-    assert.equal(
-      extractDateFromISODateString('2025-05-23T15:30:00.000Z'),
+    expect(extractDateFromISODateString('2025-05-23T15:30:00.000Z')).toBe(
       '2025-05-23',
     )
   })
 
   it('throws for string shorter than 10 chars', () => {
-    assert.throws(
-      () => extractDateFromISODateString('2025-05'),
+    expect(() => extractDateFromISODateString('2025-05')).toThrow(
       /Invalid ISO date string/,
     )
   })
 
   it('throws for string not matching YYYY-MM-DD', () => {
-    assert.throws(
-      () => extractDateFromISODateString('2025-5-23T00:00:00Z'),
+    expect(() => extractDateFromISODateString('2025-5-23T00:00:00Z')).toThrow(
       /Invalid ISO date string/,
     )
-    assert.throws(
-      () => extractDateFromISODateString('abcd-ef-ghT00:00:00Z'),
+    expect(() => extractDateFromISODateString('2025-5-23T00:00:00Z')).toThrow(
+      /Invalid ISO date string/,
+    )
+    expect(() => extractDateFromISODateString('abcd-ef-ghT00:00:00Z')).toThrow(
       /Invalid ISO date string/,
     )
   })
 
   it('returns correct date for valid ISO string with time', () => {
-    assert.equal(
-      extractDateFromISODateString('2024-12-31T23:59:59.999Z'),
+    expect(extractDateFromISODateString('2024-12-31T23:59:59.999Z')).toBe(
       '2024-12-31',
     )
   })
@@ -188,13 +185,13 @@ describe('extractDateFromISODateString', () => {
 describe('findLongestStreak', () => {
   it('should return 0 for empty array', () => {
     const result = findLongestStreak([])
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 1 for single date', () => {
     const data = [{ date: '2024-01-01' }]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 1)
+    expect(result).toBe(1)
   })
 
   it('should find longest streak in consecutive dates', () => {
@@ -205,7 +202,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-04' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 4)
+    expect(result).toBe(4)
   })
 
   it('should handle gaps in dates correctly', () => {
@@ -217,7 +214,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-06' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 3) // Longest streak is days 4, 5, 6
+    expect(result).toBe(3) // Longest streak is days 4, 5, 6
   })
 
   it('should deduplicate dates on same day', () => {
@@ -229,7 +226,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-03' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should handle unsorted dates', () => {
@@ -241,7 +238,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-04' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 5)
+    expect(result).toBe(5)
   })
 
   it('should handle multiple separate streaks', () => {
@@ -254,7 +251,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-08' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 4) // Days 5, 6, 7, 8
+    expect(result).toBe(4) // Days 5, 6, 7, 8
   })
 
   it('should handle month boundaries correctly', () => {
@@ -265,7 +262,7 @@ describe('findLongestStreak', () => {
       { date: '2024-02-02' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 4)
+    expect(result).toBe(4)
   })
 
   it('should handle year boundaries correctly', () => {
@@ -276,7 +273,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-02' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 4)
+    expect(result).toBe(4)
   })
 
   it('should handle leap year correctly', () => {
@@ -286,7 +283,7 @@ describe('findLongestStreak', () => {
       { date: '2024-03-01' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should return 0 for all invalid dates', () => {
@@ -295,7 +292,7 @@ describe('findLongestStreak', () => {
       { date: '2024-13-01' }, // Invalid month
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should filter out invalid dates and process valid ones', () => {
@@ -307,7 +304,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-03' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should work with objects containing additional properties', () => {
@@ -317,7 +314,7 @@ describe('findLongestStreak', () => {
       { date: '2024-01-03', activity: 'climbing', grade: '5.11b' },
     ]
     const result = findLongestStreak(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 })
 
@@ -325,13 +322,13 @@ describe('findLongestGap', () => {
   it('should return 0 for empty array', () => {
     const data: Array<{ date: string }> = []
     const result = findLongestGap(data)
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 0 for single date', () => {
     const data = [{ date: '2024-01-01' }]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 0 for consecutive dates with no gaps', () => {
@@ -341,7 +338,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-03' },
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should calculate gap correctly for simple case', () => {
@@ -350,7 +347,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-05' }, // 3-day gap (Jan 2, 3, 4)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should find the longest gap among multiple gaps', () => {
@@ -362,7 +359,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-17' }, // 4-day gap (Jan 13-16)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 6)
+    expect(result).toBe(6)
   })
 
   it('should handle unsorted dates correctly', () => {
@@ -372,7 +369,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-15' },
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 8)
+    expect(result).toBe(8)
   })
 
   it('should handle duplicate dates correctly', () => {
@@ -383,7 +380,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-05' }, // Duplicate
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should handle month boundaries correctly', () => {
@@ -392,7 +389,7 @@ describe('findLongestGap', () => {
       { date: '2024-02-05' }, // 5-day gap (Jan 31, Feb 1-4)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 5)
+    expect(result).toBe(5)
   })
 
   it('should handle year boundaries correctly', () => {
@@ -401,7 +398,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-05' }, // 5-day gap (Dec 31, Jan 1-4)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 5)
+    expect(result).toBe(5)
   })
 
   it('should handle leap year correctly', () => {
@@ -410,7 +407,7 @@ describe('findLongestGap', () => {
       { date: '2024-03-02' }, // 3-day gap (Feb 28, 29, Mar 1)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should return 0 for all invalid dates', () => {
@@ -419,7 +416,7 @@ describe('findLongestGap', () => {
       { date: '2024-13-01' }, // Invalid month
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should filter out invalid dates and process valid ones', () => {
@@ -430,7 +427,7 @@ describe('findLongestGap', () => {
       { date: '2024-13-01' }, // Invalid month
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 3)
+    expect(result).toBe(3)
   })
 
   it('should work with objects containing additional properties', () => {
@@ -439,7 +436,7 @@ describe('findLongestGap', () => {
       { date: '2024-01-08', activity: 'bouldering', grade: 'V4' }, // 6-day gap
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 6)
+    expect(result).toBe(6)
   })
 
   it('should handle large gaps correctly', () => {
@@ -448,6 +445,6 @@ describe('findLongestGap', () => {
       { date: '2024-12-31' }, // 364-day gap (entire year minus 1 day)
     ]
     const result = findLongestGap(data)
-    assert.strictEqual(result, 364)
+    expect(result).toBe(364)
   })
 })

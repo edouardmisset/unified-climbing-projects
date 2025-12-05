@@ -53,7 +53,7 @@ type DeSlugifyOptions = {
 export function deSlugify(slug: string, options?: DeSlugifyOptions): string {
   const { capitalize = true, separator = '-' } = options ?? {}
 
-  const result = slug.replaceAll(separator, ' ').trim()
+  const cleanedText = slug.replaceAll(separator, ' ').trim()
 
-  return capitalize ? capitalizeFunction(result) : result
+  return capitalize ? capitalizeFunction(cleanedText) : cleanedText
 }

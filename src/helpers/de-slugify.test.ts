@@ -1,70 +1,70 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { deSlugify } from './de-slugify.js'
 
 describe('deSlugify', () => {
   describe('Basic functionality', () => {
     it('should convert a simple slug to readable text with default options', () => {
       const result = deSlugify('hello-world')
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
 
     it('should convert multiple separators correctly', () => {
       const result = deSlugify('this-is-a-test')
-      assert.equal(result, 'This is a test')
+      expect(result).toBe('This is a test')
     })
 
     it('should handle single words', () => {
       const result = deSlugify('single')
-      assert.equal(result, 'Single')
+      expect(result).toBe('Single')
     })
 
     it('should handle empty strings', () => {
       const result = deSlugify('')
-      assert.equal(result, '')
+      expect(result).toBe('')
     })
   })
 
   describe('Capitalization options', () => {
     it('should capitalize when capitalize option is true', () => {
       const result = deSlugify('hello-world', { capitalize: true })
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
 
     it('should not capitalize when capitalize option is false', () => {
       const result = deSlugify('hello-world', { capitalize: false })
-      assert.equal(result, 'hello world')
+      expect(result).toBe('hello world')
     })
 
     it('should use default capitalization when option is not provided', () => {
       const result = deSlugify('hello-world')
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
   })
 
   describe('Custom separators', () => {
     it('should handle underscore separators', () => {
       const result = deSlugify('hello_world_test', { separator: '_' })
-      assert.equal(result, 'Hello world test')
+      expect(result).toBe('Hello world test')
     })
 
     it('should handle double dash separators', () => {
       const result = deSlugify('hello--world--test', { separator: '--' })
-      assert.equal(result, 'Hello world test')
+      expect(result).toBe('Hello world test')
     })
 
     it('should handle pipe separators', () => {
       const result = deSlugify('hello|world|test', { separator: '|' })
-      assert.equal(result, 'Hello world test')
+      expect(result).toBe('Hello world test')
     })
 
     it('should handle dot separators', () => {
       const result = deSlugify('hello.world.test', { separator: '.' })
-      assert.equal(result, 'Hello world test')
+      expect(result).toBe('Hello world test')
     })
 
     it('should handle space separators (edge case)', () => {
       const result = deSlugify('hello world test', { separator: ' ' })
-      assert.equal(result, 'Hello world test')
+      expect(result).toBe('Hello world test')
     })
   })
 
@@ -74,7 +74,7 @@ describe('deSlugify', () => {
         separator: '_',
         capitalize: false,
       })
-      assert.equal(result, 'hello world test')
+      expect(result).toBe('hello world test')
     })
 
     it('should handle custom separator with capitalization', () => {
@@ -82,39 +82,39 @@ describe('deSlugify', () => {
         separator: '--',
         capitalize: true,
       })
-      assert.equal(result, 'My awesome page')
+      expect(result).toBe('My awesome page')
     })
   })
 
   describe('Edge cases', () => {
     it('should handle strings with only separators (empty string)', () => {
       const result = deSlugify('---', { separator: '-' })
-      assert.equal(result, '')
+      expect(result).toBe('')
     })
 
     it('should handle strings without separators', () => {
       const result = deSlugify('noSeparators')
-      assert.equal(result, 'Noseparators')
+      expect(result).toBe('Noseparators')
     })
 
     it('should handle strings with mixed separators (only replaces specified)', () => {
       const result = deSlugify('hello-world_test', { separator: '-' })
-      assert.equal(result, 'Hello world_test')
+      expect(result).toBe('Hello world_test')
     })
 
     it('should handle strings starting with separator (trim)', () => {
       const result = deSlugify('-hello-world', { separator: '-' })
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
 
     it('should handle (trim) strings ending with separator', () => {
       const result = deSlugify('hello-world-', { separator: '-' })
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
 
     it('should handle consecutive separators', () => {
       const result = deSlugify('hello---world', { separator: '-' })
-      assert.equal(result, 'Hello   world')
+      expect(result).toBe('Hello   world')
     })
   })
 
@@ -132,7 +132,7 @@ describe('deSlugify', () => {
 
       for (const { input, expected } of testCases) {
         const result = deSlugify(input)
-        assert.equal(result, expected)
+        expect(result).toBe(expected)
       }
     })
 
@@ -145,7 +145,7 @@ describe('deSlugify', () => {
 
       for (const { input, expected } of testCases) {
         const result = deSlugify(input, { separator: '_' })
-        assert.equal(result, expected)
+        expect(result).toBe(expected)
       }
     })
 
@@ -158,7 +158,7 @@ describe('deSlugify', () => {
 
       for (const { input, expected } of testCases) {
         const result = deSlugify(input, { capitalize: false })
-        assert.equal(result, expected)
+        expect(result).toBe(expected)
       }
     })
   })
@@ -171,21 +171,21 @@ describe('deSlugify', () => {
       const result = deSlugify(longSlug)
 
       // Should start with capitalized first word and contain spaces
-      assert.ok(result.startsWith('Word0'))
-      assert.ok(result.includes(' '))
+      expect(result.startsWith('Word0')).toBe(true)
+      expect(result.includes(' ')).toBe(true)
 
       // Should have replaced all separators
-      assert.ok(!result.includes('-'))
+      expect(result.includes('-')).toBe(false)
     })
 
     it('should handle empty options object', () => {
       const result = deSlugify('hello-world', {})
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
 
     it('should handle undefined options', () => {
       const result = deSlugify('hello-world', undefined)
-      assert.equal(result, 'Hello world')
+      expect(result).toBe('Hello world')
     })
   })
 })

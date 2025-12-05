@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
 import { sortByGrade } from './sorter'
 
@@ -11,7 +11,7 @@ const easierAscent: Ascent = {
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
-  id: 1,
+  _id: '1',
   personalGrade: '6c+',
   profile: 'Arête',
   rating: 4,
@@ -30,7 +30,7 @@ const harderAscent: Ascent = {
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
   holds: 'Pocket',
-  id: 2,
+  _id: '2',
   personalGrade: '7b+',
   profile: 'Overhang',
   rating: 3,
@@ -44,19 +44,19 @@ const harderAscent: Ascent = {
 describe('sortByGrade', () => {
   it('should return a negative value when the first ascent has a higher grade than the second in descending order', () => {
     const result = sortByGrade(harderAscent, easierAscent)
-    assert.ok(result < 0)
+    expect(result < 0).toBe(true)
   })
 
   it('should return a positive value when the first ascent has a lower grade than the second in descending order', () => {
     const result = sortByGrade(easierAscent, harderAscent)
-    assert.ok(result > 0)
+    expect(result > 0).toBe(true)
   })
 
   it('should sort an array of ascents in descending order by grade (default behavior)', () => {
     const ascents: Ascent[] = [easierAscent, harderAscent]
     const sorted = ascents.sort(sortByGrade)
-    assert.equal(sorted[0]?.topoGrade, '7b')
-    assert.equal(sorted[1]?.topoGrade, '7a')
+    expect(sorted[0]?.topoGrade).toBe('7b')
+    expect(sorted[1]?.topoGrade).toBe('7a')
   })
 
   it('should sort an array of ascents in ascending order when the descending flag is false', () => {
@@ -64,7 +64,7 @@ describe('sortByGrade', () => {
     const sorted = ascents.sort((a, b) =>
       sortByGrade(a, b, { descending: false }),
     )
-    assert.equal(sorted[0]?.topoGrade, '7a')
-    assert.equal(sorted[1]?.topoGrade, '7b')
+    expect(sorted[0]?.topoGrade).toBe('7a')
+    expect(sorted[1]?.topoGrade).toBe('7b')
   })
 })

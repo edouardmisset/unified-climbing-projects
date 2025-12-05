@@ -1,76 +1,98 @@
-@property --rotating-angle {
+@property --sun-angle {
   syntax: '<angle>';
-  inherits: true;
-  initial-value: 0deg;
+  inherits: false;
+  initial-value: 20deg;
 }
 
-@keyframes rotating-gradient {
+@keyframes rising-sun {
   from {
-    --rotating-angle: 0deg;
+    --sun-angle: 20deg;
   }
 
   to {
-    --rotating-angle: 360deg;
+    --sun-angle: 60deg;
   }
 }
 
 .card {
-  --border-width: calc(var(--size-fluid-0) / 2);
-  --half-line-width: .75%;
-  --line-color: transparent;
+  --sun-angle: 20deg;
+  --first-angle: 20deg;
+  --second-angle: 35deg;
+  --forth-angle: 45deg;
+  --border-width: calc(var(--size-fluid-0) / 3);
+  --glow-intensity: 0.2;
+  --glow-size: 0.7rem;
+  --conic-gradient: conic-gradient(
+    from 180deg,
+    var(--patagonia-color-5),
+    var(--sun-angle),
+    var(--patagonia-color-4),
+    calc(var(--sun-angle) + var(--first-angle)),
+    var(--patagonia-color-3),
+    calc(var(--sun-angle) + var(--second-angle)),
+    var(--patagonia-color-2),
+    calc(var(--sun-angle) + var(--forth-angle)),
+    var(--patagonia-color-1),
+    calc(360deg - var(--sun-angle) - var(--forth-angle)),
+    var(--patagonia-color-2),
+    calc(360deg - var(--sun-angle) - var(--second-angle)),
+    var(--patagonia-color-3),
+    calc(360deg - var(--sun-angle) - var(--first-angle)),
+    var(--patagonia-color-4),
+    calc(360deg - var(--sun-angle)),
+    var(--patagonia-color-5)
+  );
+
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-
-  inline-size: calc(100% - var(--border-width));
-  block-size: calc(100% - var(--border-width));
   padding: var(--size-fluid-2);
-  overflow: hidden;
-  border-radius: var(--radius-conditional-3);
+  text-overflow: clip;
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    var(--conic-gradient) border-box;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-size-4);
   isolation: isolate;
 
-  &::before {
-    position: absolute;
-    inset: 0;
-    content: '';
-    background: linear-gradient(
-      calc(var(--rotating-angle) + 135deg),
-      var(--patagonia-color-1) 0%,
-      var(--patagonia-color-1) calc(20% - var(--half-line-width)),
-      var(--line-color) calc(20% - var(--half-line-width)),
-      var(--line-color) calc(20% + var(--half-line-width)),
-      var(--patagonia-color-2) calc(20% + var(--half-line-width)),
-      var(--patagonia-color-2) calc(40% - var(--half-line-width)),
-      var(--line-color) calc(40% - var(--half-line-width)),
-      var(--line-color) calc(40% + var(--half-line-width)),
-      var(--patagonia-color-3) calc(40% + var(--half-line-width)),
-      var(--patagonia-color-3) calc(60% - var(--half-line-width)),
-      var(--line-color) calc(60% - var(--half-line-width)),
-      var(--line-color) calc(60% + var(--half-line-width)),
-      var(--patagonia-color-4) calc(60% + var(--half-line-width)),
-      var(--patagonia-color-4) calc(80% - var(--half-line-width)),
-      var(--line-color) calc(80% - var(--half-line-width)),
-      var(--line-color) calc(80% + var(--half-line-width)),
-      var(--patagonia-color-5) calc(80% + var(--half-line-width))
-    );
-    border-radius: var(--radius-conditional-3);
+  /* Prevents the card from being rendered when off-screen */
+  content-visibility: auto;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.4s ease-in-out;
   }
 
-  &:hover {
-    animation: rotating-gradient 40s linear infinite;
+  &::after,
+  &::before {
+    position: absolute;
+    content: '';
+    border-radius: inherit;
+    filter: blur(var(--glow-size));
+    transition: inherit;
+  }
+
+  &::before {
+    inset: calc(1 * var(--glow-size));
+    z-index: -1;
+    background: var(--surface-2);
   }
 
   &::after {
-    position: absolute;
-    inset: var(--border-width);
-    content: '';
-    background: var(--surface-2);
-    border-radius: calc(var(--radius-conditional-3) - var(--border-width));
+    inset: calc(-1 * 2 * var(--glow-size));
+    z-index: -2;
+    opacity: 0;
   }
 
-  /* Place content above the background */
-  & > * {
-    z-index: 1;
+  @media (hover: hover) {
+    &:hover,
+    &:focus-within {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: rising-sun 3s ease-in-out forwards;
+      }
+
+      &::after {
+        background: var(--conic-gradient);
+        opacity: var(--glow-intensity);
+      }
+    }
   }
 }

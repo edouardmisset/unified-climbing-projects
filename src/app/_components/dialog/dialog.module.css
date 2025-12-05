@@ -1,40 +1,12 @@
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: 100%;
-  font-size: var(--font-size-fluid-2);
-  line-height: 1.5;
-  text-shadow: none;
-  user-select: none;
-  background-color: transparent;
-
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -1px;
-  }
-
-  @media (hover: hover) {
-    &:hover:not([data-close='true']) {
-      color: transparent;
-      background: var(--gradient-1);
-      background-clip: text;
-    }
-  }
-
-  &:active:not([data-close='true']) {
-    color: transparent;
-    background: var(--gradient-1);
-    background-clip: text;
-  }
-}
-
 .backdrop {
   position: fixed;
   inset: 0;
   background-color: black;
   opacity: 0.2;
-  transition: opacity 150ms cubic-bezier(0.45, 1.005, 0, 1.005);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 150ms cubic-bezier(0.45, 1.005, 0, 1.005);
+  }
 
   @media (prefers-color-scheme: dark) {
     opacity: 0.7;
@@ -50,18 +22,11 @@
   position: fixed;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  box-sizing: border-box;
-  min-inline-size: var(--size-content-2);
-  max-inline-size: calc(100vw - var(--size-fluid-3));
-  padding: var(--size-fluid-3);
-  outline: 1px solid light-dark(var(--color-gray-200), var(--color-gray-300));
-  background-color: var(--surface-1);
-  border-radius: var(--radius-3);
+  background-color: transparent;
   transform: translate(-50%, -50%);
-  transition: all 150ms;
 
-  & > * + * {
-    margin-block-start: var(--size-fluid-3);
+  @media (prefers-reduced-motion: no-preference) {
+    transition: all 150ms;
   }
 
   &[data-starting-style],
@@ -71,13 +36,29 @@
   }
 }
 
-.title {
-  line-height: 1.5;
-  text-align: center;
+.button {
+  position: fixed;
+  inset-block-start: var(--size-3);
+  inset-inline-end: var(--size-3);
+  inline-size: 1.5em;
+
+  max-inline-size: 2rem;
+  max-block-size: 2rem;
+
+  aspect-ratio: 1;
+  padding: var(--size-fluid-0);
+  margin: 0;
+
+  font-size: larger;
+  color: var(--text-1);
+
+  background-color: color-mix(in hsl, var(--surface-3) 50%, transparent);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-2);
 }
 
-.actions {
-  display: flex;
-  gap: var(--size-fluid-1);
-  justify-content: flex-end;
+.title {
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
 }

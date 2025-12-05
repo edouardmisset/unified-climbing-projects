@@ -17,7 +17,7 @@
 .mobileMenu {
   display: none;
 
-  @media (width <= 640px) {
+  @media (width <= 40rem) {
     position: absolute;
     inset: 0;
     z-index: var(--layer-3);
@@ -51,7 +51,7 @@
     padding: 0;
   }
 
-  @media (width <= 640px) {
+  @media (width <= 40rem) {
     display: none;
   }
 }
@@ -62,7 +62,9 @@
   padding-inline: var(--size-fluid-2);
   border-radius: var(--border-size-4);
 
-  transition: all 0.3s var(--ease-elastic-in-1);
+  @media (prefers-reduced-motion: no-preference) {
+    transition: all 0.3s var(--ease-elastic-in-1);
+  }
 
   && {
     &:hover {
@@ -139,9 +141,12 @@
   background-color: canvas;
   border-radius: 0.375rem;
   transform-origin: var(--transform-origin);
-  transition:
-    transform 150ms,
-    opacity 150ms;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      transform 150ms,
+      opacity 150ms;
+  }
 
   &[data-starting-style],
   &[data-ending-style] {

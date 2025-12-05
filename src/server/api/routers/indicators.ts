@@ -1,14 +1,15 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { z } from 'zod'
 import { calculateEfficiencyPercentage } from '~/helpers/calculate-efficiency-percentage'
 import { calculateProgressionPercentage } from '~/helpers/calculate-progression-percentage'
 import { calculateScore } from '~/helpers/calculate-score'
 import { calculateVersatilityPercentage } from '~/helpers/calculate-versatility-percentage'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { z } from '~/helpers/zod'
 import { percentSchema } from '~/schema/generic'
 import { getAllTrainingSessions } from '~/services/training'
+import { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 import { createTRPCRouter, publicProcedure } from '../trpc'
-import { getFilteredAscents, optionalAscentFilterSchema } from './ascents'
+import { getFilteredAscents } from './ascents'
 
 export const indicatorsRouter = createTRPCRouter({
   getEfficiencyPercentage: publicProcedure

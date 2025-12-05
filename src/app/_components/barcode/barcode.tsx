@@ -1,3 +1,5 @@
+'use client'
+
 import { memo, type ReactNode } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'

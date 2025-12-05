@@ -12,8 +12,8 @@ export function createGradeScaleFromAscents(ascents: Ascent[]): Grade[] {
 
   const [lowerGrade, higherGrade] = minMaxGrades(ascents)
 
-  const lowerGradeIndex = _GRADES.findIndex(grade => grade === lowerGrade)
-  const higherGradeIndex = _GRADES.findIndex(grade => grade === higherGrade)
+  const lowerGradeIndex = _GRADES.indexOf(lowerGrade)
+  const higherGradeIndex = _GRADES.indexOf(higherGrade)
 
   if (
     lowerGradeIndex === -1 ||

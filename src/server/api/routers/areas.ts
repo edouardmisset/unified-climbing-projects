@@ -1,11 +1,12 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
-import { z } from 'zod'
 import { groupSimilarStrings } from '~/helpers/find-similar'
+import { sortByDate } from '~/helpers/sort-by-date'
 import {
   compareStringsAscending,
   compareStringsDescending,
 } from '~/helpers/sort-strings'
 import { sortNumericalValues } from '~/helpers/sort-values'
+import { z } from '~/helpers/zod'
 import { type Ascent, ascentSchema } from '~/schema/ascent'
 import { positiveInteger } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
@@ -13,7 +14,10 @@ import { getAllAscents } from '~/services/ascents'
 
 async function getAllAreas(): Promise<NonNullable<Ascent['area']>[]> {
   const ascents = await getAllAscents()
-  return ascents.map(({ area }) => area?.trim()).filter(Boolean)
+  return ascents
+    .sort((a, b) => sortByDate(a, b, true))
+    .map(({ area }) => area?.trim())
+    .filter(Boolean)
 }
 
 export const areasRouter = createTRPCRouter({
@@ -25,9 +29,9 @@ export const areasRouter = createTRPCRouter({
         })
         .optional(),
     )
-    .output(ascentSchema.shape.area.nonoptional().array())
+    .output(ascentSchema.required().shape.area.array())
     .query(async ({ input }) => {
-      const { sortOrder } = input ?? {}
+      const { sortOrder = 'newest' } = input ?? {}
       const validAreas = await getAllAreas()
       const uniqueAreas = [...new Set(validAreas)]
 

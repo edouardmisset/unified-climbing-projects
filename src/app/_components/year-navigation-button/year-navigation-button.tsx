@@ -20,10 +20,14 @@ export function YearNavigationButton({
     nextOrPrevious === 'next' ? selectedYear + 1 : selectedYear - 1
   return (
     <Link
-      className={styles.button}
+      className={`${styles.button} ${nextOrPrevious === 'next' ? styles.right : styles.left}`}
       href={`.${path}/${targetYear}`}
       prefetch
-      title={targetYear?.toString() ?? ''}
+      title={
+        nextOrPrevious === 'next'
+          ? `Next year: ${targetYear}`
+          : `Previous year: ${targetYear}`
+      }
     >
       {nextOrPrevious === 'next' ? (
         <ArrowRightCircleIcon />

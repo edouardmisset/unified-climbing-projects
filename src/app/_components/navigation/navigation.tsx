@@ -1,9 +1,9 @@
 import { Menu } from '@base-ui-components/react/menu'
-import { MenuIcon } from 'lucide-react'
+import { Link, MenuIcon } from 'lucide-react'
 import { memo } from 'react'
-import { Link } from '../link/link'
 import { Arrow } from '../svg/arrow/arrow'
-import { UserStatus } from './_components/user-status'
+import { MobileNavigationItem } from './_components/mobile-navigation-item'
+import type { UserStatus } from './_components/user-status'
 import { useMediaQuery } from './hooks'
 import styles from './navigation.module.css'
 

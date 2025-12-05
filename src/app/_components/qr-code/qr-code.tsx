@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { memo, type ReactNode } from 'react'
 import type { Ascent } from '~/schema/ascent.ts'

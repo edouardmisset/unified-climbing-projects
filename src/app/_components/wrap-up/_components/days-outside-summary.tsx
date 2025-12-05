@@ -1,49 +1,54 @@
 import humanizeDuration from 'humanize-duration'
 import { Suspense } from 'react'
+import { calculateAscentsPerDay } from '~/helpers/calculate-ascents-per-day'
 import {
+  extractDateFromISODateString,
   findLongestGap,
   findLongestStreak,
   getMostFrequentDate,
 } from '~/helpers/date'
-import { buildDateTimeFormat } from '~/helpers/format-date'
+import { filterTrainingSessions } from '~/helpers/filter-training'
+import { formatLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
-import { api } from '~/trpc/server'
+import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-const MIN_GAP_THRESHOLD = 5
-
-const formatDate = buildDateTimeFormat('longDate')
+const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
 
 export async function DaysOutsideSummary({
   ascents,
-  year,
+  trainingSessions,
 }: {
   ascents: Ascent[]
-  year?: number
+  trainingSessions: TrainingSession[]
 }) {
-  const outdoorSessions = await api.training.getAll({
+  const outdoorSessions = filterTrainingSessions(trainingSessions, {
     sessionType: 'Out',
-    year,
   })
 
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)
   const longestGap = findLongestGap(outdoorSessions)
 
-  const daysOutside = outdoorSessions.length
-
-  const numberOfAscents = ascents.length
-
-  if (numberOfAscents === 0 || daysOutside === 0) return undefined
+  if (ascents.length === 0 || outdoorSessions.length === 0) return undefined
 
   const [mostAscentDate] = getMostFrequentDate(ascents)
 
-  const ascentsInMostAscentDay = ascents.filter(
-    ({ date }) =>
-      new Date(date).getTime() === new Date(mostAscentDate).getTime(),
-  )
+  const mostAscentDay = extractDateFromISODateString(mostAscentDate)
 
-  const ascentsRatio = (numberOfAscents / daysOutside).toFixed(1)
+  const ascentsInMostAscentDay = ascents.filter(({ date }) => {
+    try {
+      return extractDateFromISODateString(date) === mostAscentDay
+    } catch (error) {
+      globalThis.console.error(`Failed to parse date '${date}':`, error)
+      return false
+    }
+  })
+
+  const ascentsRatio = calculateAscentsPerDay(
+    ascents,
+    trainingSessions,
+  ).toFixed(1)
 
   return (
     <Card>
@@ -59,13 +64,13 @@ export async function DaysOutsideSummary({
           <DaysOutsideDetails
             ascents={ascents}
             ascentsRatio={ascentsRatio}
-            daysOutside={daysOutside}
+            daysOutside={outdoorSessions.length}
           />
         </Suspense>
         {mostAscentDate === '' ||
         ascentsInMostAscentDay[0] === undefined ? undefined : (
           <span className="block">
-            Your best day was <strong>{formatDate(mostAscentDate)}</strong>{' '}
+            Your best day was <strong>{formatLongDate(mostAscentDate)}</strong>{' '}
             where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>

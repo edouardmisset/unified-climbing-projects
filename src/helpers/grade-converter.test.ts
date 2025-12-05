@@ -1,5 +1,5 @@
 import { objectKeys } from '@edouardmisset/object'
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 import {
@@ -15,12 +15,12 @@ describe('fromGradeToNumber', () => {
     )[0] as keyof typeof GRADE_TO_NUMBER
     const expectedNumber = GRADE_TO_NUMBER[validGrade]
     const result = fromGradeToNumber(validGrade)
-    assert.equal(result, expectedNumber)
+    expect(result).toBe(expectedNumber)
   })
 
   it('should return 1 for an invalid grade', () => {
     const result = fromGradeToNumber('invalid_grade' as unknown as Grade)
-    assert.equal(result, 1)
+    expect(result).toBe(1)
   })
 })
 
@@ -32,12 +32,12 @@ describe('fromNumberToGrade', () => {
 
     const expectedGrade = NUMBER_TO_GRADE[validNumberKey]
     const result = fromNumberToGrade(validNumberKey)
-    assert.equal(result, expectedGrade)
+    expect(result).toBe(expectedGrade)
   })
 
   it('should return `DEFAULT_GRADE` for an invalid number', () => {
     const invalidNumber = -9999
     const result = fromNumberToGrade(invalidNumber)
-    assert.equal(result, DEFAULT_GRADE)
+    expect(result).toBe(DEFAULT_GRADE)
   })
 })

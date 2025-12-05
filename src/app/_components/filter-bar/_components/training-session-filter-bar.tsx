@@ -100,5 +100,5 @@ export function TrainingSessionFilterBar({
     ],
   )
 
-  return <StickyFilterBar filters={filters} />
+  return <StickyFilterBar filters={filters} showSearch={false} />
 }

@@ -6,7 +6,7 @@ import {
   ResponsiveLine,
   type Serie,
 } from '@nivo/line'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -46,13 +46,7 @@ const legends = [
   },
 ] as const
 
-export function TriesByGrade({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   const data: LineChartDataStructure[] = useMemo(
     () => getTriesByGrade(ascents),
     [ascents],
@@ -63,7 +57,7 @@ export function TriesByGrade({
   if (data.length === 0 || isFirstTry) return null
 
   return (
-    <ChartContainer caption="Tries by Grade" className={className}>
+    <ChartContainer caption="Tries by Grade">
       <ResponsiveLine
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfTriesAxisLeft}
@@ -85,10 +79,10 @@ export function TriesByGrade({
   )
 }
 
-const Tooltip = ({ point }: PointTooltipProps) => (
+const Tooltip = memo(({ point }: PointTooltipProps) => (
   <div className={styles.tooltip}>
     <strong>{point.data.xFormatted}</strong>{' '}
     {capitalize(point.serieId.toString())} # of tries:{' '}
     <strong>{point.data.yFormatted}</strong>
   </div>
-)
+))

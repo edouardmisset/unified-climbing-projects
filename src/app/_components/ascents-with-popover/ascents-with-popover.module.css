@@ -8,7 +8,9 @@
 
   cursor: pointer;
 
-  transition: color var(--sneeze);
+  @media (prefers-reduced-motion: no-preference) {
+    transition: color var(--sneeze);
+  }
 
   &:hover {
     color: oklch(from var(--text) calc(l * 0.7) c h);

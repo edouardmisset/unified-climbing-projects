@@ -1,6 +1,10 @@
+'use client'
+
 import { memo, type ReactNode, useMemo } from 'react'
 import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
+import type { Ascent } from '~/schema/ascent'
+import type { TrainingSession } from '~/schema/training'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
@@ -45,7 +49,6 @@ export const YearGrid = memo(
           { length: numberOfDaysFromPreviousMondayTo1stJanuary },
           (_, index): DayDescriptor => ({
             date: '',
-            description: '',
             shortText: index.toString(),
             title: '',
           }),
@@ -72,23 +75,25 @@ export const YearGrid = memo(
           (
             {
               date,
-              description,
               backgroundColor,
               shortText = '',
               title,
               isSpecialCase = false,
+              ascents,
+              trainingSessions,
             },
             index,
           ) => (
             <YearGridCell
+              ascents={ascents}
               backgroundColor={backgroundColor}
               date={date}
-              description={description}
               formattedDate={date === '' ? '' : prettyLongDate(date)}
               isSpecialCase={isSpecialCase}
               key={(date || index).toString()}
               shortText={shortText}
               title={title}
+              trainingSessions={trainingSessions}
               year={year}
             />
           ),
@@ -101,8 +106,10 @@ export const YearGrid = memo(
 export type DayDescriptor = {
   backgroundColor?: string
   date: string
-  description: ReactNode
   isSpecialCase?: boolean
   shortText: ReactNode
   title: ReactNode
+  // Lazy loading data
+  ascents?: Ascent[]
+  trainingSessions?: TrainingSession[]
 }

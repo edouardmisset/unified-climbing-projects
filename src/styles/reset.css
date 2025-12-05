@@ -33,9 +33,8 @@
 
 :root {
   font-weight: var(--font-weight-4);
-  font-family: system-ui, sans-serif;
 
-  --accent: light-dark(var(--violet-6), var(--violet-4));
+  --accent: light-dark(var(--patagonia-color-2), var(--patagonia-color-3));
   --link: light-dark(var(--indigo-7), var(--indigo-5));
   --link-visited: light-dark(var(--indigo-5), var(--indigo-3));
   --text-1: light-dark(var(--gray-12), var(--gray-1));
@@ -44,6 +43,9 @@
   --surface-2: light-dark(var(--gray-2), var(--gray-8));
   --surface-3: light-dark(var(--gray-3), var(--gray-7));
   --surface-4: light-dark(var(--gray-4), var(--gray-6));
+
+  /* Animation */
+  --rotating-angle: 0turn;
 
   /* Accent colors */
   accent-color: var(--accent, var(--link));
@@ -94,8 +96,9 @@
 
 :where(body) {
   min-block-size: 100svh;
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
   line-height: 1.5;
+  position: relative;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
@@ -162,10 +165,12 @@ not to see them */
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
+    && {
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      scroll-behavior: auto;
+    }
   }
 }
 
@@ -222,7 +227,7 @@ not to see them */
 
 @media (prefers-reduced-motion: no-preference) {
   :where(:focus-visible) {
-    transition: outline-offset 145ms var(--ease-2);
+    transition: outline-offset 145ms var(--ease-elastic-in-1);
   }
 
   :where(:not(:active):focus-visible) {
@@ -235,23 +240,23 @@ not to see them */
 }
 
 :where(h1) {
-  font-size: var(--font-size-8);
+  font-size: clamp(2rem, 3.5vw + 1rem, 3.5rem);
 }
 
 :where(h2) {
-  font-size: var(--font-size-6);
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
 }
 
 :where(h3) {
-  font-size: var(--font-size-5);
+  font-size: clamp(1.25rem, 1.5vw + 1rem, 2rem);
 }
 
 :where(h4) {
-  font-size: var(--font-size-4);
+  font-size: clamp(1rem, 1vw + 1rem, 1.5rem);
 }
 
 :where(h5) {
-  font-size: var(--font-size-3);
+  font-size: clamp(0.875rem, 0.5vw + 1rem, 1.25rem);
 }
 
 :where(h3, h4, h5, h6, dt) {
@@ -259,7 +264,7 @@ not to see them */
 }
 
 :where(p, ul, ol, dl, h6) {
-  font-size: var(--font-size-2);
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
 }
 
 @supports (-moz-appearance: none) {

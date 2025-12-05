@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import {
@@ -16,24 +16,24 @@ import {
 describe('fromGradeToBackgroundColor', () => {
   it('should return black when grade is undefined', () => {
     const result = fromGradeToBackgroundColor(undefined)
-    assert.equal(result, 'black')
+    expect(result).toBe('black')
   })
 
   it('should return the correct background color based on grade', () => {
     const result = fromGradeToBackgroundColor('7a+')
-    assert.equal(result, 'var(--7a_)')
+    expect(result).toBe('var(--7a_)')
   })
 })
 
 describe('fromGradeToClassName', () => {
   it('should return undefined when grade is undefined', () => {
     const result = fromGradeToClassName(undefined)
-    assert.equal(result, undefined)
+    expect(result).toBe(undefined)
   })
 
   it('should return a class name with underscores replacing plus signs', () => {
     const result = fromGradeToClassName('7a+')
-    assert.equal(result, '_7a_')
+    expect(result).toBe('_7a_')
   })
 })
 
@@ -48,21 +48,21 @@ describe('fromAscentToPoints', () => {
     }
 
     const result = fromAscentToPoints(onsight7a)
-    assert.equal(result, 850)
+    expect(result).toBe(850)
 
     const result2 = fromAscentToPoints(redpoint7b)
-    assert.equal(result2, 800)
+    expect(result2).toBe(800)
 
     const result3 = fromAscentToPoints(flash7aBoulder)
-    assert.equal(result3, 850)
+    expect(result3).toBe(850)
   })
 })
 
 describe('fromPointToGrade', () => {
   it('should convert valid points to the correct grade with default parameters', () => {
-    assert.equal(fromPointToGrade(700), '7a')
-    assert.equal(fromPointToGrade(800), '7b')
-    assert.equal(fromPointToGrade(1000), '8a')
+    expect(fromPointToGrade(700)).toBe('7a')
+    expect(fromPointToGrade(800)).toBe('7b')
+    expect(fromPointToGrade(1000)).toBe('8a')
   })
 
   it('should handle edge cases with minimum and maximum point values', () => {
@@ -70,25 +70,24 @@ describe('fromPointToGrade', () => {
     const minGrade = Object.entries(GRADE_TO_POINTS).find(
       ([_, points]) => points === minPoints,
     )?.[0]
-    assert.equal(fromPointToGrade(minPoints), minGrade)
+    expect(fromPointToGrade(minPoints)).toBe(minGrade)
 
     const maxPoints = Math.max(...Object.values(GRADE_TO_POINTS))
     const maxGrade = Object.entries(GRADE_TO_POINTS).find(
       ([_, points]) => points === maxPoints,
     )?.[0]
-    assert.equal(fromPointToGrade(maxPoints), maxGrade)
+    expect(fromPointToGrade(maxPoints)).toBe(maxGrade)
   })
 
   it('should adjust points correctly for different climbing disciplines', () => {
     const pointsFor7a = GRADE_TO_POINTS['7a']
 
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
-    assert.equal(
-      fromPointToGrade(pointsWith7aBoulderBonus, {
-        climbingDiscipline: 'Boulder',
-      }),
-      '7a',
-    )
+    const boulderGrade = fromPointToGrade(pointsWith7aBoulderBonus, {
+      climbingDiscipline: 'Boulder',
+    })
+
+    expect(boulderGrade).toBe('7a')
   })
 
   it('should adjust points correctly for different climbing styles', () => {
@@ -96,14 +95,15 @@ describe('fromPointToGrade', () => {
 
     const flashPoints = STYLE_TO_POINTS.Flash
     const pointsWith7aFlash = pointsFor7a + flashPoints
-    assert.equal(fromPointToGrade(pointsWith7aFlash, { style: 'Flash' }), '7a')
+    const flash7a = fromPointToGrade(pointsWith7aFlash, { style: 'Flash' })
+    expect(flash7a).toBe('7a')
 
     const onsightPoints = STYLE_TO_POINTS.Onsight
     const pointsWith7aOnsight = pointsFor7a + onsightPoints
-    assert.equal(
-      fromPointToGrade(pointsWith7aOnsight, { style: 'Onsight' }),
-      '7a',
-    )
+    const onsight7a = fromPointToGrade(pointsWith7aOnsight, {
+      style: 'Onsight',
+    })
+    expect(onsight7a).toBe('7a')
   })
 
   it('should combine discipline and style adjustments correctly', () => {
@@ -111,23 +111,22 @@ describe('fromPointToGrade', () => {
     const flashPoints = STYLE_TO_POINTS.Flash
 
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
-    assert.equal(
+    expect(
       fromPointToGrade(combinedPoints, {
         climbingDiscipline: 'Boulder',
         style: 'Flash',
       }),
-      '7a',
-    )
+    ).toBe('7a')
   })
 
   it('should return DEFAULT_GRADE when points do not match any grade', () => {
     const invalidPoints = 123
-    assert.equal(fromPointToGrade(invalidPoints), DEFAULT_GRADE)
+    expect(fromPointToGrade(invalidPoints)).toBe(DEFAULT_GRADE)
 
-    assert.equal(fromPointToGrade(-100), DEFAULT_GRADE)
+    expect(fromPointToGrade(-100)).toBe(DEFAULT_GRADE)
 
     const veryLargePoints = 10_000
-    assert.equal(fromPointToGrade(veryLargePoints), DEFAULT_GRADE)
+    expect(fromPointToGrade(veryLargePoints)).toBe(DEFAULT_GRADE)
   })
 
   it('should handle conversion from real ascent examples', () => {
@@ -140,7 +139,7 @@ describe('fromPointToGrade', () => {
           climbingDiscipline: ascent.climbingDiscipline,
           style: ascent.style,
         })
-        assert.equal(convertedGrade, ascent.topoGrade)
+        expect(convertedGrade).toBe(ascent.topoGrade)
       }
     }
   })

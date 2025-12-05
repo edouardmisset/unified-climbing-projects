@@ -1,30 +1,33 @@
-import { ResponsivePie } from '@nivo/pie'
+import type { OrdinalColorScaleConfig } from '@nivo/colors'
+import type { PropertyAccessor } from '@nivo/core'
+import { type ComputedDatum, ResponsivePie } from '@nivo/pie'
 import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
-import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
+import {
+  type AscentByStyle,
+  getAscentsByStyle,
+} from '../ascents-by-style/get-ascents-by-style'
 import { ChartContainer } from '../chart-container/chart-container'
 import { DEFAULT_PIE_MARGIN, defaultMotionConfig, theme } from '../constants'
 
-export function AscentsByStyle({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
+
+  const arcLabel: PropertyAccessor<
+    ComputedDatum<AscentByStyle>,
+    string
+  > = data =>
+    `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
 
   if (data.length <= 1) return null
 
   return (
-    <ChartContainer caption="Ascent By Style" className={className}>
+    <ChartContainer caption="Ascent By Style">
       <ResponsivePie
         animate
-        arcLabel={data =>
-          `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
-        }
+        arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
-        colors={({ data }) => data.color}
+        colors={getChartColor}
         data={data}
         innerRadius={0.5}
         margin={DEFAULT_PIE_MARGIN}
@@ -34,3 +37,7 @@ export function AscentsByStyle({
     </ChartContainer>
   )
 }
+
+const getChartColor: OrdinalColorScaleConfig<
+  Omit<ComputedDatum<AscentByStyle>, 'color' | 'fill' | 'arc'>
+> = ({ data }) => data.color

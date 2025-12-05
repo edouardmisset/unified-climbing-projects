@@ -12,13 +12,9 @@ import {
 } from '../constants'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
-export function AscentsByGradesPerCrag({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+const chartMarginSettings = { ...DEFAULT_CHART_MARGIN, left: 150, right: 40 }
+
+export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   const ascentsByGradesPerCrag = useMemo(
     () => getAscentsByGradesPerCrag(ascents).reverse(),
     [ascents],
@@ -32,10 +28,10 @@ export function AscentsByGradesPerCrag({
   if (uniqueCragsCount <= 1) return null
 
   return (
-    <ChartContainer caption="Ascents By Grades Per Crag" className={className}>
+    <ChartContainer caption="Ascents By Grades Per Crag">
       <ResponsiveBar
         axisBottom={numberOfAscentsAxisBottom}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={ascentsByGradesPerCrag}
         enableGridX={false}
@@ -45,8 +41,7 @@ export function AscentsByGradesPerCrag({
         indexBy="crag"
         keys={_GRADES}
         layout="horizontal"
-        // @ts-ignore
-        margin={{ ...DEFAULT_CHART_MARGIN, left: 150, right: 40 }}
+        margin={chartMarginSettings}
         motionConfig={defaultMotionConfig}
         padding={defaultBarChartPadding}
         theme={theme}

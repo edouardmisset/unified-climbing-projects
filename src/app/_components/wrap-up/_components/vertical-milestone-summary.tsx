@@ -23,7 +23,7 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
       ? Math.round(average(...routes.map(({ height }) => height ?? 0)))
       : 0
 
-  const formattedTotalHeight = frenchNumberFormatter(totalHeight)
+  const formattedTotalHeight = frenchNumberFormatter.format(totalHeight)
 
   return (
     <Card>
