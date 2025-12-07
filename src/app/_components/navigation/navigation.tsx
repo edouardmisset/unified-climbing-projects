@@ -13,16 +13,13 @@ export const Navigation = memo(() => (
   <nav className={styles.nav}>
     {/* Desktop full menu - visible by CSS when viewport is wide */}
     <ul className={styles.navList}>
-      {NAVIGATION_ITEMS.map((item, index) => {
-        const key = createNavigationElementKey(item, index)
-        return (
-          <DesktopNavigationItem
-            index={index}
-            item={item}
-            key={`desktop-${key}`}
-          />
-        )
-      })}
+      {NAVIGATION_ITEMS.map((item, index) => (
+        <DesktopNavigationItem
+          index={index}
+          item={item}
+          key={`desktop-${createNavigationElementKey(item, index)}`}
+        />
+      ))}
       <li className={styles.user}>
         <UserStatus />
       </li>
@@ -45,16 +42,13 @@ export const Navigation = memo(() => (
               <Menu.Arrow className={styles.Arrow}>
                 <Arrow />
               </Menu.Arrow>
-              {NAVIGATION_ITEMS.map((item, index) => {
-                const key = createNavigationElementKey(item, index)
-                return (
-                  <MobileNavigationItem
-                    index={index}
-                    item={item}
-                    key={`mobile-${key}`}
-                  />
-                )
-              })}
+              {NAVIGATION_ITEMS.map((item, index) => (
+                <MobileNavigationItem
+                  index={index}
+                  item={item}
+                  key={`mobile-${createNavigationElementKey(item, index)}`}
+                />
+              ))}
               <Menu.Separator className={styles.Separator} />
               <Menu.Item
                 className={styles.Item}

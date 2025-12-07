@@ -10,14 +10,14 @@
   flex-direction: column;
   gap: var(--size-3);
   align-items: center;
-  padding-block-start: var(--size-3);
-
+  
   background-color: var(--surface-2);
-
+  
   box-shadow: var(--shadow-4);
   isolation: isolate;
-
+  
   @media (width > 40rem) {
+    padding-block-start: var(--size-3);
     overflow-y: auto;
   }
 

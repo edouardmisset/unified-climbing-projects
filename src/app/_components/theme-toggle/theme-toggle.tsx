@@ -1,5 +1,6 @@
 import { Moon, Sun } from 'lucide-react'
 import { useCallback } from 'react'
+import styles from './theme-toggle.module.css'
 
 export function ThemeToggle({
   checked,
@@ -14,7 +15,12 @@ export function ThemeToggle({
   )
 
   return (
-    <button onClick={handleThemeChange} type="button">
+    <button
+      aria-label="Toggle theme"
+      className={styles.toggle}
+      onClick={handleThemeChange}
+      type="button"
+    >
       {checked ? (
         <Moon color={'var(--text-2)'} />
       ) : (
