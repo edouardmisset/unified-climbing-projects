@@ -1,15 +1,4 @@
 .wrapUp {
   /* This is to override the 300px min from the grid utility */
   --min: 350px;
-
-  & > div {
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: span 2;
-    gap: 0;
-
-    & > p {
-      padding-block-start: var(--size-fluid-1);
-    }
-  }
 }
