@@ -61,19 +61,23 @@ const meaninglessWords = [
 
 const WORD_SPLIT_REGEX = /\s|-|’|'|\(|\)|,|>|<|\.|"|:|\?|!|¡|#|,|=|\+|\/|\\/
 
-const words = ascents.flatMap(({ routeName }) =>
-  removeAccents(routeName)
-    .toLowerCase()
-    .split(WORD_SPLIT_REGEX)
-    .filter(word => word.length > 2 && !meaninglessWords.includes(word)),
-)
+function getWordFrequency(): void {
+  const words = ascents.flatMap(({ routeName }) =>
+    removeAccents(routeName)
+      .toLowerCase()
+      .split(WORD_SPLIT_REGEX)
+      .filter(word => word.length > 2 && !meaninglessWords.includes(word)),
+  )
 
-const wordFrequency = Object.fromEntries(
-  Object.entries(frequency(words)).filter(([_, value]) => value > 1),
-)
-const sortedWordFrequency = sortNumericalValues(wordFrequency, {
-  ascending: false,
-})
+  const wordFrequency = Object.fromEntries(
+    Object.entries(frequency(words)).filter(([_, value]) => value > 1),
+  )
+  const sortedWordFrequency = sortNumericalValues(wordFrequency, {
+    ascending: false,
+  })
 
-globalThis.console.log(`${words.length} words`)
-globalThis.console.table(sortedWordFrequency)
+  globalThis.console.log(`${words.length} words`)
+  globalThis.console.table(sortedWordFrequency)
+}
+
+getWordFrequency()

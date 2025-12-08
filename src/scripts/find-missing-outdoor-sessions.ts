@@ -7,7 +7,7 @@ import { getAllTrainingSessions } from '~/services/training'
 // the list of all ascents.
 // Then, get the list of all the outdoor sessions and compute the difference
 // between the two sets to find the missing days.
-export async function findMissingOutdoorSessions(): Promise<string[]> {
+async function findMissingOutdoorSessions(): Promise<string[]> {
   const ascentDays = await getAllAscents()
   const outdoorSessions = await getAllTrainingSessions()
 
