@@ -37,6 +37,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     year,
     ascents,
     trainingSessions,
+    description,
   } = props
 
   const cellStyle: CSSProperties = useMemo(
@@ -53,6 +54,8 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
   // LAZY LOADING: Create description component only when we have data
   const lazyDescription = useMemo(() => {
+    if (description) return description
+
     if (ascents && ascents.length > 0) {
       return (
         <Suspense fallback="Loading...">
@@ -68,7 +71,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       )
     }
     return ''
-  }, [ascents, trainingSessions])
+  }, [ascents, trainingSessions, description])
 
   if (date === '' || !isDateInYear(date, year))
     return <EmptyGridCell cellStyle={cellStyle} date={date} />

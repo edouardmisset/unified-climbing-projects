@@ -81,6 +81,7 @@ export const YearGrid = memo(
               isSpecialCase = false,
               ascents,
               trainingSessions,
+              description,
             },
             index,
           ) => (
@@ -88,6 +89,7 @@ export const YearGrid = memo(
               ascents={ascents}
               backgroundColor={backgroundColor}
               date={date}
+              description={description}
               formattedDate={date === '' ? '' : prettyLongDate(date)}
               isSpecialCase={isSpecialCase}
               key={(date || index).toString()}
@@ -106,6 +108,7 @@ export const YearGrid = memo(
 export type DayDescriptor = {
   backgroundColor?: string
   date: string
+  description?: ReactNode
   isSpecialCase?: boolean
   shortText: ReactNode
   title: ReactNode

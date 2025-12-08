@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
+import { ascentTransformConfig } from '~/app/_components/data-calendar'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
 import { Loader } from '~/app/_components/loader/loader'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
 import type { Ascent } from '~/schema/ascent'
 
 export function AscentCalendar({
@@ -14,14 +13,11 @@ export function AscentCalendar({
 }) {
   return (
     <>
-      <h2 className="superCenter">{year}</h2>
+      <h2 className="centerText">{year}</h2>
       <Suspense fallback={<Loader />}>
         <DataCalendar
+          config={ascentTransformConfig}
           data={allAscents}
-          dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={(calendarYear, ascents) =>
-            fromAscentsToCalendarEntries(calendarYear, ascents as Ascent[][])
-          }
           key={year}
           year={year}
         />
