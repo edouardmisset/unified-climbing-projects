@@ -25,7 +25,7 @@ export const trainingRouter = createTRPCRouter({
     .input(
       z
         .object({
-          sessionType: trainingSessionSchema.shape.sessionType.optional(),
+          sessionType: trainingSessionSchema.shape.type.optional(),
           year: optionalAscentYear,
         })
         .optional(),
@@ -40,13 +40,13 @@ export const trainingRouter = createTRPCRouter({
       return filteredTrainingSessions.sort(sortByDate)
     }),
   getAllLocations: publicProcedure
-    .output(z.array(trainingSessionSchema.required().shape.gymCrag))
+    .output(z.array(trainingSessionSchema.required().shape.location))
     .query(async () => {
       const allTrainingSessions = await getAllTrainingSessions()
       return [
         ...new Set(
           allTrainingSessions
-            .map(({ gymCrag }) => gymCrag?.trim())
+            .map(({ location }) => location?.trim())
             .filter(Boolean)
             .sort(compareStringsAscending),
         ),

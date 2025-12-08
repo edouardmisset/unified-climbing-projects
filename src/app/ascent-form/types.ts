@@ -27,7 +27,7 @@ const numberOfTriesSchema = z
   .transform(Number)
 export const ascentFormInputSchema = z.object({
   area: z.string().trim().optional(),
-  climbingDiscipline: climbingDisciplineSchema.optional(),
+  discipline: climbingDisciplineSchema.optional(),
   comments: z.string().trim().optional(),
   crag: z.string().trim().optional(),
   date: z.date().transform(date => stringifyDate(date)),
@@ -36,9 +36,9 @@ export const ascentFormInputSchema = z.object({
   personalGrade: optionalNumberGradeSchema,
   profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(MAX_RATING).transform(String).optional(),
-  routeName: z.string().trim().optional(),
+  name: z.string().trim().optional(),
   style: ascentStyleSchema.optional(),
-  topoGrade: optionalNumberGradeSchema,
+  grade: optionalNumberGradeSchema,
   tries: numberOfTriesSchema.transform(num => num?.toString()),
 })
 
@@ -67,6 +67,6 @@ export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   rating: z
     .string()
     .transform(rating => (rating === '' ? undefined : Number(rating))),
-  topoGrade: numberGradeToGradeSchema,
+  grade: numberGradeToGradeSchema,
   tries: numberOfTriesSchema,
 })

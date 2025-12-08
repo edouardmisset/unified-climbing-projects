@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import {
+  BOULDERING,
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   STYLE_TO_POINTS,
@@ -84,7 +85,7 @@ describe('fromPointToGrade', () => {
 
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
     const boulderGrade = fromPointToGrade(pointsWith7aBoulderBonus, {
-      climbingDiscipline: 'Boulder',
+      discipline: BOULDERING,
     })
 
     expect(boulderGrade).toBe('7a')
@@ -113,7 +114,7 @@ describe('fromPointToGrade', () => {
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
     expect(
       fromPointToGrade(combinedPoints, {
-        climbingDiscipline: 'Boulder',
+        discipline: BOULDERING,
         style: 'Flash',
       }),
     ).toBe('7a')
@@ -136,10 +137,10 @@ describe('fromPointToGrade', () => {
       if (ascent) {
         const points = fromAscentToPoints(ascent)
         const convertedGrade = fromPointToGrade(points, {
-          climbingDiscipline: ascent.climbingDiscipline,
+          discipline: ascent.discipline,
           style: ascent.style,
         })
-        expect(convertedGrade).toBe(ascent.topoGrade)
+        expect(convertedGrade).toBe(ascent.grade)
       }
     }
   })

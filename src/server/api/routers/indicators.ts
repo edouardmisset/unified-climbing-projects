@@ -6,6 +6,7 @@ import { calculateVersatilityPercentage } from '~/helpers/calculate-versatility-
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { z } from '~/helpers/zod'
 import { percentSchema } from '~/schema/generic'
+import { OUTDOOR } from '~/schema/training'
 import { getAllTrainingSessions } from '~/services/training'
 import { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 import { createTRPCRouter, publicProcedure } from '../trpc'
@@ -22,9 +23,9 @@ export const indicatorsRouter = createTRPCRouter({
       const filteredTrainingSessions = filterTrainingSessions(
         allTrainingSessions,
         {
-          climbingDiscipline: input?.climbingDiscipline,
-          gymCrag: input?.crag,
-          sessionType: 'Out',
+          discipline: input?.discipline,
+          location: input?.crag,
+          type: OUTDOOR,
           year: input?.year,
         },
       )
@@ -77,9 +78,9 @@ export const indicatorsRouter = createTRPCRouter({
       const filteredTrainingSessions = filterTrainingSessions(
         allTrainingSessions,
         {
-          climbingDiscipline: input?.climbingDiscipline,
-          gymCrag: input?.crag,
-          sessionType: 'Out',
+          discipline: input?.discipline,
+          location: input?.crag,
+          type: OUTDOOR,
           year,
         },
       )

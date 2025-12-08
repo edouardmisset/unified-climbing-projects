@@ -1,7 +1,13 @@
-import type { Ascent } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  DEEP_WATER_SOLOING,
+  MULTI_PITCH,
+  SPORT,
+} from '~/schema/ascent'
 
 type ClimbingActivity =
-  `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${'s' | ''}`
+  `${Lowercase<Ascent['discipline']> | 'ascent'}${'s' | ''}`
 
 /**
  * Generates a text for ascents based on their climbing discipline.
@@ -12,21 +18,31 @@ type ClimbingActivity =
  *   or with an "s" if there are multiple ascents.
  *
  * @param {Ascent[]} ascents - The list of ascent objects.
- * @returns {ClimbingActivity} The text for the ascents ('boulder', 'boulders',
- * 'route', etc).
+ * @returns {ClimbingActivity} The text for the ascents (BOULDERING, 'boulders',
+ * SPORT, etc).
  */
 export function writeAscentsDisciplineText<
-  T extends Pick<Ascent, 'climbingDiscipline'>,
+  T extends Pick<Ascent, 'discipline'>,
 >(ascents: T[]): ClimbingActivity {
   if (ascents[0] === undefined) return 'ascents'
 
   const maybePlural = ascents.length > 1 ? 's' : ''
 
-  const firstDiscipline = ascents[0].climbingDiscipline
-
-  for (const { climbingDiscipline } of ascents) {
-    if (climbingDiscipline !== firstDiscipline) return `ascent${maybePlural}`
+  const firstDiscipline = ascents[0].discipline
+  for (const { discipline } of ascents) {
+    if (discipline !== firstDiscipline) return `ascent${maybePlural}`
   }
 
-  return `${firstDiscipline.toLowerCase()}${maybePlural}` as ClimbingActivity
+  const activity =
+    firstDiscipline === BOULDERING
+      ? 'boulder'
+      : firstDiscipline === SPORT
+        ? 'route'
+        : firstDiscipline === DEEP_WATER_SOLOING
+          ? 'deep water solo'
+          : firstDiscipline === MULTI_PITCH
+            ? 'multi-pitch route'
+            : firstDiscipline
+
+  return `${activity}${maybePlural}` as ClimbingActivity
 }

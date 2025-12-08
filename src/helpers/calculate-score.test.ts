@@ -4,8 +4,8 @@ import {
   COEFFICIENT_VOLUME,
   DEFAULT_GRADE,
 } from '~/constants/ascents'
-import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { type Ascent, BOULDERING, FLASH, REDPOINT } from '~/schema/ascent'
+import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 import {
   calculateProgressionPercentage,
@@ -21,13 +21,13 @@ describe('calculateScore', () => {
     const result = calculateScore({
       ascents: [
         {
-          climbingDiscipline: 'Boulder',
+          discipline: BOULDERING,
           crag: 'Test',
           date: '2023-01-01T00:00:00Z',
           _id: '1',
-          routeName: 'A',
-          style: 'Redpoint',
-          topoGrade: '5a',
+          name: 'A',
+          style: REDPOINT,
+          grade: '5a',
           tries: 1,
         } as Ascent,
       ],
@@ -58,24 +58,24 @@ describe('calculateScore', () => {
     const previousYear = year - 1
 
     const currentYearAscent: Ascent = {
-      climbingDiscipline: 'Boulder',
+      discipline: BOULDERING,
       crag: 'Test Crag',
       date: `${year}-01-01T10:00:00Z`,
       _id: '1',
-      routeName: 'Test Route 1',
-      style: 'Flash',
-      topoGrade: '7a',
+      name: 'Test Route 1',
+      style: FLASH,
+      grade: '7a',
       tries: 1,
     }
 
     const previousYearAscent: Ascent = {
-      climbingDiscipline: 'Boulder',
+      discipline: BOULDERING,
       crag: 'Test Crag',
       date: `${previousYear}-01-01T10:00:00Z`,
       _id: '2',
-      routeName: 'Test Route 2',
+      name: 'Test Route 2',
       style: 'Redpoint',
-      topoGrade: '6c',
+      grade: '6c',
       tries: 3,
     }
 
@@ -85,7 +85,7 @@ describe('calculateScore', () => {
       {
         date: `${year}-01-01T09:00:00Z`,
         _id: '1',
-        sessionType: 'Out',
+        type: OUTDOOR,
       },
     ]
 
@@ -149,24 +149,24 @@ describe('calculateScore', () => {
     const ascents: Ascent[] = [
       // Current year ascents
       {
-        climbingDiscipline: 'Boulder',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: `${year}-01-01T10:00:00Z`,
         _id: '1',
-        routeName: 'Test Route 1',
-        style: 'Flash',
-        topoGrade: '7a',
+        name: 'Test Route 1',
+        style: FLASH,
+        grade: '7a',
         tries: 1,
       },
       // Previous year ascent
       {
-        climbingDiscipline: 'Boulder',
+        discipline: BOULDERING,
         crag: 'Test Crag',
         date: `${previousYear}-01-01T10:00:00Z`,
         _id: '2',
-        routeName: 'Test Route 2',
-        style: 'Redpoint',
-        topoGrade: '6c',
+        name: 'Test Route 2',
+        style: REDPOINT,
+        grade: '6c',
         tries: 3,
       },
     ]
@@ -175,7 +175,7 @@ describe('calculateScore', () => {
       {
         date: `${year}-01-01T09:00:00Z`,
         _id: '1',
-        sessionType: 'Out',
+        type: OUTDOOR,
       },
     ]
 

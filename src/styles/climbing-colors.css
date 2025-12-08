@@ -1,6 +1,6 @@
 /*
 * NB: CSS classes cannot start with a numbers. Therefore, they prepended with an
-* underscore. Furthermore, pluses ("+") are replaced with underscores.
+* underscore. Furthermore, plus ("+") is replaced with underscores.
 */
 
 /* stylelint-disable custom-property-empty-line-before */
@@ -48,14 +48,15 @@
   --strength: var(--pink-5);
   --strengthHigh: var(--pink-9);
 
-  --taperedLow: var(--violet-1);
-  --tapered: var(--violet-5);
-  --taperedHigh: var(--violet-9);
+  --chillLow: var(--violet-1);
+  --chill: var(--violet-5);
+  --chillHigh: var(--violet-9);
 
   /* DISCIPLINE */
-  --boulder: var(--pink-4);
-  --route: var(--cyan-4);
+  --bouldering: var(--pink-4);
+  --sport: var(--cyan-4);
   --multiPitch: var(--choco-4);
+  --deepWaterSoloing: var(--blue-4);
 
   /* STYLE */
   --onsight: var(--teal-5);
@@ -178,23 +179,23 @@
   background-color: var(--color);
 }
 
-.tapered {
-  --color: var(--tapered);
+.chill {
+  --color: var(--chill);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
 }
 
 /* DISCIPLINE */
-.boulder {
-  --color: var(--boulder);
+.bouldering {
+  --color: var(--bouldering);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
 }
 
-.route {
-  --color: var(--route);
+.sport {
+  --color: var(--sport);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
@@ -202,6 +203,13 @@
 
 .multiPitch {
   --color: var(--multiPitch);
+  color: oklch(from var(--color) var(--l) 0 h);
+
+  background-color: var(--color);
+}
+
+.deepWaterSoloing {
+  --color: var(--deepWaterSoloing);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
