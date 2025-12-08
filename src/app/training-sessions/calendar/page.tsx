@@ -18,7 +18,7 @@ export default async function TrainingSessionsCalendarPage() {
     <Layout layout="flexColumn" title="Training Calendar">
       {trainingYears.map(year => (
         <Fragment key={year}>
-          <h2 className="superCenter">{year}</h2>
+          <h2 className="centerText">{year}</h2>
           <DataCalendar
             config={trainingTransformConfig}
             data={trainingSessions}

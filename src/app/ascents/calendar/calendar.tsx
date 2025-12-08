@@ -13,7 +13,7 @@ export function AscentCalendar({
 }) {
   return (
     <>
-      <h2 className="superCenter">{year}</h2>
+      <h2 className="centerText">{year}</h2>
       <Suspense fallback={<Loader />}>
         <DataCalendar
           config={ascentTransformConfig}
