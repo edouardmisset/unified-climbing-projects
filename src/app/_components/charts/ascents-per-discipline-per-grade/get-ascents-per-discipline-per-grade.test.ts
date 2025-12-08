@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 
 describe('getAscentsPerDisciplinePerGrade', () => {
   it('should return empty array for empty input', () => {
     const result = getAscentsPerDisciplinePerGrade([])
-    assert.deepEqual(result, [])
+    expect(result).toEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -70,6 +70,6 @@ describe('getAscentsPerDisciplinePerGrade', () => {
     const result = getAscentsPerDisciplinePerGrade(
       sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
     )
-    assert.deepEqual(result, expected)
+    expect(result).toEqual(expected)
   })
 })

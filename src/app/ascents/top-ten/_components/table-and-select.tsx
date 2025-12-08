@@ -1,32 +1,34 @@
 'use client'
 
-import { useQueryState } from 'nuqs'
-import { Suspense } from 'react'
+import { Suspense, useDeferredValue, useMemo } from 'react'
+import { AscentList } from '~/app/_components/ascent-list/ascent-list'
 import { Loader } from '~/app/_components/loader/loader'
-import { TopTenTable } from '~/app/_components/top-ten-table/top-ten-table'
-import type { Ascent } from '~/schema/ascent'
-import { type Timeframe, timeframeSchema } from '~/schema/generic'
+import NotFound from '~/app/not-found'
+import { getTopTenAscents } from '~/helpers/get-top-ten-ascents'
+import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'
+import type { AscentListProps } from '~/schema/ascent'
 import { TimeframeSelect } from './timeframe-select'
 
-export function TableAndSelect({
-  initialTopTen: topTen,
-}: {
-  initialTopTen: Ascent[]
-}): React.JSX.Element {
-  const [timeframe, setTimeframe] = useQueryState<Timeframe>('timeframe', {
-    defaultValue: 'year',
-    parse: value => timeframeSchema.parse(value),
-  })
+export function TableAndSelect({ ascents }: AscentListProps) {
+  const [timeframe] = useTimeframeQueryState()
+  const deferredTimeframe = useDeferredValue(timeframe)
 
-  const handleChange = (value: Timeframe) => {
-    setTimeframe(value)
-  }
+  const topTenAscents = useMemo(
+    () =>
+      getTopTenAscents({
+        ascents: ascents ?? [],
+        timeframe: deferredTimeframe,
+      }),
+    [ascents, deferredTimeframe],
+  )
+
+  if (ascents.length === 0) return <NotFound />
 
   return (
-    <div className="flex flex-column gap grid-full-width">
-      <TimeframeSelect onChange={handleChange} value={timeframe} />
+    <div className="flex flexColumn gap gridFullWidth padding">
+      <TimeframeSelect />
       <Suspense fallback={<Loader />}>
-        <TopTenTable initialTopTen={topTen} timeframe={timeframe} />
+        <AscentList ascents={topTenAscents} showDetails={false} showPoints />
       </Suspense>
     </div>
   )

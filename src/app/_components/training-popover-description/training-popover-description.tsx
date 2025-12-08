@@ -6,16 +6,16 @@ import {
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
 import { roundToTen } from '~/helpers/math'
-import { fromSessionTypeToLabel, type TrainingSession } from '~/schema/training'
+import {
+  fromSessionTypeToLabel,
+  type TrainingSessionListProps,
+} from '~/schema/training'
 import styles from './training-popover-description.module.css'
 
 export function TrainingPopoverDescription({
   trainingSessions,
-}: {
-  trainingSessions: TrainingSession[]
-}) {
-  if (trainingSessions.length === 0 || trainingSessions[0] === undefined)
-    return undefined
+}: TrainingSessionListProps) {
+  if (trainingSessions.length === 0 || trainingSessions[0] === undefined) return
 
   return (
     <ul className={styles.list}>
@@ -30,9 +30,9 @@ export function TrainingPopoverDescription({
           load,
           sessionType,
           volume,
-          id,
+          _id,
         }) => (
-          <li className={styles.item} key={id}>
+          <li className={styles.item} key={_id}>
             {climbingDiscipline === undefined ? (
               ''
             ) : (

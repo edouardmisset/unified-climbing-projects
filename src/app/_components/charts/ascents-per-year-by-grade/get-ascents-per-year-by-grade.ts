@@ -1,8 +1,7 @@
 import { createYearList } from '~/data/helpers'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
-import { createGradeScale } from '~/helpers/create-grade-scale'
+import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import { filterAscents } from '~/helpers/filter-ascents'
-import { minMaxGrades } from '~/helpers/min-max-grades'
 import type { Ascent } from '~/schema/ascent'
 
 export function getAscentsPerYearByGrade(ascents: Ascent[]): {
@@ -18,7 +17,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
       return { year }
     }
 
-    const gradeScale = createGradeScale(...minMaxGrades(ascentsForYear))
+    const gradeScale = createGradeScaleFromAscents(ascentsForYear)
 
     const frequency: Record<string, string | number> = {}
 

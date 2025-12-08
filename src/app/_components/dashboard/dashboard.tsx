@@ -1,11 +1,12 @@
 'use client'
 
 import { Link } from 'next-view-transitions'
-import AscentsFilterBar from '~/app/_components/ascents-filter-bar/ascents-filter-bar'
-import NotFound from '~/app/not-found'
+import { memo, Suspense } from 'react'
+import AscentsFilterBar from '~/app/_components/filter-bar/_components/ascents-filter-bar.tsx'
+import NotFound from '~/app/not-found.tsx'
+import { LINKS } from '~/constants/links'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
-import { useGetAscents } from '~/hooks/use-get-ascents.ts'
-import { Card } from '../card/card.tsx'
+import type { AscentListProps } from '~/schema/ascent.ts'
 import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
 import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
 import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
@@ -18,76 +19,45 @@ import { TriesByGrade } from '../charts/tries-by-grade/tries-by-grade.tsx'
 import { Loader } from '../loader/loader.tsx'
 import styles from './dashboard.module.css'
 
-export function Dashboard() {
-  const { data: allAscents = [], isLoading } = useGetAscents()
+export function Dashboard({ ascents }: AscentListProps) {
+  const filteredAscents = useAscentsFilter(ascents ?? [])
 
-  const filteredAscents = useAscentsFilter(allAscents)
-
-  if (isLoading) return <Loader />
-
-  if (!allAscents) return <NotFound />
+  if (ascents.length === 0) return <NotFound />
 
   return (
-    <div className="flex flex-column gap align-center grid-full-width">
-      <AscentsFilterBar allAscents={allAscents} />
-      {filteredAscents.length === 0 ? (
-        <div className=" flex-column gap w100 padding">
-          <h2>Nothing there...</h2>
-          <p>
-            Try adjusting your filters or{' '}
-            <Link href={'/log-ascent'}>logging new ascents</Link>.
-          </p>
-        </div>
-      ) : (
-        <div className={styles.container}>
-          <Card>
-            {' '}
-            <AscentPyramid ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerYearByGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsByStyle ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerDiscipline
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsPerDisciplinePerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <TriesByGrade ascents={filteredAscents} className={styles.item} />
-          </Card>
-          <Card>
-            <AscentsPerDisciplinePerGrade
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <DistanceClimbedPerYear
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-          <Card>
-            <AscentsByGradesPerCrag
-              ascents={filteredAscents}
-              className={styles.item}
-            />
-          </Card>
-        </div>
-      )}
+    <div className="flex flexColumn alignCenter gridFullWidth">
+      <AscentsFilterBar allAscents={ascents} showSearch={false} />
+      <Suspense fallback={<Loader />}>
+        <DashboardStatistics ascents={filteredAscents} />
+      </Suspense>
     </div>
   )
 }
+
+const DashboardStatistics = memo(({ ascents }: AscentListProps) => {
+  if (ascents.length === 0) {
+    return (
+      <div className=" flexColumn gap w100 padding">
+        <h2>Nothing there...</h2>
+        <p>
+          Try adjusting your filters or{' '}
+          <Link href={LINKS.ascentForm}>logging new ascents</Link>.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.container}>
+      <AscentPyramid ascents={ascents} />
+      <AscentsPerYearByGrade ascents={ascents} />
+      <AscentsByStyle ascents={ascents} />
+      <AscentsPerDiscipline ascents={ascents} />
+      <AscentsPerDisciplinePerYear ascents={ascents} />
+      <TriesByGrade ascents={ascents} />
+      <AscentsPerDisciplinePerGrade ascents={ascents} />
+      <DistanceClimbedPerYear ascents={ascents} />
+      <AscentsByGradesPerCrag ascents={ascents} />
+    </div>
+  )
+})

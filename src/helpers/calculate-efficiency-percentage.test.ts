@@ -1,5 +1,5 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import {
   COEFFICIENT_ASCENTS_PER_DAY,
   COEFFICIENT_ONSIGHT_FLASH_RATIO,
@@ -13,11 +13,11 @@ describe('calculateEfficiencyPercentage', () => {
     const result = calculateEfficiencyPercentage({
       ascents: [],
       trainingSessions: [
-        { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
+        { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
       ],
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 0 when there are no training sessions', () => {
@@ -27,7 +27,7 @@ describe('calculateEfficiencyPercentage', () => {
           climbingDiscipline: 'Boulder',
           crag: 'Test Crag',
           date: '2023-01-01T11:00:00Z',
-          id: 1,
+          _id: '1',
           routeName: 'Test Route 1',
           style: 'Flash',
           topoGrade: '6b',
@@ -37,7 +37,7 @@ describe('calculateEfficiencyPercentage', () => {
       trainingSessions: [],
     })
 
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should calculate efficiency percentage correctly for a simple case', () => {
@@ -47,7 +47,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
@@ -56,7 +56,7 @@ describe('calculateEfficiencyPercentage', () => {
     ]
 
     const trainingSessions: TrainingSession[] = [
-      { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
+      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
     ]
 
     const result = calculateEfficiencyPercentage({
@@ -82,15 +82,15 @@ describe('calculateEfficiencyPercentage', () => {
       ) * 100,
     )
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 
   it('should handle multiple days and ascents correctly', () => {
     // 3 different days outside
     const trainingSessions: TrainingSession[] = [
-      { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
-      { date: '2023-01-02T10:00:00Z', id: 2, sessionType: 'Out' },
-      { date: '2023-01-03T10:00:00Z', id: 3, sessionType: 'Out' },
+      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
+      { date: '2023-01-02T10:00:00Z', _id: '2', sessionType: 'Out' },
+      { date: '2023-01-03T10:00:00Z', _id: '3', sessionType: 'Out' },
     ]
 
     // 3 ascents on 2 different days
@@ -100,7 +100,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
@@ -110,7 +110,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T12:00:00Z',
-        id: 2,
+        _id: '2',
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6c',
@@ -121,7 +121,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
-        id: 3,
+        _id: '3',
         routeName: 'Test Route 3',
         style: 'Onsight',
         topoGrade: '6a+',
@@ -153,13 +153,13 @@ describe('calculateEfficiencyPercentage', () => {
     )
     const expected = Math.round(average(ratios))
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 
   it('should handle a high efficiency scenario correctly', () => {
     const trainingSessions: TrainingSession[] = [
-      { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
-      { date: '2023-01-02T10:00:00Z', id: 2, sessionType: 'Out' },
+      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
+      { date: '2023-01-02T10:00:00Z', _id: '2', sessionType: 'Out' },
     ]
 
     // High efficiency: all days with ascents, all onsight/flash, low tries
@@ -168,7 +168,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Onsight',
         topoGrade: '6b',
@@ -178,7 +178,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
-        id: 2,
+        _id: '2',
         routeName: 'Test Route 2',
         style: 'Flash',
         topoGrade: '6b',
@@ -188,7 +188,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
-        id: 3,
+        _id: '3',
         routeName: 'Test Route 3',
         style: 'Onsight',
         topoGrade: '6b',
@@ -198,7 +198,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-02T14:00:00Z',
-        id: 4,
+        _id: '4',
         routeName: 'Test Route 4',
         style: 'Flash',
         topoGrade: '6b',
@@ -217,7 +217,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Redpoint',
         topoGrade: '6b',
@@ -227,7 +227,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
-        id: 2,
+        _id: '2',
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6b',
@@ -241,15 +241,12 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // High efficiency scenario should have a higher result
-    assert.ok(
-      highEfficiencyResult > lowEfficiencyResult,
-      `Expected ${highEfficiencyResult} to be greater than ${lowEfficiencyResult}`,
-    )
+    expect(highEfficiencyResult).toBeGreaterThan(lowEfficiencyResult)
   })
 
   it('should handle edge case with very high number of tries', () => {
     const trainingSessions: TrainingSession[] = [
-      { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
+      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
     ]
 
     const highTriesAscents: Ascent[] = [
@@ -257,7 +254,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Redpoint',
         topoGrade: '6b',
@@ -271,22 +268,16 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // Should still return a valid percentage
-    assert.ok(
-      result >= 0,
-      `Expected ${result} to be greater than or equal to 0`,
-    )
-    assert.ok(
-      result <= 100,
-      `Expected ${result} to be less than or equal to 100`,
-    )
+    expect(result).toBeGreaterThanOrEqual(0)
+    expect(result).toBeLessThanOrEqual(100)
   })
 
   it('should handle multiple days but same date ascents correctly', () => {
     // 3 different training session days but only 1 unique date
     const trainingSessions: TrainingSession[] = [
-      { date: '2023-01-01T10:00:00Z', id: 1, sessionType: 'Out' },
-      { date: '2023-01-01T12:00:00Z', id: 2, sessionType: 'Out' },
-      { date: '2023-01-01T14:00:00Z', id: 3, sessionType: 'Out' },
+      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
+      { date: '2023-01-01T12:00:00Z', _id: '2', sessionType: 'Out' },
+      { date: '2023-01-01T14:00:00Z', _id: '3', sessionType: 'Out' },
     ]
 
     const ascents: Ascent[] = [
@@ -294,7 +285,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
@@ -304,7 +295,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T13:00:00Z',
-        id: 2,
+        _id: '2',
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6c',
@@ -333,6 +324,6 @@ describe('calculateEfficiencyPercentage', () => {
       ) * 100,
     )
 
-    assert.equal(result, expected)
+    expect(result).toBe(expected)
   })
 })

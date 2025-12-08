@@ -1,26 +1,30 @@
-import { memo } from 'react'
+import { type CSSProperties, memo, useMemo } from 'react'
 import styles from './year-grid.module.css'
 
 const weekDays = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-export const DaysColumn = memo(() =>
-  weekDays.map((day, index) => {
-    return index === 0 ? (
-      <i
-        className={`${styles.yearGridCell} ${styles.firstCell}`}
-        key="empty-first-cell"
-      />
-    ) : (
-      <i
-        className={`contrast-color ${styles.firstColumn}`}
-        key={day}
-        style={
-          index % 2 === 0 ? { backgroundColor: 'var(--surface-4)' } : undefined
-        }
-        title={day}
-      >
-        {day}
-      </i>
-    )
-  }),
-)
+const DayCell = memo(({ day, index }: { day: string; index: number }) => {
+  const backgroundStyle: CSSProperties | undefined = useMemo(
+    () => (index >= 6 ? { backgroundColor: 'var(--surface-3)' } : undefined),
+    [index],
+  )
+
+  if (index === 0)
+    return <span className={`${styles.yearGridCell} ${styles.firstCell}`} />
+
+  return (
+    <span
+      className={`contrastColor ${styles.firstColumn}`}
+      style={backgroundStyle}
+      title={day}
+    >
+      {day}
+    </span>
+  )
+})
+
+export function DaysColumn() {
+  return weekDays.map((day, index) => (
+    <DayCell day={day} index={index} key={day} />
+  ))
+}

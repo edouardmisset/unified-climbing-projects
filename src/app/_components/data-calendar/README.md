@@ -189,6 +189,7 @@ const entries = defaultTransform(year, data, config)
 ### From Legacy API
 
 **Old (still supported):**
+
 ```tsx
 <DataCalendar
   data={allAscents}
@@ -201,6 +202,7 @@ const entries = defaultTransform(year, data, config)
 ```
 
 **New (recommended):**
+
 ```tsx
 <DataCalendar
   data={allAscents}
@@ -270,6 +272,7 @@ export const CALENDAR_CELL_TYPES = {
 ## Error Handling
 
 The component gracefully handles:
+
 - Empty data arrays
 - Missing years
 - Invalid date strings
@@ -295,5 +298,6 @@ When contributing to the DataCalendar component:
 ## Examples
 
 See the usage in:
+
 - `src/app/visualization/ascents/calendar/page.tsx`
 - `src/app/visualization/training-sessions/calendar/page.tsx`

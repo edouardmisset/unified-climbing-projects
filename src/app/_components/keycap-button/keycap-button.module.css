@@ -1,0 +1,123 @@
+@keyframes rainbow {
+  100% {
+    --rotating-angle: 1turn;
+  }
+}
+
+@property --rotating-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0turn;
+}
+
+.button {
+  --white: hsl(0deg 0% 100%);
+  --gray: hsl(252deg 4% 28%);
+  --blackBorder: hsl(0deg 0% 0% / 20%);
+  --black: hsl(76deg 12% 19%);
+  --padding: var(--size-1);
+  --radius: var(--border-size-5);
+  --blur: 1px;
+
+  all: revert;
+
+  display: inline-grid;
+  grid-template-areas: 'button';
+  align-self: center;
+  inline-size: clamp(10ch, 10ch + 10vw, 30ch);
+  padding: var(--padding);
+  font-size: var(--font-size-3);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+
+  /* GLASS */
+  background: hsl(0deg 0% 100% / 50%);
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow:
+    0 -1px var(--blur) 0 var(--white),
+    0 1px var(--blur) 0 var(--white),
+    1px 1px var(--blur) 0 var(--blackBorder),
+    -1px 0 var(--blur) 0 var(--blackBorder),
+    0 0 10px hsl(0deg 0% 0% / 10%);
+
+  .text {
+    --inner-padding: calc(var(--padding) * 2);
+
+    /* BLACK CIRCLE */
+    z-index: 2;
+    grid-area: button;
+    padding: var(--inner-padding) calc(var(--inner-padding) * 2);
+    margin: var(--inner-padding);
+    color: hsl(0deg 0% 91%);
+    text-align: center;
+
+    background: linear-gradient(to bottom, var(--black), var(--gray));
+    border-radius: 100vmax;
+  }
+
+  &::after {
+    /* GRADIENT */
+    --walk: calc(var(--padding) * -1);
+    --blur: var(--size-5);
+    z-index: 0;
+    grid-area: button;
+    width: calc(100% + var(--padding) * 2);
+    height: calc(100% + var(--padding) * 2);
+
+    content: '';
+    background: conic-gradient(
+      from var(--rotating-angle),
+      var(--patagonia-color-1),
+      var(--patagonia-color-2),
+      var(--patagonia-color-3),
+      var(--patagonia-color-4),
+      var(--patagonia-color-5),
+      var(--patagonia-color-1)
+    );
+
+    border-radius: var(--radius);
+    opacity: 0.8;
+    filter: blur(var(--blur));
+    transform: translate(var(--walk), var(--walk));
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: rainbow 5s linear infinite;
+    }
+
+    &:disabled {
+      animation-play-state: paused;
+    }
+  }
+
+  &::before {
+    /* BLACK BUTTON */
+    z-index: 1;
+    grid-area: button;
+
+    /* BLACK BUTTON */
+    content: '';
+
+    /* Gradient from gray to black */
+    background: linear-gradient(to bottom, var(--gray), var(--black));
+    border-radius: calc(var(--radius) - var(--padding));
+    box-shadow:
+      0 0 10px 0 hsl(0deg 0% 0% / 20%),
+      0 8px 10px 0 hsl(0deg 0% 0% / 20%);
+  }
+
+  &:active {
+    &::before,
+    &::after,
+    .text {
+      scale: 0.9;
+    }
+
+    &::after {
+      --blur: var(--size-3);
+      --padding: var(--size-3);
+      animation-play-state: paused;
+    }
+  }
+}

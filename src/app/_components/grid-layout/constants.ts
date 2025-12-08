@@ -1,1 +1,0 @@
-export const YEAR_OF_FIRST_ASCENT = 2015

@@ -22,6 +22,6 @@ export async function generateMetadata({
   return {
     description: `Textual description of all my climbing ascents in ${year}`,
     keywords: ['climbing', 'ascents', 'description', year],
-    title: `${year} Climbing wrap Up 🔁`,
+    title: `${year} Climbing wrap Up 🔁`.trim(),
   }
 }

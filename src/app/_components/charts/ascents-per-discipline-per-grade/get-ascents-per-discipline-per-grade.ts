@@ -1,5 +1,4 @@
-import { createGradeScale } from '~/helpers/create-grade-scale'
-import { minMaxGrades } from '~/helpers/min-max-grades'
+import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent, Grade } from '~/schema/ascent'
 
 type AscentsPerDisciplinePerGrade = {
@@ -15,7 +14,7 @@ export const getAscentsPerDisciplinePerGrade = (
 ): AscentsPerDisciplinePerGrade => {
   if (ascents.length === 0) return []
 
-  const grades = createGradeScale(...minMaxGrades(ascents))
+  const grades = createGradeScaleFromAscents(ascents)
   const validGrades = new Set(grades)
 
   const groupByGrade = new Map<

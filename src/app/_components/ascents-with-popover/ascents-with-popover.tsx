@@ -1,34 +1,56 @@
-import { capitalize, wrapInParentheses } from '@edouardmisset/text'
-import { displayGrade } from '~/helpers/display-grade'
+import { capitalize } from '@edouardmisset/text'
+import { memo, useMemo } from 'react'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
-import type { Ascent } from '~/schema/ascent'
+import type { Ascent, AscentListProps } from '~/schema/ascent'
+import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
-export function AscentsWithPopover({
-  ascents,
-}: {
-  ascents: Ascent[]
-}): React.JSX.Element {
-  const ascentsDisciplineText = writeAscentsDisciplineText(ascents)
+const AscentListItem = memo(
+  ({ climbingDiscipline, routeName, topoGrade }: AscentListItemProps) => (
+    <li className={styles.item}>
+      {routeName} (
+      <DisplayGrade climbingDiscipline={climbingDiscipline} grade={topoGrade} />
+      )
+    </li>
+  ),
+)
+
+const AscentList = memo(({ ascents }: AscentListProps) => (
+  <ul className={styles.list}>
+    {ascents.map(({ _id, ...ascent }) => (
+      <AscentListItem key={_id} {...ascent} />
+    ))}
+  </ul>
+))
+
+export function AscentsWithPopover({ ascents }: AscentListProps) {
+  const ascentsDisciplineText = useMemo(
+    () => writeAscentsDisciplineText(ascents),
+    [ascents],
+  )
+
+  const title = useMemo(
+    () => capitalize(ascentsDisciplineText),
+    [ascentsDisciplineText],
+  )
+
   return (
     <Popover
-      popoverDescription={
-        <div className={styles.popoverContainer}>
-          {ascents.map(({ id, routeName, topoGrade, climbingDiscipline }) => (
-            <span
-              key={id}
-            >{`${routeName} ${wrapInParentheses(displayGrade({ climbingDiscipline, grade: topoGrade }))}`}</span>
-          ))}
-        </div>
-      }
-      popoverTitle={capitalize(ascentsDisciplineText)}
+      popoverDescription={<AscentList ascents={ascents} />}
+      popoverTitle={title}
       triggerClassName={styles.popover}
       triggerContent={
-        <span>
-          <strong>{ascents.length}</strong> {ascentsDisciplineText}
-        </span>
+        <strong>
+          {ascents.length} {ascentsDisciplineText}
+        </strong>
       }
     />
   )
+}
+
+type AscentListItemProps = {
+  climbingDiscipline: Ascent['climbingDiscipline']
+  routeName: Ascent['routeName']
+  topoGrade: Ascent['topoGrade']
 }

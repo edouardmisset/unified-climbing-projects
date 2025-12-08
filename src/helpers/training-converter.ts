@@ -80,7 +80,7 @@ export function getSessionTypeColors({
   intensityPercent?: number
   volumePercent?: number
 }): string {
-  if (sessionType === undefined) return 'var(--cell-color)'
+  if (sessionType === undefined) return 'var(--cellColor)'
 
   const upperThreshold = 80
   const lowerThreshold = 50
@@ -92,13 +92,13 @@ export function getSessionTypeColors({
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
   const convertedSessionType =
-    fromSessionTypeToString(sessionType) ?? 'other-training'
+    fromSessionTypeToString(sessionType) ?? 'otherTraining'
   if (isOneComponentBelowThreshold) {
-    return `var(--${convertedSessionType}-low)`
+    return `var(--${convertedSessionType}Low)`
   }
 
   if (isOneComponentAboveThreshold) {
-    return `var(--${convertedSessionType}-high)`
+    return `var(--${convertedSessionType}High)`
   }
 
   return `var(--${convertedSessionType})`

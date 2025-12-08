@@ -1,0 +1,55 @@
+import { SignedIn, SignedOut } from '@clerk/nextjs'
+import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { Loader } from '~/app/_components/loader/loader.tsx'
+import { api } from '~/trpc/server.ts'
+import Layout from '../_components/page-layout/page-layout.tsx'
+import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
+import AscentForm from './_components/ascent-form.tsx'
+
+async function fetchAscentData() {
+  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] =
+    await Promise.all([
+      api.ascents.getLatest(),
+      api.grades.getMinMax(),
+      api.crags.getAll({ sortOrder: 'newest' }),
+      api.areas.getAll({ sortOrder: 'newest' }),
+    ])
+  return { latestAscent, minGrade, maxGrade, allCrags, allAreas }
+}
+
+export default async function AscentFormPage() {
+  const { latestAscent, minGrade, maxGrade, allCrags, allAreas } =
+    await fetchAscentData()
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <SignedIn>
+        <Layout gridClassName="padding" title="Congrats 🎉">
+          <span aria-describedby="form-description" className="visuallyHidden">
+            Form to log a climbing ascent
+          </span>
+          <Suspense fallback={<Loader />}>
+            <AscentForm
+              areas={allAreas}
+              crags={allCrags}
+              latestAscent={latestAscent}
+              maxGrade={maxGrade}
+              minGrade={minGrade}
+            />
+          </Suspense>
+        </Layout>
+      </SignedIn>
+      <SignedOut>
+        <UnauthorizedAccess />
+      </SignedOut>
+    </Suspense>
+  )
+}
+
+export const metadata: Metadata = {
+  description:
+    'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
+  keywords: ['climbing', 'route', 'boulder', 'outdoor', 'multi-pitch', 'log'],
+  title: 'Log ascent 📋',
+}

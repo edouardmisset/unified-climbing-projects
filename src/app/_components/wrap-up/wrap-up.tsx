@@ -1,38 +1,62 @@
+import type { Ascent } from '~/schema/ascent'
+import type { TrainingSession } from '~/schema/training'
 import { api } from '~/trpc/server'
 import { Card } from '../card/card'
-import GridLayout from '../grid-layout/grid-layout'
+import Layout from '../page-layout/page-layout'
 import { AscentSummary } from './_components/ascent-summary'
+import { CragsSummary } from './_components/crags-summary'
 import { DaysOutsideSummary } from './_components/days-outside-summary'
-import { FavoriteCragSummary } from './_components/favorite-crag-summary'
 import { HardestClimbsSummary } from './_components/hardest-climbs-summary'
 import { TopTenSummary } from './_components/top-ten-summary'
 import { VerticalMilestoneSummary } from './_components/vertical-milestone-summary'
-import { ALL_TIME } from './constants'
+import { WrapUpHeader } from './_components/wrap-up-header'
+import styles from './wrap-up.module.css'
+
+async function getAscentsAndTraining(
+  year?: number,
+): Promise<{ ascents: Ascent[]; trainingSessions: TrainingSession[] }> {
+  const [ascents, trainingSessions] = await Promise.all([
+    api.ascents.getAll({ year }),
+    api.training.getAll({ year }),
+  ])
+  return { ascents, trainingSessions }
+}
 
 export default async function WrapUp({ year }: { year?: number }) {
-  const ascents = await api.ascents.getAll({ year })
+  const { ascents, trainingSessions } = await getAscentsAndTraining(year)
 
-  if (ascents.length === 0) {
+  const isTrainingEmpty = trainingSessions.length === 0
+  const isAscentsEmpty = ascents.length === 0
+
+  if (isAscentsEmpty && isTrainingEmpty) {
     return (
-      <GridLayout title={year ?? ALL_TIME}>
+      <Layout title={<WrapUpHeader year={year} />}>
         <Card>
           <h2>No Data</h2>
           <p>
-            You have not logged any data yet. Go climb some routes and train!
+            You have not logged any data yet.{' '}
+            {isAscentsEmpty ? 'Go climb some routes! ' : ''}{' '}
+            {isTrainingEmpty ? 'Go train!' : ''}
           </p>
         </Card>
-      </GridLayout>
+      </Layout>
     )
   }
 
   return (
-    <GridLayout gridClassName="padding" title={year ?? ALL_TIME}>
-      <DaysOutsideSummary ascents={ascents} year={year} />
+    <Layout
+      gridClassName={`padding ${styles.wrapUp}`}
+      title={<WrapUpHeader year={year} />}
+    >
+      <DaysOutsideSummary
+        ascents={ascents}
+        trainingSessions={trainingSessions}
+      />
       <AscentSummary ascents={ascents} />
       <HardestClimbsSummary ascents={ascents} />
       <VerticalMilestoneSummary ascents={ascents} />
-      <FavoriteCragSummary ascents={ascents} />
+      <CragsSummary ascents={ascents} trainingSessions={trainingSessions} />
       <TopTenSummary ascents={ascents} />
-    </GridLayout>
+    </Layout>
   )
 }

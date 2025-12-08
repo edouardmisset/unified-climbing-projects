@@ -1,11 +1,26 @@
 import { isValidDate } from '@edouardmisset/date'
 import { DAYS_IN_WEEK } from '~/constants/generic'
-import type { StringDate } from '~/types/generic'
+import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
 const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
 const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
+
+export function createRecentDateOptions(): ValueAndLabel[] {
+  return [
+    { label: 'Yesterday', value: fromDateToStringDate(getYesterday()) },
+    {
+      label: 'Last Saturday',
+      value: fromDateToStringDate(getLastSaturday()),
+    },
+    {
+      label: 'Last Sunday',
+      value: fromDateToStringDate(getLastSunday()),
+    },
+  ]
+}
 
 export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
@@ -76,13 +91,13 @@ export const getDayOfYear = (date: Date): number => {
 /**
  * Returns the most frequent date from an array of objects containing a date field.
  *
- * @template Type
- * @param {Type[]} data - The array of objects that contain a 'date' string field
+ * @template TypeWithDate
+ * @param {TypeWithDate[]} data - The array of objects that contain a 'date' string field
  * @returns {[string, number]} A tuple where the first element is the date and
  * the second element is the frequency
  */
-export function getMostFrequentDate<Type extends { date: string }>(
-  data: Type[],
+export function getMostFrequentDate<TypeWithDate extends { date: string }>(
+  data: TypeWithDate[],
 ): [string, number] {
   const dateFrequency = frequencyBy(data, 'date')
   const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
@@ -99,7 +114,7 @@ export function getMostFrequentDate<Type extends { date: string }>(
  * @param {Date} date - The date to normalize
  * @returns {Date} The normalized date at noon
  */
-function getDateAtNoon(date: Date): Date {
+export function getDateAtNoon(date: Date): Date {
   const normalized = new Date(date)
   normalized.setHours(12, 0, 0, 0)
   return normalized
@@ -175,7 +190,7 @@ export function extractDateFromISODateString(isoDate: string): string {
   }
 
   const datePart = isoDate.slice(0, 10)
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(datePart)) {
+  if (!ISO_DATE_REGEX.test(datePart)) {
     throw new Error('Invalid ISO date string')
   }
   return datePart

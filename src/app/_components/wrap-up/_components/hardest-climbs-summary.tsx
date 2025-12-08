@@ -1,11 +1,11 @@
 import { filterAscents, getHardestAscent } from '~/helpers/filter-ascents'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
-export function HardestClimbsSummary({ ascents }: { ascents: Ascent[] }) {
-  if (ascents.length === 0) return undefined
+export function HardestClimbsSummary({ ascents }: AscentListProps) {
+  if (ascents.length === 0) return
 
   const highestDegree = Math.max(
     ...ascents.map(({ topoGrade }) => Number(topoGrade[0])),
@@ -26,18 +26,16 @@ export function HardestClimbsSummary({ ascents }: { ascents: Ascent[] }) {
     <Card>
       <h2>Hardest Sends</h2>
       <p>
-        {hardestRoute ? (
+        {hardestRoute === undefined ? undefined : (
           <span className="block">
-            Your hardest route was{' '}
-            <AscentComponent ascent={hardestRoute} showGrade={true} />
+            Your hardest route was <AscentComponent ascent={hardestRoute} />
           </span>
-        ) : undefined}
-        {hardestBoulder ? (
+        )}
+        {hardestBoulder === undefined ? undefined : (
           <span className="block">
-            Your hardest boulder was{' '}
-            <AscentComponent ascent={hardestBoulder} showGrade={true} />
+            Your hardest boulder was <AscentComponent ascent={hardestBoulder} />
           </span>
-        ) : undefined}
+        )}
         <span className="block">
           You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} />{' '}
           in the <strong>{highestDegree}</strong>

@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { ASCENT_STYLE, type Ascent, HOLDS, PROFILES } from '~/schema/ascent'
 import { calculateVersatilityPercentage } from './calculate-versatility-percentage'
 
 describe('calculateVersatilityPercentage', () => {
   it('should return 0 for empty ascents array', () => {
     const result = calculateVersatilityPercentage([])
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should handle ascents with undefined properties', () => {
@@ -14,7 +14,7 @@ describe('calculateVersatilityPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Crag 1',
         date: '2023-01-01',
-        id: 1,
+        _id: '1',
         routeName: 'Route 1',
         style: 'Redpoint',
         topoGrade: '6a',
@@ -25,7 +25,7 @@ describe('calculateVersatilityPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Crag 2',
         date: '2023-01-02',
-        id: 2,
+        _id: '2',
         routeName: 'Route 2',
         style: 'Flash',
         topoGrade: '6a+',
@@ -38,7 +38,7 @@ describe('calculateVersatilityPercentage', () => {
 
     // With missing properties, the ratios for holds, profile, and height will be 0
     // Only style and crag will contribute to versatility
-    assert.ok(result > 0)
+    expect(result > 0).toBe(true)
   })
 
   it('should calculate versatility correctly for a variety of ascents', () => {
@@ -49,7 +49,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height: 15,
         holds: 'Crimp',
-        id: 1,
+        _id: '1',
         profile: 'Vertical',
         routeName: 'Route 1',
         style: 'Redpoint',
@@ -62,7 +62,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-02',
         height: 5,
         holds: 'Jug',
-        id: 2,
+        _id: '2',
         profile: 'Overhang',
         routeName: 'Route 2',
         style: 'Flash',
@@ -75,7 +75,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-03',
         height: 20,
         holds: 'Pocket',
-        id: 3,
+        _id: '3',
         profile: 'Slab',
         routeName: 'Route 3',
         style: 'Onsight',
@@ -90,8 +90,8 @@ describe('calculateVersatilityPercentage', () => {
     // 3 different heights (3/10), and 3 different crags (3/15)
     // Expected ratios: [3/7, 3/10, 3/7, 1, 0.2]
     // Average: ~0.47 -> 47%
-    assert.ok(result > 0)
-    assert.ok(result < 100)
+    expect(result > 0).toBe(true)
+    expect(result < 100).toBe(true)
   })
 
   it('should handle maximum versatility', () => {
@@ -114,7 +114,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height: heights[0],
         holds: hold,
-        id: id++,
+        _id: String(id++),
         profile: PROFILES[0],
         routeName: `Route with ${hold}`,
         style: ASCENT_STYLE[0],
@@ -131,7 +131,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height: heights[1],
         holds: HOLDS[0],
-        id: id++,
+        _id: String(id++),
         profile,
         routeName: `Route with ${profile}`,
         style: ASCENT_STYLE[0],
@@ -148,7 +148,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height: heights[2],
         holds: HOLDS[1],
-        id: id++,
+        _id: String(id++),
         profile: PROFILES[1],
         routeName: `Route with ${style}`,
         style: style,
@@ -165,7 +165,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height: heights[3],
         holds: HOLDS[2],
-        id: id++,
+        _id: String(id++),
         profile: PROFILES[2],
         routeName: `Route at ${crag}`,
         style: ASCENT_STYLE[0],
@@ -182,7 +182,7 @@ describe('calculateVersatilityPercentage', () => {
         date: '2023-01-01',
         height,
         holds: HOLDS[3],
-        id: id++,
+        _id: String(id++),
         profile: PROFILES[3],
         routeName: `Route with height ${height}`,
         style: ASCENT_STYLE[0],
@@ -194,6 +194,6 @@ describe('calculateVersatilityPercentage', () => {
     const result = calculateVersatilityPercentage(ascents)
 
     // With all possible values represented, we should get 100%
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 })

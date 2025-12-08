@@ -12,6 +12,9 @@
   padding-inline: var(--inline-padding);
   margin-inline: auto;
   background-color: var(--bg-color);
+
+  /* Prevents the calendar from being rendered when off-screen */
+  content-visibility: auto;
 }
 
 .bar {

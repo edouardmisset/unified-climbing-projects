@@ -4,24 +4,28 @@ import {
   fromAscentToPoints,
   fromPointToGrade,
 } from '~/helpers/ascent-converter'
-import { displayGrade } from '~/helpers/display-grade'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { Card } from '../../card/card'
+import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
+import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
-export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
+export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,
     points: fromAscentToPoints(ascent),
   }))
+
+  const isMultipleYears =
+    new Set(ascents.map(ascent => new Date(ascent.date).getFullYear())).size > 1
 
   const topTenAscents = useMemo(
     () => ascentsWithPoints.sort((a, b) => b.points - a.points).slice(0, 10),
     [ascentsWithPoints],
   )
 
-  if (ascents.length === 0 || ascentsWithPoints.length === 0) return undefined
+  if (ascents.length === 0 || ascentsWithPoints.length === 0) return
 
   const lowestTopTenAscent = topTenAscents.findLast(
     ascent =>
@@ -31,75 +35,71 @@ export function TopTenSummary({ ascents }: { ascents: Ascent[] }) {
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
 
   const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
+  const displayHowToImprove =
+    lowestTopTenAscent &&
+    (new Date().getFullYear() ===
+      new Date(lowestTopTenAscent.date).getFullYear() ||
+      isMultipleYears)
+
   return (
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your score is <strong>{frenchNumberFormatter(topTenScore)}</strong>
-      </p>
-      {lowestTopTenAscent && (
-        <>
-          <h3>Improve by</h3>
-          <p>
+        Your score is{' '}
+        <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
+        {displayHowToImprove === true && (
+          <>
+            <strong className="block">Improve by</strong>
             <span className="block">
-              Onsighting a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              Lead climb{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Onsight',
                 })}
-              </strong>{' '}
-              route
-            </span>
-            <span className="block">
-              Flashing a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              />{' '}
+              <ClimbingStyle climbingStyle="Onsight" />,{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Flash',
                 })}
-              </strong>{' '}
-              route
-            </span>
-            <span className="block">
-              Redpointing a{' '}
-              <strong>
-                {fromPointToGrade(nextStepPoints, {
+              />{' '}
+              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <DisplayGrade
+                climbingDiscipline="Route"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Redpoint',
                 })}
-              </strong>{' '}
-              route
+              />{' '}
+              <ClimbingStyle climbingStyle="Redpoint" />
             </span>
+
             <span className="block">
-              Flashing a{' '}
-              <strong>
-                {displayGrade({
+              Boulder{' '}
+              <DisplayGrade
+                climbingDiscipline="Boulder"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
-                  grade: fromPointToGrade(nextStepPoints, {
-                    climbingDiscipline: 'Boulder',
-                    style: 'Flash',
-                  }),
+                  style: 'Flash',
                 })}
-              </strong>{' '}
-              boulder
-            </span>
-            <span className="block">
-              Redpointing a{' '}
-              <strong>
-                {displayGrade({
+              />{' '}
+              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <DisplayGrade
+                climbingDiscipline="Boulder"
+                grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
-                  grade: fromPointToGrade(nextStepPoints, {
-                    climbingDiscipline: 'Boulder',
-                    style: 'Redpoint',
-                  }),
+                  style: 'Redpoint',
                 })}
-              </strong>{' '}
-              boulder
+              />{' '}
+              <ClimbingStyle climbingStyle="Redpoint" />
             </span>
-          </p>
-        </>
-      )}
+          </>
+        )}
+      </p>
     </Card>
   )
 }

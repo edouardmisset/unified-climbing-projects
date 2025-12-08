@@ -11,30 +11,28 @@ import {
 } from '../constants'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
 
-export function DistanceClimbedPerYear({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+const chartColors = ['var(--blue-3)', 'var(--orange-3)']
+const keys = ['distance']
+const adjustedChartMargin = { ...DEFAULT_CHART_MARGIN, left: 80 }
+
+export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
 
   if (data.length === 0) return null
 
   return (
-    <ChartContainer caption="Distance climbed per Year" className={className}>
+    <ChartContainer caption="Distance climbed per Year">
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={heightAxisLeft}
-        colors={['var(--blue-3)', 'var(--orange-3)']}
+        colors={chartColors}
         data={data}
         enableGridY={false}
         enableLabel={false}
-        enableTotals={true}
+        enableTotals
         indexBy="year"
-        keys={['distance']}
-        margin={{ ...DEFAULT_CHART_MARGIN, left: 80 }}
+        keys={keys}
+        margin={adjustedChartMargin}
         motionConfig={defaultMotionConfig}
         padding={0}
         theme={theme}

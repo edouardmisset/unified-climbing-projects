@@ -1,0 +1,4 @@
+.wrapUp {
+  /* This is to override the 300px min from the grid utility */
+  --min: 350px;
+}

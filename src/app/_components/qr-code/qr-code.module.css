@@ -15,11 +15,15 @@
   max-inline-size: var(--size-content-2);
   aspect-ratio: 1;
   background-color: var(--bg-color);
+
+  /* Prevents the calendar from being rendered when off-screen */
+  content-visibility: auto;
 }
 
 .image {
   grid-area: 9 / 9 / 18 / 18;
-  inline-size: 100%;
-  block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  aspect-ratio: 1;
   padding: var(--size-3);
 }

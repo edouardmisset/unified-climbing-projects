@@ -1,26 +1,28 @@
 'use client'
 
+import { Suspense } from 'react'
+import { TrainingSessionFilterBar } from '~/app/_components/filter-bar/_components/training-session-filter-bar'
 import NotFound from '~/app/not-found'
 import { useTrainingSessionsFilter } from '~/hooks/use-training-sessions-filter'
-import type { TrainingSession } from '~/schema/training'
-import { TrainingSessionFilterBar } from '../training-session-filter-bar/training-session-filter-bar'
+import type { TrainingSessionListProps } from '~/schema/training'
+import { Loader } from '../loader/loader'
 import { TrainingSessionList } from '../training-session-list/training-session-list'
 
 export function FilteredTrainingSessionList({
   trainingSessions,
-}: {
-  trainingSessions: TrainingSession[]
-}) {
+}: TrainingSessionListProps) {
   const filteredTrainingSessions = useTrainingSessionsFilter(
     trainingSessions ?? [],
   )
 
-  if (!trainingSessions) return <NotFound />
+  if (trainingSessions.length === 0) return <NotFound />
 
   return (
-    <section className="flex flex-column gap grid-full-width">
+    <section className="flex flexColumn gridFullWidth padding overflowXClip">
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
-      <TrainingSessionList trainingSessions={filteredTrainingSessions} />
+      <Suspense fallback={<Loader />}>
+        <TrainingSessionList trainingSessions={filteredTrainingSessions} />
+      </Suspense>
     </section>
   )
 }

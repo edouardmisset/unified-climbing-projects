@@ -1,19 +1,19 @@
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { type DATE_TIME_OPTIONS, formatDateTime } from './format-date'
+import { buildDateTimeFormat } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
 export function formatComments(
   comments: Ascent['comments'] | TrainingSession['comments'],
-) {
+): string {
   return comments ? `💬 “${comments}”` : ''
 }
 
-export function formatHeight(height: Ascent['height']) {
+export function formatHeight(height: Ascent['height']): string {
   return height ? `📏 ${height}m` : ''
 }
 
-export function formatHolds(holds: Ascent['holds']) {
+export function formatHolds(holds: Ascent['holds']): string {
   return holds ? `✊ ${holds}` : ''
 }
 
@@ -21,27 +21,30 @@ export function formatCragAndArea(
   crag: Ascent['crag'],
   area: Ascent['area'],
   options?: { showDetails?: boolean },
-) {
+): string {
   const { showDetails = true } = options ?? {}
 
   return `📍 ${crag}${showDetails && area ? ` ▸ ${area}` : ''}`
 }
 
-export function formatRating(rating: Ascent['rating']) {
+export function formatRating(rating: Ascent['rating']): string {
   return rating === undefined
     ? ''
     : Array.from({ length: rating }, () => '⭐').join('')
 }
 
-export function formatProfile(profile: Ascent['profile']) {
+export function formatProfile(profile: Ascent['profile']): string {
   return profile ? `📐 ${profile}` : ''
 }
 
-export function prettyLongDate(
-  date: string,
-  options: keyof typeof DATE_TIME_OPTIONS = 'longDate',
-) {
-  return `📅 ${formatDateTime(new Date(date), options)}`
+export const formatLongDate = buildDateTimeFormat('longDate')
+export const formatShortDate = buildDateTimeFormat('shortDate')
+
+export function prettyLongDate(date: string): string {
+  return date === '' ? '' : `📅 ${formatLongDate(date)}`
+}
+export function prettyShortDate(date: string): string {
+  return `📅 ${formatShortDate(date)}`
 }
 
 export function formatStyleAndTriers({
@@ -52,7 +55,7 @@ export function formatStyleAndTriers({
   style: Ascent['style']
   tries: Ascent['tries']
   options?: { showDetails?: boolean }
-}) {
+}): string {
   const { showDetails = false } = options ?? {}
 
   const styleEmoji = fromAscentStyleToEmoji(style)

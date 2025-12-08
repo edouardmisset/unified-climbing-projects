@@ -2,19 +2,15 @@ import { isDateInLast12Months, isDateInYear } from '@edouardmisset/date'
 import { average, validNumberWithFallback } from '@edouardmisset/math'
 import { removeAccents } from '@edouardmisset/text'
 import fuzzySort from 'fuzzysort'
-import { z } from 'zod'
-import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { calculateTopTenScore } from '~/helpers/calculate-top-ten'
 import { filterAscents } from '~/helpers/filter-ascents.ts'
 import { groupSimilarStrings } from '~/helpers/find-similar'
 import { mostFrequentBy } from '~/helpers/most-frequent-by'
 import { sortByDate } from '~/helpers/sort-by-date'
+import { z } from '~/helpers/zod'
 import {
   type Ascent,
   ascentSchema,
-  ascentStyleSchema,
-  climbingDisciplineSchema,
-  gradeSchema,
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
@@ -24,7 +20,9 @@ import {
   timeframeSchema,
 } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { addAscent, getAllAscents } from '~/services/ascents'
+import { getAllAscents } from '~/services/ascents'
+import { addAscentToDB } from '~/services/convex'
+import { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 
 export async function getFilteredAscents(
   filters?: OptionalAscentFilter,
@@ -34,32 +32,18 @@ export async function getFilteredAscents(
   return filterAscents(ascents, filters)
 }
 
-export const optionalAscentFilterSchema = z
-  .object({
-    climbingDiscipline: climbingDisciplineSchema.optional(),
-    crag: ascentSchema.shape.crag.optional(),
-    grade: gradeSchema.optional(),
-    height: ascentSchema.shape.height.optional(),
-    holds: holdsSchema.optional(),
-    profile: profileSchema.optional(),
-    rating: ascentSchema.shape.rating.optional(),
-    style: ascentStyleSchema.optional(),
-    tries: ascentSchema.shape.tries.optional(),
-    year: optionalAscentYear,
-  })
-  .optional()
 export type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
 export const ascentsRouter = createTRPCRouter({
   addOne: publicProcedure
-    .input(ascentSchema.omit({ id: true }))
+    .input(ascentSchema.omit({ _id: true }))
     .output(z.boolean())
     .query(async ({ input }) => {
       try {
-        await addAscent(input)
+        await addAscentToDB(input)
         return true
       } catch (error) {
-        globalThis.console.error(error)
+        globalThis.console.error('Error adding ascent:', error)
         return false
       }
     }),
@@ -120,13 +104,13 @@ export const ascentsRouter = createTRPCRouter({
       return average(filteredTries) ?? -1
     }),
   getById: publicProcedure
-    .input(ascentSchema.pick({ id: true }))
+    .input(ascentSchema.pick({ _id: true }))
     .output(ascentSchema.or(errorSchema))
     .query(async ({ input }) => {
       const ascents = await getAllAscents()
-      const foundAscent = ascents.find(({ id }) => id === input.id)
+      const foundAscent = ascents.find(({ _id }) => _id === input._id)
       if (foundAscent === undefined) {
-        return { error: `Ascent ${input.id} not found` }
+        return { error: `Ascent ${input._id} not found` }
       }
       return foundAscent
     }),
@@ -196,42 +180,6 @@ export const ascentsRouter = createTRPCRouter({
 
       return similarAscents
     }),
-  getTopTen: publicProcedure
-    .input(
-      z
-        .object({
-          timeframe: timeframeSchema.optional(),
-          year: optionalAscentYear,
-        })
-        .optional(),
-    )
-    .output(
-      z.array(
-        z.object({
-          ...ascentSchema.shape,
-          points: ascentSchema.required().shape.points,
-        }),
-      ),
-    )
-    .query(async ({ input = {} }) => {
-      const { timeframe = 'year', year = new Date().getFullYear() } = input
-
-      const allAscents = await getAllAscents()
-
-      const sortedAscentsWithPoints = allAscents
-        .filter(({ date }) => {
-          if (timeframe === 'all-time') return true
-          if (timeframe === 'year') return isDateInYear(date, year)
-          if (timeframe === 'last-12-months') return isDateInLast12Months(date)
-          return false
-        })
-        .map(ascent =>
-          Object.assign(ascent, { points: fromAscentToPoints(ascent) }),
-        )
-        .sort((a, b) => b.points - a.points)
-
-      return sortedAscentsWithPoints.slice(0, 10)
-    }),
   search: publicProcedure
     .input(
       z.object({
@@ -251,7 +199,7 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const { query, limit } = input
 
-      const results = fuzzySort.go(
+      const fuzzySearchResults = fuzzySort.go(
         removeAccents(query),
         await getAllAscents(),
         {
@@ -261,7 +209,7 @@ export const ascentsRouter = createTRPCRouter({
         },
       )
 
-      return results.map(result =>
+      return fuzzySearchResults.map(result =>
         Object.assign(result.obj, {
           highlight: result.highlight(),
           target: result.target,

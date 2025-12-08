@@ -33,9 +33,8 @@
 
 :root {
   font-weight: var(--font-weight-4);
-  font-family: system-ui, sans-serif;
 
-  --accent: light-dark(var(--violet-6), var(--violet-4));
+  --accent: light-dark(var(--patagonia-color-2), var(--patagonia-color-3));
   --link: light-dark(var(--indigo-7), var(--indigo-5));
   --link-visited: light-dark(var(--indigo-5), var(--indigo-3));
   --text-1: light-dark(var(--gray-12), var(--gray-1));
@@ -44,6 +43,9 @@
   --surface-2: light-dark(var(--gray-2), var(--gray-8));
   --surface-3: light-dark(var(--gray-3), var(--gray-7));
   --surface-4: light-dark(var(--gray-4), var(--gray-6));
+
+  /* Animation */
+  --rotating-angle: 0turn;
 
   /* Accent colors */
   accent-color: var(--accent, var(--link));
@@ -94,8 +96,9 @@
 
 :where(body) {
   min-block-size: 100svh;
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
   line-height: 1.5;
+  position: relative;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
@@ -149,7 +152,7 @@
 }
 
 :where(b, strong) {
-  font-weight: var(--font-weight-7);
+  font-weight: var(--font-weight-9);
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer
@@ -162,10 +165,12 @@ not to see them */
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
+    && {
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      scroll-behavior: auto;
+    }
   }
 }
 
@@ -189,49 +194,6 @@ not to see them */
   --_highlight: var(--_highlight-light);
   --_bg: var(--_bg-light);
   --_ink-shadow: var(--_ink-shadow-light);
-}
-
-:where(html) :where(button, .btn) :where([type='reset']) {
-  --_text: var(--red-6);
-  --_border: var(--red-3);
-}
-
-:where(html)
-  :where(
-    button,
-    .btn,
-    input:is([type='button'], [type='submit'], [type='reset'])
-  )[disabled] {
-  --_text: var(--gray-6);
-}
-
-:where(html)
-  :where(
-    textarea,
-    select,
-    input:not([type='button'], [type='submit'], [type='reset'])
-  ) {
-  background-color: var(--surface-2);
-}
-
-:where(form input:user-invalid) {
-  outline: var(--red-8) solid var(--border-size-2);
-  outline-offset: 1px;
-}
-
-:where(form input:user-valid) {
-  outline: var(--green-8) solid var(--border-size-1);
-  outline-offset: 1px;
-}
-
-:where(label:has(+ input:required))::after,
-:where(label:has(+ textarea:required))::after,
-:where(label:has(+ select:required))::after,
-.required::after {
-  font-size: 1em;
-  vertical-align: super;
-  color: var(--red-9);
-  content: ' *';
 }
 
 :where(a[href]) {
@@ -265,7 +227,7 @@ not to see them */
 
 @media (prefers-reduced-motion: no-preference) {
   :where(:focus-visible) {
-    transition: outline-offset 145ms var(--ease-2);
+    transition: outline-offset 145ms var(--ease-elastic-in-1);
   }
 
   :where(:not(:active):focus-visible) {
@@ -278,23 +240,23 @@ not to see them */
 }
 
 :where(h1) {
-  font-size: var(--font-size-8);
+  font-size: clamp(2rem, 3.5vw + 1rem, 3.5rem);
 }
 
 :where(h2) {
-  font-size: var(--font-size-6);
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
 }
 
 :where(h3) {
-  font-size: var(--font-size-5);
+  font-size: clamp(1.25rem, 1.5vw + 1rem, 2rem);
 }
 
 :where(h4) {
-  font-size: var(--font-size-4);
+  font-size: clamp(1rem, 1vw + 1rem, 1.5rem);
 }
 
 :where(h5) {
-  font-size: var(--font-size-3);
+  font-size: clamp(0.875rem, 0.5vw + 1rem, 1.25rem);
 }
 
 :where(h3, h4, h5, h6, dt) {
@@ -302,7 +264,7 @@ not to see them */
 }
 
 :where(p, ul, ol, dl, h6) {
-  font-size: var(--font-size-2);
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
 }
 
 @supports (-moz-appearance: none) {
@@ -368,6 +330,8 @@ not to see them */
   block-size: auto;
 }
 
+/* Reset styles for form elements */
+
 :where(input, button, textarea, select),
 :where(input[type='file'])::-webkit-file-upload-button {
   font: inherit;
@@ -376,9 +340,52 @@ not to see them */
   letter-spacing: inherit;
 }
 
-::placeholder {
-  color: var(--gray-7);
-  opacity: 0.75;
+:where(html)
+  :where(
+    textarea,
+    select,
+    input:not([type='button'], [type='submit'], [type='reset'])
+  ) {
+  background-color: var(--surface-2);
+}
+
+:where(form input:user-invalid, form textarea:user-invalid) {
+  outline: var(--red-8) solid var(--border-size-2);
+  outline-offset: 1px;
+}
+
+:where(form input:user-valid, form textarea:user-valid) {
+  outline: var(--green-8) solid var(--border-size-1);
+  outline-offset: 1px;
+}
+
+:where(
+    label:has(+ input:required),
+    label:has(+ textarea:required),
+    label:has(+ select:required),
+    .required
+  )::after {
+  font-size: 1em;
+  vertical-align: super;
+  color: var(--red-9);
+  content: ' *';
+}
+
+:where(::placeholder) {
+  color: white;
+  text-shadow:
+    0 0 0.05em black,
+    0 0 0.05em black,
+    0 0 0.05em black,
+    0 0 0.05em black;
+  opacity: 0.8;
+
+  @supports (color: oklch(from lightblue l c h)) {
+    --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
+
+    color: oklch(from var(--color) var(--l) 0 h);
+    text-shadow: none;
+  }
 }
 
 :where(input:not([type='range']), textarea) {
@@ -387,7 +394,7 @@ not to see them */
 }
 
 :where(select) {
-  padding-block: 0.75ch;
+  padding-block: var(--size-1);
   padding-inline-start: var(--size-relative-4);
 }
 
@@ -480,7 +487,9 @@ not to see them */
 }
 
 :where(i, em) {
+  font-family: var(--font-handwritten);
   font-style: italic;
+  font-weight: var(--font-weight-6);
 }
 
 :where(figure) {
@@ -525,7 +534,7 @@ not to see them */
 }
 
 :where(details[open] > summary) {
-  margin-bottom: var(--size-2);
+  margin-block-end: var(--size-2);
   border-end-start-radius: 0;
   border-end-end-radius: 0;
 }
@@ -576,7 +585,7 @@ not to see them */
 
 :where(table) {
   --nice-inner-radius: calc(var(--radius-3) - 2px);
-  width: fit-content;
+  inline-size: fit-content;
 
   background: var(--surface-2);
   border: 1px solid var(--surface-2);
@@ -631,7 +640,7 @@ not to see them */
 
 :where(td, th) {
   padding: var(--size-fluid-0);
-  text-align: left;
+  text-align: start;
 }
 
 :where(:is(td, th):not([align])) {

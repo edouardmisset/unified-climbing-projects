@@ -1,13 +1,15 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
+import { stringIncludesCaseInsensitive } from '@edouardmisset/text'
 import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
+import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import type { Ascent } from '~/schema/ascent'
 import { useAscentsQueryState } from './use-ascents-query-state'
 
 /**
  * Filters the provided ascents based on the following query state parameters:
- * year, discipline, style, crag, and grade.
+ * year, discipline, style, crag, and grade and period.
  *
  * @param {Ascent[]} ascents - The array of ascents to filter.
  * @returns {Ascent[]} The filtered ascents.
@@ -15,32 +17,44 @@ import { useAscentsQueryState } from './use-ascents-query-state'
 export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const {
     selectedYear,
-    selectedDiscipline,
-    selectedStyle,
     selectedCrag,
+    selectedDiscipline,
     selectedGrade,
+    selectedPeriod,
+    selectedRoute,
+    selectedStyle,
   } = useAscentsQueryState()
+
+  const filteredAscents = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    return filterAscents(ascents, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      crag: normalizeFilterValue(selectedCrag),
+      grade: normalizeFilterValue(selectedGrade),
+      style: normalizeFilterValue(selectedStyle),
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      period: normalizeFilterValue(selectedPeriod),
+    })
+  }, [
+    ascents,
+    selectedCrag,
+    selectedDiscipline,
+    selectedGrade,
+    selectedPeriod,
+    selectedStyle,
+    selectedYear,
+  ])
 
   return useMemo(
     () =>
-      filterAscents(ascents, {
-        climbingDiscipline:
-          selectedDiscipline === ALL_VALUE ? undefined : selectedDiscipline,
-        crag: selectedCrag === ALL_VALUE ? undefined : selectedCrag,
-        grade: selectedGrade === ALL_VALUE ? undefined : selectedGrade,
-        style: selectedStyle === ALL_VALUE ? undefined : selectedStyle,
-        year:
-          selectedYear !== ALL_VALUE && isValidNumber(Number(selectedYear))
-            ? Number(selectedYear)
-            : undefined,
-      }),
-    [
-      ascents,
-      selectedCrag,
-      selectedDiscipline,
-      selectedGrade,
-      selectedStyle,
-      selectedYear,
-    ],
+      selectedRoute === ''
+        ? filteredAscents
+        : filteredAscents.filter(({ routeName }) =>
+            stringIncludesCaseInsensitive(routeName, selectedRoute),
+          ),
+    [filteredAscents, selectedRoute],
   )
 }

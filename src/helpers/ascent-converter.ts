@@ -105,9 +105,9 @@ export function fromPointToGrade(
 
   const parsedPoint = adjustedPoints as (typeof listOfPoints)[number]
 
-  const grade = Object.entries(GRADE_TO_POINTS).find(([_, value]) => {
-    return value === parsedPoint
-  })
+  const grade = Object.entries(GRADE_TO_POINTS).find(
+    ([_, value]) => value === parsedPoint,
+  )
 
   if (!grade) {
     globalThis.console.log(

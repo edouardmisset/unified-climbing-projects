@@ -1,19 +1,21 @@
 'use client'
+
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Atkinson_Hyperlegible } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { type ReactNode, Suspense, useMemo } from 'react'
+import { lazy, type ReactNode, Suspense, useMemo } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
-import { ReactScan } from '~/app/_components/react-scan/react-scan.tsx'
 import { env } from '~/env.js'
 import { useTheme } from '~/hooks/use-theme'
 import { TRPCReactProvider } from '~/trpc/react'
 import styles from './index.module.css'
+
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
 import '~/styles/animation.css'
@@ -29,9 +31,26 @@ import '~/styles/zindex.css'
 import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
-import { LightDarkSwitch } from './_components/light-dark-switch/light-dark-switch'
+import { ThemeToggle } from './_components/theme-toggle/theme-toggle'
 
-export const fetchCache = 'default-cache'
+// Dynamic import for ReactQueryDevtools - only loads in development
+const ReactQueryDevtools = lazy(() =>
+  env.NEXT_PUBLIC_ENV === 'development'
+    ? import('@tanstack/react-query-devtools').then(module => ({
+        default: module.ReactQueryDevtools,
+      }))
+    : Promise.resolve({ default: () => <></> }),
+)
+
+const font = Atkinson_Hyperlegible({
+  display: 'swap',
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  preload: true,
+  variable: '--font-atkinson',
+  fallback: ['system-ui', 'sans-serif'],
+})
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const { theme, toggleTheme } = useTheme()
@@ -47,23 +66,29 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <ClerkProvider appearance={appearance}>
-        {env.NEXT_PUBLIC_ENV === 'development' && <ReactScan />}
         <html
+          className={font.className}
           data-color-scheme={theme}
           lang="en"
-          suppressHydrationWarning={true}
+          suppressHydrationWarning
         >
           <body className={styles.body}>
             <header className={styles.header}>
-              <LightDarkSwitch
-                checked={theme === 'dark'}
-                onChange={toggleTheme}
-              />
+              <ThemeToggle checked={theme === 'dark'} onChange={toggleTheme} />
               <Navigation />
             </header>
             <main className={styles.main}>
               <Suspense fallback={<Loader />}>
                 <TRPCReactProvider>
+                  {env.NEXT_PUBLIC_ENV === 'development' && (
+                    <Suspense fallback={null}>
+                      <ReactQueryDevtools
+                        buttonPosition="bottom-right"
+                        initialIsOpen={false}
+                        position="right"
+                      />
+                    </Suspense>
+                  )}
                   <NuqsAdapter>{children}</NuqsAdapter>
                 </TRPCReactProvider>
               </Suspense>

@@ -28,34 +28,34 @@
   --8c_: var(--blue-12);
 
   /* TRAINING */
-  --endurance-low: var(--orange-1);
+  --enduranceLow: var(--orange-1);
   --endurance: var(--orange-5);
-  --endurance-high: var(--orange-9);
+  --enduranceHigh: var(--orange-9);
 
-  --other-training-low: var(--gray-1);
-  --other-training: var(--gray-5);
-  --other-training-high: var(--gray-7);
+  --otherTrainingLow: var(--gray-1);
+  --otherTraining: var(--gray-5);
+  --otherTrainingHigh: var(--gray-7);
 
-  --outdoor-low: var(--green-1);
+  --outdoorLow: var(--green-1);
   --outdoor: var(--green-5);
-  --outdoor-high: var(--green-9);
+  --outdoorHigh: var(--green-9);
 
-  --stamina-low: var(--indigo-1);
+  --staminaLow: var(--indigo-1);
   --stamina: var(--indigo-5);
-  --stamina-high: var(--indigo-9);
+  --staminaHigh: var(--indigo-9);
 
-  --strength-low: var(--pink-1);
+  --strengthLow: var(--pink-1);
   --strength: var(--pink-5);
-  --strength-high: var(--pink-9);
+  --strengthHigh: var(--pink-9);
 
-  --tapered-low: var(--violet-1);
+  --taperedLow: var(--violet-1);
   --tapered: var(--violet-5);
-  --tapered-high: var(--violet-9);
+  --taperedHigh: var(--violet-9);
 
   /* DISCIPLINE */
   --boulder: var(--pink-4);
   --route: var(--cyan-4);
-  --multi-pitch: var(--choco-4);
+  --multiPitch: var(--choco-4);
 
   /* STYLE */
   --onsight: var(--teal-5);
@@ -63,9 +63,9 @@
   --redpoint: var(--red-5);
 
   /* TRIES */
-  --max-tries: var(--pink-7);
-  --average-tries: var(--pink-4);
-  --min-tries: var(--pink-1);
+  --maxTries: var(--pink-7);
+  --averageTries: var(--pink-4);
+  --minTries: var(--pink-1);
 }
 
 /* GRADES */
@@ -150,8 +150,8 @@
   background-color: var(--color);
 }
 
-.other-training {
-  --color: var(--other-training);
+.otherTraining {
+  --color: var(--otherTraining);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);
@@ -200,8 +200,8 @@
   background-color: var(--color);
 }
 
-.multi-pitch {
-  --color: var(--multi-pitch);
+.multiPitch {
+  --color: var(--multiPitch);
   color: oklch(from var(--color) var(--l) 0 h);
 
   background-color: var(--color);

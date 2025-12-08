@@ -1,4 +1,4 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { Ascent } from '~/schema/ascent'
 import { calculateProgressionPercentage } from './calculate-progression-percentage'
 
@@ -8,7 +8,7 @@ describe('calculateProgressionPercentage', () => {
       ascents: [],
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 40% when there are no ascents in the previous year but two in the current year', () => {
@@ -17,7 +17,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 1,
+        _id: '1',
         routeName: 'Test Route 1',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -27,7 +27,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 2,
+        _id: '2',
         routeName: 'Test Route 2',
         style: 'Onsight',
         topoGrade: '6c',
@@ -39,7 +39,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 40)
+    expect(result).toBe(40)
   })
 
   it('should return 0 when there are no ascents in the current year', () => {
@@ -48,7 +48,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 3,
+        _id: '3',
         routeName: 'Test Route 3',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -58,7 +58,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 4,
+        _id: '4',
         routeName: 'Test Route 4',
         style: 'Onsight',
         topoGrade: '6c',
@@ -70,7 +70,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should return 100% when all categories show progression', () => {
@@ -80,7 +80,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 5,
+        _id: '5',
         routeName: 'Boulder Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -90,7 +90,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 6,
+        _id: '6',
         routeName: 'Boulder Flash 2022',
         style: 'Flash',
         topoGrade: '6c',
@@ -100,7 +100,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 7,
+        _id: '7',
         routeName: 'Route Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7b',
@@ -110,7 +110,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 8,
+        _id: '8',
         routeName: 'Route Flash 2022',
         style: 'Flash',
         topoGrade: '7a',
@@ -120,7 +120,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 9,
+        _id: '9',
         routeName: 'Route Onsight 2022',
         style: 'Onsight',
         topoGrade: '6c+',
@@ -132,7 +132,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 10,
+        _id: '10',
         routeName: 'Boulder Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7a+',
@@ -142,7 +142,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 11,
+        _id: '11',
         routeName: 'Boulder Flash 2023',
         style: 'Flash',
         topoGrade: '7a',
@@ -152,7 +152,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 12,
+        _id: '12',
         routeName: 'Route Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7b+',
@@ -162,7 +162,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 13,
+        _id: '13',
         routeName: 'Route Flash 2023',
         style: 'Flash',
         topoGrade: '7a+',
@@ -172,7 +172,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 14,
+        _id: '14',
         routeName: 'Route Onsight 2023',
         style: 'Onsight',
         topoGrade: '7a',
@@ -184,7 +184,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 
   it('should return 60% when 3 out of 5 categories show progression', () => {
@@ -194,7 +194,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 15,
+        _id: '15',
         routeName: 'Boulder Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -204,7 +204,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 16,
+        _id: '16',
         routeName: 'Boulder Flash 2022',
         style: 'Flash',
         topoGrade: '6c',
@@ -214,7 +214,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 17,
+        _id: '17',
         routeName: 'Route Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7b',
@@ -224,7 +224,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 18,
+        _id: '18',
         routeName: 'Route Flash 2022',
         style: 'Flash',
         topoGrade: '7a',
@@ -234,7 +234,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 19,
+        _id: '19',
         routeName: 'Route Onsight 2022',
         style: 'Onsight',
         topoGrade: '6c+',
@@ -246,7 +246,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 20,
+        _id: '20',
         routeName: 'Boulder Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7a+', // Better
@@ -256,7 +256,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 21,
+        _id: '21',
         routeName: 'Boulder Flash 2023',
         style: 'Flash',
         topoGrade: '7a', // Better
@@ -266,7 +266,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 22,
+        _id: '22',
         routeName: 'Route Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7b', // Same
@@ -276,7 +276,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 23,
+        _id: '23',
         routeName: 'Route Flash 2023',
         style: 'Flash',
         topoGrade: '7a', // Same
@@ -286,7 +286,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 24,
+        _id: '24',
         routeName: 'Route Onsight 2023',
         style: 'Onsight',
         topoGrade: '7a', // Better
@@ -298,7 +298,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 60)
+    expect(result).toBe(60)
   })
 
   it('should return 0% when all categories show regression', () => {
@@ -308,7 +308,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 25,
+        _id: '25',
         routeName: 'Boulder Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7b',
@@ -318,7 +318,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 26,
+        _id: '26',
         routeName: 'Boulder Flash 2022',
         style: 'Flash',
         topoGrade: '7a',
@@ -328,7 +328,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 27,
+        _id: '27',
         routeName: 'Route Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '8a',
@@ -338,7 +338,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 28,
+        _id: '28',
         routeName: 'Route Flash 2022',
         style: 'Flash',
         topoGrade: '7b',
@@ -348,7 +348,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 29,
+        _id: '29',
         routeName: 'Route Onsight 2022',
         style: 'Onsight',
         topoGrade: '7a+',
@@ -360,7 +360,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 30,
+        _id: '30',
         routeName: 'Boulder Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -370,7 +370,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 31,
+        _id: '31',
         routeName: 'Boulder Flash 2023',
         style: 'Flash',
         topoGrade: '6c',
@@ -380,7 +380,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 32,
+        _id: '32',
         routeName: 'Route Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7c',
@@ -390,7 +390,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 33,
+        _id: '33',
         routeName: 'Route Flash 2023',
         style: 'Flash',
         topoGrade: '7a',
@@ -400,7 +400,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 34,
+        _id: '34',
         routeName: 'Route Onsight 2023',
         style: 'Onsight',
         topoGrade: '6c',
@@ -412,7 +412,7 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 0)
+    expect(result).toBe(0)
   })
 
   it('should handle categories with missing data', () => {
@@ -422,7 +422,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 35,
+        _id: '35',
         routeName: 'Boulder Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7a',
@@ -432,7 +432,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 36,
+        _id: '36',
         routeName: 'Route Redpoint 2022',
         style: 'Redpoint',
         topoGrade: '7b',
@@ -442,7 +442,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2022-06-15T12:00:00.000Z',
-        id: 37,
+        _id: '37',
         routeName: 'Route Onsight 2022',
         style: 'Onsight',
         topoGrade: '6c+',
@@ -454,7 +454,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 38,
+        _id: '38',
         routeName: 'Boulder Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7a+',
@@ -464,7 +464,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 39,
+        _id: '39',
         routeName: 'Boulder Flash 2023',
         style: 'Flash',
         topoGrade: '7a',
@@ -474,7 +474,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 40,
+        _id: '40',
         routeName: 'Route Redpoint 2023',
         style: 'Redpoint',
         topoGrade: '7b+',
@@ -484,7 +484,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 41,
+        _id: '41',
         routeName: 'Route Flash 2023',
         style: 'Flash',
         topoGrade: '7a',
@@ -494,7 +494,7 @@ describe('calculateProgressionPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-06-15T12:00:00.000Z',
-        id: 42,
+        _id: '42',
         routeName: 'Route Onsight 2023',
         style: 'Onsight',
         topoGrade: '7a',
@@ -507,6 +507,6 @@ describe('calculateProgressionPercentage', () => {
       ascents,
       year: 2023,
     })
-    assert.equal(result, 100)
+    expect(result).toBe(100)
   })
 })

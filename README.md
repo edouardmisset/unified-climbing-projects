@@ -1,9 +1,76 @@
 # Climbing App
 
-This is my pet project 🐕 climbing 🧗 app 📱.  
-⚠️ It's a work in progress.  
-I like to explore new technologies, new frameworks, new libraries. This project
-is my playground for these experiments.  
+## Introduction
+
+Personal climbing analytics and logging app to track ascents and training,
+visualize progress, and explore performance trends.
+
+⚠️ Work in progress and intentionally experimental. This repo is a playground
+to try new libraries and patterns.
+
+What’s inside (high-level):
+
+- Next.js (App Router) + TypeScript, Bun, CSS Modules
+- UI: Base UI components; Charts: Nivo; Auth: Clerk
+- Data & validation: tRPC, Zod schemas; helpers for Google Sheets ⇄ JS
+  transforms
+- Features: dashboards and charts (grades, disciplines, years, distance),
+  calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards
+- Testing: unit tests with poku, end-to-end with Playwright
+- Perf: caching utilities and React Compiler enabled
+
+## Getting Started
+
+Prerequisites:
+
+- Bun installed (recommended)
+
+Install dependencies:
+
+```sh
+bun install
+```
+
+Start the app in development:
+
+```sh
+bun run dev
+```
+
+Production preview (build then start):
+
+```sh
+bun run preview
+```
+
+Note: You may need to configure environment variables (for example, Clerk).
+
+## Scripts
+
+- Lint: `bun run lint`
+- Format: `bun run format`
+- Typecheck and checks: `bun run check`
+- Validate (checks, tests, build): `bun run validate`
+- Spellcheck: `bun run spell`
+- File lint & style lint: `bun run ls-lint`, `bun run style:lint`
+
+## Testing
+
+- Unit tests (poku): `bun run test:unit`
+- E2E tests (Playwright): `bun run test:e2e`
+- All tests: `bun run test:all`
+
+## Notable Directories
+
+- `src/app/` — Next.js App Router pages, layouts, and route components
+- `src/app/_components/` — Reusable UI components (charts, inputs, dialogs)
+- `src/helpers/` — Core utilities (dates, grades, transforms) with tests
+- `src/schema/` — Zod schemas for strong typing and validation
+- `src/trpc/` — tRPC router, server, and client wiring
+- `src/data/` — Data grouping and time-based helpers
+- `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
+- `tests/` — Playwright E2E tests and reports
+- `backup/` — Sample data for local development
 
 ## TODO
 
@@ -72,6 +139,10 @@ is my playground for these experiments.
 - [ ] ~~Redo the styles of the slider of the ascent log page~~
 - [x] Add dark / light theme (also add a toggle). Replace the purple theme with
   the dark theme
+- [x] Create a (climbing) style component to display the style of the climb
+  (`<em>{style}</em>`)
+- [x] Create a (climbing) grade component to display the grade of the climb
+  (`<strong>{topoGrade}</strong>`)
 
 </details>
 </br>
@@ -94,18 +165,17 @@ is my playground for these experiments.
   stash my component somewhere and also improve it using the best practice found
   in HeatJS~~
 - [x] Add the calendars (ascents and training) to the Visualization page
+- [x] Change the logic for inputting the grade when logging an ascent. Use an
+  input along with `+` and `-` buttons to increase or decrease the grade.
 
 </details>
 </br>
 
 - [ ] Refactor the code of the Visualization page => Maybe this should be a
-  navigation page and not a dynamic content page?
+  navigation page and not a dynamic content page
 
-- [ ] Refactor the form components. This needs to be more legible and
-maintainable
-
-- [ ] Change the logic for inputting the grade when logging an ascent. Use an
-  input along with `+` and `-` buttons to increase or decrease the grade.
+- [ ] Refactor the form components. This needs to be more legible and
+  maintainable
 
 ### Tests
 

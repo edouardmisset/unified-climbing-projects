@@ -12,13 +12,7 @@ import {
 import type { ClimbingDisciplineMetric } from '../types'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
-export function AscentsPerDiscipline({
-  ascents,
-  className,
-}: {
-  ascents: Ascent[]
-  className?: string
-}) {
+export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   const routesVsBoulders = useMemo(
     () => getAscentsPerDiscipline(ascents),
     [ascents],
@@ -35,9 +29,9 @@ export function AscentsPerDiscipline({
   if (routesVsBoulders.length <= 1) return null
 
   return (
-    <ChartContainer caption="Ascents per Discipline" className={className}>
+    <ChartContainer caption="Ascents per Discipline">
       <ResponsivePie
-        animate={true}
+        animate
         arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
         colors={pieColorsGetter}

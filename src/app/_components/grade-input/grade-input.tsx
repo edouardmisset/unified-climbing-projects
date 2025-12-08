@@ -8,8 +8,8 @@ import { GRADE_TO_NUMBER } from '~/schema/ascent'
 import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
 import styles from './grade-input.module.css'
 
-const min = Math.min(...Object.values(GRADE_TO_NUMBER))
-const max = Math.max(...Object.values(GRADE_TO_NUMBER))
+const globalMinGrade = Math.min(...Object.values(GRADE_TO_NUMBER))
+const globalMaxGrade = Math.max(...Object.values(GRADE_TO_NUMBER))
 
 export function GradeInput(
   props: NumberField.Root.Props & {
@@ -17,7 +17,15 @@ export function GradeInput(
     gradeType?: 'Personal' | 'Topo'
   },
 ) {
-  const { label, onValueChange, value, gradeType = 'Topo', ...rest } = props
+  const {
+    label,
+    onValueChange,
+    value,
+    gradeType = 'Topo',
+    min = globalMinGrade,
+    max = globalMaxGrade,
+    ...rest
+  } = props
   const id = useId()
 
   if (value == null || !onValueChange) {
@@ -49,31 +57,21 @@ export function GradeInput(
       <NumberField.Group className={styles.Group}>
         <NumberField.Decrement
           className={styles.Decrement}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            e.stopPropagation()
-            return onValueChange(value)
-          }}
-          title="decrease grade (-)"
+          title="Decrease grade (-)"
         >
           <MinusIcon />
         </NumberField.Decrement>
         <NumberField.Input
           className={styles.Input}
           inputMode="text"
-          render={props => (
-            <input {...props} value={fromNumberToGrade(value)} />
+          render={renderProps => (
+            <input {...renderProps} value={fromNumberToGrade(value)} />
           )}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />
         <NumberField.Increment
           className={styles.Increment}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            e.stopPropagation()
-            return onValueChange(value)
-          }}
-          title="increase grade (+)"
+          title="Increase grade (+)"
         >
           <PlusIcon />
         </NumberField.Increment>
@@ -81,3 +79,5 @@ export function GradeInput(
     </NumberField.Root>
   )
 }
+
+export type HandleGradeChange = NumberField.Root.Props['onValueChange']

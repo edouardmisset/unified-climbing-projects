@@ -1,32 +1,44 @@
-import { assert, describe, it } from 'poku'
-import type { Grade } from '~/schema/ascent'
-import { createGradeScale } from './create-grade-scale'
+import { describe, expect, it } from 'vitest'
+import type { Ascent, Grade } from '~/schema/ascent'
+import { createGradeScaleFromAscents } from './create-grade-scale'
 
-describe('createGradeScale', () => {
-  it('should return an empty array when given an invalid grade', () => {
-    const lowerGrade = 'invalidGrade' as Grade
-    const higherGrade = '7a'
-    const result = createGradeScale(lowerGrade, higherGrade)
-    assert.deepEqual(result, [])
-
-    const lowerGrade2 = '8b'
-    const higherGrade2 = 'invalidGrade' as Grade
-    const result2 = createGradeScale(lowerGrade2, higherGrade2)
-    assert.deepEqual(result2, [])
+describe('createGradeScaleFromAscents', () => {
+  it('should return all grades when given an empty array', () => {
+    const ascents: Ascent[] = []
+    const result = createGradeScaleFromAscents(ascents)
+    // Since it returns [..._GRADES], we expect all grades
+    expect(result.length).toBeGreaterThan(0)
+    expect(result).toContain('1a')
+    expect(result).toContain('9c')
   })
 
-  it('should return an empty array when lowerGrade > higherGrade', () => {
-    const lowerGrade = '8a'
-    const higherGrade = '6a'
-    const result = createGradeScale(lowerGrade, higherGrade)
-    assert.deepEqual(result, [])
-  })
-
-  it('should return a grade scale between the specified lower and higher grades', () => {
-    const lowerGrade = '6a'
-    const higherGrade = '7a'
+  it('should return a grade scale between the min and max grades from ascents', () => {
+    const ascents: Ascent[] = [
+      { topoGrade: '6c' } as Ascent,
+      { topoGrade: '6a' } as Ascent,
+      { topoGrade: '7a' } as Ascent,
+      { topoGrade: '6b+' } as Ascent,
+    ]
     const expectedScale: Grade[] = ['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a']
-    const result = createGradeScale(lowerGrade, higherGrade)
-    assert.deepEqual(result, expectedScale)
+    const result = createGradeScaleFromAscents(ascents)
+    expect(result).toEqual(expectedScale)
+  })
+
+  it('should handle single ascent', () => {
+    const ascents: Ascent[] = [{ topoGrade: '7a' } as Ascent]
+    const expectedScale: Grade[] = ['7a']
+    const result = createGradeScaleFromAscents(ascents)
+    expect(result).toEqual(expectedScale)
+  })
+
+  it('should handle ascents with same grade', () => {
+    const ascents: Ascent[] = [
+      { topoGrade: '6b' } as Ascent,
+      { topoGrade: '6b' } as Ascent,
+      { topoGrade: '6b' } as Ascent,
+    ]
+    const expectedScale: Grade[] = ['6b']
+    const result = createGradeScaleFromAscents(ascents)
+    expect(result).toEqual(expectedScale)
   })
 })

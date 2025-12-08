@@ -15,3 +15,5 @@ ignore:
   - node_modules
   - '**/_components'
   - '**/{\[id\],\[year\],\[trpc\]}'
+  - test-results
+  - convex/_generated

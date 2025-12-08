@@ -1,10 +1,8 @@
 import { writeFile } from 'node:fs/promises'
-import backup from './ascent-data.json' with { type: 'json' }
+import ascents from './ascent-data.json' with { type: 'json' }
 
-const { data } = backup
-
-const sampleSize = 100
-const stratifyBy: (keyof (typeof data)[number])[] = [
+const SAMPLE_SIZE = 100
+const STRATIFY_BY: (keyof (typeof ascents)[number])[] = [
   'crag',
   'climbingDiscipline',
   'style',
@@ -13,22 +11,22 @@ const stratifyBy: (keyof (typeof data)[number])[] = [
 
 // Function to get a random sample of specified size from an array
 // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
-function getRandomSample(arr: any[], sampleSize: number): any[] {
+function getRandomSample(arr: any[], size: number): any[] {
   const shuffled = arr.sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, sampleSize)
+  return shuffled.slice(0, size)
 }
 
 // Function to perform stratified sampling by multiple keys
 function stratifiedSample(
   // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
   data: any[],
-  sampleSize: number,
-  stratifyBy: string[],
+  size: number,
+  stratificationKeys: string[],
   // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
 ): any[] {
   const strata = data.reduce(
     (acc, entry) => {
-      const key = stratifyBy.map(factor => entry[factor]).join('|')
+      const key = stratificationKeys.map(factor => entry[factor]).join('|')
       if (!acc[key]) {
         acc[key] = []
       }
@@ -42,7 +40,7 @@ function stratifiedSample(
   // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
   const sample: any[] = []
   const strataKeys = Object.keys(strata)
-  const samplesPerStratum = Math.floor(sampleSize / strataKeys.length)
+  const samplesPerStratum = Math.floor(size / strataKeys.length)
 
   for (const key of strataKeys) {
     const stratumSample = getRandomSample(strata[key], samplesPerStratum)
@@ -50,7 +48,7 @@ function stratifiedSample(
   }
 
   // If there are remaining samples to be taken, randomly select from all strata
-  const remainingSamples = sampleSize - sample.length
+  const remainingSamples = size - sample.length
   if (remainingSamples > 0) {
     const allEntries = Object.values(strata).flat()
     const additionalSamples = getRandomSample(allEntries, remainingSamples)
@@ -61,7 +59,7 @@ function stratifiedSample(
 }
 
 // Select n random ascents from the data using stratified sampling by multiple keys
-const subset = stratifiedSample(data, sampleSize, stratifyBy)
+const subset = stratifiedSample(ascents, SAMPLE_SIZE, STRATIFY_BY)
 
 // Write the subset to a new JSON file
 await writeFile(

@@ -1,8 +1,11 @@
 .table {
+  --columns: 10;
+  --max-width: 120ch;
+
   display: grid;
-  grid-template-columns: repeat(10, auto);
+  grid-template-columns: repeat(var(--columns, 10), auto);
   column-gap: var(--size-fluid-1);
-  max-inline-size: 100%;
+  inline-size: min(100%, var(--max-width, 120ch));
   max-block-size: 80dvh;
   margin-inline: auto;
 

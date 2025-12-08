@@ -2,12 +2,15 @@
   display: inline-block;
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
-
   text-decoration-style: dashed;
   text-decoration-color: currentcolor;
+  text-underline-offset: 0.2em;
+
   cursor: pointer;
 
-  transition: color var(--sneeze);
+  @media (prefers-reduced-motion: no-preference) {
+    transition: color var(--sneeze);
+  }
 
   &:hover {
     color: oklch(from var(--text) calc(l * 0.7) c h);
@@ -15,9 +18,15 @@
   }
 }
 
-.popoverContainer {
+.list {
   display: flex;
   flex-direction: column;
   max-block-size: 20rem;
+  padding: 0;
   overflow: auto;
+  list-style: none;
+}
+
+.item {
+  padding: 0;
 }

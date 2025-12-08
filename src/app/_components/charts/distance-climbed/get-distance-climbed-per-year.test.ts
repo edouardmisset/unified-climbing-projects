@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
 
 describe('getDistanceClimbedPerYear', () => {
   it('should return empty array for empty input', () => {
     const result = getDistanceClimbedPerYear([])
-    assert.deepEqual(result, [])
+    expect(result).toEqual([])
   })
 
   it('should compute distance and average height for a multiple years', () => {
@@ -44,6 +44,6 @@ describe('getDistanceClimbedPerYear', () => {
       },
     ]
     const result = getDistanceClimbedPerYear(sampleAscents)
-    assert.deepEqual(result, expected)
+    expect(result).toEqual(expected)
   })
 })

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from '~/helpers/zod'
 import { positiveInteger } from './generic'
 
 export const _GRADES = [
@@ -190,29 +190,6 @@ export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
 
 export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
-export const HOLDS_FROM_GS = [
-  'Positive',
-  'Jug',
-  'Sloper',
-  'Pocket',
-  'Pinch',
-  'Crimp',
-  'Volume',
-  'Crack',
-  'Bi',
-  'Mono',
-  'Various',
-  'Undercling',
-] as const
-
-/**
- * 'Mono' and 'Bi' hold types from Google Sheets' model are really only pockets.
- *
- * 'Various' was a catch-all for holds that don't fit in the other categories,
- * but it's not very useful. It is likely to be crimpy holds.
- *
- * 'Positive' and Volume are a hold type that don't really exist in outdoor climbing.
- */
 export const HOLDS = [
   'Crimp',
   'Jug',
@@ -235,36 +212,34 @@ export const PROFILES = [
 
 export const ascentStyleSchema = z.enum(ASCENT_STYLE)
 export const profileSchema = z.enum(PROFILES)
-export const holdsFomGSSchema = z.enum(HOLDS_FROM_GS)
 export const holdsSchema = z.enum(HOLDS)
 const optionalStringSchema = z.string().optional()
 
 export const ascentSchema = z.object({
-  area: z.string().or(z.number()).transform(String).optional(),
+  area: z.string().trim().optional(),
   climber: z
     .string()
     .transform(() => 'Edouard Misset')
     .optional(),
   climbingDiscipline: climbingDisciplineSchema,
   comments: optionalStringSchema,
-  crag: z.string().min(1),
+  crag: z.string().trim().min(1),
   date: z.string(), // ISO 8601 date format
   height: positiveInteger.optional(),
   holds: holdsSchema.optional(),
-  id: positiveInteger,
+  _id: z.string(),
   personalGrade: gradeSchema.optional(),
   points: positiveInteger.optional(),
   profile: profileSchema.optional(),
   rating: z.number().int().min(0).max(5).optional(),
   region: optionalStringSchema,
-  routeName: z
-    .string()
-    .min(1)
-    .or(z.number())
-    .transform(String)
-    .default('No Name'),
+  routeName: z.string().trim().min(1).default('No Name'),
   style: ascentStyleSchema,
   topoGrade: gradeSchema,
   tries: z.number().int().min(1),
 })
 export type Ascent = z.infer<typeof ascentSchema>
+
+export type AscentListProps = {
+  ascents: Ascent[]
+}

@@ -1,0 +1,99 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-3);
+  isolation: isolate;
+}
+
+.h1 {
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: center;
+  padding-inline: var(--font-size-fluid-0);
+}
+
+.patagonia {
+  --patagonia-line-width: 2%;
+  --patagonia-line-color: hsl(0deg 0% 3%);
+  --mountains-outline: 5%;
+
+  /* biome-ignore format: the clip path should not be formatted */
+  --mountains: 
+  0 100%,
+  5% 85%,
+  10% 55%, 
+  13% 45%, 
+  15% 50%,
+  23% 87%,
+  25% 90%,
+  27% 85%,
+  30% 75%,
+  32% 77%,
+  45% 160%,
+  67% 85%,
+  70% 93%,
+  72% 90%,
+  82% 57%,
+  85% 52%,
+  95% 90%,
+  100% 100%;
+  --patagonia-gradient: linear-gradient(
+    to bottom,
+    var(--patagonia-color-1) 0%,
+    var(--patagonia-color-1) calc(20% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(20% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(20% + var(--patagonia-line-width)),
+    var(--patagonia-color-2) calc(20% + var(--patagonia-line-width)),
+    var(--patagonia-color-2) calc(40% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(40% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(40% + var(--patagonia-line-width)),
+    var(--patagonia-color-3) calc(40% + var(--patagonia-line-width)),
+    var(--patagonia-color-3) calc(60% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(60% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(60% + var(--patagonia-line-width)),
+    var(--patagonia-color-4) calc(60% + var(--patagonia-line-width)),
+    var(--patagonia-color-4) calc(80% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(80% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(80% + var(--patagonia-line-width)),
+    var(--patagonia-color-5) calc(80% + var(--patagonia-line-width)),
+    var(--patagonia-color-5) 100%
+  );
+
+  position: relative;
+  inline-size: 100%;
+  color: var(--gray-1);
+  background: var(--patagonia-gradient);
+
+  &::before {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 50%;
+    content: '';
+    background: hsl(0deg 0% 93%);
+    clip-path: polygon(var(--mountains));
+  }
+
+  &::after {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 50%;
+    content: '';
+    background: linear-gradient(
+      to bottom,
+      hsl(0deg 0% 0%) 0%,
+      hsl(0deg 0% 10%) 60%,
+      hsl(0deg 0% 15%) 80%,
+      hsl(0deg 0% 25%) 95%
+    );
+    clip-path: polygon(var(--mountains));
+    transform: translateY(var(--mountains-outline, 2%));
+  }
+}

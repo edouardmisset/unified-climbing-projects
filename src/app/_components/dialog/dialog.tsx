@@ -1,26 +1,33 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog'
-import { memo } from 'react'
+import { XIcon } from 'lucide-react'
 import styles from './dialog.module.css'
 
-export const Dialog = memo(
-  ({ title, content }: { title: string; content: React.JSX.Element }) => (
+export function Dialog({
+  triggerText,
+  content,
+  triggerClassName,
+  title,
+}: {
+  triggerText?: string
+  content: React.JSX.Element
+  triggerClassName?: string
+  title?: string
+}) {
+  return (
     <BaseDialog.Root>
-      <BaseDialog.Trigger className={styles.Button}>{title}</BaseDialog.Trigger>
-      <BaseDialog.Portal keepMounted>
-        <BaseDialog.Backdrop className={styles.Backdrop} />
-        <BaseDialog.Popup className={styles.Popup}>
-          <BaseDialog.Title className={styles.Title}>{title}</BaseDialog.Title>
-          <BaseDialog.Description
-            className={styles.Description}
-            render={content}
-          />
-          <div className={styles.Actions}>
-            <BaseDialog.Close className={styles.Button} data-close="true">
-              Close
-            </BaseDialog.Close>
-          </div>
+      <BaseDialog.Trigger className={`${styles.trigger} ${triggerClassName}`}>
+        {triggerText}
+      </BaseDialog.Trigger>
+      <BaseDialog.Portal>
+        <BaseDialog.Backdrop className={styles.backdrop} />
+        <BaseDialog.Popup className={styles.popup}>
+          <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
+          <BaseDialog.Description render={content} />
+          <BaseDialog.Close className={styles.button} data-close="true">
+            <XIcon />
+          </BaseDialog.Close>
         </BaseDialog.Popup>
       </BaseDialog.Portal>
     </BaseDialog.Root>
-  ),
-)
+  )
+}

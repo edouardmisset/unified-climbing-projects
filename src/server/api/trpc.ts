@@ -8,7 +8,7 @@
  */
 import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
-import { ZodError, z } from 'zod'
+import { ZodError } from 'zod/v3'
 
 /**
  * 1. CONTEXT
@@ -26,11 +26,12 @@ export const createTRPCContext = async (opts: {
   req?: Request
   res?: Response
   headers: Headers
-}) => {
-  return {
-    ...opts,
-  }
-}
+}) =>
+  new Promise(resolve =>
+    resolve({
+      ...opts,
+    }),
+  )
 
 /**
  * 2. INITIALIZATION
@@ -45,8 +46,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       ...shape,
       data: {
         ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? z.treeifyError(error.cause) : null,
+        zodError: error.cause instanceof ZodError ? error.cause : null,
       },
     }
   },

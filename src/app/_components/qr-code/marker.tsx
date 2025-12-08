@@ -4,21 +4,34 @@ type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
 
 const markerSize = 8
 const numberOfSquareInMarker = 4
+const squareIndices = Array.from(
+  { length: numberOfSquareInMarker },
+  (_, index) => index,
+)
 
 const leftRegEx = /left/i
 const topRegEx = /top/i
+
+const GridItem = memo(
+  ({ gridArea, index }: { gridArea: string; index: number }) => {
+    const backgroundStyle = useMemo(
+      () => ({
+        backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
+        gridArea,
+      }),
+      [index, gridArea],
+    )
+    return <span key={gridArea} style={backgroundStyle} />
+  },
+)
 
 export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1
   const startingRow = topRegEx.test(placement) ? 1 : -1
 
-  const markerIndices = useMemo(
-    () => Array.from({ length: numberOfSquareInMarker }, (_, index) => index),
-    [],
-  )
   return (
     <>
-      {markerIndices.map(index => {
+      {squareIndices.map(index => {
         const remainingMarkerSize = markerSize - index
 
         const rowStart = index <= 1 ? startingRow : startingRow * index
@@ -27,16 +40,7 @@ export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
         const rowEnd = startingRow * remainingMarkerSize
 
         const gridArea = `${rowStart} / ${columnStart} / ${rowEnd} / ${columnEnd}`
-        return (
-          <i
-            key={gridArea}
-            style={{
-              backgroundColor:
-                index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
-              gridArea,
-            }}
-          />
-        )
+        return <GridItem gridArea={gridArea} index={index} key={gridArea} />
       })}
     </>
   )

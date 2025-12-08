@@ -1,12 +1,17 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
-export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
-  columns.map((columnNumber, index) => {
-    if (columnNumber === 0)
-      return <i className={`super-center ${styles.firstCell}`} key={0} />
-
+const WeekCell = memo(
+  ({
+    columnNumber,
+    index,
+    columns,
+  }: {
+    columnNumber: number
+    columns: number[]
+    index: number
+  }) => {
     const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
 
     // Adjust the grid column based on the presence of an extra column and the current index
@@ -15,17 +20,34 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
         ? 2
         : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
 
+    const gridColumnStyle = useMemo(
+      () => ({
+        gridColumn: adjustedGridColumn,
+      }),
+      [adjustedGridColumn],
+    )
+
+    if (columnNumber === 0)
+      return <span className={`superCenter ${styles.firstCell}`} key={0} />
+
     return (
-      <i
-        className={`super-center ${styles.yearGridCell} ${styles.gridHeader}`}
-        // biome-ignore lint/suspicious/noArrayIndexKey: We need to differentiate the two 53 columns, so we use the index as the key
-        key={`W${columnNumber}-${index}column`}
-        style={{
-          gridColumn: adjustedGridColumn,
-        }}
+      <span
+        className={`superCenter ${styles.yearGridCell} ${styles.gridHeader}`}
+        style={gridColumnStyle}
       >
         {columnNumber}
-      </i>
+      </span>
     )
-  }),
+  },
+)
+
+export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
+  columns.map((columnNumber, index) => (
+    <WeekCell
+      columnNumber={columnNumber}
+      columns={columns}
+      index={index}
+      key={`W${columnNumber}-${index}column`}
+    />
+  )),
 )

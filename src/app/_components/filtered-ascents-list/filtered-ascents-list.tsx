@@ -1,20 +1,24 @@
 'use client'
 
+import { Suspense } from 'react'
+import { Loader } from '~/app/_components/loader/loader'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
-import type { Ascent } from '~/schema/ascent'
+import type { AscentListProps } from '~/schema/ascent'
 import { AscentList } from '../ascent-list/ascent-list'
-import AscentsFilterBar from '../ascents-filter-bar/ascents-filter-bar'
+import AscentsFilterBar from '../filter-bar/_components/ascents-filter-bar'
 
-export function FilteredAscentList({ ascents }: { ascents: Ascent[] }) {
-  const filteredAscents = useAscentsFilter(ascents ?? [])
+export function FilteredAscentList({ ascents }: AscentListProps) {
+  const filteredAscents = useAscentsFilter(ascents)
 
-  if (!ascents) return <NotFound />
+  if (ascents.length === 0) return <NotFound />
 
   return (
-    <section className="flex flex-column gap grid-full-width">
-      <AscentsFilterBar allAscents={ascents} />
-      <AscentList ascents={filteredAscents} />
+    <section className="flex flexColumn gridFullWidth padding overflowXClip">
+      <AscentsFilterBar allAscents={ascents} showSearch={true} />
+      <Suspense fallback={<Loader />}>
+        <AscentList ascents={filteredAscents} />
+      </Suspense>
     </section>
   )
 }

@@ -1,6 +1,6 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import { type CSSProperties, useMemo } from 'react'
-import { displayGrade } from '~/helpers/display-grade'
+import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
   formatCragAndArea,
@@ -34,16 +34,20 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
 
   const stylesDependingOnComments: CSSProperties = useMemo(() => {
     const maxCommentLength = 120
-    return comments && comments.length > maxCommentLength
-      ? ({ '--direction': 'row' } as CSSProperties)
-      : ({ '--direction': 'column' } as CSSProperties)
+    const isLongComment = comments && comments.length > maxCommentLength
+
+    return { '--direction': isLongComment ? 'row' : 'column' } as CSSProperties
   }, [comments])
 
-  const formattedGrade = displayGrade({ climbingDiscipline, grade: topoGrade })
+  const formattedGrade = useMemo(
+    () => formatGrade({ climbingDiscipline, grade: topoGrade }),
+    [climbingDiscipline, topoGrade],
+  )
+
   return (
     <div className={styles.card}>
       <h2
-        className={`${styles.header} text-no-wrap`}
+        className={`${styles.header} textNoWrap`}
         title={`${routeName} ${formattedGrade}`}
       >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
       <div className={styles.content}>
@@ -65,7 +69,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className="text-no-wrap" key={formattedContent}>
+              <span className="textNoWrap" key={formattedContent}>
                 {formattedContent}
               </span>
             ))}

@@ -20,10 +20,8 @@ const ROUTE_AND_BOULDER = [
 
 export function AscentsPerDisciplinePerGrade({
   ascents,
-  className,
 }: {
   ascents: Ascent[]
-  className?: string
 }) {
   const data = useMemo(
     () => getAscentsPerDisciplinePerGrade(ascents),
@@ -37,21 +35,17 @@ export function AscentsPerDisciplinePerGrade({
   if (isSingleDiscipline) return null
 
   return (
-    <ChartContainer
-      caption="Ascents per Discipline per Grade"
-      className={className}
-    >
+    <ChartContainer caption="Ascents per Discipline per Grade">
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-ignore
+        // @ts-expect-error
         colors={chartColorGetter}
         data={data}
         enableGridY={false}
         enableLabel={false}
         groupMode="grouped"
         indexBy="grade"
-        // @ts-ignore
         keys={ROUTE_AND_BOULDER}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { StringDate } from '~/types/generic'
 import type { DayDescriptor } from '../year-grid/year-grid'
 
@@ -8,11 +9,11 @@ export interface DataTransformConfig<T extends StringDate> {
   /** Function to extract background color from data */
   getBackgroundColor?: (data: T[]) => string
   /** Function to extract short text from data */
-  getShortText?: (data: T[]) => import('react').ReactNode
+  getShortText?: (data: T[]) => ReactNode
   /** Function to extract title from data */
-  getTitle?: (data: T[]) => import('react').ReactNode
+  getTitle?: (data: T[]) => ReactNode
   /** Function to extract description from data */
-  getDescription?: (data: T[]) => import('react').ReactNode
+  getDescription?: (data: T[]) => ReactNode
   /** Function to determine if this is a special case */
   getIsSpecialCase?: (data: T[]) => boolean
 }

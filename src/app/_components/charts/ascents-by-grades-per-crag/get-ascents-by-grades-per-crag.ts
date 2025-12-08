@@ -1,6 +1,5 @@
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
-import { createGradeScale } from '~/helpers/create-grade-scale'
-import { minMaxGrades } from '~/helpers/min-max-grades'
+import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent } from '~/schema/ascent'
 
 /**
@@ -32,12 +31,16 @@ export function getAscentsByGradesPerCrag(
   }
 
   const crags = Object.entries(cragMap)
-    .map(([crag, ascents]) => ({ ascents, count: ascents.length, crag }))
+    .map(([crag, cragAscents]) => ({
+      ascents: cragAscents,
+      count: cragAscents.length,
+      crag,
+    }))
     .sort((a, b) => b.count - a.count)
     .slice(0, 10)
 
-  return crags.map(({ crag, ascents }) => {
-    const gradeScale = createGradeScale(...minMaxGrades(ascents))
+  return crags.map(({ crag, ascents: cragAscents }) => {
+    const gradeScale = createGradeScaleFromAscents(cragAscents)
 
     const frequency: Record<string, string | number> = { crag }
 

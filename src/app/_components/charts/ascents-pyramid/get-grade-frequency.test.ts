@@ -1,11 +1,11 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
 describe('getGradeFrequencyAndColors', () => {
   it('should return empty array for empty input', () => {
     const result = getGradeFrequencyAndColors([])
-    assert.deepEqual(result, [])
+    expect(result).toEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -68,6 +68,6 @@ describe('getGradeFrequencyAndColors', () => {
     const resultFor7Degree = getGradeFrequencyAndColors(
       sampleAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
     )
-    assert.deepEqual(resultFor7Degree, expected)
+    expect(resultFor7Degree).toEqual(expected)
   })
 })

@@ -1,4 +1,4 @@
-.IconButton {
+.iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -13,6 +13,7 @@
 
   @media (hover: hover) {
     &:hover {
+      text-underline-offset: 0.3em;
       background-color: var(--color-gray-100);
     }
   }
@@ -31,7 +32,7 @@
   }
 }
 
-.Popup {
+.popup {
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
@@ -42,9 +43,10 @@
 
   border-radius: var(--size-2);
   transform-origin: var(--transform-origin);
-  transition:
-    transform 150ms,
-    opacity 150ms;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: all 150ms;
+  }
 
   &[data-starting-style],
   &[data-ending-style] {
@@ -65,38 +67,38 @@
   }
 }
 
-.Arrow {
+.arrow {
   display: flex;
 
   &[data-side='top'] {
-    bottom: -8px;
+    inset-block-end: -8px;
     rotate: 180deg;
   }
 
   &[data-side='bottom'] {
-    top: -8px;
+    inset-block-start: -8px;
     rotate: 0deg;
   }
 
   &[data-side='left'] {
-    right: -13px;
+    inset-inline-end: -13px;
     rotate: 90deg;
   }
 
   &[data-side='right'] {
-    left: -13px;
+    inset-inline-start: -13px;
     rotate: -90deg;
   }
 }
 
-.Title {
+.title {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.5rem;
 }
 
-.Description {
+.description {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5rem;

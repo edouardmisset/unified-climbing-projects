@@ -45,7 +45,9 @@ yarn-error.log*
 # idea files
 .idea
 
+# Caches
 .stylelintcache
+.eslintcache
 
 # Playwright
 node_modules/
@@ -53,3 +55,9 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# AI
+repomix-output.xml
+
+# Convex
+/convex/_generated/

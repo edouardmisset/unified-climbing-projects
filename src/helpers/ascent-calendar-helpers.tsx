@@ -1,11 +1,9 @@
-import { AscentsPopoverDescription } from '~/app/_components/ascents-popover-description/ascents-popover-description'
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import type { Ascent } from '~/schema/ascent'
-import { displayGrade } from './display-grade'
-import { formatDateTime } from './format-date'
-import { prettyLongDate } from './formatters'
+import { formatGrade } from './format-grade'
+import { formatShortDate, prettyLongDate } from './formatters'
 
 export function fromAscentsToCalendarEntries(
   year: number,
@@ -16,12 +14,11 @@ export function fromAscentsToCalendarEntries(
       const [firstAscent] = ascents
 
       if (firstAscent === undefined || ascents === undefined) {
-        const date = new Date(year, 0, index + 1, 12).toISOString()
+        const emptyDate = new Date(year, 0, index + 1, 12).toISOString()
         return {
-          date,
-          description: '',
+          date: emptyDate,
           shortText: '',
-          title: formatDateTime(new Date(date), 'shortDate'),
+          title: formatShortDate(emptyDate),
         }
       }
 
@@ -33,12 +30,12 @@ export function fromAscentsToCalendarEntries(
       return {
         backgroundColor,
         date,
-        description: <AscentsPopoverDescription ascents={ascents} />,
         isSpecialCase: ascents.every(
           ascent => ascent.climbingDiscipline === 'Boulder',
         ),
-        shortText: displayGrade({ climbingDiscipline, grade: topoGrade }),
+        shortText: formatGrade({ climbingDiscipline, grade: topoGrade }),
         title: dateAndCrag,
+        ascents,
       }
     }) ?? []
   )

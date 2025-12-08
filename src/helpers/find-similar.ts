@@ -1,20 +1,21 @@
 import { removeAccents } from '@edouardmisset/text/remove-accents.ts'
 import { levenshteinDistance } from '@std/text'
 
-function formatString(item: string): string {
-  // TODO: comment traiter toutes les différentes combinatoires Majuscules etc.
+function formatAscentName(ascentName: string): string {
   const synonyms: Record<string, string> = {
     '(droite)': 'droite',
     '(gauche)': 'gauche',
-    '(l1 + l2)': 'l1 + l2',
-    '(left)': 'gauche',
-    '(p1 + p2)': 'l1 + l2',
     '(right)': 'droite',
+    '(left)': 'gauche',
+
+    '(l1+l2)': 'l1 + l2',
     'l1+l2': 'l1 + l2',
+
+    '(p1+p2)': 'l1 + l2',
     'p1+p2': 'l1 + l2',
   }
 
-  return removeAccents(item)
+  return removeAccents(ascentName)
     .toLowerCase()
     .trim()
     .replaceAll('-', ' ')
@@ -48,7 +49,7 @@ export function groupSimilarStrings(
       s =>
         s !== str &&
         !seen.has(s) &&
-        getDistance(str, formatString(s)) <= maxDistance,
+        getDistance(str, formatAscentName(s)) <= maxDistance,
     )
 
     if (similarStrings.length > 1) {
@@ -56,8 +57,8 @@ export function groupSimilarStrings(
     }
 
     seen.add(str)
-    for (const str of similarStrings) {
-      seen.add(str)
+    for (const similarStr of similarStrings) {
+      seen.add(similarStr)
     }
   }
 

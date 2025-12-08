@@ -1,4 +1,5 @@
-import { _GRADES, type Grade } from '~/schema/ascent'
+import { _GRADES, type Ascent, type Grade } from '~/schema/ascent'
+import { minMaxGrades } from './min-max-grades'
 
 /**
  * Create a grade scale between two grades.
@@ -6,12 +7,13 @@ import { _GRADES, type Grade } from '~/schema/ascent'
  * @param higherGrade - The higher grade.
  * @returns An array of grades between the specified lower and higher grades.
  */
-export function createGradeScale(
-  lowerGrade: Grade,
-  higherGrade: Grade,
-): Grade[] {
-  const lowerGradeIndex = _GRADES.findIndex(grade => grade === lowerGrade)
-  const higherGradeIndex = _GRADES.findIndex(grade => grade === higherGrade)
+export function createGradeScaleFromAscents(ascents: Ascent[]): Grade[] {
+  if (ascents.length === 0) return [..._GRADES]
+
+  const [lowerGrade, higherGrade] = minMaxGrades(ascents)
+
+  const lowerGradeIndex = _GRADES.indexOf(lowerGrade)
+  const higherGradeIndex = _GRADES.indexOf(higherGrade)
 
   if (
     lowerGradeIndex === -1 ||

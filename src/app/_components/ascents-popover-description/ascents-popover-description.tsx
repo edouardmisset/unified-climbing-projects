@@ -1,7 +1,36 @@
-import { displayGrade } from '~/helpers/display-grade'
+import { memo } from 'react'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
+import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascents-popover-description.module.css'
+
+const AscentPopoverItem = memo(
+  ({
+    climbingDiscipline,
+    crag,
+    routeName,
+    showCrag,
+    topoGrade,
+  }: {
+    climbingDiscipline: Ascent['climbingDiscipline']
+    crag: Ascent['crag']
+    routeName: Ascent['routeName']
+    showCrag: boolean
+    topoGrade: Ascent['topoGrade']
+  }) => {
+    const cragDescription = showCrag ? `- ${crag}` : ''
+    return (
+      <li className={styles.item}>
+        {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
+        <DisplayGrade
+          climbingDiscipline={climbingDiscipline}
+          grade={topoGrade}
+        />
+        ) {cragDescription}
+      </li>
+    )
+  },
+)
 
 export function AscentsPopoverDescription({
   ascents,
@@ -14,21 +43,18 @@ export function AscentsPopoverDescription({
 
   return (
     <ul className={styles.list}>
-      {ascents.map(({ routeName, topoGrade, climbingDiscipline, crag }) => (
-        <li
-          className={styles.item}
-          key={routeName}
-          style={{
-            paddingInlineStart: 0,
-          }}
-        >
-          {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
-          <strong>
-            {displayGrade({ climbingDiscipline, grade: topoGrade })}
-          </strong>
-          ) {showCrag ? `- ${crag}` : ''}
-        </li>
-      ))}
+      {ascents.map(
+        ({ _id, routeName, topoGrade, climbingDiscipline, crag }) => (
+          <AscentPopoverItem
+            climbingDiscipline={climbingDiscipline}
+            crag={crag}
+            key={_id}
+            routeName={routeName}
+            showCrag={showCrag}
+            topoGrade={topoGrade}
+          />
+        ),
+      )}
     </ul>
   )
 }

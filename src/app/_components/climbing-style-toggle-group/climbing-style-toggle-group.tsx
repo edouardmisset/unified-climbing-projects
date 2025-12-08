@@ -2,24 +2,21 @@ import { Toggle } from '@base-ui-components/react/toggle'
 import { ToggleGroup } from '@base-ui-components/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
+import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
 import styles from './climbing-style-toggle-group.module.css'
 
-type ClimbingStyleToggleGroupProps = {
-  display: boolean
-  onValueChange: (groupValue: string[], event: Event) => void
-  value?: string
-  isOnsightDisable: boolean
-}
+export function ClimbingStyleToggleGroup(
+  props: Omit<ToggleGroup.Props, 'value'> & ClimbingStyleToggleGroupProps,
+) {
+  const { display, onValueChange, value, isOnsightDisable, ...rest } = props
 
-export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
-  const { display, onValueChange, value, isOnsightDisable } = props
-
-  if (!display) return undefined
+  if (!display) return
 
   return (
     <ToggleGroup
+      {...rest}
       aria-label={`Climbing style (${disjunctiveListFormatter(ASCENT_STYLE)}). Default is "Redpoint" if number of tries is greater than 1.`}
-      className={styles.Panel}
+      className={styles.panel}
       defaultValue={['Redpoint']}
       onValueChange={onValueChange}
       value={isOnsightDisable ? ['Flash'] : [value]}
@@ -27,18 +24,9 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
       <Toggle
         aria-hidden={isOnsightDisable}
         aria-label="Onsight"
-        className={`contrast-color ${styles.Button}`}
-        // TODO: Remove disabled prop - https://axesslab.com/disabled-buttons-suck/
+        className={`contrastColor ${styles.button} ${isOnsightDisable ? 'notAllowed' : ''}`}
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
-        style={
-          isOnsightDisable
-            ? {
-                color: 'var(--gray-7)',
-                cursor: 'not-allowed',
-              }
-            : undefined
-        }
         title={
           isOnsightDisable
             ? 'Historically, boulders can only be flashed, not onsighted'
@@ -46,16 +34,23 @@ export function ClimbingStyleToggleGroup(props: ClimbingStyleToggleGroupProps) {
         }
         value="Onsight"
       >
-        Onsight
+        <ClimbingStyle climbingStyle="Onsight" />
       </Toggle>
       <Toggle
         aria-label="Flash"
-        className={`contrast-color ${styles.Button}`}
+        className={`contrastColor ${styles.button}`}
         title="Flash: the route was climbed first try using any prior information (also used for boulders)"
         value="Flash"
       >
-        Flash
+        <ClimbingStyle climbingStyle="Flash" />
       </Toggle>
     </ToggleGroup>
   )
+}
+
+type ClimbingStyleToggleGroupProps = {
+  display: boolean
+  onValueChange: (groupValue: string[], event: Event) => void
+  value?: string
+  isOnsightDisable: boolean
 }
