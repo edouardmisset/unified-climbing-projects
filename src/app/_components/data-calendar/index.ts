@@ -3,7 +3,6 @@ export { DataCalendar } from './data-calendar'
 
 // Export types for TypeScript support
 export type { 
-  CalendarEntry, 
   DataCalendarProps, 
   DataTransformConfig, 
   GroupedData 

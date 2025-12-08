@@ -1,5 +1,6 @@
 import type { StringDate } from '~/types/generic'
-import type { CalendarEntry, DataTransformConfig, GroupedData } from './types'
+import type { DayDescriptor } from '../year-grid/year-grid'
+import type { DataTransformConfig, GroupedData } from './types'
 
 // Constants for date calculations
 const FEBRUARY_MONTH = 1
@@ -68,7 +69,7 @@ export function transformToCalendarEntries<T extends StringDate>(
   year: number,
   groupedData: T[][],
   config: DataTransformConfig<T> = {}
-): CalendarEntry[] {
+): DayDescriptor[] {
   const {
     getBackgroundColor = () => undefined,
     getShortText = () => '',
@@ -77,7 +78,7 @@ export function transformToCalendarEntries<T extends StringDate>(
     getIsSpecialCase = () => false
   } = config
 
-  return groupedData.map((dayData, index): CalendarEntry => {
+  return groupedData.map((dayData, index): DayDescriptor => {
     const date = new Date(year, 0, index + 1, HOURS_FOR_NOON).toISOString()
     
     if (dayData.length === 0) {
@@ -107,7 +108,7 @@ export function defaultTransform<T extends StringDate>(
   year: number,
   data: T[],
   config: DataTransformConfig<T> = {}
-): CalendarEntry[] {
+): DayDescriptor[] {
   const grouped = groupDataByYear(data)
   const yearData = grouped[year] || []
   return transformToCalendarEntries(year, yearData, config)
