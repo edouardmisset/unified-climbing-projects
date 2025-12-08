@@ -2,6 +2,13 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { Card } from './card'
 
+const TEST_TITLE_REGEX = /test title/i
+const TEST_CONTENT_REGEX = /test content/i
+const CARD_CLASS_REGEX = /card/i
+const HEADER_REGEX = /header/i
+const SECTION_CONTENT_REGEX = /section content/i
+const ACTION_REGEX = /action/i
+
 describe('Card Component', () => {
   it('renders children correctly', () => {
     render(
@@ -11,8 +18,8 @@ describe('Card Component', () => {
       </Card>,
     )
 
-    expect(screen.getByText(/test title/i)).toBeInTheDocument()
-    expect(screen.getByText(/test content/i)).toBeInTheDocument()
+    expect(screen.getByText(TEST_TITLE_REGEX)).toBeInTheDocument()
+    expect(screen.getByText(TEST_CONTENT_REGEX)).toBeInTheDocument()
   })
 
   it('applies correct CSS class', () => {
@@ -23,7 +30,7 @@ describe('Card Component', () => {
     )
 
     const cardElement = container.firstChild
-    expect(cardElement).toHaveClass(/card/i)
+    expect(cardElement).toHaveClass(CARD_CLASS_REGEX)
   })
 
   it('renders with complex children', () => {
@@ -41,8 +48,10 @@ describe('Card Component', () => {
       </Card>,
     )
 
-    expect(screen.getByText(/header/i)).toBeInTheDocument()
-    expect(screen.getByText(/section content/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /action/i })).toBeInTheDocument()
+    expect(screen.getByText(HEADER_REGEX)).toBeInTheDocument()
+    expect(screen.getByText(SECTION_CONTENT_REGEX)).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: ACTION_REGEX }),
+    ).toBeInTheDocument()
   })
 })

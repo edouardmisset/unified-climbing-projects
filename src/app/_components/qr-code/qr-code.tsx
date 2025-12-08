@@ -46,28 +46,24 @@ export const TrainingQRCode = memo(
     yearlyTrainingSessions,
   }: {
     yearlyTrainingSessions: TrainingSession[][]
-  }) => {
-    return (
-      <QRCode>
-        {yearlyTrainingSessions.map((sessions, index) => (
-          <TrainingsQRDot
-            key={sessions[0]?.date ?? index}
-            trainingSessions={sessions}
-          />
-        ))}
-      </QRCode>
-    )
-  },
+  }) => (
+    <QRCode>
+      {yearlyTrainingSessions.map((sessions, index) => (
+        <TrainingsQRDot
+          key={sessions[0]?.date ?? index}
+          trainingSessions={sessions}
+        />
+      ))}
+    </QRCode>
+  ),
 )
 
 export const AscentsQRCode = memo(
-  ({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => {
-    return (
-      <QRCode>
-        {yearlyAscents.map((ascents, index) => (
-          <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
-        ))}
-      </QRCode>
-    )
-  },
+  ({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => (
+    <QRCode>
+      {yearlyAscents.map((ascents, index) => (
+        <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
+      ))}
+    </QRCode>
+  ),
 )

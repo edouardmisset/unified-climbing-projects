@@ -256,11 +256,11 @@ export default function AscentForm(props: AscentFormProps) {
           id="discipline"
           title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
         >
-          {AVAILABLE_CLIMBING_DISCIPLINE.map(discipline => (
+          {AVAILABLE_CLIMBING_DISCIPLINE.map(disciplineOption => (
             <Option
-              key={discipline}
-              label={`${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`}
-              value={discipline}
+              key={disciplineOption}
+              label={`${fromClimbingDisciplineToEmoji(disciplineOption)} ${disciplineOption}`}
+              value={disciplineOption}
             />
           ))}
         </select>

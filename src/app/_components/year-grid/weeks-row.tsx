@@ -47,8 +47,6 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
       columnNumber={columnNumber}
       columns={columns}
       index={index}
-      /* biome-ignore lint/suspicious/noArrayIndexKey: We need a way to
-      differentiate between week 53 of years n and n+1. */
       key={`W${columnNumber}-${index}column`}
     />
   )),

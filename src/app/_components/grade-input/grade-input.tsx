@@ -64,8 +64,8 @@ export function GradeInput(
         <NumberField.Input
           className={styles.Input}
           inputMode="text"
-          render={props => (
-            <input {...props} value={fromNumberToGrade(value)} />
+          render={renderProps => (
+            <input {...renderProps} value={fromNumberToGrade(value)} />
           )}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />

@@ -16,12 +16,11 @@ export async function findMissingOutdoorSessions(): Promise<string[]> {
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   )[0]
 
-  const filteredAscentDays = ascentDays.filter(({ date }) => {
-    return (
+  const filteredAscentDays = ascentDays.filter(
+    ({ date }) =>
       new Date(date).getTime() >=
-      new Date(firstRecordedTrainingSession?.date ?? '').getTime()
-    )
-  })
+      new Date(firstRecordedTrainingSession?.date ?? '').getTime(),
+  )
 
   const ascentDaysSet = new Set(
     filteredAscentDays.map(({ date }) => extractDateFromISODateString(date)),

@@ -26,13 +26,12 @@ export const createTRPCContext = async (opts: {
   req?: Request
   res?: Response
   headers: Headers
-}) => {
-  return new Promise(resolve =>
+}) =>
+  new Promise(resolve =>
     resolve({
       ...opts,
     }),
   )
-}
 
 /**
  * 2. INITIALIZATION

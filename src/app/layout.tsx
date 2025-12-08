@@ -31,7 +31,7 @@ import '~/styles/zindex.css'
 import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
-import { LightDarkSwitch } from './_components/light-dark-switch/light-dark-switch'
+import { ThemeToggle } from './_components/theme-toggle/theme-toggle'
 
 // Dynamic import for ReactQueryDevtools - only loads in development
 const ReactQueryDevtools = lazy(() =>
@@ -74,10 +74,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           <body className={styles.body}>
             <header className={styles.header}>
-              <LightDarkSwitch
-                checked={theme === 'dark'}
-                onChange={toggleTheme}
-              />
+              <ThemeToggle checked={theme === 'dark'} onChange={toggleTheme} />
               <Navigation />
             </header>
             <main className={styles.main}>

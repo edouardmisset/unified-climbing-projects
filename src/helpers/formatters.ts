@@ -50,7 +50,7 @@ export const formatLongDate = buildDateTimeFormat('longDate')
 export const formatShortDate = buildDateTimeFormat('shortDate')
 
 export function prettyLongDate(date: string): string {
-  return `📅 ${formatLongDate(date)}`
+  return date === '' ? '' : `📅 ${formatLongDate(date)}`
 }
 export function prettyShortDate(date: string): string {
   return `📅 ${formatShortDate(date)}`

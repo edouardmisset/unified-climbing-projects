@@ -9,13 +9,11 @@ export type AscentByStyle = {
   value: number
 }
 
-export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] => {
-  return ASCENT_STYLE.map(style => {
+export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] =>
+  ASCENT_STYLE.map(style => {
     const filteredAscentsByStyle = filterAscents(ascents, { style })
 
-    if (filteredAscentsByStyle.length === 0) {
-      return undefined
-    }
+    if (filteredAscentsByStyle.length === 0) return null
 
     return {
       color: fromAscentStyleToBackgroundColor(style),
@@ -23,9 +21,10 @@ export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] => {
       label: style,
       value: filteredAscentsByStyle.length,
     }
-  }).filter(val => val !== undefined)
-}
+  }).filter(val => val !== null)
 
-function fromAscentStyleToBackgroundColor(ascentStyle: Ascent['style']) {
+function fromAscentStyleToBackgroundColor(
+  ascentStyle: Ascent['style'],
+): string {
   return ASCENT_STYLE_TO_COLOR[ascentStyle] ?? 'var(--gray-5)'
 }

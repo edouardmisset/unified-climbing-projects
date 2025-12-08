@@ -15,6 +15,9 @@ import {
   getYesterday,
 } from './date'
 
+const INVALID_DATE_REGEX = /Invalid date/
+const INVALID_ISO_DATE_STRING_REGEX = /Invalid ISO date string/
+
 describe('getWeekNumber', () => {
   it('should return the correct week number for a given date', () => {
     const date = new Date(2024, 0, 20)
@@ -136,13 +139,13 @@ describe('fromDateToISOString', () => {
 
   it('throws for an invalid date', () => {
     expect(() => fromDateToStringDate(new Date('invalid-date'))).toThrow(
-      /Invalid date/,
+      INVALID_DATE_REGEX,
     )
   })
 
   it('throws for a non-Date object', () => {
     // @ts-expect-error purposely passing string
-    expect(() => fromDateToStringDate('2024-05-23')).toThrow(/Invalid date/)
+    expect(() => fromDateToStringDate('2024-05-23')).toThrow(INVALID_DATE_REGEX)
   })
 
   it('returns correct ISO string for a leap year date', () => {
@@ -160,19 +163,19 @@ describe('extractDateFromISODateString', () => {
 
   it('throws for string shorter than 10 chars', () => {
     expect(() => extractDateFromISODateString('2025-05')).toThrow(
-      /Invalid ISO date string/,
+      INVALID_ISO_DATE_STRING_REGEX,
     )
   })
 
   it('throws for string not matching YYYY-MM-DD', () => {
     expect(() => extractDateFromISODateString('2025-5-23T00:00:00Z')).toThrow(
-      /Invalid ISO date string/,
+      INVALID_ISO_DATE_STRING_REGEX,
     )
     expect(() => extractDateFromISODateString('2025-5-23T00:00:00Z')).toThrow(
-      /Invalid ISO date string/,
+      INVALID_ISO_DATE_STRING_REGEX,
     )
     expect(() => extractDateFromISODateString('abcd-ef-ghT00:00:00Z')).toThrow(
-      /Invalid ISO date string/,
+      INVALID_ISO_DATE_STRING_REGEX,
     )
   })
 

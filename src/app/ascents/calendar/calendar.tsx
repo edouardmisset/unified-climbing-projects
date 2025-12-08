@@ -19,8 +19,8 @@ export function AscentCalendar({
         <DataCalendar
           data={allAscents}
           dataTransformationFunction={groupDataDaysByYear}
-          fromDataToCalendarEntries={(year, ascents) =>
-            fromAscentsToCalendarEntries(year, ascents as Ascent[][])
+          fromDataToCalendarEntries={(calendarYear, ascents) =>
+            fromAscentsToCalendarEntries(calendarYear, ascents as Ascent[][])
           }
           key={year}
           year={year}

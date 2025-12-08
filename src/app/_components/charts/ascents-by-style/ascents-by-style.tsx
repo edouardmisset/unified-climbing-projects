@@ -16,8 +16,8 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const arcLabel: PropertyAccessor<
     ComputedDatum<AscentByStyle>,
     string
-  > = data =>
-    `${data.value} (${Math.round((data.value / ascents.length) * 100)}%)`
+  > = datum =>
+    `${datum.value} (${Math.round((datum.value / ascents.length) * 100)}%)`
 
   if (data.length <= 1) return null
 

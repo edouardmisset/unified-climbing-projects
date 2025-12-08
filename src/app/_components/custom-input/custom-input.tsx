@@ -18,7 +18,7 @@ export function CustomInput(
         {...rest}
         className={styles.input}
         id={id}
-        title={value ? String(value) : undefined}
+        title={value?.toString()}
         value={value}
       />
     </label>

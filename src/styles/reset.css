@@ -98,6 +98,7 @@
   min-block-size: 100svh;
   font-size: clamp(1rem, 0.5vw + 1rem, 1.125rem);
   line-height: 1.5;
+  position: relative;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
