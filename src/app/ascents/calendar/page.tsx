@@ -1,34 +1,39 @@
-import { filterByDate } from '@edouardmisset/array'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import NotFound from '~/app/not-found'
-import { createYearList } from '~/data/helpers'
+import type { Ascent } from '~/schema/ascent'
 import { api } from '~/trpc/server'
 import { AscentCalendar } from './calendar'
 
-export default async function AscentsCalendarPage() {
-  const allAscents = await api.ascents.getAll()
-
-  if (!allAscents) return <NotFound />
-
-  const ascentYearsData = createYearList(allAscents, {
-    continuous: false,
-    descending: true,
-  }).map(
-    year => [year, allAscents.filter(filterByDate('date', { year }))] as const,
-  )
+export default function AscentsCalendarPage() {
+  const allAscentsPromise = api.ascents.getAll()
+  const yearsPromise = api.ascents.getYears()
 
   return (
     <Layout layout="flexColumn" title="Ascents Calendar">
       <Suspense fallback={<Loader />}>
-        {ascentYearsData.map(([year, ascents]) => (
-          <AscentCalendar allAscents={ascents} key={year} year={year} />
-        ))}
+        <CalendarList
+          dataPromise={allAscentsPromise}
+          yearsPromise={yearsPromise}
+        />
       </Suspense>
     </Layout>
   )
+}
+
+async function CalendarList({
+  yearsPromise,
+  dataPromise,
+}: {
+  yearsPromise: Promise<number[]>
+  dataPromise: Promise<Ascent[]>
+}) {
+  const years = await yearsPromise
+
+  return years.map(year => (
+    <AscentCalendar allAscents={dataPromise} key={year} year={year} />
+  ))
 }
 
 export const metadata: Metadata = {

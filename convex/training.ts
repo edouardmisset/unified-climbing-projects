@@ -23,6 +23,17 @@ export const get = query({
   },
 })
 
+export const getYears = query({
+  args: {},
+  handler: async ctx => {
+    const trainingRecords = await ctx.db.query('training').collect()
+    const years = new Set(
+      trainingRecords.map(r => new Date(r.date).getFullYear()),
+    )
+    return Array.from(years).sort((a, b) => b - a)
+  },
+})
+
 export const post = mutation({
   args: convexPostTrainingSessionSchema,
   handler: async (ctx, args) => await ctx.db.insert('training', args),

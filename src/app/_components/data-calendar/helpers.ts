@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react'
 import type { StringDate } from '~/types/generic'
 import type { DayDescriptor } from '../year-grid/year-grid'
-import type { DataTransformConfig, GroupedData } from './types'
+import type { GroupedData } from './types'
 
 // Constants for date calculations
 const FEBRUARY_MONTH = 1
@@ -16,7 +17,6 @@ const MILLISECONDS_PER_DAY =
   SECONDS_PER_MINUTE *
   MINUTES_PER_HOUR *
   HOURS_PER_DAY
-const HOURS_FOR_NOON = 12
 
 /**
  * Get the number of days in a year
@@ -78,34 +78,16 @@ export function groupDataByYear<T extends StringDate>(
 export function transformToCalendarEntries<T extends StringDate>(
   year: number,
   groupedData: T[][],
-  config: DataTransformConfig<T> = {},
+  renderDay: (data: T[], date: string) => ReactNode,
 ): DayDescriptor[] {
-  const {
-    getBackgroundColor = () => '',
-    getShortText = () => '',
-    getTitle = () => '',
-    getDescription = () => '',
-    getIsSpecialCase = () => false,
-  } = config
-
   return groupedData.map((dayData, index): DayDescriptor => {
-    const date = new Date(year, 0, index + 1, HOURS_FOR_NOON).toISOString()
+    // Use UTC noon to avoid timezone issues when formatting dates
+    const date = new Date(Date.UTC(year, 0, index + 1, 12)).toISOString()
 
-    return dayData.length === 0
-      ? {
-          date,
-          description: '',
-          shortText: '',
-          title: '',
-        }
-      : {
-          date,
-          backgroundColor: getBackgroundColor(dayData),
-          description: getDescription(dayData),
-          shortText: getShortText(dayData),
-          title: getTitle(dayData),
-          isSpecialCase: getIsSpecialCase(dayData),
-        }
+    return {
+      date,
+      content: renderDay(dayData, date),
+    }
   })
 }
 
@@ -115,9 +97,15 @@ export function transformToCalendarEntries<T extends StringDate>(
 export function defaultTransform<T extends StringDate>(
   year: number,
   data: T[],
-  config: DataTransformConfig<T> = {},
+  renderDay: (calendarEvents: T[], date: string) => ReactNode,
 ): DayDescriptor[] {
   const grouped = groupDataByYear(data)
-  const yearData = grouped[year] || []
-  return transformToCalendarEntries(year, yearData, config)
+  let yearData = grouped[year]
+
+  if (!yearData) {
+    const daysInYear = getDaysInYear(year)
+    yearData = Array.from({ length: daysInYear }, () => [])
+  }
+
+  return transformToCalendarEntries(year, yearData, renderDay)
 }

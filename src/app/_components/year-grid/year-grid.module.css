@@ -27,6 +27,33 @@
   }
 }
 
+.yearGridCell:not(.loading) {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+@starting-style {
+  .yearGridCell:not(.loading) {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+
 .emptyGridCell {
   border: none;
 }

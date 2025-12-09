@@ -1,11 +1,10 @@
-import { assert, describe, it } from 'poku'
+import { describe, expect, it } from 'vitest'
 import type { StringDate } from '~/types/generic'
 import {
   defaultTransform,
   groupDataByYear,
   transformToCalendarEntries,
 } from './helpers'
-import type { DataTransformConfig } from './types'
 
 // Test constants
 const TEST_YEAR = 2024
@@ -31,29 +30,26 @@ describe('DataCalendar Helpers', () => {
       const result = groupDataByYear(data)
 
       // Should have both years
-      assert.ok(result?.[TEST_YEAR])
-      assert.ok(result?.[PREVIOUS_YEAR])
+      expect(result?.[TEST_YEAR]).toBeTruthy()
+      expect(result?.[PREVIOUS_YEAR]).toBeTruthy()
 
       // 2024 should have 2 items on day 1 (index 0) and 1 item on day 2 (index 1)
-      assert.equal(
-        result?.[TEST_YEAR]?.[JANUARY_DAY_ONE]?.length,
+      expect(result?.[TEST_YEAR]?.[JANUARY_DAY_ONE]?.length).toBe(
         EXPECTED_TWO_ITEMS,
       )
-      assert.equal(
-        result?.[TEST_YEAR]?.[JANUARY_DAY_TWO]?.length,
+      expect(result?.[TEST_YEAR]?.[JANUARY_DAY_TWO]?.length).toBe(
         EXPECTED_ONE_ITEM,
       )
 
       // 2023 should have 1 item on last day (index 364 for non-leap year)
-      assert.equal(
-        result?.[PREVIOUS_YEAR]?.[DECEMBER_DAY_INDEX]?.length,
+      expect(result?.[PREVIOUS_YEAR]?.[DECEMBER_DAY_INDEX]?.length).toBe(
         EXPECTED_ONE_ITEM,
       )
     })
 
     it('should handle empty data', () => {
       const result = groupDataByYear([])
-      assert.deepEqual(result, {})
+      expect(result).toEqual({})
     })
   })
 
@@ -65,27 +61,25 @@ describe('DataCalendar Helpers', () => {
         [{ date: '2024-01-03T12:00:00.000Z' }],
       ]
 
-      const config: DataTransformConfig<StringDate> = {
-        getShortText: data => (data.length > 0 ? 'X' : ''),
-        getTitle: data => (data.length > 0 ? 'Has data' : ''),
-      }
+      const renderDay = (data: StringDate[]) =>
+        data.length > 0 ? 'Has data' : 'Empty'
 
-      const result = transformToCalendarEntries(TEST_YEAR, mockData, config)
+      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay)
 
-      assert.equal(result.length, EXPECTED_THREE_ITEMS)
-      assert.equal(result?.[0]?.shortText, 'X')
-      assert.equal(result?.[0]?.title, 'Has data')
-      assert.equal(result?.[1]?.shortText, '')
-      assert.equal(result?.[2]?.shortText, 'X')
+      expect(result.length).toBe(EXPECTED_THREE_ITEMS)
+      expect(result?.[0]?.content).toBe('Has data')
+      expect(result?.[1]?.content).toBe('Empty')
+      expect(result?.[2]?.content).toBe('Has data')
     })
 
     it('should handle empty days', () => {
       const mockData = [[], []]
-      const result = transformToCalendarEntries(TEST_YEAR, mockData)
+      const renderDay = () => 'Empty'
+      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay)
 
-      assert.equal(result.length, EXPECTED_TWO_ITEMS)
-      assert.equal(result?.[0]?.shortText, '')
-      assert.equal(result?.[1]?.shortText, '')
+      expect(result.length).toBe(EXPECTED_TWO_ITEMS)
+      expect(result?.[0]?.content).toBe('Empty')
+      expect(result?.[1]?.content).toBe('Empty')
     })
   })
 
@@ -96,20 +90,18 @@ describe('DataCalendar Helpers', () => {
         { date: '2024-01-02T12:00:00.000Z' },
       ]
 
-      const config: DataTransformConfig<StringDate> = {
-        getShortText: d => d.length.toString(),
-      }
+      const renderDay = (d: StringDate[]) => d.length.toString()
 
-      const result = defaultTransform(TEST_YEAR, data, config)
+      const result = defaultTransform(TEST_YEAR, data, renderDay)
 
       // Should have entries for all days of the year
-      assert.ok(result.length > EXPECTED_EMPTY)
+      expect(result.length).toBeGreaterThan(EXPECTED_EMPTY)
 
-      // First day should have shortText of '1'
-      assert.equal(result?.[0]?.shortText, '1')
+      // First day should have content of '1'
+      expect(result?.[0]?.content).toBe('1')
 
-      // Second day should have shortText of '1'
-      assert.equal(result?.[1]?.shortText, '1')
+      // Second day should have content of '1'
+      expect(result?.[1]?.content).toBe('1')
     })
   })
 })

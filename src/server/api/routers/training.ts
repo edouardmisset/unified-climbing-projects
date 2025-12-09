@@ -6,7 +6,7 @@ import { optionalAscentYear } from '~/schema/generic'
 import { trainingSessionSchema } from '~/schema/training'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
 import { addTrainingSessionToDB } from '~/services/convex'
-import { getAllTrainingSessions } from '~/services/training'
+import { getAllTrainingSessions, getTrainingYears } from '~/services/training'
 
 export const trainingRouter = createTRPCRouter({
   addOne: publicProcedure
@@ -39,6 +39,9 @@ export const trainingRouter = createTRPCRouter({
       )
       return filteredTrainingSessions.sort(sortByDate)
     }),
+  getYears: publicProcedure
+    .output(z.array(z.number()))
+    .query(async () => await getTrainingYears()),
   getAllLocations: publicProcedure
     .output(z.array(trainingSessionSchema.required().shape.gymCrag))
     .query(async () => {

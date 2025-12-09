@@ -35,6 +35,16 @@ export async function addAscentToDB(ascent: Omit<Ascent, '_id'>) {
   }
 }
 
+export async function getAscentYearsFromDB(): Promise<number[]> {
+  'use cache'
+  try {
+    return await fetchQuery(api.ascents.getYears, EMPTY_OBJECT)
+  } catch (error) {
+    globalThis.console.error('Error fetching ascent years from DB:', error)
+    return []
+  }
+}
+
 /** TRAINING SESSIONS */
 
 export async function getAllTrainingSessionsFromDB(): Promise<
@@ -54,6 +64,16 @@ export async function getAllTrainingSessionsFromDB(): Promise<
     return parsedTraining.data
   } catch (error) {
     globalThis.console.error('Error fetching training sessions from DB:', error)
+    return []
+  }
+}
+
+export async function getTrainingYearsFromDB(): Promise<number[]> {
+  'use cache'
+  try {
+    return await fetchQuery(api.training.getYears, EMPTY_OBJECT)
+  } catch (error) {
+    globalThis.console.error('Error fetching training years from DB:', error)
     return []
   }
 }

@@ -1,15 +1,12 @@
 'use client'
 
-import { memo, type ReactNode, useMemo } from 'react'
+import { Fragment, memo, type ReactNode, useMemo } from 'react'
+import { CalendarCell } from '~/app/_components/data-calendar/calendar-cell'
 import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
-import { prettyLongDate } from '~/helpers/formatters.ts'
-import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
 import { WeeksRow } from './weeks-row.tsx'
 import styles from './year-grid.module.css'
-import { YearGridCell } from './year-grid-cell.tsx'
 
 export const YearGrid = memo(
   ({
@@ -47,13 +44,12 @@ export const YearGrid = memo(
       () =>
         Array.from(
           { length: numberOfDaysFromPreviousMondayTo1stJanuary },
-          (_, index): DayDescriptor => ({
+          (): DayDescriptor => ({
             date: '',
-            shortText: index.toString(),
-            title: '',
+            content: <CalendarCell date="" year={year} />,
           }),
         ),
-      [numberOfDaysFromPreviousMondayTo1stJanuary],
+      [numberOfDaysFromPreviousMondayTo1stJanuary, year],
     )
 
     const allDayCollection = useMemo(
@@ -71,48 +67,15 @@ export const YearGrid = memo(
       <div className={styles.yearGrid} style={gridTemplateStyle}>
         <DaysColumn />
         <WeeksRow columns={columns} />
-        {allDayCollection.map(
-          (
-            {
-              date,
-              backgroundColor,
-              shortText = '',
-              title,
-              isSpecialCase = false,
-              ascents,
-              trainingSessions,
-              description,
-            },
-            index,
-          ) => (
-            <YearGridCell
-              ascents={ascents}
-              backgroundColor={backgroundColor}
-              date={date}
-              description={description}
-              formattedDate={date === '' ? '' : prettyLongDate(date)}
-              isSpecialCase={isSpecialCase}
-              key={(date || index).toString()}
-              shortText={shortText}
-              title={title}
-              trainingSessions={trainingSessions}
-              year={year}
-            />
-          ),
-        )}
+        {allDayCollection.map((day, index) => (
+          <Fragment key={day.date || index}>{day.content}</Fragment>
+        ))}
       </div>
     )
   },
 )
 
 export type DayDescriptor = {
-  backgroundColor?: string
   date: string
-  description?: ReactNode
-  isSpecialCase?: boolean
-  shortText: ReactNode
-  title: ReactNode
-  // Lazy loading data
-  ascents?: Ascent[]
-  trainingSessions?: TrainingSession[]
+  content: ReactNode
 }

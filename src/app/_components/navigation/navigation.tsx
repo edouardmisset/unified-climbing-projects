@@ -32,6 +32,7 @@ export const Navigation = memo(() => (
           aria-label="navigation"
           className={styles.Button}
           openOnHover
+          suppressHydrationWarning
           tabIndex={0}
         >
           <MenuIcon />

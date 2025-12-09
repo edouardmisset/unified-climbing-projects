@@ -36,9 +36,17 @@ export const DATE_TIME_OPTIONS = {
 export const buildDateTimeFormat = (
   options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
 ): ((date: string) => string) => {
+  const isDateOnly =
+    options === 'longDate' ||
+    options === 'mediumDate' ||
+    options === 'shortDate'
+
   const { format } = new Intl.DateTimeFormat(
     options === 'shortDate' ? 'fr-FR' : US_LOCALE,
-    DATE_TIME_OPTIONS[options],
+    {
+      ...DATE_TIME_OPTIONS[options],
+      ...(isDateOnly ? { timeZone: 'UTC' } : {}),
+    },
   )
 
   return date => format(new Date(date))
