@@ -20,7 +20,7 @@ import {
   timeframeSchema,
 } from '~/schema/generic'
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc'
-import { getAllAscents } from '~/services/ascents'
+import { getAllAscents, getAscentYears } from '~/services/ascents'
 import { addAscentToDB } from '~/services/convex'
 import { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 
@@ -83,6 +83,9 @@ export const ascentsRouter = createTRPCRouter({
 
       return filteredAscents.sort(sortByDate)
     }),
+  getYears: publicProcedure
+    .output(z.array(z.number()))
+    .query(async () => await getAscentYears()),
   getAverageRating: publicProcedure
     .input(optionalAscentFilterSchema)
     .output(ascentSchema.shape.rating)

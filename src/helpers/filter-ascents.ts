@@ -69,9 +69,7 @@ export function getHardestAscent(ascents: Ascent[]): Ascent {
 
       const isCurrentAscentHarder = hardestGrade < currentGrade
 
-      if (isCurrentAscentHarder) return currentAscent
-
-      return hardestAscent
+      return isCurrentAscentHarder ? currentAscent : hardestAscent
     },
     { topoGrade: DEFAULT_GRADE } as Ascent,
   )

@@ -24,6 +24,17 @@ export const get = zQuery({
   },
 })
 
+export const getYears = query({
+  args: {},
+  handler: async ctx => {
+    const ascentRecords = await ctx.db.query('ascents').collect()
+    const years = new Set(
+      ascentRecords.map(r => new Date(r.date).getFullYear()),
+    )
+    return Array.from(years).sort((a, b) => b - a)
+  },
+})
+
 export const post = mutation({
   args: convexPostAscentSchema,
   handler: async (ctx, args) => await ctx.db.insert('ascents', args),
