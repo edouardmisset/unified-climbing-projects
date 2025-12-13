@@ -1,7 +1,7 @@
 'use client'
 
-import { renderAscentDay } from '~/app/_components/data-calendar'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { renderAscentDay } from '~/app/_components/data-calendar/renders'
 import type { Ascent } from '~/schema/ascent'
 
 export function AscentCalendar({
@@ -17,7 +17,7 @@ export function AscentCalendar({
       <DataCalendar<Ascent>
         data={allAscents}
         key={year}
-        renderDay={renderAscentDay}
+        transformDay={renderAscentDay}
         year={year}
       />
     </>

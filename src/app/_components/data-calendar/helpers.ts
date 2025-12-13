@@ -1,7 +1,5 @@
-import type { ReactNode } from 'react'
 import type { StringDate } from '~/types/generic'
-import type { DayDescriptor } from '../year-grid/year-grid'
-import type { GroupedData } from './types'
+import type { CalendarCellRender, DayTransform, GroupedData } from './types'
 
 // Constants for date calculations
 const FEBRUARY_MONTH = 1
@@ -21,7 +19,7 @@ const MILLISECONDS_PER_DAY =
 /**
  * Get the number of days in a year
  */
-function getDaysInYear(year: number): number {
+export function getDaysInYear(year: number): number {
   const isLeap =
     new Date(year, FEBRUARY_MONTH, LEAP_YEAR_TEST_DAY).getMonth() ===
     FEBRUARY_MONTH
@@ -78,16 +76,18 @@ export function groupDataByYear<T extends StringDate>(
 export function transformToCalendarEntries<T extends StringDate>(
   year: number,
   groupedData: T[][],
-  renderDay: (data: T[], date: string) => ReactNode,
-): DayDescriptor[] {
-  return groupedData.map((dayData, index): DayDescriptor => {
-    // Use UTC noon to avoid timezone issues when formatting dates
+  transformDay: DayTransform<T>,
+  maxCount: number,
+): CalendarCellRender[] {
+  return groupedData.map((dayData, index): CalendarCellRender => {
     const date = new Date(Date.UTC(year, 0, index + 1, 12)).toISOString()
 
-    return {
+    return transformDay({
+      items: dayData,
       date,
-      content: renderDay(dayData, date),
-    }
+      dayIndex: index,
+      maxCount,
+    })
   })
 }
 
@@ -97,8 +97,8 @@ export function transformToCalendarEntries<T extends StringDate>(
 export function defaultTransform<T extends StringDate>(
   year: number,
   data: T[],
-  renderDay: (calendarEvents: T[], date: string) => ReactNode,
-): DayDescriptor[] {
+  transformDay: DayTransform<T>,
+): CalendarCellRender[] {
   const grouped = groupDataByYear(data)
   let yearData = grouped[year]
 
@@ -107,5 +107,7 @@ export function defaultTransform<T extends StringDate>(
     yearData = Array.from({ length: daysInYear }, () => [])
   }
 
-  return transformToCalendarEntries(year, yearData, renderDay)
+  const maxCount = Math.max(...yearData.map(day => day.length), 0)
+
+  return transformToCalendarEntries(year, yearData, transformDay, maxCount)
 }

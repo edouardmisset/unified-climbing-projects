@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { StringDate } from '~/types/generic'
-import {
-  defaultTransform,
-  groupDataByYear,
-  transformToCalendarEntries,
-} from './helpers'
+import { defaultTransform, groupDataByYear, transformToCalendarEntries } from './helpers'
+import type { DayTransform } from './types'
 
 // Test constants
 const TEST_YEAR = 2024
@@ -61,10 +58,12 @@ describe('DataCalendar Helpers', () => {
         [{ date: '2024-01-03T12:00:00.000Z' }],
       ]
 
-      const renderDay = (data: StringDate[]) =>
-        data.length > 0 ? 'Has data' : 'Empty'
+      const renderDay: DayTransform<StringDate> = ({ items, date }) => ({
+        date,
+        content: items.length > 0 ? 'Has data' : 'Empty',
+      })
 
-      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay)
+      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay, 1)
 
       expect(result.length).toBe(EXPECTED_THREE_ITEMS)
       expect(result?.[0]?.content).toBe('Has data')
@@ -74,8 +73,11 @@ describe('DataCalendar Helpers', () => {
 
     it('should handle empty days', () => {
       const mockData = [[], []]
-      const renderDay = () => 'Empty'
-      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay)
+      const renderDay: DayTransform<StringDate> = ({ date }) => ({
+        date,
+        content: 'Empty',
+      })
+      const result = transformToCalendarEntries(TEST_YEAR, mockData, renderDay, 0)
 
       expect(result.length).toBe(EXPECTED_TWO_ITEMS)
       expect(result?.[0]?.content).toBe('Empty')
@@ -90,17 +92,15 @@ describe('DataCalendar Helpers', () => {
         { date: '2024-01-02T12:00:00.000Z' },
       ]
 
-      const renderDay = (d: StringDate[]) => d.length.toString()
+      const renderDay: DayTransform<StringDate> = ({ items, date }) => ({
+        date,
+        content: items.length.toString(),
+      })
 
       const result = defaultTransform(TEST_YEAR, data, renderDay)
 
-      // Should have entries for all days of the year
       expect(result.length).toBeGreaterThan(EXPECTED_EMPTY)
-
-      // First day should have content of '1'
       expect(result?.[0]?.content).toBe('1')
-
-      // Second day should have content of '1'
       expect(result?.[1]?.content).toBe('1')
     })
   })

@@ -1,21 +1,30 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import type { StringDate } from '~/types/generic'
 
-/**
- * Simplified props for DataCalendar component
- */
-export interface DataCalendarProps<T extends StringDate> {
-  /** Year to display */
-  year: number
-  /** Array of data items with date strings */
-  data?: T[] | Promise<T[]>
-  /** Function to render a day cell */
-  renderDay: (data: T[], date: string) => ReactNode
+export interface CalendarCellRender {
+  date: string
+  content?: ReactNode
+  popoverTitle?: ReactNode
+  popoverDescription?: ReactNode
+  style?: CSSProperties
+  isSpecialCase?: boolean
+  isEmpty?: boolean
+  className?: string
 }
 
-/**
- * Grouped data by year and day
- */
+export type DayTransform<T extends StringDate> = (params: {
+  items: T[]
+  date: string
+  dayIndex: number
+  maxCount: number
+}) => CalendarCellRender
+
+export interface DataCalendarProps<T extends StringDate> {
+  year: number
+  data?: T[] | Promise<T[]>
+  transformDay?: DayTransform<T>
+}
+
 export interface GroupedData<T extends StringDate> {
   [year: number]: T[][]
 }

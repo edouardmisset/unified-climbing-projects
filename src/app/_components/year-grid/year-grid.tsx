@@ -1,7 +1,6 @@
 'use client'
 
 import { Fragment, memo, type ReactNode, useMemo } from 'react'
-import { CalendarCell } from '~/app/_components/data-calendar/calendar-cell'
 import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { DaysColumn } from './days-column.tsx'
 import { getNumberOfDaysInYear } from './helpers.ts'
@@ -46,10 +45,15 @@ export const YearGrid = memo(
           { length: numberOfDaysFromPreviousMondayTo1stJanuary },
           (): DayDescriptor => ({
             date: '',
-            content: <CalendarCell date="" year={year} />,
+            content: (
+              <span
+                aria-hidden
+                className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
+              />
+            ),
           }),
         ),
-      [numberOfDaysFromPreviousMondayTo1stJanuary, year],
+      [numberOfDaysFromPreviousMondayTo1stJanuary],
     )
 
     const allDayCollection = useMemo(

@@ -58,6 +58,16 @@
   border: none;
 }
 
+.weekend {
+  background-color: var(--surface-3);
+}
+
+.today {
+  && {
+    outline: 2px solid var(--text-1);
+  }
+}
+
 .specialCase {
   && {
     outline: 2px dashed var(--text-1);

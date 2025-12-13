@@ -1,8 +1,8 @@
 'use client'
 
 import { Fragment, use } from 'react'
-import { renderTrainingDay } from '~/app/_components/data-calendar'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { renderTrainingDay } from '~/app/_components/data-calendar/renders'
 import type { TrainingSession } from '~/schema/training'
 
 interface CalendarListProps {
@@ -20,7 +20,7 @@ export function CalendarList({ yearsPromise, dataPromise }: CalendarListProps) {
           <h2 className="centerText">{year}</h2>
           <DataCalendar<TrainingSession>
             data={dataPromise}
-            renderDay={renderTrainingDay}
+            transformDay={renderTrainingDay}
             year={year}
           />
         </Fragment>
