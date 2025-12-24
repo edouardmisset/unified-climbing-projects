@@ -1,12 +1,8 @@
 import { type UseQueryStateReturn, useQueryState } from 'nuqs'
-import { type Ascent, ascentSchema } from '~/schema/ascent'
+import { type Ascent, ascentSchema, SPORT } from '~/schema/ascent'
 
-export const useRouteQueryState = (): UseQueryStateReturn<
-  Ascent['routeName'],
-  ''
-> =>
-  useQueryState<Ascent['routeName']>('route', {
+export const useRouteQueryState = (): UseQueryStateReturn<Ascent['name'], ''> =>
+  useQueryState<Ascent['name']>(SPORT, {
     defaultValue: '',
-    parse: value =>
-      value === '' ? '' : ascentSchema.shape.routeName.parse(value),
+    parse: value => (value === '' ? '' : ascentSchema.shape.name.parse(value)),
   })

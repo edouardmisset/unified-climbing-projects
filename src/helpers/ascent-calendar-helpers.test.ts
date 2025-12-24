@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import {
+  ARETE,
+  type Ascent,
+  CRIMP,
+  OVERHANG,
+  POCKET,
+  SPORT,
+} from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
@@ -25,41 +32,38 @@ describe('fromAscentsToCalendarEntries', () => {
       [
         {
           area: 'Wig Wam',
-          climber: 'Edouard Misset',
-          climbingDiscipline: 'Route',
+          discipline: SPORT,
           comments: 'À la fois superbe grimpe et passage terrifiant. ',
           crag: 'Ewige Jagdgründe',
           date: '2024-10-27T12:00:00.000Z',
           height: 25,
-          holds: 'Crimp',
+          holds: CRIMP,
           _id: '1',
           personalGrade: '6c+',
-          profile: 'Arête',
+          profile: ARETE,
           rating: 4,
-          routeName: 'Black Knight',
+          name: 'Black Knight',
           style: 'Onsight',
-          topoGrade: '7a',
+          grade: '7a',
           tries: 1,
         },
       ],
       [
         {
           area: 'Envers du canyon',
-          climber: 'Edouard Misset',
-          climbingDiscipline: 'Route',
+          discipline: SPORT,
           comments: 'Dur :(',
           crag: 'Rue des masques',
           date: '2023-08-01T12:00:00.000Z',
           height: 25,
-          holds: 'Pocket',
+          holds: POCKET,
           _id: '2',
           personalGrade: '7b+',
-          profile: 'Overhang',
+          profile: OVERHANG,
           rating: 3,
-          region: 'Hautes-Alpes',
-          routeName: 'Flash dans ta gueule',
+          name: 'Flash dans ta gueule',
           style: 'Redpoint',
-          topoGrade: '7b',
+          grade: '7b',
           tries: 2,
         },
       ],

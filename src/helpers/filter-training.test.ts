@@ -1,40 +1,41 @@
 import { describe, expect, it } from 'vitest'
+import { BOULDERING, SPORT } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
 describe('filterTrainingSessions', () => {
   const trainingSessions = [
     {
-      anatomicalRegion: 'Ar',
-      climbingDiscipline: 'Route',
+      anatomicalRegion: 'Arms',
+      discipline: SPORT,
       comments: 'Good session',
       date: '2023-01-01',
-      energySystem: 'AA',
-      gymCrag: 'Gym 1',
+      energySystem: 'Anaerobic Alactic',
+      location: 'Gym 1',
       _id: '1',
-      sessionType: 'CS',
+      type: 'Contact Strength',
       volume: 70,
     },
     {
-      anatomicalRegion: 'Fi',
-      climbingDiscipline: 'Boulder',
+      anatomicalRegion: 'Fingers',
+      discipline: BOULDERING,
       comments: 'Hard session',
       date: '2023-02-01',
-      energySystem: 'AL',
-      gymCrag: 'Crag 1',
+      energySystem: 'Anaerobic Lactic',
+      location: 'Crag 1',
       _id: '2',
-      sessionType: 'PE',
+      type: 'Power Endurance',
       volume: 60,
     },
     {
-      anatomicalRegion: 'Ge',
-      climbingDiscipline: 'Route',
+      anatomicalRegion: 'General',
+      discipline: SPORT,
       comments: 'Easy session',
       date: '2024-01-01',
-      energySystem: 'AE',
-      gymCrag: 'Gym 1',
+      energySystem: 'Aerobic',
+      location: 'Gym 1',
       _id: '3',
-      sessionType: 'MS',
+      type: 'Max Strength',
       volume: 80,
     },
   ] satisfies TrainingSession[]
@@ -46,21 +47,21 @@ describe('filterTrainingSessions', () => {
 
   it('should filter training sessions by gymCrag', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
-      gymCrag: 'Gym 1',
+      location: 'Gym 1',
     })
     expect(sessions.length).toBe(2)
 
-    for (const { gymCrag } of sessions) {
+    for (const { location: gymCrag } of sessions) {
       expect(gymCrag).toBe('Gym 1')
     }
   })
 
-  it('should filter training sessions by climbingDiscipline', () => {
+  it('should filter training sessions by discipline', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      climbingDiscipline: 'Boulder',
+      discipline: BOULDERING,
     })
     expect(result.length).toBe(1)
-    expect(result[0]?.climbingDiscipline).toBe('Boulder')
+    expect(result[0]?.discipline).toBe(BOULDERING)
   })
 
   it('should filter training sessions by year', () => {
@@ -75,34 +76,34 @@ describe('filterTrainingSessions', () => {
 
   it('should return an empty array when no training sessions match the filters', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
-      gymCrag: 'This gym does not exist',
+      location: 'This gym does not exist',
     })
     expect(sessions).toEqual([])
   })
 
   it('should filter training sessions by sessionType', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      sessionType: 'CS',
+      type: 'Contact Strength',
     })
     expect(result.length).toBe(1)
-    expect(result[0]?.sessionType).toBe('CS')
+    expect(result[0]?.type).toBe('Contact Strength')
   })
 
   it('should filter training sessions by energySystem', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      energySystem: 'AA',
+      energySystem: 'Anaerobic Alactic',
     })
     expect(result.length).toBe(1)
-    expect(result[0]?.energySystem).toBe('AA')
+    expect(result[0]?.energySystem).toBe('Anaerobic Alactic')
   })
 
   it('should filter training sessions by multiple criteria', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      gymCrag: 'Gym 1',
-      sessionType: 'CS',
+      location: 'Gym 1',
+      type: 'Contact Strength',
     })
     expect(result.length).toBe(1)
-    expect(result[0]?.sessionType).toBe('CS')
-    expect(result[0]?.gymCrag).toBe('Gym 1')
+    expect(result[0]?.type).toBe('Contact Strength')
+    expect(result[0]?.location).toBe('Gym 1')
   })
 })
