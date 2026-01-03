@@ -1,12 +1,8 @@
 import { objectKeys } from '@edouardmisset/object'
-import { INDOOR_SESSION_TYPES } from '~/constants/training'
 import { frequencyBy } from '~/helpers/frequency-by'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { AscentListProps } from '~/schema/ascent'
-import type {
-  TrainingSession,
-  TrainingSessionListProps,
-} from '~/schema/training'
+import type { TrainingSessionListProps } from '~/schema/training'
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
@@ -29,12 +25,6 @@ export function CragsSummary({
   const cragsWithoutAscents = [...cragsWithTrainingSessions].filter(
     crag => crag.trim() !== '' && !cragsWithAscents.has(crag),
   )
-
-  const numberOfSessionsIndoor = trainingSessions.filter(({ sessionType }) =>
-    sessionType === undefined
-      ? false
-      : INDOOR_SESSION_TYPES.includes(sessionType),
-  ).length
 
   if (
     numberOfCrags === 0 ||
@@ -89,12 +79,6 @@ export function CragsSummary({
                 </span>
               }
             />
-          </>
-        )}
-        {numberOfSessionsIndoor > 0 && (
-          <>
-            <br />
-            Indoor sessions: <strong>{numberOfSessionsIndoor}</strong>
           </>
         )}
       </p>
