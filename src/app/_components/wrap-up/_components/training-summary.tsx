@@ -2,19 +2,8 @@ import type {
   TrainingSession,
   TrainingSessionListProps,
 } from '~/schema/training'
+import { INDOOR_SESSION_TYPES } from '~/constants/training'
 import { Card } from '../../card/card'
-
-const INDOOR_SESSION_TYPES = [
-  'CS',
-  'En',
-  'MS',
-  'PE',
-  'Po',
-  'SE',
-  'Sk',
-  'St',
-  'Ta',
-] as const satisfies TrainingSession['sessionType'][]
 
 export function TrainingSummary({
   trainingSessions,
@@ -49,7 +38,7 @@ export function TrainingSummary({
       ? 'N/A'
       : (numberOfRouteSessions / numberOfBoulderSessions).toFixed(2)
 
-  if (totalSessions === 0) return
+  if (totalSessions === 0) return null
 
   return (
     <Card>

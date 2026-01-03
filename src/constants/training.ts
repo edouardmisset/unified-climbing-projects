@@ -1,5 +1,17 @@
 import type { TrainingSession } from '~/schema/training'
 
+export const INDOOR_SESSION_TYPES = [
+  'CS',
+  'En',
+  'MS',
+  'PE',
+  'Po',
+  'SE',
+  'Sk',
+  'St',
+  'Ta',
+] as const satisfies TrainingSession['sessionType'][]
+
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['sessionType']>,
   string

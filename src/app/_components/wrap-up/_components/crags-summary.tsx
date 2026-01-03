@@ -1,4 +1,5 @@
 import { objectKeys } from '@edouardmisset/object'
+import { INDOOR_SESSION_TYPES } from '~/constants/training'
 import { frequencyBy } from '~/helpers/frequency-by'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { AscentListProps } from '~/schema/ascent'
@@ -9,18 +10,6 @@ import type {
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../card/card'
 import { Popover } from '../../popover/popover'
-
-const INDOOR_SESSION_TYPES = [
-  'CS',
-  'En',
-  'MS',
-  'PE',
-  'Po',
-  'SE',
-  'Sk',
-  'St',
-  'Ta',
-] as const satisfies TrainingSession['sessionType'][]
 
 export function CragsSummary({
   ascents,
