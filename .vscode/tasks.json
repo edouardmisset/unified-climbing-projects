@@ -21,7 +21,8 @@
 			},
 			"runOptions": {
 				"runOn": "folderOpen"
-			}
+			},
+			"problemMatcher": []
 		},
 		{
 			"command": "bunx convex dev",
