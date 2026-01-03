@@ -37,12 +37,14 @@ export const Popover = memo(
     popoverDescription,
     triggerClassName = '',
     buttonStyle,
+    title,
   }: {
     triggerContent: ReactNode
     triggerClassName?: string
     buttonStyle?: CSSProperties
     popoverTitle: ReactNode
     popoverDescription: ReactNode
+    title?: string
   }) => {
     const triggerClass = useMemo(
       () => `${styles.iconButton} ${triggerClassName}`,
@@ -50,7 +52,11 @@ export const Popover = memo(
     )
     return (
       <BasePopover.Root>
-        <BasePopover.Trigger className={triggerClass} style={buttonStyle}>
+        <BasePopover.Trigger
+          className={triggerClass}
+          style={buttonStyle}
+          title={title}
+        >
           {triggerContent}
         </BasePopover.Trigger>
         <BasePopover.Portal>
