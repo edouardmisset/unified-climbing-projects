@@ -1,15 +1,15 @@
 import type { TrainingSession } from '~/schema/training'
 
 export const INDOOR_SESSION_TYPES = [
-  'CS',
   'En',
-  'MS',
   'PE',
-  'Po',
   'SE',
-  'Sk',
-  'St',
+  'MS',
+  'Po',
+  'CS',
   'Ta',
+  'St',
+  'Sk',
   'Ro',
   'Sg',
   'Co',

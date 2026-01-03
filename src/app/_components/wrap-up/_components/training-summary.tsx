@@ -8,10 +8,9 @@ import { Card } from '../../card/card'
 export function TrainingSummary({
   trainingSessions,
 }: TrainingSessionListProps) {
-  const numberOfIndoorSessions = trainingSessions.filter(({ sessionType }) =>
-    sessionType === undefined
-      ? false
-      : INDOOR_SESSION_TYPES.includes(sessionType),
+  const numberOfIndoorSessions = trainingSessions.filter(
+    ({ sessionType }) =>
+      sessionType !== undefined && INDOOR_SESSION_TYPES.includes(sessionType),
   ).length
 
   const numberOfOutdoorSessions = trainingSessions.filter(
@@ -21,7 +20,7 @@ export function TrainingSummary({
   const totalSessions = numberOfIndoorSessions + numberOfOutdoorSessions
 
   const indoorOutdoorRatio =
-    numberOfOutdoorSessions === 0
+    numberOfOutdoorSessions === 0 || numberOfIndoorSessions === 0
       ? 'N/A'
       : (numberOfIndoorSessions / numberOfOutdoorSessions).toFixed(2)
 
@@ -34,7 +33,7 @@ export function TrainingSummary({
   ).length
 
   const routeBoulderRatio =
-    numberOfBoulderSessions === 0
+    numberOfBoulderSessions === 0 || numberOfRouteSessions === 0
       ? 'N/A'
       : (numberOfRouteSessions / numberOfBoulderSessions).toFixed(2)
 
@@ -49,11 +48,11 @@ export function TrainingSummary({
         <br />
         Number of outdoor sessions: <strong>{numberOfOutdoorSessions}</strong>
         <br />
-        Ratio: <strong>{indoorOutdoorRatio}</strong>
+        Indoor/Outdoor ratio: <strong>{indoorOutdoorRatio}</strong>
         {(numberOfRouteSessions > 0 || numberOfBoulderSessions > 0) && (
           <>
             <br />
-            Route vs Boulder ratio: <strong>{routeBoulderRatio}</strong>
+            Route/Boulder ratio: <strong>{routeBoulderRatio}</strong>
           </>
         )}
       </p>
