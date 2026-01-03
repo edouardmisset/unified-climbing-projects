@@ -16,7 +16,7 @@ export function calculatePercentage({
       : roundToTen((firstCount / (secondCount + firstCount)) * 100).toString()
 
   return {
-    percentage: percentage,
+    percentage,
     firstLabel,
     firstCount,
     firstSessions,

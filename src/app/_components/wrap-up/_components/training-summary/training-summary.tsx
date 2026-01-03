@@ -27,7 +27,7 @@ export function TrainingSummary({
   const indoorPercentage = roundToTen((indoor.length / totalSessions) * 100)
   const outdoorPercentage = roundToTen((outdoor.length / totalSessions) * 100)
 
-  const sessionTypeStats = calculatePercentage({
+  const { firstCount, secondCount } = calculatePercentage({
     firstLabel: 'Indoor',
     firstSessions: indoor,
     secondLabel: 'Outdoor',
@@ -42,14 +42,14 @@ export function TrainingSummary({
         header="Indoor"
         percentage={indoorPercentage}
         routeSessions={indoorRoute}
-        title={`Indoor sessions ${sessionTypeStats.firstCount}`}
+        title={`Indoor sessions ${firstCount}`}
       />
       <DisciplineSection
         boulderSessions={outdoorBoulder}
         header="Outdoor"
         percentage={outdoorPercentage}
         routeSessions={outdoorRoute}
-        title={`Outdoor sessions ${sessionTypeStats.secondCount}`}
+        title={`Outdoor sessions ${secondCount}`}
       />
     </Card>
   )
@@ -70,7 +70,15 @@ function DisciplineSection({
 }) {
   if (routeSessions.length === 0 && boulderSessions.length === 0) return null
 
-  const stats = calculatePercentage({
+  const {
+    firstLabel,
+    firstSessions,
+    firstCount,
+    secondLabel,
+    secondSessions,
+    secondCount,
+    percentage: disciplinePercentage,
+  } = calculatePercentage({
     firstLabel: 'Route',
     firstSessions: routeSessions,
     secondLabel: 'Boulder',
@@ -83,21 +91,21 @@ function DisciplineSection({
         {header} <span className={styles.headerSmall}>({percentage}%)</span>
       </h4>
       <Popover
-        popoverDescription={<SessionList sessions={stats.firstSessions} />}
-        popoverTitle={`${stats.firstLabel}: ${stats.firstCount} sessions`}
-        title={`${stats.firstLabel} Training Sessions: ${stats.firstCount}`}
+        popoverDescription={<SessionList sessions={firstSessions} />}
+        popoverTitle={`${firstLabel}: ${firstCount} sessions`}
+        title={`${firstLabel} Training Sessions: ${firstCount}`}
         triggerClassName={styles.target}
-        triggerContent={stats.firstLabel}
+        triggerContent={firstLabel}
       />{' '}
       /{' '}
       <Popover
-        popoverDescription={<SessionList sessions={stats.secondSessions} />}
-        popoverTitle={`${stats.secondLabel}: ${stats.secondCount} sessions`}
-        title={`${stats.secondLabel} Training Sessions: ${stats.secondCount}`}
+        popoverDescription={<SessionList sessions={secondSessions} />}
+        popoverTitle={`${secondLabel}: ${secondCount} sessions`}
+        title={`${secondLabel} Training Sessions: ${secondCount}`}
         triggerClassName={styles.target}
-        triggerContent={stats.secondLabel}
+        triggerContent={secondLabel}
       />
-      : {stats.percentage}%
+      : {disciplinePercentage}%
     </>
   )
 }
