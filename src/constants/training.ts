@@ -1,43 +1,44 @@
 import type { TrainingSession } from '~/schema/training'
 
+/**
+ * Training session types. We purposefully omit "Sg", "FB", "Co" and "Ro" from
+ * this list as these are specific training and not climbing training.
+ */
 export const INDOOR_SESSION_TYPES = [
   'En',
   'PE',
   'SE',
   'MS',
   'Po',
-  'CS',
-  'Ta',
-  'St',
+  'SE',
   'Sk',
-  'Ro',
-  'Sg',
-  'Co',
-  'FB',
+  'St',
+  'Ta',
 ] as const satisfies TrainingSession['sessionType'][]
 
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['sessionType']>,
   string
 > = {
-  Co: 'var(--otherTraining)',
+  Out: 'var(--outdoor)',
 
   CS: 'var(--strength)',
-
-  En: 'var(--endurance)',
-  FB: 'var(--otherTraining)',
   MS: 'var(--strength)',
-  Out: 'var(--outdoor)',
-  PE: 'var(--endurance)',
   Po: 'var(--strength)',
-  Ro: 'var(--otherTraining)',
+
+  PE: 'var(--endurance)',
+  En: 'var(--endurance)',
   SE: 'var(--endurance)',
-  Sg: 'var(--otherTraining)',
 
   Sk: 'var(--stamina)',
   St: 'var(--stamina)',
 
   Ta: 'var(--tapered)',
+
+  Co: 'var(--otherTraining)',
+  Ro: 'var(--otherTraining)',
+  FB: 'var(--otherTraining)',
+  Sg: 'var(--otherTraining)',
 } as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
 
 export const TRAINING_SESSION_TYPE_TO_CLASS_NAME: Record<
