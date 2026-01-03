@@ -7,15 +7,20 @@ import styles from './training-summary.module.css'
 export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
   return (
     <ul className={styles.list}>
-      {sessions.map(({ climbingDiscipline, date, gymCrag }, index) => (
-        <li className={styles.item} key={index}>
-          {(climbingDiscipline
-            ? fromClimbingDisciplineToEmoji(climbingDiscipline)
-            : '―') + NON_BREAKING_SPACE}
-          {<span className="monospace">{stringifyDate(new Date(date))}</span>}
-          {gymCrag ? ` - ${gymCrag}` : ''}
-        </li>
-      ))}
+      {sessions.map(({ _id, climbingDiscipline, date, gymCrag }) => {
+        const disciplineIcon = climbingDiscipline
+          ? fromClimbingDisciplineToEmoji(climbingDiscipline)
+          : '―'
+
+        return (
+          <li className={styles.item} key={_id}>
+            {disciplineIcon}
+            {NON_BREAKING_SPACE}
+            <span className="monospace">{stringifyDate(new Date(date))}</span>
+            {gymCrag && ` - ${gymCrag}`}
+          </li>
+        )
+      })}
     </ul>
   )
 }

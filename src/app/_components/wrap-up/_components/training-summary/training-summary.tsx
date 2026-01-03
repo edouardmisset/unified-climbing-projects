@@ -1,11 +1,14 @@
-import { roundToTen } from '~/helpers/math'
 import type {
   TrainingSession,
   TrainingSessionListProps,
 } from '~/schema/training'
 import { Card } from '../../../card/card'
 import { Popover } from '../../../popover/popover'
-import { calculatePercentage, categorizeSessions } from './helpers'
+import {
+  calculateSessionPercentage,
+  categorizeSessions,
+  getSessionRatioData,
+} from './helpers'
 import { SessionList } from './session-list'
 import styles from './training-summary.module.css'
 
@@ -22,17 +25,16 @@ export function TrainingSummary({
   } = categorizeSessions(trainingSessions)
 
   const totalSessions = indoor.length + outdoor.length
-  if (totalSessions === 0) return
+  if (totalSessions === 0) return null
 
-  const indoorPercentage = roundToTen((indoor.length / totalSessions) * 100)
-  const outdoorPercentage = roundToTen((outdoor.length / totalSessions) * 100)
-
-  const { firstCount, secondCount } = calculatePercentage({
-    firstLabel: 'Indoor',
-    firstSessions: indoor,
-    secondLabel: 'Outdoor',
-    secondSessions: outdoor,
-  })
+  const indoorPercentage = calculateSessionPercentage(
+    indoor.length,
+    outdoor.length,
+  )
+  const outdoorPercentage = calculateSessionPercentage(
+    outdoor.length,
+    indoor.length,
+  )
 
   return (
     <Card>
@@ -42,31 +44,31 @@ export function TrainingSummary({
         header="Indoor"
         percentage={indoorPercentage}
         routeSessions={indoorRoute}
-        title={`Indoor sessions ${firstCount}`}
+        sessionCount={indoor.length}
       />
       <DisciplineSection
         boulderSessions={outdoorBoulder}
         header="Outdoor"
         percentage={outdoorPercentage}
         routeSessions={outdoorRoute}
-        title={`Outdoor sessions ${secondCount}`}
+        sessionCount={outdoor.length}
       />
     </Card>
   )
 }
 
 function DisciplineSection({
-  title,
   header,
   percentage,
   routeSessions,
   boulderSessions,
+  sessionCount,
 }: {
-  title: string
   header: string
-  percentage: number
+  percentage: string
   routeSessions: TrainingSession[]
   boulderSessions: TrainingSession[]
+  sessionCount: number
 }) {
   if (routeSessions.length === 0 && boulderSessions.length === 0) return null
 
@@ -78,16 +80,18 @@ function DisciplineSection({
     secondSessions,
     secondCount,
     percentage: disciplinePercentage,
-  } = calculatePercentage({
+  } = getSessionRatioData({
     firstLabel: 'Route',
     firstSessions: routeSessions,
     secondLabel: 'Boulder',
     secondSessions: boulderSessions,
   })
 
+  const sectionTitle = `${header} sessions ${sessionCount}`
+
   return (
     <>
-      <h4 title={title}>
+      <h4 title={sectionTitle}>
         {header} <span className={styles.headerSmall}>({percentage}%)</span>
       </h4>
       <Popover

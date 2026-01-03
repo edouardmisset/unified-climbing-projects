@@ -2,18 +2,33 @@ import { INDOOR_SESSION_TYPES } from '~/constants/training'
 import { roundToTen } from '~/helpers/math'
 import type { TrainingSession } from '~/schema/training'
 
-export function calculatePercentage({
+/**
+ * Calculate the percentage of first sessions relative to total sessions.
+ * Returns 'N/A' if there are no sessions to avoid division by zero.
+ */
+export function calculateSessionPercentage(
+  firstCount: number,
+  secondCount: number,
+): string {
+  const total = firstCount + secondCount
+  if (total === 0) return 'N/A'
+
+  return roundToTen((firstCount / total) * 100).toString()
+}
+
+/**
+ * Get categorized session counts and labels for display.
+ * This is primarily a data structure for passing to UI components.
+ */
+export function getSessionRatioData({
   firstLabel,
   firstSessions,
   secondLabel,
   secondSessions,
-}: CalculateRatioInput): CalculateRatioOutput {
+}: SessionRatioInput): SessionRatioData {
   const firstCount = firstSessions.length
   const secondCount = secondSessions.length
-  const percentage =
-    firstCount === 0 || secondCount === 0
-      ? 'N/A'
-      : roundToTen((firstCount / (secondCount + firstCount)) * 100).toString()
+  const percentage = calculateSessionPercentage(firstCount, secondCount)
 
   return {
     percentage,
@@ -26,14 +41,14 @@ export function calculatePercentage({
   }
 }
 
-type CalculateRatioInput = {
+type SessionRatioInput = {
   firstLabel: string
   firstSessions: TrainingSession[]
   secondLabel: string
   secondSessions: TrainingSession[]
 }
 
-export type CalculateRatioOutput = {
+export type SessionRatioData = {
   percentage: string
   firstLabel: string
   firstCount: number
