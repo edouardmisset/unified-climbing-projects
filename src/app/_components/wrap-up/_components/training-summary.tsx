@@ -38,7 +38,7 @@ export function TrainingSummary({
       ? 'N/A'
       : (numberOfRouteSessions / numberOfBoulderSessions).toFixed(2)
 
-  if (totalSessions === 0) return null
+  if (totalSessions === 0) return
 
   return (
     <Card>

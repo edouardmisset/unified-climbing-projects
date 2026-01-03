@@ -10,6 +10,10 @@ export const INDOOR_SESSION_TYPES = [
   'Sk',
   'St',
   'Ta',
+  'Ro',
+  'Sg',
+  'Co',
+  'FB',
 ] as const satisfies TrainingSession['sessionType'][]
 
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
