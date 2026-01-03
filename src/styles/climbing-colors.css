@@ -32,6 +32,22 @@
   --endurance: var(--orange-5);
   --enduranceHigh: var(--orange-9);
 
+  --indoorLow: var(--blue-1);
+  --indoor: var(--blue-5);
+  --indoorHigh: var(--blue-9);
+
+  /* Scale down saturation (chroma) for indoor route/boulder oklch() colors */
+  --indoorSaturation: 0.1;
+  --indoorLightness: 0.1;
+  --indoorRoute: oklch(
+    from var(--route) calc(l + var(--indoorLightness))
+      calc(c * var(--indoorSaturation)) h
+  );
+  --indoorBoulder: oklch(
+    from var(--boulder) calc(l + var(--indoorLightness))
+      calc(c * var(--indoorSaturation)) h
+  );
+
   --otherTrainingLow: var(--gray-1);
   --otherTraining: var(--gray-5);
   --otherTrainingHigh: var(--gray-7);
@@ -51,6 +67,16 @@
   --taperedLow: var(--violet-1);
   --tapered: var(--violet-5);
   --taperedHigh: var(--violet-9);
+
+  /* ENERGY SYSTEMS */
+  --energySystemAA: var(--red-5);
+  --energySystemAL: var(--purple-5);
+  --energySystemAE: var(--teal-5);
+
+  /* ANATOMICAL REGIONS */
+  --anatomicalRegionAr: var(--blue-5);
+  --anatomicalRegionFi: var(--pink-5);
+  --anatomicalRegionGe: var(--teal-5);
 
   /* DISCIPLINE */
   --boulder: var(--pink-4);

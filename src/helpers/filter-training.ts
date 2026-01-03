@@ -1,6 +1,8 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
+import type { LocationType } from '~/app/_components/filter-bar/types'
+import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { PERIOD_TO_DATES, type Period } from '~/schema/generic'
 import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
 
@@ -10,6 +12,7 @@ type OptionalTrainingInput = Partial<
   year?: number
   load?: LoadCategory
   period?: Period
+  locationType?: LocationType
 }
 
 /**
@@ -36,6 +39,7 @@ export function filterTrainingSessions(
     volume,
     year,
     period,
+    locationType,
   } = filters ?? {}
 
   if (!trainingSessions || trainingSessions.length === 0) {
@@ -47,6 +51,7 @@ export function filterTrainingSessions(
 
   return trainingSessions.filter(trainingSession => {
     const trainingSessionDate = new Date(trainingSession.date)
+
     return (
       (gymCrag === undefined ||
         stringEqualsCaseInsensitive(trainingSession?.gymCrag ?? '', gymCrag)) &&
@@ -64,7 +69,11 @@ export function filterTrainingSessions(
         trainingSession.sessionType === sessionType) &&
       (volume === undefined || trainingSession.volume === volume) &&
       (period === undefined ||
-        isDateInRange(trainingSessionDate, { ...PERIOD_TO_DATES[period] }))
+        isDateInRange(trainingSessionDate, { ...PERIOD_TO_DATES[period] })) &&
+      (locationType === undefined ||
+        (locationType === 'Indoor'
+          ? isIndoorSession({ sessionType: trainingSession.sessionType })
+          : trainingSession.sessionType === 'Out'))
     )
   })
 }
