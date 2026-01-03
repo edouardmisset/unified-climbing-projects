@@ -8,6 +8,7 @@ import { CragsSummary } from './_components/crags-summary'
 import { DaysOutsideSummary } from './_components/days-outside-summary'
 import { HardestClimbsSummary } from './_components/hardest-climbs-summary'
 import { TopTenSummary } from './_components/top-ten-summary'
+import { TrainingSummary } from './_components/training-summary'
 import { VerticalMilestoneSummary } from './_components/vertical-milestone-summary'
 import { WrapUpHeader } from './_components/wrap-up-header'
 import styles from './wrap-up.module.css'
@@ -56,6 +57,7 @@ export default async function WrapUp({ year }: { year?: number }) {
       <HardestClimbsSummary ascents={ascents} />
       <VerticalMilestoneSummary ascents={ascents} />
       <CragsSummary ascents={ascents} trainingSessions={trainingSessions} />
+      <TrainingSummary trainingSessions={trainingSessions} />
       <TopTenSummary ascents={ascents} />
     </Layout>
   )
