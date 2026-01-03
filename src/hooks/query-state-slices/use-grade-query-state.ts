@@ -4,10 +4,10 @@ import type { OrAll } from '~/app/_components/dashboard/types'
 import { type Ascent, gradeSchema } from '~/schema/ascent'
 
 export const useGradeQueryState = (): UseQueryStateReturn<
-  OrAll<Ascent['topoGrade']>,
+  OrAll<Ascent['grade']>,
   typeof ALL_VALUE
 > =>
-  useQueryState<OrAll<Ascent['topoGrade']>>('grade', {
+  useQueryState<OrAll<Ascent['grade']>>('grade', {
     defaultValue: ALL_VALUE,
     parse: value =>
       value === ALL_VALUE ? ALL_VALUE : gradeSchema.parse(value),

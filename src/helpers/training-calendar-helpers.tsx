@@ -1,5 +1,5 @@
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
-import { getSessionTypeColors } from '~/helpers/training-converter'
+import { getSessionColor } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import { prettyLongDate } from './formatters'
 
@@ -19,17 +19,17 @@ export function fromTrainingSessionsToCalendarEntries(
         }
       }
 
-      const { date, sessionType, intensity, volume } = firstSession
-      const backgroundColor = getSessionTypeColors({
+      const { date, type, intensity, volume } = firstSession
+      const backgroundColor = getSessionColor({
         intensityPercent: intensity,
-        sessionType,
+        sessionType: type,
         volumePercent: volume,
       })
 
       return {
         backgroundColor,
         date,
-        shortText: sessionType ?? '',
+        shortText: type ?? '',
         title: prettyLongDate(date),
         trainingSessions: sessions,
       }

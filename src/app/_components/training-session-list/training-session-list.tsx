@@ -1,10 +1,7 @@
 import { memo } from 'react'
 import NotFound from '~/app/not-found'
 import { prettyLongDate, prettyShortDate } from '~/helpers/formatters'
-import {
-  fromSessionTypeToLabel,
-  type TrainingSessionListProps,
-} from '~/schema/training'
+import type { TrainingSessionListProps } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
 export const TrainingSessionList = memo(
@@ -33,16 +30,10 @@ export const TrainingSessionList = memo(
             >
               Type
             </th>
-            <th
-              className={`${styles.cell} ${styles.headerCell}`}
-              title="Load level of the session"
-            >
-              Load
-            </th>
           </tr>
         </thead>
         <tbody className={`${styles.body} gridFullWidth`}>
-          {trainingSessions.map(({ _id, sessionType, date, load, gymCrag }) => (
+          {trainingSessions.map(({ _id, type, date, location }) => (
             <tr className={`${styles.row} gridFullWidth`} key={_id}>
               <td
                 className={`${styles.cell} monospace`}
@@ -50,26 +41,11 @@ export const TrainingSessionList = memo(
               >
                 {prettyShortDate(date)}
               </td>
-              <td className={styles.cell} title={gymCrag}>
-                {gymCrag || '—'}
+              <td className={styles.cell} title={location}>
+                {location || '—'}
               </td>
-              <td
-                className={styles.cell}
-                title={
-                  sessionType === undefined
-                    ? undefined
-                    : fromSessionTypeToLabel(sessionType)
-                }
-              >
-                {sessionType === undefined
-                  ? '—'
-                  : fromSessionTypeToLabel(sessionType)}
-              </td>
-              <td
-                className={styles.cell}
-                title={load === undefined ? '—' : `${load}%`}
-              >
-                {load === undefined ? '—' : `${load}%`}
+              <td className={styles.cell} title={type}>
+                {type ?? '—'}
               </td>
             </tr>
           ))}

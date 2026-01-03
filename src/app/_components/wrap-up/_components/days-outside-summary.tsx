@@ -10,7 +10,7 @@ import {
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { formatLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
 
@@ -24,7 +24,7 @@ export async function DaysOutsideSummary({
   trainingSessions: TrainingSession[]
 }) {
   const outdoorSessions = filterTrainingSessions(trainingSessions, {
-    sessionType: 'Out',
+    type: OUTDOOR,
   })
 
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)

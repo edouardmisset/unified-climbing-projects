@@ -16,24 +16,20 @@ export function YearNavigationButton({
 }) {
   if (!(enabled && isValidNumber(selectedYear))) return <span />
 
-  const targetYear =
-    nextOrPrevious === 'next' ? selectedYear + 1 : selectedYear - 1
+  const isNextYear = nextOrPrevious === 'next'
+  const targetYear = isNextYear ? selectedYear + 1 : selectedYear - 1
+  const title = `${isNextYear ? 'Next' : 'Previous'} year: ${targetYear}`
+  const icon = isNextYear ? <ArrowRightCircleIcon /> : <ArrowLeftCircleIcon />
+  const targetYearPath = `.${path}/${targetYear}`
+
   return (
     <Link
-      className={`${styles.button} ${nextOrPrevious === 'next' ? styles.right : styles.left}`}
-      href={`.${path}/${targetYear}`}
+      className={`${styles.button} ${isNextYear ? styles.right : styles.left}`}
+      href={targetYearPath}
       prefetch
-      title={
-        nextOrPrevious === 'next'
-          ? `Next year: ${targetYear}`
-          : `Previous year: ${targetYear}`
-      }
+      title={title}
     >
-      {nextOrPrevious === 'next' ? (
-        <ArrowRightCircleIcon />
-      ) : (
-        <ArrowLeftCircleIcon />
-      )}
+      {icon}
     </Link>
   )
 }

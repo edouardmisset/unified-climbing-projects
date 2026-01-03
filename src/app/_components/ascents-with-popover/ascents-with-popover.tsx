@@ -7,11 +7,14 @@ import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
 const AscentListItem = memo(
-  ({ climbingDiscipline, routeName, topoGrade }: AscentListItemProps) => (
+  ({
+    discipline,
+    name,
+    grade,
+  }: Pick<Ascent, 'discipline' | 'name' | 'grade'>) => (
     <li className={styles.item}>
-      {routeName} (
-      <DisplayGrade climbingDiscipline={climbingDiscipline} grade={topoGrade} />
-      )
+      {name} (
+      <DisplayGrade discipline={discipline} grade={grade} />)
     </li>
   ),
 )
@@ -47,10 +50,4 @@ export function AscentsWithPopover({ ascents }: AscentListProps) {
       }
     />
   )
-}
-
-type AscentListItemProps = {
-  climbingDiscipline: Ascent['climbingDiscipline']
-  routeName: Ascent['routeName']
-  topoGrade: Ascent['topoGrade']
 }

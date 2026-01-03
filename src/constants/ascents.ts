@@ -1,16 +1,27 @@
-import type { Ascent, Grade } from '~/schema/ascent'
+import {
+  type Ascent,
+  BOULDERING,
+  DEEP_WATER_SOLOING,
+  FLASH,
+  type Grade,
+  MULTI_PITCH,
+  ONSIGHT,
+  REDPOINT,
+  SPORT,
+} from '~/schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR = {
-  Flash: 'var(--flash)',
-  Onsight: 'var(--onsight)',
-  Redpoint: 'var(--redpoint)',
+  [FLASH]: 'var(--flash)',
+  [ONSIGHT]: 'var(--onsight)',
+  [REDPOINT]: 'var(--redpoint)',
 } as const satisfies Record<Ascent['style'], string>
 
 export const CLIMBING_DISCIPLINE_TO_COLOR = {
-  Boulder: 'var(--boulder)',
-  'Multi-Pitch': 'var(--multiPitch)',
-  Route: 'var(--route)',
-} as const satisfies Record<Ascent['climbingDiscipline'], string>
+  [BOULDERING]: 'var(--bouldering)',
+  [MULTI_PITCH]: 'var(--multiPitch)',
+  [SPORT]: 'var(--sport)',
+  [DEEP_WATER_SOLOING]: 'var(--deepWaterSoloing)',
+} as const satisfies Record<Ascent['discipline'], string>
 
 /**
  * This is a mapping from ascent grades to colors.

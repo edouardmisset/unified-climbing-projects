@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { type Ascent, BOULDERING, SPORT } from '~/schema/ascent'
 import { writeAscentsDisciplineText } from './write-ascents-discipline-text'
 
-const route = { climbingDiscipline: 'Route' } as const
-const boulder = { climbingDiscipline: 'Boulder' } as const
+const route = { discipline: SPORT } as const
+const boulder = { discipline: BOULDERING } as const
 
 describe('writeAscentsDisciplineText', () => {
   it('should return "ascents" when no ascents are provided', () => {

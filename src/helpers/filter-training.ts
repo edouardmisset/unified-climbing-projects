@@ -2,13 +2,12 @@ import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { PERIOD_TO_DATES, type Period } from '~/schema/generic'
-import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
+import type { TrainingSession } from '~/schema/training.ts'
 
 type OptionalTrainingInput = Partial<
-  Omit<TrainingSession, 'date' | 'comments' | 'load'>
+  Omit<TrainingSession, 'date' | 'comments'>
 > & {
   year?: number
-  load?: LoadCategory
   period?: Period
 }
 
@@ -27,12 +26,11 @@ export function filterTrainingSessions(
 ): TrainingSession[] {
   const {
     anatomicalRegion,
-    climbingDiscipline,
+    discipline,
     energySystem,
-    gymCrag,
+    location,
     intensity,
-    load,
-    sessionType,
+    type,
     volume,
     year,
     period,
@@ -48,41 +46,22 @@ export function filterTrainingSessions(
   return trainingSessions.filter(trainingSession => {
     const trainingSessionDate = new Date(trainingSession.date)
     return (
-      (gymCrag === undefined ||
-        stringEqualsCaseInsensitive(trainingSession?.gymCrag ?? '', gymCrag)) &&
-      (climbingDiscipline === undefined ||
-        trainingSession.climbingDiscipline === climbingDiscipline) &&
+      (location === undefined ||
+        stringEqualsCaseInsensitive(
+          trainingSession?.location ?? '',
+          location,
+        )) &&
+      (discipline === undefined || trainingSession.discipline === discipline) &&
       (year === undefined || isDateInYear(trainingSessionDate, year)) &&
       (anatomicalRegion === undefined ||
         trainingSession.anatomicalRegion === anatomicalRegion) &&
       (energySystem === undefined ||
         trainingSession.energySystem === energySystem) &&
       (intensity === undefined || trainingSession.intensity === intensity) &&
-      (load === undefined ||
-        isLoadInLoadCategory(trainingSession.load, load)) &&
-      (sessionType === undefined ||
-        trainingSession.sessionType === sessionType) &&
+      (type === undefined || trainingSession.type === type) &&
       (volume === undefined || trainingSession.volume === volume) &&
       (period === undefined ||
         isDateInRange(trainingSessionDate, { ...PERIOD_TO_DATES[period] }))
     )
   })
-}
-
-function isLoadInLoadCategory(
-  load: TrainingSession['load'],
-  loadCategory: LoadCategory,
-): boolean {
-  if (load === undefined) return false
-
-  if (loadCategory === 'Low') {
-    return load < 30
-  }
-  if (loadCategory === 'Medium') {
-    return 30 <= load && load < 70
-  }
-  if (loadCategory === 'High') {
-    return 70 <= load
-  }
-  return false
 }

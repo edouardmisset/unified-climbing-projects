@@ -1,43 +1,47 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import {
+  ARETE,
+  type Ascent,
+  CRIMP,
+  OVERHANG,
+  POCKET,
+  SPORT,
+} from '~/schema/ascent'
 import { sortByGrade } from './sorter'
 
 const easierAscent: Ascent = {
   area: 'Wig Wam',
-  climber: 'Edouard Misset',
-  climbingDiscipline: 'Route',
+  discipline: SPORT,
   comments: 'À la fois superbe grimpe et passage terrifiant.',
   crag: 'Ewige Jagdgründe',
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
-  holds: 'Crimp',
+  holds: CRIMP,
   _id: '1',
   personalGrade: '6c+',
-  profile: 'Arête',
+  profile: ARETE,
   rating: 4,
-  routeName: 'Black Knight',
+  name: 'Black Knight',
   style: 'Onsight',
-  topoGrade: '7a',
+  grade: '7a',
   tries: 1,
 }
 
 const harderAscent: Ascent = {
   area: 'Envers du canyon',
-  climber: 'Edouard Misset',
-  climbingDiscipline: 'Route',
+  discipline: SPORT,
   comments: 'Dur :(',
   crag: 'Rue des masques',
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
-  holds: 'Pocket',
+  holds: POCKET,
   _id: '2',
   personalGrade: '7b+',
-  profile: 'Overhang',
+  profile: OVERHANG,
   rating: 3,
-  region: 'Hautes-Alpes',
-  routeName: 'Flash dans ta gueule',
+  name: 'Flash dans ta gueule',
   style: 'Redpoint',
-  topoGrade: '7b',
+  grade: '7b',
   tries: 2,
 }
 
@@ -55,8 +59,8 @@ describe('sortByGrade', () => {
   it('should sort an array of ascents in descending order by grade (default behavior)', () => {
     const ascents: Ascent[] = [easierAscent, harderAscent]
     const sorted = ascents.sort(sortByGrade)
-    expect(sorted[0]?.topoGrade).toBe('7b')
-    expect(sorted[1]?.topoGrade).toBe('7a')
+    expect(sorted[0]?.grade).toBe('7b')
+    expect(sorted[1]?.grade).toBe('7a')
   })
 
   it('should sort an array of ascents in ascending order when the descending flag is false', () => {
@@ -64,7 +68,7 @@ describe('sortByGrade', () => {
     const sorted = ascents.sort((a, b) =>
       sortByGrade(a, b, { descending: false }),
     )
-    expect(sorted[0]?.topoGrade).toBe('7a')
-    expect(sorted[1]?.topoGrade).toBe('7b')
+    expect(sorted[0]?.grade).toBe('7a')
+    expect(sorted[1]?.grade).toBe('7b')
   })
 })

@@ -11,8 +11,10 @@ import { z } from '~/helpers/zod'
 import {
   type Ascent,
   ascentSchema,
+  CRIMP,
   holdsSchema,
   profileSchema,
+  VERTICAL,
 } from '~/schema/ascent'
 import {
   errorSchema,
@@ -119,9 +121,9 @@ export const ascentsRouter = createTRPCRouter({
     const ascents = await getAllAscents()
 
     for (const ascent of ascents) {
-      const { routeName, crag, topoGrade } = ascent
-      // We ignore the "+" in the topoGrade in case it was logged inconsistently
-      const key = [routeName, topoGrade.replace('+', ''), crag]
+      const { name, crag, grade } = ascent
+      // We ignore the "+" in the grade in case it was logged inconsistently
+      const key = [name, grade.replace('+', ''), crag]
         .map(string => removeAccents(string.toLocaleLowerCase()))
         .join('-')
 
@@ -157,7 +159,7 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      return mostFrequentBy(filteredAscents, 'holds') ?? 'Crimp'
+      return mostFrequentBy(filteredAscents, 'holds') ?? CRIMP
     }),
   getMostFrequentProfile: publicProcedure
     .input(optionalAscentFilterSchema)
@@ -165,7 +167,7 @@ export const ascentsRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const filteredAscents = await getFilteredAscents(input)
 
-      return mostFrequentBy(filteredAscents, 'profile') ?? 'Vertical'
+      return mostFrequentBy(filteredAscents, 'profile') ?? VERTICAL
     }),
   getSimilar: publicProcedure
     .output(z.tuple([z.string(), z.string().array()]).array())
@@ -173,7 +175,7 @@ export const ascentsRouter = createTRPCRouter({
       const ascents = await getAllAscents()
       const similarAscents = Array.from(
         groupSimilarStrings(
-          ascents.map(({ routeName }) => routeName),
+          ascents.map(({ name }) => name),
           2,
         ).entries(),
       )
@@ -203,7 +205,7 @@ export const ascentsRouter = createTRPCRouter({
         removeAccents(query),
         await getAllAscents(),
         {
-          key: ({ routeName }) => routeName,
+          key: ({ name }) => name,
           limit,
           threshold: 0.7,
         },

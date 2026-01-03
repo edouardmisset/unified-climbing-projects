@@ -38,17 +38,17 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
 
 type UseAscentsQueryStateReturn = {
   selectedCrag: OrAll<Ascent['crag']>
-  selectedDiscipline: OrAll<Ascent['climbingDiscipline']>
-  selectedGrade: OrAll<Ascent['topoGrade']>
+  selectedDiscipline: OrAll<Ascent['discipline']>
+  selectedGrade: OrAll<Ascent['grade']>
   selectedPeriod: OrAll<Period>
-  selectedRoute: Ascent['routeName']
+  selectedRoute: Ascent['name']
   selectedStyle: OrAll<Ascent['style']>
   selectedYear: OrAll<string>
   setCrag: (crag: OrAll<Ascent['crag']>) => void
-  setDiscipline: (discipline: OrAll<Ascent['climbingDiscipline']>) => void
-  setGrade: (grade: OrAll<Ascent['topoGrade']>) => void
+  setDiscipline: (discipline: OrAll<Ascent['discipline']>) => void
+  setGrade: (grade: OrAll<Ascent['grade']>) => void
   setPeriod: (period: OrAll<Period>) => void
-  setRoute: (route: Ascent['routeName']) => void
+  setRoute: (route: Ascent['name']) => void
   setStyle: (style: OrAll<Ascent['style']>) => void
   setYear: (year: OrAll<string>) => void
 }

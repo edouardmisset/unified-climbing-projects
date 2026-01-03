@@ -1,7 +1,7 @@
 import { average, isValidNumber } from '@edouardmisset/math'
 import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { OUTDOOR, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 import {
   calculateProgressionPercentage,
@@ -38,7 +38,7 @@ export function calculateScore({
     year: year - 1,
   })
   const outdoorTrainingSession = filterTrainingSessions(trainingSessions, {
-    sessionType: 'Out',
+    type: OUTDOOR,
     year,
   })
 

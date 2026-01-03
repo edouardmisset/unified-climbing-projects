@@ -2,6 +2,7 @@ import { sum } from '@edouardmisset/math/sum.ts'
 import { type CSSProperties, memo, useMemo } from 'react'
 import NotFound from '~/app/not-found'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
+import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { formatGrade } from '~/helpers/format-grade'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
@@ -25,9 +26,18 @@ const columnsByDefault = 6
 
 export const AscentList = memo(
   ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
-    const totalAscentPoints = useMemo(
-      () => sum(ascents?.map(({ points }) => points ?? 0)),
+    const ascentsWithPoints = useMemo(
+      () =>
+        ascents.map(ascent => ({
+          ...ascent,
+          points: fromAscentToPoints(ascent),
+        })),
       [ascents],
+    )
+
+    const totalAscentPoints = useMemo(
+      () => sum(ascentsWithPoints?.map(({ points }) => points ?? 0)),
+      [ascentsWithPoints],
     )
 
     const columns = useMemo(
@@ -125,14 +135,14 @@ export const AscentList = memo(
           </tr>
         </thead>
         <tbody className={`${styles.body} gridFullWidth`}>
-          {ascents.map(
+          {ascentsWithPoints.map(
             ({
               _id,
-              routeName,
+              name,
               crag,
-              topoGrade,
+              grade,
               date,
-              climbingDiscipline,
+              discipline,
               style,
               tries,
               area,
@@ -144,19 +154,19 @@ export const AscentList = memo(
               points,
             }) => {
               const formattedGrade = formatGrade({
-                climbingDiscipline,
-                grade: topoGrade,
+                discipline,
+                grade,
               })
               return (
                 <tr className={`${styles.row} gridFullWidth`} key={_id}>
                   <td
                     className={`${styles.cell} marginAuto`}
-                    title={climbingDiscipline}
+                    title={discipline}
                   >
-                    {fromClimbingDisciplineToEmoji(climbingDiscipline)}
+                    {fromClimbingDisciplineToEmoji(discipline)}
                   </td>
                   <td className={styles.cell}>
-                    <strong title={routeName}>{routeName}</strong>
+                    <strong title={name}>{name}</strong>
                   </td>
                   {showPoints && (
                     <td
@@ -169,19 +179,19 @@ export const AscentList = memo(
                   <td className={styles.cell}>
                     <em
                       className="monospace"
-                      title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
+                      title={`Topo Grade: ${formattedGrade}${grade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ discipline: discipline, grade: personalGrade })}`}`}
                     >
                       <span>
                         {formattedGrade.endsWith('+')
                           ? formattedGrade
                           : `${formattedGrade}${NON_BREAKING_SPACE}`}
                       </span>
-                      {personalGrade === topoGrade ||
+                      {personalGrade === grade ||
                       personalGrade === undefined ? undefined : (
                         <sup>
                           {' '}
                           <DisplayGrade
-                            climbingDiscipline={climbingDiscipline}
+                            discipline={discipline}
                             grade={personalGrade}
                           />
                         </sup>

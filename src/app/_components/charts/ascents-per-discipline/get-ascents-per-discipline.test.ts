@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
+import { BOULDERING, SPORT } from '~/schema/ascent'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
 describe('getAscentsPerDiscipline', () => {
@@ -11,15 +12,15 @@ describe('getAscentsPerDiscipline', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        color: 'var(--route)',
-        id: 'Route',
-        label: 'Route',
+        color: 'var(--sport)',
+        id: SPORT,
+        label: SPORT,
         value: 84,
       },
       {
-        color: 'var(--boulder)',
-        id: 'Boulder',
-        label: 'Boulder',
+        color: 'var(--bouldering)',
+        id: BOULDERING,
+        label: BOULDERING,
         value: 16,
       },
     ]

@@ -1,6 +1,6 @@
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { sortByDate } from '~/helpers/sort-by-date'
-import type { AscentListProps } from '~/schema/ascent'
+import { type AscentListProps, BOULDERING, SPORT } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
@@ -15,15 +15,15 @@ export function AscentSummary({ ascents }: AscentListProps) {
   const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style)
   const ascentsByDiscipline = Object.groupBy(
     ascents,
-    ascent => ascent.climbingDiscipline,
+    ascent => ascent.discipline,
   )
 
   const onsightAscents = ascentsByStyle.Onsight ?? []
   const flashAscents = ascentsByStyle.Flash ?? []
   const redpointAscents = ascentsByStyle.Redpoint ?? []
 
-  const boulders = ascentsByDiscipline.Boulder ?? []
-  const routes = ascentsByDiscipline.Route ?? []
+  const boulders = ascentsByDiscipline[BOULDERING] ?? []
+  const routes = ascentsByDiscipline[SPORT] ?? []
 
   const averageRouteGrade = getAverageGrade(routes)
   const averageBoulderGrade = getAverageGrade(boulders)
@@ -34,7 +34,7 @@ export function AscentSummary({ ascents }: AscentListProps) {
 
       <p>
         <span className="block">
-          Your last {mostRecentAscent.climbingDiscipline.toLowerCase()} was{' '}
+          Your last {mostRecentAscent.discipline.toLowerCase()} was{' '}
           <AscentComponent ascent={mostRecentAscent} />
         </span>
 
@@ -60,19 +60,13 @@ export function AscentSummary({ ascents }: AscentListProps) {
         {averageRouteGrade === 'N/A' ? undefined : (
           <span className="block">
             Your average route grade was{' '}
-            <DisplayGrade
-              climbingDiscipline="Route"
-              grade={averageRouteGrade}
-            />
+            <DisplayGrade discipline={SPORT} grade={averageRouteGrade} />
           </span>
         )}
         {averageBoulderGrade === 'N/A' ? undefined : (
           <span className="block">
             Your average bouldering grade was{' '}
-            <DisplayGrade
-              climbingDiscipline="Boulder"
-              grade={averageBoulderGrade}
-            />
+            <DisplayGrade discipline={BOULDERING} grade={averageBoulderGrade} />
           </span>
         )}
       </p>

@@ -1,4 +1,5 @@
 import { extractDateFromISODateString } from '~/helpers/date'
+import { OUTDOOR } from '~/schema/training'
 import { getAllAscents } from '~/services/ascents'
 import { getAllTrainingSessions } from '~/services/training'
 
@@ -27,7 +28,7 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
 
   const outdoorSessionsSet = new Set(
     outdoorSessions
-      .filter(({ sessionType }) => sessionType === 'Out')
+      .filter(({ type }) => type === OUTDOOR)
       .map(({ date }) => extractDateFromISODateString(date)),
   )
 

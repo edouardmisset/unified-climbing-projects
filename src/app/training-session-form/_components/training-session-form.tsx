@@ -13,18 +13,14 @@ import { _0To100RegEx } from '~/constants/generic'
 import { LINKS } from '~/constants/links'
 import { createValueAndLabel } from '~/helpers/create-value-and-label'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
-import {
-  fromAnatomicalRegionToEmoji,
-  fromClimbingDisciplineToEmoji,
-  fromEnergySystemToEmoji,
-} from '~/helpers/formatters'
+import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import { CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import {
+  ANATOMICAL_REGION,
   ANATOMICAL_REGIONS,
+  ENERGY_SYSTEM,
   ENERGY_SYSTEMS,
-  fromAnatomicalRegionToLabel,
-  fromEnergySystemToLabel,
-  fromSessionTypeToLabel,
+  OUTDOOR,
   SESSION_TYPES,
   type TrainingSessionForm as TrainingSessionFormType,
 } from '~/schema/training'
@@ -80,7 +76,7 @@ export default function TrainingSessionForm({
           reset()
           await utils.training.invalidate()
 
-          if (data.sessionType === 'Out') {
+          if (data.type === OUTDOOR) {
             router.push(LINKS.ascentForm)
           }
         },
@@ -113,7 +109,7 @@ export default function TrainingSessionForm({
       <div className={styles.field}>
         <label htmlFor="session-type">Session Type</label>
         <input
-          {...register('sessionType')}
+          {...register('type')}
           className={styles.input}
           enterKeyHint="next"
           id="session-type"
@@ -124,42 +120,39 @@ export default function TrainingSessionForm({
         />
         <DataList
           id="session-type-list"
-          options={SESSION_TYPES.map(sessionType => ({
-            label: fromSessionTypeToLabel(sessionType),
-            value: sessionType,
+          options={SESSION_TYPES.map(type => ({
+            label: type,
+            value: type,
           }))}
         />
       </div>
       <div className={styles.field}>
-        <label htmlFor="gymCrag">Location</label>
+        <label htmlFor="location">Location</label>
         <input
-          {...register('gymCrag')}
+          {...register('location')}
           className={styles.input}
           enterKeyHint="next"
-          id="gymCrag"
-          list="gym-crag-list"
+          id="location"
+          list="locations"
           placeholder="Ceüse"
           title="The name of the gym or crag"
           type="text"
         />
-        <DataList
-          id="gym-crag-list"
-          options={createValueAndLabel(allLocations)}
-        />
+        <DataList id="locations" options={createValueAndLabel(allLocations)} />
       </div>
       <div className={styles.field}>
-        <label htmlFor="climbing-discipline">Climbing Discipline</label>
+        <label htmlFor="discipline">Climbing Discipline</label>
         <input
-          {...register('climbingDiscipline')}
+          {...register('discipline')}
           className={styles.input}
           enterKeyHint="next"
-          id="climbing-discipline"
-          list="climbing-discipline-list"
+          id="discipline"
+          list="discipline-list"
           placeholder="Route"
           title={`The climbing discipline of the session (e.g. ${climbingDisciplineFormattedList})`}
         />
         <DataList
-          id="climbing-discipline-list"
+          id="discipline-list"
           options={CLIMBING_DISCIPLINE.map(discipline => ({
             label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
             value: discipline,
@@ -180,7 +173,7 @@ export default function TrainingSessionForm({
         <DataList
           id="anatomical-region-list"
           options={ANATOMICAL_REGIONS.map(region => ({
-            label: `${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`,
+            label: `${ANATOMICAL_REGION[region].emoji} ${region}`,
             value: region,
           }))}
         />
@@ -200,7 +193,7 @@ export default function TrainingSessionForm({
         <DataList
           id="energy-system-list"
           options={ENERGY_SYSTEMS.map(system => ({
-            label: `${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`,
+            label: `${ENERGY_SYSTEM[system].emoji} ${system}`,
             value: system,
           }))}
         />
