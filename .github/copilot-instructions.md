@@ -311,6 +311,8 @@ Each section MUST be separated by an empty line.
 
 - Follow DRY (**Don’t Repeat Yourself**) principle. This is particularly true for test cases.
 - Follow SOLID principles where applicable.
+- Use destructuring for objects and arrays whenever possible.
+- For functions with more than 2 parameters, consider using a single object parameter to improve readability.
 
 ### Deployment
 
