@@ -18,6 +18,7 @@ export const LINKS = {
   ascentsBarcode: '/ascents/barcode',
   ascentsQrCode: '/ascents/qr-code',
   trainingSessionsList: '/training-sessions',
+  trainingSessionsDashboard: '/training-sessions/dashboard',
   trainingSessionsCalendar: '/training-sessions/calendar',
   trainingSessionsBarcode: '/training-sessions/barcode',
   trainingSessionsQrCode: '/training-sessions/qr-code',

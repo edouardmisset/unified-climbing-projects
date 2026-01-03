@@ -15,23 +15,30 @@ export function useTrainingSessionsFilter(
     selectedLoad,
     selectedLocation,
     selectedPeriod,
+    selectedDiscipline,
+    selectedLocationType,
   } = useTrainingSessionsQueryState()
 
   const filteredTrainingSessions = useMemo(() => {
     const selectedYearNumber = Number(selectedYear)
+
     return filterTrainingSessions(trainingSessions, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       gymCrag: normalizeFilterValue(selectedLocation),
       load: normalizeFilterValue(selectedLoad),
+      locationType: normalizeFilterValue(selectedLocationType),
+      period: normalizeFilterValue(selectedPeriod),
       sessionType: normalizeFilterValue(selectedSessionType),
       year:
         selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
           : undefined,
-      period: normalizeFilterValue(selectedPeriod),
     })
   }, [
+    selectedDiscipline,
     selectedLoad,
     selectedLocation,
+    selectedLocationType,
     selectedPeriod,
     selectedSessionType,
     selectedYear,

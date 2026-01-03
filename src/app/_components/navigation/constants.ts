@@ -45,6 +45,11 @@ export const NAVIGATION_ITEMS = [
       },
       {
         type: 'link',
+        href: LINKS.trainingSessionsDashboard,
+        label: '📊 Dashboard',
+      },
+      {
+        type: 'link',
         href: LINKS.trainingSessionsCalendar,
         label: '📅 Calendar',
       },

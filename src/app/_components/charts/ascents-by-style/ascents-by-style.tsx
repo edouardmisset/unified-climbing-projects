@@ -1,4 +1,3 @@
-import type { OrdinalColorScaleConfig } from '@nivo/colors'
 import type { PropertyAccessor } from '@nivo/core'
 import { type ComputedDatum, ResponsivePie } from '@nivo/pie'
 import { useMemo } from 'react'
@@ -8,7 +7,12 @@ import {
   getAscentsByStyle,
 } from '../ascents-by-style/get-ascents-by-style'
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_PIE_MARGIN, defaultMotionConfig, theme } from '../constants'
+import {
+  DEFAULT_PIE_MARGIN,
+  defaultMotionConfig,
+  pieColorsGetter,
+  theme,
+} from '../constants'
 
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
@@ -27,7 +31,8 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
         animate
         arcLabel={arcLabel}
         arcLabelsTextColor="var(--surface-1)"
-        colors={getChartColor}
+        // @ts-expect-error
+        colors={pieColorsGetter}
         data={data}
         innerRadius={0.5}
         margin={DEFAULT_PIE_MARGIN}
@@ -37,7 +42,3 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
     </ChartContainer>
   )
 }
-
-const getChartColor: OrdinalColorScaleConfig<
-  Omit<ComputedDatum<AscentByStyle>, 'color' | 'fill' | 'arc'>
-> = ({ data }) => data.color

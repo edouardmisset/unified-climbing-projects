@@ -1,5 +1,8 @@
 import type { ChangeEventHandler } from 'react'
 
+export const LOCATION_TYPES = ['Indoor', 'Outdoor'] as const
+export type LocationType = (typeof LOCATION_TYPES)[number]
+
 export type FilterConfig<T extends string | number = string> = {
   name: string
   title: string

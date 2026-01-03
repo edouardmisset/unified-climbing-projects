@@ -70,8 +70,7 @@ export function categorizeSessions(
 
   for (const session of sessions) {
     const { sessionType, climbingDiscipline } = session
-    const isIndoor =
-      sessionType !== undefined && INDOOR_SESSION_TYPES.includes(sessionType)
+    const isIndoor = isIndoorSession({ sessionType })
     const isOutdoor = sessionType === 'Out'
 
     if (isIndoor) {
@@ -102,4 +101,12 @@ type CategorizedSessionsOutput = {
   indoorBoulder: TrainingSession[]
   outdoorRoute: TrainingSession[]
   outdoorBoulder: TrainingSession[]
+}
+
+export function isIndoorSession({
+  sessionType,
+}: {
+  sessionType?: TrainingSession['sessionType']
+}): boolean {
+  return sessionType !== undefined && INDOOR_SESSION_TYPES.includes(sessionType)
 }
