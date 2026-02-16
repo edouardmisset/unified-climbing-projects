@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
 
 // LAZY LOADING: Load barcode component only when needed
 const AscentsBarcode = lazy(() =>
@@ -14,7 +14,7 @@ const AscentsBarcode = lazy(() =>
 )
 
 export default async function AscentBarcodePage() {
-  const allAscents = await api.ascents.getAll()
+  const allAscents = await getAllAscents()
 
   if (!allAscents) return <NotFound />
 

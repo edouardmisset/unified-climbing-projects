@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
-import { api } from '~/trpc/server'
+import { getAllTrainingSessions } from '~/services/training'
 
 // LAZY LOADING: Load QR code component only when needed
 const TrainingQRCode = lazy(() =>
@@ -14,7 +14,7 @@ const TrainingQRCode = lazy(() =>
 )
 
 export default async function TrainingSessionsQRCodePage() {
-  const trainingSessions = await api.training.getAll()
+  const trainingSessions = await getAllTrainingSessions()
 
   if (!trainingSessions) return <NotFound />
 

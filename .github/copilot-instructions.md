@@ -1,49 +1,64 @@
 # Copilot Instructions
 
-This is a Next.js climbing analytics app focused on **European sport climbing and bouldering** using the French grading system. It features Google Sheets backend, tRPC API, and extensive data visualization with strong emphasis on type safety.
+This is a Next.js climbing analytics app focused on **European sport climbing and bouldering** using the French grading system. It features Convex backend, ISR for performance, and extensive data visualization with strong emphasis on type safety.
 
 ## Architecture Overview
 
-**Data Flow:** Google Sheets → CSV/API → tRPC → React components → Nivo charts
-- **Backend:** Google Sheets as database via service account authentication
-- **API:** tRPC routers in `src/server/api/routers/` with strong typing
+**Data Flow:** Convex → Services (with cache) → React Server Components → Nivo charts
+
+- **Backend:** Convex as database with built-in query caching
+- **API:** Direct service layer in `src/services/` with React `cache()` wrappers
 - **Frontend:** Next.js App Router with Base UI components and CSS modules
 - **Auth:** Clerk with sign-in protection on `/log-*` routes
 - **Type Safety:** Zod schemas validate all data boundaries and runtime validation
+- **Performance:** ISR (Incremental Static Regeneration) with on-demand revalidation
 
 ## Critical Systems
 
 ### Grade Conversion & Scoring
+
 The app uses the **French climbing grade system** with point conversions:
+
 ```typescript
 // French grade conversion: '7a' → 37 (number) → 700 (points)
-fromGradeToNumber('7a') // 37
-GRADE_TO_POINTS['7a'] // 700 + style points + discipline bonus
+fromGradeToNumber("7a"); // 37
+GRADE_TO_POINTS["7a"]; // 700 + style points + discipline bonus
 ```
+
 - `src/schema/ascent.ts` defines French grade mappings and point systems
 - `src/helpers/grade-converter.ts` handles conversions
 - Style points: Onsight (+150), Flash (+50), Redpoint (+0)
 - Boulder bonus: +100 points
 
-### Google Sheets Integration
-All data flows through Google Sheets transformers:
+### Convex Integration
+
+Data is fetched through the service layer with caching:
+
 ```typescript
-// src/helpers/transformers/
-// GS format ↔ JS format with header mappings
-transformAscentFromGSToJS(rawRow) // Sheets → typed objects
-transformAscentFromJSToGS(ascent) // Form data → Sheets format
+// src/services/convex.ts
+import { cache } from "react";
+import { api } from "~/convex/_generated/api";
+import { fetchQuery, fetchMutation } from "convex/nextjs";
+
+export const getAllAscents = cache(() => {
+  "use cache";
+  return fetchQuery(api.ascents.getAll);
+});
 ```
-- Headers defined in `src/helpers/transformers/headers.ts`
-- Authentication via service account in `src/services/google-sheets.ts`
-- Cache data fetching with React's `cache()` for performance
+
+- Service functions wrapped with React `cache()` to prevent duplicate fetches
+- Convex provides built-in caching with 'use cache' directive
+- Server actions use `revalidatePath()` for cache invalidation
 
 ### Chart Data Transformations
+
 Chart helpers follow this pattern:
+
 ```typescript
 // src/app/_components/charts/[chart-name]/get-[chart-name].ts
 export function getChartData(ascents: Ascent[]): ChartDataType {
   // 1. Create grade scale from min/max grades
-  // 2. Group/filter ascents 
+  // 2. Group/filter ascents
   // 3. Transform to chart format with colors
 }
 ```
@@ -61,11 +76,22 @@ component-name/
 └── component-name.test.ts   // Unit tests with vitest
 ```
 
-**Pages:** Use `default export`, fetch data with `api.` calls in async components
+**Pages:** Use `default export`, fetch data by importing service functions in async components
+
+```typescript
+// src/app/ascents/page.tsx
+export const revalidate = 3600 // ISR: cache for 1 hour
+
+export default async function Page() {
+  const ascents = await getAllAscents()
+  return <AscentList ascents={ascents} />
+}
+```
 
 ## Development Workflows
 
 ### Key Commands
+
 ```bash
 bun run dev          # Development with Turbo
 bun run check        # Quick validation (lint + typecheck + style) - use frequently
@@ -75,22 +101,27 @@ bun run test:e2e     # Playwright tests in tests/
 ```
 
 ### Data Operations
-- **Backup:** `bun run scripts/backup.ts` exports Google Sheets to JSON
-- **Environment:** Requires Google Sheets service account credentials
+
+- **Backup:** `bun run scripts/backup.ts` exports Convex data to JSON
+- **Environment:** Requires Convex deployment URL and credentials
 - **Schema:** Zod schemas in `src/schema/` with strict validation
+- **ISR:** Pages use `export const revalidate = 3600` for static generation
 
 ### Filter Patterns
+
 Use consistent filter helpers:
+
 ```typescript
 // src/helpers/filter-*.ts pattern
-filterAscents(ascents, { year: 2024, climbingDiscipline: 'Route' })
-filterTrainingSessions(sessions, { sessionType: 'Out' })
+filterAscents(ascents, { year: 2024, climbingDiscipline: "Route" });
+filterTrainingSessions(sessions, { sessionType: "Out" });
 ```
 
 ## Design System
 
 **CSS:** Use design tokens from `src/styles/`:
-- Colors: `var(--blue-5)`, `var(--gray-800)` 
+
+- Colors: `var(--blue-5)`, `var(--gray-800)`
 - Sizes: `var(--size-3)`, `var(--size-fluid-2)`
 - Climbing-specific: `var(--route)`, `var(--boulder)`, `var(--flash)`
 
@@ -99,16 +130,17 @@ filterTrainingSessions(sessions, { sessionType: 'Out' })
 ## Testing Patterns
 
 **Unit Tests:** Test data transformation helpers extensively:
+
 ```typescript
 // src/helpers/*.test.ts
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it } from "vitest";
 
-describe('fromGradeToNumber', () => {
-  it('converts French grades to numbers correctly', () => {
-    expect(fromGradeToNumber('5a')).toBe(21)
-    expect(fromGradeToNumber('6c+')).toBe(33)
-  })
-})
+describe("fromGradeToNumber", () => {
+  it("converts French grades to numbers correctly", () => {
+    expect(fromGradeToNumber("5a")).toBe(21);
+    expect(fromGradeToNumber("6c+")).toBe(33);
+  });
+});
 ```
 
 **E2E:** Smoke tests for main pages with Playwright
@@ -116,14 +148,15 @@ describe('fromGradeToNumber', () => {
 ## Common Gotchas
 
 - **Grade System:** Always use helper functions, never manual conversions
-- **Google Sheets:** Headers order matters, defined in `headers.ts`
-- **tRPC:** Server calls use `api.` (RSC), client uses `trpc.`
-- **Caching:** React `cache()` for data fetching, 'use cache' directive
+- **Convex:** Use service layer, not direct Convex client imports in components
+- **Caching:** React `cache()` for data fetching, 'use cache' directive in services
+- **ISR:** Use `revalidatePath()` in server actions to invalidate caches after mutations
 - **Auth:** Clerk `<SignedIn>` wrapper for protected routes
 
 ## TypeScript & Type Safety
 
 **Critical Rules:**
+
 - **Avoid `any`** - use proper typing or `unknown` with type guards
 - **Type all function return types** (except React components)
 - **Use TypeScript generics** to improve type inference and reusability
@@ -132,10 +165,10 @@ describe('fromGradeToNumber', () => {
 ```typescript
 // Good: Typed function with generic
 function filterData<T extends { date: string }>(
-  items: T[], 
-  predicate: (item: T) => boolean
+  items: T[],
+  predicate: (item: T) => boolean,
 ): T[] {
-  return items.filter(predicate)
+  return items.filter(predicate);
 }
 
 // Good: Zod validation at boundaries
@@ -143,7 +176,7 @@ const ascentSchema = z.object({
   topoGrade: gradeSchema,
   style: ascentStyleSchema,
   // ...
-})
+});
 ```
 
 ## Naming Conventions
@@ -174,21 +207,23 @@ const ascentSchema = z.object({
 
     ```ts
     export const clampValueInRange = (params: ValueAndRange): number => {
-      const { maximum, minimum, value } = params
-      return Math.max(Math.min(value, maximum), minimum)
-    }
+      const { maximum, minimum, value } = params;
+      return Math.max(Math.min(value, maximum), minimum);
+    };
     ```
 
   - React components MUST use `props`.
 
     ```tsx
-    export function BooleanStateGridCell(props: BooleanStateCellProps): React.JSX.Element {
-      const { checked } = props
+    export function BooleanStateGridCell(
+      props: BooleanStateCellProps,
+    ): React.JSX.Element {
+      const { checked } = props;
       return (
         <CenterCell>
           <StyledBooleanStateCell checked={checked} />
         </CenterCell>
-      )
+      );
     }
     ```
 

@@ -28,7 +28,6 @@ import {
   SESSION_TYPES,
   type TrainingSessionForm as TrainingSessionFormType,
 } from '~/schema/training'
-import { api } from '~/trpc/react'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 import {
@@ -46,7 +45,6 @@ export default function TrainingSessionForm({
   'use no memo'
   const { user } = useUser()
   const router = useTransitionRouter()
-  const utils = api.useUtils()
 
   const defaultDate = stringifyDate(new Date())
 
@@ -78,7 +76,7 @@ export default function TrainingSessionForm({
           if (!(await promise)) return
 
           reset()
-          await utils.training.invalidate()
+          router.refresh()
 
           if (data.sessionType === 'Out') {
             router.push(LINKS.ascentForm)

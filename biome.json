@@ -55,6 +55,7 @@
       "correctness": {
         "noUnusedImports": "error",
         "noUnusedVariables": "warn",
+        "noUnknownPseudoElement": "off",
         "useUniqueElementIds": "off",
         "useExhaustiveDependencies": "off",
         "noConstantCondition": "error",
@@ -68,22 +69,14 @@
       },
       "nursery": {
         "noShadow": "warn",
-        "noDeprecatedImports": "warn",
         "noFloatingPromises": "warn",
-        "noDuplicateDependencies": "warn",
         "noDuplicatedSpreadProps": "warn",
         "noEqualsToNull": "off",
-        "noImportCycles": "warn",
         "noMisusedPromises": "warn",
         "noProto": "warn",
         "noMultiStr": "warn",
         "noUnnecessaryConditions": "warn",
-        "noUselessUndefined": "warn",
-        "noUnusedExpressions": "warn",
-        "noUselessCatchBinding": "warn",
-        "useArraySortCompare": "warn",
-        "useConsistentArrowReturn": "warn",
-        "useDeprecatedDate": "warn"
+        "useArraySortCompare": "warn"
       },
       "style": {
         "noInferrableTypes": "error",

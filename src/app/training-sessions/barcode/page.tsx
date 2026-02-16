@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataWeeksByYear } from '~/data/helpers'
-import { api } from '~/trpc/server'
+import { getAllTrainingSessions } from '~/services/training'
 
 // LAZY LOADING: Load barcode component only when needed
 const TrainingSessionsBarcode = lazy(() =>
@@ -14,7 +14,7 @@ const TrainingSessionsBarcode = lazy(() =>
 )
 
 export default async function TrainingSessionsBarcodePage() {
-  const trainingSessions = await api.training.getAll()
+  const trainingSessions = await getAllTrainingSessions()
 
   if (!trainingSessions) return <NotFound />
 

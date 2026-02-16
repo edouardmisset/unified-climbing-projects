@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { api } from '~/trpc/server'
+import { getAllTrainingSessions } from '~/services/training'
 import { FilteredTrainingSessionList } from '../_components/filtered-training-sessions-list/filtered-training-sessions-list'
 import { Loader } from '../_components/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 
+export const revalidate = 86_400
+
 export default async function TrainingSessionsPage() {
-  const trainingSessions = await api.training.getAll()
+  const trainingSessions = await getAllTrainingSessions()
 
   return (
     <Layout title="Training">

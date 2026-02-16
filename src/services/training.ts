@@ -1,6 +1,22 @@
-import type { TrainingSession } from '~/schema/training'
-import { getAllTrainingSessionsFromDB } from './convex.ts'
+import { cache } from 'react'
+import { compareStringsAscending } from '~/helpers/sort-strings'
 
-export async function getAllTrainingSessions(): Promise<TrainingSession[]> {
-  return await getAllTrainingSessionsFromDB()
-}
+export { addTrainingSession, getAllTrainingSessions } from './convex'
+
+/**
+ * Get all unique training locations sorted alphabetically
+ */
+export const getAllTrainingLocations = cache(async (): Promise<string[]> => {
+  'use cache'
+  const { getAllTrainingSessions } = await import('./convex')
+  const allTrainingSessions = await getAllTrainingSessions()
+
+  return [
+    ...new Set(
+      allTrainingSessions
+        .map(({ gymCrag }) => gymCrag?.trim())
+        .filter(Boolean)
+        .sort(compareStringsAscending),
+    ),
+  ]
+})

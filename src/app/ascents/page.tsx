@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
 import { FilteredAscentList } from '../_components/filtered-ascents-list/filtered-ascents-list'
 import { Loader } from '../_components/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 
+export const revalidate = 86_400
+
 export default async function Page() {
-  const ascents = await api.ascents.getAll()
+  const ascents = await getAllAscents()
 
   return (
     <Layout title="Ascents">

@@ -3,10 +3,12 @@ import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { TrainingDashboard } from '~/app/_components/training-dashboard/training-dashboard'
-import { api } from '~/trpc/server'
+import { getAllTrainingSessions } from '~/services/training'
+
+export const revalidate = 86_400
 
 export default async function Page() {
-  const trainingSessions = await api.training.getAll()
+  const trainingSessions = await getAllTrainingSessions()
 
   return (
     <Layout title="Training Dashboard">

@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { extractDateFromISODateString } from '~/helpers/date'
 import type { AscentListProps } from '~/schema/ascent'
 import type { TrainingSessionListProps } from '~/schema/training'
-import { getAllAscentsFromDB, getAllTrainingSessionsFromDB } from './convex'
+import { getAllAscents, getAllTrainingSessions } from './convex'
 
 const BACKUP_DIRECTORY = './src/backup/'
 
@@ -45,8 +45,8 @@ export async function writeClimbingDBToBackupJson(): Promise<{
 
 export async function getDataFromDB(): Promise<DataToBackup> {
   const [ascents, trainingSessions] = await Promise.all([
-    getAllAscentsFromDB(),
-    getAllTrainingSessionsFromDB(),
+    getAllAscents(),
+    getAllTrainingSessions(),
   ])
 
   return { ascents, trainingSessions }
