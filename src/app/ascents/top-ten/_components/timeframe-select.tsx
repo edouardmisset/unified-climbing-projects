@@ -33,7 +33,7 @@ export function TimeframeSelect() {
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>
                 <Select.ItemText className={styles.ItemText}>
-                  {deSlugify(timeframe)}
+                  {deSlugify(timeframeOption)}
                 </Select.ItemText>
               </Select.Item>
             ))}
