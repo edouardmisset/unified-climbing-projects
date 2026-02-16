@@ -38,7 +38,7 @@ export const ascentsRouter = createTRPCRouter({
   addOne: publicProcedure
     .input(ascentSchema.omit({ _id: true }))
     .output(z.boolean())
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       try {
         await addAscentToDB(input)
         return true
