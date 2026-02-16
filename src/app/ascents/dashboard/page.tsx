@@ -3,10 +3,12 @@ import { Suspense } from 'react'
 import { Dashboard } from '~/app/_components/dashboard/dashboard'
 import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
+
+export const revalidate = 86_400
 
 export default async function Page() {
-  const ascents = await api.ascents.getAll()
+  const ascents = await getAllAscents()
 
   return (
     <Layout title="Dashboard">

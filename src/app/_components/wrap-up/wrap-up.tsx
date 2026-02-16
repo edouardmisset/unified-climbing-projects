@@ -1,6 +1,9 @@
+import { filterAscents } from '~/helpers/filter-ascents'
+import { filterTrainingSessions } from '~/helpers/filter-training'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
+import { getAllTrainingSessions } from '~/services/training'
 import { Card } from '../card/card'
 import Layout from '../page-layout/page-layout'
 import { AscentSummary } from './_components/ascent-summary'
@@ -16,10 +19,16 @@ import styles from './wrap-up.module.css'
 async function getAscentsAndTraining(
   year?: number,
 ): Promise<{ ascents: Ascent[]; trainingSessions: TrainingSession[] }> {
-  const [ascents, trainingSessions] = await Promise.all([
-    api.ascents.getAll({ year }),
-    api.training.getAll({ year }),
+  const [allAscents, allTrainingSessions] = await Promise.all([
+    getAllAscents(),
+    getAllTrainingSessions(),
   ])
+
+  const ascents = year ? filterAscents(allAscents, { year }) : allAscents
+  const trainingSessions = year
+    ? filterTrainingSessions(allTrainingSessions, { year })
+    : allTrainingSessions
+
   return { ascents, trainingSessions }
 }
 

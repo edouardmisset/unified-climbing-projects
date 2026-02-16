@@ -36,7 +36,6 @@ import {
   HOLDS,
   PROFILES,
 } from '~/schema/ascent'
-import { api } from '~/trpc/react.tsx'
 import { onSubmit } from '../actions.ts'
 import {
   _1To5RegEx,
@@ -74,7 +73,6 @@ export default function AscentForm(props: AscentFormProps) {
   'use no memo'
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
   const { user, isLoaded: isUserLoaded } = useUser()
-  const utils = api.useUtils()
 
   const router = useTransitionRouter()
 
@@ -203,7 +201,6 @@ export default function AscentForm(props: AscentFormProps) {
           if (!(await promise)) return
 
           reset()
-          await utils.ascents.invalidate()
           router.refresh()
         },
         error => {

@@ -5,11 +5,21 @@ import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { createYearList } from '~/data/helpers'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
 import { AscentCalendar } from './calendar'
 
 export default async function AscentsCalendarPage() {
-  const allAscents = await api.ascents.getAll()
+  return (
+    <Layout layout="flexColumn" title="Ascents Calendar">
+      <Suspense fallback={<Loader />}>
+        <CalendarContent />
+      </Suspense>
+    </Layout>
+  )
+}
+
+async function CalendarContent() {
+  const allAscents = await getAllAscents()
 
   if (!allAscents) return <NotFound />
 
@@ -21,13 +31,11 @@ export default async function AscentsCalendarPage() {
   )
 
   return (
-    <Layout layout="flexColumn" title="Ascents Calendar">
-      <Suspense fallback={<Loader />}>
-        {ascentYearsData.map(([year, ascents]) => (
-          <AscentCalendar allAscents={ascents} key={year} year={year} />
-        ))}
-      </Suspense>
-    </Layout>
+    <>
+      {ascentYearsData.map(([year, ascents]) => (
+        <AscentCalendar allAscents={ascents} key={year} year={year} />
+      ))}
+    </>
   )
 }
 

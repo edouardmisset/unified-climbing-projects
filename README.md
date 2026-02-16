@@ -12,8 +12,7 @@ What’s inside (high-level):
 
 - Next.js (App Router) + TypeScript, Bun, CSS Modules
 - UI: Base UI components; Charts: Nivo; Auth: Clerk
-- Data & validation: tRPC, Zod schemas; helpers for Google Sheets ⇄ JS
-  transforms
+- Data & validation: Convex database, Zod schemas; ISR for performance
 - Features: dashboards and charts (grades, disciplines, years, distance),
   calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards
 - Testing: unit tests with poku, end-to-end with Playwright
@@ -66,7 +65,7 @@ Note: You may need to configure environment variables (for example, Clerk).
 - `src/app/_components/` — Reusable UI components (charts, inputs, dialogs)
 - `src/helpers/` — Core utilities (dates, grades, transforms) with tests
 - `src/schema/` — Zod schemas for strong typing and validation
-- `src/trpc/` — tRPC router, server, and client wiring
+- `src/services/` — Data access layer with React cache() wrappers
 - `src/data/` — Data grouping and time-based helpers
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
 - `tests/` — Playwright E2E tests and reports
@@ -89,13 +88,11 @@ Note: You may need to configure environment variables (for example, Clerk).
 - [x] Add a list of all training sessions like the list of ascents. Also use
   filters (by year, by session type, by "intensity",  "volume" or "load"? (high,
   medium, low))
+- [x] Add database (managed database with Convex)
+- [ ] ~~Add ORM (Drizzle)~~
 
 </details>
 </br>
-
-- [ ] Add database (Postgres)
-
-- [ ] Add ORM (Drizzle)
 
 - [ ] Bonus: Implement rate limiting (use Upstash) ?
 
@@ -115,14 +112,13 @@ Note: You may need to configure environment variables (for example, Clerk).
 - [x] Improve caching mechanisms for better performances (`createCache`,
   Vercel's fluid computing, ...)
 - [x] Use [react compiler](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactCompiler)
+- [x] Changed from tRPC to direct RSC + Convex for better performance
+- [x] Added ISR (Incremental Static Regeneration) with on-demand revalidation
+- [x] Implemented React cache() wrappers for service functions
+- [x] Memoize costly functions (like data transformations).
 
 </details>
 </br>
-
-- [ ] Investigate the viability of changing the communication between front and
-  back from `tRPC` to `RSC` for better performances
-
-- [ ] Memoize costly functions (like data transformations).
 
 - [ ] Improve performances of the `Visualization` page.
 

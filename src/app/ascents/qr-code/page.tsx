@@ -5,7 +5,7 @@ import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { sortByGrade } from '~/helpers/sorter'
-import { api } from '~/trpc/server'
+import { getAllAscents } from '~/services/ascents'
 
 // LAZY LOADING: Load QR code component only when needed
 const AscentsQRCode = lazy(() =>
@@ -15,7 +15,7 @@ const AscentsQRCode = lazy(() =>
 )
 
 export default async function AscentsQRCodePage() {
-  const allAscents = await api.ascents.getAll()
+  const allAscents = await getAllAscents()
 
   if (!allAscents) return <NotFound />
 

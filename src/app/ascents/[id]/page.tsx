@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
-import { isError } from '~/helpers/is-error'
-import { api } from '~/trpc/server'
+import { Loader } from '~/app/_components/loader/loader'
+import { getAscentById } from '~/services/ascents'
 
 export default async function Page({
   params,
@@ -11,10 +12,18 @@ export default async function Page({
   const _id = (await params)?.id ?? ''
   if (_id.length === 0) return <h2>Invalid ascent ID</h2>
 
-  const ascent = await api.ascents.getById({ _id })
+  return (
+    <Suspense fallback={<Loader />}>
+      <AscentDetail ascentId={_id} />
+    </Suspense>
+  )
+}
 
-  if (isError(ascent)) {
-    return <p>{ascent.error}</p>
+async function AscentDetail({ ascentId }: { ascentId: string }) {
+  const ascent = await getAscentById(ascentId)
+
+  if (!ascent) {
+    return <p>Ascent not found</p>
   }
 
   return (

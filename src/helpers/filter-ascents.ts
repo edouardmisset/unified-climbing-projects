@@ -2,10 +2,13 @@ import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
 import { DEFAULT_GRADE } from '~/constants/ascents.ts'
+import type { z } from '~/helpers/zod'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'
-import type { OptionalAscentFilter } from '~/server/api/routers/ascents'
+import type { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 import { fromGradeToNumber } from './grade-converter.ts'
+
+type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
 /**
  * Filters the provided ascents based on the given filter criteria.
@@ -56,7 +59,8 @@ export function filterAscents(
       (tries === undefined || ascent.tries === tries) &&
       (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
       (period === undefined ||
-        isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] }))
+        (period in PERIOD_TO_DATES &&
+          isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
     )
   })
 }

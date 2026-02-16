@@ -2,26 +2,17 @@ import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
-import { api } from '~/trpc/server.ts'
+import {
+  getAllAreas,
+  getAllCrags,
+  getLatestAscent,
+  getMinMaxGrades,
+} from '~/services/ascent-helpers'
 import Layout from '../_components/page-layout/page-layout.tsx'
 import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
 import AscentForm from './_components/ascent-form.tsx'
 
-async function fetchAscentData() {
-  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] =
-    await Promise.all([
-      api.ascents.getLatest(),
-      api.grades.getMinMax(),
-      api.crags.getAll({ sortOrder: 'newest' }),
-      api.areas.getAll({ sortOrder: 'newest' }),
-    ])
-  return { latestAscent, minGrade, maxGrade, allCrags, allAreas }
-}
-
 export default async function AscentFormPage() {
-  const { latestAscent, minGrade, maxGrade, allCrags, allAreas } =
-    await fetchAscentData()
-
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
@@ -30,13 +21,7 @@ export default async function AscentFormPage() {
             Form to log a climbing ascent
           </span>
           <Suspense fallback={<Loader />}>
-            <AscentForm
-              areas={allAreas}
-              crags={allCrags}
-              latestAscent={latestAscent}
-              maxGrade={maxGrade}
-              minGrade={minGrade}
-            />
+            <AscentFormWrapper />
           </Suspense>
         </Layout>
       </SignedIn>
@@ -44,6 +29,26 @@ export default async function AscentFormPage() {
         <UnauthorizedAccess />
       </SignedOut>
     </Suspense>
+  )
+}
+
+async function AscentFormWrapper() {
+  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] =
+    await Promise.all([
+      getLatestAscent(),
+      getMinMaxGrades(),
+      getAllCrags(),
+      getAllAreas(),
+    ])
+
+  return (
+    <AscentForm
+      areas={allAreas}
+      crags={allCrags}
+      latestAscent={latestAscent}
+      maxGrade={maxGrade}
+      minGrade={minGrade}
+    />
   )
 }
 
