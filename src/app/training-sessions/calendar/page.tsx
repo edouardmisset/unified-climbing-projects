@@ -11,7 +11,7 @@ import { getAllTrainingSessions } from '~/services/training'
 
 export default async function TrainingSessionsCalendarPage() {
   return (
-    <Layout layout="flexColumn" title="Training Calendar">
+    <Layout layout='flexColumn' title='Training Calendar'>
       <Suspense fallback={<Loader />}>
         <CalendarContent />
       </Suspense>
@@ -30,15 +30,12 @@ async function CalendarContent() {
     <>
       {trainingYears.map(year => (
         <Fragment key={year}>
-          <h2 className="superCenter">{year}</h2>
+          <h2 className='superCenter'>{year}</h2>
           <DataCalendar
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear}
             fromDataToCalendarEntries={(calendarYear, sessions) =>
-              fromTrainingSessionsToCalendarEntries(
-                calendarYear,
-                sessions as TrainingSession[][],
-              )
+              fromTrainingSessionsToCalendarEntries(calendarYear, sessions as TrainingSession[][])
             }
             year={year}
           />

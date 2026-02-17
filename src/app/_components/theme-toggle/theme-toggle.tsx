@@ -9,23 +9,16 @@ export function ThemeToggle({
   checked: boolean
   onChange: (checked: boolean) => void
 }) {
-  const handleThemeChange = useCallback(
-    () => onChange(!checked),
-    [checked, onChange],
-  )
+  const handleThemeChange = useCallback(() => onChange(!checked), [checked, onChange])
 
   return (
     <button
-      aria-label="Toggle theme"
+      aria-label='Toggle theme'
       className={styles.toggle}
       onClick={handleThemeChange}
-      type="button"
+      type='button'
     >
-      {checked ? (
-        <Moon color="var(--text-2)" />
-      ) : (
-        <Sun color="var(--text-2)" />
-      )}
+      {checked ? <Moon color='var(--text-2)' /> : <Sun color='var(--text-2)' />}
     </button>
   )
 }

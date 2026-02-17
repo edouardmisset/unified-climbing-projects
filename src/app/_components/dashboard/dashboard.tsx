@@ -25,7 +25,7 @@ export function Dashboard({ ascents }: AscentListProps) {
   if (ascents.length === 0) return <NotFound />
 
   return (
-    <div className="flex flexColumn alignCenter gridFullWidth">
+    <div className='flex flexColumn alignCenter gridFullWidth'>
       <AscentsFilterBar allAscents={ascents} showSearch={false} />
       <Suspense fallback={<Loader />}>
         <DashboardStatistics ascents={filteredAscents} />
@@ -37,11 +37,10 @@ export function Dashboard({ ascents }: AscentListProps) {
 const DashboardStatistics = memo(({ ascents }: AscentListProps) => {
   if (ascents.length === 0) {
     return (
-      <div className=" flexColumn gap w100 padding">
+      <div className=' flexColumn gap w100 padding'>
         <h2>Nothing there...</h2>
         <p>
-          Try adjusting your filters or{' '}
-          <Link href={LINKS.ascentForm}>logging new ascents</Link>.
+          Try adjusting your filters or <Link href={LINKS.ascentForm}>logging new ascents</Link>.
         </p>
       </div>
     )

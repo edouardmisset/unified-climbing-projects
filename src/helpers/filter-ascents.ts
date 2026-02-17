@@ -20,10 +20,7 @@ type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
  * @param {OptionalAscentFilter} [filters] - An optional set of filter criteria.
  * @returns {Ascent[]} - The filtered array of ascents.
  */
-export function filterAscents(
-  ascents: Ascent[],
-  filters?: OptionalAscentFilter,
-): Ascent[] {
+export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter): Ascent[] {
   const {
     climbingDiscipline,
     crag,
@@ -46,10 +43,8 @@ export function filterAscents(
   return ascents.filter(ascent => {
     const ascentDate = new Date(ascent.date)
     return (
-      (grade === undefined ||
-        stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
-      (climbingDiscipline === undefined ||
-        ascent.climbingDiscipline === climbingDiscipline) &&
+      (grade === undefined || stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
+      (climbingDiscipline === undefined || ascent.climbingDiscipline === climbingDiscipline) &&
       (year === undefined || isDateInYear(ascentDate, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&
@@ -59,8 +54,7 @@ export function filterAscents(
       (tries === undefined || ascent.tries === tries) &&
       (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
       (period === undefined ||
-        (period in PERIOD_TO_DATES &&
-          isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
+        (period in PERIOD_TO_DATES && isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
     )
   })
 }

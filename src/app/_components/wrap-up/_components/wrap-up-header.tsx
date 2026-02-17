@@ -9,14 +9,14 @@ export function WrapUpHeader({ year }: { year?: number }) {
   const beforeTitle = titleIsValidNumber ? (
     <YearNavigationButton
       enabled={YEAR_OF_FIRST_ASCENT < title}
-      nextOrPrevious="previous"
+      nextOrPrevious='previous'
       selectedYear={title}
     />
   ) : title === ALL_TIME ? (
     <YearNavigationButton
       enabled
-      nextOrPrevious="previous"
-      path="/wrap-up"
+      nextOrPrevious='previous'
+      path='/wrap-up'
       selectedYear={new Date().getFullYear() + 1}
     />
   ) : undefined
@@ -24,7 +24,7 @@ export function WrapUpHeader({ year }: { year?: number }) {
   const afterTitle = titleIsValidNumber && (
     <YearNavigationButton
       enabled={title < new Date().getFullYear()}
-      nextOrPrevious="next"
+      nextOrPrevious='next'
       selectedYear={title}
     />
   )

@@ -4,11 +4,7 @@ import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
 import { Loader } from '~/app/_components/loader/loader'
 import { getAscentById } from '~/services/ascents'
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const _id = (await params)?.id ?? ''
   if (_id.length === 0) return <h2>Invalid ascent ID</h2>
 
@@ -27,7 +23,7 @@ async function AscentDetail({ ascentId }: { ascentId: string }) {
   }
 
   return (
-    <div className="superCenter w100 h100">
+    <div className='superCenter w100 h100'>
       <AscentCard ascent={ascent} />
     </div>
   )

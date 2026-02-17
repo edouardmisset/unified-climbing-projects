@@ -5,16 +5,10 @@ import { groupDataDaysByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
 import type { Ascent } from '~/schema/ascent'
 
-export function AscentCalendar({
-  allAscents,
-  year,
-}: {
-  allAscents: Ascent[]
-  year: number
-}) {
+export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; year: number }) {
   return (
     <>
-      <h2 className="superCenter">{year}</h2>
+      <h2 className='superCenter'>{year}</h2>
       <Suspense fallback={<Loader />}>
         <DataCalendar
           data={allAscents}

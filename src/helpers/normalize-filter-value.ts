@@ -7,5 +7,5 @@ import { ALL_VALUE } from '~/app/_components/dashboard/constants'
  * @returns The original value if not "all", otherwise undefined
  */
 export function normalizeFilterValue<T extends string>(value: T | typeof ALL_VALUE): T | undefined {
-  return value === ALL_VALUE ? undefined : (value)
+  return value === ALL_VALUE ? undefined : value
 }

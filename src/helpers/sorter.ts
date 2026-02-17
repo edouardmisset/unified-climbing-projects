@@ -24,8 +24,7 @@ export function sortByGrade(
   const { descending = true } = options ?? {}
   return aGrade === bGrade
     ? 0
-    : (fromGradeToNumber(bGrade) - fromGradeToNumber(aGrade)) *
-        (descending ? 1 : -1)
+    : (fromGradeToNumber(bGrade) - fromGradeToNumber(aGrade)) * (descending ? 1 : -1)
 }
 
 /**
@@ -42,10 +41,7 @@ export const fromSessionTypeToSortOrder = (
   sessionType: Required<TrainingSession>['sessionType'],
 ): number => SESSION_TYPE_TO_SORT_ORDER[sessionType]
 
-const SESSION_TYPE_TO_SORT_ORDER: Record<
-  Required<TrainingSession>['sessionType'],
-  number
-> = {
+const SESSION_TYPE_TO_SORT_ORDER: Record<Required<TrainingSession>['sessionType'], number> = {
   Co: 7,
   CS: 2,
   En: 3,

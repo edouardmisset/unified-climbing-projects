@@ -7,7 +7,7 @@ import { TableAndSelect } from './_components/table-and-select'
 
 export default async function Page() {
   return (
-    <Layout title="Top Ten">
+    <Layout title='Top Ten'>
       <Suspense fallback={<Loader />}>
         <TopTenContent />
       </Suspense>

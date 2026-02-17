@@ -9,22 +9,15 @@ const DayCell = memo(({ day, index }: { day: string; index: number }) => {
     [index],
   )
 
-  if (index === 0)
-    return <span className={`${styles.yearGridCell} ${styles.firstCell}`} />
+  if (index === 0) return <span className={`${styles.yearGridCell} ${styles.firstCell}`} />
 
   return (
-    <span
-      className={`contrastColor ${styles.firstColumn}`}
-      style={backgroundStyle}
-      title={day}
-    >
+    <span className={`contrastColor ${styles.firstColumn}`} style={backgroundStyle} title={day}>
       {day}
     </span>
   )
 })
 
 export function DaysColumn() {
-  return weekDays.map((day, index) => (
-    <DayCell day={day} index={index} key={day} />
-  ))
+  return weekDays.map((day, index) => <DayCell day={day} index={index} key={day} />)
 }

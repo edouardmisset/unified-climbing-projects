@@ -7,9 +7,9 @@ import { Popover } from '../popover/popover'
 
 // Lazy load the popover component
 const AscentsPopoverDescription = lazy(() =>
-  import('../ascents-popover-description/ascents-popover-description').then(
-    module => ({ default: module.AscentsPopoverDescription }),
-  ),
+  import('../ascents-popover-description/ascents-popover-description').then(module => ({
+    default: module.AscentsPopoverDescription,
+  })),
 )
 
 export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
@@ -36,7 +36,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
   const lazyDescription = useMemo(() => {
     if (!ascents || ascents.length === 0) return ''
     return (
-      <Suspense fallback="Loading...">
+      <Suspense fallback='Loading...'>
         <AscentsPopoverDescription ascents={ascents} />
       </Suspense>
     )
@@ -49,7 +49,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
       popoverDescription={lazyDescription}
       popoverTitle={dateAndCrag}
       triggerClassName={gradeClassName}
-      triggerContent=""
+      triggerContent=''
     />
   )
 })

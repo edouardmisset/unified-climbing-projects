@@ -1,8 +1,5 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
-import {
-  COEFFICIENT_ASCENTS_PER_DAY,
-  COEFFICIENT_ONSIGHT_FLASH_RATIO,
-} from '~/constants/ascents'
+import { COEFFICIENT_ASCENTS_PER_DAY, COEFFICIENT_ONSIGHT_FLASH_RATIO } from '~/constants/ascents'
 import type { AscentListProps } from '~/schema/ascent'
 import type { TrainingSessionListProps } from '~/schema/training'
 import { calculateAscentDayPerDayOutside } from './calculate-ascent-day-per-day-outside'
@@ -33,24 +30,14 @@ export function calculateEfficiencyPercentage({
   const daysOutside = countOutdoorDays(trainingSessions)
   if (daysOutside === 0) return 0
 
-  const ascentDayPerDayOutside = calculateAscentDayPerDayOutside(
-    ascents,
-    trainingSessions,
-  )
+  const ascentDayPerDayOutside = calculateAscentDayPerDayOutside(ascents, trainingSessions)
   const ascentsPerDay =
-    calculateAscentsPerDay(ascents, trainingSessions) *
-    COEFFICIENT_ASCENTS_PER_DAY
+    calculateAscentsPerDay(ascents, trainingSessions) * COEFFICIENT_ASCENTS_PER_DAY
   const averageTries = calculateAverageTries(ascents)
-  const onsightFlashRatio =
-    calculateOnsightFlashRatio(ascents) * COEFFICIENT_ONSIGHT_FLASH_RATIO
+  const onsightFlashRatio = calculateOnsightFlashRatio(ascents) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
-  const percentages = [
-    ascentDayPerDayOutside,
-    ascentsPerDay,
-    averageTries,
-    onsightFlashRatio,
-  ].map(ratio =>
-    clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
+  const percentages = [ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio].map(
+    ratio => clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
   )
 
   return Math.round(average(percentages))

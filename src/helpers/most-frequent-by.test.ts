@@ -26,12 +26,7 @@ describe('mostFrequentBy', () => {
   })
 
   it('should return the first most frequent value in case of a tie', () => {
-    const records = [
-      { property: 'a' },
-      { property: 'b' },
-      { property: 'a' },
-      { property: 'b' },
-    ]
+    const records = [{ property: 'a' }, { property: 'b' }, { property: 'a' }, { property: 'b' }]
     const result = mostFrequentBy(records, 'property')
     expect(result).toBe('a') // 'a' appears first
   })

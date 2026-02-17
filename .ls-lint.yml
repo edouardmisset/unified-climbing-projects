@@ -13,7 +13,7 @@ ignore:
   - .husky
   - .vscode
   - node_modules
-  - "**/_components"
+  - '**/_components'
   - '**/{\[id\],\[year\]}'
   - test-results
   - convex/_generated

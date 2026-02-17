@@ -33,9 +33,7 @@ export function fromGradeToNumber(grade: Grade): number {
  */
 export const fromNumberToGrade = (gradeNumber: number): Grade => {
   if (!(gradeNumber in NUMBER_TO_GRADE)) {
-    globalThis.console.error(
-      `Error in fromNumberToGrade, with gradeNumber: ${gradeNumber}`,
-    )
+    globalThis.console.error(`Error in fromNumberToGrade, with gradeNumber: ${gradeNumber}`)
     return DEFAULT_GRADE
   }
 

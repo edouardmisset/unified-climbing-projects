@@ -1,10 +1,5 @@
 import { range } from '@edouardmisset/array'
-import {
-  getDayOfYear,
-  getDaysInYear,
-  getWeekNumber,
-  getWeeksInYear,
-} from '~/helpers/date'
+import { getDayOfYear, getDaysInYear, getWeekNumber, getWeeksInYear } from '~/helpers/date'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
@@ -27,9 +22,7 @@ export function createYearList<T extends StringDate = TrainingSession | Ascent>(
 
   if (data.length === 0) return []
 
-  const uniqueYears = [
-    ...new Set(data.map(({ date }) => new Date(date).getFullYear())),
-  ]
+  const uniqueYears = [...new Set(data.map(({ date }) => new Date(date).getFullYear()))]
 
   const yearsToSort = continuous
     ? range(Math.min(...uniqueYears), Math.max(...uniqueYears))
@@ -42,9 +35,7 @@ export function createYearList<T extends StringDate = TrainingSession | Ascent>(
 type YearlyDaysCollection<T> = Record<number, T[][]>
 
 /** Initially, the array of data is empty */
-function initializeYearlyDataDaysCollection<
-  T extends StringDate = TrainingSession | Ascent,
->(
+function initializeYearlyDataDaysCollection<T extends StringDate = TrainingSession | Ascent>(
   data: T[],
   getFractionInYear: (year: number) => number,
 ): YearlyDaysCollection<T> {
@@ -62,9 +53,9 @@ function initializeYearlyDataDaysCollection<
   return yearlyDataCollections
 }
 
-export function groupDataDaysByYear<
-  T extends StringDate = Ascent | TrainingSession,
->(data: T[]): YearlyDaysCollection<T> {
+export function groupDataDaysByYear<T extends StringDate = Ascent | TrainingSession>(
+  data: T[],
+): YearlyDaysCollection<T> {
   return groupDataByYear(data, {
     getFractionInYear: getDaysInYear,
     // We want the index to be 0-based to index into an array
@@ -72,9 +63,9 @@ export function groupDataDaysByYear<
   })
 }
 
-export function groupDataWeeksByYear<
-  T extends StringDate = Ascent | TrainingSession,
->(data: T[]): YearlyDaysCollection<T> {
+export function groupDataWeeksByYear<T extends StringDate = Ascent | TrainingSession>(
+  data: T[],
+): YearlyDaysCollection<T> {
   return groupDataByYear(data, {
     getFractionInYear: getWeeksInYear,
     getIndex: getWeekNumber,
@@ -92,20 +83,14 @@ function groupDataByYear<T extends StringDate = Ascent | TrainingSession>(
 ): YearlyDaysCollection<T> {
   const { getIndex, getFractionInYear } = options
 
-  const groupedItemByYear = initializeYearlyDataDaysCollection(
-    data,
-    getFractionInYear,
-  )
+  const groupedItemByYear = initializeYearlyDataDaysCollection(data, getFractionInYear)
 
   for (const item of data) {
     const date = new Date(item.date)
     const year = date.getFullYear()
     const index = getIndex(date)
 
-    if (
-      groupedItemByYear[year] === undefined ||
-      groupedItemByYear[year][index] === undefined
-    )
+    if (groupedItemByYear[year] === undefined || groupedItemByYear[year][index] === undefined)
       continue
 
     groupedItemByYear[year][index].push(item)

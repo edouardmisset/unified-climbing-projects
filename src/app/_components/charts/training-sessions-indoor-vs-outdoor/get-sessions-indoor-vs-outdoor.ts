@@ -9,9 +9,7 @@ type SessionsIndoorVsOutdoor = {
   color: string
 }[]
 
-export function getSessionsIndoorVsOutdoor(
-  sessions: TrainingSession[],
-): SessionsIndoorVsOutdoor {
+export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): SessionsIndoorVsOutdoor {
   if (sessions.length === 0) return []
 
   let indoorCount = 0

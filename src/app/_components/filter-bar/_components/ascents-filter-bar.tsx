@@ -2,11 +2,7 @@ import { useMemo } from 'react'
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import {
-  ASCENT_STYLE,
-  type Ascent,
-  AVAILABLE_CLIMBING_DISCIPLINE,
-} from '~/schema/ascent'
+import { ASCENT_STYLE, type Ascent, AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { PERIOD } from '~/schema/generic'
 import { createChangeHandler } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'

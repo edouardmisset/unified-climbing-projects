@@ -3,13 +3,7 @@ import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'
 
-export function MobileNavigationItem({
-  item,
-  index,
-}: {
-  item: NavigationElement
-  index: number
-}) {
+export function MobileNavigationItem({ item, index }: { item: NavigationElement; index: number }) {
   if (item.type === 'link') {
     const { href, label } = item
     return (
@@ -20,9 +14,7 @@ export function MobileNavigationItem({
   }
 
   if (item.type === 'separator') {
-    return (
-      <Menu.Separator className={styles.Separator} key={`separator-${index}`} />
-    )
+    return <Menu.Separator className={styles.Separator} key={`separator-${index}`} />
   }
 
   if (item.type === 'group') {

@@ -61,9 +61,7 @@ describe('sortByGrade', () => {
 
   it('should sort an array of ascents in ascending order when the descending flag is false', () => {
     const ascents: Ascent[] = [easierAscent, harderAscent]
-    const sorted = ascents.sort((a, b) =>
-      sortByGrade(a, b, { descending: false }),
-    )
+    const sorted = ascents.sort((a, b) => sortByGrade(a, b, { descending: false }))
     expect(sorted[0]?.topoGrade).toBe('7a')
     expect(sorted[1]?.topoGrade).toBe('7b')
   })

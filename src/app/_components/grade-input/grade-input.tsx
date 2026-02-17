@@ -55,24 +55,16 @@ export function GradeInput(
       </NumberField.ScrubArea>
 
       <NumberField.Group className={styles.Group}>
-        <NumberField.Decrement
-          className={styles.Decrement}
-          title="Decrease grade (-)"
-        >
+        <NumberField.Decrement className={styles.Decrement} title='Decrease grade (-)'>
           <MinusIcon />
         </NumberField.Decrement>
         <NumberField.Input
           className={styles.Input}
-          inputMode="text"
-          render={renderProps => (
-            <input {...renderProps} value={fromNumberToGrade(value)} />
-          )}
+          inputMode='text'
+          render={renderProps => <input {...renderProps} value={fromNumberToGrade(value)} />}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />
-        <NumberField.Increment
-          className={styles.Increment}
-          title="Increase grade (+)"
-        >
+        <NumberField.Increment className={styles.Increment} title='Increase grade (+)'>
           <PlusIcon />
         </NumberField.Increment>
       </NumberField.Group>

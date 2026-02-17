@@ -1,58 +1,55 @@
 {
-	"version": "2.0.0",
-	"presentation": {
-		"echo": false,
-		"reveal": "always",
-		"focus": false,
-		"panel": "dedicated",
-		"showReuseMessage": false
-	},
-	"tasks": [
-		{
-			"label": "Dev scripts",
-			"dependsOn": [
-				"Dev:Convex",
-				"Dev:Next"
-			],
-			"dependsOrder": "parallel",
-			"group": {
-				"kind": "none",
-				"isDefault": true
-			},
-			"runOptions": {
-				"runOn": "folderOpen"
-			},
-			"problemMatcher": []
-		},
-		{
-			"command": "bunx convex dev",
-			"detail": "bunx convex dev",
-			"isBackground": true,
-			"label": "Dev:Convex",
-			"problemMatcher": [],
-			"type": "shell",
-			"presentation": {
-				"group": "dev"
-			},
-			"icon": {
-				"id": "database",
-				"color": "terminal.ansiBlue"
-			}
-		},
-		{
-			"command": "bun run dev",
-			"detail": "next dev",
-			"isBackground": true,
-			"label": "Dev:Next",
-			"problemMatcher": [],
-			"type": "shell",
-			"presentation": {
-				"group": "dev"
-			},
-			"icon": {
-				"id": "run",
-				"color": "terminal.ansiGreen"
-			}
-		}
-	]
+  "version": "2.0.0",
+  "presentation": {
+    "echo": false,
+    "reveal": "always",
+    "focus": false,
+    "panel": "dedicated",
+    "showReuseMessage": false
+  },
+  "tasks": [
+    {
+      "label": "Dev scripts",
+      "dependsOn": ["Dev:Convex", "Dev:Next"],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
+      "command": "bunx convex dev",
+      "detail": "bunx convex dev",
+      "isBackground": true,
+      "label": "Dev:Convex",
+      "problemMatcher": [],
+      "type": "shell",
+      "presentation": {
+        "group": "dev"
+      },
+      "icon": {
+        "id": "database",
+        "color": "terminal.ansiBlue"
+      }
+    },
+    {
+      "command": "bun run dev",
+      "detail": "next dev",
+      "isBackground": true,
+      "label": "Dev:Next",
+      "problemMatcher": [],
+      "type": "shell",
+      "presentation": {
+        "group": "dev"
+      },
+      "icon": {
+        "id": "run",
+        "color": "terminal.ansiGreen"
+      }
+    }
+  ]
 }

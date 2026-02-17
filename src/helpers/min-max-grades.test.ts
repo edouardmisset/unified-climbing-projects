@@ -41,9 +41,7 @@ describe('minMaxGrades', () => {
   })
 
   it('should correctly calculate min and max grades for multiple ascents', () => {
-    const numericGrades = sampleAscents.map(({ topoGrade }) =>
-      fromGradeToNumber(topoGrade),
-    )
+    const numericGrades = sampleAscents.map(({ topoGrade }) => fromGradeToNumber(topoGrade))
     const expectedMin = fromNumberToGrade(Math.min(...numericGrades))
     const expectedMax = fromNumberToGrade(Math.max(...numericGrades))
     const [min, max] = minMaxGrades(sampleAscents)

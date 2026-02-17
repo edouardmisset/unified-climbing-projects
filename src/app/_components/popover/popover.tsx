@@ -18,9 +18,7 @@ const PopoverContent = memo(
         <BasePopover.Arrow className={styles.arrow}>
           <Arrow />
         </BasePopover.Arrow>
-        <BasePopover.Title className={styles.title}>
-          {popoverTitle}
-        </BasePopover.Title>
+        <BasePopover.Title className={styles.title}>{popoverTitle}</BasePopover.Title>
         <BasePopover.Description
           className={styles.description}
           render={<div>{popoverDescription}</div>}
@@ -52,18 +50,11 @@ export const Popover = memo(
     )
     return (
       <BasePopover.Root>
-        <BasePopover.Trigger
-          className={triggerClass}
-          style={buttonStyle}
-          title={title}
-        >
+        <BasePopover.Trigger className={triggerClass} style={buttonStyle} title={title}>
           {triggerContent}
         </BasePopover.Trigger>
         <BasePopover.Portal>
-          <PopoverContent
-            popoverDescription={popoverDescription}
-            popoverTitle={popoverTitle}
-          />
+          <PopoverContent popoverDescription={popoverDescription} popoverTitle={popoverTitle} />
         </BasePopover.Portal>
       </BasePopover.Root>
     )

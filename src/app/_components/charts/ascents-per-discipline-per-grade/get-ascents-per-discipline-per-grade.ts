@@ -17,10 +17,9 @@ export const getAscentsPerDisciplinePerGrade = (
   const grades = createGradeScaleFromAscents(ascents)
   const validGrades = new Set(grades)
 
-  const groupByGrade = new Map<
-    Grade,
-    Record<Ascent['climbingDiscipline'], number>
-  >(grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]))
+  const groupByGrade = new Map<Grade, Record<Ascent['climbingDiscipline'], number>>(
+    grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]),
+  )
 
   for (const { topoGrade, climbingDiscipline } of ascents) {
     if (!validGrades.has(topoGrade)) continue

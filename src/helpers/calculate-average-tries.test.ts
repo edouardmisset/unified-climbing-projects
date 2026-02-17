@@ -37,14 +37,8 @@ describe('calculateAverageTries', () => {
   })
 
   it('should return lower ratio for higher average tries', () => {
-    const efficientAscents: Ascent[] = [
-      { tries: 1 } as Ascent,
-      { tries: 2 } as Ascent,
-    ]
-    const lessEfficientAscents: Ascent[] = [
-      { tries: 5 } as Ascent,
-      { tries: 10 } as Ascent,
-    ]
+    const efficientAscents: Ascent[] = [{ tries: 1 } as Ascent, { tries: 2 } as Ascent]
+    const lessEfficientAscents: Ascent[] = [{ tries: 5 } as Ascent, { tries: 10 } as Ascent]
 
     const efficientResult = calculateAverageTries(efficientAscents)
     const lessEfficientResult = calculateAverageTries(lessEfficientAscents)

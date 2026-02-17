@@ -1,8 +1,5 @@
 import { lazy, memo, Suspense, useMemo } from 'react'
-import {
-  fromGradeToBackgroundColor,
-  fromGradeToClassName,
-} from '~/helpers/ascent-converter'
+import { fromGradeToBackgroundColor, fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getWeekNumber } from '~/helpers/date'
 import { sortByGrade } from '~/helpers/sorter'
 import type { Ascent } from '~/schema/ascent'
@@ -12,9 +9,9 @@ import styles from './barcode.module.css'
 
 // Lazy load the popover component
 const AscentsPopoverDescription = lazy(() =>
-  import('../ascents-popover-description/ascents-popover-description').then(
-    module => ({ default: module.AscentsPopoverDescription }),
-  ),
+  import('../ascents-popover-description/ascents-popover-description').then(module => ({
+    default: module.AscentsPopoverDescription,
+  })),
 )
 
 export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
@@ -42,11 +39,8 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (weeklyAscentsByDescendingGrade.length === 0) return ''
     return (
-      <Suspense fallback="Loading...">
-        <AscentsPopoverDescription
-          ascents={weeklyAscentsByDescendingGrade}
-          showCrag
-        />
+      <Suspense fallback='Loading...'>
+        <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
       </Suspense>
     )
   }, [weeklyAscentsByDescendingGrade])
@@ -64,7 +58,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       popoverDescription={lazyDescription}
       popoverTitle={title}
       triggerClassName={triggerClassName}
-      triggerContent=""
+      triggerContent=''
     />
   )
 })

@@ -6,15 +6,10 @@ import {
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
 import { roundToTen } from '~/helpers/math'
-import {
-  fromSessionTypeToLabel,
-  type TrainingSessionListProps,
-} from '~/schema/training'
+import { fromSessionTypeToLabel, type TrainingSessionListProps } from '~/schema/training'
 import styles from './training-popover-description.module.css'
 
-export function TrainingPopoverDescription({
-  trainingSessions,
-}: TrainingSessionListProps) {
+export function TrainingPopoverDescription({ trainingSessions }: TrainingSessionListProps) {
   if (trainingSessions.length === 0 || trainingSessions[0] === undefined) return
 
   return (
@@ -54,9 +49,7 @@ export function TrainingPopoverDescription({
             {anatomicalRegion === undefined
               ? ''
               : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
-            {energySystem === undefined
-              ? ''
-              : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
+            {energySystem === undefined ? '' : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
             {comments === undefined || trainingSessions.length > 1 ? (
               ''
             ) : (

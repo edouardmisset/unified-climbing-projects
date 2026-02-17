@@ -24,11 +24,7 @@ export function TimeframeSelect() {
           <Select.ScrollUpArrow className={styles.ScrollArrow} />
           <Select.Popup className={styles.Popup}>
             {TIMEFRAMES.map(timeframeOption => (
-              <Select.Item
-                className={styles.Item}
-                key={timeframeOption}
-                value={timeframeOption}
-              >
+              <Select.Item className={styles.Item} key={timeframeOption} value={timeframeOption}>
                 <Select.ItemIndicator className={styles.ItemIndicator}>
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>

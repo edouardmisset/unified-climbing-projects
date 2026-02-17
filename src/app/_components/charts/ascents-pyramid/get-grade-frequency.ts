@@ -25,17 +25,14 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
       Redpoint: 0,
     }
 
-    const { Flash, Onsight, Redpoint } = ascents.reduce(
-      (acc, { topoGrade, style }) => {
-        if (topoGrade !== grade) {
-          return acc
-        }
-
-        acc[style] += 1
+    const { Flash, Onsight, Redpoint } = ascents.reduce((acc, { topoGrade, style }) => {
+      if (topoGrade !== grade) {
         return acc
-      },
-      initialStyleFrequency,
-    )
+      }
+
+      acc[style] += 1
+      return acc
+    }, initialStyleFrequency)
 
     return {
       Flash,

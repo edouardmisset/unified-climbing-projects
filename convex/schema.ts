@@ -4,9 +4,7 @@ import { ascentSchema } from '~/schema/ascent'
 import { trainingSessionSchema } from '~/schema/training'
 
 const convexGetAscentSchema = zodToConvex(ascentSchema)
-export const convexPostAscentSchema = zodToConvex(
-  ascentSchema.omit({ _id: true }),
-)
+export const convexPostAscentSchema = zodToConvex(ascentSchema.omit({ _id: true }))
 
 const convexGetTrainingSessionSchema = zodToConvex(trainingSessionSchema)
 export const convexPostTrainingSessionSchema = zodToConvex(

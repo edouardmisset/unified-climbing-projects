@@ -2,17 +2,11 @@ import { objectKeys } from '@edouardmisset/object'
 import { describe, expect, it } from 'vitest'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
-import {
-  fromGradeToNumber,
-  fromNumberToGrade,
-  NUMBER_TO_GRADE,
-} from './grade-converter'
+import { fromGradeToNumber, fromNumberToGrade, NUMBER_TO_GRADE } from './grade-converter'
 
 describe('fromGradeToNumber', () => {
   it('should convert a valid grade correctly', () => {
-    const validGrade = objectKeys(
-      GRADE_TO_NUMBER,
-    )[0] as keyof typeof GRADE_TO_NUMBER
+    const validGrade = objectKeys(GRADE_TO_NUMBER)[0] as keyof typeof GRADE_TO_NUMBER
     const expectedNumber = GRADE_TO_NUMBER[validGrade]
     const result = fromGradeToNumber(validGrade)
     expect(result).toBe(expectedNumber)
@@ -26,9 +20,7 @@ describe('fromGradeToNumber', () => {
 
 describe('fromNumberToGrade', () => {
   it('should convert a valid number to its corresponding grade', () => {
-    const validNumberKey = objectKeys(
-      NUMBER_TO_GRADE,
-    )[0] as keyof typeof NUMBER_TO_GRADE
+    const validNumberKey = objectKeys(NUMBER_TO_GRADE)[0] as keyof typeof NUMBER_TO_GRADE
 
     const expectedGrade = NUMBER_TO_GRADE[validNumberKey]
     const result = fromNumberToGrade(validNumberKey)

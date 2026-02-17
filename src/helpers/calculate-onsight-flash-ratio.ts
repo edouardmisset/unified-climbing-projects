@@ -10,8 +10,7 @@ export function calculateOnsightFlashRatio(ascents: Ascent[]): number {
   if (ascents.length === 0) return 0
 
   const onsightFlashCount = ascents.reduce(
-    (count, { style }) =>
-      style === 'Flash' || style === 'Onsight' ? count + 1 : count,
+    (count, { style }) => (style === 'Flash' || style === 'Onsight' ? count + 1 : count),
     0,
   )
 

@@ -1,54 +1,33 @@
-import type {
-  TrainingSession,
-  TrainingSessionListProps,
-} from '~/schema/training'
+import type { TrainingSession, TrainingSessionListProps } from '~/schema/training'
 import { Card } from '../../../card/card'
 import { Popover } from '../../../popover/popover'
-import {
-  calculateSessionPercentage,
-  categorizeSessions,
-  getSessionRatioData,
-} from './helpers'
+import { calculateSessionPercentage, categorizeSessions, getSessionRatioData } from './helpers'
 import { SessionList } from './session-list'
 import styles from './training-summary.module.css'
 
-export function TrainingSummary({
-  trainingSessions,
-}: TrainingSessionListProps) {
-  const {
-    indoor,
-    outdoor,
-    indoorRoute,
-    indoorBoulder,
-    outdoorRoute,
-    outdoorBoulder,
-  } = categorizeSessions(trainingSessions)
+export function TrainingSummary({ trainingSessions }: TrainingSessionListProps) {
+  const { indoor, outdoor, indoorRoute, indoorBoulder, outdoorRoute, outdoorBoulder } =
+    categorizeSessions(trainingSessions)
 
   const totalSessions = indoor.length + outdoor.length
   if (totalSessions === 0) return null
 
-  const indoorPercentage = calculateSessionPercentage(
-    indoor.length,
-    outdoor.length,
-  )
-  const outdoorPercentage = calculateSessionPercentage(
-    outdoor.length,
-    indoor.length,
-  )
+  const indoorPercentage = calculateSessionPercentage(indoor.length, outdoor.length)
+  const outdoorPercentage = calculateSessionPercentage(outdoor.length, indoor.length)
 
   return (
     <Card>
       <h2>Training</h2>
       <DisciplineSection
         boulderSessions={indoorBoulder}
-        header="Indoor"
+        header='Indoor'
         percentage={indoorPercentage}
         routeSessions={indoorRoute}
         sessionCount={indoor.length}
       />
       <DisciplineSection
         boulderSessions={outdoorBoulder}
-        header="Outdoor"
+        header='Outdoor'
         percentage={outdoorPercentage}
         routeSessions={outdoorRoute}
         sessionCount={outdoor.length}

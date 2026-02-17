@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
-import {
-  BOULDERING_BONUS_POINTS,
-  GRADE_TO_POINTS,
-  STYLE_TO_POINTS,
-} from '~/schema/ascent'
+import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS } from '~/schema/ascent'
 import {
   fromAscentToPoints,
   fromGradeToBackgroundColor,

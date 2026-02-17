@@ -17,9 +17,7 @@ import type { Ascent } from '~/schema/ascent'
  *  - A count for each grade present in the grade scale.
  *  - A `<grade>Color` property for each grade representing its assigned background color.
  */
-export function getAscentsByGradesPerCrag(
-  ascents: Ascent[],
-): Record<string, string | number>[] {
+export function getAscentsByGradesPerCrag(ascents: Ascent[]): Record<string, string | number>[] {
   const cragMap: Record<string, Ascent[]> = {}
 
   for (const ascent of ascents) {
@@ -50,10 +48,7 @@ export function getAscentsByGradesPerCrag(
     }
 
     for (const { topoGrade } of ascents) {
-      if (
-        frequency[topoGrade] === undefined ||
-        typeof frequency[topoGrade] !== 'number'
-      ) {
+      if (frequency[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') {
         continue
       }
 

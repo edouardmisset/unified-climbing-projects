@@ -15,15 +15,14 @@ import type { Object_ } from '~/types/generic'
  * // Returns the most common wall profile among ascents
  * const mostCommonProfile = mostFrequentBy(ascents, 'profile');
  */
-export function mostFrequentBy<
-  Type extends Object_,
-  Key extends keyof Type,
-  Value = Type[Key],
->(records: Type[], property: Key): Value | undefined {
+export function mostFrequentBy<Type extends Object_, Key extends keyof Type, Value = Type[Key]>(
+  records: Type[],
+  property: Key,
+): Value | undefined {
   if (records.length === 0) return
 
   const occurrenceMap = new Map<Value, number>()
-  let mostFrequentValue: Value | undefined
+  let mostFrequentValue: Value | undefined = undefined
   let highestCount = 0
 
   for (const record of records) {

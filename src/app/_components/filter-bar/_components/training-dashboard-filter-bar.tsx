@@ -8,9 +8,7 @@ import { createChangeHandler } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import { type FilterConfig, LOCATION_TYPES } from '../types'
 
-export function TrainingDashboardFilterBar({
-  trainingSessions,
-}: TrainingSessionListProps) {
+export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSessionListProps) {
   const yearList = useMemo(
     () =>
       createYearList(trainingSessions, {

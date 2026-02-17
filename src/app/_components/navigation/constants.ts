@@ -84,7 +84,4 @@ type NavigationGroup = {
   links: NavigationLink[]
 }
 
-export type NavigationElement =
-  | NavigationLink
-  | NavigationSeparator
-  | NavigationGroup
+export type NavigationElement = NavigationLink | NavigationSeparator | NavigationGroup

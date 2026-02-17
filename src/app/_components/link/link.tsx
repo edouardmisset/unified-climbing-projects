@@ -11,13 +11,10 @@ export const Link = memo(
     children,
     className,
     ...props
-  }: { children: ReactNode; href: string } & React.ComponentProps<
-    typeof NextLink
-  >) => {
+  }: { children: ReactNode; href: string } & React.ComponentProps<typeof NextLink>) => {
     const pathname = usePathname()
     const isActive =
-      pathname === href ||
-      (pathname.includes('visualization') && href.includes('visualization'))
+      pathname === href || (pathname.includes('visualization') && href.includes('visualization'))
 
     return (
       <NextLink

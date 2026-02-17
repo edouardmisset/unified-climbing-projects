@@ -6,21 +6,13 @@ type CustomInputProps = {
   name: string
 }
 
-export function CustomInput(
-  props: CustomInputProps & ComponentPropsWithoutRef<'input'>,
-) {
+export function CustomInput(props: CustomInputProps & ComponentPropsWithoutRef<'input'>) {
   const { value, name, id = name, title = capitalize(name), ...rest } = props
 
   return (
     <label className={styles.label} htmlFor={id} title={title}>
       {capitalize(name)}
-      <input
-        {...rest}
-        className={styles.input}
-        id={id}
-        title={value?.toString()}
-        value={value}
-      />
+      <input {...rest} className={styles.input} id={id} title={value?.toString()} value={value} />
     </label>
   )
 }

@@ -12,11 +12,7 @@ export const revalidate = 86400
 
 export default async function Page() {
   return (
-    <Layout
-      gridClassName={styles.container}
-      layout="flexRow"
-      title="Indicators"
-    >
+    <Layout gridClassName={styles.container} layout='flexRow' title='Indicators'>
       <Suspense fallback={<Loader />}>
         <IndicatorsTimeline />
       </Suspense>
@@ -29,27 +25,19 @@ async function IndicatorsTimeline() {
 
   return (
     <Timeline>
-      {indicators.map(
-        ({ year, progression, efficiency, versatility, score }) => (
-          <Event interval={String(year)} key={year} title={''}>
-            <ul className={styles.list}>
-              <li className={`${styles.item} textNoWrap`}>
-                Progression: {progression}%
-              </li>
-              <li className={`${styles.item} textNoWrap`}>
-                Efficiency: {efficiency}%
-              </li>
-              <li className={`${styles.item} textNoWrap`}>
-                Versatility: {versatility}%
-              </li>
-              <hr className={styles.hr} />
-              <li className={`${styles.item} textNoWrap`}>
-                <strong>Score</strong>: {score}
-              </li>
-            </ul>
-          </Event>
-        ),
-      )}
+      {indicators.map(({ year, progression, efficiency, versatility, score }) => (
+        <Event interval={String(year)} key={year} title={''}>
+          <ul className={styles.list}>
+            <li className={`${styles.item} textNoWrap`}>Progression: {progression}%</li>
+            <li className={`${styles.item} textNoWrap`}>Efficiency: {efficiency}%</li>
+            <li className={`${styles.item} textNoWrap`}>Versatility: {versatility}%</li>
+            <hr className={styles.hr} />
+            <li className={`${styles.item} textNoWrap`}>
+              <strong>Score</strong>: {score}
+            </li>
+          </ul>
+        </Event>
+      ))}
     </Timeline>
   )
 }

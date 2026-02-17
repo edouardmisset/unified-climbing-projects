@@ -22,7 +22,7 @@ function EventComponent({
 }) {
   return (
     <li className={styles.event}>
-      <span aria-hidden="true" className={styles.icon} />
+      <span aria-hidden='true' className={styles.icon} />
       <div className={styles.body}>
         <time className={styles.date}>{interval}</time>
         {Boolean(title) && <h3>{title}</h3>}

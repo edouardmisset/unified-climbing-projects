@@ -84,8 +84,7 @@ export function calculateProgressionPercentage({
     }
 
     const isClimbingProgressing =
-      fromGradeToNumber(currentYearHardest) >
-      fromGradeToNumber(previousYearHardest as Grade)
+      fromGradeToNumber(currentYearHardest) > fromGradeToNumber(previousYearHardest as Grade)
 
     if (isClimbingProgressing) progressionCount++
   }
@@ -102,10 +101,7 @@ export function createHardestGradeMap(
   const gradeMap = new Map<ReturnType<typeof generateCategoryKey>, Grade>()
 
   // Group ascents by category
-  const categoryGroups = new Map<
-    ReturnType<typeof generateCategoryKey>,
-    Ascent[]
-  >()
+  const categoryGroups = new Map<ReturnType<typeof generateCategoryKey>, Ascent[]>()
 
   for (const ascent of ascents) {
     const key = generateCategoryKey(ascent.climbingDiscipline, ascent.style)

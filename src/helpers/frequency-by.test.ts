@@ -3,12 +3,7 @@ import { frequencyBy } from './frequency-by'
 
 describe('frequencyBy', () => {
   it('should count frequencies for string keys without sorting when ascending undefined', () => {
-    const items = [
-      { category: 'a' },
-      { category: 'b' },
-      { category: 'a' },
-      { category: 'c' },
-    ]
+    const items = [{ category: 'a' }, { category: 'b' }, { category: 'a' }, { category: 'c' }]
     const result = frequencyBy(items, 'category')
     // distinct keys in insertion order: 'a', 'b', 'c'
     expect(result).toEqual({ a: 2, b: 1, c: 1 })

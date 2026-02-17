@@ -15,8 +15,7 @@ export function datesEqual(leftDate: Date, rightDate = new Date()): boolean {
 
 export function getNumberOfDaysInYear(year: number): number {
   return (
-    (new Date(year + 1, 0, 1, 12).getTime() -
-      new Date(year, 0, 1, 12).getTime()) /
+    (new Date(year + 1, 0, 1, 12).getTime() - new Date(year, 0, 1, 12).getTime()) /
     (1000 * 60 * 60 * 24)
   )
 }

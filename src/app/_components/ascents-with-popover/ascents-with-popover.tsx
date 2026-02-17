@@ -6,15 +6,12 @@ import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Popover } from '../popover/popover'
 import styles from './ascents-with-popover.module.css'
 
-const AscentListItem = memo(
-  ({ climbingDiscipline, routeName, topoGrade }: AscentListItemProps) => (
-    <li className={styles.item}>
-      {routeName} (
-      <DisplayGrade climbingDiscipline={climbingDiscipline} grade={topoGrade} />
-      )
-    </li>
-  ),
-)
+const AscentListItem = memo(({ climbingDiscipline, routeName, topoGrade }: AscentListItemProps) => (
+  <li className={styles.item}>
+    {routeName} (
+    <DisplayGrade climbingDiscipline={climbingDiscipline} grade={topoGrade} />)
+  </li>
+))
 
 const AscentList = memo(({ ascents }: AscentListProps) => (
   <ul className={styles.list}>
@@ -25,15 +22,9 @@ const AscentList = memo(({ ascents }: AscentListProps) => (
 ))
 
 export function AscentsWithPopover({ ascents }: AscentListProps) {
-  const ascentsDisciplineText = useMemo(
-    () => writeAscentsDisciplineText(ascents),
-    [ascents],
-  )
+  const ascentsDisciplineText = useMemo(() => writeAscentsDisciplineText(ascents), [ascents])
 
-  const title = useMemo(
-    () => capitalize(ascentsDisciplineText),
-    [ascentsDisciplineText],
-  )
+  const title = useMemo(() => capitalize(ascentsDisciplineText), [ascentsDisciplineText])
 
   return (
     <Popover

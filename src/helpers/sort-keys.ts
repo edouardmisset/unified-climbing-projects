@@ -22,15 +22,11 @@ import { compareStringsAscending } from './sort-strings'
  * const sortedObjDesc = sortKeys(obj, false);
  * console.log(sortedObjDesc); // { c: 3, b: 1, a: 2 }
  */
-export function sortKeys<Obj extends Object_>(
-  obj: Obj,
-  options?: { ascending?: boolean },
-): Obj {
+export function sortKeys<Obj extends Object_>(obj: Obj, options?: { ascending?: boolean }): Obj {
   const { ascending = true } = options ?? {}
   return Object.fromEntries(
     Object.entries(obj).sort(
-      ([leftKey], [rightKey]) =>
-        compareStringsAscending(leftKey, rightKey) * (ascending ? 1 : -1),
+      ([leftKey], [rightKey]) => compareStringsAscending(leftKey, rightKey) * (ascending ? 1 : -1),
     ),
   ) as Obj
 }

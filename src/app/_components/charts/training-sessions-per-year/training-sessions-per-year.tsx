@@ -19,10 +19,7 @@ export function TrainingSessionsPerYear({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const data = useMemo(
-    () => getSessionsPerYear(trainingSessions),
-    [trainingSessions],
-  )
+  const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
   const axisLeft = useMemo(
     () => ({
@@ -75,7 +72,7 @@ export function TrainingSessionsPerYear({
   if (data.length === 0) return null
 
   return (
-    <ChartContainer caption="Training Sessions per Year (Indoor/Outdoor by Discipline)">
+    <ChartContainer caption='Training Sessions per Year (Indoor/Outdoor by Discipline)'>
       <ResponsiveStream
         animate
         axisBottom={axisBottom}
@@ -85,7 +82,7 @@ export function TrainingSessionsPerYear({
         keys={STREAM_KEYS}
         margin={chartMargins}
         motionConfig={defaultMotionConfig}
-        offsetType="expand"
+        offsetType='expand'
         theme={theme}
       />
     </ChartContainer>

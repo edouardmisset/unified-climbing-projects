@@ -10,12 +10,7 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import {
-  _1To9999RegEx,
-  MAX_HEIGHT,
-  MAX_RATING,
-  MAX_TRIES,
-} from './constants.ts'
+import { _1To9999RegEx, MAX_HEIGHT, MAX_RATING, MAX_TRIES } from './constants.ts'
 
 const optionalNumberGradeSchema = z.number().optional()
 const numberOfTriesSchema = z
@@ -47,9 +42,7 @@ export type AscentFormInput = z.input<typeof ascentFormInputSchema>
 const numberGradeToGradeSchema = z
   .number()
   .or(z.string())
-  .transform(stringOrNumberGrade =>
-    fromNumberToGrade(Number(stringOrNumberGrade)),
-  )
+  .transform(stringOrNumberGrade => fromNumberToGrade(Number(stringOrNumberGrade)))
 
 export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
@@ -64,9 +57,7 @@ export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
   profile: z.preprocess(emptyStringToUndefined, profileSchema.optional()),
-  rating: z
-    .string()
-    .transform(rating => (rating === '' ? undefined : Number(rating))),
+  rating: z.string().transform(rating => (rating === '' ? undefined : Number(rating))),
   topoGrade: numberGradeToGradeSchema,
   tries: numberOfTriesSchema,
 })

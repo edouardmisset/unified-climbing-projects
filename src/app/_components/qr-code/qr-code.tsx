@@ -21,13 +21,13 @@ const QRCode = memo((props: { children?: ReactNode }) => {
   return (
     <div className={styles.qrcode}>
       {/* Square markers */}
-      <Marker placement="TopLeft" />
-      <Marker placement="TopRight" />
-      <Marker placement="BottomLeft" />
+      <Marker placement='TopLeft' />
+      <Marker placement='TopRight' />
+      <Marker placement='BottomLeft' />
 
       {/* Image at the center of the QR Code */}
       <Image
-        alt="emoji of a person climbing"
+        alt='emoji of a person climbing'
         className={styles.image}
         height={120}
         priority
@@ -42,28 +42,19 @@ const QRCode = memo((props: { children?: ReactNode }) => {
 })
 
 export const TrainingQRCode = memo(
-  ({
-    yearlyTrainingSessions,
-  }: {
-    yearlyTrainingSessions: TrainingSession[][]
-  }) => (
+  ({ yearlyTrainingSessions }: { yearlyTrainingSessions: TrainingSession[][] }) => (
     <QRCode>
       {yearlyTrainingSessions.map((sessions, index) => (
-        <TrainingsQRDot
-          key={sessions[0]?.date ?? index}
-          trainingSessions={sessions}
-        />
+        <TrainingsQRDot key={sessions[0]?.date ?? index} trainingSessions={sessions} />
       ))}
     </QRCode>
   ),
 )
 
-export const AscentsQRCode = memo(
-  ({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => (
-    <QRCode>
-      {yearlyAscents.map((ascents, index) => (
-        <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
-      ))}
-    </QRCode>
-  ),
-)
+export const AscentsQRCode = memo(({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => (
+  <QRCode>
+    {yearlyAscents.map((ascents, index) => (
+      <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
+    ))}
+  </QRCode>
+))

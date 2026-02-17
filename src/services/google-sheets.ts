@@ -1,9 +1,6 @@
 import { objectKeys } from '@edouardmisset/object'
 import { JWT } from 'google-auth-library'
-import {
-  GoogleSpreadsheet,
-  type GoogleSpreadsheetWorksheet,
-} from 'google-spreadsheet'
+import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { env } from '~/env'
 import type { Object_ } from '~/types/generic'
 
@@ -27,7 +24,8 @@ export async function loadBackupSpreadsheet(
     return doc
   } catch (error) {
     throw new Error(
-      `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`, { cause: error },
+      `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     )
   }
 }
@@ -60,7 +58,5 @@ export async function backupDataToWorksheet<T extends Object_>(
   }
 
   await sheet.setHeaderRow([...headersSet])
-  await sheet.addRows(
-    data as Parameters<GoogleSpreadsheetWorksheet['addRows']>[0],
-  )
+  await sheet.addRows(data as Parameters<GoogleSpreadsheetWorksheet['addRows']>[0])
 }

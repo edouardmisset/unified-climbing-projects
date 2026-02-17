@@ -6,10 +6,7 @@ import type { LineChartDataStructure } from './tries-by-grade'
 export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
   if (ascents.length === 0) return []
 
-  const gradeStats = {} as Record<
-    Grade,
-    { min: number; max: number; sum: number; count: number }
-  >
+  const gradeStats = {} as Record<Grade, { min: number; max: number; sum: number; count: number }>
 
   for (const { topoGrade, tries } of ascents) {
     const topoGradeStat = gradeStats[topoGrade]
@@ -24,9 +21,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
     topoGradeStat.count++
   }
 
-  const grades = objectKeys(gradeStats).sort((a, b) =>
-    compareStringsAscending(a, b),
-  )
+  const grades = objectKeys(gradeStats).sort((a, b) => compareStringsAscending(a, b))
 
   return [
     {

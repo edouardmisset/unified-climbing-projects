@@ -16,8 +16,8 @@ export default async function AscentFormPage() {
   return (
     <Suspense fallback={<Loader />}>
       <SignedIn>
-        <Layout gridClassName="padding" title="Congrats 🎉">
-          <span aria-describedby="form-description" className="visuallyHidden">
+        <Layout gridClassName='padding' title='Congrats 🎉'>
+          <span aria-describedby='form-description' className='visuallyHidden'>
             Form to log a climbing ascent
           </span>
           <Suspense fallback={<Loader />}>
@@ -33,13 +33,12 @@ export default async function AscentFormPage() {
 }
 
 async function AscentFormWrapper() {
-  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] =
-    await Promise.all([
-      getLatestAscent(),
-      getMinMaxGrades(),
-      getAllCrags(),
-      getAllAreas(),
-    ])
+  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] = await Promise.all([
+    getLatestAscent(),
+    getMinMaxGrades(),
+    getAllCrags(),
+    getAllAreas(),
+  ])
 
   return (
     <AscentForm
@@ -53,8 +52,7 @@ async function AscentFormWrapper() {
 }
 
 export const metadata: Metadata = {
-  description:
-    'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
+  description: 'Log an outdoor climbing ascent (boulder, route, or multi-pitch)',
   keywords: ['climbing', 'route', 'boulder', 'outdoor', 'multi-pitch', 'log'],
   title: 'Log ascent 📋',
 }

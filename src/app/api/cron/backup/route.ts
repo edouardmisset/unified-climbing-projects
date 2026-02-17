@@ -38,9 +38,6 @@ export async function GET() {
     )
   } catch (error) {
     globalThis.console.error('Cron backup failed', error)
-    return NextResponse.json(
-      { ok: false, error: 'Cron backup failed' },
-      { status: 500 },
-    )
+    return NextResponse.json({ ok: false, error: 'Cron backup failed' }, { status: 500 })
   }
 }

@@ -8,7 +8,5 @@ import { extractDateFromISODateString } from './date'
  * @returns {number} The count of unique dates
  */
 export function countUniqueDates(itemsWithDate: StringDate[]): number {
-  return new Set(
-    itemsWithDate.map(({ date }) => extractDateFromISODateString(date)),
-  ).size
+  return new Set(itemsWithDate.map(({ date }) => extractDateFromISODateString(date))).size
 }

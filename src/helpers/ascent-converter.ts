@@ -33,9 +33,7 @@ export function fromGradeToBackgroundColor(grade?: Grade): string {
  * @returns {string | undefined} The CSS class name for the given grade, or
  * undefined if no grade is provided.
  */
-export function fromGradeToClassName(
-  grade?: Ascent['topoGrade'],
-): string | undefined {
+export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | undefined {
   return grade === undefined ? undefined : `_${grade.replaceAll('+', '_')}`
 }
 
@@ -50,16 +48,10 @@ export function fromGradeToClassName(
  * @param {string} params.climbingDiscipline - The discipline of the climb.
  * @returns {number} The total points for the ascent.
  */
-export function fromAscentToPoints({
-  topoGrade,
-  style,
-  climbingDiscipline,
-}: Ascent): number {
-  const gradePoints =
-    GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
+export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
+  const gradePoints = GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
-  const climbingDisciplineBonus =
-    climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
+  const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
@@ -105,14 +97,10 @@ export function fromPointToGrade(
 
   const parsedPoint = adjustedPoints as (typeof listOfPoints)[number]
 
-  const grade = Object.entries(GRADE_TO_POINTS).find(
-    ([_, value]) => value === parsedPoint,
-  )
+  const grade = Object.entries(GRADE_TO_POINTS).find(([_, value]) => value === parsedPoint)
 
   if (!grade) {
-    globalThis.console.log(
-      `Error: No matching grade found for the given points (${parsedPoint}).`,
-    )
+    globalThis.console.log(`Error: No matching grade found for the given points (${parsedPoint}).`)
     return DEFAULT_GRADE
   }
 

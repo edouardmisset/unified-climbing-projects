@@ -21,12 +21,12 @@ export default async function TrainingSessionsQRCodePage() {
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 
   return (
-    <Layout title="Training QR">
+    <Layout title='Training QR'>
       {Object.entries(groupedTrainingDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (
-          <div className="flexColumn alignCenter" key={year}>
-            <h2 className="centerText">{year}</h2>
+          <div className='flexColumn alignCenter' key={year}>
+            <h2 className='centerText'>{year}</h2>
             <Suspense fallback={<Loader />}>
               <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
             </Suspense>

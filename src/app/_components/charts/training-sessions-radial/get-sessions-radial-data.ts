@@ -38,16 +38,11 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
   legendData: { id: string; label: string; color: string }[]
   totals: Record<string, number>
 } {
-  if (sessions.length === 0)
-    return { colors: {}, data: [], legendData: [], totals: {} }
+  if (sessions.length === 0) return { colors: {}, data: [], legendData: [], totals: {} }
 
-  const sessionsWithEnergySystem = sessions.filter(
-    session => session.energySystem !== undefined,
-  )
+  const sessionsWithEnergySystem = sessions.filter(session => session.energySystem !== undefined)
 
-  const sessionsWithRegion = sessions.filter(
-    session => session.anatomicalRegion !== undefined,
-  )
+  const sessionsWithRegion = sessions.filter(session => session.anatomicalRegion !== undefined)
 
   const energySystemCounts = sessionsWithEnergySystem.reduce(
     (acc, { energySystem }) => {
@@ -70,13 +65,9 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
   const colors: Record<string, string> = {}
 
   // Build Energy System ring data
-  const energySystemData: { x: string; y: number }[] = Object.entries(
-    energySystemCounts,
-  )
+  const energySystemData: { x: string; y: number }[] = Object.entries(energySystemCounts)
     .map(([system, count]) => ({
-      x:
-        ENERGY_SYSTEM_LABELS[system as keyof typeof ENERGY_SYSTEM_LABELS] ??
-        system,
+      x: ENERGY_SYSTEM_LABELS[system as keyof typeof ENERGY_SYSTEM_LABELS] ?? system,
       y: count,
     }))
     .sort((a, b) => b.y - a.y)
@@ -91,14 +82,9 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
   }
 
   // Build Anatomical Region ring data
-  const anatomicalRegionData: { x: string; y: number }[] = Object.entries(
-    regionCounts,
-  )
+  const anatomicalRegionData: { x: string; y: number }[] = Object.entries(regionCounts)
     .map(([region, count]) => ({
-      x:
-        ANATOMICAL_REGION_LABELS[
-          region as keyof typeof ANATOMICAL_REGION_LABELS
-        ] ?? region,
+      x: ANATOMICAL_REGION_LABELS[region as keyof typeof ANATOMICAL_REGION_LABELS] ?? region,
       y: count,
     }))
     .sort((a, b) => b.y - a.y)
@@ -125,10 +111,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
 
   const totals = {
     'Energy System': energySystemData.reduce((sum, item) => sum + item.y, 0),
-    'Anatomical Region': anatomicalRegionData.reduce(
-      (sum, item) => sum + item.y,
-      0,
-    ),
+    'Anatomical Region': anatomicalRegionData.reduce((sum, item) => sum + item.y, 0),
   }
 
   const legendData = [

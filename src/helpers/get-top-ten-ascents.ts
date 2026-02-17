@@ -10,11 +10,7 @@ type GetTopTenParams = {
 }
 
 export function getTopTenAscents(params: GetTopTenParams): Ascent[] {
-  const {
-    timeframe = 'year',
-    year = new Date().getFullYear(),
-    ascents = [],
-  } = params
+  const { timeframe = 'year', year = new Date().getFullYear(), ascents = [] } = params
 
   if (ascents.length === 0) return []
 

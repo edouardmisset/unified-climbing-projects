@@ -6,9 +6,9 @@ import { Popover } from '../popover/popover'
 
 // Lazy load the popover component
 const TrainingPopoverDescription = lazy(() =>
-  import('../training-popover-description/training-popover-description').then(
-    module => ({ default: module.TrainingPopoverDescription }),
-  ),
+  import('../training-popover-description/training-popover-description').then(module => ({
+    default: module.TrainingPopoverDescription,
+  })),
 )
 
 export const TrainingsQRDot = memo(
@@ -23,10 +23,7 @@ export const TrainingsQRDot = memo(
       [firstSession?.sessionType],
     )
     const formattedDate = useMemo(
-      () =>
-        firstSession?.date === undefined
-          ? ''
-          : prettyLongDate(firstSession.date),
+      () => (firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)),
       [firstSession?.date],
     )
 
@@ -34,21 +31,20 @@ export const TrainingsQRDot = memo(
     const lazyDescription = useMemo(() => {
       if (trainingSessions.length === 0) return ''
       return (
-        <Suspense fallback="Loading...">
+        <Suspense fallback='Loading...'>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )
     }, [trainingSessions])
 
-    if (trainingSessions.length === 0 || firstSession === undefined)
-      return <span />
+    if (trainingSessions.length === 0 || firstSession === undefined) return <span />
 
     return (
       <Popover
         popoverDescription={lazyDescription}
         popoverTitle={formattedDate}
         triggerClassName={sessionClassName}
-        triggerContent=""
+        triggerContent=''
       />
     )
   },

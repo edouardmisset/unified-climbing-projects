@@ -25,14 +25,8 @@ export function createRecentDateOptions(): ValueAndLabel[] {
 export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
   const startOfYear = new Date(date.getFullYear(), 0, 1)
-  startOfYear.setDate(
-    startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % 7)),
-  )
-  return (
-    Math.round(
-      (date.getTime() - startOfYear.getTime()) / MILLISECONDS_IN_WEEK,
-    ) + 1
-  )
+  startOfYear.setDate(startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % 7)))
+  return Math.round((date.getTime() - startOfYear.getTime()) / MILLISECONDS_IN_WEEK) + 1
 }
 
 /**
@@ -45,22 +39,11 @@ export const getWeekNumber = (date: Date): number => {
  * @returns {number} The number of weeks in the specified year
  */
 export const getWeeksInYear = (year: number): number => {
-  const firstMondayThisYear = new Date(
-    year,
-    0,
-    5 - (new Date(year, 0, 4).getDay() || 7),
-  )
+  const firstMondayThisYear = new Date(year, 0, 5 - (new Date(year, 0, 4).getDay() || 7))
 
-  const firstMondayNextYear = new Date(
-    year + 1,
-    0,
-    5 - (new Date(year + 1, 0, 4).getDay() || 7),
-  )
+  const firstMondayNextYear = new Date(year + 1, 0, 5 - (new Date(year + 1, 0, 4).getDay() || 7))
 
-  return (
-    (firstMondayNextYear.getTime() - firstMondayThisYear.getTime()) /
-    MILLISECONDS_IN_WEEK
-  )
+  return (firstMondayNextYear.getTime() - firstMondayThisYear.getTime()) / MILLISECONDS_IN_WEEK
 }
 
 /**
@@ -83,8 +66,7 @@ export const getDaysInYear = (year: number): number => {
 export const getDayOfYear = (date: Date): number => {
   const newDate = new Date(date)
   return Math.floor(
-    (newDate.getTime() - new Date(newDate.getFullYear(), 0, 0).getTime()) /
-      MILLISECONDS_IN_DAY,
+    (newDate.getTime() - new Date(newDate.getFullYear(), 0, 0).getTime()) / MILLISECONDS_IN_DAY,
   )
 }
 
@@ -103,10 +85,7 @@ export function getMostFrequentDate<TypeWithDate extends { date: string }>(
   const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
     ascending: false,
   })
-  return (Object.entries(sortedDateByFrequency)[0] ?? ['', 0]) as [
-    string,
-    number,
-  ]
+  return (Object.entries(sortedDateByFrequency)[0] ?? ['', 0]) as [string, number]
 }
 
 /**

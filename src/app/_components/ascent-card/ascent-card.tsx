@@ -69,7 +69,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className="textNoWrap" key={formattedContent}>
+              <span className='textNoWrap' key={formattedContent}>
                 {formattedContent}
               </span>
             ))}

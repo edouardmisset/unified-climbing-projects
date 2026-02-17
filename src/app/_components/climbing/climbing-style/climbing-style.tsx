@@ -10,9 +10,7 @@ interface ClimbingStyleProps {
   climbingStyle: StyleWithSuffix
 }
 
-export function ClimbingStyle(
-  props: Omit<ComponentProps<'em'>, 'children'> & ClimbingStyleProps,
-) {
+export function ClimbingStyle(props: Omit<ComponentProps<'em'>, 'children'> & ClimbingStyleProps) {
   const { climbingStyle, className = '', ...otherProps } = props
 
   return (

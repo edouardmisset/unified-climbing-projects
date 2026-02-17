@@ -3,18 +3,12 @@ import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { PERIOD } from '~/schema/generic'
-import {
-  LOAD_CATEGORIES,
-  SESSION_TYPES,
-  type TrainingSessionListProps,
-} from '~/schema/training.ts'
+import { LOAD_CATEGORIES, SESSION_TYPES, type TrainingSessionListProps } from '~/schema/training.ts'
 import { createChangeHandler } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
-export function TrainingSessionFilterBar({
-  trainingSessions,
-}: TrainingSessionListProps) {
+export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionListProps) {
   const yearList = createYearList(trainingSessions, {
     descending: true,
     continuous: false,
@@ -22,13 +16,9 @@ export function TrainingSessionFilterBar({
 
   const locationList = useMemo(
     () =>
-      [
-        ...new Set(
-          trainingSessions
-            .map(({ gymCrag }) => gymCrag?.trim())
-            .filter(Boolean),
-        ),
-      ].sort(compareStringsAscending),
+      [...new Set(trainingSessions.map(({ gymCrag }) => gymCrag?.trim()).filter(Boolean))].sort(
+        compareStringsAscending,
+      ),
     [trainingSessions],
   )
 

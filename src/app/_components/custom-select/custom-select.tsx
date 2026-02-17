@@ -13,13 +13,7 @@ type CustomSelectProps = {
 }
 
 export function CustomSelect(props: CustomSelectProps) {
-  const {
-    handleChange,
-    selectedOption,
-    options,
-    name,
-    title = capitalize(name),
-  } = props
+  const { handleChange, selectedOption, options, name, title = capitalize(name) } = props
 
   return (
     <label className={styles.label} htmlFor={name} title={title}>

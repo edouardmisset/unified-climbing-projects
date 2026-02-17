@@ -21,12 +21,12 @@ export default async function AscentBarcodePage() {
   const groupedAscentsWeekly = groupDataWeeksByYear(allAscents)
 
   return (
-    <Layout title="Ascents Barcode">
+    <Layout title='Ascents Barcode'>
       {Object.entries(groupedAscentsWeekly)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearAscents]) => (
-          <div className="flexColumn w100" key={year}>
-            <h2 className="centerText">{year}</h2>
+          <div className='flexColumn w100' key={year}>
+            <h2 className='centerText'>{year}</h2>
             <Suspense fallback={<Loader />}>
               <AscentsBarcode yearlyAscents={yearAscents} />
             </Suspense>

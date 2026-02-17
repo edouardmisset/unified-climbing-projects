@@ -1,8 +1,5 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
-import {
-  COEFFICIENT_DISCRETE_HEIGHTS,
-  COEFFICIENT_NUMBER_OF_CRAGS,
-} from '~/constants/ascents'
+import { COEFFICIENT_DISCRETE_HEIGHTS, COEFFICIENT_NUMBER_OF_CRAGS } from '~/constants/ascents'
 import { ASCENT_STYLE, type Ascent, HOLDS, PROFILES } from '~/schema/ascent'
 
 /**
@@ -47,13 +44,7 @@ export function calculateVersatilityPercentage(ascents: Ascent[]): number {
   const styleRatio = uniqueStyles.size / ASCENT_STYLE.length
   const cragRatio = uniqueCrags.size / COEFFICIENT_NUMBER_OF_CRAGS
 
-  const ratios = [
-    holdsRatio,
-    heightRatio,
-    profileRatio,
-    styleRatio,
-    cragRatio,
-  ].map(ratio =>
+  const ratios = [holdsRatio, heightRatio, profileRatio, styleRatio, cragRatio].map(ratio =>
     clampValueInRange({ maximum: 100, minimum: 0, value: ratio * 100 }),
   )
 

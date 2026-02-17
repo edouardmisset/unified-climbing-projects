@@ -14,17 +14,13 @@ import styles from '../dashboard/dashboard.module.css'
 import { TrainingDashboardFilterBar } from '../filter-bar/_components/training-dashboard-filter-bar'
 import { Loader } from '../loader/loader.tsx'
 
-export function TrainingDashboard({
-  trainingSessions,
-}: TrainingSessionListProps) {
-  const filteredTrainingSessions = useTrainingSessionsFilter(
-    trainingSessions ?? [],
-  )
+export function TrainingDashboard({ trainingSessions }: TrainingSessionListProps) {
+  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions ?? [])
 
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
-    <div className="flex flexColumn alignCenter gridFullWidth">
+    <div className='flex flexColumn alignCenter gridFullWidth'>
       <TrainingDashboardFilterBar trainingSessions={trainingSessions} />
       <Suspense fallback={<Loader />}>
         <DashboardStats trainingSessions={filteredTrainingSessions} />
@@ -37,14 +33,10 @@ const DashboardStats = memo(function DashboardStatistics({
   trainingSessions,
 }: TrainingSessionListProps) {
   return trainingSessions.length === 0 ? (
-    <div className="flexColumn gap w100 padding">
+    <div className='flexColumn gap w100 padding'>
       <h2>Nothing there...</h2>
       <p>
-        Try{' '}
-        <Link href={LINKS.trainingSessionForm}>
-          logging new training sessions
-        </Link>
-        .
+        Try <Link href={LINKS.trainingSessionForm}>logging new training sessions</Link>.
       </p>
     </div>
   ) : (

@@ -44,8 +44,7 @@ export default async function WrapUp({ year }: { year?: number }) {
         <Card>
           <h2>No Data</h2>
           <p>
-            You have not logged any data yet.{' '}
-            {isAscentsEmpty ? 'Go climb some routes! ' : ''}{' '}
+            You have not logged any data yet. {isAscentsEmpty ? 'Go climb some routes! ' : ''}{' '}
             {isTrainingEmpty ? 'Go train!' : ''}
           </p>
         </Card>
@@ -54,14 +53,8 @@ export default async function WrapUp({ year }: { year?: number }) {
   }
 
   return (
-    <Layout
-      gridClassName={`padding ${styles.wrapUp}`}
-      title={<WrapUpHeader year={year} />}
-    >
-      <DaysOutsideSummary
-        ascents={ascents}
-        trainingSessions={trainingSessions}
-      />
+    <Layout gridClassName={`padding ${styles.wrapUp}`} title={<WrapUpHeader year={year} />}>
+      <DaysOutsideSummary ascents={ascents} trainingSessions={trainingSessions} />
       <AscentSummary ascents={ascents} />
       <HardestClimbsSummary ascents={ascents} />
       <VerticalMilestoneSummary ascents={ascents} />

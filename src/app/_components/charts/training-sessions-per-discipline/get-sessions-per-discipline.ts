@@ -8,9 +8,7 @@ type SessionsPerDiscipline = {
   color: string
 }[]
 
-export function getSessionsPerDiscipline(
-  sessions: TrainingSession[],
-): SessionsPerDiscipline {
+export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsPerDiscipline {
   if (sessions.length === 0) return []
 
   const sessionsWithDiscipline = sessions.filter(
@@ -29,9 +27,8 @@ export function getSessionsPerDiscipline(
   return Object.entries(disciplineCounts)
     .map(([discipline, count]) => ({
       color:
-        CLIMBING_DISCIPLINE_TO_COLOR[
-          discipline as keyof typeof CLIMBING_DISCIPLINE_TO_COLOR
-        ] ?? 'var(--gray-5)',
+        CLIMBING_DISCIPLINE_TO_COLOR[discipline as keyof typeof CLIMBING_DISCIPLINE_TO_COLOR] ??
+        'var(--gray-5)',
       id: discipline as NonNullable<TrainingSession['climbingDiscipline']>,
       label: discipline as NonNullable<TrainingSession['climbingDiscipline']>,
       value: count,

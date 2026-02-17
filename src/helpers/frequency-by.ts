@@ -3,11 +3,7 @@ import { sortNumericalValues } from './sort-values.ts'
 export function frequencyBy<
   Object_ extends Record<string, string | number>,
   Key extends keyof Object_,
->(
-  array: Object_[],
-  key: Key,
-  options?: { ascending: boolean },
-): Record<Object_[Key], number> {
+>(array: Object_[], key: Key, options?: { ascending: boolean }): Record<Object_[Key], number> {
   const { ascending } = options ?? {}
 
   const validItems = array.filter(item => item[key] != null)

@@ -4,24 +4,14 @@ import { type DayDescriptor, YearGrid } from '../year-grid/year-grid'
 import styles from './data-calendar.module.css'
 
 export const DataCalendar = memo(
-  <Data, DataArray extends (Data & StringDate)[]>(
-    props: DataCalendarProps<DataArray, Data>,
-  ) => {
-    const {
-      year,
-      data,
-      dataTransformationFunction,
-      fromDataToCalendarEntries,
-    } = props
+  <Data, DataArray extends (Data & StringDate)[]>(props: DataCalendarProps<DataArray, Data>) => {
+    const { year, data, dataTransformationFunction, fromDataToCalendarEntries } = props
 
     const yearlyData = useMemo(
       () => dataTransformationFunction(data),
       [data, dataTransformationFunction],
     )
-    const dataInSelectedYear = useMemo(
-      () => yearlyData[year],
-      [year, yearlyData],
-    )
+    const dataInSelectedYear = useMemo(() => yearlyData[year], [year, yearlyData])
 
     const calendarEntries = useMemo(
       () => fromDataToCalendarEntries(year, dataInSelectedYear),

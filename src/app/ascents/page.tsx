@@ -11,7 +11,7 @@ export default async function Page() {
   const ascents = await getAllAscents()
 
   return (
-    <Layout title="Ascents">
+    <Layout title='Ascents'>
       <Suspense fallback={<Loader />}>
         <FilteredAscentList ascents={ascents} />
       </Suspense>

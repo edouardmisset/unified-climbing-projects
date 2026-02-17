@@ -37,9 +37,7 @@ export function fromSessionTypeToBackgroundColor(
 export function fromSessionTypeToClassName(
   sessionType: TrainingSession['sessionType'],
 ): string | undefined {
-  return sessionType === undefined
-    ? undefined
-    : TRAINING_SESSION_TYPE_TO_CLASS_NAME[sessionType]
+  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[sessionType]
 }
 
 /**
@@ -53,12 +51,8 @@ export function fromSessionTypeToClassName(
  * @returns {string | undefined} The corresponding string value if sessionType
  * is defined, or undefined.
  */
-function fromSessionTypeToString(
-  sessionType: TrainingSession['sessionType'],
-): string | undefined {
-  return sessionType === undefined
-    ? undefined
-    : TRAINING_SESSION_TYPE_TO_STRING[sessionType]
+function fromSessionTypeToString(sessionType: TrainingSession['sessionType']): string | undefined {
+  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[sessionType]
 }
 
 /**
@@ -91,8 +85,7 @@ export function getSessionTypeColors({
   const isOneComponentBelowThreshold =
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
-  const convertedSessionType =
-    fromSessionTypeToString(sessionType) ?? 'otherTraining'
+  const convertedSessionType = fromSessionTypeToString(sessionType) ?? 'otherTraining'
   if (isOneComponentBelowThreshold) {
     return `var(--${convertedSessionType}Low)`
   }

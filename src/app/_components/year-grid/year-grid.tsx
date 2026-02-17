@@ -12,16 +12,8 @@ import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell.tsx'
 
 export const YearGrid = memo(
-  ({
-    dayCollection,
-    year,
-  }: {
-    year: number
-    dayCollection: DayDescriptor[]
-  }) => {
-    const displayedNumberOfWeeks = Math.ceil(
-      (getNumberOfDaysInYear(year) + 1) / 7,
-    )
+  ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
+    const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / 7)
     const firstDayOfYear = new Date(year, 0, 1, 12)
     const firstDayIndex = firstDayOfYear.getUTCDay()
     const prependWeek53 = firstDayIndex >= 4 || firstDayIndex === 0
@@ -32,16 +24,14 @@ export const YearGrid = memo(
       () => [
         0,
         ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
-        ...Array.from(
-          { length: displayedNumberOfWeeks },
-          (_, index) => index + 1,
-        ),
+        ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
       ],
       [displayedNumberOfWeeks, prependWeek53],
     )
 
+    const dayOffset = 6
     const numberOfDaysFromPreviousMondayTo1stJanuary =
-      firstDayIndex === 0 ? 6 : firstDayIndex - 1
+      firstDayIndex === 0 ? dayOffset : firstDayIndex - 1
 
     const emptyDays = useMemo(
       () =>

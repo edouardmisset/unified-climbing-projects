@@ -45,10 +45,7 @@ export async function DaysOutsideSummary({
     }
   })
 
-  const ascentsRatio = calculateAscentsPerDay(
-    ascents,
-    trainingSessions,
-  ).toFixed(1)
+  const ascentsRatio = calculateAscentsPerDay(ascents, trainingSessions).toFixed(1)
 
   const isBelowMinGapThreshold = MIN_GAP_THRESHOLD < longestGap
   return (
@@ -68,23 +65,20 @@ export async function DaysOutsideSummary({
             daysOutside={outdoorSessions.length}
           />
         </Suspense>
-        {mostAscentDate === '' ||
-        ascentsInMostAscentDay[0] === undefined ? undefined : (
-          <span className="block">
-            Your best day was <strong>{formatLongDate(mostAscentDate)}</strong>{' '}
-            where you climbed{' '}
+        {mostAscentDate === '' || ascentsInMostAscentDay[0] === undefined ? undefined : (
+          <span className='block'>
+            Your best day was <strong>{formatLongDate(mostAscentDate)}</strong> where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
           </span>
         )}
         {consecutiveClimbingDays === 0 ? undefined : (
-          <span className="block">
-            Your longest streak was <strong>{consecutiveClimbingDays}</strong>{' '}
-            days.
+          <span className='block'>
+            Your longest streak was <strong>{consecutiveClimbingDays}</strong> days.
           </span>
         )}
         {isBelowMinGapThreshold ? undefined : (
-          <span className="block">
+          <span className='block'>
             Your longest gap without climbing was{' '}
             <strong>
               {humanizeDuration(longestGap * 24 * 60 * 60 * 1000, {
@@ -112,10 +106,9 @@ function DaysOutsideDetails({
   daysOutside: number
 }) {
   return (
-    <span className="block">
-      You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
-      <strong>{daysOutside}</strong> days (<strong>{ascentsRatio}</strong>{' '}
-      ascents per day outside)
+    <span className='block'>
+      You climbed <AscentsWithPopover ascents={ascents} /> in <strong>{daysOutside}</strong> days (
+      <strong>{ascentsRatio}</strong> ascents per day outside)
     </span>
   )
 }

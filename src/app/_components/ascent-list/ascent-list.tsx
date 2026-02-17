@@ -51,45 +51,36 @@ export const AscentList = memo(
         <thead className={`${styles.header} gridFullWidth`}>
           <tr className={`${styles.headerRow} gridFullWidth`}>
             <th
-              aria-label="Discipline"
+              aria-label='Discipline'
               className={`${styles.cell} ${styles.headerCell}`}
-              title="Discipline: 🧗 route, 🪨 boulder..."
+              title='Discipline: 🧗 route, 🪨 boulder...'
             />
-            <th
-              className={`${styles.cell} ${styles.headerCell}`}
-              title="Name of the route"
-            >
+            <th className={`${styles.cell} ${styles.headerCell}`} title='Name of the route'>
               Name
             </th>
             {showPoints && (
-              <th
-                className={`${styles.cell} ${styles.headerCell}`}
-                title="Points of the ascent"
-              >
+              <th className={`${styles.cell} ${styles.headerCell}`} title='Points of the ascent'>
                 Points
               </th>
             )}
             <th
               className={`${styles.cell} ${styles.headerCell}`}
-              title="French grade of the route as shown in the guide book"
+              title='French grade of the route as shown in the guide book'
             >
               Grade
             </th>
             <th
               className={`${styles.cell} ${styles.headerCell}`}
-              title="Style of the ascent (onsight, flash, redpoint) and # tries"
+              title='Style of the ascent (onsight, flash, redpoint) and # tries'
             >
               Style
             </th>
-            <th
-              className={`${styles.cell} ${styles.headerCell}`}
-              title="Date of the ascent"
-            >
+            <th className={`${styles.cell} ${styles.headerCell}`} title='Date of the ascent'>
               Date
             </th>
             <th
               className={`${styles.cell} ${styles.headerCell}`}
-              title="Location (crag and sector if available) of the ascent"
+              title='Location (crag and sector if available) of the ascent'
             >
               Location
             </th>
@@ -98,25 +89,25 @@ export const AscentList = memo(
               <>
                 <th
                   className={`${styles.cell} ${styles.headerCell}`}
-                  title="Most common holds on the route (or boulder) or holds of the crux section"
+                  title='Most common holds on the route (or boulder) or holds of the crux section'
                 >
                   Holds
                 </th>
                 <th
                   className={`${styles.cell} ${styles.headerCell}`}
-                  title="General profile of the route or profile of the crux section"
+                  title='General profile of the route or profile of the crux section'
                 >
                   Profile
                 </th>
                 <th
                   className={`${styles.cell} ${styles.headerCell}`}
-                  title="Height of the route in meters"
+                  title='Height of the route in meters'
                 >
                   Height
                 </th>
                 <th
                   className={`${styles.cell} ${styles.headerCell}`}
-                  title="Rating of the ascent (out of 5 stars)"
+                  title='Rating of the ascent (out of 5 stars)'
                 >
                   Rating
                 </th>
@@ -149,26 +140,20 @@ export const AscentList = memo(
               })
               return (
                 <tr className={`${styles.row} gridFullWidth`} key={_id}>
-                  <td
-                    className={`${styles.cell} marginAuto`}
-                    title={climbingDiscipline}
-                  >
+                  <td className={`${styles.cell} marginAuto`} title={climbingDiscipline}>
                     {fromClimbingDisciplineToEmoji(climbingDiscipline)}
                   </td>
                   <td className={styles.cell}>
                     <strong title={routeName}>{routeName}</strong>
                   </td>
                   {showPoints && (
-                    <td
-                      className={`${styles.cell} monospace`}
-                      title={points?.toString()}
-                    >
+                    <td className={`${styles.cell} monospace`} title={points?.toString()}>
                       {points === undefined ? '—' : <strong>{points}</strong>}
                     </td>
                   )}
                   <td className={styles.cell}>
                     <em
-                      className="monospace"
+                      className='monospace'
                       title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
                     >
                       <span>
@@ -176,8 +161,7 @@ export const AscentList = memo(
                           ? formattedGrade
                           : `${formattedGrade}${NON_BREAKING_SPACE}`}
                       </span>
-                      {personalGrade === topoGrade ||
-                      personalGrade === undefined ? undefined : (
+                      {personalGrade === topoGrade || personalGrade === undefined ? undefined : (
                         <sup>
                           {' '}
                           <DisplayGrade
@@ -188,23 +172,14 @@ export const AscentList = memo(
                       )}
                     </em>
                   </td>
-                  <td
-                    className={styles.cell}
-                    title={tries === 1 ? style : formatOrdinals(tries)}
-                  >
+                  <td className={styles.cell} title={tries === 1 ? style : formatOrdinals(tries)}>
                     <span>{fromAscentStyleToEmoji(style)}</span>
                     <sup>{tries > 1 ? ` ${formatOrdinals(tries)}` : ''}</sup>
                   </td>
-                  <td
-                    className={`${styles.cell} monospace`}
-                    title={prettyLongDate(date)}
-                  >
+                  <td className={`${styles.cell} monospace`} title={prettyLongDate(date)}>
                     {prettyShortDate(date)}
                   </td>
-                  <td
-                    className={styles.cell}
-                    title={formatCragAndArea(crag, area)}
-                  >
+                  <td className={styles.cell} title={formatCragAndArea(crag, area)}>
                     {formatCragAndArea(crag, area)}
                   </td>
                   {showDetails && (
@@ -241,17 +216,14 @@ export const AscentList = memo(
                 <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
                 <td className={`${styles.footerCell} ${styles.cell}`} />
                 <td className={`${styles.footerCell} ${styles.cell}`}>
-                  <strong>
-                    {frenchNumberFormatter.format(totalAscentPoints)}
-                  </strong>
+                  <strong>{frenchNumberFormatter.format(totalAscentPoints)}</strong>
                 </td>
               </>
             ) : (
               <>
                 <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
                 <td className={`${styles.footerCell} ${styles.cell}`}>
-                  <strong>{ascents.length}</strong>{' '}
-                  {writeAscentsDisciplineText(ascents)}
+                  <strong>{ascents.length}</strong> {writeAscentsDisciplineText(ascents)}
                 </td>
               </>
             )}

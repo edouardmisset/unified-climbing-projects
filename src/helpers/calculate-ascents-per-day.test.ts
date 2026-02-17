@@ -26,13 +26,7 @@ describe('calculateAscentsPerDay', () => {
   })
 
   it('should calculate ascents per day', () => {
-    const ascents: Ascent[] = [
-      {} as Ascent,
-      {} as Ascent,
-      {} as Ascent,
-      {} as Ascent,
-      {} as Ascent,
-    ]
+    const ascents: Ascent[] = [{} as Ascent, {} as Ascent, {} as Ascent, {} as Ascent, {} as Ascent]
     const trainingSessions: TrainingSession[] = [
       { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
       { date: '2024-01-02', sessionType: 'Out' } as TrainingSession,

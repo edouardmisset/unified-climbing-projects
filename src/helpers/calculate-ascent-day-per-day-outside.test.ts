@@ -5,10 +5,7 @@ import { calculateAscentDayPerDayOutside } from './calculate-ascent-day-per-day-
 
 describe('calculateAscentDayPerDayOutside', () => {
   it('should return 0 when there are no outdoor days', () => {
-    const ascents: Ascent[] = [
-      { date: '2024-01-01' } as Ascent,
-      { date: '2024-01-02' } as Ascent,
-    ]
+    const ascents: Ascent[] = [{ date: '2024-01-01' } as Ascent, { date: '2024-01-02' } as Ascent]
     const trainingSessions: TrainingSession[] = []
 
     const result = calculateAscentDayPerDayOutside(ascents, trainingSessions)
@@ -29,10 +26,7 @@ describe('calculateAscentDayPerDayOutside', () => {
   })
 
   it('should calculate ratio when ascent days equal outdoor days', () => {
-    const ascents: Ascent[] = [
-      { date: '2024-01-01' } as Ascent,
-      { date: '2024-01-02' } as Ascent,
-    ]
+    const ascents: Ascent[] = [{ date: '2024-01-01' } as Ascent, { date: '2024-01-02' } as Ascent]
     const trainingSessions: TrainingSession[] = [
       { date: '2024-01-01', sessionType: 'Out' } as TrainingSession,
       { date: '2024-01-02', sessionType: 'Out' } as TrainingSession,
