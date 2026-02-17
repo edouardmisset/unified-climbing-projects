@@ -49,6 +49,7 @@ export default defineConfig({
       files: ['**/*.test.*', '**/*.spec.*', 'tests/**'],
       rules: {
         'no-magic-numbers': 'off',
+        'typescript/no-unsafe-type-assertion': 'off',
       },
     },
   ],
