@@ -323,7 +323,7 @@ describe('findLongestStreak', () => {
 
 describe('findLongestGap', () => {
   it('should return 0 for empty array', () => {
-    const data: Array<{ date: string }> = []
+    const data: { date: string }[] = []
     const result = findLongestGap(data)
     expect(result).toBe(0)
   })

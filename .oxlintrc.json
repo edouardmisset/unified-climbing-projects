@@ -15,7 +15,7 @@
     "import/prefer-default-export": "off",
     "import/consistent-type-specifier-style": "off",
     "max-statements": ["warn", 100],
-    "no-magic-numbers": ["warn", { "ignore": [-1, 0, 1, 2, 24, 60, 100, 1000, 1900] }],
+    "no-magic-numbers": ["warn", { "ignore": [-1, 0, 1, 2, 10, 24, 60, 100, 1000, 1900] }],
     "no-continue": "off",
     "no-ternary": "off",
     "func-style": "off",
@@ -27,6 +27,8 @@
     "sort-imports": "off",
     "sort-keys": "off",
     "curly": "off",
+    "capitalized-comments": "off",
+    "no-unassigned-import": "off",
     "typescript/no-explicit-any": "off",
     "typescript/consistent-type-definitions": "off"
   },

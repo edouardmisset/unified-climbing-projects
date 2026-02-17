@@ -39,9 +39,7 @@ export function createYearList<T extends StringDate = TrainingSession | Ascent>(
 }
 
 /** Note that the array of data of type T can represent a **week or a day** of data. */
-type YearlyDaysCollection<T> = {
-  [year: number]: T[][]
-}
+type YearlyDaysCollection<T> = Record<number, T[][]>
 
 /** Initially, the array of data is empty */
 function initializeYearlyDataDaysCollection<

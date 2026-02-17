@@ -42,8 +42,6 @@ export const DataCalendar = memo(
 type DataCalendarProps<DataArray extends (Data & StringDate)[], Data> = {
   year: number
   data: DataArray
-  dataTransformationFunction: (input: DataArray) => {
-    [year: number]: Data[][]
-  }
+  dataTransformationFunction: (input: DataArray) => Record<number, Data[][]>
   fromDataToCalendarEntries: (year: number, data?: Data[][]) => DayDescriptor[]
 }

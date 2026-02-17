@@ -22,9 +22,9 @@ export function ThemeToggle({
       type="button"
     >
       {checked ? (
-        <Moon color={'var(--text-2)'} />
+        <Moon color="var(--text-2)" />
       ) : (
-        <Sun color={'var(--text-2)'} />
+        <Sun color="var(--text-2)" />
       )}
     </button>
   )

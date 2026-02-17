@@ -64,7 +64,7 @@ export function TrainingSessionsRadial({
       <ResponsiveRadialBar
         colors={getBarColor}
         data={data}
-        enableCircularGrid={true}
+        enableCircularGrid
         enableLabels
         enableRadialGrid={false}
         enableTracks={false}

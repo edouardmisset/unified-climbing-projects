@@ -27,7 +27,7 @@ export async function loadBackupSpreadsheet(
     return doc
   } catch (error) {
     throw new Error(
-      `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`,
+      `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`, { cause: error },
     )
   }
 }

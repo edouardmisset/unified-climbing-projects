@@ -1,3 +1,4 @@
+// oxlint-disable import/no-nodejs-modules
 import { writeFile } from 'node:fs/promises'
 import ascents from './ascent-data.json' with { type: 'json' }
 
@@ -10,34 +11,22 @@ const STRATIFY_BY: (keyof (typeof ascents)[number])[] = [
 ]
 
 // Function to get a random sample of specified size from an array
-// biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
 function getRandomSample(arr: any[], size: number): any[] {
-  const shuffled = arr.sort(() => 0.5 - Math.random())
+  const shuffled = arr.sort(() => 1 / 2 - Math.random())
   return shuffled.slice(0, size)
 }
 
 // Function to perform stratified sampling by multiple keys
-function stratifiedSample(
-  // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
-  data: any[],
-  size: number,
-  stratificationKeys: string[],
-  // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
-): any[] {
-  const strata = data.reduce(
-    (acc, entry) => {
-      const key = stratificationKeys.map(factor => entry[factor]).join('|')
-      if (!acc[key]) {
-        acc[key] = []
-      }
-      acc[key].push(entry)
-      return acc
-    },
-    // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
-    {} as { [key: string]: any[] },
-  )
+function stratifiedSample(data: any[], size: number, stratificationKeys: string[]): any[] {
+  const strata = data.reduce<Record<string, any[]>>((acc, entry) => {
+    const key = stratificationKeys.map(factor => entry[factor]).join('|')
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(entry)
+    return acc
+  }, {})
 
-  // biome-ignore lint/suspicious/noExplicitAny: experimental move fast and break things
   const sample: any[] = []
   const strataKeys = Object.keys(strata)
   const samplesPerStratum = Math.floor(size / strataKeys.length)
@@ -67,6 +56,4 @@ await writeFile(
   JSON.stringify(subset, null, 2),
 )
 
-globalThis.console.log(
-  `Sampled ${subset.length} entries from the original data.`,
-)
+globalThis.console.log(`Sampled ${subset.length} entries from the original data.`)

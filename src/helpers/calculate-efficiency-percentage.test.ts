@@ -1,9 +1,6 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
 import { describe, expect, it } from 'vitest'
-import {
-  COEFFICIENT_ASCENTS_PER_DAY,
-  COEFFICIENT_ONSIGHT_FLASH_RATIO,
-} from '~/constants/ascents'
+import { COEFFICIENT_ASCENTS_PER_DAY, COEFFICIENT_ONSIGHT_FLASH_RATIO } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
@@ -12,9 +9,7 @@ describe('calculateEfficiencyPercentage', () => {
   it('should return 0 when there are no ascents', () => {
     const result = calculateEfficiencyPercentage({
       ascents: [],
-      trainingSessions: [
-        { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-      ],
+      trainingSessions: [{ date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' }],
     })
 
     expect(result).toBe(0)
@@ -66,20 +61,15 @@ describe('calculateEfficiencyPercentage', () => {
 
     // Calculate expected result manually
     const ascentDayPerDayOutside = 1
-    const ascentsPerDay = 1 * COEFFICIENT_ASCENTS_PER_DAY
+    const ascentsPerDay = COEFFICIENT_ASCENTS_PER_DAY
     const averageTries = 1
     const onsightFlashRatio = clampValueInRange({
       maximum: 1,
       minimum: 0,
-      value: 1 * COEFFICIENT_ONSIGHT_FLASH_RATIO,
+      value: COEFFICIENT_ONSIGHT_FLASH_RATIO,
     })
     const expected = Math.round(
-      average(
-        ascentDayPerDayOutside,
-        ascentsPerDay,
-        averageTries,
-        onsightFlashRatio,
-      ) * 100,
+      average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio) * 100,
     )
 
     expect(result).toBe(expected)
@@ -139,17 +129,13 @@ describe('calculateEfficiencyPercentage', () => {
     const averageTries = 3 / (1 + 3 + 1)
     const onsightFlashRatio = (2 / 3) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
-    const ratios = [
-      ascentDayPerDayOutside,
-      ascentsPerDay,
-      averageTries,
-      onsightFlashRatio,
-    ].map(ratio =>
-      clampValueInRange({
-        maximum: 100,
-        minimum: 0,
-        value: ratio * 100,
-      }),
+    const ratios = [ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio].map(
+      ratio =>
+        clampValueInRange({
+          maximum: 100,
+          minimum: 0,
+          value: ratio * 100,
+        }),
     )
     const expected = Math.round(average(ratios))
 
@@ -316,12 +302,7 @@ describe('calculateEfficiencyPercentage', () => {
     const onsightFlashRatio = (1 / 2) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
     const expected = Math.round(
-      average(
-        ascentDayPerDayOutside,
-        ascentsPerDay,
-        averageTries,
-        onsightFlashRatio,
-      ) * 100,
+      average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio) * 100,
     )
 
     expect(result).toBe(expected)

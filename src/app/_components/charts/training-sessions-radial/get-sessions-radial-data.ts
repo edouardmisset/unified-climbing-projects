@@ -1,12 +1,12 @@
 import type { TrainingSession } from '~/schema/training'
 
-type RadialBarData = Array<{
+type RadialBarData = {
   id: string
-  data: Array<{
+  data: {
     x: string
     y: number
-  }>
-}>
+  }[]
+}[]
 
 const ENERGY_SYSTEM_COLORS = {
   AA: 'var(--energySystemAA)',
@@ -35,7 +35,7 @@ const ANATOMICAL_REGION_LABELS = {
 export function getSessionsRadialData(sessions: TrainingSession[]): {
   data: RadialBarData
   colors: Record<string, string>
-  legendData: Array<{ id: string; label: string; color: string }>
+  legendData: { id: string; label: string; color: string }[]
   totals: Record<string, number>
 } {
   if (sessions.length === 0)
@@ -70,7 +70,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
   const colors: Record<string, string> = {}
 
   // Build Energy System ring data
-  const energySystemData: Array<{ x: string; y: number }> = Object.entries(
+  const energySystemData: { x: string; y: number }[] = Object.entries(
     energySystemCounts,
   )
     .map(([system, count]) => ({
@@ -83,9 +83,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
 
   for (const item of energySystemData) {
     const systemKey = (
-      Object.keys(ENERGY_SYSTEM_LABELS) as Array<
-        keyof typeof ENERGY_SYSTEM_LABELS
-      >
+      Object.keys(ENERGY_SYSTEM_LABELS) as (keyof typeof ENERGY_SYSTEM_LABELS)[]
     ).find(key => ENERGY_SYSTEM_LABELS[key] === item.x)
     if (systemKey) {
       colors[item.x] = ENERGY_SYSTEM_COLORS[systemKey]
@@ -93,7 +91,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
   }
 
   // Build Anatomical Region ring data
-  const anatomicalRegionData: Array<{ x: string; y: number }> = Object.entries(
+  const anatomicalRegionData: { x: string; y: number }[] = Object.entries(
     regionCounts,
   )
     .map(([region, count]) => ({
@@ -107,9 +105,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
 
   for (const item of anatomicalRegionData) {
     const regionKey = (
-      Object.keys(ANATOMICAL_REGION_LABELS) as Array<
-        keyof typeof ANATOMICAL_REGION_LABELS
-      >
+      Object.keys(ANATOMICAL_REGION_LABELS) as (keyof typeof ANATOMICAL_REGION_LABELS)[]
     ).find(key => ANATOMICAL_REGION_LABELS[key] === item.x)
     if (regionKey) {
       colors[item.x] = ANATOMICAL_REGION_COLORS[regionKey]

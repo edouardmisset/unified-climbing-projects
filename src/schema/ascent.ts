@@ -182,23 +182,14 @@ export type Grade = z.infer<typeof gradeSchema>
 
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
-const UNAVAILABLE_CLIMBING_DISCIPLINE: Set<Ascent['climbingDiscipline']> =
-  new Set(['Multi-Pitch'])
+const UNAVAILABLE_CLIMBING_DISCIPLINE = new Set<Ascent['climbingDiscipline']>(['Multi-Pitch'])
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
   d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )
 
 export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
-export const HOLDS = [
-  'Crimp',
-  'Jug',
-  'Pocket',
-  'Sloper',
-  'Pinch',
-  'Crack',
-  'Undercling',
-] as const
+export const HOLDS = ['Crimp', 'Jug', 'Pocket', 'Sloper', 'Pinch', 'Crack', 'Undercling'] as const
 
 export const PROFILES = [
   'Vertical',
@@ -214,6 +205,8 @@ export const ascentStyleSchema = z.enum(ASCENT_STYLE)
 export const profileSchema = z.enum(PROFILES)
 export const holdsSchema = z.enum(HOLDS)
 const optionalStringSchema = z.string().optional()
+
+const MAX_RATING = 5
 
 export const ascentSchema = z.object({
   area: z.string().trim().optional(),
@@ -231,7 +224,7 @@ export const ascentSchema = z.object({
   personalGrade: gradeSchema.optional(),
   points: positiveInteger.optional(),
   profile: profileSchema.optional(),
-  rating: z.number().int().min(0).max(5).optional(),
+  rating: z.number().int().min(0).max(MAX_RATING).optional(),
   region: optionalStringSchema,
   routeName: z.string().trim().min(1).default('No Name'),
   style: ascentStyleSchema,

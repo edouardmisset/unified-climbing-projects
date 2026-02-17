@@ -6,7 +6,7 @@ export type LocationType = (typeof LOCATION_TYPES)[number]
 export type FilterConfig<T extends string | number = string> = {
   name: string
   title: string
-  options: ReadonlyArray<T>
+  options: readonly T[]
   selectedValue: T
   handleChange: ChangeEventHandler<HTMLSelectElement>
 }
