@@ -21,26 +21,10 @@
   --patagonia-line-color: hsl(0deg 0% 3%);
   --mountains-outline: 5%;
 
-  /* biome-ignore format: the clip path should not be formatted */
-  --mountains: 
-  0 100%,
-  5% 85%,
-  10% 55%, 
-  13% 45%, 
-  15% 50%,
-  23% 87%,
-  25% 90%,
-  27% 85%,
-  30% 75%,
-  32% 77%,
-  45% 160%,
-  67% 85%,
-  70% 93%,
-  72% 90%,
-  82% 57%,
-  85% 52%,
-  95% 90%,
-  100% 100%;
+  /* oxfmt-ignore */
+  --mountains:
+    0 100%, 5% 85%, 10% 55%, 13% 45%, 15% 50%, 23% 87%, 25% 90%, 27% 85%, 30% 75%, 32% 77%,
+    45% 160%, 67% 85%, 70% 93%, 72% 90%, 82% 57%, 85% 52%, 95% 90%, 100% 100%;
   --patagonia-gradient: linear-gradient(
     to bottom,
     var(--patagonia-color-1) 0%,

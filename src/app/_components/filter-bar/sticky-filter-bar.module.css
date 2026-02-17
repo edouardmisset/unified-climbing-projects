@@ -1,9 +1,5 @@
 .container {
-  --transparent-background: color-mix(
-    in oklch,
-    var(--surface-3) 10%,
-    transparent
-  );
+  --transparent-background: color-mix(in oklch, var(--surface-3) 10%, transparent);
 
   position: sticky;
   inset: 0;

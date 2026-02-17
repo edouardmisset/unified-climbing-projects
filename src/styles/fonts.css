@@ -1,34 +1,27 @@
 :where(html) {
   --font-system-ui: system-ui, sans-serif;
   --font-transitional: charter, bitstream charter, sitka text, cambria, serif;
-  --font-old-style:
-    iowan old style, palatino linotype, urw palladio l, p052, serif;
+  --font-old-style: iowan old style, palatino linotype, urw palladio l, p052, serif;
   --font-humanist:
-    seravek, gill sans nova, ubuntu, calibri, dejavu sans, source-sans-pro,
-    sans-serif;
-  --font-geometric-humanist:
-    avenir, montserrat, corbel, urw gothic, source-sans-pro, sans-serif;
-  --font-classical-humanist:
-    optima, candara, noto sans, source-sans-pro, sans-serif;
-  --font-neo-grotesque:
-    inter, roboto, helvetica neue, arial nova, nimbus sans, arial, sans-serif;
+    seravek, gill sans nova, ubuntu, calibri, dejavu sans, source-sans-pro, sans-serif;
+  --font-geometric-humanist: avenir, montserrat, corbel, urw gothic, source-sans-pro, sans-serif;
+  --font-classical-humanist: optima, candara, noto sans, source-sans-pro, sans-serif;
+  --font-neo-grotesque: inter, roboto, helvetica neue, arial nova, nimbus sans, arial, sans-serif;
   --font-monospace-slab-serif: nimbus mono ps, courier new, monospace;
   --font-monospace-code:
-    dank mono, operator mono, inconsolata, fira mono, ui-monospace, sf mono, monaco, droid sans mono, source code pro, cascadia code, menlo, consolas, dejavu sans mono, monospace;
+    dank mono, operator mono, inconsolata, fira mono, ui-monospace, sf mono, monaco,
+    droid sans mono, source code pro, cascadia code, menlo, consolas, dejavu sans mono, monospace;
   --font-industrial:
-    bahnschrift, din alternate, franklin gothic medium, nimbus sans narrow,
-    sans-serif-condensed, sans-serif;
+    bahnschrift, din alternate, franklin gothic medium, nimbus sans narrow, sans-serif-condensed,
+    sans-serif;
   --font-rounded-sans:
-    ui-rounded, hiragino maru gothic pron, quicksand, comfortaa, manjari, arial rounded mt, arial rounded mt bold, calibri, source-sans-pro, sans-serif;
-  --font-slab-serif:
-    rockwell, rockwell nova, roboto slab, dejavu serif, sitka small, serif;
+    ui-rounded, hiragino maru gothic pron, quicksand, comfortaa, manjari, arial rounded mt,
+    arial rounded mt bold, calibri, source-sans-pro, sans-serif;
+  --font-slab-serif: rockwell, rockwell nova, roboto slab, dejavu serif, sitka small, serif;
   --font-antique:
-    superclarendon, bookman old style, urw bookman, urw bookman l, georgia pro,
-    georgia, serif;
-  --font-didone:
-    didot, bodoni mt, noto serif display, urw palladio l, p052, sylfaen, serif;
-  --font-handwritten:
-    segoe print, bradley hand, chilanka, tscu_comic, casual, cursive;
+    superclarendon, bookman old style, urw bookman, urw bookman l, georgia pro, georgia, serif;
+  --font-didone: didot, bodoni mt, noto serif display, urw palladio l, p052, sylfaen, serif;
+  --font-handwritten: segoe print, bradley hand, chilanka, tscu_comic, casual, cursive;
   --font-sans: var(--font-system-ui);
   --font-serif: ui-serif, serif;
   --font-mono: var(--font-monospace-code);

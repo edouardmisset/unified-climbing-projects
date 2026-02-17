@@ -268,15 +268,17 @@ Each section MUST be separated by an empty line.
 - Use template literals over string concatenation.
   - **Example:** Prefer `` `Hello, ${name}` `` to `'Hello, ' + name`.
 - Code MUST be:
-  - **Linted**
+  - **Linted** (using Oxlint)
   - **Free of unused variables**
   - **Free of unused imports/exports**
-  - **Formatted**
+  - **Formatted** (using Oxfmt)
   - **Passing static analysis checks**
-- A linter SHOULD be used for linting.
+- Oxlint SHOULD be used for linting.
   - **Example:** `bun run lint`
-- A formatter SHOULD be used for formatting.
+  - **Ignore comments:** Use `// oxlint-disable-next-line rule-name` or `/* oxlint-disable */`
+- Oxfmt SHOULD be used for formatting.
   - **Example:** `bun run format`
+  - **Ignore comments:** Use `// oxfmt-ignore` for the next statement
 
 ## Git Commit Guidelines
 

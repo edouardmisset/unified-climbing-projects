@@ -16,12 +16,12 @@ export const optionalAscentFilterSchema = z
     grade: gradeSchema,
     height: ascentSchema.shape.height,
     holds: holdsSchema,
+    period: periodSchema,
     profile: profileSchema,
     rating: ascentSchema.shape.rating,
     style: ascentStyleSchema,
     tries: ascentSchema.shape.tries,
     year: optionalAscentYear,
-    period: periodSchema,
   })
   .partial()
   .optional()

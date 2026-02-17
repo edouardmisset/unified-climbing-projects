@@ -274,37 +274,37 @@ not to see them */
 }
 
 :where(
-    a[href],
-    area,
-    button,
-    input:not(
-        [type='text'],
-        [type='email'],
-        [type='number'],
-        [type='password'],
-        [type=''],
-        [type='tel'],
-        [type='url']
-      ),
-    label[for],
-    select,
-    summary,
-    [tabindex]:not([tabindex*='-'])
-  ) {
+  a[href],
+  area,
+  button,
+  input:not(
+    [type='text'],
+    [type='email'],
+    [type='number'],
+    [type='password'],
+    [type=''],
+    [type='tel'],
+    [type='url']
+  ),
+  label[for],
+  select,
+  summary,
+  [tabindex]:not([tabindex*='-'])
+) {
   cursor: pointer;
 }
 
 :where(
-    a[href],
-    area,
-    button,
-    input,
-    label[for],
-    select,
-    summary,
-    textarea,
-    [tabindex]:not([tabindex*='-'])
-  ) {
+  a[href],
+  area,
+  button,
+  input,
+  label[for],
+  select,
+  summary,
+  textarea,
+  [tabindex]:not([tabindex*='-'])
+) {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -340,12 +340,7 @@ not to see them */
   letter-spacing: inherit;
 }
 
-:where(html)
-  :where(
-    textarea,
-    select,
-    input:not([type='button'], [type='submit'], [type='reset'])
-  ) {
+:where(html) :where(textarea, select, input:not([type='button'], [type='submit'], [type='reset'])) {
   background-color: var(--surface-2);
 }
 
@@ -360,11 +355,11 @@ not to see them */
 }
 
 :where(
-    label:has(+ input:required),
-    label:has(+ textarea:required),
-    label:has(+ select:required),
-    .required
-  )::after {
+  label:has(+ input:required),
+  label:has(+ textarea:required),
+  label:has(+ select:required),
+  .required
+)::after {
   font-size: 1em;
   vertical-align: super;
   color: var(--red-9);
@@ -398,11 +393,7 @@ not to see them */
   padding-inline-start: var(--size-relative-4);
 }
 
-:where(
-    textarea,
-    select,
-    input:not([type='button'], [type='submit'], [type='reset'])
-  ) {
+:where(textarea, select, input:not([type='button'], [type='submit'], [type='reset'])) {
   background-color: var(--surface-2);
   border-radius: var(--radius-2);
 }

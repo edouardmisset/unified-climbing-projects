@@ -4,9 +4,9 @@ import { getAllTrainingSessions } from '~/services/training'
 
 // Write a function to find missing outdoor sessions.
 // To do this, first compile a list (set) of all the days with ascents based on
-// the list of all ascents.
+// The list of all ascents.
 // Then, get the list of all the outdoor sessions and compute the difference
-// between the two sets to find the missing days.
+// Between the two sets to find the missing days.
 async function findMissingOutdoorSessions(): Promise<string[]> {
   const ascentDays = await getAllAscents()
   const outdoorSessions = await getAllTrainingSessions()
@@ -17,8 +17,7 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
 
   const filteredAscentDays = ascentDays.filter(
     ({ date }) =>
-      new Date(date).getTime() >=
-      new Date(firstRecordedTrainingSession?.date ?? '').getTime(),
+      new Date(date).getTime() >= new Date(firstRecordedTrainingSession?.date ?? '').getTime(),
   )
 
   const ascentDaysSet = new Set(
@@ -31,9 +30,7 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
       .map(({ date }) => extractDateFromISODateString(date)),
   )
 
-  const missingDays = [...ascentDaysSet].filter(
-    date => !outdoorSessionsSet.has(date),
-  )
+  const missingDays = [...ascentDaysSet].filter(date => !outdoorSessionsSet.has(date))
   return missingDays
 }
 

@@ -14,10 +14,7 @@ export const getAllAscents = cache(async (): Promise<Ascent[]> => {
 
     const parsedAscents = ascentSchema.array().safeParse(ascentData)
     if (!parsedAscents.success) {
-      globalThis.console.error(
-        'Error parsing ascents from DB:',
-        parsedAscents.error,
-      )
+      globalThis.console.error('Error parsing ascents from DB:', parsedAscents.error)
       return []
     }
 
@@ -39,35 +36,23 @@ export async function addAscent(ascent: Omit<Ascent, '_id'>): Promise<void> {
 
 /** TRAINING SESSIONS */
 
-export const getAllTrainingSessions = cache(
-  async (): Promise<TrainingSession[]> => {
-    'use cache'
-    try {
-      const trainingData = await fetchQuery(api.training.get, EMPTY_OBJECT)
-      const parsedTraining = trainingSessionSchema
-        .array()
-        .safeParse(trainingData)
-      if (!parsedTraining.success) {
-        globalThis.console.error(
-          'Error parsing training sessions from DB:',
-          parsedTraining.error,
-        )
-        return []
-      }
-      return parsedTraining.data
-    } catch (error) {
-      globalThis.console.error(
-        'Error fetching training sessions from DB:',
-        error,
-      )
+export const getAllTrainingSessions = cache(async (): Promise<TrainingSession[]> => {
+  'use cache'
+  try {
+    const trainingData = await fetchQuery(api.training.get, EMPTY_OBJECT)
+    const parsedTraining = trainingSessionSchema.array().safeParse(trainingData)
+    if (!parsedTraining.success) {
+      globalThis.console.error('Error parsing training sessions from DB:', parsedTraining.error)
       return []
     }
-  },
-)
+    return parsedTraining.data
+  } catch (error) {
+    globalThis.console.error('Error fetching training sessions from DB:', error)
+    return []
+  }
+})
 
-export async function addTrainingSession(
-  session: Omit<TrainingSession, '_id'>,
-): Promise<void> {
+export async function addTrainingSession(session: Omit<TrainingSession, '_id'>): Promise<void> {
   try {
     await fetchAction(api.training.postAction, session)
   } catch (error) {

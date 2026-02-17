@@ -4,11 +4,7 @@
   gap: 0.75rem;
   align-items: center;
   justify-content: space-between;
-  inline-size: clamp(
-    calc(var(--size-content-1) / 2),
-    var(--size-content-1),
-    var(--size-content-2)
-  );
+  inline-size: clamp(calc(var(--size-content-1) / 2), var(--size-content-1), var(--size-content-2));
   min-inline-size: 9rem;
   block-size: 2.5rem;
   padding-inline-start: 0.875rem;
