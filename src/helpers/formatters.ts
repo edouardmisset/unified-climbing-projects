@@ -3,7 +3,7 @@ import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
-export function formatComments(comments: Ascent['comments']  ): string {
+export function formatComments(comments: Ascent['comments']): string {
   return comments ? `💬 “${comments}”` : ''
 }
 
@@ -85,7 +85,7 @@ const ENERGY_SYSTEM_TO_EMOJI: Record<Exclude<TrainingSession['energySystem'], un
   AL: '🪫',
 }
 
-export function fromEnergySystemToEmoji(energySystem: TrainingSession['energySystem']): Emoji | '' {
+export function fromEnergySystemToEmoji(energySystem: TrainingSession['energySystem']): Emoji {
   return energySystem === undefined ? '' : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
 }
 
@@ -100,7 +100,7 @@ const ANATOMICAL_REGION_TO_EMOJI: Record<
 
 export function fromAnatomicalRegionToEmoji(
   anatomicalRegion: TrainingSession['anatomicalRegion'],
-): Emoji | '' {
+): Emoji {
   return anatomicalRegion === undefined ? '' : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
 }
 
@@ -115,7 +115,7 @@ const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
 
 export function fromClimbingDisciplineToEmoji(
   climbingDiscipline: TrainingSession['climbingDiscipline'],
-): Emoji | '' {
+): Emoji {
   return climbingDiscipline === undefined
     ? ''
     : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')

@@ -9,7 +9,7 @@ export default function Layout({
   title,
 }: GridLayoutProps) {
   return (
-    <section className="flexColumn w100 h100 overflowXClip">
+    <section className='flexColumn w100 h100 overflowXClip'>
       <Header title={title} />
       <Suspense fallback={<Loader />}>
         <div className={`${layout} ${gridClassName}`}>{children}</div>
@@ -20,7 +20,7 @@ export default function Layout({
 
 const Header = memo(({ title }: { title: ReactNode }) => (
   <div className={`${styles.header} ${styles.patagonia}`}>
-    <h1 className={styles.h1} title={title?.toString()}>
+    <h1 className={styles.h1} title={typeof title === 'string' ? title : undefined}>
       {title}
     </h1>
   </div>

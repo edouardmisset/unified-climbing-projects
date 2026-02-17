@@ -16,21 +16,18 @@ import {
   theme,
 } from '../constants'
 
-const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
-  id,
-  data,
-}) => String(data[`${id}Color` as keyof typeof data])
+const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({ id, data }) => {
+  const colorForAscent = data[`${id}Color` as keyof typeof data] as string | undefined
+  return colorForAscent ? colorForAscent : ''
+}
 
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
-  const gradeFrequency = useMemo(
-    () => getGradeFrequencyAndColors(ascents),
-    [ascents],
-  )
+  const gradeFrequency = useMemo(() => getGradeFrequencyAndColors(ascents), [ascents])
 
   if (gradeFrequency.length === 0) return null
 
   return (
-    <ChartContainer caption="Ascent Pyramid">
+    <ChartContainer caption='Ascent Pyramid'>
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
@@ -40,7 +37,7 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
         enableGridY={false}
         enableLabel={false}
         enableTotals
-        indexBy="grade"
+        indexBy='grade'
         keys={ASCENT_STYLE}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}
