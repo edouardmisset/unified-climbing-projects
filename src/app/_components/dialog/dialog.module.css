@@ -27,6 +27,7 @@
   background-color: transparent;
   transform: translate(-50%, -50%);
   z-index: var(--layer-3);
+  min-inline-size: min(100%, var(--size-content-2));
 
   @media (prefers-reduced-motion: no-preference) {
     transition: all 150ms;
