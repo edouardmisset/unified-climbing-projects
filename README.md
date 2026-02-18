@@ -15,7 +15,7 @@ What’s inside (high-level):
 - Data & validation: Convex database, Zod schemas; ISR for performance
 - Features: dashboards and charts (grades, disciplines, years, distance),
   calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards
-- Testing: unit tests with poku, end-to-end with Playwright
+- Testing: unit tests with vitest, end-to-end with Playwright
 - Perf: caching utilities and React Compiler enabled
 
 ## Getting Started
@@ -55,7 +55,7 @@ Note: You may need to configure environment variables (for example, Clerk).
 
 ## Testing
 
-- Unit tests (poku): `bun run test:unit`
+- Unit tests: `bun run test:unit`
 - E2E tests (Playwright): `bun run test:e2e`
 - All tests: `bun run test:all`
 

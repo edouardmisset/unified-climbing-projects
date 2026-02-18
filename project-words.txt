@@ -16,7 +16,6 @@ Onsight
 onsighted
 Onsighting
 patagonia
-poku
 qrcode
 redpoint
 Redpoint
