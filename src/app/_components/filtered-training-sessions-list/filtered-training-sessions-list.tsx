@@ -8,17 +8,13 @@ import type { TrainingSessionListProps } from '~/schema/training'
 import { Loader } from '../loader/loader'
 import { TrainingSessionList } from '../training-session-list/training-session-list'
 
-export function FilteredTrainingSessionList({
-  trainingSessions,
-}: TrainingSessionListProps) {
-  const filteredTrainingSessions = useTrainingSessionsFilter(
-    trainingSessions ?? [],
-  )
+export function FilteredTrainingSessionList({ trainingSessions }: TrainingSessionListProps) {
+  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions ?? [])
 
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
-    <section className="flex flexColumn gridFullWidth padding overflowXClip">
+    <section className='flex flexColumn gridFullWidth padding overflowXClip'>
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
       <Suspense fallback={<Loader />}>
         <TrainingSessionList trainingSessions={filteredTrainingSessions} />

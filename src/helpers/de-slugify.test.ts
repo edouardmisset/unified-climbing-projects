@@ -165,9 +165,7 @@ describe('deSlugify', () => {
 
   describe('Performance and stability', () => {
     it('should handle long strings efficiently', () => {
-      const longSlug = Array.from({ length: 100 }, (_, i) => `word${i}`).join(
-        '-',
-      )
+      const longSlug = Array.from({ length: 100 }, (_, i) => `word${i}`).join('-')
       const result = deSlugify(longSlug)
 
       // Should start with capitalized first word and contain spaces

@@ -6,9 +6,7 @@ import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import type { TrainingSession } from '~/schema/training'
 import { useTrainingSessionsQueryState } from './use-training-sessions-query-state'
 
-export function useTrainingSessionsFilter(
-  trainingSessions: TrainingSession[],
-): TrainingSession[] {
+export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): TrainingSession[] {
   const {
     selectedYear,
     selectedSessionType,

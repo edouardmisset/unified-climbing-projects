@@ -1,39 +1,34 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import type { TrainingSession } from '~/schema/training'
 
+type Discipline = NonNullable<TrainingSession['climbingDiscipline']>
+
 type SessionsPerDiscipline = {
-  id: NonNullable<TrainingSession['climbingDiscipline']>
-  label: NonNullable<TrainingSession['climbingDiscipline']>
+  id: Discipline
+  label: Discipline
   value: number
   color: string
 }[]
 
-export function getSessionsPerDiscipline(
-  sessions: TrainingSession[],
-): SessionsPerDiscipline {
+export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsPerDiscipline {
   if (sessions.length === 0) return []
 
   const sessionsWithDiscipline = sessions.filter(
     session => session.climbingDiscipline !== undefined,
   )
 
-  const disciplineCounts = sessionsWithDiscipline.reduce(
-    (acc, { climbingDiscipline }) => {
-      if (!climbingDiscipline) return acc
-      acc[climbingDiscipline] = (acc[climbingDiscipline] ?? 0) + 1
-      return acc
-    },
-    {} as Record<NonNullable<TrainingSession['climbingDiscipline']>, number>,
-  )
+  const disciplineCounts = new Map<Discipline, number>()
 
-  return Object.entries(disciplineCounts)
+  for (const { climbingDiscipline } of sessionsWithDiscipline) {
+    if (!climbingDiscipline) continue
+    disciplineCounts.set(climbingDiscipline, (disciplineCounts.get(climbingDiscipline) ?? 0) + 1)
+  }
+
+  return Array.from(disciplineCounts.entries())
     .map(([discipline, count]) => ({
-      color:
-        CLIMBING_DISCIPLINE_TO_COLOR[
-          discipline as keyof typeof CLIMBING_DISCIPLINE_TO_COLOR
-        ] ?? 'var(--gray-5)',
-      id: discipline as NonNullable<TrainingSession['climbingDiscipline']>,
-      label: discipline as NonNullable<TrainingSession['climbingDiscipline']>,
+      color: CLIMBING_DISCIPLINE_TO_COLOR[discipline] ?? 'var(--gray-5)',
+      id: discipline,
+      label: discipline,
       value: count,
     }))
     .sort((a, b) => b.value - a.value)

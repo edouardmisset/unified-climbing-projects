@@ -7,14 +7,10 @@ type DistanceClimbedPerYear = {
   // averageHeight?: number
 }
 
-export const getDistanceClimbedPerYear = (
-  ascents: Ascent[],
-): DistanceClimbedPerYear[] => {
+export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPerYear[] => {
   const filteredAscents = ascents.filter(
     ascent =>
-      ascent.climbingDiscipline === 'Route' &&
-      ascent.height !== undefined &&
-      ascent.height > 0,
+      ascent.climbingDiscipline === 'Route' && ascent.height !== undefined && ascent.height > 0,
   )
 
   if (filteredAscents.length === 0) return []
@@ -34,10 +30,7 @@ export const getDistanceClimbedPerYear = (
 
   return years.map(year => {
     const yearAscents = ascentsByYear.get(year) ?? []
-    const totalDistance = yearAscents.reduce(
-      (acc, ascent) => acc + (ascent.height ?? 0),
-      0,
-    )
+    const totalDistance = yearAscents.reduce((acc, ascent) => acc + (ascent.height ?? 0), 0)
 
     return {
       distance: totalDistance,

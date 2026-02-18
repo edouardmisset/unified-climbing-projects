@@ -18,11 +18,7 @@ const ROUTE_AND_BOULDER = [
   'Route',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
-export function AscentsPerDisciplinePerYear({
-  ascents,
-}: {
-  ascents: Ascent[]
-}) {
+export function AscentsPerDisciplinePerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsPerDisciplinePerYear(ascents), [ascents])
 
   if (data.length === 0) return null
@@ -35,7 +31,7 @@ export function AscentsPerDisciplinePerYear({
   if (isSingleDiscipline) return null
 
   return (
-    <ChartContainer caption="Ascents per Discipline per Year">
+    <ChartContainer caption='Ascents per Discipline per Year'>
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
@@ -44,8 +40,8 @@ export function AscentsPerDisciplinePerYear({
         data={data}
         enableGridY={false}
         enableLabel={false}
-        groupMode="grouped"
-        indexBy="year"
+        groupMode='grouped'
+        indexBy='year'
         keys={ROUTE_AND_BOULDER}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

@@ -1,9 +1,6 @@
 import { sum } from '@edouardmisset/math'
 import { useMemo } from 'react'
-import {
-  fromAscentToPoints,
-  fromPointToGrade,
-} from '~/helpers/ascent-converter'
+import { fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
 import { Card } from '../../card/card'
@@ -28,8 +25,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0 || ascentsWithPoints.length === 0) return
 
   const lowestTopTenAscent = topTenAscents.findLast(
-    ascent =>
-      ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
+    ascent => ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
   )
 
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
@@ -37,65 +33,63 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
   const displayHowToImprove =
     lowestTopTenAscent &&
-    (new Date().getFullYear() ===
-      new Date(lowestTopTenAscent.date).getFullYear() ||
+    (new Date().getFullYear() === new Date(lowestTopTenAscent.date).getFullYear() ||
       isMultipleYears)
 
   return (
     <Card>
       <h2>Top Ten</h2>
       <p>
-        Your score is{' '}
-        <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
+        Your score is <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
         {displayHowToImprove === true && (
           <>
-            <strong className="block">Improve by</strong>
-            <span className="block">
+            <strong className='block'>Improve by</strong>
+            <span className='block'>
               Lead climb{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                climbingDiscipline='Route'
                 grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Onsight',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Onsight" />,{' '}
+              <ClimbingStyle climbingStyle='Onsight' />,{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                climbingDiscipline='Route'
                 grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Flash',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                climbingDiscipline="Route"
+                climbingDiscipline='Route'
                 grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Route',
                   style: 'Redpoint',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Redpoint" />
+              <ClimbingStyle climbingStyle='Redpoint' />
             </span>
 
-            <span className="block">
+            <span className='block'>
               Boulder{' '}
               <DisplayGrade
-                climbingDiscipline="Boulder"
+                climbingDiscipline='Boulder'
                 grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
                   style: 'Flash',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                climbingDiscipline="Boulder"
+                climbingDiscipline='Boulder'
                 grade={fromPointToGrade(nextStepPoints, {
                   climbingDiscipline: 'Boulder',
                   style: 'Redpoint',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Redpoint" />
+              <ClimbingStyle climbingStyle='Redpoint' />
             </span>
           </>
         )}

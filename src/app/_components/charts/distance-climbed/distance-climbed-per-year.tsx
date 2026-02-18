@@ -21,7 +21,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   if (data.length === 0) return null
 
   return (
-    <ChartContainer caption="Distance climbed per Year">
+    <ChartContainer caption='Distance climbed per Year'>
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={heightAxisLeft}
@@ -30,7 +30,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
         enableGridY={false}
         enableLabel={false}
         enableTotals
-        indexBy="year"
+        indexBy='year'
         keys={keys}
         margin={adjustedChartMargin}
         motionConfig={defaultMotionConfig}

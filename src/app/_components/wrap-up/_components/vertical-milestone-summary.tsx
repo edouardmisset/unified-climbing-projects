@@ -19,9 +19,7 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   )
 
   const averageHeight =
-    routes.length > 0
-      ? Math.round(average(...routes.map(({ height }) => height ?? 0)))
-      : 0
+    routes.length > 0 ? Math.round(average(...routes.map(({ height }) => height ?? 0))) : 0
 
   const formattedTotalHeight = frenchNumberFormatter.format(totalHeight)
 
@@ -30,22 +28,22 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
       <h2>Vertical Milestone</h2>
       <p>
         {routes.length !== 0 && (
-          <span className="block">
+          <span className='block'>
             You climbed <AscentsWithPopover ascents={routes} />
           </span>
         )}
         {boulders.length !== 0 && (
-          <span className="block">
+          <span className='block'>
             You climbed <AscentsWithPopover ascents={boulders} />
           </span>
         )}
         {totalHeight !== 0 && (
-          <span className="block">
+          <span className='block'>
             In total, you climbed <strong>{formattedTotalHeight}</strong> meters
           </span>
         )}
         {averageHeight !== 0 && (
-          <span className="block">
+          <span className='block'>
             Your average route height is <strong>{averageHeight}</strong> meters
           </span>
         )}

@@ -1,29 +1,14 @@
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
+import { GridItem } from './grid-item'
 
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
 
 const markerSize = 8
 const numberOfSquareInMarker = 4
-const squareIndices = Array.from(
-  { length: numberOfSquareInMarker },
-  (_, index) => index,
-)
+const squareIndices = Array.from({ length: numberOfSquareInMarker }, (_, index) => index)
 
 const leftRegEx = /left/i
 const topRegEx = /top/i
-
-const GridItem = memo(
-  ({ gridArea, index }: { gridArea: string; index: number }) => {
-    const backgroundStyle = useMemo(
-      () => ({
-        backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
-        gridArea,
-      }),
-      [index, gridArea],
-    )
-    return <span key={gridArea} style={backgroundStyle} />
-  },
-)
 
 export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1

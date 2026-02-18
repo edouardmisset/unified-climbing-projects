@@ -23,7 +23,7 @@ export function ClimbingStyleToggleGroup(
     >
       <Toggle
         aria-hidden={isOnsightDisable}
-        aria-label="Onsight"
+        aria-label='Onsight'
         className={`contrastColor ${styles.button} ${isOnsightDisable ? 'notAllowed' : ''}`}
         disabled={isOnsightDisable}
         hidden={isOnsightDisable}
@@ -32,17 +32,17 @@ export function ClimbingStyleToggleGroup(
             ? 'Historically, boulders can only be flashed, not onsighted'
             : 'Onsight: the route was climbed first try with no prior information (not used for boulders)'
         }
-        value="Onsight"
+        value='Onsight'
       >
-        <ClimbingStyle climbingStyle="Onsight" />
+        <ClimbingStyle climbingStyle='Onsight' />
       </Toggle>
       <Toggle
-        aria-label="Flash"
+        aria-label='Flash'
         className={`contrastColor ${styles.button}`}
-        title="Flash: the route was climbed first try using any prior information (also used for boulders)"
-        value="Flash"
+        title='Flash: the route was climbed first try using any prior information (also used for boulders)'
+        value='Flash'
       >
-        <ClimbingStyle climbingStyle="Flash" />
+        <ClimbingStyle climbingStyle='Flash' />
       </Toggle>
     </ToggleGroup>
   )

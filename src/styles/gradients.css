@@ -21,28 +21,12 @@
     hsl(263deg 100% 71%)
   );
   --gradient-3:
-    radial-gradient(
-      circle at top right,
-      hsl(180deg 100% 50%),
-      hsl(180deg 100% 50% / 0%)
-    ),
-    radial-gradient(
-      circle at bottom left,
-      hsl(328deg 100% 54%),
-      hsl(328deg 100% 54% / 0%)
-    );
-  --gradient-4: linear-gradient(
-    to bottom right,
-    hsl(159deg 100% 48%),
-    hsl(187deg 100% 48%)
-  );
+    radial-gradient(circle at top right, hsl(180deg 100% 50%), hsl(180deg 100% 50% / 0%)),
+    radial-gradient(circle at bottom left, hsl(328deg 100% 54%), hsl(328deg 100% 54% / 0%));
+  --gradient-4: linear-gradient(to bottom right, hsl(159deg 100% 48%), hsl(187deg 100% 48%));
   --gradient-5: conic-gradient(from -270deg at 75% 110%, fuchsia, floralwhite);
   --gradient-6: conic-gradient(from -90deg at top left, black, white);
-  --gradient-7: linear-gradient(
-    to bottom right,
-    hsl(200deg 80% 69%),
-    hsl(207deg 100% 28%)
-  );
+  --gradient-7: linear-gradient(to bottom right, hsl(200deg 80% 69%), hsl(207deg 100% 28%));
   --gradient-8: conic-gradient(
     from 90deg at 50% 0%,
     hsl(0deg 0% 7%),
@@ -105,36 +89,12 @@
   --gradient-17: conic-gradient(from -90deg at 50% -25%, blue, blueviolet);
   --gradient-18:
     linear-gradient(0deg, hsl(0deg 100% 50% / 80%), hsl(0deg 100% 50% / 0%) 75%),
-    linear-gradient(
-      60deg,
-      hsl(60deg 100% 50% / 80%),
-      hsl(60deg 100% 50% / 0%) 75%
-    ),
-    linear-gradient(
-      120deg,
-      hsl(120deg 100% 50% / 80%),
-      hsl(120deg 100% 50% / 0%) 75%
-    ),
-    linear-gradient(
-      180deg,
-      hsl(180deg 100% 50% / 80%),
-      hsl(180deg 100% 50% / 0%) 75%
-    ),
-    linear-gradient(
-      240deg,
-      hsl(240deg 100% 50% / 80%),
-      hsl(240deg 100% 50% / 0%) 75%
-    ),
-    linear-gradient(
-      300deg,
-      hsl(300deg 100% 50% / 80%),
-      hsl(300deg 100% 50% / 0%) 75%
-    );
-  --gradient-19: linear-gradient(
-    to bottom right,
-    hsl(50deg 100% 67%),
-    hsl(30deg 100% 66%)
-  );
+    linear-gradient(60deg, hsl(60deg 100% 50% / 80%), hsl(60deg 100% 50% / 0%) 75%),
+    linear-gradient(120deg, hsl(120deg 100% 50% / 80%), hsl(120deg 100% 50% / 0%) 75%),
+    linear-gradient(180deg, hsl(180deg 100% 50% / 80%), hsl(180deg 100% 50% / 0%) 75%),
+    linear-gradient(240deg, hsl(240deg 100% 50% / 80%), hsl(240deg 100% 50% / 0%) 75%),
+    linear-gradient(300deg, hsl(300deg 100% 50% / 80%), hsl(300deg 100% 50% / 0%) 75%);
+  --gradient-19: linear-gradient(to bottom right, hsl(50deg 100% 67%), hsl(30deg 100% 66%));
   --gradient-20: conic-gradient(
     from -135deg at -10% center,
     hsl(39deg 100% 50%),
@@ -156,16 +116,8 @@
     hsl(240deg 100% 50%),
     hsl(240deg 100% 50%)
   );
-  --gradient-22: linear-gradient(
-    to bottom right,
-    hsl(229deg 52% 79%),
-    hsl(169deg 97% 76%)
-  );
-  --gradient-23: linear-gradient(
-    to bottom right,
-    hsl(202deg 17% 39%),
-    hsl(231deg 28% 22%)
-  );
+  --gradient-22: linear-gradient(to bottom right, hsl(229deg 52% 79%), hsl(169deg 97% 76%));
+  --gradient-23: linear-gradient(to bottom right, hsl(202deg 17% 39%), hsl(231deg 28% 22%));
   --gradient-24: conic-gradient(
     from 0.5turn at 0% 0%,
     hsl(156deg 100% 38%),
@@ -182,39 +134,15 @@
     hsl(349deg 100% 74%),
     hsl(264deg 87% 76%)
   );
-  --gradient-26: linear-gradient(
-    to bottom right,
-    hsl(241deg 75% 76%),
-    hsl(345deg 87% 88%)
-  );
-  --gradient-27: conic-gradient(
-    from 0.5turn at bottom left,
-    deeppink,
-    rebeccapurple
-  );
+  --gradient-26: linear-gradient(to bottom right, hsl(241deg 75% 76%), hsl(345deg 87% 88%));
+  --gradient-27: conic-gradient(from 0.5turn at bottom left, deeppink, rebeccapurple);
   --gradient-28: conic-gradient(from -90deg at 50% 105%, white, orchid);
   --gradient-29:
-    radial-gradient(
-      circle at top right,
-      hsl(250deg 100% 85%),
-      hsl(250deg 100% 85% / 0%)
-    ),
-    radial-gradient(
-      circle at bottom left,
-      hsl(220deg 90% 75%),
-      hsl(220deg 90% 75% / 0%)
-    );
+    radial-gradient(circle at top right, hsl(250deg 100% 85%), hsl(250deg 100% 85% / 0%)),
+    radial-gradient(circle at bottom left, hsl(220deg 90% 75%), hsl(220deg 90% 75% / 0%));
   --gradient-30:
-    radial-gradient(
-      circle at top right,
-      hsl(150deg 100% 50%),
-      hsl(150deg 100% 50% / 0%)
-    ),
-    radial-gradient(
-      circle at bottom left,
-      hsl(150deg 100% 84%),
-      hsl(150deg 100% 84% / 0%)
-    );
+    radial-gradient(circle at top right, hsl(150deg 100% 50%), hsl(150deg 100% 50% / 0%)),
+    radial-gradient(circle at bottom left, hsl(150deg 100% 84%), hsl(150deg 100% 84% / 0%));
   --noise-1: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   --noise-2: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   --noise-3: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.25' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");

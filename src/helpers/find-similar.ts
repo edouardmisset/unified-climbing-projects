@@ -26,10 +26,7 @@ function formatAscentName(ascentName: string): string {
     .join(' ') // Join the words back into a string
 }
 
-export function groupSimilarStrings(
-  strings: string[],
-  maxDistance = 2,
-): Map<string, string[]> {
+export function groupSimilarStrings(strings: string[], maxDistance = 2): Map<string, string[]> {
   const similarStringsMap = new Map<string, string[]>()
   const seen = new Set<string>()
   const distanceCache = new Map<string, number>()
@@ -46,10 +43,7 @@ export function groupSimilarStrings(
     if (seen.has(str)) continue
 
     const similarStrings = strings.filter(
-      s =>
-        s !== str &&
-        !seen.has(s) &&
-        getDistance(str, formatAscentName(s)) <= maxDistance,
+      s => s !== str && !seen.has(s) && getDistance(str, formatAscentName(s)) <= maxDistance,
     )
 
     if (similarStrings.length > 1) {

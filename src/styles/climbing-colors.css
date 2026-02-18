@@ -40,12 +40,10 @@
   --indoorSaturation: 0.1;
   --indoorLightness: 0.1;
   --indoorRoute: oklch(
-    from var(--route) calc(l + var(--indoorLightness))
-      calc(c * var(--indoorSaturation)) h
+    from var(--route) calc(l + var(--indoorLightness)) calc(c * var(--indoorSaturation)) h
   );
   --indoorBoulder: oklch(
-    from var(--boulder) calc(l + var(--indoorLightness))
-      calc(c * var(--indoorSaturation)) h
+    from var(--boulder) calc(l + var(--indoorLightness)) calc(c * var(--indoorSaturation)) h
   );
 
   --otherTrainingLow: var(--gray-1);

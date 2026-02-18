@@ -6,10 +6,7 @@ import type { TrainingSession } from '~/schema/training'
  * Calculate the percentage of first sessions relative to total sessions.
  * Returns 'N/A' if there are no sessions to avoid division by zero.
  */
-export function calculateSessionPercentage(
-  firstCount: number,
-  secondCount: number,
-): string {
+export function calculateSessionPercentage(firstCount: number, secondCount: number): string {
   const total = firstCount + secondCount
   if (total === 0) return 'N/A'
 
@@ -58,9 +55,7 @@ export type SessionRatioData = {
   secondSessions: TrainingSession[]
 }
 
-export function categorizeSessions(
-  sessions: TrainingSession[],
-): CategorizedSessionsOutput {
+export function categorizeSessions(sessions: TrainingSession[]): CategorizedSessionsOutput {
   const indoor: TrainingSession[] = []
   const outdoor: TrainingSession[] = []
   const indoorRoute: TrainingSession[] = []

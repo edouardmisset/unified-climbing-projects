@@ -3,8 +3,7 @@ import { useCallback, useMemo } from 'react'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
 import { defaultMotionConfig, theme } from '../constants'
-import type { SessionsPerYear } from './get-sessions-per-year'
-import { getSessionsPerYear } from './get-sessions-per-year'
+import { getSessionsPerYear, type SessionsPerYear } from './get-sessions-per-year'
 
 const STREAM_KEYS = [
   'indoorRoute',
@@ -19,10 +18,7 @@ export function TrainingSessionsPerYear({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const data = useMemo(
-    () => getSessionsPerYear(trainingSessions),
-    [trainingSessions],
-  )
+  const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
   const axisLeft = useMemo(
     () => ({
@@ -64,9 +60,11 @@ export function TrainingSessionsPerYear({
 
   const getSessionColor = useCallback(
     ({ id }: { id: string | number }) => {
-      const sampleData = data[0]
+      const [sampleData] = data
       if (!sampleData) return 'var(--gray-5)'
+      // oxlint-disable-next-line typescript-eslint/no-unsafe-type-assertion -- Dynamically constructing property key from chart layer id
       const key = `${id}Color` as keyof typeof sampleData
+      // oxlint-disable-next-line typescript-eslint/no-unsafe-type-assertion -- Dynamically accessing color property based on chart layer id
       return (sampleData[key] as string) ?? 'var(--gray-5)'
     },
     [data],
@@ -75,7 +73,7 @@ export function TrainingSessionsPerYear({
   if (data.length === 0) return null
 
   return (
-    <ChartContainer caption="Training Sessions per Year (Indoor/Outdoor by Discipline)">
+    <ChartContainer caption='Training Sessions per Year (Indoor/Outdoor by Discipline)'>
       <ResponsiveStream
         animate
         axisBottom={axisBottom}
@@ -85,7 +83,7 @@ export function TrainingSessionsPerYear({
         keys={STREAM_KEYS}
         margin={chartMargins}
         motionConfig={defaultMotionConfig}
-        offsetType="expand"
+        offsetType='expand'
         theme={theme}
       />
     </ChartContainer>

@@ -1,11 +1,11 @@
 import { objectKeys } from '@edouardmisset/object'
 import { JWT } from 'google-auth-library'
-import {
-  GoogleSpreadsheet,
-  type GoogleSpreadsheetWorksheet,
-} from 'google-spreadsheet'
+import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from 'google-spreadsheet'
 import { env } from '~/env'
 import type { Object_ } from '~/types/generic'
+
+type AddRowsInput = Parameters<GoogleSpreadsheetWorksheet['addRows']>[0]
+type AddRowsRow = AddRowsInput extends (infer Row)[] ? Row : never
 
 const serviceAccountAuth = new JWT({
   email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -28,6 +28,7 @@ export async function loadBackupSpreadsheet(
   } catch (error) {
     throw new Error(
       `Failed to load ${climbingDataType} backup spreadsheet (ID: ${id}): ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
     )
   }
 }
@@ -44,7 +45,7 @@ export async function createOrReplaceWorksheet(
   return await spreadsheet.addSheet({ title })
 }
 
-export async function backupDataToWorksheet<T extends Object_>(
+export async function backupDataToWorksheet<T extends Object_ & AddRowsRow>(
   sheet: GoogleSpreadsheetWorksheet,
   data: T[],
 ): Promise<void> {
@@ -55,12 +56,11 @@ export async function backupDataToWorksheet<T extends Object_>(
   const headersSet = new Set<string>()
   for (const element of data) {
     for (const key of objectKeys(element)) {
-      headersSet.add(key as string)
+      headersSet.add(String(key))
     }
   }
 
   await sheet.setHeaderRow([...headersSet])
-  await sheet.addRows(
-    data as Parameters<GoogleSpreadsheetWorksheet['addRows']>[0],
-  )
+  const rows: AddRowsInput = data
+  await sheet.addRows(rows)
 }

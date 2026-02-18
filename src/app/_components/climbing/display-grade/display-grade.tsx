@@ -11,12 +11,7 @@ interface ClimbingGradeProps {
 export function DisplayGrade(
   props: Omit<ComponentProps<'strong'>, 'children'> & ClimbingGradeProps,
 ) {
-  const {
-    grade,
-    climbingDiscipline = 'Route',
-    className = '',
-    ...otherProps
-  } = props
+  const { grade, climbingDiscipline = 'Route', className = '', ...otherProps } = props
 
   const formattedGrade = useMemo(
     () => formatGrade({ grade, climbingDiscipline }),

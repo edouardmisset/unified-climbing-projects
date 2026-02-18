@@ -137,9 +137,7 @@ describe('fromDateToISOString', () => {
   })
 
   it('throws for an invalid date', () => {
-    expect(() => fromDateToStringDate(new Date('invalid-date'))).toThrow(
-      INVALID_DATE_REGEX,
-    )
+    expect(() => fromDateToStringDate(new Date('invalid-date'))).toThrow(INVALID_DATE_REGEX)
   })
 
   it('throws for a non-Date object', () => {
@@ -155,15 +153,11 @@ describe('fromDateToISOString', () => {
 
 describe('extractDateFromISODateString', () => {
   it('returns YYYY-MM-DD for a valid ISO string', () => {
-    expect(extractDateFromISODateString('2025-05-23T15:30:00.000Z')).toBe(
-      '2025-05-23',
-    )
+    expect(extractDateFromISODateString('2025-05-23T15:30:00.000Z')).toBe('2025-05-23')
   })
 
   it('throws for string shorter than 10 chars', () => {
-    expect(() => extractDateFromISODateString('2025-05')).toThrow(
-      INVALID_ISO_DATE_STRING_REGEX,
-    )
+    expect(() => extractDateFromISODateString('2025-05')).toThrow(INVALID_ISO_DATE_STRING_REGEX)
   })
 
   it('throws for string not matching YYYY-MM-DD', () => {
@@ -179,9 +173,7 @@ describe('extractDateFromISODateString', () => {
   })
 
   it('returns correct date for valid ISO string with time', () => {
-    expect(extractDateFromISODateString('2024-12-31T23:59:59.999Z')).toBe(
-      '2024-12-31',
-    )
+    expect(extractDateFromISODateString('2024-12-31T23:59:59.999Z')).toBe('2024-12-31')
   })
 })
 
@@ -323,7 +315,7 @@ describe('findLongestStreak', () => {
 
 describe('findLongestGap', () => {
   it('should return 0 for empty array', () => {
-    const data: Array<{ date: string }> = []
+    const data: { date: string }[] = []
     const result = findLongestGap(data)
     expect(result).toBe(0)
   })
@@ -335,11 +327,7 @@ describe('findLongestGap', () => {
   })
 
   it('should return 0 for consecutive dates with no gaps', () => {
-    const data = [
-      { date: '2024-01-01' },
-      { date: '2024-01-02' },
-      { date: '2024-01-03' },
-    ]
+    const data = [{ date: '2024-01-01' }, { date: '2024-01-02' }, { date: '2024-01-03' }]
     const result = findLongestGap(data)
     expect(result).toBe(0)
   })
@@ -366,11 +354,7 @@ describe('findLongestGap', () => {
   })
 
   it('should handle unsorted dates correctly', () => {
-    const data = [
-      { date: '2024-01-10' },
-      { date: '2024-01-01' },
-      { date: '2024-01-15' },
-    ]
+    const data = [{ date: '2024-01-10' }, { date: '2024-01-01' }, { date: '2024-01-15' }]
     const result = findLongestGap(data)
     expect(result).toBe(8)
   })

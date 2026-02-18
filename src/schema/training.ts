@@ -26,8 +26,8 @@ export const SESSION_TYPES = [
 ] as const
 
 const SESSION_TYPES_TO_TEXT = {
-  Co: 'Core',
   CS: 'Contact Strength',
+  Co: 'Core',
 
   En: 'Endurance',
   FB: 'Finger Boarding',
@@ -46,37 +46,33 @@ const SESSION_TYPES_TO_TEXT = {
   Ta: 'Tapper',
 } as const satisfies Record<(typeof SESSION_TYPES)[number], string>
 
-export function fromSessionTypeToLabel(
-  sessionType: (typeof SESSION_TYPES)[number],
-) {
+export function fromSessionTypeToLabel(sessionType: (typeof SESSION_TYPES)[number]) {
   return SESSION_TYPES_TO_TEXT[sessionType]
 }
 
 export const ANATOMICAL_REGIONS = ['Ar', 'Fi', 'Ge'] as const
+export type AnatomicalRegion = (typeof ANATOMICAL_REGIONS)[number]
 
 const ANATOMICAL_REGIONS_TO_TEXT = {
   Ar: 'Arms',
   Fi: 'Fingers',
   Ge: 'General',
-} as const satisfies Record<(typeof ANATOMICAL_REGIONS)[number], string>
+} as const satisfies Record<AnatomicalRegion, string>
 
-export function fromAnatomicalRegionToLabel(
-  anatomicalRegion: (typeof ANATOMICAL_REGIONS)[number],
-) {
+export function fromAnatomicalRegionToLabel(anatomicalRegion: AnatomicalRegion) {
   return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion]
 }
 
 export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
+export type EnergySystem = (typeof ENERGY_SYSTEMS)[number]
 
 const ENERGY_SYSTEMS_TO_TEXT = {
   AA: 'Anaerobic Alactic',
   AE: 'Aerobic',
   AL: 'Anaerobic Lactic',
-} as const satisfies Record<(typeof ENERGY_SYSTEMS)[number], string>
+} as const satisfies Record<EnergySystem, string>
 
-export function fromEnergySystemToLabel(
-  energySystem: (typeof ENERGY_SYSTEMS)[number],
-) {
+export function fromEnergySystemToLabel(energySystem: EnergySystem) {
   return ENERGY_SYSTEMS_TO_TEXT[energySystem]
 }
 
@@ -104,32 +100,20 @@ export const trainingSessionSchema = z.object({
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
 
 export const trainingSessionFormSchema = z.object({
-  anatomicalRegion: z.preprocess(
-    emptyStringToUndefined,
-    anatomicalRegionSchema.optional(),
-  ),
-  climbingDiscipline: z.preprocess(
-    emptyStringToUndefined,
-    climbingDisciplineSchema.optional(),
-  ),
+  anatomicalRegion: z.preprocess(emptyStringToUndefined, anatomicalRegionSchema.optional()),
+  climbingDiscipline: z.preprocess(emptyStringToUndefined, climbingDisciplineSchema.optional()),
   comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   date: z
     .string()
     .trim()
     .transform(date => getDateAtNoon(new Date(date)).toISOString()),
-  energySystem: z.preprocess(
-    emptyStringToUndefined,
-    energySystemSchema.optional(),
-  ),
+  energySystem: z.preprocess(emptyStringToUndefined, energySystemSchema.optional()),
   gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   intensity: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),
   ),
-  sessionType: z.preprocess(
-    emptyStringToUndefined,
-    sessionTypeSchema.optional(),
-  ),
+  sessionType: z.preprocess(emptyStringToUndefined, sessionTypeSchema.optional()),
   volume: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),

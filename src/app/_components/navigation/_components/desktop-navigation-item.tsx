@@ -2,13 +2,7 @@ import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'
 
-export function DesktopNavigationItem({
-  item,
-  index,
-}: {
-  item: NavigationElement
-  index: number
-}) {
+export function DesktopNavigationItem({ item, index }: { item: NavigationElement; index: number }) {
   if (item.type === 'link') {
     const { href, label } = item
     return (

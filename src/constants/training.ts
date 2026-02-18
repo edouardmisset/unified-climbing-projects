@@ -16,6 +16,10 @@ export const INDOOR_SESSION_TYPES = [
   'Ta',
 ] as const satisfies TrainingSession['sessionType'][]
 
+// Training load/intensity constants
+export const DEFAULT_INTENSITY_PERCENT = 65
+export const DEFAULT_VOLUME_PERCENT = 65
+
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['sessionType']>,
   string

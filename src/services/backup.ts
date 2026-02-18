@@ -1,3 +1,4 @@
+// oxlint-disable import/no-nodejs-modules
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { extractDateFromISODateString } from '~/helpers/date'
@@ -20,20 +21,20 @@ export async function writeClimbingDBToBackupJson(): Promise<{
   const trainingDated = generateTimestampedFilename(trainingFileName)
 
   const files = [
-    { path: join(BACKUP_DIRECTORY, ascentDated), content: ascents },
-    { path: join(BACKUP_DIRECTORY, trainingDated), content: trainingSessions },
+    { content: ascents, path: join(BACKUP_DIRECTORY, ascentDated) },
+    { content: trainingSessions, path: join(BACKUP_DIRECTORY, trainingDated) },
     {
-      path: join(BACKUP_DIRECTORY, `${ascentFileName}.json`),
       content: ascents,
+      path: join(BACKUP_DIRECTORY, `${ascentFileName}.json`),
     },
     {
-      path: join(BACKUP_DIRECTORY, `${trainingFileName}.json`),
       content: trainingSessions,
+      path: join(BACKUP_DIRECTORY, `${trainingFileName}.json`),
     },
   ] as const
 
   await Promise.all(
-    files.map(({ path, content }) =>
+    files.map(async ({ path, content }) =>
       writeFile(path, JSON.stringify(content), {
         flag: 'w',
       }),
@@ -44,10 +45,7 @@ export async function writeClimbingDBToBackupJson(): Promise<{
 }
 
 export async function getDataFromDB(): Promise<DataToBackup> {
-  const [ascents, trainingSessions] = await Promise.all([
-    getAllAscents(),
-    getAllTrainingSessions(),
-  ])
+  const [ascents, trainingSessions] = await Promise.all([getAllAscents(), getAllTrainingSessions()])
 
   return { ascents, trainingSessions }
 }

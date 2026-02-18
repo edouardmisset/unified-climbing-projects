@@ -3,9 +3,7 @@ import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
 import { formatOrdinals } from './format-plurals'
 
-export function formatComments(
-  comments: Ascent['comments'] | TrainingSession['comments'],
-): string {
+export function formatComments(comments: Ascent['comments']): string {
   return comments ? `💬 “${comments}”` : ''
 }
 
@@ -28,9 +26,7 @@ export function formatCragAndArea(
 }
 
 export function formatRating(rating: Ascent['rating']): string {
-  return rating === undefined
-    ? ''
-    : Array.from({ length: rating }, () => '⭐').join('')
+  return rating === undefined ? '' : Array.from({ length: rating }, () => '⭐').join('')
 }
 
 export function formatProfile(profile: Ascent['profile']): string {
@@ -61,16 +57,12 @@ export function formatStyleAndTriers({
   const styleEmoji = fromAscentStyleToEmoji(style)
   const styleText = showDetails ? style : ''
 
-  const triesText =
-    tries > 1
-      ? showDetails
-        ? `(${tries} tries)`
-        : `(${formatOrdinals(tries)})`
-      : ''
+  let triesText = ''
+  if (tries > 1) {
+    triesText = showDetails ? `(${tries} tries)` : `(${formatOrdinals(tries)})`
+  }
 
-  return [styleEmoji, styleText, triesText]
-    .filter(string => string !== '')
-    .join(' ')
+  return [styleEmoji, styleText, triesText].filter(string => string !== '').join(' ')
 }
 
 // EMOJIS
@@ -89,21 +81,14 @@ export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
     : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
 }
 
-const ENERGY_SYSTEM_TO_EMOJI: Record<
-  Exclude<TrainingSession['energySystem'], undefined>,
-  Emoji
-> = {
+const ENERGY_SYSTEM_TO_EMOJI: Record<Exclude<TrainingSession['energySystem'], undefined>, Emoji> = {
   AA: '🔥',
   AE: '🫀',
   AL: '🪫',
 }
 
-export function fromEnergySystemToEmoji(
-  energySystem: TrainingSession['energySystem'],
-): Emoji | '' {
-  return energySystem === undefined
-    ? ''
-    : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
+export function fromEnergySystemToEmoji(energySystem: TrainingSession['energySystem']): Emoji {
+  return energySystem === undefined ? '' : (ENERGY_SYSTEM_TO_EMOJI[energySystem] ?? '')
 }
 
 const ANATOMICAL_REGION_TO_EMOJI: Record<
@@ -117,10 +102,8 @@ const ANATOMICAL_REGION_TO_EMOJI: Record<
 
 export function fromAnatomicalRegionToEmoji(
   anatomicalRegion: TrainingSession['anatomicalRegion'],
-): Emoji | '' {
-  return anatomicalRegion === undefined
-    ? ''
-    : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
+): Emoji {
+  return anatomicalRegion === undefined ? '' : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
 }
 
 const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
@@ -134,7 +117,7 @@ const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
 
 export function fromClimbingDisciplineToEmoji(
   climbingDiscipline: TrainingSession['climbingDiscipline'],
-): Emoji | '' {
+): Emoji {
   return climbingDiscipline === undefined
     ? ''
     : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')

@@ -40,9 +40,7 @@ test.describe('Ascents page', () => {
     const levitationAscentId = 'j579f2mexz1j2s1esh1aee9gx17r3jde'
     await page.goto(`/ascents/${levitationAscentId}`)
     await page.waitForSelector('text=Lévitation')
-    await expect(
-      page.getByRole('heading', { name: 'Lévitation' }),
-    ).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Lévitation' })).toBeVisible()
   })
 })
 

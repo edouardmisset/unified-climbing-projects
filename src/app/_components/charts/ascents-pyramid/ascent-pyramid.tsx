@@ -16,31 +16,31 @@ import {
   theme,
 } from '../constants'
 
-const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency>> = ({
-  id,
-  data,
-}) => String(data[`${id}Color` as keyof typeof data])
+const STYLE_COLORS = {
+  Flash: 'var(--flash)',
+  Onsight: 'var(--onsight)',
+  Redpoint: 'var(--redpoint)',
+} as const satisfies Record<Ascent['style'], string>
+
+const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency[number]>> = ({ id }) =>
+  id === 'Flash' || id === 'Onsight' || id === 'Redpoint' ? STYLE_COLORS[id] : ''
 
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
-  const gradeFrequency = useMemo(
-    () => getGradeFrequencyAndColors(ascents),
-    [ascents],
-  )
+  const gradeFrequency = useMemo(() => getGradeFrequencyAndColors(ascents), [ascents])
 
   if (gradeFrequency.length === 0) return null
 
   return (
-    <ChartContainer caption="Ascent Pyramid">
+    <ChartContainer caption='Ascent Pyramid'>
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
-        // @ts-expect-error
         colors={colors}
         data={gradeFrequency}
         enableGridY={false}
         enableLabel={false}
         enableTotals
-        indexBy="grade"
+        indexBy='grade'
         keys={ASCENT_STYLE}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

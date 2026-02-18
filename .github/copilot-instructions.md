@@ -21,8 +21,8 @@ The app uses the **French climbing grade system** with point conversions:
 
 ```typescript
 // French grade conversion: '7a' → 37 (number) → 700 (points)
-fromGradeToNumber("7a"); // 37
-GRADE_TO_POINTS["7a"]; // 700 + style points + discipline bonus
+fromGradeToNumber('7a') // 37
+GRADE_TO_POINTS['7a'] // 700 + style points + discipline bonus
 ```
 
 - `src/schema/ascent.ts` defines French grade mappings and point systems
@@ -36,14 +36,14 @@ Data is fetched through the service layer with caching:
 
 ```typescript
 // src/services/convex.ts
-import { cache } from "react";
-import { api } from "~/convex/_generated/api";
-import { fetchQuery, fetchMutation } from "convex/nextjs";
+import { cache } from 'react'
+import { api } from '~/convex/_generated/api'
+import { fetchQuery, fetchMutation } from 'convex/nextjs'
 
 export const getAllAscents = cache(() => {
-  "use cache";
-  return fetchQuery(api.ascents.getAll);
-});
+  'use cache'
+  return fetchQuery(api.ascents.getAll)
+})
 ```
 
 - Service functions wrapped with React `cache()` to prevent duplicate fetches
@@ -113,8 +113,8 @@ Use consistent filter helpers:
 
 ```typescript
 // src/helpers/filter-*.ts pattern
-filterAscents(ascents, { year: 2024, climbingDiscipline: "Route" });
-filterTrainingSessions(sessions, { sessionType: "Out" });
+filterAscents(ascents, { year: 2024, climbingDiscipline: 'Route' })
+filterTrainingSessions(sessions, { sessionType: 'Out' })
 ```
 
 ## Design System
@@ -133,14 +133,14 @@ filterTrainingSessions(sessions, { sessionType: "Out" });
 
 ```typescript
 // src/helpers/*.test.ts
-import { expect, describe, it } from "vitest";
+import { expect, describe, it } from 'vitest'
 
-describe("fromGradeToNumber", () => {
-  it("converts French grades to numbers correctly", () => {
-    expect(fromGradeToNumber("5a")).toBe(21);
-    expect(fromGradeToNumber("6c+")).toBe(33);
-  });
-});
+describe('fromGradeToNumber', () => {
+  it('converts French grades to numbers correctly', () => {
+    expect(fromGradeToNumber('5a')).toBe(21)
+    expect(fromGradeToNumber('6c+')).toBe(33)
+  })
+})
 ```
 
 **E2E:** Smoke tests for main pages with Playwright
@@ -164,11 +164,8 @@ describe("fromGradeToNumber", () => {
 
 ```typescript
 // Good: Typed function with generic
-function filterData<T extends { date: string }>(
-  items: T[],
-  predicate: (item: T) => boolean,
-): T[] {
-  return items.filter(predicate);
+function filterData<T extends { date: string }>(items: T[], predicate: (item: T) => boolean): T[] {
+  return items.filter(predicate)
 }
 
 // Good: Zod validation at boundaries
@@ -176,7 +173,7 @@ const ascentSchema = z.object({
   topoGrade: gradeSchema,
   style: ascentStyleSchema,
   // ...
-});
+})
 ```
 
 ## Naming Conventions
@@ -207,23 +204,21 @@ const ascentSchema = z.object({
 
     ```ts
     export const clampValueInRange = (params: ValueAndRange): number => {
-      const { maximum, minimum, value } = params;
-      return Math.max(Math.min(value, maximum), minimum);
-    };
+      const { maximum, minimum, value } = params
+      return Math.max(Math.min(value, maximum), minimum)
+    }
     ```
 
   - React components MUST use `props`.
 
     ```tsx
-    export function BooleanStateGridCell(
-      props: BooleanStateCellProps,
-    ): React.JSX.Element {
-      const { checked } = props;
+    export function BooleanStateGridCell(props: BooleanStateCellProps): React.JSX.Element {
+      const { checked } = props
       return (
         <CenterCell>
           <StyledBooleanStateCell checked={checked} />
         </CenterCell>
-      );
+      )
     }
     ```
 
@@ -268,15 +263,17 @@ Each section MUST be separated by an empty line.
 - Use template literals over string concatenation.
   - **Example:** Prefer `` `Hello, ${name}` `` to `'Hello, ' + name`.
 - Code MUST be:
-  - **Linted**
+  - **Linted** (using Oxlint)
   - **Free of unused variables**
   - **Free of unused imports/exports**
-  - **Formatted**
+  - **Formatted** (using Oxfmt)
   - **Passing static analysis checks**
-- A linter SHOULD be used for linting.
+- Oxlint SHOULD be used for linting.
   - **Example:** `bun run lint`
-- A formatter SHOULD be used for formatting.
+  - **Ignore comments:** Use `// oxlint-disable-next-line rule-name` or `/* oxlint-disable */`
+- Oxfmt SHOULD be used for formatting.
   - **Example:** `bun run format`
+  - **Ignore comments:** Use `// oxfmt-ignore` for the next statement
 
 ## Git Commit Guidelines
 

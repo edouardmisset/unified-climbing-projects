@@ -26,12 +26,7 @@ export function CragsSummary({
     crag => crag.trim() !== '' && !cragsWithAscents.has(crag),
   )
 
-  if (
-    numberOfCrags === 0 ||
-    mostFrequentCrag === undefined ||
-    mostFrequentCrag === ''
-  )
-    return
+  if (numberOfCrags === 0 || mostFrequentCrag === undefined || mostFrequentCrag === '') return
 
   return (
     <Card>
@@ -48,7 +43,7 @@ export function CragsSummary({
               ))}
             </ul>
           }
-          popoverTitle="Crags"
+          popoverTitle='Crags'
           triggerClassName={ascentsWithPopoverStyles.popover}
           triggerContent={
             <span>
@@ -71,7 +66,7 @@ export function CragsSummary({
                   ))}
                 </ul>
               }
-              popoverTitle="Crags without ascents"
+              popoverTitle='Crags without ascents'
               triggerClassName={ascentsWithPopoverStyles.popover}
               triggerContent={
                 <span>

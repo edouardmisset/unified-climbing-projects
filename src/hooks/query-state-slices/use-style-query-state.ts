@@ -9,6 +9,5 @@ export const useStyleQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<Ascent['style']>>('style', {
     defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : ascentStyleSchema.parse(value),
+    parse: value => (value === ALL_VALUE ? ALL_VALUE : ascentStyleSchema.parse(value)),
   })

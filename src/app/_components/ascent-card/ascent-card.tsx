@@ -15,6 +15,10 @@ import {
 import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-card.module.css'
 
+type CommentDirectionStyle = CSSProperties & {
+  '--direction': 'row' | 'column'
+}
+
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     area,
@@ -32,11 +36,11 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     tries,
   } = ascent
 
-  const stylesDependingOnComments: CSSProperties = useMemo(() => {
+  const stylesDependingOnComments = useMemo<CommentDirectionStyle>(() => {
     const maxCommentLength = 120
     const isLongComment = comments && comments.length > maxCommentLength
 
-    return { '--direction': isLongComment ? 'row' : 'column' } as CSSProperties
+    return { '--direction': isLongComment ? 'row' : 'column' }
   }, [comments])
 
   const formattedGrade = useMemo(
@@ -69,7 +73,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
           ]
             .filter(Boolean)
             .map(formattedContent => (
-              <span className="textNoWrap" key={formattedContent}>
+              <span className='textNoWrap' key={formattedContent}>
                 {formattedContent}
               </span>
             ))}

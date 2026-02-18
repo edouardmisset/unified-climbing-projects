@@ -26,13 +26,11 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
 
   if (ascentsByGradesPerCrag.length === 0) return null
 
-  const uniqueCragsCount = new Set(
-    ascentsByGradesPerCrag.map(({ crag }) => crag),
-  ).size
+  const uniqueCragsCount = new Set(ascentsByGradesPerCrag.map(({ crag }) => crag)).size
   if (uniqueCragsCount <= 1) return null
 
   return (
-    <ChartContainer caption="Ascents By Grades Per Crag">
+    <ChartContainer caption='Ascents By Grades Per Crag'>
       <ResponsiveBar
         axisBottom={numberOfAscentsAxisBottom}
         // @ts-expect-error
@@ -42,9 +40,9 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
         enableGridY={false}
         enableLabel={false}
         enableTotals
-        indexBy="crag"
+        indexBy='crag'
         keys={_GRADES}
-        layout="horizontal"
+        layout='horizontal'
         margin={CHART_MARGIN_SETTING}
         motionConfig={defaultMotionConfig}
         padding={defaultBarChartPadding}

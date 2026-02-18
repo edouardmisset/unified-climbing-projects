@@ -1,29 +1,23 @@
 import { isDateInYear } from '@edouardmisset/date'
-import {
-  type CSSProperties,
-  lazy,
-  memo,
-  type ReactNode,
-  Suspense,
-  useMemo,
-} from 'react'
-import { prettyLongDate } from '~/helpers/formatters'
+import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
+import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
 import { Popover } from '../popover/popover'
+import { EmptyGridCell } from './empty-grid-cell'
 import { datesEqual } from './helpers'
 import type { DayDescriptor } from './year-grid'
 import styles from './year-grid.module.css'
 
 // Lazy load the popover components
-const AscentsPopoverDescription = lazy(() =>
-  import(
-    '~/app/_components/ascents-popover-description/ascents-popover-description'
-  ).then(module => ({ default: module.AscentsPopoverDescription })),
+const AscentsPopoverDescription = lazy(async () =>
+  import('~/app/_components/ascents-popover-description/ascents-popover-description').then(
+    module => ({ default: module.AscentsPopoverDescription }),
+  ),
 )
 
-const TrainingPopoverDescription = lazy(() =>
-  import(
-    '~/app/_components/training-popover-description/training-popover-description'
-  ).then(module => ({ default: module.TrainingPopoverDescription })),
+const TrainingPopoverDescription = lazy(async () =>
+  import('~/app/_components/training-popover-description/training-popover-description').then(
+    module => ({ default: module.TrainingPopoverDescription }),
+  ),
 )
 
 export const YearGridCell = memo((props: YearGridCellProps) => {
@@ -55,14 +49,14 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
   const lazyDescription = useMemo(() => {
     if (ascents && ascents.length > 0) {
       return (
-        <Suspense fallback="Loading...">
+        <Suspense fallback='Loading...'>
           <AscentsPopoverDescription ascents={ascents} />
         </Suspense>
       )
     }
     if (trainingSessions && trainingSessions.length > 0) {
       return (
-        <Suspense fallback="Loading...">
+        <Suspense fallback='Loading...'>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )
@@ -87,17 +81,6 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
   )
 })
 
-const EmptyGridCell = memo(
-  ({ cellStyle, date }: { cellStyle: CSSProperties; date: string }) => (
-    <span
-      className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-      style={cellStyle}
-      // Here no data is available for the date, so we only display the date itself
-      title={prettyLongDate(date)}
-    />
-  ),
-)
-
 const getAdjustedBackgroundColor = ({
   backgroundColor,
   date,
@@ -108,7 +91,7 @@ const getAdjustedBackgroundColor = ({
   if (backgroundColor) return backgroundColor
 
   const day = new Date(date).getDay()
-  const isWeekend = day === 0 || day === 6
+  const isWeekend = day === 0 || day === SATURDAY_DAY_NUMBER
 
   if (date === '') return 'transparent'
   if (isWeekend) return 'var(--surface-3)'

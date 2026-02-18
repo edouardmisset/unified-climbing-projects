@@ -43,15 +43,13 @@ describe('Card Component', () => {
           <p>Section content</p>
         </section>
         <footer>
-          <button type="button">Action</button>
+          <button type='button'>Action</button>
         </footer>
       </Card>,
     )
 
     expect(screen.getByText(HEADER_REGEX)).toBeInTheDocument()
     expect(screen.getByText(SECTION_CONTENT_REGEX)).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: ACTION_REGEX }),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: ACTION_REGEX })).toBeInTheDocument()
   })
 })

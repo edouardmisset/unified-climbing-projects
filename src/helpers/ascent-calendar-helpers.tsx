@@ -5,6 +5,8 @@ import type { Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 import { formatShortDate, prettyLongDate } from './formatters'
 
+const MIDDAY_HOUR = 12
+
 export function fromAscentsToCalendarEntries(
   year: number,
   ascentsArray?: Ascent[][],
@@ -14,7 +16,7 @@ export function fromAscentsToCalendarEntries(
       const [firstAscent] = ascents
 
       if (firstAscent === undefined || ascents === undefined) {
-        const emptyDate = new Date(year, 0, index + 1, 12).toISOString()
+        const emptyDate = new Date(year, 0, index + 1, MIDDAY_HOUR).toISOString()
         return {
           date: emptyDate,
           shortText: '',
@@ -23,16 +25,15 @@ export function fromAscentsToCalendarEntries(
       }
 
       const { date, crag, climbingDiscipline } = firstAscent
-      const { topoGrade } = getHardestAscent(ascents)
+      const hardestInGroup = getHardestAscent(ascents)
+      const topoGrade = hardestInGroup?.topoGrade ?? firstAscent.topoGrade
       const backgroundColor = fromGradeToBackgroundColor(topoGrade)
       const dateAndCrag = `${prettyLongDate(date)} - ${crag}`
 
       return {
         backgroundColor,
         date,
-        isSpecialCase: ascents.every(
-          ascent => ascent.climbingDiscipline === 'Boulder',
-        ),
+        isSpecialCase: ascents.every(ascent => ascent.climbingDiscipline === 'Boulder'),
         shortText: formatGrade({ climbingDiscipline, grade: topoGrade }),
         title: dateAndCrag,
         ascents,

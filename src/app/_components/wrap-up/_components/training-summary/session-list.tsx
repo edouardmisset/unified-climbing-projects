@@ -16,7 +16,7 @@ export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
           <li className={styles.item} key={_id}>
             {disciplineIcon}
             {NON_BREAKING_SPACE}
-            <span className="monospace">{stringifyDate(new Date(date))}</span>
+            <span className='monospace'>{stringifyDate(new Date(date))}</span>
             {gymCrag && ` - ${gymCrag}`}
           </li>
         )

@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
-import {
-  BOULDERING_BONUS_POINTS,
-  GRADE_TO_POINTS,
-  STYLE_TO_POINTS,
-} from '~/schema/ascent'
+import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS } from '~/schema/ascent'
 import {
   fromAscentToPoints,
   fromGradeToBackgroundColor,
@@ -39,9 +35,8 @@ describe('fromGradeToClassName', () => {
 
 describe('fromAscentToPoints', () => {
   it('should return the sum of grade and style points when both keys exist', () => {
-    const onsight7a = sampleAscents[0]
-    const redpoint7b = sampleAscents[1]
-    const flash7aBoulder = sampleAscents[24]
+    const [onsight7a, redpoint7b] = sampleAscents
+    const { 24: flash7aBoulder } = sampleAscents
 
     if (!onsight7a || !redpoint7b || !flash7aBoulder) {
       throw new Error('Ascent not found')

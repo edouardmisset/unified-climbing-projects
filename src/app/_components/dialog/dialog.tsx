@@ -23,7 +23,7 @@ export function Dialog({
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
           <BaseDialog.Description render={content} />
-          <BaseDialog.Close className={styles.button} data-close="true">
+          <BaseDialog.Close className={styles.button} data-close='true'>
             <XIcon />
           </BaseDialog.Close>
         </BaseDialog.Popup>

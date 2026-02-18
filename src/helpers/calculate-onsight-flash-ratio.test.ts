@@ -24,10 +24,7 @@ describe('calculateOnsightFlashRatio', () => {
   })
 
   it('should calculate ratio for only onsight ascents', () => {
-    const ascents: Ascent[] = [
-      { style: 'Onsight' } as Ascent,
-      { style: 'Onsight' } as Ascent,
-    ]
+    const ascents: Ascent[] = [{ style: 'Onsight' } as Ascent, { style: 'Onsight' } as Ascent]
 
     const result = calculateOnsightFlashRatio(ascents)
     const expected = 2 / 2
@@ -36,10 +33,7 @@ describe('calculateOnsightFlashRatio', () => {
   })
 
   it('should calculate ratio for only flash ascents', () => {
-    const ascents: Ascent[] = [
-      { style: 'Flash' } as Ascent,
-      { style: 'Flash' } as Ascent,
-    ]
+    const ascents: Ascent[] = [{ style: 'Flash' } as Ascent, { style: 'Flash' } as Ascent]
 
     const result = calculateOnsightFlashRatio(ascents)
     const expected = 2 / 2
@@ -93,10 +87,7 @@ describe('calculateOnsightFlashRatio', () => {
   })
 
   it('should return ratio without coefficient', () => {
-    const ascents: Ascent[] = [
-      { style: 'Flash' } as Ascent,
-      { style: 'Redpoint' } as Ascent,
-    ]
+    const ascents: Ascent[] = [{ style: 'Flash' } as Ascent, { style: 'Redpoint' } as Ascent]
 
     const result = calculateOnsightFlashRatio(ascents)
     const expected = 1 / 2

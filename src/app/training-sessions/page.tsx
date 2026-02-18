@@ -11,7 +11,7 @@ export default async function TrainingSessionsPage() {
   const trainingSessions = await getAllTrainingSessions()
 
   return (
-    <Layout title="Training">
+    <Layout title='Training'>
       <Suspense fallback={<Loader />}>
         <FilteredTrainingSessionList trainingSessions={trainingSessions} />
       </Suspense>

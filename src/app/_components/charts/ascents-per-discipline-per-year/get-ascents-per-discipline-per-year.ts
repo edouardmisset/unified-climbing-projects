@@ -18,20 +18,19 @@ export const getAscentsPerDisciplinePerYear = (
   const years = createYearList(ascents, { descending: false, continuous: true })
 
   return years.map(year => {
-    const { Boulder = 0, Route = 0 } = ascents.reduce(
-      (acc, { date, climbingDiscipline }) => {
-        if (!isDateInYear(date, year)) return acc
+    let boulderCount = 0
+    let routeCount = 0
 
-        acc[climbingDiscipline] = (acc[climbingDiscipline] ?? 0) + 1
-        return acc
-      },
-      {} as Record<Ascent['climbingDiscipline'], number>,
-    )
+    for (const { date, climbingDiscipline } of ascents) {
+      if (!isDateInYear(date, year)) continue
+      if (climbingDiscipline === 'Boulder') boulderCount++
+      if (climbingDiscipline === 'Route') routeCount++
+    }
 
     return {
-      Boulder,
+      Boulder: boulderCount,
       BoulderColor: 'var(--boulder)',
-      Route,
+      Route: routeCount,
       RouteColor: 'var(--route)',
       year,
     }

@@ -7,15 +7,10 @@ export const useSessionTypeQueryState = (): UseQueryStateReturn<
   OrAll<NonNullable<TrainingSession['sessionType']>>,
   typeof ALL_VALUE
 > =>
-  useQueryState<OrAll<NonNullable<TrainingSession['sessionType']>>>(
-    'sessionType',
-    {
-      defaultValue: ALL_VALUE,
-      parse: value =>
-        value === ALL_VALUE
-          ? ALL_VALUE
-          : trainingSessionSchema
-              .required({ sessionType: true })
-              .shape.sessionType.parse(value),
-    },
-  )
+  useQueryState<OrAll<NonNullable<TrainingSession['sessionType']>>>('sessionType', {
+    defaultValue: ALL_VALUE,
+    parse: value =>
+      value === ALL_VALUE
+        ? ALL_VALUE
+        : trainingSessionSchema.required({ sessionType: true }).shape.sessionType.parse(value),
+  })

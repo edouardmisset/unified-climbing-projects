@@ -9,7 +9,7 @@ import styles from './timeframe-select.module.css'
 export function TimeframeSelect() {
   const [timeframe, setTimeframe] = useTimeframeQueryState()
 
-  const handleTimeframeChange = (value: Timeframe | null) => setTimeframe(value)
+  const handleTimeframeChange = async (value: Timeframe | null) => setTimeframe(value)
 
   return (
     <Select.Root onValueChange={handleTimeframeChange} value={timeframe}>
@@ -24,11 +24,7 @@ export function TimeframeSelect() {
           <Select.ScrollUpArrow className={styles.ScrollArrow} />
           <Select.Popup className={styles.Popup}>
             {TIMEFRAMES.map(timeframeOption => (
-              <Select.Item
-                className={styles.Item}
-                key={timeframeOption}
-                value={timeframeOption}
-              >
+              <Select.Item className={styles.Item} key={timeframeOption} value={timeframeOption}>
                 <Select.ItemIndicator className={styles.ItemIndicator}>
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>

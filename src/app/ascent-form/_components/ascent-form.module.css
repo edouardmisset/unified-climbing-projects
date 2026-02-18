@@ -88,10 +88,7 @@
 
   @media (width > 40rem) {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(15ch, calc(50% - (var(--gap) / 2)))
-      );
+    grid-template-columns: repeat(auto-fill, minmax(15ch, calc(50% - (var(--gap) / 2))));
     align-items: center;
 
     & > span {

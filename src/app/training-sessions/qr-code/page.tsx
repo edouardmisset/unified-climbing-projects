@@ -7,7 +7,7 @@ import { groupDataDaysByYear } from '~/data/helpers'
 import { getAllTrainingSessions } from '~/services/training'
 
 // LAZY LOADING: Load QR code component only when needed
-const TrainingQRCode = lazy(() =>
+const TrainingQRCode = lazy(async () =>
   import('~/app/_components/qr-code/qr-code').then(module => ({
     default: module.TrainingQRCode,
   })),
@@ -21,12 +21,12 @@ export default async function TrainingSessionsQRCodePage() {
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 
   return (
-    <Layout title="Training QR">
+    <Layout title='Training QR'>
       {Object.entries(groupedTrainingDaily)
         .sort(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (
-          <div className="flexColumn alignCenter" key={year}>
-            <h2 className="centerText">{year}</h2>
+          <div className='flexColumn alignCenter' key={year}>
+            <h2 className='centerText'>{year}</h2>
             <Suspense fallback={<Loader />}>
               <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
             </Suspense>

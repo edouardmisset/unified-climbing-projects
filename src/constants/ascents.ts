@@ -41,15 +41,15 @@ export const ASCENT_GRADE_TO_COLOR = {
   '8c+': 'var(--8c_)',
 } as const satisfies Partial<Record<Grade, string>>
 
-export const DEFAULT_BOULDER_HEIGHT = 2 as const
+export const DEFAULT_BOULDER_HEIGHT = 2
 
 export const DEFAULT_GRADE = '1a' as const satisfies Grade
 
 // COEFFICIENTS
-export const COEFFICIENT_ONSIGHT_FLASH_RATIO = 1.5 as const
-export const COEFFICIENT_ASCENTS_PER_DAY = 0.5 as const
-export const COEFFICIENT_TOP_TEN = 0.000_01 as const
-export const COEFFICIENT_VOLUME = 0.001 as const
-export const COEFFICIENT_NUMBER_OF_CRAGS = 15 as const
+export const COEFFICIENT_ONSIGHT_FLASH_RATIO = 1.5
+export const COEFFICIENT_ASCENTS_PER_DAY = 0.5
+export const COEFFICIENT_TOP_TEN = 0.000_01
+export const COEFFICIENT_VOLUME = 0.001
+export const COEFFICIENT_NUMBER_OF_CRAGS = 15
 /** From 5m to 50m in 5m intervals: (50 - 5) / 5 + 1 = 10 */
-export const COEFFICIENT_DISCRETE_HEIGHTS = 10 as const
+export const COEFFICIENT_DISCRETE_HEIGHTS = 10

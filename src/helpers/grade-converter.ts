@@ -22,6 +22,9 @@ export function fromGradeToNumber(grade: Grade): number {
   return GRADE_TO_NUMBER[grade]
 }
 
+type GradeNumber = keyof typeof NUMBER_TO_GRADE
+const isValidGradeNumber = (num: number): num is GradeNumber => num in NUMBER_TO_GRADE
+
 /**
  * Converts a numeric grade to its corresponding Grade.
  *
@@ -33,11 +36,9 @@ export function fromGradeToNumber(grade: Grade): number {
  */
 export const fromNumberToGrade = (gradeNumber: number): Grade => {
   if (!(gradeNumber in NUMBER_TO_GRADE)) {
-    globalThis.console.error(
-      `Error in fromNumberToGrade, with gradeNumber: ${gradeNumber}`,
-    )
+    globalThis.console.error(`Error in fromNumberToGrade, with gradeNumber: ${gradeNumber}`)
     return DEFAULT_GRADE
   }
 
-  return NUMBER_TO_GRADE[gradeNumber as keyof typeof NUMBER_TO_GRADE]
+  return isValidGradeNumber(gradeNumber) ? NUMBER_TO_GRADE[gradeNumber] : DEFAULT_GRADE
 }

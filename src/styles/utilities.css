@@ -150,9 +150,9 @@
     text-shadow: none;
   }
 
-  /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
+  /* stylelint-disable-next-line function-no-unknown */
   @supports (color: contrast-color(lightblue)) {
-    /* biome-ignore lint/correctness/noUnknownFunction: This is the futur... */
+    /* stylelint-disable-next-line function-no-unknown */
     color: contrast-color(var(--color));
     text-shadow: none;
   }

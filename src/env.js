@@ -8,8 +8,8 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_ENV: z.string(),
     NEXT_PUBLIC_CONVEX_URL: z.string().url(),
+    NEXT_PUBLIC_ENV: z.string(),
   },
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
@@ -25,8 +25,7 @@ export const env = createEnv({
     GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
     GOOGLE_SERVICE_ACCOUNT_EMAIL: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
     GOOGLE_SHEET_ID_ASCENTS_BACKUP: process.env.GOOGLE_SHEET_ID_ASCENTS_BACKUP,
-    GOOGLE_SHEET_ID_TRAINING_BACKUP:
-      process.env.GOOGLE_SHEET_ID_TRAINING_BACKUP,
+    GOOGLE_SHEET_ID_TRAINING_BACKUP: process.env.GOOGLE_SHEET_ID_TRAINING_BACKUP,
     // Client-side env
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
     NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
@@ -48,5 +47,5 @@ export const env = createEnv({
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
    * useful for Docker builds.
    */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+  skipValidation: Boolean(process.env.SKIP_ENV_VALIDATION),
 })

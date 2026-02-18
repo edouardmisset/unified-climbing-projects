@@ -11,20 +11,19 @@ import { WeeksRow } from './weeks-row.tsx'
 import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell.tsx'
 
+const DAYS_IN_WEEK = 7
+const SUNDAY_INDEX = 0
+const MONDAY_INDEX = 1
+const WEEK_53_START_INDEX = 4
+const MIDDAY_HOUR = 12
+const PREVIOUS_MONDAY_OFFSET = 6
+
 export const YearGrid = memo(
-  ({
-    dayCollection,
-    year,
-  }: {
-    year: number
-    dayCollection: DayDescriptor[]
-  }) => {
-    const displayedNumberOfWeeks = Math.ceil(
-      (getNumberOfDaysInYear(year) + 1) / 7,
-    )
-    const firstDayOfYear = new Date(year, 0, 1, 12)
+  ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
+    const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
+    const firstDayOfYear = new Date(year, 0, 1, MIDDAY_HOUR)
     const firstDayIndex = firstDayOfYear.getUTCDay()
-    const prependWeek53 = firstDayIndex >= 4 || firstDayIndex === 0
+    const prependWeek53 = firstDayIndex >= WEEK_53_START_INDEX || firstDayIndex === SUNDAY_INDEX
 
     const numberOfColumns = 1 + displayedNumberOfWeeks + (prependWeek53 ? 1 : 0)
 
@@ -32,16 +31,13 @@ export const YearGrid = memo(
       () => [
         0,
         ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
-        ...Array.from(
-          { length: displayedNumberOfWeeks },
-          (_, index) => index + 1,
-        ),
+        ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
       ],
       [displayedNumberOfWeeks, prependWeek53],
     )
 
     const numberOfDaysFromPreviousMondayTo1stJanuary =
-      firstDayIndex === 0 ? 6 : firstDayIndex - 1
+      firstDayIndex === SUNDAY_INDEX ? PREVIOUS_MONDAY_OFFSET : firstDayIndex - MONDAY_INDEX
 
     const emptyDays = useMemo(
       () =>
@@ -90,6 +86,7 @@ export const YearGrid = memo(
               date={date}
               formattedDate={date === '' ? '' : prettyLongDate(date)}
               isSpecialCase={isSpecialCase}
+              // oxlint-disable-next-line react/no-array-index-key -- stable day index for empty dates
               key={(date || index).toString()}
               shortText={shortText}
               title={title}

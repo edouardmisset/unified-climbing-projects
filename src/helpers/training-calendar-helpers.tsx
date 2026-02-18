@@ -2,6 +2,7 @@ import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
 import { getSessionTypeColors } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import { prettyLongDate } from './formatters'
+import { NOON_HOUR } from '~/constants/generic'
 
 export function fromTrainingSessionsToCalendarEntries(
   year: number,
@@ -13,7 +14,7 @@ export function fromTrainingSessionsToCalendarEntries(
 
       if (firstSession === undefined) {
         return {
-          date: new Date(year, 0, index + 1, 12).toISOString(),
+          date: new Date(year, 0, index + 1, NOON_HOUR).toISOString(),
           shortText: '',
           title: '',
         }

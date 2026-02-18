@@ -18,15 +18,8 @@ const ROUTE_AND_BOULDER = [
   'Route',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
 
-export function AscentsPerDisciplinePerGrade({
-  ascents,
-}: {
-  ascents: Ascent[]
-}) {
-  const data = useMemo(
-    () => getAscentsPerDisciplinePerGrade(ascents),
-    [ascents],
-  )
+export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] }) {
+  const data = useMemo(() => getAscentsPerDisciplinePerGrade(ascents), [ascents])
 
   if (data.length === 0) return null
 
@@ -35,7 +28,7 @@ export function AscentsPerDisciplinePerGrade({
   if (isSingleDiscipline) return null
 
   return (
-    <ChartContainer caption="Ascents per Discipline per Grade">
+    <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveBar
         axisBottom={gradesBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
@@ -44,8 +37,8 @@ export function AscentsPerDisciplinePerGrade({
         data={data}
         enableGridY={false}
         enableLabel={false}
-        groupMode="grouped"
-        indexBy="grade"
+        groupMode='grouped'
+        indexBy='grade'
         keys={ROUTE_AND_BOULDER}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

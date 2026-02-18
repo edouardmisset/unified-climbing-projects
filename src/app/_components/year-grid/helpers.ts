@@ -1,3 +1,5 @@
+import { NOON_HOUR } from '~/constants/generic'
+
 /**
  * Compares two dates to check if they are equal.
  *
@@ -15,8 +17,7 @@ export function datesEqual(leftDate: Date, rightDate = new Date()): boolean {
 
 export function getNumberOfDaysInYear(year: number): number {
   return (
-    (new Date(year + 1, 0, 1, 12).getTime() -
-      new Date(year, 0, 1, 12).getTime()) /
+    (new Date(year + 1, 0, 1, NOON_HOUR).getTime() - new Date(year, 0, 1, NOON_HOUR).getTime()) /
     (1000 * 60 * 60 * 24)
   )
 }

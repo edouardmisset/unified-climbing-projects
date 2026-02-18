@@ -9,6 +9,5 @@ export const useDisciplineQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<Ascent['climbingDiscipline']>>('discipline', {
     defaultValue: ALL_VALUE,
-    parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : climbingDisciplineSchema.parse(value),
+    parse: value => (value === ALL_VALUE ? ALL_VALUE : climbingDisciplineSchema.parse(value)),
   })

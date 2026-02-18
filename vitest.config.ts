@@ -1,3 +1,4 @@
+// oxlint-disable import/no-nodejs-modules
 import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
@@ -7,13 +8,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    exclude: [
-      'node_modules/',
-      'dist/',
-      'src/backup/',
-      'src/scripts/',
-      '**/*smoke*.*',
-    ],
+    exclude: ['node_modules/', 'dist/', 'src/backup/', 'src/scripts/', '**/*smoke*.*'],
     css: true,
     coverage: {
       provider: 'v8',

@@ -17,6 +17,7 @@ export const Navigation = memo(() => (
         <DesktopNavigationItem
           index={index}
           item={item}
+          // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
           key={`desktop-${createNavigationElementKey(item, index)}`}
         />
       ))}
@@ -28,12 +29,7 @@ export const Navigation = memo(() => (
     {/* Mobile hamburger menu */}
     <div className={styles.mobileMenu}>
       <Menu.Root>
-        <Menu.Trigger
-          aria-label="navigation"
-          className={styles.Button}
-          openOnHover
-          tabIndex={0}
-        >
+        <Menu.Trigger aria-label='navigation' className={styles.Button} openOnHover tabIndex={0}>
           <MenuIcon />
         </Menu.Trigger>
         <Menu.Portal>
@@ -46,6 +42,7 @@ export const Navigation = memo(() => (
                 <MobileNavigationItem
                   index={index}
                   item={item}
+                  // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
                   key={`mobile-${createNavigationElementKey(item, index)}`}
                 />
               ))}

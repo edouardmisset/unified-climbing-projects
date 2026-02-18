@@ -14,19 +14,14 @@ import {
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
 export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
-  const ascentsPerYearByGrade = useMemo(
-    () => getAscentsPerYearByGrade(ascents),
-    [ascents],
-  )
+  const ascentsPerYearByGrade = useMemo(() => getAscentsPerYearByGrade(ascents), [ascents])
 
   if (ascentsPerYearByGrade.length === 0) return null
-  const uniqueYearsCount = new Set(
-    ascentsPerYearByGrade.map(({ year }) => year),
-  ).size
+  const uniqueYearsCount = new Set(ascentsPerYearByGrade.map(({ year }) => year)).size
   if (uniqueYearsCount <= 1) return null
 
   return (
-    <ChartContainer caption="Ascents Per Year By Grade">
+    <ChartContainer caption='Ascents Per Year By Grade'>
       <ResponsiveBar
         axisBottom={yearBottomAxis}
         axisLeft={numberOfAscentsAxisLeft}
@@ -36,7 +31,7 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
         enableGridY={false}
         enableLabel={false}
         enableTotals
-        indexBy="year"
+        indexBy='year'
         keys={_GRADES}
         margin={DEFAULT_CHART_MARGIN}
         motionConfig={defaultMotionConfig}

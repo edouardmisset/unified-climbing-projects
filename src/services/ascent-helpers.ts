@@ -52,7 +52,7 @@ export const getAllAreas = cache(async (): Promise<string[]> => {
 export const getLatestAscent = cache(async (): Promise<Ascent | undefined> => {
   'use cache'
   const ascents = await getAllAscents()
-  if (ascents.length === 0) return undefined
+  if (ascents.length === 0) return
   return ascents.sort((a, b) => sortByDate(a, b, true)).at(0)
 })
 
@@ -63,5 +63,5 @@ export const getAllGrades = cache(async (): Promise<Grade[]> => {
   'use cache'
   const ascents = await getAllAscents()
   const grades = ascents.map(({ topoGrade }) => topoGrade)
-  return [...new Set(grades)].sort(compareStringsAscending) as Grade[]
+  return [...new Set(grades)].sort(compareStringsAscending)
 })

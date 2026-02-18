@@ -1,12 +1,18 @@
-import type { TrainingSession } from '~/schema/training'
+import {
+  ANATOMICAL_REGIONS,
+  ENERGY_SYSTEMS,
+  type AnatomicalRegion,
+  type EnergySystem,
+  type TrainingSession,
+} from '~/schema/training'
 
-type RadialBarData = Array<{
+type RadialBarData = {
   id: string
-  data: Array<{
+  data: {
     x: string
     y: number
-  }>
-}>
+  }[]
+}[]
 
 const ENERGY_SYSTEM_COLORS = {
   AA: 'var(--energySystemAA)',
@@ -35,84 +41,57 @@ const ANATOMICAL_REGION_LABELS = {
 export function getSessionsRadialData(sessions: TrainingSession[]): {
   data: RadialBarData
   colors: Record<string, string>
-  legendData: Array<{ id: string; label: string; color: string }>
+  legendData: { id: string; label: string; color: string }[]
   totals: Record<string, number>
 } {
-  if (sessions.length === 0)
-    return { colors: {}, data: [], legendData: [], totals: {} }
+  if (sessions.length === 0) return { colors: {}, data: [], legendData: [], totals: {} }
 
-  const sessionsWithEnergySystem = sessions.filter(
-    session => session.energySystem !== undefined,
-  )
+  const sessionsWithEnergySystem = sessions.filter(session => session.energySystem !== undefined)
 
-  const sessionsWithRegion = sessions.filter(
-    session => session.anatomicalRegion !== undefined,
-  )
+  const sessionsWithRegion = sessions.filter(session => session.anatomicalRegion !== undefined)
 
-  const energySystemCounts = sessionsWithEnergySystem.reduce(
-    (acc, { energySystem }) => {
-      if (!energySystem) return acc
-      acc[energySystem] = (acc[energySystem] ?? 0) + 1
-      return acc
-    },
-    {} as Record<NonNullable<TrainingSession['energySystem']>, number>,
-  )
+  const energySystemCounts = new Map<EnergySystem, number>()
+  const regionCounts = new Map<AnatomicalRegion, number>()
 
-  const regionCounts = sessionsWithRegion.reduce(
-    (acc, { anatomicalRegion }) => {
-      if (!anatomicalRegion) return acc
-      acc[anatomicalRegion] = (acc[anatomicalRegion] ?? 0) + 1
-      return acc
-    },
-    {} as Record<NonNullable<TrainingSession['anatomicalRegion']>, number>,
-  )
+  for (const { energySystem } of sessionsWithEnergySystem) {
+    if (!energySystem) continue
+    energySystemCounts.set(energySystem, (energySystemCounts.get(energySystem) ?? 0) + 1)
+  }
+
+  for (const { anatomicalRegion } of sessionsWithRegion) {
+    if (!anatomicalRegion) continue
+    regionCounts.set(anatomicalRegion, (regionCounts.get(anatomicalRegion) ?? 0) + 1)
+  }
 
   const colors: Record<string, string> = {}
 
   // Build Energy System ring data
-  const energySystemData: Array<{ x: string; y: number }> = Object.entries(
-    energySystemCounts,
-  )
-    .map(([system, count]) => ({
-      x:
-        ENERGY_SYSTEM_LABELS[system as keyof typeof ENERGY_SYSTEM_LABELS] ??
-        system,
-      y: count,
-    }))
+  const energySystemData = ENERGY_SYSTEMS.map(key => ({
+    x: ENERGY_SYSTEM_LABELS[key],
+    y: energySystemCounts.get(key) ?? 0,
+  }))
+    .filter(item => item.y > 0)
     .sort((a, b) => b.y - a.y)
 
-  for (const item of energySystemData) {
-    const systemKey = (
-      Object.keys(ENERGY_SYSTEM_LABELS) as Array<
-        keyof typeof ENERGY_SYSTEM_LABELS
-      >
-    ).find(key => ENERGY_SYSTEM_LABELS[key] === item.x)
-    if (systemKey) {
-      colors[item.x] = ENERGY_SYSTEM_COLORS[systemKey]
+  for (const key of ENERGY_SYSTEMS) {
+    const label = ENERGY_SYSTEM_LABELS[key]
+    if ((energySystemCounts.get(key) ?? 0) > 0) {
+      colors[label] = ENERGY_SYSTEM_COLORS[key]
     }
   }
 
   // Build Anatomical Region ring data
-  const anatomicalRegionData: Array<{ x: string; y: number }> = Object.entries(
-    regionCounts,
-  )
-    .map(([region, count]) => ({
-      x:
-        ANATOMICAL_REGION_LABELS[
-          region as keyof typeof ANATOMICAL_REGION_LABELS
-        ] ?? region,
-      y: count,
-    }))
+  const anatomicalRegionData = ANATOMICAL_REGIONS.map(key => ({
+    x: ANATOMICAL_REGION_LABELS[key],
+    y: regionCounts.get(key) ?? 0,
+  }))
+    .filter(item => item.y > 0)
     .sort((a, b) => b.y - a.y)
 
-  for (const item of anatomicalRegionData) {
-    const regionKey = (
-      Object.keys(ANATOMICAL_REGION_LABELS) as Array<
-        keyof typeof ANATOMICAL_REGION_LABELS
-      >
-    ).find(key => ANATOMICAL_REGION_LABELS[key] === item.x)
-    if (regionKey) {
-      colors[item.x] = ANATOMICAL_REGION_COLORS[regionKey]
+  for (const key of ANATOMICAL_REGIONS) {
+    const label = ANATOMICAL_REGION_LABELS[key]
+    if ((regionCounts.get(key) ?? 0) > 0) {
+      colors[label] = ANATOMICAL_REGION_COLORS[key]
     }
   }
 
@@ -129,10 +108,7 @@ export function getSessionsRadialData(sessions: TrainingSession[]): {
 
   const totals = {
     'Energy System': energySystemData.reduce((sum, item) => sum + item.y, 0),
-    'Anatomical Region': anatomicalRegionData.reduce(
-      (sum, item) => sum + item.y,
-      0,
-    ),
+    'Anatomical Region': anatomicalRegionData.reduce((sum, item) => sum + item.y, 0),
   }
 
   const legendData = [

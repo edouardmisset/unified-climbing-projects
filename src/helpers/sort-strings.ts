@@ -20,9 +20,7 @@ const createCompareStrings = (
   const { sensitivity = 'base', ...rest } = options ?? {}
   const collator = new Intl.Collator(locale, { sensitivity, ...rest })
 
-  return order === 'asc'
-    ? (a, b) => collator.compare(a, b)
-    : (a, b) => collator.compare(b, a)
+  return order === 'asc' ? (a, b) => collator.compare(a, b) : (a, b) => collator.compare(b, a)
 }
 
 /**

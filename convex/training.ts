@@ -8,14 +8,9 @@ export const get = query({
   handler: async ctx => {
     const trainingRecords = await ctx.db.query('training').collect()
 
-    const validatedTrainingSessions = trainingSessionSchema
-      .array()
-      .safeParse(trainingRecords)
+    const validatedTrainingSessions = trainingSessionSchema.array().safeParse(trainingRecords)
     if (!validatedTrainingSessions.success) {
-      globalThis.console.error(
-        'Invalid training session data',
-        validatedTrainingSessions.error,
-      )
+      globalThis.console.error('Invalid training session data', validatedTrainingSessions.error)
       return []
     }
 

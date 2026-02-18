@@ -20,9 +20,7 @@ describe('sortByDate', () => {
 
   it('should sort dates in ascending order when isDescending is false (oldest first)', () => {
     const unsortedArray = [dateA, dateB, dateC]
-    const sortedArray = [...unsortedArray].sort((a, b) =>
-      sortByDate(a, b, false),
-    )
+    const sortedArray = [...unsortedArray].sort((a, b) => sortByDate(a, b, false))
 
     expect(sortedArray.map(item => item.id)).toEqual(
       [3, 1, 2], // dateC (Dec), dateA (Jan), dateB (Feb)

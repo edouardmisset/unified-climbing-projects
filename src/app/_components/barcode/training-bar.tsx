@@ -11,10 +11,10 @@ import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
 
 // Lazy load the popover component
-const TrainingPopoverDescription = lazy(() =>
-  import('../training-popover-description/training-popover-description').then(
-    module => ({ default: module.TrainingPopoverDescription }),
-  ),
+const TrainingPopoverDescription = lazy(async () =>
+  import('../training-popover-description/training-popover-description').then(module => ({
+    default: module.TrainingPopoverDescription,
+  })),
 )
 
 export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
@@ -28,8 +28,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
         .sort(({ sessionType: aType }, { sessionType: bType }) =>
           aType === undefined || bType === undefined
             ? 0
-            : fromSessionTypeToSortOrder(bType) -
-              fromSessionTypeToSortOrder(aType),
+            : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
         ),
     [weeklyTraining],
   )
@@ -41,9 +40,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       background: isSingleWeekTraining
         ? undefined
         : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
-            .map(({ sessionType }) =>
-              fromSessionTypeToBackgroundColor(sessionType),
-            )
+            .map(({ sessionType }) => fromSessionTypeToBackgroundColor(sessionType))
             .join(', ')})`,
       inlineSize: `${numberOfTraining / 2}%`,
     }),
@@ -54,10 +51,8 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (filteredSortedWeeklyTraining.length === 0) return ''
     return (
-      <Suspense fallback="Loading...">
-        <TrainingPopoverDescription
-          trainingSessions={filteredSortedWeeklyTraining}
-        />
+      <Suspense fallback='Loading...'>
+        <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
       </Suspense>
     )
   }, [filteredSortedWeeklyTraining])
@@ -65,9 +60,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   if (firstTraining === undefined) return <span />
 
   const trainingBarClassName = `${
-    isSingleWeekTraining
-      ? fromSessionTypeToClassName(firstTraining?.sessionType)
-      : ''
+    isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining?.sessionType) : ''
   } ${styles.bar}`
 
   return (
@@ -76,7 +69,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       popoverDescription={lazyDescription}
       popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
       triggerClassName={trainingBarClassName}
-      triggerContent=""
+      triggerContent=''
     />
   )
 })

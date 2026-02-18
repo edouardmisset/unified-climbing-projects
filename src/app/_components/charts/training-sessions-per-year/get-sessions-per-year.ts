@@ -14,9 +14,7 @@ export type SessionsPerYear = {
   outdoorBoulderColor: string
 }
 
-export function getSessionsPerYear(
-  sessions: TrainingSession[],
-): SessionsPerYear[] {
+export function getSessionsPerYear(sessions: TrainingSession[]): SessionsPerYear[] {
   if (sessions.length === 0) return []
 
   const years = createYearList(sessions, {

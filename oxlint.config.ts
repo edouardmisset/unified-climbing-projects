@@ -1,0 +1,77 @@
+import { defineConfig } from 'oxlint'
+
+export default defineConfig({
+  plugins: [
+    'react',
+    'jsx-a11y',
+    'nextjs',
+    'typescript',
+    'import',
+    // 'unicorn',
+    // 'vitest',
+    // 'react-perf',
+  ],
+  categories: {
+    correctness: 'error',
+    suspicious: 'warn',
+    perf: 'warn',
+    style: 'warn',
+  },
+  rules: {
+    'capitalized-comments': 'off',
+    'func-style': 'off',
+    'id-length': 'off',
+    'import/consistent-type-specifier-style': 'off',
+    'import/exports-last': 'off',
+    'import/group-exports': 'off',
+    'import/no-named-export': 'off',
+    'import/prefer-default-export': 'off',
+    'max-statements': ['warn', 100],
+    'no-continue': 'off',
+    'no-magic-numbers': ['warn', { ignore: [-2, -1, 0, 1, 2, 10, 24, 60, 100, 1000, 1900] }],
+    'no-ternary': 'off',
+    'no-unassigned-import': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react/jsx-max-depth': ['warn', { max: 8 }],
+    'react/jsx-props-no-spreading': 'off',
+    'react/no-multi-comp': 'warn',
+    'react/react-in-jsx-scope': 'off',
+    'sort-imports': 'off',
+    'sort-keys': 'off',
+    'typescript/consistent-type-definitions': 'off',
+    'typescript/no-explicit-any': 'off',
+    'typescript/no-non-null-assertion': 'warn',
+    'typescript/no-unsafe-type-assertion': 'off',
+    complexity: 'warn',
+    curly: 'off',
+  },
+  ignorePatterns: [
+    '.next/**',
+    'node_modules/**',
+    'out/**',
+    'build/**',
+    'dist/**',
+    'coverage/**',
+    'playwright-report/**',
+    'test-results/**',
+    'convex/_generated/**',
+  ],
+  overrides: [
+    {
+      files: ['**/*.test.*', '**/*.spec.*', 'tests/**'],
+      rules: {
+        'no-magic-numbers': 'off',
+        'typescript/no-unsafe-type-assertion': 'off',
+      },
+    },
+  ],
+  settings: {
+    vitest: {
+      typecheck: false,
+    },
+  },
+  env: {
+    builtin: true,
+  },
+})

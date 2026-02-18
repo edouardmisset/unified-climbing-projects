@@ -4,15 +4,15 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark, neobrutalism } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Atkinson_Hyperlegible } from 'next/font/google'
 import { ViewTransitions } from 'next-view-transitions'
+import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense, useMemo } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Loader } from '~/app/_components/loader/loader'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
 import { useTheme } from '~/hooks/use-theme'
-import styles from './index.module.css'
+import { ThemeToggle } from './_components/theme-toggle/theme-toggle'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -29,9 +29,9 @@ import '~/styles/zindex.css'
 import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
-import { ThemeToggle } from './_components/theme-toggle/theme-toggle'
+import styles from './index.module.css'
 
-const font = Atkinson_Hyperlegible({
+const font = atkinson_Hyperlegible({
   display: 'swap',
   subsets: ['latin'],
   weight: ['400', '700'],
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html
           className={font.className}
           data-color-scheme={theme}
-          lang="en"
+          lang='en'
           suppressHydrationWarning
         >
           <body className={styles.body}>
@@ -75,9 +75,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ToastContainer
               closeOnClick
               draggable
-              draggableDirection="x"
+              draggableDirection='x'
               draggablePercent={20}
-              theme="colored"
+              theme='colored'
             />
             <SpeedInsights />
             <Analytics />

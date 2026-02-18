@@ -7,6 +7,9 @@ import {
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
 
+type ColorGrade = keyof typeof ASCENT_GRADE_TO_COLOR
+const isColorGrade = (g: Grade): g is ColorGrade => g in ASCENT_GRADE_TO_COLOR
+
 /**
  * Converts a climbing grade to its corresponding background color.
  *
@@ -18,8 +21,10 @@ import {
  * @returns {string} The background color for the given grade.
  */
 export function fromGradeToBackgroundColor(grade?: Grade): string {
-  if (!grade || !(grade in ASCENT_GRADE_TO_COLOR)) return 'black'
-  return ASCENT_GRADE_TO_COLOR[grade as keyof typeof ASCENT_GRADE_TO_COLOR]
+  const isValidColorGrade = grade && grade in ASCENT_GRADE_TO_COLOR && isColorGrade(grade)
+  if (isValidColorGrade) return ASCENT_GRADE_TO_COLOR[grade]
+
+  return 'black'
 }
 
 /**
@@ -33,9 +38,7 @@ export function fromGradeToBackgroundColor(grade?: Grade): string {
  * @returns {string | undefined} The CSS class name for the given grade, or
  * undefined if no grade is provided.
  */
-export function fromGradeToClassName(
-  grade?: Ascent['topoGrade'],
-): string | undefined {
+export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | undefined {
   return grade === undefined ? undefined : `_${grade.replaceAll('+', '_')}`
 }
 
@@ -50,16 +53,14 @@ export function fromGradeToClassName(
  * @param {string} params.climbingDiscipline - The discipline of the climb.
  * @returns {number} The total points for the ascent.
  */
-export function fromAscentToPoints({
-  topoGrade,
-  style,
-  climbingDiscipline,
-}: Ascent): number {
-  const gradePoints =
-    GRADE_TO_POINTS[topoGrade as keyof typeof GRADE_TO_POINTS] ?? 0
+export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
+  type PointsGrade = keyof typeof GRADE_TO_POINTS
+  const hasPoints = (grade: Grade): grade is PointsGrade => grade in GRADE_TO_POINTS
+
+  // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
+  const gradePoints = hasPoints(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
-  const climbingDisciplineBonus =
-    climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
+  const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
@@ -103,18 +104,20 @@ export function fromPointToGrade(
     return DEFAULT_GRADE
   }
 
-  const parsedPoint = adjustedPoints as (typeof listOfPoints)[number]
-
-  const grade = Object.entries(GRADE_TO_POINTS).find(
-    ([_, value]) => value === parsedPoint,
+  // Find the grade that matches the adjusted points
+  type PointsGrade = keyof typeof GRADE_TO_POINTS
+  const isPointsGrade = (grade: string): grade is PointsGrade => grade in GRADE_TO_POINTS
+  const matchingEntry = Object.entries(GRADE_TO_POINTS).find(
+    ([, entryPoints]) => entryPoints === adjustedPoints,
   )
+  const matchingGrade = matchingEntry?.[0]
 
-  if (!grade) {
+  if (!matchingGrade || !isPointsGrade(matchingGrade)) {
     globalThis.console.log(
-      `Error: No matching grade found for the given points (${parsedPoint}).`,
+      `Error: No matching grade found for the given points (${adjustedPoints}).`,
     )
     return DEFAULT_GRADE
   }
 
-  return grade[0] as Grade
+  return matchingGrade
 }

@@ -23,12 +23,7 @@ export function TrainingSessionsRadial({
   )
 
   const formatLabel = useCallback(
-    (datum: {
-      id: string
-      groupId: string
-      value: number
-      stackedValue: number
-    }) => {
+    (datum: { id: string; groupId: string; value: number; stackedValue: number }) => {
       const total = totals[datum.groupId]
       if (!total) return '0%'
       const percentage = Math.round((datum.value / total) * 100)
@@ -36,10 +31,7 @@ export function TrainingSessionsRadial({
     },
     [totals],
   )
-  const chartMargins = useMemo(
-    () => ({ bottom: 20, left: 75, right: 160, top: 20 }),
-    [],
-  )
+  const chartMargins = useMemo(() => ({ bottom: 20, left: 75, right: 160, top: 20 }), [])
 
   const legends = useMemo<LegendProps[]>(
     () => [
@@ -60,11 +52,11 @@ export function TrainingSessionsRadial({
 
   if (data.length === 0) return null
   return (
-    <ChartContainer caption="Training Sessions Distribution">
+    <ChartContainer caption='Training Sessions Distribution'>
       <ResponsiveRadialBar
         colors={getBarColor}
         data={data}
-        enableCircularGrid={true}
+        enableCircularGrid
         enableLabels
         enableRadialGrid={false}
         enableTracks={false}
