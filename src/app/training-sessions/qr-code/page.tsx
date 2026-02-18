@@ -7,7 +7,7 @@ import { groupDataDaysByYear } from '~/data/helpers'
 import { getAllTrainingSessions } from '~/services/training'
 
 // LAZY LOADING: Load QR code component only when needed
-const TrainingQRCode = lazy(() =>
+const TrainingQRCode = lazy(async () =>
   import('~/app/_components/qr-code/qr-code').then(module => ({
     default: module.TrainingQRCode,
   })),

@@ -34,7 +34,7 @@ export async function writeClimbingDBToBackupJson(): Promise<{
   ] as const
 
   await Promise.all(
-    files.map(({ path, content }) =>
+    files.map(async ({ path, content }) =>
       writeFile(path, JSON.stringify(content), {
         flag: 'w',
       }),

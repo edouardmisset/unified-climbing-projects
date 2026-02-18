@@ -8,7 +8,7 @@ import { Popover } from '../popover/popover'
 import styles from './barcode.module.css'
 
 // Lazy load the popover component
-const AscentsPopoverDescription = lazy(() =>
+const AscentsPopoverDescription = lazy(async () =>
   import('../ascents-popover-description/ascents-popover-description').then(module => ({
     default: module.AscentsPopoverDescription,
   })),

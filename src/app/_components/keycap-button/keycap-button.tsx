@@ -6,7 +6,7 @@ import styles from './keycap-button.module.css'
 
 export function KeycapButton({
   label,
-  type,
+  type = 'button',
   ...otherProps
 }: {
   label: string

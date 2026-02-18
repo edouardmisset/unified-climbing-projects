@@ -146,7 +146,7 @@ export default function AscentForm(props: AscentFormProps) {
   )
 
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    event => {
+    async event => {
       // Set the style value to 'Redpoint' when the number of tries is greater than 1
       if (Number(event.target.value) > 1) {
         setValue('style', 'Redpoint')

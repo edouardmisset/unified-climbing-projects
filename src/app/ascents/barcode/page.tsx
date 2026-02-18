@@ -7,7 +7,7 @@ import { groupDataWeeksByYear } from '~/data/helpers'
 import { getAllAscents } from '~/services/ascents'
 
 // LAZY LOADING: Load barcode component only when needed
-const AscentsBarcode = lazy(() =>
+const AscentsBarcode = lazy(async () =>
   import('~/app/_components/barcode/barcode').then(module => ({
     default: module.AscentsBarcode,
   })),

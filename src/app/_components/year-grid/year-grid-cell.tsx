@@ -8,13 +8,13 @@ import type { DayDescriptor } from './year-grid'
 import styles from './year-grid.module.css'
 
 // Lazy load the popover components
-const AscentsPopoverDescription = lazy(() =>
+const AscentsPopoverDescription = lazy(async () =>
   import('~/app/_components/ascents-popover-description/ascents-popover-description').then(
     module => ({ default: module.AscentsPopoverDescription }),
   ),
 )
 
-const TrainingPopoverDescription = lazy(() =>
+const TrainingPopoverDescription = lazy(async () =>
   import('~/app/_components/training-popover-description/training-popover-description').then(
     module => ({ default: module.TrainingPopoverDescription }),
   ),

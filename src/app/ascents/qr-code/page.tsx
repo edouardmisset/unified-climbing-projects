@@ -8,7 +8,7 @@ import { sortByGrade } from '~/helpers/sorter'
 import { getAllAscents } from '~/services/ascents'
 
 // LAZY LOADING: Load QR code component only when needed
-const AscentsQRCode = lazy(() =>
+const AscentsQRCode = lazy(async () =>
   import('~/app/_components/qr-code/qr-code').then(module => ({
     default: module.AscentsQRCode,
   })),

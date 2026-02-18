@@ -5,7 +5,7 @@ import type { TrainingSession } from '~/schema/training'
 import { Popover } from '../popover/popover'
 
 // Lazy load the popover component
-const TrainingPopoverDescription = lazy(() =>
+const TrainingPopoverDescription = lazy(async () =>
   import('../training-popover-description/training-popover-description').then(module => ({
     default: module.TrainingPopoverDescription,
   })),

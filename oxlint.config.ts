@@ -16,7 +16,6 @@ export default defineConfig({
     suspicious: 'warn',
     perf: 'warn',
     style: 'warn',
-    // restriction: 'warn',
   },
   rules: {
     'capitalized-comments': 'off',
@@ -36,12 +35,15 @@ export default defineConfig({
     'react-hooks/rules-of-hooks': 'error',
     'react/jsx-max-depth': ['warn', { max: 8 }],
     'react/jsx-props-no-spreading': 'off',
+    'react/no-multi-comp': 'warn',
     'react/react-in-jsx-scope': 'off',
     'sort-imports': 'off',
     'sort-keys': 'off',
     'typescript/consistent-type-definitions': 'off',
     'typescript/no-explicit-any': 'off',
+    'typescript/no-non-null-assertion': 'warn',
     'typescript/no-unsafe-type-assertion': 'off',
+    complexity: 'warn',
     curly: 'off',
   },
   ignorePatterns: [

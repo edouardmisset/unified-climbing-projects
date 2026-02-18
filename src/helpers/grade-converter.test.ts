@@ -6,7 +6,10 @@ import { fromGradeToNumber, fromNumberToGrade, NUMBER_TO_GRADE } from './grade-c
 
 describe('fromGradeToNumber', () => {
   it('should convert a valid grade correctly', () => {
-    const validGrade = objectKeys(GRADE_TO_NUMBER)[0] as keyof typeof GRADE_TO_NUMBER
+    const [validGrade] = objectKeys(GRADE_TO_NUMBER)
+    if (!validGrade) {
+      throw new Error('No valid grade keys found in GRADE_TO_NUMBER')
+    }
     const expectedNumber = GRADE_TO_NUMBER[validGrade]
     const result = fromGradeToNumber(validGrade)
     expect(result).toBe(expectedNumber)
@@ -20,7 +23,11 @@ describe('fromGradeToNumber', () => {
 
 describe('fromNumberToGrade', () => {
   it('should convert a valid number to its corresponding grade', () => {
-    const validNumberKey = objectKeys(NUMBER_TO_GRADE)[0] as keyof typeof NUMBER_TO_GRADE
+    const [validNumberKey] = objectKeys(NUMBER_TO_GRADE)
+
+    if (!validNumberKey) {
+      throw new Error('No valid number keys found in NUMBER_TO_GRADE')
+    }
 
     const expectedGrade = NUMBER_TO_GRADE[validNumberKey]
     const result = fromNumberToGrade(validNumberKey)
