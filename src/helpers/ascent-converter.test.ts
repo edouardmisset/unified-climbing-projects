@@ -35,9 +35,8 @@ describe('fromGradeToClassName', () => {
 
 describe('fromAscentToPoints', () => {
   it('should return the sum of grade and style points when both keys exist', () => {
-    const onsight7a = sampleAscents[0]
-    const redpoint7b = sampleAscents[1]
-    const flash7aBoulder = sampleAscents[24]
+    const [onsight7a, redpoint7b] = sampleAscents
+    const { 24: flash7aBoulder } = sampleAscents
 
     if (!onsight7a || !redpoint7b || !flash7aBoulder) {
       throw new Error('Ascent not found')

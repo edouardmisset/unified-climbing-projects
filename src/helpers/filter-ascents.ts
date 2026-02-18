@@ -1,7 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
-import { DEFAULT_GRADE } from '~/constants/ascents.ts'
 import type { z } from '~/helpers/zod'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'
@@ -59,18 +58,17 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
   })
 }
 
-export function getHardestAscent(ascents: Ascent[]): Ascent {
-  return ascents.reduce(
-    (hardestAscent, currentAscent) => {
-      const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
-      const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
+export function getHardestAscent(ascents: Ascent[]): Ascent | undefined {
+  if (ascents.length === 0) return undefined
 
-      const isCurrentAscentHarder = hardestGrade < currentGrade
+  return ascents.reduce((hardestAscent, currentAscent) => {
+    const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
+    const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
 
-      if (isCurrentAscentHarder) return currentAscent
+    const isCurrentAscentHarder = hardestGrade < currentGrade
 
-      return hardestAscent
-    },
-    { topoGrade: DEFAULT_GRADE } as Ascent,
-  )
+    if (isCurrentAscentHarder) return currentAscent
+
+    return hardestAscent
+  })
 }

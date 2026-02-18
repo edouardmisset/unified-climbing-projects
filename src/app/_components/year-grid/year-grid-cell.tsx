@@ -1,5 +1,6 @@
 import { isDateInYear } from '@edouardmisset/date'
 import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
+import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
 import { prettyLongDate } from '~/helpers/formatters'
 import { Popover } from '../popover/popover'
 import { datesEqual } from './helpers'
@@ -99,7 +100,7 @@ const getAdjustedBackgroundColor = ({
   if (backgroundColor) return backgroundColor
 
   const day = new Date(date).getDay()
-  const isWeekend = day === 0 || day === 6
+  const isWeekend = day === 0 || day === SATURDAY_DAY_NUMBER
 
   if (date === '') return 'transparent'
   if (isWeekend) return 'var(--surface-3)'

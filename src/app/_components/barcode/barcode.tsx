@@ -23,7 +23,8 @@ export const AscentsBarcode = memo(({ yearlyAscents }: { yearlyAscents: Ascent[]
   return (
     <Barcode>
       {yearlyAscents.map((ascents, index) => (
-        <AscentsBar key={ascents[0]?.date ?? index} weeklyAscents={ascents} />
+        // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
+        <AscentsBar key={ascents[0]?.date ?? `week-${index}`} weeklyAscents={ascents} />
       ))}
     </Barcode>
   )
@@ -36,7 +37,8 @@ export const TrainingSessionsBarcode = memo(
     return (
       <Barcode>
         {yearlyTraining.map((sessions, index) => (
-          <TrainingBar key={sessions[0]?.date ?? index} weeklyTraining={sessions} />
+          // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
+          <TrainingBar key={sessions[0]?.date ?? `week-${index}`} weeklyTraining={sessions} />
         ))}
       </Barcode>
     )

@@ -1,5 +1,14 @@
 import { isValidDate } from '@edouardmisset/date'
-import { DAYS_IN_WEEK } from '~/constants/generic'
+import {
+  DAYS_IN_COMMON_YEAR,
+  DAYS_IN_LEAP_YEAR,
+  DAYS_IN_WEEK,
+  FRIDAY_DAY_NUMBER,
+  LEAP_YEAR_DAY_CHECK,
+  NOON_HOUR,
+  SATURDAY_DAY_NUMBER,
+  THURSDAY_DAY_NUMBER,
+} from '~/constants/generic'
 import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
@@ -25,7 +34,9 @@ export function createRecentDateOptions(): ValueAndLabel[] {
 export const getWeekNumber = (date: Date): number => {
   const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
   const startOfYear = new Date(date.getFullYear(), 0, 1)
-  startOfYear.setDate(startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % 7)))
+  startOfYear.setDate(
+    startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % DAYS_IN_WEEK)),
+  )
   return Math.round((date.getTime() - startOfYear.getTime()) / MILLISECONDS_IN_WEEK) + 1
 }
 
@@ -39,9 +50,17 @@ export const getWeekNumber = (date: Date): number => {
  * @returns {number} The number of weeks in the specified year
  */
 export const getWeeksInYear = (year: number): number => {
-  const firstMondayThisYear = new Date(year, 0, 5 - (new Date(year, 0, 4).getDay() || 7))
+  const firstMondayThisYear = new Date(
+    year,
+    0,
+    FRIDAY_DAY_NUMBER - (new Date(year, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
+  )
 
-  const firstMondayNextYear = new Date(year + 1, 0, 5 - (new Date(year + 1, 0, 4).getDay() || 7))
+  const firstMondayNextYear = new Date(
+    year + 1,
+    0,
+    FRIDAY_DAY_NUMBER - (new Date(year + 1, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
+  )
 
   return (firstMondayNextYear.getTime() - firstMondayThisYear.getTime()) / MILLISECONDS_IN_WEEK
 }
@@ -53,8 +72,8 @@ export const getWeeksInYear = (year: number): number => {
  * @returns {number} The number of days in the specified year
  */
 export const getDaysInYear = (year: number): number => {
-  const isLeap = new Date(year, 1, 29).getMonth() === 1
-  return isLeap ? 366 : 365
+  const isLeap = new Date(year, 1, LEAP_YEAR_DAY_CHECK).getMonth() === 1
+  return isLeap ? DAYS_IN_LEAP_YEAR : DAYS_IN_COMMON_YEAR
 }
 
 /**
@@ -85,7 +104,16 @@ export function getMostFrequentDate<TypeWithDate extends { date: string }>(
   const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
     ascending: false,
   })
-  return (Object.entries(sortedDateByFrequency)[0] ?? ['', 0]) as [string, number]
+  const [firstEntry] = Object.entries(sortedDateByFrequency)
+
+  if (!firstEntry) return ['', 0]
+
+  const [date, count] = firstEntry
+
+  // Ensure count is a number
+  if (typeof count !== 'number') return ['', 0]
+
+  return [date, count]
 }
 
 /**
@@ -95,7 +123,7 @@ export function getMostFrequentDate<TypeWithDate extends { date: string }>(
  */
 export function getDateAtNoon(date: Date): Date {
   const normalized = new Date(date)
-  normalized.setHours(12, 0, 0, 0)
+  normalized.setHours(NOON_HOUR, 0, 0, 0)
   return normalized
 }
 
@@ -119,7 +147,7 @@ export function getLastSaturday(): Date {
   const now = new Date()
   const dayOfWeek = now.getDay() // 0 = Sunday, 6 = Saturday
   // If today is Saturday (6), go back 7 days; else, go back to last Saturday
-  const daysSinceSaturday = dayOfWeek === 6 ? DAYS_IN_WEEK : dayOfWeek + 1
+  const daysSinceSaturday = dayOfWeek === SATURDAY_DAY_NUMBER ? DAYS_IN_WEEK : dayOfWeek + 1
   const lastSaturday = new Date(now)
   lastSaturday.setDate(now.getDate() - daysSinceSaturday)
   return getDateAtNoon(lastSaturday)

@@ -8,7 +8,7 @@ import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 
 export function AscentSummary({ ascents }: AscentListProps) {
-  const mostRecentAscent = ascents.toSorted((a, b) => sortByDate(a, b))[0]
+  const [mostRecentAscent] = ascents.toSorted((a, b) => sortByDate(a, b))
 
   if (ascents.length === 0 || mostRecentAscent === undefined) return
 

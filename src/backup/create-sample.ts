@@ -32,7 +32,9 @@ function stratifiedSample(data: any[], size: number, stratificationKeys: string[
   const samplesPerStratum = Math.floor(size / strataKeys.length)
 
   for (const key of strataKeys) {
-    const stratumSample = getRandomSample(strata[key], samplesPerStratum)
+    const stratum = strata[key]
+    if (!stratum) continue
+    const stratumSample = getRandomSample(stratum, samplesPerStratum)
     sample.push(...stratumSample)
   }
 

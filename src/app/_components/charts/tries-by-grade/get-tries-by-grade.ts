@@ -1,4 +1,3 @@
-import { objectKeys } from '@edouardmisset/object'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { LineChartDataStructure } from './tries-by-grade'
@@ -6,12 +5,12 @@ import type { LineChartDataStructure } from './tries-by-grade'
 export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
   if (ascents.length === 0) return []
 
-  const gradeStats = {} as Record<Grade, { min: number; max: number; sum: number; count: number }>
+  const gradeStats = new Map<Grade, { min: number; max: number; sum: number; count: number }>()
 
   for (const { topoGrade, tries } of ascents) {
-    const topoGradeStat = gradeStats[topoGrade]
+    const topoGradeStat = gradeStats.get(topoGrade)
     if (!topoGradeStat) {
-      gradeStats[topoGrade] = { count: 1, max: tries, min: tries, sum: tries }
+      gradeStats.set(topoGrade, { count: 1, max: tries, min: tries, sum: tries })
       continue
     }
 
@@ -21,21 +20,21 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
     topoGradeStat.count++
   }
 
-  const grades = objectKeys(gradeStats).sort((a, b) => compareStringsAscending(a, b))
+  const grades = Array.from(gradeStats.keys()).sort((a, b) => compareStringsAscending(a, b))
 
   return [
     {
       color: 'var(--minTries)',
       data: grades.map(grade => ({
         x: grade,
-        y: gradeStats[grade].min,
+        y: gradeStats.get(grade)?.min ?? 0,
       })),
       id: 'min',
     },
     {
       color: 'var(--averageTries)',
       data: grades.map(grade => {
-        const { sum, count } = gradeStats[grade]
+        const { sum, count } = gradeStats.get(grade) ?? { sum: 0, count: 1 }
         return {
           x: grade,
           y: Math.round(sum / count),
@@ -47,7 +46,7 @@ export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
       color: 'var(--maxTries)',
       data: grades.map(grade => ({
         x: grade,
-        y: gradeStats[grade].max,
+        y: gradeStats.get(grade)?.max ?? 0,
       })),
       id: 'max',
     },

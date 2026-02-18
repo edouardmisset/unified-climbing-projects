@@ -45,7 +45,8 @@ export const TrainingQRCode = memo(
   ({ yearlyTrainingSessions }: { yearlyTrainingSessions: TrainingSession[][] }) => (
     <QRCode>
       {yearlyTrainingSessions.map((sessions, index) => (
-        <TrainingsQRDot key={sessions[0]?.date ?? index} trainingSessions={sessions} />
+        // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
+        <TrainingsQRDot key={sessions[0]?.date ?? `week-${index}`} trainingSessions={sessions} />
       ))}
     </QRCode>
   ),
@@ -54,7 +55,8 @@ export const TrainingQRCode = memo(
 export const AscentsQRCode = memo(({ yearlyAscents }: { yearlyAscents: Ascent[][] }) => (
   <QRCode>
     {yearlyAscents.map((ascents, index) => (
-      <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? index} />
+      // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
+      <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? `week-${index}`} />
     ))}
   </QRCode>
 ))

@@ -3,14 +3,18 @@ import { useCallback, useEffect, useState } from 'react'
 const THEMES = ['light', 'dark'] as const
 type ThemeMode = (typeof THEMES)[number]
 
+function isThemeMode(value: string): value is ThemeMode {
+  return THEMES.includes(value)
+}
+
 export function useTheme() {
   const [theme, setTheme] = useState<ThemeMode>('dark')
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const stored = (localStorage.getItem('theme') ?? 'light') as ThemeMode
-    if (THEMES.includes(stored)) {
+    const stored = localStorage.getItem('theme') ?? 'light'
+    if (isThemeMode(stored)) {
       setTheme(stored)
       return
     }

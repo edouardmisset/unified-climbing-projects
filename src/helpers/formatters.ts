@@ -57,8 +57,10 @@ export function formatStyleAndTriers({
   const styleEmoji = fromAscentStyleToEmoji(style)
   const styleText = showDetails ? style : ''
 
-  const triesText =
-    tries > 1 ? (showDetails ? `(${tries} tries)` : `(${formatOrdinals(tries)})`) : ''
+  let triesText = ''
+  if (tries > 1) {
+    triesText = showDetails ? `(${tries} tries)` : `(${formatOrdinals(tries)})`
+  }
 
   return [styleEmoji, styleText, triesText].filter(string => string !== '').join(' ')
 }

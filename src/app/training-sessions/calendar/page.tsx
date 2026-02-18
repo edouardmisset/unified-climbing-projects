@@ -33,9 +33,9 @@ async function CalendarContent() {
           <h2 className='superCenter'>{year}</h2>
           <DataCalendar
             data={trainingSessions}
-            dataTransformationFunction={groupDataDaysByYear}
+            dataTransformationFunction={groupDataDaysByYear<TrainingSession>}
             fromDataToCalendarEntries={(calendarYear, sessions) =>
-              fromTrainingSessionsToCalendarEntries(calendarYear, sessions as TrainingSession[][])
+              fromTrainingSessionsToCalendarEntries(calendarYear, sessions)
             }
             year={year}
           />

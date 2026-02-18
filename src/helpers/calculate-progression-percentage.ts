@@ -78,13 +78,13 @@ export function calculateProgressionPercentage({
 
     if (currentYearHardest === undefined) continue
 
-    if (previousYearHardest === undefined && currentYearHardest !== undefined) {
+    if (previousYearHardest === undefined) {
       progressionCount++
       continue
     }
 
     const isClimbingProgressing =
-      fromGradeToNumber(currentYearHardest) > fromGradeToNumber(previousYearHardest as Grade)
+      fromGradeToNumber(currentYearHardest) > fromGradeToNumber(previousYearHardest)
 
     if (isClimbingProgressing) progressionCount++
   }

@@ -51,26 +51,28 @@ export function fromSessionTypeToLabel(sessionType: (typeof SESSION_TYPES)[numbe
 }
 
 export const ANATOMICAL_REGIONS = ['Ar', 'Fi', 'Ge'] as const
+export type AnatomicalRegion = (typeof ANATOMICAL_REGIONS)[number]
 
 const ANATOMICAL_REGIONS_TO_TEXT = {
   Ar: 'Arms',
   Fi: 'Fingers',
   Ge: 'General',
-} as const satisfies Record<(typeof ANATOMICAL_REGIONS)[number], string>
+} as const satisfies Record<AnatomicalRegion, string>
 
-export function fromAnatomicalRegionToLabel(anatomicalRegion: (typeof ANATOMICAL_REGIONS)[number]) {
+export function fromAnatomicalRegionToLabel(anatomicalRegion: AnatomicalRegion) {
   return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion]
 }
 
 export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
+export type EnergySystem = (typeof ENERGY_SYSTEMS)[number]
 
 const ENERGY_SYSTEMS_TO_TEXT = {
   AA: 'Anaerobic Alactic',
   AE: 'Aerobic',
   AL: 'Anaerobic Lactic',
-} as const satisfies Record<(typeof ENERGY_SYSTEMS)[number], string>
+} as const satisfies Record<EnergySystem, string>
 
-export function fromEnergySystemToLabel(energySystem: (typeof ENERGY_SYSTEMS)[number]) {
+export function fromEnergySystemToLabel(energySystem: EnergySystem) {
   return ENERGY_SYSTEMS_TO_TEXT[energySystem]
 }
 

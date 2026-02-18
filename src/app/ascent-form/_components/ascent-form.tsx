@@ -137,7 +137,7 @@ export default function AscentForm(props: AscentFormProps) {
       const parsedVal = ascentStyleSchema.array().safeParse(val)
       if (!parsedVal.success) return
 
-      const parsedClimbData = parsedVal.data[0]
+      const [parsedClimbData] = parsedVal.data
       if (parsedClimbData === undefined) return
 
       setValue('style', parsedClimbData)

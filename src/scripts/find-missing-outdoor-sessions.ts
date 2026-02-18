@@ -11,9 +11,9 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
   const ascentDays = await getAllAscents()
   const outdoorSessions = await getAllTrainingSessions()
 
-  const firstRecordedTrainingSession = outdoorSessions.toSorted(
+  const [firstRecordedTrainingSession] = outdoorSessions.toSorted(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-  )[0]
+  )
 
   const filteredAscentDays = ascentDays.filter(
     ({ date }) =>

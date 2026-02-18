@@ -1,4 +1,6 @@
 import {
+  DEFAULT_INTENSITY_PERCENT,
+  DEFAULT_VOLUME_PERCENT,
   TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR,
   TRAINING_SESSION_TYPE_TO_CLASS_NAME,
   TRAINING_SESSION_TYPE_TO_STRING,
@@ -61,14 +63,14 @@ function fromSessionTypeToString(sessionType: TrainingSession['sessionType']): s
  *
  * @param {Object} params - The parameters object
  * @param {TrainingSession['sessionType']} params.sessionType - The type of the training session
- * @param {number} [params.intensityPercent=65] - The current intensity percentage
- * @param {number} [params.volumePercent=65] - The current volume percentage
+ * @param {number} [params.intensityPercent=DEFAULT_INTENSITY_PERCENT] - The current intensity percentage
+ * @param {number} [params.volumePercent=DEFAULT_VOLUME_PERCENT] - The current volume percentage
  * @returns {{ backgroundColor: string; foreColor: string }} The resulting color configuration
  */
 export function getSessionTypeColors({
   sessionType,
-  intensityPercent = 65,
-  volumePercent = 65,
+  intensityPercent = DEFAULT_INTENSITY_PERCENT,
+  volumePercent = DEFAULT_VOLUME_PERCENT,
 }: {
   sessionType: TrainingSession['sessionType']
   intensityPercent?: number

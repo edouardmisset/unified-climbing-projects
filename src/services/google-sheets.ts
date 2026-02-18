@@ -4,6 +4,9 @@ import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from 'google-sprea
 import { env } from '~/env'
 import type { Object_ } from '~/types/generic'
 
+type AddRowsInput = Parameters<GoogleSpreadsheetWorksheet['addRows']>[0]
+type AddRowsRow = AddRowsInput extends (infer Row)[] ? Row : never
+
 const serviceAccountAuth = new JWT({
   email: env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
   key: env.GOOGLE_PRIVATE_KEY?.split(String.raw`\n`)?.join('\n'),
@@ -42,7 +45,7 @@ export async function createOrReplaceWorksheet(
   return await spreadsheet.addSheet({ title })
 }
 
-export async function backupDataToWorksheet<T extends Object_>(
+export async function backupDataToWorksheet<T extends Object_ & AddRowsRow>(
   sheet: GoogleSpreadsheetWorksheet,
   data: T[],
 ): Promise<void> {
@@ -53,10 +56,11 @@ export async function backupDataToWorksheet<T extends Object_>(
   const headersSet = new Set<string>()
   for (const element of data) {
     for (const key of objectKeys(element)) {
-      headersSet.add(key as string)
+      headersSet.add(String(key))
     }
   }
 
   await sheet.setHeaderRow([...headersSet])
-  await sheet.addRows(data as Parameters<GoogleSpreadsheetWorksheet['addRows']>[0])
+  const rows: AddRowsInput = data
+  await sheet.addRows(rows)
 }

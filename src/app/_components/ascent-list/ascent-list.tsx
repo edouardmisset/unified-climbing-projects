@@ -1,7 +1,7 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { type CSSProperties, memo, useMemo } from 'react'
 import NotFound from '~/app/not-found'
-import { NON_BREAKING_SPACE } from '~/constants/generic'
+import { MAX_COLUMNS_THRESHOLD, NON_BREAKING_SPACE } from '~/constants/generic'
 import { formatGrade } from '~/helpers/format-grade'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
@@ -21,7 +21,13 @@ import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascent-list.module.css'
 
-const columnsByDefault = 6
+const BASE_COLUMNS_COUNT = 6
+const DETAIL_COLUMNS_COUNT = 4
+
+type TableStyle = CSSProperties & {
+  '--columns': number
+  '--max-width': string
+}
 
 export const AscentList = memo(
   ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
@@ -31,16 +37,15 @@ export const AscentList = memo(
     )
 
     const columns = useMemo(
-      () => columnsByDefault + (showDetails ? 4 : 0) + (showPoints ? 1 : 0),
+      () => BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0),
       [showDetails, showPoints],
     )
 
-    const tableStyles = useMemo(
-      () =>
-        ({
-          '--columns': columns,
-          '--max-width': columns > 8 ? '120ch' : '90ch',
-        }) as CSSProperties,
+    const tableStyles = useMemo<TableStyle>(
+      () => ({
+        '--columns': columns,
+        '--max-width': columns > MAX_COLUMNS_THRESHOLD ? '120ch' : '90ch',
+      }),
       [columns],
     )
 

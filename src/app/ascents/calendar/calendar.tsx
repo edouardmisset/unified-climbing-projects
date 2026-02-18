@@ -12,9 +12,9 @@ export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; yea
       <Suspense fallback={<Loader />}>
         <DataCalendar
           data={allAscents}
-          dataTransformationFunction={groupDataDaysByYear}
+          dataTransformationFunction={groupDataDaysByYear<Ascent>}
           fromDataToCalendarEntries={(calendarYear, ascents) =>
-            fromAscentsToCalendarEntries(calendarYear, ascents as Ascent[][])
+            fromAscentsToCalendarEntries(calendarYear, ascents)
           }
           key={year}
           year={year}

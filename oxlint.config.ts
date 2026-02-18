@@ -1,12 +1,22 @@
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
-  plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import'],
+  plugins: [
+    'react',
+    'jsx-a11y',
+    'nextjs',
+    'typescript',
+    'import',
+    // 'unicorn',
+    // 'vitest',
+    // 'react-perf',
+  ],
   categories: {
     correctness: 'error',
     suspicious: 'warn',
     perf: 'warn',
     style: 'warn',
+    // restriction: 'warn',
   },
   rules: {
     'id-length': 'off',
@@ -16,12 +26,12 @@ export default defineConfig({
     'import/prefer-default-export': 'off',
     'import/consistent-type-specifier-style': 'off',
     'max-statements': ['warn', 100],
-    'no-magic-numbers': ['warn', { ignore: [-1, 0, 1, 2, 10, 24, 60, 100, 1000, 1900] }],
+    'no-magic-numbers': ['warn', { ignore: [-2, -1, 0, 1, 2, 10, 24, 60, 100, 1000, 1900] }],
     'no-continue': 'off',
     'no-ternary': 'off',
     'func-style': 'off',
     'react/react-in-jsx-scope': 'off',
-    'react/jsx-max-depth': ['warn', { max: 7 }],
+    'react/jsx-max-depth': ['warn', { max: 8 }],
     'react/jsx-props-no-spreading': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -54,30 +64,6 @@ export default defineConfig({
     },
   ],
   settings: {
-    'jsx-a11y': {
-      polymorphicPropName: null,
-      components: {},
-      attributes: {},
-    },
-    next: {
-      rootDir: [],
-    },
-    react: {
-      formComponents: [],
-      linkComponents: [],
-      version: null,
-      componentWrapperFunctions: [],
-    },
-    jsdoc: {
-      ignorePrivate: false,
-      ignoreInternal: false,
-      ignoreReplacesDocs: true,
-      overrideReplacesDocs: true,
-      augmentsExtendsReplacesDocs: false,
-      implementsReplacesDocs: false,
-      exemptDestructuredRootsFromChecks: false,
-      tagNamePreference: {},
-    },
     vitest: {
       typecheck: false,
     },
@@ -85,5 +71,4 @@ export default defineConfig({
   env: {
     builtin: true,
   },
-  globals: {},
 })

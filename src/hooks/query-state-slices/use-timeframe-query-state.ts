@@ -1,7 +1,7 @@
 import { type UseQueryStateReturn, useQueryState } from 'nuqs'
 import { TIMEFRAMES, type Timeframe, timeframeSchema } from '~/schema/generic'
 
-const defaultTimeframe = TIMEFRAMES[1]
+const [, defaultTimeframe] = TIMEFRAMES
 
 export const useTimeframeQueryState = (): UseQueryStateReturn<Timeframe, typeof defaultTimeframe> =>
   useQueryState<Timeframe>('timeframe', {

@@ -55,6 +55,7 @@ describe('filterAscents', () => {
 describe('getHardestAscent', () => {
   it('should return the ascent with the highest grade', () => {
     const hardest = getHardestAscent(sampleAscents)
-    expect(hardest.topoGrade).toBe('8b+')
+    expect(hardest).toBeDefined()
+    expect(hardest?.topoGrade).toBe('8b+')
   })
 })
