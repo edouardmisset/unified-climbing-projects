@@ -116,11 +116,10 @@ Note: You may need to configure environment variables (for example, Clerk).
 - [x] Added ISR (Incremental Static Regeneration) with on-demand revalidation
 - [x] Implemented React cache() wrappers for service functions
 - [x] Memoize costly functions (like data transformations).
+- [x] Improve performances of the `Visualization` page.
 
 </details>
 </br>
-
-- [ ] Improve performances of the `Visualization` page.
 
 ### Style
 
@@ -163,12 +162,11 @@ Note: You may need to configure environment variables (for example, Clerk).
 - [x] Add the calendars (ascents and training) to the Visualization page
 - [x] Change the logic for inputting the grade when logging an ascent. Use an
       input along with `+` and `-` buttons to increase or decrease the grade.
+- [x] Refactor the code of the Visualization page => Maybe this should be a
+      navigation page and not a dynamic content page
 
 </details>
 </br>
-
-- [ ] Refactor the code of the Visualization page => Maybe this should be a
-      navigation page and not a dynamic content page
 
 - [ ] Refactor the form components. This needs to be more legible and
       maintainable
