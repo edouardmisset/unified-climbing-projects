@@ -44,6 +44,7 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
       columnNumber={columnNumber}
       columns={columns}
       index={index}
+      // oxlint-disable-next-line react/no-array-index-key
       key={`W${columnNumber}-${index}column`}
     />
   )),
