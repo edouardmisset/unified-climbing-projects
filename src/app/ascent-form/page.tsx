@@ -2,15 +2,9 @@ import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader.tsx'
-import {
-  getAllAreas,
-  getAllCrags,
-  getLatestAscent,
-  getMinMaxGrades,
-} from '~/services/ascent-helpers'
 import Layout from '../_components/page-layout/page-layout.tsx'
 import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
-import AscentForm from './_components/ascent-form.tsx'
+import { AscentFormWrapper } from './ascent-form-wrapper'
 
 export default async function AscentFormPage() {
   return (
@@ -29,25 +23,6 @@ export default async function AscentFormPage() {
         <UnauthorizedAccess />
       </SignedOut>
     </Suspense>
-  )
-}
-
-async function AscentFormWrapper() {
-  const [latestAscent, [minGrade = '7a', maxGrade = '8a'], allCrags, allAreas] = await Promise.all([
-    getLatestAscent(),
-    getMinMaxGrades(),
-    getAllCrags(),
-    getAllAreas(),
-  ])
-
-  return (
-    <AscentForm
-      areas={allAreas}
-      crags={allCrags}
-      latestAscent={latestAscent}
-      maxGrade={maxGrade}
-      minGrade={minGrade}
-    />
   )
 }
 

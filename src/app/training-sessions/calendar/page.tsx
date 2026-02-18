@@ -1,13 +1,8 @@
 import type { Metadata } from 'next'
-import { Fragment, Suspense } from 'react'
-import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { Suspense } from 'react'
 import { Loader } from '~/app/_components/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import NotFound from '~/app/not-found'
-import { createYearList, groupDataDaysByYear } from '~/data/helpers'
-import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
-import type { TrainingSession } from '~/schema/training'
-import { getAllTrainingSessions } from '~/services/training'
+import { CalendarContent } from './calendar-content'
 
 export default async function TrainingSessionsCalendarPage() {
   return (
@@ -16,32 +11,6 @@ export default async function TrainingSessionsCalendarPage() {
         <CalendarContent />
       </Suspense>
     </Layout>
-  )
-}
-
-async function CalendarContent() {
-  const trainingSessions = await getAllTrainingSessions()
-
-  if (!trainingSessions) return <NotFound />
-
-  const trainingYears = createYearList(trainingSessions, { continuous: false })
-
-  return (
-    <>
-      {trainingYears.map(year => (
-        <Fragment key={year}>
-          <h2 className='superCenter'>{year}</h2>
-          <DataCalendar
-            data={trainingSessions}
-            dataTransformationFunction={groupDataDaysByYear<TrainingSession>}
-            fromDataToCalendarEntries={(calendarYear, sessions) =>
-              fromTrainingSessionsToCalendarEntries(calendarYear, sessions)
-            }
-            year={year}
-          />
-        </Fragment>
-      ))}
-    </>
   )
 }
 

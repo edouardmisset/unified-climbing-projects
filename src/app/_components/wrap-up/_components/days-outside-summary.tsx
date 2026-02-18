@@ -13,6 +13,7 @@ import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../card/card'
+import { DaysOutsideDetails } from './days-outside-details'
 
 const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
 
@@ -93,22 +94,5 @@ export async function DaysOutsideSummary({
         )}
       </p>
     </Card>
-  )
-}
-
-function DaysOutsideDetails({
-  ascents,
-  ascentsRatio,
-  daysOutside,
-}: {
-  ascents: Ascent[]
-  ascentsRatio: string
-  daysOutside: number
-}) {
-  return (
-    <span className='block'>
-      You climbed <AscentsWithPopover ascents={ascents} /> in <strong>{daysOutside}</strong> days (
-      <strong>{ascentsRatio}</strong> ascents per day outside)
-    </span>
   )
 }

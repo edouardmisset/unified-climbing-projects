@@ -1,6 +1,6 @@
-import { memo, type ReactNode, Suspense } from 'react'
+import { type ReactNode, Suspense } from 'react'
 import { Loader } from '../loader/loader'
-import styles from './page-layout.module.css'
+import { Header } from './header'
 
 export default function Layout({
   gridClassName = '',
@@ -17,14 +17,6 @@ export default function Layout({
     </section>
   )
 }
-
-const Header = memo(({ title }: { title: ReactNode }) => (
-  <div className={`${styles.header} ${styles.patagonia}`}>
-    <h1 className={styles.h1} title={typeof title === 'string' ? title : undefined}>
-      {title}
-    </h1>
-  </div>
-))
 
 type GridLayoutProps = {
   gridClassName?: string

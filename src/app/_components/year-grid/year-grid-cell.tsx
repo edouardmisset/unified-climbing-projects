@@ -1,8 +1,8 @@
 import { isDateInYear } from '@edouardmisset/date'
 import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
 import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
-import { prettyLongDate } from '~/helpers/formatters'
 import { Popover } from '../popover/popover'
+import { EmptyGridCell } from './empty-grid-cell'
 import { datesEqual } from './helpers'
 import type { DayDescriptor } from './year-grid'
 import styles from './year-grid.module.css'
@@ -80,15 +80,6 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     />
   )
 })
-
-const EmptyGridCell = memo(({ cellStyle, date }: { cellStyle: CSSProperties; date: string }) => (
-  <span
-    className={`${styles.yearGridCell} ${styles.emptyGridCell}`}
-    style={cellStyle}
-    // Here no data is available for the date, so we only display the date itself
-    title={prettyLongDate(date)}
-  />
-))
 
 const getAdjustedBackgroundColor = ({
   backgroundColor,

@@ -1,7 +1,6 @@
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { OrdinalColorScaleConfigCustomFunction } from '@nivo/colors'
-import { type ComputedSerie, type PointTooltipProps, ResponsiveLine, type Serie } from '@nivo/line'
-import { memo, useMemo } from 'react'
+import { type ComputedSerie, ResponsiveLine, type Serie } from '@nivo/line'
+import { useMemo } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -12,8 +11,8 @@ import {
   numberOfTriesAxisLeft,
   theme,
 } from '../constants'
+import { TriesByGradeTooltip } from './tries-by-grade-tooltip'
 import { getTriesByGrade } from './get-tries-by-grade'
-import styles from './tries-by-grades.module.css'
 /**
  * {
  *   id: string | number // Min, average, max
@@ -59,7 +58,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
         margin={DEFAULT_CHART_MARGIN}
         pointSize={8}
         theme={theme}
-        tooltip={Tooltip}
+        tooltip={TriesByGradeTooltip}
         useMesh
         xScale={lineXScale}
         yScale={lineYScale}
@@ -67,10 +66,3 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
     </ChartContainer>
   )
 }
-
-const Tooltip = memo(({ point }: PointTooltipProps) => (
-  <div className={styles.tooltip}>
-    <strong>{point.data.xFormatted}</strong> {capitalize(point.serieId.toString())} # of tries:{' '}
-    <strong>{point.data.yFormatted}</strong>
-  </div>
-))
