@@ -90,6 +90,9 @@ Note: You may need to configure environment variables (for example, Clerk).
       medium, low))
 - [x] Add database (managed database with Convex)
 - [ ] ~~Add ORM (Drizzle)~~
+- [x] Transform the dashboard so that it displays the list of selected ascents
+      along with the charts. Each ascent should be clickable to see a modal with the
+      Ascent's details (use the `AscentCard` component)
 
 </details>
 </br>
@@ -99,10 +102,6 @@ Note: You may need to configure environment variables (for example, Clerk).
 - [ ] Add error management (w/ Sentry)
 
 - [ ] Add Analytics (Posthog)
-
-- [ ] Transform the dashboard so that it displays the list of selected ascents
-      along with the charts. Each ascent should be clickable to see a modal with the
-      Ascent's details (use the `AscentCard` component)
 
 ### Performance
 
@@ -170,6 +169,7 @@ Note: You may need to configure environment variables (for example, Clerk).
 
 - [ ] Refactor the form components. This needs to be more legible and
       maintainable
+- [ ] Change chart lib
 
 ### Tests
 
