@@ -270,10 +270,8 @@ Each section MUST be separated by an empty line.
   - **Passing static analysis checks**
 - Oxlint SHOULD be used for linting.
   - **Example:** `bun run lint`
-  - **Ignore comments:** Use `// oxlint-disable-next-line rule-name` or `/* oxlint-disable */`
 - Oxfmt SHOULD be used for formatting.
   - **Example:** `bun run format`
-  - **Ignore comments:** Use `// oxfmt-ignore` for the next statement
 
 ## Git Commit Guidelines
 

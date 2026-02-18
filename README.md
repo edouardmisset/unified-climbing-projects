@@ -48,7 +48,7 @@ Note: You may need to configure environment variables (for example, Clerk).
 
 - Lint: `bun run lint`
 - Format: `bun run format`
-- Typecheck and checks: `bun run check`
+- Typecheck and checks (linting, style linting, formatting, etc.): `bun run check`
 - Validate (checks, tests, build): `bun run validate`
 - Spellcheck: `bun run spell`
 - File lint & style lint: `bun run ls-lint`, `bun run style:lint`
