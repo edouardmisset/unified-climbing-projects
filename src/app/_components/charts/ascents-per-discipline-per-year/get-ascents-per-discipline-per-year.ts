@@ -4,9 +4,7 @@ import type { Ascent } from '~/schema/ascent'
 
 type AscentsPerDisciplinePerYear = {
   Boulder: number
-  BoulderColor: string
   Route: number
-  RouteColor: string
   year: number
 }
 
@@ -29,9 +27,7 @@ export const getAscentsPerDisciplinePerYear = (
 
     return {
       Boulder: boulderCount,
-      BoulderColor: 'var(--boulder)',
       Route: routeCount,
-      RouteColor: 'var(--route)',
       year,
     }
   })

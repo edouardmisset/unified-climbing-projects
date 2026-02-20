@@ -11,7 +11,7 @@ to try new libraries and patterns.
 What’s inside (high-level):
 
 - Next.js (App Router) + TypeScript, Bun, CSS Modules
-- UI: Base UI components; Charts: Nivo; Auth: Clerk
+- UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas; ISR for performance
 - Features: dashboards and charts (grades, disciplines, years, distance),
   calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards
@@ -163,13 +163,13 @@ Note: You may need to configure environment variables (for example, Clerk).
       input along with `+` and `-` buttons to increase or decrease the grade.
 - [x] Refactor the code of the Visualization page => Maybe this should be a
       navigation page and not a dynamic content page
+- [x] Change chart lib
 
 </details>
 </br>
 
 - [ ] Refactor the form components. This needs to be more legible and
       maintainable
-- [ ] Change chart lib
 
 ### Tests
 

@@ -1,8 +1,8 @@
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { Ascent, Grade } from '~/schema/ascent'
-import type { LineChartDataStructure } from './tries-by-grade'
+import type { TriesByGradeSeries } from './tries-by-grade'
 
-export function getTriesByGrade(ascents: Ascent[]): LineChartDataStructure[] {
+export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
   if (ascents.length === 0) return []
 
   const gradeStats = new Map<Grade, { min: number; max: number; sum: number; count: number }>()

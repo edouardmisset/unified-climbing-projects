@@ -1,14 +1,11 @@
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent, Grade } from '~/schema/ascent'
 
-export type GradeFrequency = {
+type GradeFrequency = {
   grade: Grade
   Onsight: number
-  OnsightColor: string
   Flash: number
-  FlashColor: string
   Redpoint: number
-  RedpointColor: string
 }[]
 
 export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
@@ -36,12 +33,9 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
 
     return {
       Flash,
-      FlashColor: 'var(--flash)',
       grade,
       Onsight,
-      OnsightColor: 'var(--onsight)',
       Redpoint,
-      RedpointColor: 'var(--redpoint)',
     }
   })
 

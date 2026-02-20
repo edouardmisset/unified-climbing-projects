@@ -1,22 +1,12 @@
-import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import { _GRADES, type Ascent } from '~/schema/ascent'
-import { ChartContainer } from '../chart-container/chart-container'
-import {
-  chartColorGetter,
-  DEFAULT_CHART_MARGIN,
-  defaultBarChartPadding,
-  defaultMotionConfig,
-  numberOfAscentsAxisBottom,
-  theme,
-} from '../constants'
-import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
-const CHART_MARGIN_SETTING = {
-  ...DEFAULT_CHART_MARGIN,
-  left: 150,
-  right: 40,
-}
+import { ChartContainer } from '../chart-container/chart-container'
+import { AXIS_TICK_STYLE, BAR_CATEGORY_GAP, CURSOR_STYLE, TOOLTIP_STYLE } from '../constants'
+
+import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
+import { _GRADES, type Ascent } from '~/schema/ascent'
+import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   const ascentsByGradesPerCrag = useMemo(
@@ -24,30 +14,23 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
     [ascents],
   )
 
-  if (ascentsByGradesPerCrag.length === 0) return null
+  if (ascentsByGradesPerCrag.length === 0) return
 
   const uniqueCragsCount = new Set(ascentsByGradesPerCrag.map(({ crag }) => crag)).size
-  if (uniqueCragsCount <= 1) return null
+  if (uniqueCragsCount <= 1) return
 
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
-      <ResponsiveBar
-        axisBottom={numberOfAscentsAxisBottom}
-        // @ts-expect-error
-        colors={chartColorGetter}
-        data={ascentsByGradesPerCrag}
-        enableGridX={false}
-        enableGridY={false}
-        enableLabel={false}
-        enableTotals
-        indexBy='crag'
-        keys={_GRADES}
-        layout='horizontal'
-        margin={CHART_MARGIN_SETTING}
-        motionConfig={defaultMotionConfig}
-        padding={defaultBarChartPadding}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsByGradesPerCrag} layout='vertical'>
+          <XAxis tick={AXIS_TICK_STYLE} type='number' />
+          <YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          {_GRADES.map(key => (
+            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

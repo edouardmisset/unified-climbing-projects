@@ -4,8 +4,7 @@ import { getHardestAscent } from '~/helpers/filter-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 import { formatShortDate, prettyLongDate } from './formatters'
-
-const MIDDAY_HOUR = 12
+import { NOON_HOUR } from '~/constants/generic'
 
 export function fromAscentsToCalendarEntries(
   year: number,
@@ -16,7 +15,7 @@ export function fromAscentsToCalendarEntries(
       const [firstAscent] = ascents
 
       if (firstAscent === undefined || ascents === undefined) {
-        const emptyDate = new Date(year, 0, index + 1, MIDDAY_HOUR).toISOString()
+        const emptyDate = new Date(year, 0, index + 1, NOON_HOUR).toISOString()
         return {
           date: emptyDate,
           shortText: '',

@@ -1,4 +1,3 @@
-import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent } from '~/schema/ascent'
 
@@ -44,10 +43,9 @@ export function getAscentsByGradesPerCrag(ascents: Ascent[]): Record<string, str
 
     for (const grade of gradeScale) {
       frequency[grade] = 0
-      frequency[`${grade}Color`] = fromGradeToBackgroundColor(grade)
     }
 
-    for (const { topoGrade } of ascents) {
+    for (const { topoGrade } of cragAscents) {
       if (frequency[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') {
         continue
       }

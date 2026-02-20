@@ -1,22 +1,29 @@
-import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  chartColorGetter,
-  DEFAULT_CHART_MARGIN,
-  defaultBarChartPadding,
-  defaultMotionConfig,
-  numberOfAscentsAxisLeft,
-  theme,
-  yearBottomAxis,
+  AXIS_LABEL_STYLE,
+  AXIS_TICK_STYLE,
+  BAR_CATEGORY_GAP,
+  CURSOR_STYLE,
+  formatYearTick,
+  TOOLTIP_STYLE,
 } from '../constants'
+
+import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per-year'
+import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 
 const ROUTE_AND_BOULDER = [
   'Boulder',
   'Route',
 ] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
+
+const AXIS_LABELS = {
+  numberOfAscents: '# Ascents',
+  years: 'Years',
+}
 
 export function AscentsPerDisciplinePerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsPerDisciplinePerYear(ascents), [ascents])
@@ -32,22 +39,34 @@ export function AscentsPerDisciplinePerYear({ ascents }: { ascents: Ascent[] }) 
 
   return (
     <ChartContainer caption='Ascents per Discipline per Year'>
-      <ResponsiveBar
-        axisBottom={yearBottomAxis}
-        axisLeft={numberOfAscentsAxisLeft}
-        // @ts-expect-error
-        colors={chartColorGetter}
-        data={data}
-        enableGridY={false}
-        enableLabel={false}
-        groupMode='grouped'
-        indexBy='year'
-        keys={ROUTE_AND_BOULDER}
-        margin={DEFAULT_CHART_MARGIN}
-        motionConfig={defaultMotionConfig}
-        padding={defaultBarChartPadding}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+          <XAxis
+            dataKey='year'
+            label={{
+              value: AXIS_LABELS.years,
+              offset: 20,
+              position: 'bottom',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+            tickFormatter={value => formatYearTick(Number(value))}
+          />
+          <YAxis
+            label={{
+              value: AXIS_LABELS.numberOfAscents,
+              angle: -90,
+              position: 'insideLeft',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+          />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          {ROUTE_AND_BOULDER.map(key => (
+            <Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

@@ -1,33 +1,42 @@
-import type { PropertyAccessor } from '@nivo/core'
-import { type ComputedDatum, ResponsivePie } from '@nivo/pie'
 import { useMemo } from 'react'
-import type { Ascent } from '~/schema/ascent'
-import { type AscentByStyle, getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
+import {
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Sector,
+  Tooltip,
+  type PieSectorShapeProps,
+} from 'recharts'
+
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_PIE_MARGIN, defaultMotionConfig, pieColorsGetter, theme } from '../constants'
+import { DEFAULT_PIE_PROPS, TOOLTIP_STYLE } from '../constants'
+import { renderPieArcLabel } from '../pie-chart-utils'
+
+import type { Ascent } from '~/schema/ascent'
+import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
 
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
 
-  const arcLabel: PropertyAccessor<ComputedDatum<AscentByStyle>, string> = datum =>
-    `${datum.value} (${Math.round((datum.value / ascents.length) * 100)}%)`
-
-  if (data.length <= 1) return null
+  if (data.length <= 1) return
 
   return (
     <ChartContainer caption='Ascent By Style'>
-      <ResponsivePie
-        animate
-        arcLabel={arcLabel}
-        arcLabelsTextColor='var(--surface-1)'
-        // @ts-expect-error
-        colors={pieColorsGetter}
-        data={data}
-        innerRadius={0.5}
-        margin={DEFAULT_PIE_MARGIN}
-        motionConfig={defaultMotionConfig}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <PieChart>
+          <Tooltip contentStyle={TOOLTIP_STYLE} />
+          <Pie
+            {...DEFAULT_PIE_PROPS}
+            data={data}
+            dataKey='value'
+            label={props => renderPieArcLabel({ props, total: ascents.length })}
+            nameKey='label'
+            shape={(props: PieSectorShapeProps) => (
+              <Sector {...props} fill={data[props.index]?.color} />
+            )}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

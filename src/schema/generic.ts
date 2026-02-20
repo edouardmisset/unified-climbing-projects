@@ -1,8 +1,5 @@
 import { z } from '~/helpers/zod'
 
-export const errorSchema = z.object({ error: z.string() })
-export type CustomError = z.infer<typeof errorSchema>
-
 export const TIMEFRAMES = ['year', 'last-12-months', 'all-time'] as const
 export const timeframeSchema = z.enum(TIMEFRAMES)
 export type Timeframe = z.infer<typeof timeframeSchema>

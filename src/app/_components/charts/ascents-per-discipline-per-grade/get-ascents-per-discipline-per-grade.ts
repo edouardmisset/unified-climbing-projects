@@ -4,9 +4,7 @@ import type { Ascent, Grade } from '~/schema/ascent'
 type AscentsPerDisciplinePerGrade = {
   grade: Grade
   Boulder: number
-  BoulderColor: string
   Route: number
-  RouteColor: string
 }[]
 
 export const getAscentsPerDisciplinePerGrade = (
@@ -35,10 +33,8 @@ export const getAscentsPerDisciplinePerGrade = (
 
     return {
       Boulder,
-      BoulderColor: 'var(--boulder)',
       grade,
       Route,
-      RouteColor: 'var(--route)',
     }
   })
 }

@@ -45,7 +45,7 @@ type SessionRatioInput = {
   secondSessions: TrainingSession[]
 }
 
-export type SessionRatioData = {
+type SessionRatioData = {
   percentage: string
   firstLabel: string
   firstCount: number

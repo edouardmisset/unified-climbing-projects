@@ -1,17 +1,25 @@
-import { ResponsiveStream } from '@nivo/stream'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
-import { defaultMotionConfig, theme } from '../constants'
-import { getSessionsPerYear, type SessionsPerYear } from './get-sessions-per-year'
-
-const STREAM_KEYS = [
-  'indoorRoute',
-  'indoorBoulder',
-  'outdoorRoute',
-  'outdoorBoulder',
-] as const satisfies (keyof SessionsPerYear)[]
-const chartMargins = { bottom: 50, left: 60, right: 10, top: 10 }
+import {
+  AXIS_LABEL_STYLE,
+  AXIS_TICK_STYLE,
+  formatPercentageTick,
+  formatYearTick,
+  GRID_STROKE,
+  TOOLTIP_STYLE,
+} from '../constants'
+import { getSessionsPerYear } from './get-sessions-per-year'
 
 export function TrainingSessionsPerYear({
   trainingSessions,
@@ -20,72 +28,61 @@ export function TrainingSessionsPerYear({
 }) {
   const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
-  const axisLeft = useMemo(
-    () => ({
-      tickSize: 0,
-      tickPadding: 0,
-      renderTick: () => null,
-    }),
-    [],
-  )
-
-  // Create a mapping of index to year for axis formatting
-  const yearsByIndex = useMemo(() => data.map(d => d.year), [data])
-
-  const axisBottom = useMemo(
-    () => ({
-      format: (index: number | string) => {
-        const numericIndex = typeof index === 'number' ? index : Number(index)
-
-        if (!Number.isFinite(numericIndex)) {
-          return ''
-        }
-
-        if (numericIndex < 0 || numericIndex >= yearsByIndex.length) {
-          return ''
-        }
-
-        const year = yearsByIndex[numericIndex]
-        return year ? `'${String(year).slice(-2)}` : ''
-      },
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legend: 'Years',
-      legendOffset: 40,
-      legendPosition: 'middle' as const,
-    }),
-    [yearsByIndex],
-  )
-
-  const getSessionColor = useCallback(
-    ({ id }: { id: string | number }) => {
-      const [sampleData] = data
-      if (!sampleData) return 'var(--gray-5)'
-      // oxlint-disable-next-line typescript-eslint/no-unsafe-type-assertion -- Dynamically constructing property key from chart layer id
-      const key = `${id}Color` as keyof typeof sampleData
-      // oxlint-disable-next-line typescript-eslint/no-unsafe-type-assertion -- Dynamically accessing color property based on chart layer id
-      return (sampleData[key] as string) ?? 'var(--gray-5)'
-    },
-    [data],
-  )
-
   if (data.length === 0) return null
 
   return (
     <ChartContainer caption='Training Sessions per Year (Indoor/Outdoor by Discipline)'>
-      <ResponsiveStream
-        animate
-        axisBottom={axisBottom}
-        axisLeft={axisLeft}
-        colors={getSessionColor}
-        data={data}
-        keys={STREAM_KEYS}
-        margin={chartMargins}
-        motionConfig={defaultMotionConfig}
-        offsetType='expand'
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <AreaChart data={data} stackOffset='expand'>
+          <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
+          <XAxis
+            dataKey='year'
+            tickFormatter={formatYearTick}
+            label={{
+              value: 'Years',
+              position: 'bottom',
+              offset: 20,
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+          />
+          <YAxis tickFormatter={formatPercentageTick} tick={AXIS_TICK_STYLE} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={value => `${value}%`} />
+          <Legend />
+          <Area
+            type='monotone'
+            dataKey='indoorRoute'
+            stackId='1'
+            stroke='var(--indoorRoute)'
+            fill='var(--indoorRoute)'
+            name='Indoor Route'
+          />
+          <Area
+            type='monotone'
+            dataKey='indoorBoulder'
+            stackId='1'
+            stroke='var(--indoorBoulder)'
+            fill='var(--indoorBoulder)'
+            name='Indoor Boulder'
+          />
+          <Area
+            type='monotone'
+            dataKey='outdoorRoute'
+            stackId='1'
+            stroke='var(--route)'
+            fill='var(--route)'
+            name='Outdoor Route'
+          />
+          <Area
+            type='monotone'
+            dataKey='outdoorBoulder'
+            stackId='1'
+            stroke='var(--boulder)'
+            fill='var(--boulder)'
+            name='Outdoor Boulder'
+          />
+        </AreaChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

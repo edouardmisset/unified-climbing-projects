@@ -1,17 +1,24 @@
-import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import { _GRADES, type Ascent } from '~/schema/ascent'
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  chartColorGetter,
-  DEFAULT_CHART_MARGIN,
-  defaultBarChartPadding,
-  defaultMotionConfig,
-  numberOfAscentsAxisLeft,
-  theme,
-  yearBottomAxis,
+  AXIS_LABEL_STYLE,
+  AXIS_TICK_STYLE,
+  BAR_CATEGORY_GAP,
+  CURSOR_STYLE,
+  formatYearTick,
+  TOOLTIP_STYLE,
 } from '../constants'
+
+import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
+import { _GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
+
+const AXIS_LABELS = {
+  numberOfAscents: '# Ascents',
+  years: 'Years',
+}
 
 export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   const ascentsPerYearByGrade = useMemo(() => getAscentsPerYearByGrade(ascents), [ascents])
@@ -22,22 +29,34 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
 
   return (
     <ChartContainer caption='Ascents Per Year By Grade'>
-      <ResponsiveBar
-        axisBottom={yearBottomAxis}
-        axisLeft={numberOfAscentsAxisLeft}
-        // @ts-expect-error
-        colors={chartColorGetter}
-        data={ascentsPerYearByGrade}
-        enableGridY={false}
-        enableLabel={false}
-        enableTotals
-        indexBy='year'
-        keys={_GRADES}
-        margin={DEFAULT_CHART_MARGIN}
-        motionConfig={defaultMotionConfig}
-        padding={defaultBarChartPadding}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsPerYearByGrade}>
+          <XAxis
+            dataKey='year'
+            label={{
+              value: AXIS_LABELS.years,
+              offset: 20,
+              position: 'bottom',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+            tickFormatter={value => formatYearTick(Number(value))}
+          />
+          <YAxis
+            label={{
+              value: AXIS_LABELS.numberOfAscents,
+              angle: -90,
+              position: 'insideLeft',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+          />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          {_GRADES.map(key => (
+            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

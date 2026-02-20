@@ -1,7 +1,7 @@
 'use client'
 
 import { memo, type ReactNode, useMemo } from 'react'
-import { WEEKS_IN_YEAR } from '~/constants/generic.ts'
+import { DAYS_IN_WEEK, NOON_HOUR, WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -11,17 +11,15 @@ import { WeeksRow } from './weeks-row.tsx'
 import styles from './year-grid.module.css'
 import { YearGridCell } from './year-grid-cell.tsx'
 
-const DAYS_IN_WEEK = 7
 const SUNDAY_INDEX = 0
 const MONDAY_INDEX = 1
 const WEEK_53_START_INDEX = 4
-const MIDDAY_HOUR = 12
 const PREVIOUS_MONDAY_OFFSET = 6
 
 export const YearGrid = memo(
   ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
     const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
-    const firstDayOfYear = new Date(year, 0, 1, MIDDAY_HOUR)
+    const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
     const firstDayIndex = firstDayOfYear.getUTCDay()
     const prependWeek53 = firstDayIndex >= WEEK_53_START_INDEX || firstDayIndex === SUNDAY_INDEX
 

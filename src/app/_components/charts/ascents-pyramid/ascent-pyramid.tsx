@@ -1,29 +1,24 @@
-import { type ComputedDatum, ResponsiveBar } from '@nivo/bar'
-import type { OrdinalColorScaleConfig } from '@nivo/colors'
 import { useMemo } from 'react'
-import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
-import {
-  type GradeFrequency,
-  getGradeFrequencyAndColors,
-} from '../ascents-pyramid/get-grade-frequency'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  DEFAULT_CHART_MARGIN,
-  defaultBarChartPadding,
-  defaultMotionConfig,
-  gradesBottomAxis,
-  numberOfAscentsAxisLeft,
-  theme,
+  AXIS_LABEL_STYLE,
+  AXIS_TICK_STYLE,
+  BAR_CATEGORY_GAP,
+  CURSOR_STYLE,
+  GRID_STROKE,
+  TOOLTIP_STYLE,
 } from '../constants'
 
-const STYLE_COLORS = {
-  Flash: 'var(--flash)',
-  Onsight: 'var(--onsight)',
-  Redpoint: 'var(--redpoint)',
-} as const satisfies Record<Ascent['style'], string>
+import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
+import { getGradeFrequencyAndColors } from '../ascents-pyramid/get-grade-frequency'
+import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 
-const colors: OrdinalColorScaleConfig<ComputedDatum<GradeFrequency[number]>> = ({ id }) =>
-  id === 'Flash' || id === 'Onsight' || id === 'Redpoint' ? STYLE_COLORS[id] : ''
+const AXIS_LABELS = {
+  grades: 'Grades',
+  numberOfAscents: '# Ascents',
+}
 
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   const gradeFrequency = useMemo(() => getGradeFrequencyAndColors(ascents), [ascents])
@@ -32,21 +27,25 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
 
   return (
     <ChartContainer caption='Ascent Pyramid'>
-      <ResponsiveBar
-        axisBottom={gradesBottomAxis}
-        axisLeft={numberOfAscentsAxisLeft}
-        colors={colors}
-        data={gradeFrequency}
-        enableGridY={false}
-        enableLabel={false}
-        enableTotals
-        indexBy='grade'
-        keys={ASCENT_STYLE}
-        margin={DEFAULT_CHART_MARGIN}
-        motionConfig={defaultMotionConfig}
-        padding={defaultBarChartPadding}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={gradeFrequency}>
+          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
+          <XAxis dataKey='grade' tick={AXIS_TICK_STYLE} />
+          <YAxis
+            label={{
+              value: AXIS_LABELS.numberOfAscents,
+              angle: -90,
+              position: 'insideLeft',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+          />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          {ASCENT_STYLE.map(style => (
+            <Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

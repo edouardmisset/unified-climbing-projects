@@ -1,6 +1,6 @@
 import { US_LOCALE } from '~/constants/generic'
 
-export const DATE_TIME_OPTIONS = {
+const DATE_TIME_OPTIONS = {
   longDate: {
     day: 'numeric',
     month: 'short',

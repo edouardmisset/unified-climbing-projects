@@ -2,16 +2,12 @@ import { createYearList } from '~/data/helpers'
 import type { TrainingSession } from '~/schema/training'
 import { isIndoorSession } from '../../wrap-up/_components/training-summary/helpers'
 
-export type SessionsPerYear = {
+type SessionsPerYear = {
   year: number
   indoorRoute: number
-  indoorRouteColor: string
   indoorBoulder: number
-  indoorBoulderColor: string
   outdoorRoute: number
-  outdoorRouteColor: string
   outdoorBoulder: number
-  outdoorBoulderColor: string
 }
 
 export function getSessionsPerYear(sessions: TrainingSession[]): SessionsPerYear[] {
@@ -75,13 +71,9 @@ export function getSessionsPerYear(sessions: TrainingSession[]): SessionsPerYear
     result.push({
       year,
       indoorRoute: counts.indoorRoute,
-      indoorRouteColor: 'var(--indoorRoute)',
       indoorBoulder: counts.indoorBoulder,
-      indoorBoulderColor: 'var(--indoorBoulder)',
       outdoorRoute: counts.outdoorRoute,
-      outdoorRouteColor: 'var(--route)',
       outdoorBoulder: counts.outdoorBoulder,
-      outdoorBoulderColor: 'var(--boulder)',
     })
   }
 
