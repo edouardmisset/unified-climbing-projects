@@ -1,21 +1,21 @@
-import { ResponsiveBar } from '@nivo/bar'
 import { useMemo } from 'react'
-import { _GRADES, type Ascent } from '~/schema/ascent'
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+
 import { ChartContainer } from '../chart-container/chart-container'
 import {
-  chartColorGetter,
-  DEFAULT_CHART_MARGIN,
-  defaultBarChartPadding,
-  defaultMotionConfig,
-  numberOfAscentsAxisBottom,
-  theme,
+  AXIS_LABEL_STYLE,
+  AXIS_TICK_STYLE,
+  BAR_CATEGORY_GAP,
+  CURSOR_STYLE,
+  TOOLTIP_STYLE,
 } from '../constants'
+
+import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
+import { _GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
-const CHART_MARGIN_SETTING = {
-  ...DEFAULT_CHART_MARGIN,
-  left: 150,
-  right: 40,
+const AXIS_LABELS = {
+  numberOfAscents: 'Number of Ascents',
 }
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
@@ -31,23 +31,25 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
 
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
-      <ResponsiveBar
-        axisBottom={numberOfAscentsAxisBottom}
-        // @ts-expect-error
-        colors={chartColorGetter}
-        data={ascentsByGradesPerCrag}
-        enableGridX={false}
-        enableGridY={false}
-        enableLabel={false}
-        enableTotals
-        indexBy='crag'
-        keys={_GRADES}
-        layout='horizontal'
-        margin={CHART_MARGIN_SETTING}
-        motionConfig={defaultMotionConfig}
-        padding={defaultBarChartPadding}
-        theme={theme}
-      />
+      <ResponsiveContainer height='100%' width='100%'>
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsByGradesPerCrag} layout='vertical'>
+          <XAxis
+            label={{
+              value: AXIS_LABELS.numberOfAscents,
+              offset: 20,
+              position: 'bottom',
+              ...AXIS_LABEL_STYLE,
+            }}
+            tick={AXIS_TICK_STYLE}
+            type='number'
+          />
+          <YAxis dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={150} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          {_GRADES.map(key => (
+            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </ChartContainer>
   )
 }

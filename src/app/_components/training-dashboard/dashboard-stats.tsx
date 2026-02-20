@@ -5,7 +5,7 @@ import type { TrainingSessionListProps } from '~/schema/training.ts'
 import { TrainingSessionsIndoorVsOutdoor } from '../charts/training-sessions-indoor-vs-outdoor/training-sessions-indoor-vs-outdoor.tsx'
 import { TrainingSessionsPerDiscipline } from '../charts/training-sessions-per-discipline/training-sessions-per-discipline.tsx'
 import { TrainingSessionsPerYear } from '../charts/training-sessions-per-year/training-sessions-per-year.tsx'
-import { TrainingSessionsRadial } from '../charts/training-sessions-radial/training-sessions-radial.tsx'
+import { TrainingSessionsDistribution } from '../charts/training-sessions-distribution/training-sessions-distribution.tsx'
 import styles from '../dashboard/dashboard.module.css'
 
 type DashboardStatsProps = TrainingSessionListProps
@@ -25,7 +25,7 @@ function DashboardStatsComponent(props: DashboardStatsProps) {
       <TrainingSessionsPerDiscipline trainingSessions={trainingSessions} />
       <TrainingSessionsIndoorVsOutdoor trainingSessions={trainingSessions} />
       <TrainingSessionsPerYear trainingSessions={trainingSessions} />
-      <TrainingSessionsRadial trainingSessions={trainingSessions} />
+      <TrainingSessionsDistribution trainingSessions={trainingSessions} />
     </div>
   )
 }

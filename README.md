@@ -11,7 +11,7 @@ to try new libraries and patterns.
 What’s inside (high-level):
 
 - Next.js (App Router) + TypeScript, Bun, CSS Modules
-- UI: Base UI components; Charts: Nivo; Auth: Clerk
+- UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas; ISR for performance
 - Features: dashboards and charts (grades, disciplines, years, distance),
   calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards

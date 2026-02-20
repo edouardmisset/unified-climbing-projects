@@ -4,7 +4,7 @@ This is a Next.js climbing analytics app focused on **European sport climbing an
 
 ## Architecture Overview
 
-**Data Flow:** Convex → Services (with cache) → React Server Components → Nivo charts
+**Data Flow:** Convex → Services (with cache) → React Server Components → Recharts charts
 
 - **Backend:** Convex as database with built-in query caching
 - **API:** Direct service layer in `src/services/` with React `cache()` wrappers

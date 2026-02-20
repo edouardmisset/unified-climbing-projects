@@ -38,7 +38,7 @@ const ANATOMICAL_REGION_LABELS = {
   Ge: 'General',
 } as const
 
-export function getSessionsRadialData(sessions: TrainingSession[]): {
+export function getSessionsDistributionData(sessions: TrainingSession[]): {
   data: RadialBarData
   colors: Record<string, string>
   legendData: { id: string; label: string; color: string }[]
