@@ -163,13 +163,13 @@ Note: You may need to configure environment variables (for example, Clerk).
       input along with `+` and `-` buttons to increase or decrease the grade.
 - [x] Refactor the code of the Visualization page => Maybe this should be a
       navigation page and not a dynamic content page
+- [x] Change chart lib
 
 </details>
 </br>
 
 - [ ] Refactor the form components. This needs to be more legible and
       maintainable
-- [ ] Change chart lib
 
 ### Tests
 

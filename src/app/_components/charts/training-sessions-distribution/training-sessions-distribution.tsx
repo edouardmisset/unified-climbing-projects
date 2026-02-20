@@ -6,7 +6,6 @@ import {
   AXIS_LABEL_STYLE,
   AXIS_TICK_STYLE,
   CURSOR_STYLE,
-  ,
   TOOLTIP_STYLE,
 } from '../constants'
 
@@ -77,7 +76,6 @@ export function TrainingSessionsDistribution({
           barCategoryGap={BAR_CATEGORY_GAP}
           data={chartData}
           layout='vertical'
-          margin={}
         >
           <XAxis
             label={{
