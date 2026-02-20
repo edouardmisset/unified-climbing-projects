@@ -29,8 +29,7 @@
     "test:all": "bun run test:unit && bun run test:e2e",
     "knip": "clear && knip",
     "ls-lint": "ls-lint",
-    "validate": "clear && bun run check && bun run test:all && bun run build",
-    "repo": "bun run repomix"
+    "validate": "clear && bun run check && bun run test:all && bun run build"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-rc.0",
@@ -43,14 +42,11 @@
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text@^4.1.0",
     "@std/text": "npm:@jsr/std__text@^1.0.17",
     "@t3-oss/env-nextjs": "^0.13.10",
-    "@tanstack/react-query": "^5.90.21",
-    "@tanstack/react-query-devtools": "^5.91.3",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "convex": "^1.31.7",
     "convex-helpers": "^0.1.112",
-    "fuzzysort": "^3.1.0",
     "google-auth-library": "^10.5.0",
     "google-spreadsheet": "^5.0.2",
     "humanize-duration": "^3.33.2",
@@ -63,8 +59,6 @@
     "react-hook-form": "^7.71.1",
     "react-toastify": "^11.0.5",
     "recharts": "^3.7.0",
-    "server-only": "^0.0.1",
-    "superjson": "^2.2.6",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -91,7 +85,6 @@
     "oxfmt": "0.33.0",
     "oxlint": "1.48.0",
     "oxlint-tsgolint": "^0.13.0",
-    "repomix": "^1.11.1",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "vitest": "^4.0.18"

@@ -8,7 +8,7 @@ import { calculateVersatilityPercentage } from './calculate-versatility-percenta
 import { filterAscents } from './filter-ascents'
 import { filterTrainingSessions } from './filter-training'
 
-export type YearIndicators = {
+type YearIndicators = {
   efficiency: number
   progression: number
   score: number

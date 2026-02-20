@@ -17,9 +17,7 @@ export const FRIDAY_DAY_NUMBER = 5
 export const SATURDAY_DAY_NUMBER = 6
 
 // UI/Chart constants
-export const FILTER_BUTTON_INACTIVE_OPACITY = 0.5
 export const MAX_COLUMNS_THRESHOLD = 8
-export const EXTRA_COLUMNS_WITH_DETAILS = 4
 export const WEEKEND_START_DAY_INDEX = 6
 
 export const EMPTY_OBJECT = Object.freeze({})

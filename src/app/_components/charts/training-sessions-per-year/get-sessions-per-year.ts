@@ -2,7 +2,7 @@ import { createYearList } from '~/data/helpers'
 import type { TrainingSession } from '~/schema/training'
 import { isIndoorSession } from '../../wrap-up/_components/training-summary/helpers'
 
-export type SessionsPerYear = {
+type SessionsPerYear = {
   year: number
   indoorRoute: number
   indoorBoulder: number

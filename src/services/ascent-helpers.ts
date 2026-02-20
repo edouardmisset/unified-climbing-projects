@@ -55,13 +55,3 @@ export const getLatestAscent = cache(async (): Promise<Ascent | undefined> => {
   if (ascents.length === 0) return
   return ascents.sort((a, b) => sortByDate(a, b, true)).at(0)
 })
-
-/**
- * Get all unique grades sorted alphabetically
- */
-export const getAllGrades = cache(async (): Promise<Grade[]> => {
-  'use cache'
-  const ascents = await getAllAscents()
-  const grades = ascents.map(({ topoGrade }) => topoGrade)
-  return [...new Set(grades)].sort(compareStringsAscending)
-})

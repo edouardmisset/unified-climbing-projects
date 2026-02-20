@@ -1,7 +1,7 @@
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import type { Ascent, Grade } from '~/schema/ascent'
 
-export type GradeFrequency = {
+type GradeFrequency = {
   grade: Grade
   Onsight: number
   Flash: number
