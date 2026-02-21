@@ -2,12 +2,7 @@ import { useMemo } from 'react'
 import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import {
-  AXIS_LABEL_STYLE,
-  AXIS_TICK_STYLE,
-  CURSOR_STYLE,
-  TOOLTIP_STYLE,
-} from '../constants'
+import { AXIS_LABEL_STYLE, AXIS_TICK_STYLE, CURSOR_STYLE, TOOLTIP_STYLE } from '../constants'
 
 import type { TrainingSession } from '~/schema/training'
 import { getSessionsDistributionData } from './get-sessions-distribution-data'
@@ -72,11 +67,7 @@ export function TrainingSessionsDistribution({
   return (
     <ChartContainer caption='Training Sessions Distribution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={chartData}
-          layout='vertical'
-        >
+        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={chartData} layout='vertical'>
           <XAxis
             label={{
               value: 'Number of Sessions',
