@@ -9,6 +9,7 @@ ignore:
   - .git
   - .md
   - .next
+  - .agents
   - .github
   - .husky
   - .vscode
