@@ -240,7 +240,7 @@ not to see them */
 }
 
 :where(h1) {
-  font-size: clamp(2rem, 3.5vw + 1rem, 3.5rem);
+  font-size: clamp(2.5rem, 3.5vw + 1rem, 3.5rem);
 }
 
 :where(h2) {
