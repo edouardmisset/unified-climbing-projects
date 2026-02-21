@@ -12,9 +12,7 @@ describe('getAscentsPerDisciplinePerYear', () => {
     const expected = [
       {
         Boulder: 1,
-        BoulderColor: 'var(--boulder)',
         Route: 19,
-        RouteColor: 'var(--route)',
         year: 2024,
       },
     ]

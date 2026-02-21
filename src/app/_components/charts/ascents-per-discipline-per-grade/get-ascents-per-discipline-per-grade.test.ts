@@ -12,59 +12,43 @@ describe('getAscentsPerDisciplinePerGrade', () => {
     const expected = [
       {
         Boulder: 1,
-        BoulderColor: 'var(--boulder)',
         grade: '7a',
         Route: 6,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '7a+',
         Route: 4,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '7b',
         Route: 5,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '7b+',
         Route: 1,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '7c',
         Route: 1,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '7c+',
         Route: 1,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '8a',
         Route: 0,
-        RouteColor: 'var(--route)',
       },
       {
         Boulder: 0,
-        BoulderColor: 'var(--boulder)',
         grade: '8a+',
         Route: 1,
-        RouteColor: 'var(--route)',
       },
     ]
     const result = getAscentsPerDisciplinePerGrade(
