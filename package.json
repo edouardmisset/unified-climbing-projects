@@ -24,9 +24,10 @@
     "test:unit": "bun run test:unit:watch run",
     "test:unit:watch": "bun vitest --reporter=dot",
     "test:unit:ui": "bun run test:unit:watch --ui",
+    "test:unit:silent": "bun run test:unit --silent=passed-only",
     "test:e2e": "bun run playwright test",
     "test:e2e:ui": "bun run test:e2e --ui",
-    "test:all": "bun run test:unit && bun run test:e2e",
+    "test:all": "bun run test:unit:silent & bun run test:e2e",
     "knip": "clear && knip",
     "ls-lint": "ls-lint",
     "validate": "clear && bun run check && bun run test:all && bun run build"
