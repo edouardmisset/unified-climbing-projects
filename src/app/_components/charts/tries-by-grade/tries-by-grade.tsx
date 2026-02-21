@@ -1,8 +1,17 @@
 import { useMemo } from 'react'
-import { Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import { AXIS_LABEL_STYLE, AXIS_TICK_STYLE } from '../constants'
+import { AXIS_LABEL_STYLE, AXIS_TICK_STYLE, GRID_STROKE } from '../constants'
 
 import { TriesByGradeTooltip } from './tries-by-grade-tooltip'
 import { getTriesByGrade } from './get-tries-by-grade'
@@ -77,6 +86,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
     <ChartContainer caption='Tries by Grade'>
       <ResponsiveContainer height='100%' width='100%'>
         <LineChart data={chartData}>
+          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis
             dataKey='grade'
             label={{
@@ -88,6 +98,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             tick={AXIS_TICK_STYLE}
           />
           <YAxis
+            domain={[0, 'dataMax']}
             label={{
               value: AXIS_LABELS.numberOfTries,
               angle: -90,
@@ -97,20 +108,14 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             tick={AXIS_TICK_STYLE}
           />
           <Tooltip content={TriesByGradeTooltip} />
-          <Legend
-            align='left'
-            iconType='circle'
-            layout='vertical'
-            verticalAlign='top'
-            wrapperStyle={{ paddingLeft: 8 }}
-          />
+          <Legend align='center' iconType='circle' layout='vertical' verticalAlign='top' />
           <Line
             dataKey='min'
             dot={{ r: 4 }}
             name='Min'
             stroke={seriesColors.get('min') ?? 'var(--minTries)'}
             strokeWidth={2}
-            type='monotone'
+            type='natural'
           />
           <Line
             dataKey='average'
@@ -118,7 +123,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             name='Average'
             stroke={seriesColors.get('average') ?? 'var(--averageTries)'}
             strokeWidth={2}
-            type='monotone'
+            type='natural'
           />
           <Line
             dataKey='max'
@@ -126,7 +131,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             name='Max'
             stroke={seriesColors.get('max') ?? 'var(--maxTries)'}
             strokeWidth={2}
-            type='monotone'
+            type='natural'
           />
         </LineChart>
       </ResponsiveContainer>

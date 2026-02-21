@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -7,6 +7,7 @@ import {
   AXIS_TICK_STYLE,
   BAR_CATEGORY_GAP,
   CURSOR_STYLE,
+  GRID_STROKE,
   TOOLTIP_STYLE,
 } from '../constants'
 
@@ -37,6 +38,7 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
     <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis
             dataKey='grade'
             label={{

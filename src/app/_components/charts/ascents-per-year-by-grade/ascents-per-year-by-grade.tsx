@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -8,6 +8,7 @@ import {
   BAR_CATEGORY_GAP,
   CURSOR_STYLE,
   formatYearTick,
+  GRID_STROKE,
   TOOLTIP_STYLE,
 } from '../constants'
 
@@ -31,6 +32,7 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
     <ChartContainer caption='Ascents Per Year By Grade'>
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsPerYearByGrade}>
+          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis
             dataKey='year'
             label={{
@@ -40,7 +42,7 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
               ...AXIS_LABEL_STYLE,
             }}
             tick={AXIS_TICK_STYLE}
-            tickFormatter={value => formatYearTick(Number(value))}
+            tickFormatter={formatYearTick}
           />
           <YAxis
             label={{

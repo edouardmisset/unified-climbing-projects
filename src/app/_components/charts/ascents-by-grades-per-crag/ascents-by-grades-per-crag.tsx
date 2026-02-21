@@ -1,8 +1,14 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import { AXIS_TICK_STYLE, BAR_CATEGORY_GAP, CURSOR_STYLE, TOOLTIP_STYLE } from '../constants'
+import {
+  AXIS_TICK_STYLE,
+  BAR_CATEGORY_GAP,
+  CURSOR_STYLE,
+  GRID_STROKE,
+  TOOLTIP_STYLE,
+} from '../constants'
 
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { _GRADES, type Ascent } from '~/schema/ascent'
@@ -23,6 +29,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
     <ChartContainer caption='Ascents By Grades Per Crag'>
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsByGradesPerCrag} layout='vertical'>
+          <CartesianGrid stroke={GRID_STROKE} vertical horizontal={false} />
           <XAxis tick={AXIS_TICK_STYLE} type='number' />
           <YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />

@@ -31,7 +31,7 @@ export const DEFAULT_PIE_PROPS = {
   labelLine: false,
 } as const satisfies Partial<PieProps>
 
-export function formatYearTick(year: number): string {
+export function formatYearTick(year: number | string): string {
   return `'${String(year).slice(-2)}`
 }
 

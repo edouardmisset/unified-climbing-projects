@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -7,18 +7,17 @@ import {
   AXIS_TICK_STYLE,
   CURSOR_STYLE,
   formatYearTick,
+  GRID_STROKE,
   TOOLTIP_STYLE,
 } from '../constants'
 
 import type { Ascent } from '~/schema/ascent'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
 
-const chartColors = ['var(--blue-3)', 'var(--orange-3)']
 const AXIS_LABELS = {
   height: 'Height',
   years: 'Years',
 }
-const BAR_CATEGORY_GAP = 0
 
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
@@ -28,7 +27,8 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Distance climbed per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <BarChart barCategoryGap={0} data={data}>
+          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis
             dataKey='year'
             label={{
@@ -38,7 +38,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
               ...AXIS_LABEL_STYLE,
             }}
             tick={AXIS_TICK_STYLE}
-            tickFormatter={value => formatYearTick(Number(value))}
+            tickFormatter={formatYearTick}
           />
           <YAxis
             label={{
@@ -50,7 +50,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
             tick={AXIS_TICK_STYLE}
           />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
-          <Bar dataKey='distance' fill={chartColors[0]} />
+          <Bar dataKey='distance' fill='var(--blue-3)' />
         </BarChart>
       </ResponsiveContainer>
     </ChartContainer>
