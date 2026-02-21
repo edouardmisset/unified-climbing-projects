@@ -8,6 +8,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type LabelProps,
 } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
@@ -80,38 +81,38 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
 
   const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
 
-  if (series.length === 0 || isFirstTry) return null
+  const xAxisLabel = useMemo<LabelProps>(
+    () => ({ value: AXIS_LABELS.grades, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
+    [],
+  )
+
+  const yAxisLabel = useMemo<LabelProps>(
+    () => ({
+      value: AXIS_LABELS.numberOfTries,
+      angle: -90,
+      position: 'insideLeft',
+      ...AXIS_LABEL_STYLE,
+    }),
+    [],
+  )
+
+  const dotStyle = useMemo(() => ({ r: 4 }), [])
+  const yAxisDomain = useMemo(() => [0, 'dataMax'] as const, [])
+
+  if (series.length === 0 || isFirstTry) return
 
   return (
     <ChartContainer caption='Tries by Grade'>
       <ResponsiveContainer height='100%' width='100%'>
         <LineChart data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <XAxis
-            dataKey='grade'
-            label={{
-              value: AXIS_LABELS.grades,
-              offset: 20,
-              position: 'bottom',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
-          <YAxis
-            domain={[0, 'dataMax']}
-            label={{
-              value: AXIS_LABELS.numberOfTries,
-              angle: -90,
-              position: 'insideLeft',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
+          <XAxis dataKey='grade' label={xAxisLabel} tick={AXIS_TICK_STYLE} />
+          <YAxis domain={yAxisDomain} label={yAxisLabel} tick={AXIS_TICK_STYLE} />
           <Tooltip content={TriesByGradeTooltip} />
           <Legend align='center' iconType='circle' layout='vertical' verticalAlign='top' />
           <Line
             dataKey='min'
-            dot={{ r: 4 }}
+            dot={dotStyle}
             name='Min'
             stroke={seriesColors.get('min') ?? 'var(--minTries)'}
             strokeWidth={2}
@@ -119,7 +120,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
           />
           <Line
             dataKey='average'
-            dot={{ r: 4 }}
+            dot={dotStyle}
             name='Average'
             stroke={seriesColors.get('average') ?? 'var(--averageTries)'}
             strokeWidth={2}
@@ -127,7 +128,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
           />
           <Line
             dataKey='max'
-            dot={{ r: 4 }}
+            dot={dotStyle}
             name='Max'
             stroke={seriesColors.get('max') ?? 'var(--maxTries)'}
             strokeWidth={2}

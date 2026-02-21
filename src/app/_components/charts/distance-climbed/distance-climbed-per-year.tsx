@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  type LabelProps,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -22,7 +31,17 @@ const AXIS_LABELS = {
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
 
-  if (data.length === 0) return null
+  const xAxisLabel = useMemo<LabelProps>(
+    () => ({ value: AXIS_LABELS.years, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
+    [],
+  )
+
+  const yAxisLabel = useMemo<LabelProps>(
+    () => ({ value: AXIS_LABELS.height, angle: -90, position: 'insideLeft', ...AXIS_LABEL_STYLE }),
+    [],
+  )
+
+  if (data.length === 0) return
 
   return (
     <ChartContainer caption='Distance climbed per Year'>
@@ -31,24 +50,11 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis
             dataKey='year'
-            label={{
-              value: AXIS_LABELS.years,
-              offset: 20,
-              position: 'bottom',
-              ...AXIS_LABEL_STYLE,
-            }}
+            label={xAxisLabel}
             tick={AXIS_TICK_STYLE}
             tickFormatter={formatYearTick}
           />
-          <YAxis
-            label={{
-              value: AXIS_LABELS.height,
-              angle: -90,
-              position: 'insideLeft',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
+          <YAxis label={yAxisLabel} tick={AXIS_TICK_STYLE} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
           <Bar dataKey='distance' fill='var(--blue-3)' />
         </BarChart>

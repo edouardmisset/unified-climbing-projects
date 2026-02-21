@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import {
   Area,
   AreaChart,
@@ -8,6 +8,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type LabelProps,
 } from 'recharts'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
@@ -28,7 +29,14 @@ export function TrainingSessionsPerYear({
 }) {
   const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
-  if (data.length === 0) return null
+  const xAxisLabel = useMemo<LabelProps>(
+    () => ({ value: 'Years', position: 'bottom', offset: 20, ...AXIS_LABEL_STYLE }),
+    [],
+  )
+
+  const percentFormatter = useCallback((value: unknown) => `${value as number}%`, [])
+
+  if (data.length === 0) return
 
   return (
     <ChartContainer caption='Training Sessions per Year (Indoor/Outdoor by Discipline)'>
@@ -38,16 +46,11 @@ export function TrainingSessionsPerYear({
           <XAxis
             dataKey='year'
             tickFormatter={formatYearTick}
-            label={{
-              value: 'Years',
-              position: 'bottom',
-              offset: 20,
-              ...AXIS_LABEL_STYLE,
-            }}
+            label={xAxisLabel}
             tick={AXIS_TICK_STYLE}
           />
           <YAxis tickFormatter={formatPercentageTick} tick={AXIS_TICK_STYLE} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={value => `${value as number}%`} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={percentFormatter} />
           <Legend />
           <Area
             type='monotone'

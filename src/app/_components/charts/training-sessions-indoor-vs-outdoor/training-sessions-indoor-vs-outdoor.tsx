@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import {
   Pie,
   PieChart,
   ResponsiveContainer,
   Sector,
   Tooltip,
+  type PieLabelRenderProps,
   type PieSectorShapeProps,
 } from 'recharts'
 
@@ -24,6 +25,14 @@ export function TrainingSessionsIndoorVsOutdoor({
 
   const totalSessions = data.reduce((sum, item) => sum + item.value, 0)
 
+  const labelRenderer = useCallback(
+    (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: totalSessions }),
+    [totalSessions],
+  )
+  const shapeRenderer = useCallback(
+    (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.color} />,
+    [data],
+  )
   if (data.length === 0) return
   if (data.length === 1) return
 
@@ -36,11 +45,9 @@ export function TrainingSessionsIndoorVsOutdoor({
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'
-            label={props => renderPieArcLabel({ props, total: totalSessions })}
+            label={labelRenderer}
             nameKey='label'
-            shape={(props: PieSectorShapeProps) => (
-              <Sector {...props} fill={data[props.index]?.color} />
-            )}
+            shape={shapeRenderer}
           />
         </PieChart>
       </ResponsiveContainer>

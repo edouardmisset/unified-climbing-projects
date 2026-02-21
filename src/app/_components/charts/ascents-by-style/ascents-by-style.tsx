@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import {
   Pie,
   PieChart,
   ResponsiveContainer,
   Sector,
   Tooltip,
+  type PieLabelRenderProps,
   type PieSectorShapeProps,
 } from 'recharts'
 
@@ -18,6 +19,15 @@ import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
 
+  const labelRenderer = useCallback(
+    (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length }),
+    [ascents.length],
+  )
+  const shapeRenderer = useCallback(
+    (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.color} />,
+    [data],
+  )
+
   if (data.length <= 1) return
 
   return (
@@ -29,11 +39,9 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'
-            label={props => renderPieArcLabel({ props, total: ascents.length })}
+            label={labelRenderer}
             nameKey='label'
-            shape={(props: PieSectorShapeProps) => (
-              <Sector {...props} fill={data[props.index]?.color} />
-            )}
+            shape={shapeRenderer}
           />
         </PieChart>
       </ResponsiveContainer>

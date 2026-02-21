@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  type LabelProps,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -23,7 +32,17 @@ const AXIS_LABELS = {
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   const gradeFrequency = useMemo(() => getGradeFrequencyAndColors(ascents), [ascents])
 
-  if (gradeFrequency.length === 0) return null
+  const yAxisLabel = useMemo<LabelProps>(
+    () => ({
+      value: AXIS_LABELS.numberOfAscents,
+      angle: -90,
+      position: 'insideLeft',
+      ...AXIS_LABEL_STYLE,
+    }),
+    [],
+  )
+
+  if (gradeFrequency.length === 0) return
 
   return (
     <ChartContainer caption='Ascent Pyramid'>
@@ -31,15 +50,7 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={gradeFrequency}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <XAxis dataKey='grade' tick={AXIS_TICK_STYLE} />
-          <YAxis
-            label={{
-              value: AXIS_LABELS.numberOfAscents,
-              angle: -90,
-              position: 'insideLeft',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
+          <YAxis label={yAxisLabel} tick={AXIS_TICK_STYLE} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
           {ASCENT_STYLE.map(style => (
             <Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />

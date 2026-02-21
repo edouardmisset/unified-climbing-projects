@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import {
   Pie,
   PieChart,
   ResponsiveContainer,
   Sector,
   Tooltip,
+  type PieLabelRenderProps,
   type PieSectorShapeProps,
 } from 'recharts'
 
@@ -18,7 +19,18 @@ import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   const routesVsBoulders = useMemo(() => getAscentsPerDiscipline(ascents), [ascents])
 
-  if (routesVsBoulders.length <= 1) return null
+  const labelRenderer = useCallback(
+    (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length }),
+    [ascents.length],
+  )
+  const shapeRenderer = useCallback(
+    (props: PieSectorShapeProps) => (
+      <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
+    ),
+    [routesVsBoulders],
+  )
+
+  if (routesVsBoulders.length <= 1) return
 
   return (
     <ChartContainer caption='Ascents per Discipline'>
@@ -29,11 +41,9 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
             {...DEFAULT_PIE_PROPS}
             data={routesVsBoulders}
             dataKey='value'
-            label={props => renderPieArcLabel({ props, total: ascents.length })}
+            label={labelRenderer}
             nameKey='label'
-            shape={(props: PieSectorShapeProps) => (
-              <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
-            )}
+            shape={shapeRenderer}
           />
         </PieChart>
       </ResponsiveContainer>

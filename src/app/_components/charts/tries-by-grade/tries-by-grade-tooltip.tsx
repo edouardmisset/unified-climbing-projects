@@ -14,7 +14,7 @@ interface CustomTooltipProps {
 }
 
 function TriesByGradeTooltipComponent({ active, label, payload }: CustomTooltipProps) {
-  if (!active || !payload?.length) return null
+  if (!active || !payload?.length) return
 
   return (
     <div className={styles.tooltip}>

@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  type LabelProps,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -28,36 +37,34 @@ const AXIS_LABELS = {
 export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsPerDisciplinePerGrade(ascents), [ascents])
 
-  if (data.length === 0) return null
-
   const isSingleDiscipline =
     data.every(({ Boulder }) => !Boulder) || data.every(({ Route }) => !Route)
-  if (isSingleDiscipline) return null
+
+  const xAxisLabel = useMemo<LabelProps>(
+    () => ({ value: AXIS_LABELS.grades, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
+    [],
+  )
+
+  const yAxisLabel = useMemo<LabelProps>(
+    () => ({
+      value: AXIS_LABELS.numberOfAscents,
+      angle: -90,
+      position: 'insideLeft',
+      ...AXIS_LABEL_STYLE,
+    }),
+    [],
+  )
+
+  if (data.length === 0) return
+  if (isSingleDiscipline) return
 
   return (
     <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <XAxis
-            dataKey='grade'
-            label={{
-              value: AXIS_LABELS.grades,
-              offset: 20,
-              position: 'bottom',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
-          <YAxis
-            label={{
-              value: AXIS_LABELS.numberOfAscents,
-              angle: -90,
-              position: 'insideLeft',
-              ...AXIS_LABEL_STYLE,
-            }}
-            tick={AXIS_TICK_STYLE}
-          />
+          <XAxis dataKey='grade' label={xAxisLabel} tick={AXIS_TICK_STYLE} />
+          <YAxis label={yAxisLabel} tick={AXIS_TICK_STYLE} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
           {ROUTE_AND_BOULDER.map(key => (
             <Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />

@@ -13,7 +13,7 @@ export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] =>
   ASCENT_STYLE.map(style => {
     const filteredAscentsByStyle = filterAscents(ascents, { style })
 
-    if (filteredAscentsByStyle.length === 0) return null
+    if (filteredAscentsByStyle.length === 0) return
 
     return {
       color: fromAscentStyleToBackgroundColor(style),
