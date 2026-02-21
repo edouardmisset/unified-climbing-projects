@@ -1,3 +1,4 @@
+'use client'
 import { Menu } from '@base-ui/react/menu'
 import { MenuIcon } from 'lucide-react'
 import { memo } from 'react'

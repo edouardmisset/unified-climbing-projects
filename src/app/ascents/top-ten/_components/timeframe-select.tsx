@@ -1,3 +1,4 @@
+'use client'
 import { Select } from '@base-ui/react/select'
 import { CheckIcon } from '~/app/_components/svg/check/check'
 import { ChevronUpDownIcon } from '~/app/_components/svg/chevron-up-down/chevron-up-down'

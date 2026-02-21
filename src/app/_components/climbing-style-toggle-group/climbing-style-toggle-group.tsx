@@ -1,3 +1,4 @@
+'use client'
 import { Toggle } from '@base-ui/react/toggle'
 import { ToggleGroup } from '@base-ui/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
