@@ -2,7 +2,7 @@ import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'
 
-export function DesktopNavigationItem({ item, index }: { item: NavigationElement; index: number }) {
+export function DesktopNavigationItem({ item }: { item: NavigationElement }) {
   if (item.type === 'link') {
     const { href, label } = item
     return (
@@ -16,7 +16,7 @@ export function DesktopNavigationItem({ item, index }: { item: NavigationElement
 
   if (item.type === 'separator') {
     return (
-      <li key={`separator-${index}`}>
+      <li>
         <hr className={styles.Break} />
       </li>
     )

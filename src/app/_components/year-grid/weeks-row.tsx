@@ -18,12 +18,9 @@ const WeekCell = memo(
     const adjustedGridColumn =
       hasExtraColumn && index === 1 ? 2 : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
 
-    const gridColumnStyle = useMemo(
-      () => ({
-        gridColumn: adjustedGridColumn,
-      }),
-      [adjustedGridColumn],
-    )
+    const gridColumnStyle = {
+      gridColumn: adjustedGridColumn,
+    }
 
     if (columnNumber === 0) return <span className={`superCenter ${styles.firstCell}`} key={0} />
 

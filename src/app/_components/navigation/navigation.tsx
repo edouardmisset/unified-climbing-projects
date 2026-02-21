@@ -15,7 +15,6 @@ export const Navigation = memo(() => (
     <ul className={styles.navList}>
       {NAVIGATION_ITEMS.map((item, index) => (
         <DesktopNavigationItem
-          index={index}
           item={item}
           // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
           key={`desktop-${createNavigationElementKey(item, index)}`}
@@ -40,7 +39,6 @@ export const Navigation = memo(() => (
               </Menu.Arrow>
               {NAVIGATION_ITEMS.map((item, index) => (
                 <MobileNavigationItem
-                  index={index}
                   item={item}
                   // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
                   key={`mobile-${createNavigationElementKey(item, index)}`}
