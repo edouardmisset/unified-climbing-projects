@@ -1,12 +1,26 @@
+import dynamic from 'next/dynamic'
 import { Link } from 'next-view-transitions'
 import { memo } from 'react'
 import { LINKS } from '~/constants/links'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
-import { TrainingSessionsIndoorVsOutdoor } from '../charts/training-sessions-indoor-vs-outdoor/training-sessions-indoor-vs-outdoor.tsx'
-import { TrainingSessionsPerDiscipline } from '../charts/training-sessions-per-discipline/training-sessions-per-discipline.tsx'
-import { TrainingSessionsPerYear } from '../charts/training-sessions-per-year/training-sessions-per-year.tsx'
-import { TrainingSessionsDistribution } from '../charts/training-sessions-distribution/training-sessions-distribution.tsx'
 import styles from '../dashboard/dashboard.module.css'
+
+const TrainingSessionsIndoorVsOutdoor = dynamic(
+  () => import('../charts/training-sessions-indoor-vs-outdoor/training-sessions-indoor-vs-outdoor.tsx').then(m => m.TrainingSessionsIndoorVsOutdoor),
+  { ssr: false }
+)
+const TrainingSessionsPerDiscipline = dynamic(
+  () => import('../charts/training-sessions-per-discipline/training-sessions-per-discipline.tsx').then(m => m.TrainingSessionsPerDiscipline),
+  { ssr: false }
+)
+const TrainingSessionsPerYear = dynamic(
+  () => import('../charts/training-sessions-per-year/training-sessions-per-year.tsx').then(m => m.TrainingSessionsPerYear),
+  { ssr: false }
+)
+const TrainingSessionsDistribution = dynamic(
+  () => import('../charts/training-sessions-distribution/training-sessions-distribution.tsx').then(m => m.TrainingSessionsDistribution),
+  { ssr: false }
+)
 
 type DashboardStatsProps = TrainingSessionListProps
 

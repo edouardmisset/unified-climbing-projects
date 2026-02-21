@@ -1,17 +1,46 @@
+import dynamic from 'next/dynamic'
 import { Link } from 'next-view-transitions'
 import { memo } from 'react'
 import { LINKS } from '~/constants/links'
 import type { AscentListProps } from '~/schema/ascent.ts'
-import { AscentsByGradesPerCrag } from '../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx'
-import { AscentsByStyle } from '../charts/ascents-by-style/ascents-by-style.tsx'
-import { AscentsPerDiscipline } from '../charts/ascents-per-discipline/ascents-per-discipline.tsx'
-import { AscentsPerDisciplinePerGrade } from '../charts/ascents-per-discipline-per-grade/ascents-per-discipline-per-grade.tsx'
-import { AscentsPerDisciplinePerYear } from '../charts/ascents-per-discipline-per-year/ascents-per-discipline-per-year.tsx'
-import { AscentsPerYearByGrade } from '../charts/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx'
-import { AscentPyramid } from '../charts/ascents-pyramid/ascent-pyramid.tsx'
-import { DistanceClimbedPerYear } from '../charts/distance-climbed/distance-climbed-per-year.tsx'
-import { TriesByGrade } from '../charts/tries-by-grade/tries-by-grade.tsx'
 import styles from './dashboard.module.css'
+
+const AscentsByGradesPerCrag = dynamic(
+  () => import('../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx').then(m => m.AscentsByGradesPerCrag),
+  { ssr: false }
+)
+const AscentsByStyle = dynamic(
+  () => import('../charts/ascents-by-style/ascents-by-style.tsx').then(m => m.AscentsByStyle),
+  { ssr: false }
+)
+const AscentsPerDiscipline = dynamic(
+  () => import('../charts/ascents-per-discipline/ascents-per-discipline.tsx').then(m => m.AscentsPerDiscipline),
+  { ssr: false }
+)
+const AscentsPerDisciplinePerGrade = dynamic(
+  () => import('../charts/ascents-per-discipline-per-grade/ascents-per-discipline-per-grade.tsx').then(m => m.AscentsPerDisciplinePerGrade),
+  { ssr: false }
+)
+const AscentsPerDisciplinePerYear = dynamic(
+  () => import('../charts/ascents-per-discipline-per-year/ascents-per-discipline-per-year.tsx').then(m => m.AscentsPerDisciplinePerYear),
+  { ssr: false }
+)
+const AscentsPerYearByGrade = dynamic(
+  () => import('../charts/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx').then(m => m.AscentsPerYearByGrade),
+  { ssr: false }
+)
+const AscentPyramid = dynamic(
+  () => import('../charts/ascents-pyramid/ascent-pyramid.tsx').then(m => m.AscentPyramid),
+  { ssr: false }
+)
+const DistanceClimbedPerYear = dynamic(
+  () => import('../charts/distance-climbed/distance-climbed-per-year.tsx').then(m => m.DistanceClimbedPerYear),
+  { ssr: false }
+)
+const TriesByGrade = dynamic(
+  () => import('../charts/tries-by-grade/tries-by-grade.tsx').then(m => m.TriesByGrade),
+  { ssr: false }
+)
 
 type DashboardStatisticsProps = AscentListProps
 

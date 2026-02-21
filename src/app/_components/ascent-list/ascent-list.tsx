@@ -57,18 +57,12 @@ export const AscentList = memo(
       [ascents],
     )
 
-    const columns = useMemo(
-      () => BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0),
-      [showDetails, showPoints],
-    )
+    const columns = BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)
 
-    const tableStyles = useMemo<TableStyle>(
-      () => ({
-        '--columns': columns,
-        '--max-width': columns > MAX_COLUMNS_THRESHOLD ? '120ch' : '90ch',
-      }),
-      [columns],
-    )
+    const tableStyles: TableStyle = {
+      '--columns': columns,
+      '--max-width': columns > MAX_COLUMNS_THRESHOLD ? '120ch' : '90ch',
+    }
 
     if (ascents.length === 0) return <NotFound />
 
