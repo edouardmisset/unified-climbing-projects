@@ -15,17 +15,12 @@ export const TrainingsQRDot = memo(
   ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
     const [firstSession] = trainingSessions
 
-    const sessionClassName = useMemo(
-      () =>
-        firstSession?.sessionType === undefined
-          ? ''
-          : fromSessionTypeToClassName(firstSession.sessionType),
-      [firstSession?.sessionType],
-    )
-    const formattedDate = useMemo(
-      () => (firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)),
-      [firstSession?.date],
-    )
+    const sessionClassName =
+      firstSession?.sessionType === undefined
+        ? ''
+        : fromSessionTypeToClassName(firstSession.sessionType)
+    const formattedDate =
+      firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)
 
     // LAZY LOADING: Create description component only when needed
     const lazyDescription = useMemo(() => {
