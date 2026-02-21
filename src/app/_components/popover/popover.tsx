@@ -1,6 +1,6 @@
 'use client'
 
-import { Popover as BasePopover } from '@base-ui-components/react/popover'
+import { Popover as BasePopover } from '@base-ui/react/popover'
 import { type CSSProperties, memo, type ReactNode, useMemo } from 'react'
 import { PopoverContent } from './popover-content'
 import styles from './popover.module.css'

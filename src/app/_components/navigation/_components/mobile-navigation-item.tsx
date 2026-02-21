@@ -1,4 +1,4 @@
-import { Menu } from '@base-ui-components/react/menu'
+import { Menu } from '@base-ui/react/menu'
 import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'

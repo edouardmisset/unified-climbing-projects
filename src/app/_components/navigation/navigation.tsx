@@ -1,4 +1,4 @@
-import { Menu } from '@base-ui-components/react/menu'
+import { Menu } from '@base-ui/react/menu'
 import { MenuIcon } from 'lucide-react'
 import { memo } from 'react'
 import { Arrow } from '../svg/arrow/arrow'

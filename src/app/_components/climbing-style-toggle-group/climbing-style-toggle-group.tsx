@@ -1,5 +1,5 @@
-import { Toggle } from '@base-ui-components/react/toggle'
-import { ToggleGroup } from '@base-ui-components/react/toggle-group'
+import { Toggle } from '@base-ui/react/toggle'
+import { ToggleGroup } from '@base-ui/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
@@ -19,7 +19,7 @@ export function ClimbingStyleToggleGroup(
       className={styles.panel}
       defaultValue={['Redpoint']}
       onValueChange={onValueChange}
-      value={isOnsightDisable ? ['Flash'] : [value]}
+      value={isOnsightDisable || !value ? ['Flash'] : [value]}
     >
       <Toggle
         aria-hidden={isOnsightDisable}
