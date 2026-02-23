@@ -1,5 +1,7 @@
 import type { PieProps } from 'recharts'
 
+export const DEFAULT_X_AXIS_OFFSET = 20
+
 export const AXIS_TICK_STYLE = {
   fill: 'var(--text-2)',
   fontFamily: 'monospace',
@@ -31,10 +33,12 @@ export const DEFAULT_PIE_PROPS = {
   labelLine: false,
 } as const satisfies Partial<PieProps>
 
-export function formatYearTick(year: number | string): string {
-  return `'${String(year).slice(-2)}`
+export function formatYearTick(year: unknown): string {
+  return typeof year === 'number' || typeof year === 'string'
+    ? `'${String(year).slice(-2)}`
+    : String(year)
 }
 
-export function formatPercentageTick(value: number): string {
-  return `${Math.round(value * 100)}%`
+export function formatPercentageTick(value: unknown): string {
+  return typeof value === 'number' ? `${Math.round(value * 100)}%` : String(value)
 }

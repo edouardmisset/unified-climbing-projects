@@ -1,24 +1,9 @@
 import { useMemo } from 'react'
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  type LabelProps,
-} from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import {
-  AXIS_LABEL_STYLE,
-  AXIS_TICK_STYLE,
-  CURSOR_STYLE,
-  formatYearTick,
-  GRID_STROKE,
-  TOOLTIP_STYLE,
-} from '../constants'
+import { formatYearTick, GRID_STROKE } from '../constants'
+import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
 import type { Ascent } from '~/schema/ascent'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
@@ -31,16 +16,6 @@ const AXIS_LABELS = {
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
 
-  const xAxisLabel = useMemo<LabelProps>(
-    () => ({ value: AXIS_LABELS.years, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
-    [],
-  )
-
-  const yAxisLabel = useMemo<LabelProps>(
-    () => ({ value: AXIS_LABELS.height, angle: -90, position: 'insideLeft', ...AXIS_LABEL_STYLE }),
-    [],
-  )
-
   if (data.length === 0) return
 
   return (
@@ -48,14 +23,9 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={0} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <XAxis
-            dataKey='year'
-            label={xAxisLabel}
-            tick={AXIS_TICK_STYLE}
-            tickFormatter={formatYearTick}
-          />
-          <YAxis label={yAxisLabel} tick={AXIS_TICK_STYLE} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartYAxis labelText={AXIS_LABELS.height} />
+          <ChartTooltip />
           <Bar dataKey='distance' fill='var(--blue-3)' />
         </BarChart>
       </ResponsiveContainer>

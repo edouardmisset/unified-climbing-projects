@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
 import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
@@ -22,7 +22,7 @@ const WeekCell = memo(
       gridColumn: adjustedGridColumn,
     }
 
-    if (columnNumber === 0) return <span className={`superCenter ${styles.firstCell}`} key={0} />
+    if (columnNumber === 0) return <span className={`superCenter ${styles.firstCell}`} />
 
     return (
       <span

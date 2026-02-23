@@ -52,9 +52,13 @@ export const AscentList = memo(
       }
     }, [])
 
-    const totalAscentPoints = sum(ascents?.map(({ points }) => points ?? 0))
+    const totalAscentPoints = useMemo(
+      () => sum(ascents?.map(({ points }) => points ?? 0)),
+      [ascents],
+    )
 
-    const columns = BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)
+    const columns =
+      BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)
 
     const tableStyles: TableStyle = {
       '--columns': columns,

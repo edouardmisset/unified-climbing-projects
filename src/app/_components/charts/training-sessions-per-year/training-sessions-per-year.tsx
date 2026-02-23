@@ -1,25 +1,9 @@
 import { useMemo, useCallback } from 'react'
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  type LabelProps,
-} from 'recharts'
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer } from 'recharts'
+import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
-import {
-  AXIS_LABEL_STYLE,
-  AXIS_TICK_STYLE,
-  formatPercentageTick,
-  formatYearTick,
-  GRID_STROKE,
-  TOOLTIP_STYLE,
-} from '../constants'
+import { formatPercentageTick, formatYearTick, GRID_STROKE } from '../constants'
 import { getSessionsPerYear } from './get-sessions-per-year'
 
 export function TrainingSessionsPerYear({
@@ -29,12 +13,10 @@ export function TrainingSessionsPerYear({
 }) {
   const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
-  const xAxisLabel = useMemo<LabelProps>(
-    () => ({ value: 'Years', position: 'bottom', offset: 20, ...AXIS_LABEL_STYLE }),
+  const percentFormatter = useCallback(
+    (value: unknown) => (typeof value === 'number' ? `${value}%` : ''),
     [],
   )
-
-  const percentFormatter = useCallback((value: unknown) => `${value as number}%`, [])
 
   if (data.length === 0) return
 
@@ -43,14 +25,9 @@ export function TrainingSessionsPerYear({
       <ResponsiveContainer height='100%' width='100%'>
         <AreaChart data={data} stackOffset='expand'>
           <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
-          <XAxis
-            dataKey='year'
-            tickFormatter={formatYearTick}
-            label={xAxisLabel}
-            tick={AXIS_TICK_STYLE}
-          />
-          <YAxis tickFormatter={formatPercentageTick} tick={AXIS_TICK_STYLE} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={percentFormatter} />
+          <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
+          <ChartYAxis tickFormatter={formatPercentageTick} />
+          <ChartTooltip formatter={percentFormatter} />
           <Legend />
           <Area
             type='monotone'

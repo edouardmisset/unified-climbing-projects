@@ -1,25 +1,9 @@
 import { useMemo } from 'react'
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  type LabelProps,
-} from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import {
-  AXIS_LABEL_STYLE,
-  AXIS_TICK_STYLE,
-  BAR_CATEGORY_GAP,
-  CURSOR_STYLE,
-  formatYearTick,
-  GRID_STROKE,
-  TOOLTIP_STYLE,
-} from '../constants'
+import { BAR_CATEGORY_GAP, formatYearTick, GRID_STROKE } from '../constants'
+import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { _GRADES, type Ascent } from '~/schema/ascent'
@@ -34,20 +18,6 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   const ascentsPerYearByGrade = useMemo(() => getAscentsPerYearByGrade(ascents), [ascents])
 
   const uniqueYearsCount = new Set(ascentsPerYearByGrade.map(({ year }) => year)).size
-  const xAxisLabel = useMemo<LabelProps>(
-    () => ({ value: AXIS_LABELS.years, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
-    [],
-  )
-
-  const yAxisLabel = useMemo<LabelProps>(
-    () => ({
-      value: AXIS_LABELS.numberOfAscents,
-      angle: -90,
-      position: 'insideLeft',
-      ...AXIS_LABEL_STYLE,
-    }),
-    [],
-  )
 
   if (uniqueYearsCount <= 1) return
   if (ascentsPerYearByGrade.length === 0) return
@@ -57,14 +27,9 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveContainer height='100%' width='100%'>
         <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsPerYearByGrade}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <XAxis
-            dataKey='year'
-            label={xAxisLabel}
-            tick={AXIS_TICK_STYLE}
-            tickFormatter={formatYearTick}
-          />
-          <YAxis label={yAxisLabel} tick={AXIS_TICK_STYLE} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
+          <ChartTooltip />
           {_GRADES.map(key => (
             <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
           ))}

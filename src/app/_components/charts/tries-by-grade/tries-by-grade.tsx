@@ -1,21 +1,12 @@
 import { useMemo } from 'react'
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  type LabelProps,
-} from 'recharts'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import { AXIS_LABEL_STYLE, AXIS_TICK_STYLE, GRID_STROKE } from '../constants'
+import { ChartTooltip, ChartXAxis, ChartYAxis } from '../chart-elements'
+import { GRID_STROKE } from '../constants'
 
-import { TriesByGradeTooltip } from './tries-by-grade-tooltip'
 import { getTriesByGrade } from './get-tries-by-grade'
+import { TriesByGradeTooltip } from './tries-by-grade-tooltip'
 
 import type { Ascent } from '~/schema/ascent'
 
@@ -41,6 +32,9 @@ const AXIS_LABELS = {
   grades: 'Grades',
   numberOfTries: '# Tries',
 }
+
+const DOT_RADIUS = 4
+const LINE_STROKE_WIDTH = 2
 
 export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   const series = useMemo(() => getTriesByGrade(ascents), [ascents])
@@ -81,22 +75,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
 
   const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
 
-  const xAxisLabel = useMemo<LabelProps>(
-    () => ({ value: AXIS_LABELS.grades, offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
-    [],
-  )
-
-  const yAxisLabel = useMemo<LabelProps>(
-    () => ({
-      value: AXIS_LABELS.numberOfTries,
-      angle: -90,
-      position: 'insideLeft',
-      ...AXIS_LABEL_STYLE,
-    }),
-    [],
-  )
-
-  const dotStyle = useMemo(() => ({ r: 4 }), [])
+  const dotStyle = useMemo(() => ({ r: DOT_RADIUS }), [])
   const yAxisDomain = useMemo(() => [0, 'dataMax'] as const, [])
 
   if (series.length === 0 || isFirstTry) return
@@ -106,16 +85,16 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
       <ResponsiveContainer height='100%' width='100%'>
         <LineChart data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <XAxis dataKey='grade' label={xAxisLabel} tick={AXIS_TICK_STYLE} />
-          <YAxis domain={yAxisDomain} label={yAxisLabel} tick={AXIS_TICK_STYLE} />
-          <Tooltip content={TriesByGradeTooltip} />
+          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
+          <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
+          <ChartTooltip content={TriesByGradeTooltip} />
           <Legend align='center' iconType='circle' layout='vertical' verticalAlign='top' />
           <Line
             dataKey='min'
             dot={dotStyle}
             name='Min'
             stroke={seriesColors.get('min') ?? 'var(--minTries)'}
-            strokeWidth={2}
+            strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
           <Line
@@ -123,7 +102,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             dot={dotStyle}
             name='Average'
             stroke={seriesColors.get('average') ?? 'var(--averageTries)'}
-            strokeWidth={2}
+            strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
           <Line
@@ -131,7 +110,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             dot={dotStyle}
             name='Max'
             stroke={seriesColors.get('max') ?? 'var(--maxTries)'}
-            strokeWidth={2}
+            strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
         </LineChart>

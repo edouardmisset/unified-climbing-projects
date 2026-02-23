@@ -1,16 +1,16 @@
-import { useMemo, useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import {
   Pie,
   PieChart,
   ResponsiveContainer,
   Sector,
-  Tooltip,
   type PieLabelRenderProps,
   type PieSectorShapeProps,
 } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
-import { DEFAULT_PIE_PROPS, TOOLTIP_STYLE } from '../constants'
+import { ChartTooltip } from '../chart-elements'
+import { DEFAULT_PIE_PROPS } from '../constants'
 import { renderPieArcLabel } from '../pie-chart-utils'
 
 import type { Ascent } from '~/schema/ascent'
@@ -34,7 +34,7 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
     <ChartContainer caption='Ascent By Style'>
       <ResponsiveContainer height='100%' width='100%'>
         <PieChart>
-          <Tooltip contentStyle={TOOLTIP_STYLE} />
+          <ChartTooltip />
           <Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
