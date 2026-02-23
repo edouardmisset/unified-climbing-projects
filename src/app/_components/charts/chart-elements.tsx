@@ -9,6 +9,8 @@ import {
   type TooltipProps,
 } from 'recharts'
 
+import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent'
+
 import type { AxisDomain, BaseAxisProps, RenderableAxisProps } from 'recharts/types/util/types'
 import {
   AXIS_LABEL_STYLE,
@@ -23,7 +25,7 @@ type XAxisProps = {
   labelText?: LabelProps['value']
   offset?: LabelProps['offset']
   position?: LabelProps['position']
-  tickFormatter?: ((v: unknown) => string) | undefined
+  tickFormatter?: RenderableAxisProps['tickFormatter']
   type?: BaseAxisProps['type']
   width?: CartesianAxisProps['width']
 }
@@ -41,7 +43,7 @@ export function ChartXAxis(props: XAxisProps) {
 
   const label = useMemo<LabelProps | undefined>(() => {
     if (!labelText) return undefined
-    return { value: labelText, offset, position, ...AXIS_LABEL_STYLE }
+    return { ...AXIS_LABEL_STYLE, value: labelText, offset, position }
   }, [labelText, offset, position])
 
   return (
@@ -67,7 +69,7 @@ export function ChartYAxis(props: YAxisProps) {
 
   const label = useMemo<LabelProps | undefined>(() => {
     if (!labelText) return undefined
-    return { value: labelText, angle: -90, position: 'insideLeft', ...AXIS_LABEL_STYLE }
+    return { ...AXIS_LABEL_STYLE, value: labelText, angle: -90, position: 'insideLeft' }
   }, [labelText])
 
   return (
@@ -75,13 +77,17 @@ export function ChartYAxis(props: YAxisProps) {
   )
 }
 
-type ChartTooltipProps = {
-  formatter?: TooltipProps<any, any>['formatter']
+type ChartTooltipProps<T extends ValueType = ValueType, K extends NameType = NameType> = {
+  formatter?: TooltipProps<T, K>['formatter']
   showCursor?: boolean
-  content?: TooltipProps<any, any>['content']
+  content?: TooltipProps<T, K>['content']
 }
 
-export function ChartTooltip({ formatter, showCursor = true, content }: ChartTooltipProps) {
+export function ChartTooltip<T extends ValueType = ValueType, K extends NameType = NameType>({
+  formatter,
+  showCursor = true,
+  content,
+}: ChartTooltipProps<T, K>) {
   return (
     <Tooltip
       content={content}
