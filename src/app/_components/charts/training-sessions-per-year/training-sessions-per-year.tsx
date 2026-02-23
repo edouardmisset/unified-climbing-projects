@@ -47,7 +47,7 @@ export function TrainingSessionsPerYear({
             tick={AXIS_TICK_STYLE}
           />
           <YAxis tickFormatter={formatPercentageTick} tick={AXIS_TICK_STYLE} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={value => `${value}%`} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} formatter={value => `${value as number}%`} />
           <Legend />
           <Area
             type='monotone'

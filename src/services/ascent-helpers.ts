@@ -1,7 +1,6 @@
 import { cache } from 'react'
 import { minMaxGrades } from '~/helpers/min-max-grades'
 import { sortByDate } from '~/helpers/sort-by-date'
-import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { Ascent, Grade } from '~/schema/ascent'
 import { getAllAscents } from './ascents'
 

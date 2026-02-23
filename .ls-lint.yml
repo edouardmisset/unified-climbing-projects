@@ -8,6 +8,7 @@ ls:
 ignore:
   - .git
   - .md
+  - .agents
   - .next
   - .github
   - .husky

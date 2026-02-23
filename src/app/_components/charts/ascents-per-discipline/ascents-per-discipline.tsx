@@ -30,7 +30,6 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
             data={routesVsBoulders}
             dataKey='value'
             label={props => renderPieArcLabel({ props, total: ascents.length })}
-
             nameKey='label'
             shape={(props: PieSectorShapeProps) => (
               <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
