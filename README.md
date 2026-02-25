@@ -1,22 +1,18 @@
 # Climbing App
 
-## Introduction
-
 Personal climbing analytics and logging app to track ascents and training,
 visualize progress, and explore performance trends.
 
 ⚠️ Work in progress and intentionally experimental. This repo is a playground
 to try new libraries and patterns.
 
-What’s inside (high-level):
+## Stack
 
 - Next.js (App Router) + TypeScript, Bun, CSS Modules
 - UI: Base UI components; Charts: Recharts; Auth: Clerk
-- Data & validation: Convex database, Zod schemas; ISR for performance
-- Features: dashboards and charts (grades, disciplines, years, distance),
-  calendars (ascents & training), QR-code & Barcodes, ascent details dialog/cards
-- Testing: unit tests with vitest, end-to-end with Playwright
-- Perf: caching utilities and React Compiler enabled
+- Data & validation: Convex database, Zod schemas
+- Performance: ISR and React cache() wrappers
+- Testing: vitest (unit) and Playwright (e2e)
 
 ## Getting Started
 
@@ -36,28 +32,22 @@ Start the app in development:
 bun run dev
 ```
 
-Production preview (build then start):
-
-```sh
-bun run preview
-```
-
-Note: You may need to configure environment variables (for example, Clerk).
+Note: You may need to configure environment variables (for example: Convex, Google Sheet).
 
 ## Scripts
 
-- Lint: `bun run lint`
-- Format: `bun run format`
-- Typecheck and checks (linting, style linting, formatting, etc.): `bun run check`
-- Validate (checks, tests, build): `bun run validate`
-- Spellcheck: `bun run spell`
-- File lint & style lint: `bun run ls-lint`, `bun run style:lint`
+- Lint: `bun lint`
+- Format: `bun format`
+- Typecheck and checks (linting, style linting, formatting, etc.): `bun check`
+- Validate (checks, tests, build): `bun validate`
+- Spellcheck: `bun spell`
+- File lint & style lint: `bun ls-lint`, `bun style:lint`
 
 ## Testing
 
-- Unit tests: `bun run test:unit`
-- E2E tests (Playwright): `bun run test:e2e`
-- All tests: `bun run test:all`
+- Unit tests: `bun test:unit`
+- E2E tests: `bun test:e2e`
+- All tests: `bun test:all`
 
 ## Notable Directories
 
@@ -70,6 +60,31 @@ Note: You may need to configure environment variables (for example, Clerk).
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
 - `tests/` — Playwright E2E tests and reports
 - `backup/` — Sample data for local development
+
+## Development Guidelines
+
+### Code Style & Conventions
+
+**Naming:**
+
+- Files: `kebab-case.ts`
+- Variables: `camelCase`
+- Constants: `ALL_CAPS_WITH_UNDERSCORES`
+- Booleans: `isOpen`, `hasPermission`
+- React Components: `PascalCase` (function declarations only)
+- Hooks: `useSomething`
+- Handlers: `handleClick`, `handleSubmit`
+
+**TypeScript:**
+
+- Avoid `any` - use proper typing or `unknown` with type guards
+- Type all function return types (except React components)
+- Use TypeScript generics for reusability
+- Zod schemas validate all data boundaries
+
+**Style:**
+
+- Comments ONLY for complex logic
 
 ## TODO
 
