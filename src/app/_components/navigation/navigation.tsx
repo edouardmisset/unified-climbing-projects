@@ -3,8 +3,7 @@ import { Menu } from '@base-ui/react/menu'
 import { MenuIcon } from 'lucide-react'
 import { memo } from 'react'
 import { Arrow } from '../svg/arrow/arrow'
-import { DesktopNavigationItem } from './_components/desktop-navigation-item'
-import { MobileNavigationItem } from './_components/mobile-navigation-item'
+import { NavigationItem } from './_components/navigation-item'
 import { UserStatus } from './_components/user-status'
 import { NAVIGATION_ITEMS } from './constants'
 import { createNavigationElementKey } from './helpers'
@@ -15,8 +14,9 @@ export const Navigation = memo(() => (
     {/* Desktop full menu - visible by CSS when viewport is wide */}
     <ul className={styles.navList}>
       {NAVIGATION_ITEMS.map((item, index) => (
-        <DesktopNavigationItem
+        <NavigationItem
           item={item}
+          mode='desktop'
           // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
           key={`desktop-${createNavigationElementKey(item, index)}`}
         />
@@ -39,8 +39,9 @@ export const Navigation = memo(() => (
                 <Arrow />
               </Menu.Arrow>
               {NAVIGATION_ITEMS.map((item, index) => (
-                <MobileNavigationItem
+                <NavigationItem
                   item={item}
+                  mode='mobile'
                   // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
                   key={`mobile-${createNavigationElementKey(item, index)}`}
                 />

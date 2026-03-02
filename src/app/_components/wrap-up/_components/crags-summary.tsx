@@ -34,46 +34,44 @@ export function CragsSummary({
       <p>
         You visited{' '}
         <Popover
-          description={
-            <ul className={ascentsWithPopoverStyles.list}>
-              {crags.toSorted(compareStringsAscending).map(crag => (
-                <li className={ascentsWithPopoverStyles.item} key={crag}>
-                  {crag}
-                </li>
-              ))}
-            </ul>
-          }
-          title='Crags'
-          triggerClassName={ascentsWithPopoverStyles.popover}
+          className={ascentsWithPopoverStyles.popover}
+          popoverTitle='Crags'
           trigger={
             <span>
               <strong>{numberOfCrags}</strong> crags
             </span>
           }
-        />{' '}
+        >
+          <ul className={ascentsWithPopoverStyles.list}>
+            {crags.toSorted(compareStringsAscending).map(crag => (
+              <li className={ascentsWithPopoverStyles.item} key={crag}>
+                {crag}
+              </li>
+            ))}
+          </ul>
+        </Popover>{' '}
         and you went to <strong>{mostFrequentCrag}</strong> the most.
         {cragsWithoutAscents.length > 0 && (
           <>
             <br />
             Crags without ascents:{' '}
             <Popover
-              description={
-                <ul className={ascentsWithPopoverStyles.list}>
-                  {cragsWithoutAscents.map(crag => (
-                    <li className={ascentsWithPopoverStyles.item} key={crag}>
-                      {crag}
-                    </li>
-                  ))}
-                </ul>
-              }
-              title='Crags without ascents'
-              triggerClassName={ascentsWithPopoverStyles.popover}
+              className={ascentsWithPopoverStyles.popover}
+              popoverTitle='Crags without ascents'
               trigger={
                 <span>
                   <strong>{cragsWithoutAscents.length}</strong> crags
                 </span>
               }
-            />
+            >
+              <ul className={ascentsWithPopoverStyles.list}>
+                {cragsWithoutAscents.map(crag => (
+                  <li className={ascentsWithPopoverStyles.item} key={crag}>
+                    {crag}
+                  </li>
+                ))}
+              </ul>
+            </Popover>
           </>
         )}
       </p>

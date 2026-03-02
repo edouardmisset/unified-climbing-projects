@@ -13,14 +13,15 @@ export function AscentsWithPopover({ ascents }: AscentListProps) {
 
   return (
     <Popover
-      description={<AscentList ascents={ascents} />}
-      title={title}
-      triggerClassName={styles.popover}
+      className={styles.popover}
+      popoverTitle={title}
       trigger={
         <strong>
           {ascents.length} {ascentsDisciplineText}
         </strong>
       }
-    />
+    >
+      <AscentList ascents={ascents} />
+    </Popover>
   )
 }

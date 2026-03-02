@@ -46,11 +46,12 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
 
   return (
     <Popover
-      description={lazyDescription}
-      title={dateAndCrag}
-      triggerClassName={gradeClassName}
-      trigger=''
       aria-label={`Ascent on ${dateAndCrag}`}
-    />
+      className={gradeClassName}
+      popoverTitle={dateAndCrag}
+      trigger=''
+    >
+      {lazyDescription}
+    </Popover>
   )
 })

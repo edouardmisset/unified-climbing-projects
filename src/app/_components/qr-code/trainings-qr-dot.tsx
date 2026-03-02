@@ -34,12 +34,9 @@ export const TrainingsQRDot = memo(
     if (trainingSessions.length === 0 || firstSession === undefined) return <span />
 
     return (
-      <Popover
-        description={lazyDescription}
-        title={formattedDate}
-        triggerClassName={sessionClassName}
-        trigger=''
-      />
+      <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>
+        {lazyDescription}
+      </Popover>
     )
   },
 )

@@ -10,6 +10,21 @@ export function ClimbingStyleToggleGroup(
   props: Omit<ToggleGroup.Props, 'value'> & ClimbingStyleToggleGroupProps,
 ) {
   const { display, onValueChange, value, isOnsightDisable, ...rest } = props
+  const stylesByType = [
+    {
+      value: 'Onsight' as const,
+      disabled: isOnsightDisable,
+      title: isOnsightDisable
+        ? 'Historically, boulders can only be flashed, not onsighted'
+        : 'Onsight: the route was climbed first try with no prior information (not used for boulders)',
+    },
+    {
+      value: 'Flash' as const,
+      disabled: false,
+      title:
+        'Flash: the route was climbed first try using any prior information (also used for boulders)',
+    },
+  ]
 
   if (!display) return
 
@@ -22,29 +37,20 @@ export function ClimbingStyleToggleGroup(
       onValueChange={onValueChange}
       value={isOnsightDisable || !value ? ['Flash'] : [value]}
     >
-      <Toggle
-        aria-hidden={isOnsightDisable}
-        aria-label='Onsight'
-        className={`contrastColor ${styles.button} ${isOnsightDisable ? 'notAllowed' : ''}`}
-        disabled={isOnsightDisable}
-        hidden={isOnsightDisable}
-        title={
-          isOnsightDisable
-            ? 'Historically, boulders can only be flashed, not onsighted'
-            : 'Onsight: the route was climbed first try with no prior information (not used for boulders)'
-        }
-        value='Onsight'
-      >
-        <ClimbingStyle climbingStyle='Onsight' />
-      </Toggle>
-      <Toggle
-        aria-label='Flash'
-        className={`contrastColor ${styles.button}`}
-        title='Flash: the route was climbed first try using any prior information (also used for boulders)'
-        value='Flash'
-      >
-        <ClimbingStyle climbingStyle='Flash' />
-      </Toggle>
+      {stylesByType.map(({ value: climbingStyle, disabled, title }) => (
+        <Toggle
+          aria-hidden={disabled}
+          aria-label={climbingStyle}
+          className={`contrastColor ${styles.button}${disabled ? ' notAllowed' : ''}`}
+          disabled={disabled}
+          hidden={disabled}
+          key={climbingStyle}
+          title={title}
+          value={climbingStyle}
+        >
+          <ClimbingStyle climbingStyle={climbingStyle} />
+        </Toggle>
+      ))}
     </ToggleGroup>
   )
 }
