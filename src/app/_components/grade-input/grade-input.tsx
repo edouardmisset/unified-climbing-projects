@@ -5,6 +5,7 @@ import { MinusIcon, PlusIcon } from 'lucide-react'
 import { useId } from 'react'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER } from '~/schema/ascent'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import customLabelStyles from '../ui/custom-label/custom-label.module.css'
 import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
 import styles from './grade-input.module.css'
@@ -56,7 +57,10 @@ export function GradeInput(
       </NumberField.ScrubArea>
 
       <NumberField.Group className={styles.Group}>
-        <NumberField.Decrement className={styles.Decrement} title='Decrease grade (-)'>
+        <NumberField.Decrement
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Decrement}`}
+          title='Decrease grade (-)'
+        >
           <MinusIcon />
         </NumberField.Decrement>
         <NumberField.Input
@@ -65,7 +69,10 @@ export function GradeInput(
           render={renderProps => <input {...renderProps} value={fromNumberToGrade(value)} />}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />
-        <NumberField.Increment className={styles.Increment} title='Increase grade (+)'>
+        <NumberField.Increment
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Increment}`}
+          title='Increase grade (+)'
+        >
           <PlusIcon />
         </NumberField.Increment>
       </NumberField.Group>

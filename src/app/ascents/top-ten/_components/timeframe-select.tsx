@@ -5,6 +5,7 @@ import { ChevronUpDownIcon } from '~/app/_components/svg/chevron-up-down/chevron
 import { deSlugify } from '~/helpers/de-slugify'
 import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'
 import { TIMEFRAMES, type Timeframe } from '~/schema/generic'
+import baseUiStyles from '../../../_components/ui/base-ui/base-ui-primitives.module.css'
 import styles from './timeframe-select.module.css'
 
 export function TimeframeSelect() {
@@ -14,7 +15,9 @@ export function TimeframeSelect() {
 
   return (
     <Select.Root onValueChange={handleTimeframeChange} value={timeframe}>
-      <Select.Trigger className={`${styles.Select} selfCenter`}>
+      <Select.Trigger
+        className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Select} selfCenter`}
+      >
         <Select.Value>{deSlugify(timeframe)}</Select.Value>
         <Select.Icon className={styles.SelectIcon}>
           <ChevronUpDownIcon />
@@ -23,9 +26,13 @@ export function TimeframeSelect() {
       <Select.Portal>
         <Select.Positioner className={styles.Positioner} sideOffset={8}>
           <Select.ScrollUpArrow className={styles.ScrollArrow} />
-          <Select.Popup className={styles.Popup}>
+          <Select.Popup className={`${baseUiStyles.popupSurface} ${styles.Popup}`}>
             {TIMEFRAMES.map(timeframeOption => (
-              <Select.Item className={styles.Item} key={timeframeOption} value={timeframeOption}>
+              <Select.Item
+                className={`${baseUiStyles.highlightedItem} ${styles.Item}`}
+                key={timeframeOption}
+                value={timeframeOption}
+              >
                 <Select.ItemIndicator className={styles.ItemIndicator}>
                   <CheckIcon className={styles.ItemIndicatorIcon} />
                 </Select.ItemIndicator>

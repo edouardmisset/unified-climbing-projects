@@ -4,12 +4,12 @@
 
 .ArrowOuterStroke {
   @media (prefers-color-scheme: light) {
-    fill: var(--color-gray-200);
+    fill: var(--gray-2);
   }
 }
 
 .ArrowInnerStroke {
   @media (prefers-color-scheme: dark) {
-    fill: var(--color-gray-300);
+    fill: var(--gray-7);
   }
 }

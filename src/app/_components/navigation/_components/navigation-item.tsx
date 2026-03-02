@@ -1,4 +1,5 @@
 import { Menu } from '@base-ui/react/menu'
+import baseUiStyles from '../../ui/base-ui/base-ui-primitives.module.css'
 import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'
@@ -19,7 +20,7 @@ export function NavigationItem({ item, mode }: NavigationItemProps) {
         </Link>
       </li>
     ) : (
-      <Menu.Item className={styles.Item}>
+      <Menu.Item className={`${baseUiStyles.highlightedItem} ${styles.Item}`}>
         <Link href={href}>{label}</Link>
       </Menu.Item>
     )
@@ -49,7 +50,7 @@ export function NavigationItem({ item, mode }: NavigationItemProps) {
     <Menu.Group>
       <Menu.GroupLabel className={styles.GroupLabel}>{item.label}</Menu.GroupLabel>
       {item.links.map(({ href, label, shortLabel }) => (
-        <Menu.Item className={styles.Item} key={href}>
+        <Menu.Item className={`${baseUiStyles.highlightedItem} ${styles.Item}`} key={href}>
           <Link href={href}>{shortLabel ?? label}</Link>
         </Menu.Item>
       ))}

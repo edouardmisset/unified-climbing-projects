@@ -225,21 +225,6 @@
   --jungle-11: hsl(73deg 91% 21%);
   --jungle-12: hsl(73deg 90% 16%);
 
-  /** Base-UI Theme */
-  --color-blue: var(--blue-5);
-  --color-red: var(--red-5);
-  --color-gray-50: light-dark(var(--gray-0), var(--gray-10));
-  --color-gray-100: light-dark(var(--gray-1), var(--gray-9));
-  --color-gray-200: light-dark(var(--gray-2), var(--gray-8));
-  --color-gray-300: light-dark(var(--gray-3), var(--gray-7));
-  --color-gray-400: light-dark(var(--gray-4), var(--gray-6));
-  --color-gray-500: light-dark(var(--gray-5), var(--gray-5));
-  --color-gray-600: light-dark(var(--gray-6), var(--gray-4));
-  --color-gray-700: light-dark(var(--gray-7), var(--gray-3));
-  --color-gray-800: light-dark(var(--gray-8), var(--gray-2));
-  --color-gray-900: light-dark(var(--gray-9), var(--gray-1));
-  --color-gray-950: light-dark(var(--gray-10), var(--gray-0));
-
   /** Patagonia color scheme */
   --patagonia-color-1: hsl(250deg 63% 33%);
   --patagonia-color-2: hsl(246deg 49% 50%);

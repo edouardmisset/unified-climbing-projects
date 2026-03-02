@@ -7,6 +7,7 @@ import { NavigationItem } from './_components/navigation-item'
 import { UserStatus } from './_components/user-status'
 import { NAVIGATION_ITEMS } from './constants'
 import { createNavigationElementKey } from './helpers'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './navigation.module.css'
 
 export const Navigation = memo(() => (
@@ -29,13 +30,18 @@ export const Navigation = memo(() => (
     {/* Mobile hamburger menu */}
     <div className={styles.mobileMenu}>
       <Menu.Root>
-        <Menu.Trigger aria-label='navigation' className={styles.Button} openOnHover tabIndex={0}>
+        <Menu.Trigger
+          aria-label='navigation'
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Button}`}
+          openOnHover
+          tabIndex={0}
+        >
           <MenuIcon />
         </Menu.Trigger>
         <Menu.Portal>
           <Menu.Positioner className={styles.Positioner} sideOffset={8}>
-            <Menu.Popup className={styles.Popup}>
-              <Menu.Arrow className={styles.Arrow}>
+            <Menu.Popup className={`${baseUiStyles.popupSurface} ${styles.Popup}`}>
+              <Menu.Arrow className={baseUiStyles.popupArrow}>
                 <Arrow />
               </Menu.Arrow>
               {NAVIGATION_ITEMS.map((item, index) => (
@@ -48,7 +54,7 @@ export const Navigation = memo(() => (
               ))}
               <Menu.Separator className={styles.Separator} />
               <Menu.Item
-                className={styles.Item}
+                className={`${baseUiStyles.highlightedItem} ${styles.Item}`}
                 render={(_props, _state) => (
                   <div className={styles.UserContainer}>
                     <UserStatus />

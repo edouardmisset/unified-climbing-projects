@@ -18,7 +18,7 @@
 .header {
   display: grid;
   grid-template-columns: subgrid;
-  border-block-end: 1px solid var(--color-gray-400);
+  border-block-end: 1px solid light-dark(var(--gray-4), var(--gray-6));
 }
 
 .headerRow {

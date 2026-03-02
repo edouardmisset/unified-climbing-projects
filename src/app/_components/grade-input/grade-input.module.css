@@ -33,11 +33,11 @@
   font-size: 1rem;
   font-weight: normal;
   font-variant-numeric: tabular-nums;
-  color: var(--color-gray-900);
+  color: light-dark(var(--gray-9), var(--gray-1));
 
   text-align: center;
   background-color: transparent;
-  border-block: 1px solid var(--color-gray-200);
+  border-block: 1px solid light-dark(var(--gray-2), var(--gray-8));
   border-inline: none;
 
   &:focus {
@@ -57,13 +57,7 @@
   block-size: 2.5rem;
   padding: 0;
   margin: 0;
-  color: var(--color-gray-900);
-  user-select: none;
-  outline: 0;
-  background-color: var(--color-gray-50);
   background-clip: padding-box;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 0.375rem;
 
   & .Decrement {
     border-start-end-radius: 0;
@@ -73,15 +67,5 @@
   & .Increment {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
-  }
-
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--color-gray-100);
-    }
-  }
-
-  &:active {
-    background-color: var(--color-gray-100);
   }
 }

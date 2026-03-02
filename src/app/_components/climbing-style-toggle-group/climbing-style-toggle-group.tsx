@@ -4,6 +4,7 @@ import { ToggleGroup } from '@base-ui/react/toggle-group'
 import { disjunctiveListFormatter } from '~/helpers/list-formatter'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './climbing-style-toggle-group.module.css'
 
 export function ClimbingStyleToggleGroup(
@@ -41,7 +42,7 @@ export function ClimbingStyleToggleGroup(
         <Toggle
           aria-hidden={disabled}
           aria-label={climbingStyle}
-          className={`contrastColor ${styles.button}${disabled ? ' notAllowed' : ''}`}
+          className={`contrastColor ${baseUiStyles.interactiveControl} ${styles.button}${disabled ? ' notAllowed' : ''}`}
           disabled={disabled}
           hidden={disabled}
           key={climbingStyle}

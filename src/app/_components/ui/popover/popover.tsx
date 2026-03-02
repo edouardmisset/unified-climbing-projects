@@ -3,6 +3,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover'
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { Arrow } from '../../svg/arrow/arrow'
+import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './popover.module.css'
 
 type PopoverProps = {
@@ -16,7 +17,7 @@ export function Popover(props: PopoverProps) {
 
   if (trigger == null || popoverTitle == null || children == null) return null
 
-  const triggerClass = `${styles.iconButton}${className ? ` ${className}` : ''}`
+  const triggerClass = `${baseUiStyles.interactiveControl} ${styles.iconButton}${className ? ` ${className}` : ''}`
 
   return (
     <BasePopover.Root>
@@ -25,8 +26,8 @@ export function Popover(props: PopoverProps) {
       </BasePopover.Trigger>
       <BasePopover.Portal>
         <BasePopover.Positioner sideOffset={8}>
-          <BasePopover.Popup className={styles.popup}>
-            <BasePopover.Arrow className={styles.arrow}>
+          <BasePopover.Popup className={`${baseUiStyles.popupSurface} ${styles.popup}`}>
+            <BasePopover.Arrow className={baseUiStyles.popupArrow}>
               <Arrow />
             </BasePopover.Arrow>
             <BasePopover.Title className={styles.title}>{popoverTitle}</BasePopover.Title>
