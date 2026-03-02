@@ -34,7 +34,7 @@ export function CragsSummary({
       <p>
         You visited{' '}
         <Popover
-          popoverDescription={
+          description={
             <ul className={ascentsWithPopoverStyles.list}>
               {crags.toSorted(compareStringsAscending).map(crag => (
                 <li className={ascentsWithPopoverStyles.item} key={crag}>
@@ -43,9 +43,9 @@ export function CragsSummary({
               ))}
             </ul>
           }
-          popoverTitle='Crags'
+          title='Crags'
           triggerClassName={ascentsWithPopoverStyles.popover}
-          triggerContent={
+          trigger={
             <span>
               <strong>{numberOfCrags}</strong> crags
             </span>
@@ -57,7 +57,7 @@ export function CragsSummary({
             <br />
             Crags without ascents:{' '}
             <Popover
-              popoverDescription={
+              description={
                 <ul className={ascentsWithPopoverStyles.list}>
                   {cragsWithoutAscents.map(crag => (
                     <li className={ascentsWithPopoverStyles.item} key={crag}>
@@ -66,9 +66,9 @@ export function CragsSummary({
                   ))}
                 </ul>
               }
-              popoverTitle='Crags without ascents'
+              title='Crags without ascents'
               triggerClassName={ascentsWithPopoverStyles.popover}
-              triggerContent={
+              trigger={
                 <span>
                   <strong>{cragsWithoutAscents.length}</strong> crags
                 </span>

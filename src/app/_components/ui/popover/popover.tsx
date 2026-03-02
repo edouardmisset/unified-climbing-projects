@@ -5,30 +5,34 @@ import { type CSSProperties, memo, type ReactNode } from 'react'
 import { PopoverContent } from './popover-content'
 import styles from './popover.module.css'
 
+type PopoverProps = {
+  trigger: ReactNode
+  title: ReactNode
+  description: ReactNode
+  triggerClassName?: string
+  buttonStyle?: CSSProperties
+  triggerTitle?: string
+}
+
 export const Popover = memo(
   ({
-    triggerContent,
-    popoverTitle,
-    popoverDescription,
+    trigger,
+    title,
+    description,
     triggerClassName = '',
     buttonStyle,
-    title,
-  }: {
-    triggerContent: ReactNode
-    triggerClassName?: string
-    buttonStyle?: CSSProperties
-    popoverTitle: ReactNode
-    popoverDescription: ReactNode
-    title?: string
-  }) => {
+    triggerTitle,
+  }: PopoverProps) => {
+    if (trigger == null || title == null || description == null) return null
+
     const triggerClass = `${styles.iconButton} ${triggerClassName}`
     return (
       <BasePopover.Root>
-        <BasePopover.Trigger className={triggerClass} style={buttonStyle} title={title}>
-          {triggerContent}
+        <BasePopover.Trigger className={triggerClass} style={buttonStyle} title={triggerTitle}>
+          {trigger}
         </BasePopover.Trigger>
         <BasePopover.Portal>
-          <PopoverContent popoverDescription={popoverDescription} popoverTitle={popoverTitle} />
+          <PopoverContent description={description} title={title} />
         </BasePopover.Portal>
       </BasePopover.Root>
     )

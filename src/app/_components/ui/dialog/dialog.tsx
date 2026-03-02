@@ -1,57 +1,38 @@
 'use client'
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import { XIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 import styles from './dialog.module.css'
+
+type DialogProps = {
+  triggerText?: ReactNode
+  content: ReactNode
+  triggerClassName?: string
+  title?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
 
 export function Dialog({
   triggerText,
   content,
   triggerClassName,
   title,
-}: {
-  triggerText?: string
-  content: React.JSX.Element
-  triggerClassName?: string
-  title?: string
-}) {
-  return (
-    <BaseDialog.Root>
-      <BaseDialog.Trigger className={`${styles.trigger} ${triggerClassName ?? ''}`}>
-        {triggerText}
-      </BaseDialog.Trigger>
-      <BaseDialog.Portal>
-        <BaseDialog.Backdrop className={styles.backdrop} />
-        <BaseDialog.Popup className={styles.popup}>
-          <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
-          <BaseDialog.Description render={content} />
-          <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
-            <XIcon />
-          </BaseDialog.Close>
-        </BaseDialog.Popup>
-      </BaseDialog.Portal>
-    </BaseDialog.Root>
-  )
-}
-
-// oxlint-disable-next-line react/no-multi-comp
-export function ControlledDialog({
   open,
   onOpenChange,
-  content,
-  title,
-}: {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  content: React.JSX.Element
-  title?: string
-}) {
+}: DialogProps) {
+  const triggerClass = `${styles.trigger}${triggerClassName ? ` ${triggerClassName}` : ''}`
+
   return (
-    <BaseDialog.Root open={open} onOpenChange={onOpenChange}>
+    <BaseDialog.Root onOpenChange={onOpenChange} open={open}>
+      {triggerText ? (
+        <BaseDialog.Trigger className={triggerClass}>{triggerText}</BaseDialog.Trigger>
+      ) : null}
       <BaseDialog.Portal>
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
-          <BaseDialog.Description render={content} />
+          <BaseDialog.Description>{content}</BaseDialog.Description>
           <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
             <XIcon />
           </BaseDialog.Close>

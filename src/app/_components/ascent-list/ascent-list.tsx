@@ -19,7 +19,7 @@ import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
-import { ControlledDialog } from '../ui/dialog/dialog'
+import { Dialog } from '../ui/dialog/dialog'
 import styles from './ascent-list.module.css'
 import { Loader } from '../ui/loader/loader'
 
@@ -268,7 +268,7 @@ export const AscentList = memo(
         </table>
 
         {selectedAscent !== null && (
-          <ControlledDialog
+          <Dialog
             content={
               <Suspense fallback={<Loader />}>
                 <AscentCard ascent={selectedAscent} />

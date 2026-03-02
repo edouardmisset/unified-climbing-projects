@@ -40,19 +40,19 @@ export function DisciplineSection(props: DisciplineSectionProps) {
         {header} <span className={styles.headerSmall}>({percentage}%)</span>
       </h4>
       <Popover
-        popoverDescription={<SessionList sessions={firstSessions} />}
-        popoverTitle={`${firstLabel}: ${firstCount} sessions`}
-        title={`${firstLabel} Training Sessions: ${firstCount}`}
+        description={<SessionList sessions={firstSessions} />}
+        title={`${firstLabel}: ${firstCount} sessions`}
+        triggerTitle={`${firstLabel} Training Sessions: ${firstCount}`}
         triggerClassName={styles.target}
-        triggerContent={firstLabel}
+        trigger={firstLabel}
       />{' '}
       /{' '}
       <Popover
-        popoverDescription={<SessionList sessions={secondSessions} />}
-        popoverTitle={`${secondLabel}: ${secondCount} sessions`}
-        title={`${secondLabel} Training Sessions: ${secondCount}`}
+        description={<SessionList sessions={secondSessions} />}
+        title={`${secondLabel}: ${secondCount} sessions`}
+        triggerTitle={`${secondLabel} Training Sessions: ${secondCount}`}
         triggerClassName={styles.target}
-        triggerContent={secondLabel}
+        trigger={secondLabel}
       />
       : {disciplinePercentage}%
     </>

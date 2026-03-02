@@ -5,12 +5,12 @@ import { Arrow } from '../../svg/arrow/arrow'
 import styles from './popover.module.css'
 
 type PopoverContentProps = {
-  popoverTitle: ReactNode
-  popoverDescription: ReactNode
+  title: ReactNode
+  description: ReactNode
 }
 
 function PopoverContentComponent(props: PopoverContentProps) {
-  const { popoverTitle, popoverDescription } = props
+  const { title, description } = props
 
   return (
     <BasePopover.Positioner sideOffset={8}>
@@ -18,11 +18,8 @@ function PopoverContentComponent(props: PopoverContentProps) {
         <BasePopover.Arrow className={styles.arrow}>
           <Arrow />
         </BasePopover.Arrow>
-        <BasePopover.Title className={styles.title}>{popoverTitle}</BasePopover.Title>
-        <BasePopover.Description
-          className={styles.description}
-          render={<div>{popoverDescription}</div>}
-        />
+        <BasePopover.Title className={styles.title}>{title}</BasePopover.Title>
+        <BasePopover.Description className={styles.description} render={<div>{description}</div>} />
       </BasePopover.Popup>
     </BasePopover.Positioner>
   )

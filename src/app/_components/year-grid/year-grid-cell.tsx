@@ -73,10 +73,10 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
   return (
     <Popover
       buttonStyle={cellStyle}
-      popoverDescription={lazyDescription}
-      popoverTitle={title}
+      description={lazyDescription}
+      title={title}
       triggerClassName={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrastColor`}
-      triggerContent={shortText}
+      trigger={shortText}
     />
   )
 })

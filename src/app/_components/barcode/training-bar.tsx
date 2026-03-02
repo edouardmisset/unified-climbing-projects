@@ -66,10 +66,10 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   return (
     <Popover
       buttonStyle={buttonStyle}
-      popoverDescription={lazyDescription}
-      popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
+      description={lazyDescription}
+      title={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
       triggerClassName={trainingBarClassName}
-      triggerContent=''
+      trigger=''
     />
   )
 })

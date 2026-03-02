@@ -55,10 +55,10 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   return (
     <Popover
       buttonStyle={buttonStyle}
-      popoverDescription={lazyDescription}
-      popoverTitle={title}
+      description={lazyDescription}
+      title={title}
       triggerClassName={triggerClassName}
-      triggerContent=''
+      trigger=''
     />
   )
 })
