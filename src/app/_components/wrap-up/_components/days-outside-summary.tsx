@@ -12,7 +12,7 @@ import { formatLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
-import { Card } from '../../card/card'
+import { Card } from '../../ui/card/card'
 import { DaysOutsideDetails } from './days-outside-details'
 
 const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap

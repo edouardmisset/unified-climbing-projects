@@ -1,7 +1,7 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
 import { ALL_VALUE } from '../dashboard/constants.ts'
-import { Option } from '../option/option.tsx'
+import { Option } from '../ui/option/option.tsx'
 import styles from './custom-select.module.css'
 
 type CustomSelectProps = {

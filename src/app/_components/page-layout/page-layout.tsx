@@ -1,5 +1,5 @@
 import { type ReactNode, Suspense } from 'react'
-import { Loader } from '../loader/loader'
+import { Loader } from '../ui/loader/loader'
 import { Header } from './header'
 
 export default function Layout({

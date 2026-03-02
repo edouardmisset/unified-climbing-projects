@@ -9,7 +9,7 @@ import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense, useMemo } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
 import { useTheme } from '~/hooks/use-theme'
 import { ThemeToggle } from './_components/theme-toggle/theme-toggle'

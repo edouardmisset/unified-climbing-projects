@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import NotFound from '~/app/not-found'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter'
 import type { AscentListProps } from '~/schema/ascent'

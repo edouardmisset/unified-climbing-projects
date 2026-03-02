@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
 import type { Ascent } from '~/schema/ascent'

@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Option } from '~/app/_components/option/option'
+import { Option } from '~/app/_components/ui/option/option'
 import type { ValueAndLabel } from '~/types/generic'
 
 function DataListComponent({ id, options }: DataListProps) {

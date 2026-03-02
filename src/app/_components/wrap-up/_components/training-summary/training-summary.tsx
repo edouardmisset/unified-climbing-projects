@@ -1,5 +1,5 @@
 import type { TrainingSessionListProps } from '~/schema/training'
-import { Card } from '../../../card/card'
+import { Card } from '../../../ui/card/card'
 import { calculateSessionPercentage, categorizeSessions } from './helpers'
 import { DisciplineSection } from './discipline-section'
 

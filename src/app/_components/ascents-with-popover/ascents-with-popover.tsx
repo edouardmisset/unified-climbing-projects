@@ -2,7 +2,7 @@ import { capitalize } from '@edouardmisset/text'
 import { useMemo } from 'react'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { AscentListProps } from '~/schema/ascent'
-import { Popover } from '../popover/popover'
+import { Popover } from '../ui/popover/popover'
 import { AscentList } from './ascent-list'
 import styles from './ascents-with-popover.module.css'
 

@@ -5,7 +5,7 @@ import { TrainingSessionFilterBar } from '~/app/_components/filter-bar/_componen
 import NotFound from '~/app/not-found'
 import { useTrainingSessionsFilter } from '~/hooks/use-training-sessions-filter'
 import type { TrainingSessionListProps } from '~/schema/training'
-import { Loader } from '../loader/loader'
+import { Loader } from '../ui/loader/loader'
 import { TrainingSessionList } from '../training-session-list/training-session-list'
 
 export function FilteredTrainingSessionList({ trainingSessions }: TrainingSessionListProps) {

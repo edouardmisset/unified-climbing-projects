@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
 import { groupDataDaysByYear } from '~/data/helpers'

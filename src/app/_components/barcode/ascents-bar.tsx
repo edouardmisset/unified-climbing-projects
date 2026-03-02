@@ -4,7 +4,7 @@ import { getWeekNumber } from '~/helpers/date'
 import { sortByGrade } from '~/helpers/sorter'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
-import { Popover } from '../popover/popover'
+import { Popover } from '../ui/popover/popover'
 import styles from './barcode.module.css'
 
 // Lazy load the popover component

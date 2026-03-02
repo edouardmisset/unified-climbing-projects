@@ -3,7 +3,7 @@ import { sortByDate } from '~/helpers/sort-by-date'
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
-import { Card } from '../../card/card'
+import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 

@@ -1,7 +1,7 @@
 import { isDateInYear } from '@edouardmisset/date'
 import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
 import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
-import { Popover } from '../popover/popover'
+import { Popover } from '../ui/popover/popover'
 import { EmptyGridCell } from './empty-grid-cell'
 import { datesEqual } from './helpers'
 import type { DayDescriptor } from './year-grid'

@@ -6,7 +6,7 @@ import { useTrainingSessionsFilter } from '~/hooks/use-training-sessions-filter'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
 import { DashboardStats } from './dashboard-stats'
 import { TrainingDashboardFilterBar } from '../filter-bar/_components/training-dashboard-filter-bar'
-import { Loader } from '../loader/loader.tsx'
+import { Loader } from '../ui/loader/loader.tsx'
 
 export function TrainingDashboard({ trainingSessions }: TrainingSessionListProps) {
   const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions ?? [])

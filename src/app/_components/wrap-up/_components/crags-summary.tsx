@@ -4,8 +4,8 @@ import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { AscentListProps } from '~/schema/ascent'
 import type { TrainingSessionListProps } from '~/schema/training'
 import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
-import { Card } from '../../card/card'
-import { Popover } from '../../popover/popover'
+import { Card } from '../../ui/card/card'
+import { Popover } from '../../ui/popover/popover'
 
 export function CragsSummary({
   ascents,

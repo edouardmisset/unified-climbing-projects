@@ -19,9 +19,9 @@ import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
-import { ControlledDialog } from '../dialog/dialog'
+import { ControlledDialog } from '../ui/dialog/dialog'
 import styles from './ascent-list.module.css'
-import { Loader } from '../loader/loader'
+import { Loader } from '../ui/loader/loader'
 
 const AscentCard = lazy(() =>
   import('../ascent-card/ascent-card').then(module => ({ default: module.AscentCard })),

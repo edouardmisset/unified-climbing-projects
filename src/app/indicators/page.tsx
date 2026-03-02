@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Loader } from '../_components/loader/loader'
+import { Loader } from '../_components/ui/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 import { IndicatorsTimeline } from './indicators-timeline'
 import styles from './page.module.css'

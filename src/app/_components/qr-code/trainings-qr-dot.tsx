@@ -2,7 +2,7 @@ import { lazy, memo, Suspense, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
-import { Popover } from '../popover/popover'
+import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
 const TrainingPopoverDescription = lazy(async () =>

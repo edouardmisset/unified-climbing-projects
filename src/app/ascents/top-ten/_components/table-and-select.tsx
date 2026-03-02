@@ -2,7 +2,7 @@
 
 import { Suspense, useDeferredValue, useMemo } from 'react'
 import { AscentList } from '~/app/_components/ascent-list/ascent-list'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import NotFound from '~/app/not-found'
 import { getTopTenAscents } from '~/helpers/get-top-ten-ascents'
 import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'

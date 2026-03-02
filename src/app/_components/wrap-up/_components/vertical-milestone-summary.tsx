@@ -5,7 +5,7 @@ import { filterAscents } from '~/helpers/filter-ascents'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
-import { Card } from '../../card/card'
+import { Card } from '../../ui/card/card'
 
 export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })

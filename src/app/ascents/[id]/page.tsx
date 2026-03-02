@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Loader } from '~/app/_components/loader/loader'
+import { Loader } from '~/app/_components/ui/loader/loader'
 import { AscentDetail } from './ascent-detail'
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {

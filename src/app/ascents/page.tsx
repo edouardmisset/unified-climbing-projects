@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { getAllAscents } from '~/services/ascents'
 import { FilteredAscentList } from '../_components/filtered-ascents-list/filtered-ascents-list'
-import { Loader } from '../_components/loader/loader'
+import { Loader } from '../_components/ui/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 
 export const revalidate = 86_400

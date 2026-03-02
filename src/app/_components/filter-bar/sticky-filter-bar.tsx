@@ -1,6 +1,6 @@
 import { CircleX } from 'lucide-react'
 import { memo, useCallback, useMemo } from 'react'
-import { CustomInput } from '../custom-input/custom-input'
+import { CustomInput } from '../ui/custom-input/custom-input'
 import { CustomSelect } from '../custom-select/custom-select'
 import { ALL_VALUE } from '../dashboard/constants'
 import type { BaseFilterBarProps } from './types'

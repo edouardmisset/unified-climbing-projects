@@ -1,5 +1,5 @@
 import type { TrainingSession } from '~/schema/training'
-import { Popover } from '../../../popover/popover'
+import { Popover } from '../../../ui/popover/popover'
 import { getSessionRatioData } from './helpers'
 import { SessionList } from './session-list'
 import styles from './training-summary.module.css'

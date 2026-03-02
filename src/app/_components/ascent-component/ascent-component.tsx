@@ -1,7 +1,7 @@
 import { formatGrade } from '~/helpers/format-grade'
 import type { Ascent } from '~/schema/ascent'
 import { AscentCard } from '../ascent-card/ascent-card'
-import { Dialog } from '../dialog/dialog'
+import { Dialog } from '../ui/dialog/dialog'
 import styles from './ascent-component.module.css'
 
 export function AscentComponent({ ascent }: { ascent: Ascent }) {

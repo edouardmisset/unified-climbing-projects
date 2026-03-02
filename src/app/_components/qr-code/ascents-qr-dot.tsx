@@ -3,7 +3,7 @@ import { fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { prettyLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
-import { Popover } from '../popover/popover'
+import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
 const AscentsPopoverDescription = lazy(async () =>

@@ -6,7 +6,7 @@ import NotFound from '~/app/not-found.tsx'
 import { useAscentsFilter } from '~/hooks/use-ascents-filter.ts'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import { DashboardStatistics } from './dashboard-statistics'
-import { Loader } from '../loader/loader.tsx'
+import { Loader } from '../ui/loader/loader.tsx'
 
 const AscentList = lazy(() =>
   import('../ascent-list/ascent-list').then(module => ({ default: module.AscentList })),
