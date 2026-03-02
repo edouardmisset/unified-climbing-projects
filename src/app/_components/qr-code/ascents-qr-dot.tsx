@@ -50,6 +50,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
       title={dateAndCrag}
       triggerClassName={gradeClassName}
       trigger=''
+      aria-label={`Ascent on ${dateAndCrag}`}
     />
   )
 })
