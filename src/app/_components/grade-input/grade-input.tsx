@@ -5,6 +5,7 @@ import { MinusIcon, PlusIcon } from 'lucide-react'
 import { useId } from 'react'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER } from '~/schema/ascent'
+import customLabelStyles from '../ui/custom-label/custom-label.module.css'
 import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
 import styles from './grade-input.module.css'
 
@@ -45,7 +46,7 @@ export function GradeInput(
     >
       <NumberField.ScrubArea className={styles.ScrubArea}>
         {label ? (
-          <label className={styles.Label} htmlFor={id}>
+          <label className={`${customLabelStyles.labelText} ${styles.Label}`} htmlFor={id}>
             {label}
           </label>
         ) : null}

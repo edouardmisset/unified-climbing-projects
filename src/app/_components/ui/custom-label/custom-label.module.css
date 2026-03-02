@@ -1,0 +1,15 @@
+.control {
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-fluid-1);
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.labelText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: var(--color-gray-900);
+}

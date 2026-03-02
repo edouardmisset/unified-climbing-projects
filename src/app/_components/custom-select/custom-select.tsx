@@ -1,6 +1,7 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ChangeEventHandler } from 'react'
 import { ALL_VALUE } from '../dashboard/constants.ts'
+import { CustomLabel } from '../ui/custom-label/custom-label'
 import { Option } from '../ui/option/option.tsx'
 import styles from './custom-select.module.css'
 
@@ -16,8 +17,7 @@ export function CustomSelect(props: CustomSelectProps) {
   const { handleChange, selectedOption, options, name, title = capitalize(name) } = props
 
   return (
-    <label className={styles.label} htmlFor={name} title={title}>
-      {capitalize(name)}
+    <CustomLabel id={name} label={capitalize(name)} title={title}>
       <select
         className={styles.select}
         id={name}
@@ -30,6 +30,6 @@ export function CustomSelect(props: CustomSelectProps) {
           <Option key={option} label={String(option)} value={String(option)} />
         ))}
       </select>
-    </label>
+    </CustomLabel>
   )
 }

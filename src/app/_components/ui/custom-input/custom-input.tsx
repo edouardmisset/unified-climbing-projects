@@ -1,5 +1,6 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import type { ComponentPropsWithoutRef } from 'react'
+import { CustomLabel } from '../custom-label/custom-label'
 import styles from './custom-input.module.css'
 
 type CustomInputProps = {
@@ -10,8 +11,7 @@ export function CustomInput(props: CustomInputProps & ComponentPropsWithoutRef<'
   const { value, name, id = name, title = capitalize(name), ...rest } = props
 
   return (
-    <label className={styles.label} htmlFor={id} title={title}>
-      {capitalize(name)}
+    <CustomLabel id={id} label={capitalize(name)} title={title}>
       <input
         {...rest}
         className={styles.input}
@@ -20,6 +20,6 @@ export function CustomInput(props: CustomInputProps & ComponentPropsWithoutRef<'
         title={value?.toString()}
         value={value}
       />
-    </label>
+    </CustomLabel>
   )
 }
