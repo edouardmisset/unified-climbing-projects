@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import styles from './form-control.module.css'
+import styles from './custom-label.module.css'
 
 type FormControlProps = {
   id: string
