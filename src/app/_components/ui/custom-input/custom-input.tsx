@@ -12,7 +12,14 @@ export function CustomInput(props: CustomInputProps & ComponentPropsWithoutRef<'
   return (
     <label className={styles.label} htmlFor={id} title={title}>
       {capitalize(name)}
-      <input {...rest} className={styles.input} id={id} title={value?.toString()} value={value} />
+      <input
+        {...rest}
+        className={styles.input}
+        name={name}
+        id={id}
+        title={value?.toString()}
+        value={value}
+      />
     </label>
   )
 }

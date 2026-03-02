@@ -5,7 +5,7 @@ import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { getAllAscents } from '~/services/ascents'
 
-export const revalidate = 86_400
+export const revalidate = 3_600
 
 export default async function Page() {
   const ascents = await getAllAscents()

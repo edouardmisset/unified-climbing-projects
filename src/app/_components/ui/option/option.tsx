@@ -2,7 +2,9 @@ import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import { memo } from 'react'
 import type { ValueAndLabel } from '~/types/generic'
 
-function OptionComponent({ value, label }: ValueAndLabel) {
+function OptionComponent(props: ValueAndLabel) {
+  const { value, label } = props
+
   const title = stringEqualsCaseInsensitive(label, value) ? label : `${label} - ${value}`
   return (
     <option title={title} value={value}>

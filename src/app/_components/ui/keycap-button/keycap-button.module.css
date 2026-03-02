@@ -85,10 +85,10 @@
     @media (prefers-reduced-motion: no-preference) {
       animation: rainbow 5s linear infinite;
     }
+  }
 
-    &:disabled {
-      animation-play-state: paused;
-    }
+  &:disabled::after {
+    animation-play-state: paused;
   }
 
   &::before {

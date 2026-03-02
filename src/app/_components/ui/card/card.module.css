@@ -18,7 +18,7 @@
   --sun-angle: 20deg;
   --first-angle: 20deg;
   --second-angle: 35deg;
-  --forth-angle: 45deg;
+  --fourth-angle: 45deg;
   --border-width: calc(var(--size-fluid-0) / 3);
   --glow-intensity: 0.2;
   --glow-size: 0.7rem;
@@ -31,9 +31,9 @@
     var(--patagonia-color-3),
     calc(var(--sun-angle) + var(--second-angle)),
     var(--patagonia-color-2),
-    calc(var(--sun-angle) + var(--forth-angle)),
+    calc(var(--sun-angle) + var(--fourth-angle)),
     var(--patagonia-color-1),
-    calc(360deg - var(--sun-angle) - var(--forth-angle)),
+    calc(360deg - var(--sun-angle) - var(--fourth-angle)),
     var(--patagonia-color-2),
     calc(360deg - var(--sun-angle) - var(--second-angle)),
     var(--patagonia-color-3),

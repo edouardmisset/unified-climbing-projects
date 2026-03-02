@@ -16,7 +16,7 @@ export function Dialog({
 }) {
   return (
     <BaseDialog.Root>
-      <BaseDialog.Trigger className={`${styles.trigger} ${triggerClassName}`}>
+      <BaseDialog.Trigger className={`${styles.trigger} ${triggerClassName ?? ''}`}>
         {triggerText}
       </BaseDialog.Trigger>
       <BaseDialog.Portal>
@@ -24,7 +24,7 @@ export function Dialog({
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
           <BaseDialog.Description render={content} />
-          <BaseDialog.Close className={styles.button} data-close='true'>
+          <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
             <XIcon />
           </BaseDialog.Close>
         </BaseDialog.Popup>
@@ -52,7 +52,7 @@ export function ControlledDialog({
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
           <BaseDialog.Description render={content} />
-          <BaseDialog.Close className={styles.button} data-close='true'>
+          <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
             <XIcon />
           </BaseDialog.Close>
         </BaseDialog.Popup>

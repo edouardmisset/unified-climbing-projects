@@ -12,7 +12,11 @@ export function KeycapButton({
   label: string
 } & ComponentPropsWithoutRef<'button'>) {
   return (
-    <button {...otherProps} className={styles.button} type={type}>
+    <button
+      {...otherProps}
+      className={`${styles.button} ${otherProps.className ?? ''}`}
+      type={type}
+    >
       <span className={styles.text}>{label}</span>
     </button>
   )
