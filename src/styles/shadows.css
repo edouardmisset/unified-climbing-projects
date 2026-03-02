@@ -39,7 +39,6 @@
     0 22px 18px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
     0 41px 33px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
     0 100px 80px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
-  --inner-shadow-0: inset 0 0 0 1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
   --inner-shadow-1:
     inset 0 1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
     var(--inner-shadow-highlight);

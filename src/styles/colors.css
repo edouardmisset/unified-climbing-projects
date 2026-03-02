@@ -231,4 +231,33 @@
   --patagonia-color-3: hsl(248deg 67% 73%);
   --patagonia-color-4: hsl(10deg 82% 54%);
   --patagonia-color-5: hsl(24deg 83% 70%);
+  --patagonia-line-width: 2%;
+  --patagonia-line-color: hsl(0deg 0% 3%);
+  --mountains-outline: 5%;
+
+  /* oxfmt-ignore */
+  --mountains:
+    0 100%, 5% 85%, 10% 55%, 13% 45%, 15% 50%, 23% 87%, 25% 90%, 27% 85%, 30% 75%, 32% 77%,
+    45% 160%, 67% 85%, 70% 93%, 72% 90%, 82% 57%, 85% 52%, 95% 90%, 100% 100%;
+  --patagonia-gradient: linear-gradient(
+    to bottom,
+    var(--patagonia-color-1) 0%,
+    var(--patagonia-color-1) calc(20% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(20% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(20% + var(--patagonia-line-width)),
+    var(--patagonia-color-2) calc(20% + var(--patagonia-line-width)),
+    var(--patagonia-color-2) calc(40% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(40% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(40% + var(--patagonia-line-width)),
+    var(--patagonia-color-3) calc(40% + var(--patagonia-line-width)),
+    var(--patagonia-color-3) calc(60% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(60% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(60% + var(--patagonia-line-width)),
+    var(--patagonia-color-4) calc(60% + var(--patagonia-line-width)),
+    var(--patagonia-color-4) calc(80% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(80% - var(--patagonia-line-width)),
+    var(--patagonia-line-color) calc(80% + var(--patagonia-line-width)),
+    var(--patagonia-color-5) calc(80% + var(--patagonia-line-width)),
+    var(--patagonia-color-5) 100%
+  );
 }

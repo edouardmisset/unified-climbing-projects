@@ -2,22 +2,6 @@
  * https://open-props.style
  */
 
-:where(html) {
-  --g-0: 210 17% 98%;
-  --g-1: 210 17% 95%;
-  --g-2: 210 16% 93%;
-  --g-3: 210 14% 89%;
-  --g-4: 210 14% 83%;
-  --g-5: 210 11% 71%;
-  --g-6: 210 7% 56%;
-  --g-7: 210 9% 31%;
-  --g-8: 210 10% 23%;
-  --g-9: 210 11% 15%;
-  --g-10: 214 14% 10%;
-  --g-11: 216 16% 6%;
-  --g-12: 210 40% 2%;
-}
-
 :where(.btn, button, input:is([type='button'], [type='submit'], [type='reset'])),
 :where(input[type='file'])::-webkit-file-upload-button,
 :where(input[type='file'])::file-selector-button {

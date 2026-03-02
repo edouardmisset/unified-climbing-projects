@@ -3,24 +3,6 @@
  */
 
 :where(html) {
-  --minute: 60s;
-  --hour: calc(60 * var(--minute));
-  --day: calc(24 * var(--hour));
-  --week: calc(7 * var(--day));
-  --fortnight: calc(14 * var(--day));
-  --month: calc(30 * var(--day));
-  --quarter: calc(13 * var(--week));
-  --year: calc(365 * var(--day));
-  --leap-year: calc(366 * var(--day));
-  --olympiad: calc(4 * var(--year));
-  --decade: calc(10 * var(--year));
-  --generation: calc(3 * var(--decade));
-  --lifetime: calc(8 * var(--decade));
-  --work-day: calc(8 * var(--hour));
-  --work-week: calc(5 * var(--day));
   --blink: 0.1s;
   --sneeze: 0.5s;
-  --brief-moment: 15s;
-  --pause: 10s;
-  --unhealthy-pause: 30s;
 }
