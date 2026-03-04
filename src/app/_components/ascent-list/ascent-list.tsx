@@ -37,7 +37,7 @@ type TableStyle = CSSProperties & {
 
 export const AscentList = memo(
   ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
-    const [selectedAscent, setSelectedAscent] = useState<Ascent | null>(null)
+    const [selectedAscent, setSelectedAscent] = useState<Ascent | undefined>(undefined)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const handleRowClick = useCallback((ascent: Ascent) => {
@@ -48,7 +48,7 @@ export const AscentList = memo(
     const handleDialogClose = useCallback((open: boolean) => {
       setIsDialogOpen(open)
       if (!open) {
-        setSelectedAscent(null)
+        setSelectedAscent(undefined)
       }
     }, [])
 
@@ -267,7 +267,7 @@ export const AscentList = memo(
           </tfoot>
         </table>
 
-        {selectedAscent !== null && (
+        {selectedAscent !== undefined && (
           <Dialog
             content={
               <Suspense fallback={<Loader />}>

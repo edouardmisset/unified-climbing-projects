@@ -33,7 +33,7 @@ export const getAllAscents = cache(async (): Promise<Ascent[]> => {
       return []
     }
 
-    return parsedAscents.data.sort(compareDates)
+    return parsedAscents.data.toSorted(compareDates)
   } catch (error) {
     globalThis.console.error('Error fetching ascents from DB:', error)
     return []
@@ -71,7 +71,7 @@ export const getAllTrainingSessions = cache(async (): Promise<TrainingSession[]>
       globalThis.console.error('Error parsing training sessions from DB:', parsedTraining.error)
       return []
     }
-    return parsedTraining.data.sort(compareDates)
+    return parsedTraining.data.toSorted(compareDates)
   } catch (error) {
     globalThis.console.error('Error fetching training sessions from DB:', error)
     return []

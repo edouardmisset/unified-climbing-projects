@@ -22,7 +22,7 @@ export function sortNumericalValues<Obj extends Record<string, number>>(
 ): Obj {
   const { ascending = true } = options ?? {}
   return Object.fromEntries(
-    Object.entries(obj).sort(
+    Object.entries(obj).toSorted(
       ([, leftValue], [, rightValue]) => (leftValue - rightValue) * (ascending ? 1 : -1),
     ),
   ) as Obj

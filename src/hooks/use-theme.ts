@@ -11,14 +11,14 @@ export function useTheme() {
   const [theme, setTheme] = useState<ThemeMode>('dark')
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof globalThis.window === 'undefined') return
 
     const stored = localStorage.getItem('theme') ?? 'light'
     if (isThemeMode(stored)) {
       setTheme(stored)
       return
     }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setTheme('dark')
       return
     }

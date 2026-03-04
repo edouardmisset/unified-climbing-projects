@@ -33,7 +33,7 @@ export function getAscentsByGradesPerCrag(ascents: Ascent[]): Record<string, str
       count: cragAscents.length,
       crag,
     }))
-    .sort((a, b) => b.count - a.count)
+    .toSorted((a, b) => b.count - a.count)
     .slice(0, 10)
 
   return crags.map(({ crag, ascents: cragAscents }) => {

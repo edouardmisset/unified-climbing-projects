@@ -11,7 +11,7 @@ describe('sortByDate', () => {
 
   it('should sort dates in descending order by default (newest first)', () => {
     const unsortedArray = [dateA, dateB, dateC]
-    const sortedArray = [...unsortedArray].sort(sortByDate)
+    const sortedArray = unsortedArray.toSorted(sortByDate)
 
     expect(sortedArray.map(item => item.id)).toEqual(
       [2, 1, 3], // dateB (Feb), dateA (Jan), dateC (Dec)
@@ -20,7 +20,7 @@ describe('sortByDate', () => {
 
   it('should sort dates in ascending order when isDescending is false (oldest first)', () => {
     const unsortedArray = [dateA, dateB, dateC]
-    const sortedArray = [...unsortedArray].sort((a, b) => sortByDate(a, b, false))
+    const sortedArray = unsortedArray.toSorted((a, b) => sortByDate(a, b, false))
 
     expect(sortedArray.map(item => item.id)).toEqual(
       [3, 1, 2], // dateC (Dec), dateA (Jan), dateB (Feb)
@@ -40,7 +40,7 @@ describe('sortByDate', () => {
 
   it('should sort an array with multiple dates correctly', () => {
     const unsortedArray = [dateB, dateC, dateA, equalDate1, equalDate2]
-    const sortedArray = [...unsortedArray].sort(sortByDate)
+    const sortedArray = unsortedArray.toSorted(sortByDate)
 
     // Expected order: equalDate1/2 (Mar), dateB (Feb), dateA (Jan), dateC (Dec)
     expect(sortedArray.map(item => item.id)).toEqual([4, 5, 2, 1, 3])

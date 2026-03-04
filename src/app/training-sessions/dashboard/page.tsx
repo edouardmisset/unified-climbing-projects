@@ -5,7 +5,7 @@ import Layout from '~/app/_components/page-layout/page-layout'
 import { TrainingDashboard } from '~/app/_components/training-dashboard/training-dashboard'
 import { getAllTrainingSessions } from '~/services/training'
 
-export const revalidate = 3_600
+export const revalidate = 3600
 
 export default async function Page() {
   const trainingSessions = await getAllTrainingSessions()

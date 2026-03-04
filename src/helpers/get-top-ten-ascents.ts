@@ -22,6 +22,6 @@ export function getTopTenAscents(params: GetTopTenParams): Ascent[] {
       return true
     })
     .map(ascent => ({ ...ascent, points: fromAscentToPoints(ascent) }))
-    .sort((a, b) => b.points - a.points)
+    .toSorted((a, b) => b.points - a.points)
   return sortedAscentsWithPoints.slice(0, 10)
 }

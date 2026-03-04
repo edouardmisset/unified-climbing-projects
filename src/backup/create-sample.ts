@@ -12,7 +12,7 @@ const STRATIFY_BY: (keyof (typeof ascents)[number])[] = [
 
 // Function to get a random sample of specified size from an array
 function getRandomSample(arr: any[], size: number): any[] {
-  const shuffled = arr.sort(() => 1 / 2 - Math.random())
+  const shuffled = arr.toSorted(() => 1 / 2 - Math.random())
   return shuffled.slice(0, size)
 }
 
@@ -55,7 +55,7 @@ const subset = stratifiedSample(ascents, SAMPLE_SIZE, STRATIFY_BY)
 // Write the subset to a new JSON file
 await writeFile(
   `./src/server/backup/ascent-data-sample-${new Date().toISOString().slice(0, 10)}.json`,
-  JSON.stringify(subset, null, 2),
+  JSON.stringify(subset),
 )
 
 globalThis.console.log(`Sampled ${subset.length} entries from the original data.`)

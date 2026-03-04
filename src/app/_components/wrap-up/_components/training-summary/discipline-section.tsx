@@ -15,7 +15,7 @@ type DisciplineSectionProps = {
 export function DisciplineSection(props: DisciplineSectionProps) {
   const { header, percentage, routeSessions, boulderSessions, sessionCount } = props
 
-  if (routeSessions.length === 0 && boulderSessions.length === 0) return null
+  if (routeSessions.length === 0 && boulderSessions.length === 0) return
 
   const {
     firstLabel,

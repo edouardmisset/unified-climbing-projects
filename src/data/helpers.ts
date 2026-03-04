@@ -28,7 +28,7 @@ export function createYearList<T extends StringDate = TrainingSession | Ascent>(
     ? range(Math.min(...uniqueYears), Math.max(...uniqueYears))
     : uniqueYears
 
-  return yearsToSort.sort((a, b) => (a - b) * (descending ? -1 : 1))
+  return yearsToSort.toSorted((a, b) => (a - b) * (descending ? -1 : 1))
 }
 
 /** Note that the array of data of type T can represent a **week or a day** of data. */

@@ -27,7 +27,7 @@ export function Dialog({
     <BaseDialog.Root onOpenChange={onOpenChange} open={open}>
       {triggerText ? (
         <BaseDialog.Trigger className={triggerClass}>{triggerText}</BaseDialog.Trigger>
-      ) : null}
+      ) : undefined}
       <BaseDialog.Portal>
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>

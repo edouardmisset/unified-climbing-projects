@@ -31,7 +31,7 @@ describe('calculateTopTenScore', () => {
     // Calculate top 10 scores manually
     const expectedTotal = manyAscents
       .map(ascent => fromAscentToPoints(ascent))
-      .sort((a, b) => b - a)
+      .toSorted((a, b) => b - a)
       .slice(0, 10)
       .reduce((sum, points) => sum + points, 0)
 
@@ -71,7 +71,7 @@ describe('calculateTopTenScore', () => {
     // Calculate expected manually
     const expectedTotal = mockAscents
       .map(ascent => fromAscentToPoints(ascent))
-      .sort((a, b) => b - a)
+      .toSorted((a, b) => b - a)
       .slice(0, 10)
       .reduce((sum, points) => sum + points, 0)
 

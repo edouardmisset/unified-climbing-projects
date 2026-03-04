@@ -30,9 +30,9 @@ export function GradeInput(
   } = props
   const id = useId()
 
-  if (value == null || !onValueChange) {
+  if (value === null || value === undefined || !onValueChange) {
     console.error('This should be a controlled component')
-    return null
+    return undefined
   }
 
   return (
@@ -50,7 +50,7 @@ export function GradeInput(
           <label className={`${customLabelStyles.labelText} ${styles.Label}`} htmlFor={id}>
             {label}
           </label>
-        ) : null}
+        ) : undefined}
         <NumberField.ScrubAreaCursor className={styles.ScrubAreaCursor}>
           <CursorGrowIcon />
         </NumberField.ScrubAreaCursor>

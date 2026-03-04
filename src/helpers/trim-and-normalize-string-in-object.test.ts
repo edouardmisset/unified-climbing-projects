@@ -91,11 +91,13 @@ describe('trimAndNormalizeStringsInObject', () => {
 
   it('should preserve null and undefined values', () => {
     const input = {
+      // oxlint-disable-next-line unicorn/no-null
       nullValue: null,
       undefinedValue: undefined,
     }
     const result = trimAndNormalizeStringsInObject(input)
 
+    // oxlint-disable-next-line unicorn/no-null
     expect(result.nullValue).toBe(null)
     expect(result.undefinedValue).toBe(undefined)
   })

@@ -12,7 +12,7 @@ type TrainingSessionsBarcodeProps = {
 function TrainingSessionsBarcodeComponent(props: TrainingSessionsBarcodeProps) {
   const { yearlyTraining } = props
 
-  if (!yearlyTraining || yearlyTraining.length === 0) return null
+  if (!yearlyTraining || yearlyTraining.length === 0) return
 
   return (
     <Barcode>

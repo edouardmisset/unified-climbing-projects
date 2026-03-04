@@ -16,7 +16,7 @@ export const getAllTrainingLocations = cache(async (): Promise<string[]> => {
       allTrainingSessions
         .map(({ gymCrag }) => gymCrag?.trim())
         .filter(Boolean)
-        .sort(compareStringsAscending),
+        .toSorted(compareStringsAscending),
     ),
   ]
 })

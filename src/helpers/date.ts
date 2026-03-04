@@ -232,7 +232,7 @@ export function findLongestStreak<T extends StringDate>(data: T[]): number {
   const sortedDates = uniqueDatesAsStrings
     .map(dateString => new Date(dateString))
     .filter(date => isValidDate(date))
-    .sort((a, b) => a.getTime() - b.getTime())
+    .toSorted((a, b) => a.getTime() - b.getTime())
 
   if (sortedDates.length === 0) return 0
   if (sortedDates.length === 1) return 1
@@ -293,7 +293,7 @@ export function findLongestGap<T extends StringDate>(data: T[]): number {
   const sortedDates = uniqueDatesAsStrings
     .map(dateString => new Date(dateString))
     .filter(date => isValidDate(date))
-    .sort((a, b) => a.getTime() - b.getTime())
+    .toSorted((a, b) => a.getTime() - b.getTime())
 
   if (sortedDates.length <= 1) return 0
 

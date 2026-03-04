@@ -8,7 +8,7 @@ export function TrainingSummary({ trainingSessions }: TrainingSessionListProps) 
     categorizeSessions(trainingSessions)
 
   const totalSessions = indoor.length + outdoor.length
-  if (totalSessions === 0) return null
+  if (totalSessions === 0) return
 
   const indoorPercentage = calculateSessionPercentage(indoor.length, outdoor.length)
   const outdoorPercentage = calculateSessionPercentage(outdoor.length, indoor.length)

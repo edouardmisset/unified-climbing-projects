@@ -7,7 +7,7 @@ export default defineConfig({
     'nextjs',
     'typescript',
     'import',
-    // 'unicorn',
+    'unicorn',
     // 'vitest',
     // 'react-perf',
   ],
@@ -68,7 +68,7 @@ export default defineConfig({
   ],
   settings: {
     vitest: {
-      typecheck: false,
+      typecheck: true,
     },
   },
   env: {

@@ -71,7 +71,7 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
     y: energySystemCounts.get(key) ?? 0,
   }))
     .filter(item => item.y > 0)
-    .sort((a, b) => b.y - a.y)
+    .toSorted((a, b) => b.y - a.y)
 
   for (const key of ENERGY_SYSTEMS) {
     const label = ENERGY_SYSTEM_LABELS[key]
@@ -86,7 +86,7 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
     y: regionCounts.get(key) ?? 0,
   }))
     .filter(item => item.y > 0)
-    .sort((a, b) => b.y - a.y)
+    .toSorted((a, b) => b.y - a.y)
 
   for (const key of ANATOMICAL_REGIONS) {
     const label = ANATOMICAL_REGION_LABELS[key]

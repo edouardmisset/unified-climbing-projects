@@ -23,7 +23,7 @@ export default async function TrainingSessionsQRCodePage() {
   return (
     <Layout title='Training QR'>
       {Object.entries(groupedTrainingDaily)
-        .sort(([a], [b]) => Number(b) - Number(a))
+        .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyTraining]) => (
           <div className='flexColumn alignCenter' key={year}>
             <h2 className='centerText'>{year}</h2>

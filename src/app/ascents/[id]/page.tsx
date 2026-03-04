@@ -4,7 +4,8 @@ import { Loader } from '~/app/_components/ui/loader/loader'
 import { AscentDetail } from './ascent-detail'
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const _id = (await params)?.id ?? ''
+  const awaitedParams = await params
+  const _id = awaitedParams?.id ?? ''
   if (_id.length === 0) return <h2>Invalid ascent ID</h2>
 
   return (

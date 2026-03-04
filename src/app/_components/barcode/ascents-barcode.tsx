@@ -12,7 +12,7 @@ type AscentsBarcodeProps = {
 function AscentsBarcodeComponent(props: AscentsBarcodeProps) {
   const { yearlyAscents } = props
 
-  if (!yearlyAscents || yearlyAscents.length === 0) return null
+  if (!yearlyAscents || yearlyAscents.length === 0) return undefined
 
   return (
     <Barcode>

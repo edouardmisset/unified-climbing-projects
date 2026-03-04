@@ -23,7 +23,7 @@ export default async function TrainingSessionsBarcodePage() {
   return (
     <Layout title='Training Barcode'>
       {Object.entries(groupedTrainingWeekly)
-        .sort(([a], [b]) => Number(b) - Number(a))
+        .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearTraining]) => (
           <div className='flexColumn w100' key={year}>
             <h2 className='centerText'>{year}</h2>

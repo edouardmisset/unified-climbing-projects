@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { Loader } from './_components/ui/loader/loader'
 import WrapUp from './_components/wrap-up/wrap-up'
 
-export const revalidate = 3_600
+export const revalidate = 3600
 
 export default async function Home() {
   return (

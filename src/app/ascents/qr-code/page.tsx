@@ -24,7 +24,7 @@ export default async function AscentsQRCodePage() {
   return (
     <Layout title='Ascents QR'>
       {Object.entries(groupedAscentsDaily)
-        .sort(([a], [b]) => Number(b) - Number(a))
+        .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {
           if (yearlyAscents === undefined)
             return <span key='unexpected-error'>Unexpected error</span>

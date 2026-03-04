@@ -20,7 +20,7 @@ export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
     topoGradeStat.count++
   }
 
-  const grades = Array.from(gradeStats.keys()).sort((a, b) => compareStringsAscending(a, b))
+  const grades = [...gradeStats.keys()].toSorted((a, b) => compareStringsAscending(a, b))
 
   return [
     {

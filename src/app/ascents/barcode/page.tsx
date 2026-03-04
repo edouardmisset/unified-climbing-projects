@@ -23,7 +23,7 @@ export default async function AscentBarcodePage() {
   return (
     <Layout title='Ascents Barcode'>
       {Object.entries(groupedAscentsWeekly)
-        .sort(([a], [b]) => Number(b) - Number(a))
+        .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearAscents]) => (
           <div className='flexColumn w100' key={year}>
             <h2 className='centerText'>{year}</h2>

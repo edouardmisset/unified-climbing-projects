@@ -22,7 +22,7 @@ export const getAllCrags = cache(async (): Promise<string[]> => {
   return [
     ...new Set(
       ascents
-        .sort((a, b) => sortByDate(a, b, true))
+        .toSorted((a, b) => sortByDate(a, b, true))
         .map(({ crag }) => crag?.trim())
         .filter(Boolean),
     ),
@@ -38,7 +38,7 @@ export const getAllAreas = cache(async (): Promise<string[]> => {
   return [
     ...new Set(
       ascents
-        .sort((a, b) => sortByDate(a, b, true))
+        .toSorted((a, b) => sortByDate(a, b, true))
         .map(({ area }) => area?.trim())
         .filter(Boolean),
     ),
@@ -52,5 +52,5 @@ export const getLatestAscent = cache(async (): Promise<Ascent | undefined> => {
   'use cache'
   const ascents = await getAllAscents()
   if (ascents.length === 0) return
-  return ascents.sort((a, b) => sortByDate(a, b, true)).at(0)
+  return ascents.toSorted((a, b) => sortByDate(a, b, true)).at(0)
 })

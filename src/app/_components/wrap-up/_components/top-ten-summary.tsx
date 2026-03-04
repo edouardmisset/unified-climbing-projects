@@ -18,7 +18,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     new Set(ascents.map(ascent => new Date(ascent.date).getFullYear())).size > 1
 
   const topTenAscents = useMemo(
-    () => ascentsWithPoints.sort((a, b) => b.points - a.points).slice(0, 10),
+    () => ascentsWithPoints.toSorted((a, b) => b.points - a.points).slice(0, 10),
     [ascentsWithPoints],
   )
 

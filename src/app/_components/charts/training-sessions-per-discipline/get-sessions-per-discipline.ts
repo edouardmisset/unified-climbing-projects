@@ -24,12 +24,12 @@ export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsP
     disciplineCounts.set(climbingDiscipline, (disciplineCounts.get(climbingDiscipline) ?? 0) + 1)
   }
 
-  return Array.from(disciplineCounts.entries())
+  return [...disciplineCounts.entries()]
     .map(([discipline, count]) => ({
       color: CLIMBING_DISCIPLINE_TO_COLOR[discipline] ?? 'var(--gray-5)',
       id: discipline,
       label: discipline,
       value: count,
     }))
-    .sort((a, b) => b.value - a.value)
+    .toSorted((a, b) => b.value - a.value)
 }

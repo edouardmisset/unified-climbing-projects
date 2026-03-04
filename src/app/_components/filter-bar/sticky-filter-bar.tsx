@@ -30,7 +30,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       <div className={styles.background} />
       <div className={styles.edge} />
       <div className={styles.filters}>
-        {setSearch === undefined || search === undefined || !showSearch ? null : (
+        {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <CustomInput
             name='search route'
             onChange={e => setSearch(e.target.value)}
@@ -57,7 +57,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
 const FilterSelectList = memo(({ filters }: Pick<BaseFilterBarProps, 'filters'>) =>
   filters.map(({ handleChange, name, options, selectedValue, title }) =>
-    options.length === 0 ? null : (
+    options.length === 0 ? undefined : (
       <CustomSelect
         handleChange={handleChange}
         key={name}

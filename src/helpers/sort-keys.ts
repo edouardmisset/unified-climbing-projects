@@ -25,7 +25,7 @@ import { compareStringsAscending } from './sort-strings'
 export function sortKeys<Obj extends Object_>(obj: Obj, options?: { ascending?: boolean }): Obj {
   const { ascending = true } = options ?? {}
   return Object.fromEntries(
-    Object.entries(obj).sort(
+    Object.entries(obj).toSorted(
       ([leftKey], [rightKey]) => compareStringsAscending(leftKey, rightKey) * (ascending ? 1 : -1),
     ),
   ) as Obj
