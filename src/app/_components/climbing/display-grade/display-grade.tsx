@@ -3,7 +3,7 @@ import { formatGrade } from '~/helpers/format-grade'
 import type { Ascent, Grade } from '~/schema/ascent'
 import styles from './display-grade.module.css'
 
-interface ClimbingGradeProps {
+type ClimbingGradeProps = {
   grade: Grade
   climbingDiscipline?: Ascent['climbingDiscipline']
 }

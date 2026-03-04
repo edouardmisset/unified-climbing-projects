@@ -2,12 +2,12 @@ import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import { memo } from 'react'
 import styles from './tries-by-grades.module.css'
 
-interface PayloadEntry {
+type PayloadEntry = {
   dataKey: string | number
   value: number
 }
 
-interface CustomTooltipProps {
+type CustomTooltipProps = {
   active?: boolean
   label?: string | number
   payload?: readonly PayloadEntry[]

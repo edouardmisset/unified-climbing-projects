@@ -6,7 +6,7 @@ import type { Ascent, Grade } from '~/schema/ascent'
  * @param params.climbingDiscipline - The climbing discipline.
  * @returns The formatted grade string.
  */
-interface FormatGradeParams {
+type FormatGradeParams = {
   grade: Grade
   climbingDiscipline: Ascent['climbingDiscipline']
 }

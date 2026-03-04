@@ -6,7 +6,7 @@ type InsensitiveStyle = Ascent['style'] | Lowercase<Ascent['style']>
 type Suffix = 'ed' | 'ing'
 type StyleWithSuffix = `${InsensitiveStyle}${Suffix}` | InsensitiveStyle
 
-interface ClimbingStyleProps {
+type ClimbingStyleProps = {
   climbingStyle: StyleWithSuffix
 }
 
