@@ -10,10 +10,11 @@ describe('getAscentsByGradesPerCrag', () => {
 
   it('should return correct structure and counts for top 10 crags', () => {
     const result = getAscentsByGradesPerCrag(sampleAscents)
-    expect(result.length <= 10).toBe(true)
+    expect(result.length <= 10).toBeTruthy()
 
     result.forEach(item => {
       expect(item.crag).toBeDefined()
+      // oxlint-disable-next-line vitest/prefer-expect-type-of
       expect(typeof item.crag).toBe('string')
     })
   })

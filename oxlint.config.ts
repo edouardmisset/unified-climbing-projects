@@ -2,15 +2,7 @@ import { defineConfig } from 'oxlint'
 
 export default defineConfig({
   jsPlugins: ['@shopify/eslint-plugin'],
-  plugins: [
-    'react',
-    'jsx-a11y',
-    'nextjs',
-    'typescript',
-    'import',
-    'unicorn',
-    // 'vitest',
-  ],
+  plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn', 'vitest'],
   categories: {
     correctness: 'error',
     suspicious: 'warn',
@@ -94,6 +86,8 @@ export default defineConfig({
         case: 'kebabCase',
       },
     ],
+    'vitest/no-importing-vitest-globals': 'off',
+    'vitest/prefer-called-times': 'off',
     complexity: 'warn',
     curly: ['error', 'multi'],
     eqeqeq: ['error', 'always', { null: 'ignore' }],
@@ -115,6 +109,12 @@ export default defineConfig({
       rules: {
         'no-magic-numbers': 'off',
         'typescript/no-unsafe-type-assertion': 'off',
+      },
+    },
+    {
+      files: ['src/backup/**/*.ts', 'src/scripts/**/*.ts'],
+      rules: {
+        'jest/require-hook': 'off',
       },
     },
   ],

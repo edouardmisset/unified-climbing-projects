@@ -169,11 +169,11 @@ describe('deSlugify', () => {
       const result = deSlugify(longSlug)
 
       // Should start with capitalized first word and contain spaces
-      expect(result.startsWith('Word0')).toBe(true)
-      expect(result.includes(' ')).toBe(true)
+      expect(result.startsWith('Word0')).toBeTruthy()
+      expect(result.includes(' ')).toBeTruthy()
 
       // Should have replaced all separators
-      expect(result.includes('-')).toBe(false)
+      expect(result.includes('-')).toBeFalsy()
     })
 
     it('should handle empty options object', () => {

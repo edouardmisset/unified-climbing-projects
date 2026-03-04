@@ -25,7 +25,7 @@ describe('KeycapButton Component', () => {
     const button = screen.getByRole('button', { name: CLICK_ME_REGEX })
     await userEvent.click(button)
 
-    expect(handleClick).toHaveBeenCalledTimes(1)
+    expect(handleClick).toHaveBeenCalledOnce()
   })
 
   it('can be disabled', () => {
@@ -59,6 +59,6 @@ describe('KeycapButton Component', () => {
     button.focus()
     await userEvent.keyboard('{Enter}')
 
-    expect(handleClick).toHaveBeenCalledTimes(1)
+    expect(handleClick).toHaveBeenCalledOnce()
   })
 })

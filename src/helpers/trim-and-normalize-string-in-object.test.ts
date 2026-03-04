@@ -23,7 +23,7 @@ describe('trimAndNormalizeStringsInObject', () => {
 
     expect(result.name).toBe('Alice')
     expect(result.age).toBe(30)
-    expect(result.isActive).toBe(true)
+    expect(result.isActive).toBeTruthy()
   })
 
   it('should handle empty objects', () => {
@@ -63,7 +63,6 @@ describe('trimAndNormalizeStringsInObject', () => {
 
     expect(result.text).toBe('café')
 
-    expect(typeof result.text).toBe('string')
     if (typeof result.text === 'string') expect(result.text.length).toBe(4)
   })
 

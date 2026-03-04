@@ -6,6 +6,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   plugins: [react()],
   test: {
+    globals: false,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     exclude: ['node_modules/', 'dist/', 'src/backup/', 'src/scripts/', '**/*smoke*.*'],

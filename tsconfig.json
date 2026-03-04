@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Base Options: */
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2024",
