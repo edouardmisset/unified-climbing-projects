@@ -20,9 +20,8 @@ function getRandomSample(arr: any[], size: number): any[] {
 function stratifiedSample(data: any[], size: number, stratificationKeys: string[]): any[] {
   const strata = data.reduce<Record<string, any[]>>((acc, entry) => {
     const key = stratificationKeys.map(factor => entry[factor]).join('|')
-    if (!acc[key]) {
-      acc[key] = []
-    }
+    if (!acc[key]) acc[key] = []
+
     acc[key].push(entry)
     return acc
   }, {})

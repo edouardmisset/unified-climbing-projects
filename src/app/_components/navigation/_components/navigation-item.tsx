@@ -26,7 +26,7 @@ export function NavigationItem({ item, mode }: NavigationItemProps) {
     )
   }
 
-  if (item.type === 'separator') {
+  if (item.type === 'separator')
     return mode === 'desktop' ? (
       <li>
         <hr className={styles.Break} />
@@ -34,7 +34,6 @@ export function NavigationItem({ item, mode }: NavigationItemProps) {
     ) : (
       <Menu.Separator className={styles.Separator} />
     )
-  }
 
   return mode === 'desktop' ? (
     <>

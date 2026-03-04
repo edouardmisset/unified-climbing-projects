@@ -66,9 +66,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   const seriesColors = useMemo(() => {
     const colors = new Map<TriesByGradeSeries['id'], string>()
 
-    for (const serie of series) {
-      colors.set(serie.id, serie.color)
-    }
+    for (const serie of series) colors.set(serie.id, serie.color)
 
     return colors
   }, [series])

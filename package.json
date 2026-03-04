@@ -11,7 +11,7 @@
     "seed:prod": "bunx convex import --prod --replace --table ascents ./src/backup/ascent-data.json && bunx convex import --prod --replace --table training ./src/backup/training-data.json",
     "format": "oxfmt ./src",
     "lint": "oxlint --type-aware --fix ./src",
-    "check": "bun run lint && bun run format && bun run style:lint && tsgo --noEmit && ls-lint",
+    "check": "bun run lint && bun run format && bun run style:lint && tsgo --noEmit",
     "commitlint": "commitlint --edit",
     "dev": "next dev --turbo",
     "convex:dev": "bunx convex dev",
@@ -29,7 +29,6 @@
     "test:e2e:ui": "bun run test:e2e --ui",
     "test:all": "bun run test:unit:silent & bun run test:e2e",
     "knip": "clear && knip",
-    "ls-lint": "ls-lint",
     "validate": "clear && bun run check && bun run test:all && bun run build"
   },
   "dependencies": {
@@ -65,7 +64,6 @@
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
-    "@ls-lint/ls-lint": "^2.3.1",
     "@playwright/test": "^1.58.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

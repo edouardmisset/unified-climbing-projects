@@ -54,13 +54,9 @@ export function calculateProgressionPercentage({
   for (const ascent of ascents) {
     const ascentYear = new Date(ascent.date).getFullYear()
 
-    if (ascentYear === year) {
-      currentYearAscents.push(ascent)
-    }
+    if (ascentYear === year) currentYearAscents.push(ascent)
 
-    if (ascentYear === previousYear) {
-      previousYearAscents.push(ascent)
-    }
+    if (ascentYear === previousYear) previousYearAscents.push(ascent)
   }
 
   if (currentYearAscents.length === 0) return 0

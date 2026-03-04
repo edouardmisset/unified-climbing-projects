@@ -9,7 +9,7 @@ export function WrapUpHeader({ year }: { year?: number }) {
 
   let beforeTitle: ReactNode = undefined
 
-  if (titleIsValidNumber) {
+  if (titleIsValidNumber)
     beforeTitle = (
       <YearNavigationButton
         enabled={YEAR_OF_FIRST_ASCENT < title}
@@ -17,7 +17,7 @@ export function WrapUpHeader({ year }: { year?: number }) {
         selectedYear={title}
       />
     )
-  } else if (title === ALL_TIME) {
+  else if (title === ALL_TIME)
     beforeTitle = (
       <YearNavigationButton
         enabled
@@ -26,7 +26,6 @@ export function WrapUpHeader({ year }: { year?: number }) {
         selectedYear={new Date().getFullYear() + 1}
       />
     )
-  }
 
   const afterTitle = titleIsValidNumber && (
     <YearNavigationButton

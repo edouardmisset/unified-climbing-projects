@@ -29,9 +29,8 @@ export function getIndicatorsForYear({
   allTrainingSessions: TrainingSession[]
   year: number
 }): YearIndicators {
-  if (!isValidNumber(year) || year <= 0) {
+  if (!isValidNumber(year) || year <= 0)
     return { efficiency: 0, progression: 0, score: 0, versatility: 0, year }
-  }
 
   const currentYearAscents = filterAscents(allAscents, { year })
   const previousYearAscents = filterAscents(allAscents, { year: year - 1 })
@@ -40,9 +39,8 @@ export function getIndicatorsForYear({
     year,
   })
 
-  if (currentYearAscents.length === 0) {
+  if (currentYearAscents.length === 0)
     return { efficiency: 0, progression: 0, score: 0, versatility: 0, year }
-  }
 
   const progression = calculateProgressionPercentage({
     ascents: [...currentYearAscents, ...previousYearAscents],

@@ -8,14 +8,12 @@ import styles from './sticky-filter-bar.module.css'
 
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const clearFilters = useCallback(() => {
-    for (const filter of filters) {
+    for (const filter of filters)
       filter.handleChange({
         target: { value: ALL_VALUE },
       } as React.ChangeEvent<HTMLSelectElement>)
-    }
-    if (setSearch !== undefined) {
-      setSearch('')
-    }
+
+    if (setSearch !== undefined) setSearch('')
   }, [filters, setSearch])
 
   const isOneFilterActive = useMemo(

@@ -46,15 +46,10 @@ export function getSessionsPerYear(sessions: TrainingSession[]): SessionsPerYear
     const isIndoor = isIndoorSession({ sessionType })
     const isOutdoor = sessionType === 'Out'
 
-    if (isIndoor && climbingDiscipline === 'Boulder') {
-      counts.indoorBoulder++
-    } else if (isIndoor && climbingDiscipline === 'Route') {
-      counts.indoorRoute++
-    } else if (isOutdoor && climbingDiscipline === 'Boulder') {
-      counts.outdoorBoulder++
-    } else if (isOutdoor && climbingDiscipline === 'Route') {
-      counts.outdoorRoute++
-    }
+    if (isIndoor && climbingDiscipline === 'Boulder') counts.indoorBoulder++
+    else if (isIndoor && climbingDiscipline === 'Route') counts.indoorRoute++
+    else if (isOutdoor && climbingDiscipline === 'Boulder') counts.outdoorBoulder++
+    else if (isOutdoor && climbingDiscipline === 'Route') counts.outdoorRoute++
   }
 
   const result: SessionsPerYear[] = []

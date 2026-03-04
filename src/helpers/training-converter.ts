@@ -88,13 +88,9 @@ export function getSessionTypeColors({
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
   const convertedSessionType = fromSessionTypeToString(sessionType) ?? 'otherTraining'
-  if (isOneComponentBelowThreshold) {
-    return `var(--${convertedSessionType}Low)`
-  }
+  if (isOneComponentBelowThreshold) return `var(--${convertedSessionType}Low)`
 
-  if (isOneComponentAboveThreshold) {
-    return `var(--${convertedSessionType}High)`
-  }
+  if (isOneComponentAboveThreshold) return `var(--${convertedSessionType}High)`
 
   return `var(--${convertedSessionType})`
 }

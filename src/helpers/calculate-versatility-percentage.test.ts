@@ -107,7 +107,7 @@ describe('calculateVersatilityPercentage', () => {
     let id = 1
 
     // Create one ascent for each hold
-    for (const hold of HOLDS) {
+    for (const hold of HOLDS)
       ascents.push({
         climbingDiscipline: 'Route',
         crag: crags[0],
@@ -121,10 +121,9 @@ describe('calculateVersatilityPercentage', () => {
         topoGrade: '6a',
         tries: 1,
       } as Ascent)
-    }
 
     // Create one ascent for each profile
-    for (const profile of PROFILES) {
+    for (const profile of PROFILES)
       ascents.push({
         climbingDiscipline: 'Route',
         crag: crags[1],
@@ -138,10 +137,9 @@ describe('calculateVersatilityPercentage', () => {
         topoGrade: '6a',
         tries: 1,
       } as Ascent)
-    }
 
     // Create one ascent for each style
-    for (const style of ASCENT_STYLE) {
+    for (const style of ASCENT_STYLE)
       ascents.push({
         climbingDiscipline: 'Route',
         crag: crags[2],
@@ -155,10 +153,9 @@ describe('calculateVersatilityPercentage', () => {
         topoGrade: '6a',
         tries: 1,
       } as Ascent)
-    }
 
     // Create one ascent for each crag
-    for (const crag of crags) {
+    for (const crag of crags)
       ascents.push({
         climbingDiscipline: 'Route',
         crag,
@@ -172,10 +169,9 @@ describe('calculateVersatilityPercentage', () => {
         topoGrade: '6a',
         tries: 1,
       } as Ascent)
-    }
 
     // Create one ascent for each height
-    for (const height of heights) {
+    for (const height of heights)
       ascents.push({
         climbingDiscipline: 'Route',
         crag: crags[3],
@@ -189,7 +185,6 @@ describe('calculateVersatilityPercentage', () => {
         topoGrade: '6a',
         tries: 1,
       } as Ascent)
-    }
 
     const result = calculateVersatilityPercentage(ascents)
 

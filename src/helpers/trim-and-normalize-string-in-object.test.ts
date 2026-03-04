@@ -64,9 +64,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     expect(result.text).toBe('café')
 
     expect(typeof result.text).toBe('string')
-    if (typeof result.text === 'string') {
-      expect(result.text.length).toBe(4)
-    }
+    if (typeof result.text === 'string') expect(result.text.length).toBe(4)
   })
 
   it('should normalize AND trim', () => {

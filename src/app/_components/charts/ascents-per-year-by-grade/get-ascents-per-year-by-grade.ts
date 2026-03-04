@@ -13,9 +13,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
   return years.map(year => {
     const ascentsForYear = filterAscents(ascents, { year })
 
-    if (ascentsForYear.length === 0) {
-      return { year }
-    }
+    if (ascentsForYear.length === 0) return { year }
 
     const gradeScale = createGradeScaleFromAscents(ascentsForYear)
 
@@ -28,9 +26,7 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
 
     // Calculate frequency counts in a single pass over the ascents
     for (const { topoGrade } of ascentsForYear) {
-      if (frequency?.[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') {
-        continue
-      }
+      if (frequency?.[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') continue
 
       frequency[topoGrade] += 1
     }

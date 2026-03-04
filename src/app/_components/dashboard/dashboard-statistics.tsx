@@ -65,7 +65,7 @@ type DashboardStatisticsProps = AscentListProps
 function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
   const { ascents } = props
 
-  if (ascents.length === 0) {
+  if (ascents.length === 0)
     return (
       <div className=' flexColumn gap w100 padding'>
         <h2>Nothing there...</h2>
@@ -74,7 +74,6 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
         </p>
       </div>
     )
-  }
 
   return (
     <div className={styles.container}>

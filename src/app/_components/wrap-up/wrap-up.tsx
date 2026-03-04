@@ -38,7 +38,7 @@ export default async function WrapUp({ year }: { year?: number }) {
   const isTrainingEmpty = trainingSessions.length === 0
   const isAscentsEmpty = ascents.length === 0
 
-  if (isAscentsEmpty && isTrainingEmpty) {
+  if (isAscentsEmpty && isTrainingEmpty)
     return (
       <Layout title={<WrapUpHeader year={year} />}>
         <Card>
@@ -50,7 +50,6 @@ export default async function WrapUp({ year }: { year?: number }) {
         </Card>
       </Layout>
     )
-  }
 
   return (
     <Layout gridClassName={`padding ${styles.wrapUp}`} title={<WrapUpHeader year={year} />}>

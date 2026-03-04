@@ -47,9 +47,7 @@ export const AscentList = memo(
 
     const handleDialogClose = useCallback((open: boolean) => {
       setIsDialogOpen(open)
-      if (!open) {
-        setSelectedAscent(undefined)
-      }
+      if (!open) setSelectedAscent(undefined)
     }, [])
 
     const totalAscentPoints = useMemo(

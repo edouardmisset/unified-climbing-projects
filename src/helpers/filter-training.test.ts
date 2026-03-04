@@ -50,9 +50,7 @@ describe('filterTrainingSessions', () => {
     })
     expect(sessions.length).toBe(2)
 
-    for (const { gymCrag } of sessions) {
-      expect(gymCrag).toBe('Gym 1')
-    }
+    for (const { gymCrag } of sessions) expect(gymCrag).toBe('Gym 1')
   })
 
   it('should filter training sessions by climbingDiscipline', () => {
@@ -66,11 +64,8 @@ describe('filterTrainingSessions', () => {
   it('should filter training sessions by year', () => {
     const result = filterTrainingSessions(trainingSessions, { year: 2_024 })
     expect(result.length).toBe(1)
-    if (result[0]) {
-      expect(new Date(result[0].date).getFullYear()).toBe(2_024)
-    } else {
-      throw new Error('result[0] is undefined')
-    }
+    if (result[0]) expect(new Date(result[0].date).getFullYear()).toBe(2_024)
+    else throw new Error('result[0] is undefined')
   })
 
   it('should return an empty array when no training sessions match the filters', () => {

@@ -17,32 +17,27 @@ export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): Session
 
   for (const session of sessions) {
     const { sessionType } = session
-    if (sessionType === 'Out') {
-      outdoorCount++
-    } else if (isIndoorSession({ sessionType })) {
-      indoorCount++
-    }
+    if (sessionType === 'Out') outdoorCount++
+    else if (isIndoorSession({ sessionType })) indoorCount++
   }
 
   const result: SessionsIndoorVsOutdoor = []
 
-  if (indoorCount > 0) {
+  if (indoorCount > 0)
     result.push({
       color: 'var(--indoor)',
       id: 'Indoor',
       label: 'Indoor',
       value: indoorCount,
     })
-  }
 
-  if (outdoorCount > 0) {
+  if (outdoorCount > 0)
     result.push({
       color: 'var(--outdoor)',
       id: 'Outdoor',
       label: 'Outdoor',
       value: outdoorCount,
     })
-  }
 
   return result
 }

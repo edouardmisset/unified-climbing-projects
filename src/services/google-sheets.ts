@@ -38,9 +38,7 @@ export async function createOrReplaceWorksheet(
   title: string,
 ): Promise<GoogleSpreadsheetWorksheet> {
   const existingSheet = spreadsheet.sheetsByTitle[title]
-  if (existingSheet) {
-    await existingSheet.delete()
-  }
+  if (existingSheet) await existingSheet.delete()
 
   return await spreadsheet.addSheet({ title })
 }
@@ -49,16 +47,14 @@ export async function backupDataToWorksheet<T extends Object_ & AddRowsRow>(
   sheet: GoogleSpreadsheetWorksheet,
   data: T[],
 ): Promise<void> {
-  if (data.length === 0) {
-    return
-  }
+  if (data.length === 0) return
 
   const headersSet = new Set<string>()
-  for (const element of data) {
+  for (const element of data)
+    // oxlint-disable-next-line curly
     for (const key of objectKeys(element)) {
       headersSet.add(String(key))
     }
-  }
 
   await sheet.setHeaderRow([...headersSet])
   const rows: AddRowsInput = data

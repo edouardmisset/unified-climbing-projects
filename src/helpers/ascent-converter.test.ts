@@ -38,9 +38,7 @@ describe('fromAscentToPoints', () => {
     const [onsight7a, redpoint7b] = sampleAscents
     const { 24: flash7aBoulder } = sampleAscents
 
-    if (!onsight7a || !redpoint7b || !flash7aBoulder) {
-      throw new Error('Ascent not found')
-    }
+    if (!onsight7a || !redpoint7b || !flash7aBoulder) throw new Error('Ascent not found')
 
     const result = fromAscentToPoints(onsight7a)
     expect(result).toBe(850)
@@ -127,7 +125,7 @@ describe('fromPointToGrade', () => {
   it('should handle conversion from real ascent examples', () => {
     const testAscents = [sampleAscents[0], sampleAscents[1], sampleAscents[24]]
 
-    for (const ascent of testAscents) {
+    for (const ascent of testAscents)
       if (ascent) {
         const points = fromAscentToPoints(ascent)
         const convertedGrade = fromPointToGrade(points, {
@@ -136,6 +134,5 @@ describe('fromPointToGrade', () => {
         })
         expect(convertedGrade).toBe(ascent.topoGrade)
       }
-    }
   })
 })

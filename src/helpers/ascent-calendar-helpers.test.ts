@@ -14,9 +14,7 @@ describe('fromAscentsToCalendarEntries', () => {
     const ascentsArray: Ascent[][] = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
     expect(result.length).toBe(3)
-    for (const { shortText } of result) {
-      expect(shortText).toBe('')
-    }
+    for (const { shortText } of result) expect(shortText).toBe('')
   })
 
   it('should return calendar entries with correct data when ascents are provided', () => {

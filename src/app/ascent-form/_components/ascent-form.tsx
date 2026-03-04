@@ -79,9 +79,7 @@ export default function AscentForm(props: AscentFormProps) {
 
   const defaultAscentFormValues = ascentFormInputSchema.safeParse(defaultAscentToParse)
 
-  if (!defaultAscentFormValues.success) {
-    globalThis.console.warn(defaultAscentFormValues.error)
-  }
+  if (!defaultAscentFormValues.success) globalThis.console.warn(defaultAscentFormValues.error)
 
   const defaultAscent = defaultAscentFormValues.data
 
@@ -148,21 +146,17 @@ export default function AscentForm(props: AscentFormProps) {
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     async event => {
       // Set the style value to 'Redpoint' when the number of tries is greater than 1
-      if (Number(event.target.value) > 1) {
-        setValue('style', 'Redpoint')
-      }
+      if (Number(event.target.value) > 1) setValue('style', 'Redpoint')
+
       // By default set the style value to 'Onsight' when the number of tries is equal to 1
-      if (Number(event.target.value) === 1) {
-        setValue('style', isBoulder ? 'Flash' : 'Onsight')
-      }
+      if (Number(event.target.value) === 1) setValue('style', isBoulder ? 'Flash' : 'Onsight')
+
       return handleTriesChangeRegister(event)
     },
     [handleTriesChangeRegister, isBoulder, setValue],
   )
 
-  if (!isUserLoaded) {
-    return <Loader />
-  }
+  if (!isUserLoaded) return <Loader />
 
   const cragOptions = createValueAndLabel(crags)
   const areaOptions = createValueAndLabel(areas)

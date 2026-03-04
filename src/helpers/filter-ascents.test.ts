@@ -13,25 +13,19 @@ describe('filterAscents', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
     expect(result.length).toBe(38)
 
-    for (const { topoGrade } of result) {
-      expect(topoGrade).toBe('7a')
-    }
+    for (const { topoGrade } of result) expect(topoGrade).toBe('7a')
   })
 
   it('should filter ascents by climbingDiscipline', () => {
     const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
     expect(result.length).toBe(84)
-    for (const { climbingDiscipline } of result) {
-      expect(climbingDiscipline).toBe('Route')
-    }
+    for (const { climbingDiscipline } of result) expect(climbingDiscipline).toBe('Route')
   })
 
   it('should filter ascents by year', () => {
     const result = filterAscents(sampleAscents, { year: 2_022 })
     expect(result.length).toBe(13)
-    for (const { date } of result) {
-      expect(new Date(date).getFullYear()).toBe(2_022)
-    }
+    for (const { date } of result) expect(new Date(date).getFullYear()).toBe(2_022)
   })
 
   it('should filter ascents using multiple criteria', () => {

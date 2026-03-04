@@ -23,9 +23,8 @@ export function writeAscentsDisciplineText<T extends Pick<Ascent, 'climbingDisci
 
   const firstDiscipline = ascents[0].climbingDiscipline
 
-  for (const { climbingDiscipline } of ascents) {
+  for (const { climbingDiscipline } of ascents)
     if (climbingDiscipline !== firstDiscipline) return `ascent${maybePlural}`
-  }
 
   return `${firstDiscipline.toLowerCase()}${maybePlural}` as ClimbingActivity
 }

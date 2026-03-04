@@ -76,14 +76,12 @@ function isLoadInLoadCategory(load: TrainingSession['load'], loadCategory: LoadC
   const highCategoryLowerBound = 70
   if (load === undefined) return false
 
-  if (loadCategory === 'Low') {
-    return load < lowCategoryUpperBound
-  }
-  if (loadCategory === 'Medium') {
+  if (loadCategory === 'Low') return load < lowCategoryUpperBound
+
+  if (loadCategory === 'Medium')
     return lowCategoryUpperBound <= load && load < highCategoryLowerBound
-  }
-  if (loadCategory === 'High') {
-    return highCategoryLowerBound <= load
-  }
+
+  if (loadCategory === 'High') return highCategoryLowerBound <= load
+
   return false
 }

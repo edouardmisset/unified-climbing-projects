@@ -176,9 +176,7 @@ export function getLastSunday(): Date {
  * @returns {string} The ISO date string (YYYY-MM-DD)
  */
 export function fromDateToStringDate(date: Date): string {
-  if (!isValidDate(date)) {
-    throw new Error('Invalid date')
-  }
+  if (!isValidDate(date)) throw new Error('Invalid date')
 
   const isoDateString = date.toISOString()
   return extractDateFromISODateString(isoDateString)
@@ -192,14 +190,11 @@ export function fromDateToStringDate(date: Date): string {
  * @returns {string} The date portion (YYYY-MM-DD)
  */
 export function extractDateFromISODateString(isoDate: string): string {
-  if (isoDate.length < 10) {
-    throw new Error('Invalid ISO date string')
-  }
+  if (isoDate.length < 10) throw new Error('Invalid ISO date string')
 
   const datePart = isoDate.slice(0, 10)
-  if (!ISO_DATE_REGEX.test(datePart)) {
-    throw new Error('Invalid ISO date string')
-  }
+  if (!ISO_DATE_REGEX.test(datePart)) throw new Error('Invalid ISO date string')
+
   return datePart
 }
 
@@ -252,9 +247,7 @@ export function findLongestStreak<T extends StringDate>(data: T[]): number {
     if (isConsecutive) {
       currentStreak++
       maxStreak = Math.max(maxStreak, currentStreak)
-    } else {
-      currentStreak = 1
-    }
+    } else currentStreak = 1
   }
 
   return maxStreak
@@ -308,9 +301,7 @@ export function findLongestGap<T extends StringDate>(data: T[]): number {
     const timeDifference = currentDate.getTime() - previousDate.getTime()
     const gapInDays = Math.floor(timeDifference / MILLISECONDS_IN_DAY) - 1
 
-    if (gapInDays > 0) {
-      maxGap = Math.max(maxGap, gapInDays)
-    }
+    if (gapInDays > 0) maxGap = Math.max(maxGap, gapInDays)
   }
 
   return maxGap

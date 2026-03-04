@@ -32,6 +32,9 @@ export default defineConfig({
     'no-unassigned-import': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
+    'eslint/max-params': 'error',
+    'eslint/no-duplicate-imports': 'error',
+    'eslint/no-implicit-coercion': 'error',
     'react/exhaustive-deps': 'error',
     'react/jsx-max-depth': ['warn', { max: 8 }],
     'react/jsx-props-no-spreading': 'off',
@@ -62,8 +65,14 @@ export default defineConfig({
         },
       },
     ],
+    'unicorn/filename-case': [
+      'error',
+      {
+        case: 'kebabCase',
+      },
+    ],
     complexity: 'warn',
-    curly: 'off',
+    curly: ['error', 'multi'],
     eqeqeq: ['error', 'always', { null: 'ignore' }],
   },
   ignorePatterns: [

@@ -33,9 +33,8 @@ export function groupSimilarStrings(strings: string[], maxDistance = 2): Map<str
 
   const getDistance = (a: string, b: string): number => {
     const key = a < b ? `${a}-${b}` : `${b}-${a}`
-    if (!distanceCache.has(key)) {
-      distanceCache.set(key, levenshteinDistance(a, b))
-    }
+    if (!distanceCache.has(key)) distanceCache.set(key, levenshteinDistance(a, b))
+
     return distanceCache.get(key) ?? 0
   }
 
@@ -46,14 +45,10 @@ export function groupSimilarStrings(strings: string[], maxDistance = 2): Map<str
       s => s !== str && !seen.has(s) && getDistance(str, formatAscentName(s)) <= maxDistance,
     )
 
-    if (similarStrings.length > 1) {
-      similarStringsMap.set(str, similarStrings)
-    }
+    if (similarStrings.length > 1) similarStringsMap.set(str, similarStrings)
 
     seen.add(str)
-    for (const similarStr of similarStrings) {
-      seen.add(similarStr)
-    }
+    for (const similarStr of similarStrings) seen.add(similarStr)
   }
 
   return similarStringsMap

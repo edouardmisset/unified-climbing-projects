@@ -75,9 +75,7 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
 
   for (const key of ENERGY_SYSTEMS) {
     const label = ENERGY_SYSTEM_LABELS[key]
-    if ((energySystemCounts.get(key) ?? 0) > 0) {
-      colors[label] = ENERGY_SYSTEM_COLORS[key]
-    }
+    if ((energySystemCounts.get(key) ?? 0) > 0) colors[label] = ENERGY_SYSTEM_COLORS[key]
   }
 
   // Build Anatomical Region ring data
@@ -90,9 +88,7 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
 
   for (const key of ANATOMICAL_REGIONS) {
     const label = ANATOMICAL_REGION_LABELS[key]
-    if ((regionCounts.get(key) ?? 0) > 0) {
-      colors[label] = ANATOMICAL_REGION_COLORS[key]
-    }
+    if ((regionCounts.get(key) ?? 0) > 0) colors[label] = ANATOMICAL_REGION_COLORS[key]
   }
 
   const data: RadialBarData = [

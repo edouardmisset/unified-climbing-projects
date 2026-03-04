@@ -12,13 +12,12 @@ export function fromTrainingSessionsToCalendarEntries(
     trainingSessionsArray?.map((sessions, index): DayDescriptor => {
       const [firstSession] = sessions
 
-      if (firstSession === undefined) {
+      if (firstSession === undefined)
         return {
           date: new Date(year, 0, index + 1, NOON_HOUR).toISOString(),
           shortText: '',
           title: '',
         }
-      }
 
       const { date, sessionType, intensity, volume } = firstSession
       const backgroundColor = getSessionTypeColors({

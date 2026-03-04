@@ -74,9 +74,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           reset()
           router.refresh()
 
-          if (data.sessionType === 'Out') {
-            router.push(LINKS.ascentForm)
-          }
+          if (data.sessionType === 'Out') router.push(LINKS.ascentForm)
         },
         error => {
           console.error(error)

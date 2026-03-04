@@ -9,9 +9,7 @@ export async function AscentDetail(props: AscentDetailProps) {
   const { ascentId } = props
   const ascent = await getAscentById(ascentId)
 
-  if (!ascent) {
-    return <p>Ascent not found</p>
-  }
+  if (!ascent) return <p>Ascent not found</p>
 
   return (
     <div className='superCenter w100 h100'>
