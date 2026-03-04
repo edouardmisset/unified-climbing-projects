@@ -45,9 +45,9 @@ export const AscentList = memo(
       setIsDialogOpen(true)
     }, [])
 
-    const handleDialogClose = useCallback((open: boolean) => {
-      setIsDialogOpen(open)
-      if (!open) setSelectedAscent(undefined)
+    const handleDialogClose = useCallback((isOpen: boolean) => {
+      setIsDialogOpen(isOpen)
+      if (!isOpen) setSelectedAscent(undefined)
     }, [])
 
     const totalAscentPoints = useMemo(
@@ -166,10 +166,10 @@ export const AscentList = memo(
                   key={_id}
                   onClick={() => handleRowClick(ascent)}
                   onKeyDown={event => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault()
-                      handleRowClick(ascent)
-                    }
+                    if (event.key !== 'Enter' && event.key !== ' ') return
+
+                    event.preventDefault()
+                    handleRowClick(ascent)
                   }}
                   // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
                   role='button'

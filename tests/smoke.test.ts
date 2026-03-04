@@ -34,14 +34,13 @@ const PAGES_TEST_CONFIG = [
   { label: 'Wrap Up Year', path: '/wrap-up/2024', heading: '2024' },
 ]
 
-for (const { label, path, heading } of PAGES_TEST_CONFIG) {
+for (const { label, path, heading } of PAGES_TEST_CONFIG)
   test(`${label} page should load`, async ({ page }) => {
     await page.goto(path)
     await page.waitForLoadState('networkidle')
 
     if (heading) await expect(page.getByRole('heading', { name: heading })).toBeVisible()
   })
-}
 
 test('should show a single ascent', async ({ page }) => {
   const levitationAscentId = 'j579f2mexz1j2s1esh1aee9gx17r3jde'
