@@ -57,7 +57,7 @@ describe('fromPointToGrade', () => {
   it('should convert valid points to the correct grade with default parameters', () => {
     expect(fromPointToGrade(700)).toBe('7a')
     expect(fromPointToGrade(800)).toBe('7b')
-    expect(fromPointToGrade(1000)).toBe('8a')
+    expect(fromPointToGrade(1_000)).toBe('8a')
   })
 
   it('should handle edge cases with minimum and maximum point values', () => {

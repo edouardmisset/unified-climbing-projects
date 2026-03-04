@@ -64,10 +64,10 @@ describe('filterTrainingSessions', () => {
   })
 
   it('should filter training sessions by year', () => {
-    const result = filterTrainingSessions(trainingSessions, { year: 2024 })
+    const result = filterTrainingSessions(trainingSessions, { year: 2_024 })
     expect(result.length).toBe(1)
     if (result[0]) {
-      expect(new Date(result[0].date).getFullYear()).toBe(2024)
+      expect(new Date(result[0].date).getFullYear()).toBe(2_024)
     } else {
       throw new Error('result[0] is undefined')
     }

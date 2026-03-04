@@ -12,35 +12,35 @@ describe('getDistanceClimbedPerYear', () => {
     const expected = [
       {
         distance: 55,
-        year: 2017,
+        year: 2_017,
       },
       {
         distance: 155,
-        year: 2018,
+        year: 2_018,
       },
       {
         distance: 155,
-        year: 2019,
+        year: 2_019,
       },
       {
         distance: 290,
-        year: 2020,
+        year: 2_020,
       },
       {
         distance: 105,
-        year: 2021,
+        year: 2_021,
       },
       {
         distance: 300,
-        year: 2022,
+        year: 2_022,
       },
       {
         distance: 405,
-        year: 2023,
+        year: 2_023,
       },
       {
         distance: 455,
-        year: 2024,
+        year: 2_024,
       },
     ]
     const result = getDistanceClimbedPerYear(sampleAscents)

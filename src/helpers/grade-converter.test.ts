@@ -35,7 +35,7 @@ describe('fromNumberToGrade', () => {
   })
 
   it('should return `DEFAULT_GRADE` for an invalid number', () => {
-    const invalidNumber = -9999
+    const invalidNumber = -9_999
     const result = fromNumberToGrade(invalidNumber)
     expect(result).toBe(DEFAULT_GRADE)
   })

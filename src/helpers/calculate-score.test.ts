@@ -38,7 +38,7 @@ describe('calculateScore', () => {
     const result = calculateScore({
       ascents: [],
       trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' } as TrainingSession],
-      year: 2023,
+      year: 2_023,
     })
 
     expect(result).toBe(0)
@@ -46,7 +46,7 @@ describe('calculateScore', () => {
 
   it('should calculate score correctly for a simple case', () => {
     // Create test data with a simple scenario
-    const year = 2023
+    const year = 2_023
     const previousYear = year - 1
 
     const currentYearAscent: Ascent = {
@@ -129,7 +129,7 @@ describe('calculateScore', () => {
   })
 
   it('should calculate score consistently with the same inputs', () => {
-    const year = 2023
+    const year = 2_023
     const previousYear = year - 1
 
     const ascents: Ascent[] = [

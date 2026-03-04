@@ -6,7 +6,7 @@ describe('calculateProgressionPercentage', () => {
   it('should return 0 for empty ascents array', () => {
     const result = calculateProgressionPercentage({
       ascents: [],
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(0)
   })
@@ -37,7 +37,7 @@ describe('calculateProgressionPercentage', () => {
 
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(40)
   })
@@ -68,7 +68,7 @@ describe('calculateProgressionPercentage', () => {
 
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(0)
   })
@@ -182,7 +182,7 @@ describe('calculateProgressionPercentage', () => {
 
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(100)
   })
@@ -296,7 +296,7 @@ describe('calculateProgressionPercentage', () => {
 
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(60)
   })
@@ -410,7 +410,7 @@ describe('calculateProgressionPercentage', () => {
 
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(0)
   })
@@ -505,7 +505,7 @@ describe('calculateProgressionPercentage', () => {
     // Should show progression only in the 3 categories that have data for both years
     const result = calculateProgressionPercentage({
       ascents,
-      year: 2023,
+      year: 2_023,
     })
     expect(result).toBe(100)
   })

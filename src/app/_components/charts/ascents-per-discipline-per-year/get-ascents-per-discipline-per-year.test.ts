@@ -13,11 +13,11 @@ describe('getAscentsPerDisciplinePerYear', () => {
       {
         Boulder: 1,
         Route: 19,
-        year: 2024,
+        year: 2_024,
       },
     ]
     const result = getAscentsPerDisciplinePerYear(
-      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
+      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2_024),
     )
     expect(result).toEqual(expected)
   })

@@ -13,7 +13,7 @@ import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
-const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24
+const MILLISECONDS_IN_DAY = 1_000 * 60 * 60 * 24
 const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
 

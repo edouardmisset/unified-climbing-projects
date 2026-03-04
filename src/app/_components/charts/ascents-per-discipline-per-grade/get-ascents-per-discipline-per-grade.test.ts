@@ -52,7 +52,7 @@ describe('getAscentsPerDisciplinePerGrade', () => {
       },
     ]
     const result = getAscentsPerDisciplinePerGrade(
-      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
+      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2_024),
     )
     expect(result).toEqual(expected)
   })

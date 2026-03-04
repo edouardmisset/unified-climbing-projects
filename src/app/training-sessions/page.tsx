@@ -5,7 +5,7 @@ import { FilteredTrainingSessionList } from '../_components/filtered-training-se
 import { Loader } from '../_components/ui/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 
-export const revalidate = 3600
+export const revalidate = 3_600
 
 export default async function TrainingSessionsPage() {
   const trainingSessions = await getAllTrainingSessions()

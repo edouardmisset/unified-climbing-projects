@@ -7,7 +7,7 @@ export type Timeframe = z.infer<typeof timeframeSchema>
 export const optionalAscentYear = z
   .number()
   .int()
-  .min(1900, 'Year of ascent must be 1900 or later')
+  .min(1_900, 'Year of ascent must be 1900 or later')
   .optional()
 
 export const positiveInteger = z.number().int().min(0)

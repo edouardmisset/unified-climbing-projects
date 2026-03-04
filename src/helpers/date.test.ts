@@ -19,7 +19,7 @@ const INVALID_ISO_DATE_STRING_REGEX = /Invalid ISO date string/
 
 describe('getWeekNumber', () => {
   it('should return the correct week number for a given date', () => {
-    const date = new Date(2024, 0, 20)
+    const date = new Date(2_024, 0, 20)
     const result = getWeekNumber(date)
     expect(result).toBe(4)
   })
@@ -27,7 +27,7 @@ describe('getWeekNumber', () => {
 
 describe('getWeeksInYear', () => {
   it('should return the correct number of weeks in a year', () => {
-    const year = 2023
+    const year = 2_023
     const result = getWeeksInYear(year)
     expect(result).toBe(52)
   })
@@ -35,13 +35,13 @@ describe('getWeeksInYear', () => {
 
 describe('getDaysInYear', () => {
   it('should return the correct number of days in a non-leap year', () => {
-    const year = 2023
+    const year = 2_023
     const result = getDaysInYear(year)
     expect(result).toBe(365)
   })
 
   it('should return the correct number of days in a leap year', () => {
-    const year = 2024
+    const year = 2_024
     const result = getDaysInYear(year)
     expect(result).toBe(366)
   })
@@ -49,7 +49,7 @@ describe('getDaysInYear', () => {
 
 describe('getDayOfYear', () => {
   it('should return the correct day of the year for a given date', () => {
-    const date = new Date(2024, 5, 20)
+    const date = new Date(2_024, 5, 20)
     const result = getDayOfYear(date)
     expect(result).toBe(171)
   })

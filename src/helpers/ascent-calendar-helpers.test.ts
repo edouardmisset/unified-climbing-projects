@@ -4,13 +4,13 @@ import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
   it('should return an empty array when ascentsArray is undefined', () => {
-    const year = 2024
+    const year = 2_024
     const result = fromAscentsToCalendarEntries(year, undefined)
     expect(result).toEqual([])
   })
 
   it('should return calendar entries with empty shortText when ascents are undefined', () => {
-    const year = 2024
+    const year = 2_024
     const ascentsArray: Ascent[][] = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
     expect(result.length).toBe(3)
@@ -20,7 +20,7 @@ describe('fromAscentsToCalendarEntries', () => {
   })
 
   it('should return calendar entries with correct data when ascents are provided', () => {
-    const year = 2024
+    const year = 2_024
     const ascentsArray: Ascent[][] = [
       [
         {

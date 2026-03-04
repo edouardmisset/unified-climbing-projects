@@ -27,11 +27,11 @@ describe('getAscentsPerYearByGrade', () => {
         '8a+': 1,
         '8a+Color': 'var(--8a_)',
         '8aColor': 'var(--8a)',
-        year: 2024,
+        year: 2_024,
       },
     ]
     const result = getAscentsPerYearByGrade(
-      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2024),
+      sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2_024),
     )
     expect(result).toEqual(expected)
   })

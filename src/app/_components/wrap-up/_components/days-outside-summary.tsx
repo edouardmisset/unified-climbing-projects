@@ -82,7 +82,7 @@ export async function DaysOutsideSummary({
           <span className='block'>
             Your longest gap without climbing was{' '}
             <strong>
-              {humanizeDuration(longestGap * 24 * 60 * 60 * 1000, {
+              {humanizeDuration(longestGap * 24 * 60 * 60 * 1_000, {
                 units: ['mo', 'w', 'd'],
                 largest: 2,
                 conjunction: ' and ',

@@ -27,10 +27,10 @@ describe('filterAscents', () => {
   })
 
   it('should filter ascents by year', () => {
-    const result = filterAscents(sampleAscents, { year: 2022 })
+    const result = filterAscents(sampleAscents, { year: 2_022 })
     expect(result.length).toBe(13)
     for (const { date } of result) {
-      expect(new Date(date).getFullYear()).toBe(2022)
+      expect(new Date(date).getFullYear()).toBe(2_022)
     }
   })
 
