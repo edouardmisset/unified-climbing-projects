@@ -55,6 +55,10 @@ const DistanceClimbedPerYear = dynamic(
     ),
   { ssr: false },
 )
+const TopTenEvolution = dynamic(
+  () => import('../charts/top-ten-evolution/top-ten-evolution.tsx').then(m => m.TopTenEvolution),
+  { ssr: false },
+)
 const TriesByGrade = dynamic(
   () => import('../charts/tries-by-grade/tries-by-grade.tsx').then(m => m.TriesByGrade),
   { ssr: false },
@@ -86,6 +90,7 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
       <AscentsPerDisciplinePerGrade ascents={ascents} />
       <DistanceClimbedPerYear ascents={ascents} />
       <AscentsByGradesPerCrag ascents={ascents} />
+      <TopTenEvolution ascents={ascents} />
     </div>
   )
 }
