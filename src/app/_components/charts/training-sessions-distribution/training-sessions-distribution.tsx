@@ -72,7 +72,7 @@ export function TrainingSessionsDistribution({
   }, [data, colors])
 
   const xAxisLabel = useMemo<LabelProps>(
-    () => ({ value: 'Number of Sessions', offset: 20, position: 'bottom', ...AXIS_LABEL_STYLE }),
+    () => ({ ...AXIS_LABEL_STYLE, value: 'Number of Sessions', offset: 20, position: 'bottom' }),
     [],
   )
 

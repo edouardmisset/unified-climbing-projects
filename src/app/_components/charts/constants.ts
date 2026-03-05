@@ -10,6 +10,7 @@ export const AXIS_TICK_STYLE = {
 
 export const AXIS_LABEL_STYLE = {
   fill: 'var(--text-1)',
+  position: 'middle',
 } as const
 
 export const TOOLTIP_STYLE = {
