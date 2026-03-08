@@ -6,7 +6,7 @@ type SessionsIndoorVsOutdoor = {
   id: LocationType
   label: LocationType
   value: number
-  color: string
+  fill: string
 }[]
 
 export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): SessionsIndoorVsOutdoor {
@@ -25,7 +25,7 @@ export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): Session
 
   if (indoorCount > 0)
     result.push({
-      color: 'var(--indoor)',
+      fill: 'var(--indoor)',
       id: 'Indoor',
       label: 'Indoor',
       value: indoorCount,
@@ -33,7 +33,7 @@ export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): Session
 
   if (outdoorCount > 0)
     result.push({
-      color: 'var(--outdoor)',
+      fill: 'var(--outdoor)',
       id: 'Outdoor',
       label: 'Outdoor',
       value: outdoorCount,

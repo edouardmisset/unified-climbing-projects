@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import {
+  Legend,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -30,17 +31,17 @@ export function TrainingSessionsIndoorVsOutdoor({
     [totalSessions],
   )
   const shapeRenderer = useCallback(
-    (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.color} />,
+    (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.fill} />,
     [data],
   )
-  if (data.length === 0) return
-  if (data.length === 1) return
+  if (data.length <= 1) return
 
   return (
-    <ChartContainer caption='Indoor vs Outdoor Sessions'>
+    <ChartContainer caption='Indoor vs Outdoor'>
       <ResponsiveContainer height='100%' width='100%'>
         <PieChart>
           <ChartTooltip />
+          <Legend align='center' verticalAlign='top' />
           <Pie
             {...DEFAULT_PIE_PROPS}
             data={data}

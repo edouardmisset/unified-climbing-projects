@@ -21,14 +21,14 @@ export function TrainingSessionsPerYear({
   if (data.length === 0) return
 
   return (
-    <ChartContainer caption='Training Sessions per Year (Indoor/Outdoor by Discipline)'>
+    <ChartContainer caption='Sessions per Year'>
       <ResponsiveContainer height='100%' width='100%'>
         <AreaChart data={data} stackOffset='expand'>
           <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
           <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
           <ChartYAxis tickFormatter={formatPercentageTick} />
           <ChartTooltip formatter={percentFormatter} />
-          <Legend />
+          <Legend align='center' verticalAlign='top' />
           <Area
             type='monotone'
             dataKey='indoorRoute'

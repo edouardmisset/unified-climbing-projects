@@ -34,9 +34,7 @@ const TrainingSessionsDistribution = dynamic(
   { ssr: false },
 )
 
-type DashboardStatsProps = TrainingSessionListProps
-
-function DashboardStatsComponent(props: DashboardStatsProps) {
+function DashboardStatsComponent(props: TrainingSessionListProps) {
   const { trainingSessions } = props
 
   return trainingSessions.length === 0 ? (
