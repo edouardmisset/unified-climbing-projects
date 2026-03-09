@@ -5,13 +5,12 @@ import {
   XAxis,
   YAxis,
   type CartesianAxisProps,
+  type XAxisProps as RechartsXAxisProps,
+  type YAxisProps as RechartsYAxisProps,
   type LabelProps,
   type TooltipProps,
 } from 'recharts'
 
-import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent'
-
-import type { AxisDomain, BaseAxisProps, RenderableAxisProps } from 'recharts/types/util/types'
 import {
   AXIS_LABEL_STYLE,
   AXIS_TICK_STYLE,
@@ -25,8 +24,8 @@ type XAxisProps = {
   labelText?: LabelProps['value']
   offset?: LabelProps['offset']
   position?: LabelProps['position']
-  tickFormatter?: RenderableAxisProps['tickFormatter']
-  type?: BaseAxisProps['type']
+  tickFormatter?: RechartsXAxisProps['tickFormatter']
+  type?: RechartsXAxisProps['type']
   width?: CartesianAxisProps['width']
 }
 
@@ -60,8 +59,8 @@ export function ChartXAxis(props: XAxisProps) {
 
 type YAxisProps = {
   labelText?: LabelProps['value']
-  domain?: AxisDomain
-  tickFormatter?: RenderableAxisProps['tickFormatter']
+  domain?: RechartsYAxisProps['domain']
+  tickFormatter?: RechartsYAxisProps['tickFormatter']
 }
 
 export function ChartYAxis(props: YAxisProps) {
@@ -77,17 +76,13 @@ export function ChartYAxis(props: YAxisProps) {
   )
 }
 
-type ChartTooltipProps<T extends ValueType = ValueType, K extends NameType = NameType> = {
-  formatter?: TooltipProps<T, K>['formatter']
+type ChartTooltipProps = {
+  formatter?: TooltipProps['formatter']
   showCursor?: boolean
-  content?: TooltipProps<T, K>['content']
+  content?: TooltipProps['content']
 }
 
-export function ChartTooltip<T extends ValueType = ValueType, K extends NameType = NameType>({
-  formatter,
-  showCursor = true,
-  content,
-}: ChartTooltipProps<T, K>) {
+export function ChartTooltip({ formatter, showCursor = true, content }: ChartTooltipProps) {
   return (
     <Tooltip
       content={content}
