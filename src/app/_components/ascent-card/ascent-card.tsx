@@ -50,10 +50,10 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
 
   return (
     <div className={styles.card}>
-      <h2
+      <span
         className={`${styles.header} textNoWrap`}
         title={`${routeName} ${formattedGrade}`}
-      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
+      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</span>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
           <time>{prettyLongDate(date)}</time>
@@ -78,7 +78,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
               </span>
             ))}
         </div>
-        <p>{formatComments(comments)}</p>
+        <span className='block'>{formatComments(comments)}</span>
       </div>
     </div>
   )
