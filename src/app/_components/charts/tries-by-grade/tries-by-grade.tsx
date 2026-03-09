@@ -86,7 +86,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
           <ChartTooltip content={TriesByGradeTooltip} />
-          <Legend align='center' iconType='circle' layout='vertical' verticalAlign='top' />
+          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
           <Line
             dataKey='min'
             dot={dotStyle}
