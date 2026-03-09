@@ -73,6 +73,26 @@
   white-space: nowrap;
 }
 
+.gradeTD {
+  padding: 0;
+}
+
+.gradeEM {
+  inline-size: 100%;
+  block-size: 100%;
+  display: inline-block;
+  padding-block: var(--size-fluid-0);
+}
+
+.gradeCell {
+  --color: transparent;
+
+  border-radius: 10rem;
+  corner-shape: squircle;
+  background: var(--color);
+  padding-inline: var(--size-fluid-0);
+}
+
 .footer {
   display: grid;
   grid-template-columns: subgrid;

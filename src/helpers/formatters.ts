@@ -1,4 +1,4 @@
-import type { Ascent } from '~/schema/ascent'
+import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
 import { formatOrdinals } from './format-plurals'
@@ -120,3 +120,5 @@ export function fromClimbingDisciplineToEmoji(
     ? ''
     : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')
 }
+
+export const gradeToClassName = (grade: Grade): string => grade.replace('+', '_')

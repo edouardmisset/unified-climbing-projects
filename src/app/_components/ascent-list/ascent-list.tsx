@@ -12,6 +12,7 @@ import {
   formatRating,
   fromAscentStyleToEmoji,
   fromClimbingDisciplineToEmoji,
+  gradeToClassName,
   prettyLongDate,
   prettyShortDate,
 } from '~/helpers/formatters'
@@ -20,8 +21,8 @@ import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-t
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import { Dialog } from '../ui/dialog/dialog'
-import styles from './ascent-list.module.css'
 import { Loader } from '../ui/loader/loader'
+import styles from './ascent-list.module.css'
 
 const AscentCard = lazy(() =>
   import('../ascent-card/ascent-card').then(module => ({ default: module.AscentCard })),
@@ -160,6 +161,10 @@ export const AscentList = memo(
                 grade: topoGrade,
               })
 
+              const formattedGradeWithSpace = formattedGrade.endsWith('+')
+                ? formattedGrade
+                : `${formattedGrade}${NON_BREAKING_SPACE}`
+
               return (
                 <tr
                   className={`${styles.row} gridFullWidth`}
@@ -186,15 +191,20 @@ export const AscentList = memo(
                       {points === undefined ? '—' : <strong>{points}</strong>}
                     </td>
                   )}
-                  <td className={styles.cell}>
+                  <td className={`${styles.cell} ${styles.gradeTD}`}>
                     <em
-                      className='monospace'
                       title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
+                      className={`${styles.gradeEM} monospace`}
                     >
-                      <span>
-                        {formattedGrade.endsWith('+')
-                          ? formattedGrade
-                          : `${formattedGrade}${NON_BREAKING_SPACE}`}
+                      <span
+                        className={`${styles.cell} ${styles.gradeCell} contrastColor`}
+                        style={
+                          {
+                            '--color': `var(--${gradeToClassName(topoGrade)})`,
+                          } as CSSProperties
+                        }
+                      >
+                        {formattedGradeWithSpace}
                       </span>
                       {personalGrade === topoGrade || personalGrade === undefined ? undefined : (
                         <sup>
