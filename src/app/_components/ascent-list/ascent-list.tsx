@@ -1,8 +1,7 @@
 import { sum } from '@edouardmisset/math/sum.ts'
 import { type CSSProperties, lazy, memo, Suspense, useCallback, useMemo, useState } from 'react'
 import NotFound from '~/app/not-found'
-import { MAX_COLUMNS_THRESHOLD, NON_BREAKING_SPACE } from '~/constants/generic'
-import { formatGrade } from '~/helpers/format-grade'
+import { MAX_COLUMNS_THRESHOLD } from '~/constants/generic'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
   formatCragAndArea,
@@ -12,14 +11,13 @@ import {
   formatRating,
   fromAscentStyleToEmoji,
   fromClimbingDisciplineToEmoji,
-  gradeToClassName,
   prettyLongDate,
   prettyShortDate,
 } from '~/helpers/formatters'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
-import { DisplayGrade } from '../climbing/display-grade/display-grade'
+import { GradeTag } from './grade-tag'
 import { Dialog } from '../ui/dialog/dialog'
 import { Loader } from '../ui/loader/loader'
 import styles from './ascent-list.module.css'
@@ -156,15 +154,6 @@ export const AscentList = memo(
                 points,
               } = ascent
 
-              const formattedGrade = formatGrade({
-                climbingDiscipline,
-                grade: topoGrade,
-              })
-
-              const formattedGradeWithSpace = formattedGrade.endsWith('+')
-                ? formattedGrade
-                : `${formattedGrade}${NON_BREAKING_SPACE}`
-
               return (
                 <tr
                   className={`${styles.row} gridFullWidth`}
@@ -192,30 +181,11 @@ export const AscentList = memo(
                     </td>
                   )}
                   <td className={`${styles.cell} ${styles.gradeTD}`}>
-                    <em
-                      title={`Topo Grade: ${formattedGrade}${topoGrade === personalGrade || personalGrade === undefined ? '' : ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}`}`}
-                      className={`${styles.gradeEM} monospace`}
-                    >
-                      <span
-                        className={`${styles.cell} ${styles.gradeCell} contrastColor`}
-                        style={
-                          {
-                            '--color': `var(--${gradeToClassName(topoGrade)})`,
-                          } as CSSProperties
-                        }
-                      >
-                        {formattedGradeWithSpace}
-                      </span>
-                      {personalGrade === topoGrade || personalGrade === undefined ? undefined : (
-                        <sup>
-                          {' '}
-                          <DisplayGrade
-                            climbingDiscipline={climbingDiscipline}
-                            grade={personalGrade}
-                          />
-                        </sup>
-                      )}
-                    </em>
+                    <GradeTag
+                      climbingDiscipline={climbingDiscipline}
+                      personalGrade={personalGrade}
+                      topoGrade={topoGrade}
+                    />
                   </td>
                   <td className={styles.cell} title={tries === 1 ? style : formatOrdinals(tries)}>
                     <span>{fromAscentStyleToEmoji(style)}</span>

@@ -1,0 +1,31 @@
+.gradeEM {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-fluid-0);
+  padding: calc(var(--size-fluid-0) / 2);
+}
+
+.gradeCell {
+  --color: var(--text-1);
+
+  padding-block: calc(var(--size-fluid-0) / 4);
+  font-weight: bold;
+
+  letter-spacing: 0.05em;
+  border-radius: 100dvw;
+  corner-shape: squircle;
+  min-inline-size: 6ch;
+
+  border: 2px solid color-mix(in oklch, var(--color) 60%, transparent);
+  background: color-mix(in oklch, var(--color) 10%, transparent);
+  color: var(--color);
+  backdrop-filter: blur(2px);
+  box-shadow:
+    0 0 8px 1px color-mix(in oklch, var(--color) 30%, transparent),
+    inset 0 0 4px 1px color-mix(in oklch, var(--color) 15%, transparent);
+}
+
+.personalGrade {
+  align-self: flex-start;
+  font-size: 0.85em;
+}
