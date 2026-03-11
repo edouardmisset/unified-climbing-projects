@@ -14,11 +14,12 @@ export function ThemeToggle({
   return (
     <button
       aria-label='Toggle theme'
-      className={styles.toggle}
+      className={`${styles.toggle} ${checked ? styles.isDark : styles.isLight}`}
       onClick={handleThemeChange}
       type='button'
     >
-      {checked ? <Moon color='var(--text-2)' /> : <Sun color='var(--text-2)' />}
+      <Sun className={`${styles.icon} ${styles.sun}`} />
+      <Moon className={`${styles.icon} ${styles.moon}`} />
     </button>
   )
 }

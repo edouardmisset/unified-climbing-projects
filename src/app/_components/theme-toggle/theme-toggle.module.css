@@ -1,5 +1,76 @@
 .toggle {
+  block-size: 1.5rem;
+  aspect-ratio: 1;
+  display: inline-grid;
+
   @media (width <= 40rem) {
     display: none;
+  }
+}
+
+.icon {
+  grid-area: 1 / 1;
+  transition:
+    opacity 250ms ease,
+    transform 350ms
+      linear(
+        0,
+        -0.004 4.9%,
+        -0.02 9.4%,
+        -0.124 26.4%,
+        -0.126 30.5%,
+        -0.104 34.1%,
+        -0.027 38.8%,
+        0.108 43.1%,
+        0.299 47%,
+        0.817 55.2%,
+        0.97 59.1%,
+        1.071 63.4%,
+        1.118 67.7%,
+        1.127 72.6%,
+        1.108 77.2%,
+        1.019 90.7%,
+        1.004 95.2%,
+        1
+      );
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.sun {
+  stroke: var(--text-2);
+
+  circle {
+    fill: var(--yellow-6);
+  }
+
+  .isLight & {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+
+  .isDark & {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+}
+
+.moon {
+  stroke: var(--text-2);
+
+  path {
+    fill: var(--patagonia-color-2);
+  }
+
+  .isLight & {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.5);
+  }
+
+  .isDark & {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
   }
 }
