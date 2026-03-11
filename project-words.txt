@@ -8,6 +8,7 @@ droite
 Edouard
 edouardmisset
 gauche
+Keycap
 Misset
 nuqs
 NuqsAdapter
