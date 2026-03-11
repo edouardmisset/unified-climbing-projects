@@ -7,6 +7,7 @@ import styles from './ascent-component.module.css'
 export function AscentComponent({ ascent }: { ascent: Ascent }) {
   const { topoGrade, climbingDiscipline, routeName } = ascent
   const formattedRouteName = `${routeName} (${formatGrade({ climbingDiscipline, grade: topoGrade })})`
+
   return (
     <Dialog
       content={<AscentCard ascent={ascent} />}

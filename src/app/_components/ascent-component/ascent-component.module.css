@@ -1,16 +1,48 @@
 .trigger {
-  --patagonia-line-color: white;
   display: inline-block;
   inline-size: fit-content;
   max-inline-size: min(var(--size-14), 100vw);
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: var(--font-didone);
-  font-size: var(--font-size-3);
-  font-weight: var(--font-weight-9);
-  color: transparent;
   white-space: nowrap;
-  text-decoration: none;
-  background: var(--patagonia-gradient);
-  background-clip: text;
+  font-family: var(--font-didone, serif);
+  font-weight: var(--font-weight-9);
+  cursor: pointer;
+
+  font-size: var(--font-size-3);
+  color: var(--text-1);
+
+  /* The gradient highlights the bottom part of the text */
+  background-image: var(--patagonia-gradient);
+  background-size: 100% 8px;
+  background-position: bottom 2px left 0;
+  background-repeat: no-repeat;
+  padding: var(--size-1);
+  transition:
+    all 0.2s ease-out,
+    transform 0.1s,
+    background-size 0.3s
+      linear(
+        0,
+        0.417 25.5%,
+        0.867 49.4%,
+        1 57.7%,
+        0.925 65.1%,
+        0.908 68.6%,
+        0.902 72.2%,
+        0.916 78.2%,
+        0.988 92.1%,
+        1
+      );
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  background-size: 100% 100%;
+  color: var(--gray-0, white);
+  text-shadow: 1px 1px 2px black;
+}
+
+.trigger:active {
+  transform: scale(0.98);
 }
