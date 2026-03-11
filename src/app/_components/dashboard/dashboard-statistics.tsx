@@ -30,10 +30,10 @@ const AscentsPerDisciplinePerGrade = dynamic(
     ),
   { ssr: false },
 )
-const AscentsPerDisciplinePerYear = dynamic(
+const AscentsVolumeAndGradesPerYear = dynamic(
   () =>
-    import('../charts/ascents-per-discipline-per-year/ascents-per-discipline-per-year.tsx').then(
-      m => m.AscentsPerDisciplinePerYear,
+    import('../charts/ascents-volume-and-grades-per-year/ascents-volume-and-grades-per-year.tsx').then(
+      m => m.AscentsVolumeAndGradesPerYear,
     ),
   { ssr: false },
 )
@@ -85,7 +85,7 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
       <AscentsPerYearByGrade ascents={ascents} />
       <AscentsByStyle ascents={ascents} />
       <AscentsPerDiscipline ascents={ascents} />
-      <AscentsPerDisciplinePerYear ascents={ascents} />
+      <AscentsVolumeAndGradesPerYear ascents={ascents} />
       <TriesByGrade ascents={ascents} />
       <AscentsPerDisciplinePerGrade ascents={ascents} />
       <DistanceClimbedPerYear ascents={ascents} />
