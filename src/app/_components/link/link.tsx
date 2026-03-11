@@ -13,14 +13,14 @@ export const Link = memo(
     ...props
   }: { children: ReactNode; href: string } & React.ComponentProps<typeof NextLink>) => {
     const pathname = usePathname()
-    const isActive =
-      pathname === href || (pathname.includes('visualization') && href.includes('visualization'))
+    const isActive = pathname === href
 
     return (
       <NextLink
         href={href}
         {...props}
         className={`${styles.link} ${isActive ? styles.active : ''} ${className ?? ''}`}
+        data-active={isActive}
         prefetch
       >
         {children}

@@ -48,7 +48,9 @@
 }
 
 .link {
+  position: relative;
   display: inline-block;
+
   padding-block: var(--size-fluid-0);
   padding-inline: var(--size-fluid-2);
   border-radius: var(--border-size-4);
@@ -58,9 +60,34 @@
   }
 
   && {
-    &:hover {
+    &[data-active='true'] {
       color: var(--accent);
       background-color: var(--surface-1);
+
+      &::before {
+        content: '';
+        position: absolute;
+
+        inline-size: calc(1rem / 4);
+        inset-block: 0;
+        inset-inline-start: 0;
+        margin-block: calc(1rem / 4);
+
+        border-radius: 100vw;
+        background-image: linear-gradient(
+          -60deg,
+          var(--patagonia-color-1) 0 15%,
+          var(--patagonia-color-2) 15% 30%,
+          var(--patagonia-color-3) 30% 50%,
+          var(--patagonia-color-4) 50% 70%,
+          var(--patagonia-color-5) 70% 100%
+        );
+      }
+    }
+
+    &:hover {
+      color: var(--accent);
+      background-color: color-mix(in oklch, var(--surface-1), black 10%);
     }
   }
 }
