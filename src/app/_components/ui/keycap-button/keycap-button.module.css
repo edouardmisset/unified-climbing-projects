@@ -27,7 +27,8 @@
   inline-size: clamp(10ch, 10ch + 10vw, 30ch);
   padding: var(--padding);
   font-size: var(--font-size-3);
-  line-height: 1;
+  font-weight: var(--font-weight-6);
+  line-height: 1.6;
   cursor: pointer;
   user-select: none;
 
@@ -63,8 +64,8 @@
     --blur: var(--size-5);
     z-index: 0;
     grid-area: button;
-    width: calc(100% + var(--padding) * 2);
-    height: calc(100% + var(--padding) * 2);
+    inline-size: calc(100% + var(--padding) * 2);
+    block-size: calc(100% + var(--padding) * 2);
 
     content: '';
     background: conic-gradient(
@@ -88,7 +89,8 @@
   }
 
   &:disabled::after {
-    animation-play-state: paused;
+    cursor: not-allowed;
+    animation-play-state: paused; 
   }
 
   &::before {

@@ -403,7 +403,6 @@ export default function AscentForm(props: AscentFormProps) {
       </div>
       <Spacer size={3} />
       <KeycapButton
-        className={`contrastColor ${styles.submit}`}
         disabled={isSubmitting}
         label={isSubmitting ? 'Sending...' : 'Send 📮'}
         type='submit'
