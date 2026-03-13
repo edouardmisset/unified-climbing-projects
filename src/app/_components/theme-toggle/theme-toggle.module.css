@@ -1,88 +1,97 @@
 .switch {
-  font-size: 17px;
+  --toggle-transition-duration: 0.3s;
+
+  font-size: var(--font-size-1);
   position: relative;
   display: inline-block;
-  width: 4em;
-  height: 2.2em;
-  border-radius: 30px;
-  box-shadow: 0 0 10px hsl(0deg 0% 0% / 10%);
-}
+  inline-size: 4rem;
+  block-size: 2.2rem;
+  line-height: 2;
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-1);
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  @media (width <= 40rem) {
+    display: none;
+  }
+
+  & input {
+    opacity: 0;
+    inline-size: 0;
+    block-size: 0;
+  }
 }
 
 .slider {
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background-color: hsl(0deg 0% 16%);
-  transition: 0.4s;
-  border-radius: 30px;
+  background-color: var(--surface-3);
+  transition: var(--toggle-transition-duration);
+  border-radius: var(--radius-4);
   overflow: hidden;
-}
 
-.slider::before {
-  position: absolute;
-  content: '';
-  height: 1.2em;
-  width: 1.2em;
-  border-radius: 20px;
-  left: 0.5em;
-  bottom: 0.5em;
-  transition: 0.4s;
-  transition-timing-function: cubic-bezier(0.81, -0.04, 0.38, 1.5);
-  box-shadow: inset 8px -4px 0 0 white;
-}
-
-.switch input:checked + .slider {
-  background-color: hsl(201deg 100% 50%);
-}
-
-.switch input:checked + .slider::before {
-  transform: translateX(1.8em);
-  box-shadow: inset 15px -4px 0 15px hsl(44deg 100% 64%);
+  &::before {
+    position: absolute;
+    content: '';
+    block-size: 1.2rem;
+    inline-size: 1.2rem;
+    border-radius: var(--radius-4);
+    left: 0.5rem;
+    bottom: 0.5rem;
+    transition: var(--toggle-transition-duration);
+    transition-timing-function: var(--ease-elastic-in-out-1);
+    box-shadow: inset 8px -4px 0 0 var(--gray-0);
+  }
 }
 
 .star {
-  background-color: white;
+  background-color: var(--gray-0);
   border-radius: 50%;
   position: absolute;
-  width: 5px;
-  transition: all 0.4s;
-  height: 5px;
-}
+  inline-size: var(--border-size-3);
+  transition: all var(--toggle-transition-duration);
+  block-size: var(--border-size-3);
 
-.star_1 {
-  left: 2.5em;
-  top: 0.5em;
-}
+  &:nth-child(1) {
+    left: 2.5rem;
+    top: 0.5rem;
+  }
 
-.star_2 {
-  left: 2.2em;
-  top: 1.2em;
-}
+  &:nth-child(2) {
+    left: 2.2rem;
+    top: 1.2rem;
+  }
 
-.star_3 {
-  left: 3em;
-  top: 0.9em;
-}
-
-.switch input:checked ~ .slider .star {
-  opacity: 0;
+  &:nth-child(3) {
+    left: 3rem;
+    top: 0.9rem;
+  }
 }
 
 .cloud {
-  width: 3.5em;
+  inline-size: 3.5rem;
   position: absolute;
-  bottom: -1.4em;
-  left: -1.1em;
+  bottom: -1.4rem;
+  left: -1rem;
   opacity: 0;
-  transition: all 0.4s;
+  transition: all var(--toggle-transition-duration);
 }
 
-.switch input:checked ~ .slider .cloud {
-  opacity: 1;
+.switch:has(input:checked) {
+  .slider {
+    background-color: var(--link);
+
+    &::before {
+      transform: translateX(1.8em);
+      box-shadow: inset 15px -4px 0 15px var(--yellow-4);
+    }
+  }
+
+  .star {
+    opacity: 0;
+  }
+
+  .cloud {
+    opacity: 1;
+  }
 }

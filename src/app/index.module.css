@@ -38,14 +38,3 @@
   flex: 1;
   overflow: auto;
 }
-
-.themeToggle {
-  padding: var(--size-fluid-0);
-  margin-block-start: auto;
-  background: transparent;
-  border: 1px solid var(--gray-5);
-
-  @media (width <= 40rem) {
-    display: none;
-  }
-}
