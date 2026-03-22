@@ -154,6 +154,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
             list='climbing-discipline-list'
             placeholder='Route'
             title={`The climbing discipline of the session (e.g. ${climbingDisciplineFormattedList})`}
+            type='text'
           />
           <DataList
             id='climbing-discipline-list'
@@ -182,6 +183,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
             list='anatomical-region-list'
             placeholder='Fi'
             title={`The anatomical region targeted during the training session (e.g. ${anatomicalRegionFormattedList})`}
+            type='text'
           />
           <DataList
             id='anatomical-region-list'

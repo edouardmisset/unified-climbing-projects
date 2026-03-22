@@ -21,7 +21,7 @@ export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] =>
       label: style,
       value: filteredAscentsByStyle.length,
     }
-  }).filter(value => value !== undefined)
+  }).filter(style => style !== undefined)
 
 function fromAscentStyleToBackgroundColor(ascentStyle: Ascent['style']): string {
   return ASCENT_STYLE_TO_COLOR[ascentStyle] ?? 'var(--gray-5)'
