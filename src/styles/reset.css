@@ -50,6 +50,7 @@
   /* Accent colors */
   accent-color: var(--accent, var(--link));
   caret-color: var(--accent, var(--link));
+  caret-shape: underscore;
 
   /* By default we enable dark mode */
   color-scheme: light dark;

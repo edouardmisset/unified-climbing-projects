@@ -49,7 +49,7 @@ export function ClimbingStyleToggleGroup(
           title={title}
           value={climbingStyle}
         >
-          <ClimbingStyle climbingStyle={climbingStyle} />
+          <ClimbingStyle climbingStyle={climbingStyle} className={styles.buttonLabel} />
         </Toggle>
       ))}
     </ToggleGroup>
