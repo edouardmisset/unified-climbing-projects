@@ -1,76 +1,97 @@
-.toggle {
-  block-size: 1.5rem;
-  aspect-ratio: 1;
-  display: inline-grid;
+.switch {
+  --toggle-transition-duration: 0.3s;
+
+  font-size: var(--font-size-1);
+  position: relative;
+  display: inline-block;
+  inline-size: 4rem;
+  block-size: 2.2rem;
+  line-height: 2;
+  border-radius: var(--radius-4);
+  box-shadow: var(--shadow-1);
 
   @media (width <= 40rem) {
     display: none;
   }
-}
 
-.icon {
-  grid-area: 1 / 1;
-  transition:
-    opacity 250ms ease,
-    transform 350ms
-      linear(
-        0,
-        -0.004 4.9%,
-        -0.02 9.4%,
-        -0.124 26.4%,
-        -0.126 30.5%,
-        -0.104 34.1%,
-        -0.027 38.8%,
-        0.108 43.1%,
-        0.299 47%,
-        0.817 55.2%,
-        0.97 59.1%,
-        1.071 63.4%,
-        1.118 67.7%,
-        1.127 72.6%,
-        1.108 77.2%,
-        1.019 90.7%,
-        1.004 95.2%,
-        1
-      );
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
-}
-
-.sun {
-  stroke: var(--text-2);
-
-  circle {
-    fill: var(--yellow-6);
-  }
-
-  .isLight & {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-  }
-
-  .isDark & {
+  & input {
     opacity: 0;
-    transform: rotate(45deg) scale(0.5);
+    inline-size: 0;
+    block-size: 0;
   }
 }
 
-.moon {
-  stroke: var(--text-2);
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--surface-3);
+  transition: var(--toggle-transition-duration);
+  border-radius: var(--radius-4);
+  overflow: hidden;
 
-  path {
-    fill: var(--patagonia-color-2);
+  &::before {
+    position: absolute;
+    content: '';
+    block-size: 1.2rem;
+    inline-size: 1.2rem;
+    border-radius: var(--radius-4);
+    left: 0.5rem;
+    bottom: 0.5rem;
+    transition: var(--toggle-transition-duration);
+    transition-timing-function: var(--ease-elastic-in-out-1);
+    box-shadow: inset 8px -4px 0 0 var(--gray-0);
+  }
+}
+
+.star {
+  background-color: var(--gray-0);
+  border-radius: 50%;
+  position: absolute;
+  inline-size: var(--border-size-3);
+  transition: all var(--toggle-transition-duration);
+  block-size: var(--border-size-3);
+
+  &:nth-child(1) {
+    left: 2.5rem;
+    top: 0.5rem;
   }
 
-  .isLight & {
+  &:nth-child(2) {
+    left: 2.2rem;
+    top: 1.2rem;
+  }
+
+  &:nth-child(3) {
+    left: 3rem;
+    top: 0.9rem;
+  }
+}
+
+.cloud {
+  inline-size: 3.5rem;
+  position: absolute;
+  bottom: -1.4rem;
+  left: -1rem;
+  opacity: 0;
+  transition: all var(--toggle-transition-duration);
+}
+
+.switch:has(input:checked) {
+  .slider {
+    background-color: var(--link);
+
+    &::before {
+      transform: translateX(1.8em);
+      box-shadow: inset 15px -4px 0 15px var(--yellow-4);
+    }
+  }
+
+  .star {
     opacity: 0;
-    transform: rotate(-45deg) scale(0.5);
   }
 
-  .isDark & {
+  .cloud {
     opacity: 1;
-    transform: rotate(0deg) scale(1);
   }
 }
