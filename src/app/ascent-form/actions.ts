@@ -18,11 +18,7 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
 
   try {
     await addAscent(parsedFormData.data)
-    // Revalidate all ascent-related pages
-    revalidatePath('/ascents', 'page')
-    revalidatePath('/ascents/dashboard', 'page')
-    revalidatePath('/indicators', 'page')
-    revalidatePath('/', 'page') // Home page
+    revalidatePath('/', 'layout')
     return true
   } catch (error) {
     globalThis.console.error('Error adding ascent:', error)
