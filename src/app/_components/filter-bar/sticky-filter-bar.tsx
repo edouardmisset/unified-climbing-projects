@@ -1,5 +1,5 @@
 import { CircleX } from 'lucide-react'
-import { memo, useCallback, useMemo } from 'react'
+import { memo, useCallback, useMemo, useState, useTransition } from 'react'
 import { CustomInput } from '../ui/custom-input/custom-input'
 import { CustomSelect } from '../custom-select/custom-select'
 import { ALL_VALUE } from '../dashboard/constants'
@@ -7,37 +7,100 @@ import type { BaseFilterBarProps } from './types'
 import styles from './sticky-filter-bar.module.css'
 
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
-  const clearFilters = useCallback(() => {
-    for (const filter of filters)
-      filter.handleChange({
-        target: { value: ALL_VALUE },
-      } as React.ChangeEvent<HTMLSelectElement>)
+  const [isPending, startTransition] = useTransition()
 
-    if (setSearch !== undefined) setSearch('')
-  }, [filters, setSearch])
+  const selectedValueByName = useMemo(
+    () =>
+      Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<
+        string,
+        string
+      >,
+    [filters],
+  )
+
+  const [localSelectedValueByName, setLocalSelectedValueByName] =
+    useState<Record<string, string>>(selectedValueByName)
+  const [localSearch, setLocalSearch] = useState(search ?? '')
+
+  const displayedSelectedValueByName = isPending ? localSelectedValueByName : selectedValueByName
+  const displayedSearch = isPending ? localSearch : (search ?? '')
+
+  const applyFilterValue = useCallback(
+    (filterName: string, value: string) => {
+      const matchingFilter = filters.find(({ name }) => name === filterName)
+      if (matchingFilter === undefined) return
+
+      setLocalSelectedValueByName(previousValues => ({
+        ...previousValues,
+        [filterName]: value,
+      }))
+
+      startTransition(() => {
+        matchingFilter.setValue(value)
+      })
+    },
+    [filters, startTransition],
+  )
+
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setLocalSearch(value)
+
+      if (setSearch === undefined) return
+
+      startTransition(() => {
+        setSearch(value)
+      })
+    },
+    [setSearch, startTransition],
+  )
+
+  const clearFilters = useCallback(() => {
+    setLocalSelectedValueByName(
+      Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])) as Record<string, string>,
+    )
+    setLocalSearch('')
+
+    startTransition(() => {
+      for (const filter of filters) filter.setValue(ALL_VALUE)
+
+      if (setSearch !== undefined) setSearch('')
+    })
+  }, [filters, setSearch, startTransition])
 
   const isOneFilterActive = useMemo(
     () =>
-      filters.some(filter => filter.selectedValue !== ALL_VALUE) ||
-      (search !== undefined && search !== ''),
-    [filters, search],
+      filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
+      displayedSearch !== '',
+    [displayedSearch, displayedSelectedValueByName, filters],
+  )
+
+  const renderedFilters = useMemo(
+    () =>
+      filters.map(filter => ({
+        ...filter,
+        handleChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
+          applyFilterValue(filter.name, event.target.value),
+        selectedValue: displayedSelectedValueByName[filter.name] ?? filter.selectedValue,
+      })),
+    [applyFilterValue, displayedSelectedValueByName, filters],
   )
 
   return (
-    <search className={styles.container}>
+    <search aria-busy={isPending} className={styles.container}>
       <div className={styles.background} />
       <div className={styles.edge} />
-      <div className={styles.filters}>
+      <div className={`${styles.filters} ${isPending ? styles.filtersPending : ''}`}>
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <CustomInput
             name='search route'
-            onChange={e => setSearch(e.target.value)}
+            onChange={event => handleSearchChange(event.target.value)}
             placeholder='Biographie'
             type='search'
-            value={search}
+            value={displayedSearch}
           />
         )}
-        <FilterSelectList filters={filters} />
+        <FilterSelectList filters={renderedFilters} />
         <button
           className={styles.reset}
           disabled={!isOneFilterActive}
@@ -53,7 +116,12 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
   )
 }
 
-const FilterSelectList = memo(({ filters }: Pick<BaseFilterBarProps, 'filters'>) =>
+type RenderedFilter = BaseFilterBarProps['filters'][number] & {
+  handleChange: React.ChangeEventHandler<HTMLSelectElement>
+  selectedValue: string
+}
+
+const FilterSelectList = memo(({ filters }: { filters: RenderedFilter[] }) =>
   filters.map(({ handleChange, name, options, selectedValue, title }) =>
     options.length === 0 ? undefined : (
       <CustomSelect

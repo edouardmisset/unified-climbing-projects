@@ -4,7 +4,7 @@ import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-que
 import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { PERIOD } from '~/schema/generic'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
-import { createChangeHandler } from '../helpers'
+import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import { type FilterConfig, LOCATION_TYPES } from '../types'
 
@@ -33,28 +33,28 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     () =>
       [
         {
-          handleChange: createChangeHandler(setYear),
+          setValue: createValueSetter(setYear),
           name: 'Year',
           options: yearList,
           selectedValue: selectedYear,
           title: 'Year',
         },
         {
-          handleChange: createChangeHandler(setLocationType),
+          setValue: createValueSetter(setLocationType),
           name: 'Location Type',
           options: LOCATION_TYPES,
           selectedValue: selectedLocationType,
           title: 'Indoor / Outdoor',
         },
         {
-          handleChange: createChangeHandler(setDiscipline),
+          setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
           options: AVAILABLE_CLIMBING_DISCIPLINE,
           selectedValue: selectedDiscipline,
           title: 'Climbing Discipline',
         },
         {
-          handleChange: createChangeHandler(setPeriod),
+          setValue: createValueSetter(setPeriod),
           name: 'Period',
           options: PERIOD,
           selectedValue: selectedPeriod,

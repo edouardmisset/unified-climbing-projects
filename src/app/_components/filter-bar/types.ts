@@ -1,18 +1,16 @@
-import type { ChangeEventHandler } from 'react'
-
 export const LOCATION_TYPES = ['Indoor', 'Outdoor'] as const
 export type LocationType = (typeof LOCATION_TYPES)[number]
 
-export type FilterConfig<T extends string | number = string> = {
+export type FilterConfig = {
   name: string
   title: string
-  options: readonly T[]
-  selectedValue: T
-  handleChange: ChangeEventHandler<HTMLSelectElement>
+  options: readonly string[]
+  selectedValue: string
+  setValue: (value: string) => void
 }
 
-export type BaseFilterBarProps<T extends string | number = string> = {
-  filters: FilterConfig<T>[]
+export type BaseFilterBarProps = {
+  filters: FilterConfig[]
   search?: string
   setSearch?: (value: string) => void
   showSearch: boolean
