@@ -49,3 +49,20 @@ test('should show a single ascent', async ({ page }) => {
   await page.waitForSelector('text=Lévitation')
   await expect(page.getByRole('heading', { name: 'Lévitation' })).toBeVisible()
 })
+
+test('skip link should move users to content', async ({ page }) => {
+  await page.goto('/')
+
+  await page.keyboard.press('Tab')
+
+  const skipLink = page.getByRole('link', { name: 'Skip to content' })
+  await expect(skipLink).toBeFocused()
+  await expect(skipLink).toBeVisible()
+
+  await skipLink.press('Enter')
+
+  const mainContent = page.locator('main#main-content')
+  await expect(page).toHaveURL(/#main-content$/)
+  await expect(mainContent).toBeInViewport()
+  await expect(mainContent).toBeFocused()
+})

@@ -5,6 +5,46 @@
   isolation: isolate;
 }
 
+.skipLink {
+  position: absolute;
+  inset-block-start: var(--size-3);
+  inset-inline-start: var(--size-3);
+  z-index: var(--layer-5);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--size-2);
+  padding-inline: var(--size-3);
+  border-radius: var(--radius-2);
+
+  background-color: var(--surface-1);
+  color: var(--text-1);
+  box-shadow: var(--shadow-3);
+
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--size-3)));
+  opacity: 0;
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skipLink {
+    transition:
+      transform var(--sneeze) var(--ease-spring-3),
+      opacity var(--blink) var(--ease-out-3);
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(calc(-100% - var(--size-3)));
+    }
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
