@@ -56,6 +56,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html
           className={font.className}
           data-color-scheme={theme}
+          data-scroll-behavior='smooth'
           lang='en'
           suppressHydrationWarning
         >
