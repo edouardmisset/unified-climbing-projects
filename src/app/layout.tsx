@@ -60,11 +60,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           suppressHydrationWarning
         >
           <body className={styles.body}>
+            <a className={styles.skipLink} href='#main-content'>
+              Skip to content
+            </a>
             <header className={styles.header}>
               <ThemeToggle checked={theme === 'dark'} onChange={toggleTheme} />
               <Navigation />
             </header>
-            <main className={styles.main}>
+            <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>
                 <NuqsAdapter>{children}</NuqsAdapter>
               </Suspense>
