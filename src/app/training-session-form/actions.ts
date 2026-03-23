@@ -1,10 +1,10 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { calculateLoad } from '~/helpers/calculate-load'
 import { trimAndNormalizeStringsInObject } from '~/helpers/trim-and-normalize-string-in-object'
 import { type TrainingSession, trainingSessionFormSchema } from '~/schema/training'
-import { addTrainingSession } from '~/services/training'
+import { addTrainingSession, TRAINING_CACHE_TAG } from '~/services/training'
 import type { Object_ } from '~/types/generic'
 
 export const onSubmit = async (formData: Object_): Promise<boolean> => {
@@ -28,10 +28,7 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
 
   try {
     await addTrainingSession(newTrainingSession)
-    // Revalidate all training-related pages
-    revalidatePath('/training-sessions', 'page')
-    revalidatePath('/training-sessions/dashboard', 'page')
-    revalidatePath('/', 'page') // Home page
+    revalidatePath('/', 'layout')
     return true
   } catch (error) {
     globalThis.console.error('Error adding training session:', error)
