@@ -78,7 +78,7 @@
     "@typescript/native-preview": "^7.0.0-dev.20260323.1",
     "@vitejs/plugin-react": "^5.2.0",
     "@vitest/coverage-v8": "^4.1.0",
-    "@vitest/ui": "4.1.0",
+    "@vitest/ui": "^4.1.0",
     "cspell": "^9.6.4",
     "jsdom": "^29.0.1",
     "knip": "^5.88.1",
