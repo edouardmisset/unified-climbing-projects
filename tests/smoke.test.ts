@@ -61,6 +61,8 @@ test('skip link should move users to content', async ({ page }) => {
 
   await skipLink.press('Enter')
 
+  const mainContent = page.locator('main#main-content')
   await expect(page).toHaveURL(/#main-content$/)
-  await expect(page.locator('main#main-content')).toBeInViewport()
+  await expect(mainContent).toBeInViewport()
+  await expect(mainContent).toBeFocused()
 })
