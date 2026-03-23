@@ -90,7 +90,7 @@
 
   &:disabled::after {
     cursor: not-allowed;
-    animation-play-state: paused; 
+    animation-play-state: paused;
   }
 
   &::before {
