@@ -4,7 +4,7 @@ import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { PERIOD } from '~/schema/generic'
 import { LOAD_CATEGORIES, SESSION_TYPES, type TrainingSessionListProps } from '~/schema/training.ts'
-import { createChangeHandler } from '../helpers'
+import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
@@ -39,35 +39,35 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
     () =>
       [
         {
-          handleChange: createChangeHandler(setSessionType),
+          setValue: createValueSetter(setSessionType),
           name: 'Session Type',
           options: SESSION_TYPES,
           selectedValue: selectedSessionType,
           title: 'Session Type',
         },
         {
-          handleChange: createChangeHandler(setLoad),
+          setValue: createValueSetter(setLoad),
           name: 'Load',
           options: LOAD_CATEGORIES,
           selectedValue: selectedLoad,
           title: 'Load',
         },
         {
-          handleChange: createChangeHandler(setYear),
+          setValue: createValueSetter(setYear),
           name: 'Year',
           options: yearList,
           selectedValue: selectedYear,
           title: 'Year',
         },
         {
-          handleChange: createChangeHandler(setLocation),
+          setValue: createValueSetter(setLocation),
           name: 'Location',
           options: locationList,
           selectedValue: selectedLocation,
           title: 'Location',
         },
         {
-          handleChange: createChangeHandler(setPeriod),
+          setValue: createValueSetter(setPeriod),
           name: 'Period',
           options: PERIOD,
           selectedValue: selectedPeriod,

@@ -4,7 +4,7 @@ import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
 import { ASCENT_STYLE, type Ascent, AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { PERIOD } from '~/schema/generic'
-import { createChangeHandler } from '../helpers'
+import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
@@ -51,35 +51,35 @@ export default function AscentsFilterBar({
     () =>
       [
         {
-          handleChange: createChangeHandler(setDiscipline),
+          setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
           options: AVAILABLE_CLIMBING_DISCIPLINE,
           selectedValue: selectedDiscipline,
           title: 'Climbing Discipline',
         },
         {
-          handleChange: createChangeHandler(setYear),
+          setValue: createValueSetter(setYear),
           name: 'Year',
           options: yearList,
           selectedValue: selectedYear,
           title: 'Year',
         },
         {
-          handleChange: createChangeHandler(setCrag),
+          setValue: createValueSetter(setCrag),
           name: 'Crag',
           options: cragList,
           selectedValue: selectedCrag,
           title: 'Crag',
         },
         {
-          handleChange: createChangeHandler(setStyle),
+          setValue: createValueSetter(setStyle),
           name: 'Style',
           options: ASCENT_STYLE,
           selectedValue: selectedStyle,
           title: 'Ascent Style',
         },
         {
-          handleChange: createChangeHandler(setPeriod),
+          setValue: createValueSetter(setPeriod),
           name: 'Period',
           options: PERIOD,
           selectedValue: selectedPeriod,

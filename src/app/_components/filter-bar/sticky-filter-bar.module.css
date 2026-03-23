@@ -65,6 +65,14 @@
   isolation: isolate;
 }
 
+.filtersPending {
+  opacity: 0.7;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 100ms var(--ease-out-2);
+  }
+}
+
 .reset {
   align-self: first baseline;
   min-width: max-content;

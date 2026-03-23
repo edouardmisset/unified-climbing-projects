@@ -1,6 +1,6 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { stringIncludesCaseInsensitive } from '@edouardmisset/text'
-import { useMemo } from 'react'
+import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -25,36 +25,45 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedStyle,
   } = useAscentsQueryState()
 
+  const deferredSelectedCrag = useDeferredValue(selectedCrag)
+  const deferredSelectedDiscipline = useDeferredValue(selectedDiscipline)
+  const deferredSelectedGrade = useDeferredValue(selectedGrade)
+  const deferredSelectedPeriod = useDeferredValue(selectedPeriod)
+  const deferredSelectedRoute = useDeferredValue(selectedRoute)
+  const deferredSelectedStyle = useDeferredValue(selectedStyle)
+  const deferredSelectedYear = useDeferredValue(selectedYear)
+
   const filteredAscents = useMemo(() => {
-    const selectedYearNumber = Number(selectedYear)
+    const selectedYearNumber = Number(deferredSelectedYear)
+
     return filterAscents(ascents, {
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
-      crag: normalizeFilterValue(selectedCrag),
-      grade: normalizeFilterValue(selectedGrade),
-      style: normalizeFilterValue(selectedStyle),
+      climbingDiscipline: normalizeFilterValue(deferredSelectedDiscipline),
+      crag: normalizeFilterValue(deferredSelectedCrag),
+      grade: normalizeFilterValue(deferredSelectedGrade),
+      style: normalizeFilterValue(deferredSelectedStyle),
       year:
-        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+        deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber
           : undefined,
-      period: normalizeFilterValue(selectedPeriod),
+      period: normalizeFilterValue(deferredSelectedPeriod),
     })
   }, [
     ascents,
-    selectedCrag,
-    selectedDiscipline,
-    selectedGrade,
-    selectedPeriod,
-    selectedStyle,
-    selectedYear,
+    deferredSelectedCrag,
+    deferredSelectedDiscipline,
+    deferredSelectedGrade,
+    deferredSelectedPeriod,
+    deferredSelectedStyle,
+    deferredSelectedYear,
   ])
 
   return useMemo(
     () =>
-      selectedRoute === ''
+      deferredSelectedRoute === ''
         ? filteredAscents
         : filteredAscents.filter(({ routeName }) =>
-            stringIncludesCaseInsensitive(routeName, selectedRoute),
+            stringIncludesCaseInsensitive(routeName, deferredSelectedRoute),
           ),
-    [filteredAscents, selectedRoute],
+    [deferredSelectedRoute, filteredAscents],
   )
 }
