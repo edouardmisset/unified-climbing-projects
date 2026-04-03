@@ -31,6 +31,12 @@
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-2);
   backdrop-filter: blur(10px);
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
 }
 
 .toggleIcon {
@@ -283,6 +289,12 @@
   inline-size: 2.25rem;
   block-size: 2.25rem;
   border-radius: var(--radius-2);
+
+  &:focus-visible {
+    outline: none;
+    border: 1px solid var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
 }
 
 /* --- Desktop Collapsed State --- */

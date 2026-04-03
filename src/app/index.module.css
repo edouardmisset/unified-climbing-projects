@@ -1,5 +1,5 @@
 .body {
-  --rail-expanded-size: clamp(15rem, 2vw, 18rem);
+  --rail-expanded-size: clamp(15rem, 20vw, 18rem);
   --rail-collapsed-size: 5.5rem;
 
   display: flex;
