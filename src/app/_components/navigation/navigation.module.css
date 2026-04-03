@@ -190,17 +190,6 @@
   display: none;
 }
 
-.mobileTrigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-block-size: 2.5rem;
-  padding-inline: 0.875rem;
-  margin-block: var(--size-2);
-  margin-inline-start: auto;
-  border-radius: var(--radius-2);
-}
-
 .drawerSwipeArea {
   position: fixed;
   inset-block: 0;

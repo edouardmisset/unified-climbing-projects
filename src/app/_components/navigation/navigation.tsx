@@ -1,7 +1,8 @@
 'use client'
 import { Drawer } from '@base-ui/react/drawer'
-import { MenuIcon, PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
+import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
+import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem, type NavigationRenderMode } from './_components/navigation-item'
 import { UserStatus } from './_components/user-status'
 import { NAVIGATION_ITEMS } from './constants'
@@ -71,12 +72,7 @@ export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: Na
 
       <div className={styles.mobileMenu}>
         <Drawer.Root onOpenChange={setMobileOpen} open={mobileOpen} swipeDirection='left'>
-          <Drawer.Trigger
-            aria-label='Open navigation drawer'
-            className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.mobileTrigger}`}
-          >
-            <MenuIcon />
-          </Drawer.Trigger>
+          <MobileNavigationTrigger open={mobileOpen} />
           <Drawer.SwipeArea className={styles.drawerSwipeArea} />
           <Drawer.Portal>
             <Drawer.Backdrop className={styles.drawerBackdrop} />
