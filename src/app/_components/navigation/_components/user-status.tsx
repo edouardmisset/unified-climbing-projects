@@ -8,7 +8,7 @@ export function UserStatus() {
         <SignInButton />
       </SignedOut>
       <SignedIn>
-        <UserButton /> {user?.fullName}
+        <UserButton /> <span className='ellipsis'>{user?.fullName}</span>
       </SignedIn>
     </>
   )

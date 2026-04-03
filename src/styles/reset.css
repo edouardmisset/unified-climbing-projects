@@ -39,10 +39,19 @@
   --link-visited: light-dark(var(--indigo-5), var(--indigo-3));
   --text-1: light-dark(var(--gray-12), var(--gray-1));
   --text-2: light-dark(var(--gray-7), var(--gray-4));
-  --surface-1: light-dark(var(--gray-0), var(--gray-9));
-  --surface-2: light-dark(var(--gray-2), var(--gray-8));
-  --surface-3: light-dark(var(--gray-3), var(--gray-7));
-  --surface-4: light-dark(var(--gray-4), var(--gray-6));
+  --surface-1: light-dark(var(--gray-4), var(--gray-9));
+  --surface-2: light-dark(var(--gray-3), var(--gray-8));
+  --surface-3: light-dark(var(--gray-2), var(--gray-7));
+  --surface-4: light-dark(var(--gray-0), var(--gray-6));
+  --panel-bg: oklch(from var(--surface-2) l c h / 75%);
+  --panel-border: oklch(from var(--surface-4) l c h / 45%);
+  --panel-shadow-outer: oklch(from var(--surface-1) l c h / 30%);
+  --panel-shadow-inner: oklch(from var(--surface-1) l c h / 35%);
+  --control-bg: oklch(from var(--surface-1) l c h / 16%);
+  --control-bg-focus: oklch(from var(--surface-1) l c h / 24%);
+  --control-border-hover: oklch(from var(--surface-4) l c h / 70%);
+  --control-border-focus: oklch(from var(--accent) l c h / 70%);
+  --control-ring: oklch(from var(--accent) l c h / 25%);
 
   /* Animation */
   --rotating-angle: 0turn;

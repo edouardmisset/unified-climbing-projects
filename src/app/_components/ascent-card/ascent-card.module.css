@@ -1,7 +1,4 @@
 .card {
-  --inline-padding: var(--size-fluid-2);
-  --surface: var(--surface-3);
-  --text: var(--text-1);
   --gap: var(--size-fluid-2);
 
   display: flex;
@@ -13,25 +10,22 @@
   aspect-ratio: 2.5 / 3.5;
 
   overflow: auto;
-  color: var(--text);
+  color: var(--text-1);
 
-  background-color: var(--surface);
+  background-color: var(--surface-3);
   border-radius: var(--radius-3);
   box-shadow: var(--shadow-3);
 }
 
 .header {
-  --surface: var(--surface-1);
-  --text: var(--text-1);
-
   position: sticky;
   inset: 0;
   font-size: clamp(1rem, 1rem + 3vw, 2.5rem);
   font-weight: 600;
   padding-block: var(--size-fluid-3);
-  padding-inline: var(--inline-padding);
-  color: var(--text);
-  background-color: var(--surface);
+  padding-inline: var(--size-fluid-2);
+  color: var(--text-1);
+  background-color: var(--surface-1);
 
   box-shadow: var(--shadow-2);
 }
@@ -43,23 +37,19 @@
   gap: var(--gap);
   padding-block-end: var(--size-fluid-2);
 
-  padding-inline: var(--inline-padding);
+  padding-inline: var(--size-fluid-2);
 }
 
 .details {
-  --direction: column;
-
   display: flex;
-  flex-flow: var(--direction) wrap;
+  flex-flow: column wrap;
   column-gap: var(--gap);
   justify-content: space-between;
 }
 
 .placeAndTime {
-  --direction: row;
-
   display: flex;
-  flex-flow: var(--direction) wrap;
+  flex-flow: row wrap;
   row-gap: calc(var(--gap) / 2);
   column-gap: var(--gap);
   justify-content: space-evenly;

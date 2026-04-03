@@ -1,70 +1,113 @@
 'use client'
-import { Menu } from '@base-ui/react/menu'
-import { MenuIcon } from 'lucide-react'
-import { memo } from 'react'
-import { Arrow } from '../svg/arrow/arrow'
-import { NavigationItem } from './_components/navigation-item'
+import { Drawer } from '@base-ui/react/drawer'
+import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
+import { memo, useCallback, useState } from 'react'
+import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
+import { NavigationItem, type NavigationRenderMode } from './_components/navigation-item'
 import { UserStatus } from './_components/user-status'
 import { NAVIGATION_ITEMS } from './constants'
 import { createNavigationElementKey } from './helpers'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './navigation.module.css'
 
-export const Navigation = memo(() => (
-  <nav className={styles.nav}>
-    {/* Desktop full menu - visible by CSS when viewport is wide */}
-    <ul className={styles.navList}>
-      {NAVIGATION_ITEMS.map((item, index) => (
-        <NavigationItem
-          item={item}
-          mode='desktop'
-          // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
-          key={`desktop-${createNavigationElementKey(item, index)}`}
-        />
-      ))}
-      <li className={styles.user}>
-        <UserStatus />
-      </li>
-    </ul>
+type NavigationProps = {
+  desktopExpanded: boolean
+  onDesktopExpandedChange: (expanded: boolean) => void
+}
 
-    {/* Mobile hamburger menu */}
-    <div className={styles.mobileMenu}>
-      <Menu.Root>
-        <Menu.Trigger
-          aria-label='navigation'
-          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Button}`}
-          openOnHover
-          tabIndex={0}
+export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: NavigationProps) => {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  const desktopMode: NavigationRenderMode = desktopExpanded
+    ? 'desktop-expanded'
+    : 'desktop-collapsed'
+
+  const handleDesktopToggle = useCallback(
+    () => onDesktopExpandedChange(!desktopExpanded),
+    [desktopExpanded, onDesktopExpandedChange],
+  )
+
+  const handleMobileNavigate = useCallback(() => setMobileOpen(false), [])
+
+  const desktopToggleLabel = desktopExpanded
+    ? 'Collapse navigation drawer'
+    : 'Expand navigation drawer'
+
+  return (
+    <nav
+      aria-label='Primary navigation'
+      className={styles.nav}
+      data-desktop-expanded={desktopExpanded}
+    >
+      <div className={styles.desktopRail}>
+        <button
+          aria-expanded={desktopExpanded}
+          aria-label={desktopToggleLabel}
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.desktopToggle}`}
+          onClick={handleDesktopToggle}
+          type='button'
         >
-          <MenuIcon />
-        </Menu.Trigger>
-        <Menu.Portal>
-          <Menu.Positioner className={styles.Positioner} sideOffset={8}>
-            <Menu.Popup className={`${baseUiStyles.popupSurface} ${styles.Popup}`}>
-              <Menu.Arrow className={baseUiStyles.popupArrow}>
-                <Arrow />
-              </Menu.Arrow>
-              {NAVIGATION_ITEMS.map((item, index) => (
-                <NavigationItem
-                  item={item}
-                  mode='mobile'
-                  // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
-                  key={`mobile-${createNavigationElementKey(item, index)}`}
-                />
-              ))}
-              <Menu.Separator className={styles.Separator} />
-              <Menu.Item
-                className={`${baseUiStyles.highlightedItem} ${styles.Item}`}
-                render={(_props, _state) => (
-                  <div className={styles.UserContainer}>
+          <span aria-hidden className={styles.toggleIcon}>
+            {desktopExpanded ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+          </span>
+        </button>
+
+        <ul className={styles.navList} data-mode={desktopMode}>
+          {NAVIGATION_ITEMS.map((item, index) => (
+            <NavigationItem
+              item={item}
+              mode={desktopMode}
+              // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
+              key={`desktop-${createNavigationElementKey(item, index)}`}
+            />
+          ))}
+          <li className={styles.user}>
+            <hr className={styles.breakLine} />
+            <div className={styles.userContent}>
+              <UserStatus />
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div className={styles.mobileMenu}>
+        <Drawer.Root onOpenChange={setMobileOpen} open={mobileOpen} swipeDirection='left'>
+          <MobileNavigationTrigger open={mobileOpen} />
+          <Drawer.SwipeArea className={styles.drawerSwipeArea} />
+          <Drawer.Portal>
+            <Drawer.Backdrop className={styles.drawerBackdrop} />
+            <Drawer.Popup className={`${styles.drawerPopup} ${styles.drawerContent}`}>
+              <div className={styles.drawerHeader}>
+                <Drawer.Title className={styles.drawerTitle}>Navigation</Drawer.Title>
+                <Drawer.Close
+                  aria-label='Close navigation drawer'
+                  className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.drawerClose}`}
+                >
+                  <XIcon size={18} />
+                </Drawer.Close>
+              </div>
+
+              <ul className={styles.navList} data-mode='mobile'>
+                {NAVIGATION_ITEMS.map((item, index) => (
+                  <NavigationItem
+                    item={item}
+                    mode='mobile'
+                    onNavigate={handleMobileNavigate}
+                    // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
+                    key={`mobile-${createNavigationElementKey(item, index)}`}
+                  />
+                ))}
+                <li className={styles.user}>
+                  <hr className={styles.breakLine} />
+                  <div className={styles.userContent}>
                     <UserStatus />
                   </div>
-                )}
-              />
-            </Menu.Popup>
-          </Menu.Positioner>
-        </Menu.Portal>
-      </Menu.Root>
-    </div>
-  </nav>
-))
+                </li>
+              </ul>
+            </Drawer.Popup>
+          </Drawer.Portal>
+        </Drawer.Root>
+      </div>
+    </nav>
+  )
+})
