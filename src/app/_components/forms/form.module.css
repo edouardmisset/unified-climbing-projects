@@ -1,14 +1,5 @@
 .form {
-  --panel-bg: oklch(from var(--surface-2) l c h / 72%);
-  --panel-border: oklch(from var(--surface-4) l c h / 45%);
-  --panel-shadow-outer: oklch(from var(--surface-1) l c h / 30%);
-  --panel-shadow-inner: oklch(from var(--surface-1) l c h / 35%);
-  --control-bg: oklch(from var(--surface-1) l c h / 16%);
-  --control-bg-focus: oklch(from var(--surface-1) l c h / 24%);
   --control-border: oklch(from var(--surface-4) l c h / 45%);
-  --control-border-hover: oklch(from var(--surface-4) l c h / 70%);
-  --control-border-focus: oklch(from var(--accent) l c h / 70%);
-  --control-ring: oklch(from var(--accent) l c h / 25%);
 
   display: grid;
   grid-template-columns: 1fr 1fr;
