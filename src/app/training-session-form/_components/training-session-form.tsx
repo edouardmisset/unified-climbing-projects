@@ -94,6 +94,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <label htmlFor='date'>Date</label>
           <input
             {...register('date')}
+            autoFocus
             className={styles.input}
             enterKeyHint='next'
             id='date'
