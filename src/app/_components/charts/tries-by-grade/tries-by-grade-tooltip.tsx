@@ -3,10 +3,9 @@ import { memo } from 'react'
 import type { TooltipContentProps } from 'recharts'
 import styles from './tries-by-grades.module.css'
 
-type TriesByGradeTooltipProps = TooltipContentProps
-type PayloadEntry = NonNullable<TriesByGradeTooltipProps['payload']>[number]
+type PayloadEntry = NonNullable<TooltipContentProps['payload']>[number]
 
-function TriesByGradeTooltipComponent({ active, label, payload }: TriesByGradeTooltipProps) {
+function TriesByGradeTooltipComponent({ active, label, payload }: TooltipContentProps) {
   if (!active || !payload?.length) return
 
   return (
