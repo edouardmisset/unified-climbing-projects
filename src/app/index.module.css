@@ -49,63 +49,6 @@
   }
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-3);
-  align-items: stretch;
-
-  color: var(--text-1);
-  background: var(--panel-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-inline-end: 1px solid var(--panel-border);
-
-  box-shadow:
-    0 8px 32px var(--panel-shadow-outer),
-    inset 0 1px 0 var(--panel-shadow-inner);
-  isolation: isolate;
-
-  @media (width > 40rem) {
-    inline-size: var(--rail-collapsed-size);
-    min-inline-size: var(--rail-collapsed-size);
-    padding-block-start: var(--size-3);
-    overflow: hidden;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    transition: inline-size var(--sneeze) var(--ease-3);
-  }
-
-  &[data-desktop-expanded='true'] {
-    @media (width > 40rem) {
-      inline-size: var(--rail-expanded-size);
-    }
-  }
-
-  @media (width <= 40rem) {
-    position: absolute;
-    inset: 0 0 auto auto;
-    z-index: var(--layer-3);
-    inline-size: auto;
-    min-inline-size: 0;
-    padding: 0;
-    overflow: visible;
-    background: transparent;
-    backdrop-filter: none;
-    border: 0;
-    box-shadow: none;
-  }
-
-  & > label {
-    align-self: center;
-  }
-
-  & > nav {
-    inline-size: 100%;
-    block-size: 100%;
-  }
-}
-
 .main {
   flex: 1;
   min-inline-size: 0;

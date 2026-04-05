@@ -2,23 +2,22 @@
 
 import { useState } from 'react'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
-import { ThemeToggle } from '~/app/_components/theme-toggle/theme-toggle'
+import { useTheme } from '~/hooks/use-theme'
+import styles from './header.module.css'
 
-type HeaderProps = {
-  className?: string
-  isDark: boolean
-  onToggleTheme: () => void
-}
-
-export function Header({ className, isDark, onToggleTheme }: HeaderProps) {
+export function Header() {
   const [desktopNavExpanded, setDesktopNavExpanded] = useState(true)
+  const { theme, toggleTheme } = useTheme()
+
+  const isDark = theme === 'dark'
 
   return (
-    <header className={className} data-desktop-expanded={desktopNavExpanded}>
-      <ThemeToggle checked={isDark} onChange={onToggleTheme} />
+    <header className={styles.header} data-desktop-expanded={desktopNavExpanded}>
       <Navigation
         desktopExpanded={desktopNavExpanded}
+        isDark={isDark}
         onDesktopExpandedChange={setDesktopNavExpanded}
+        onToggleTheme={toggleTheme}
       />
     </header>
   )

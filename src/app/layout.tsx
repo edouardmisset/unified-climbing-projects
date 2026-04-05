@@ -1,13 +1,13 @@
 'use client'
 
 import { ClerkProvider } from '@clerk/nextjs'
-import { dark, neobrutalism } from '@clerk/themes'
+import { dark } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ViewTransitions } from 'next-view-transitions'
 import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { type ReactNode, Suspense, useMemo } from 'react'
+import { type ReactNode, Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
@@ -39,19 +39,11 @@ const font = atkinson_Hyperlegible({
 })
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const { theme, toggleTheme } = useTheme()
-
-  const appearance = useMemo(
-    () => ({
-      baseTheme: theme === 'dark' ? dark : neobrutalism,
-      variables: { colorPrimary: 'hsl(255deg 93% 72%)' },
-    }),
-    [theme],
-  )
+  const { theme } = useTheme()
 
   return (
     <ViewTransitions>
-      <ClerkProvider appearance={appearance}>
+      <ClerkProvider appearance={dark}>
         <html
           className={font.className}
           data-color-scheme={theme}
@@ -63,11 +55,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <a className={styles.skipLink} href='#main-content'>
               Skip to content
             </a>
-            <Header
-              className={styles.header}
-              isDark={theme === 'dark'}
-              onToggleTheme={toggleTheme}
-            />
+            <Header />
             <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>
                 <NuqsAdapter>{children}</NuqsAdapter>

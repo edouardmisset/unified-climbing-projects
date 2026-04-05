@@ -186,6 +186,13 @@
   font-weight: var(--font-weight-5);
 }
 
+.themeToggle {
+  display: flex;
+  align-items: center;
+  min-block-size: 2.5rem;
+  padding-inline: var(--size-2);
+}
+
 .mobileMenu {
   display: none;
 }

@@ -10,10 +10,6 @@
   border-radius: var(--radius-4);
   box-shadow: var(--shadow-1);
 
-  @media (width <= 40rem) {
-    display: none;
-  }
-
   & input {
     opacity: 0;
     inline-size: 0;
