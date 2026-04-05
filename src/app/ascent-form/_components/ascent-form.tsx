@@ -198,6 +198,7 @@ export default function AscentForm(props: AscentFormProps) {
           <label htmlFor='date'>Date</label>
           <input
             {...register('date')}
+            autoFocus
             className={`${styles.input} contrastColor`}
             enterKeyHint='next'
             id='date'
