@@ -1,7 +1,11 @@
 .body {
+  --rail-expanded-size: clamp(15rem, 20vw, 18rem);
+  --rail-collapsed-size: 5.5rem;
+
   display: flex;
   flex-direction: row;
   block-size: 100dvh;
+  overflow: hidden;
   isolation: isolate;
 }
 
@@ -45,36 +49,8 @@
   }
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-3);
-  align-items: center;
-
-  background-color: var(--surface-2);
-
-  box-shadow: var(--shadow-4);
-  isolation: isolate;
-
-  @media (width > 40rem) {
-    padding-block-start: var(--size-3);
-    overflow-y: auto;
-  }
-
-  @media (width <= 40rem) {
-    position: absolute;
-    inset: 0 0 auto auto;
-    z-index: var(--layer-3);
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  & > nav {
-    inline-size: 100%;
-  }
-}
-
 .main {
   flex: 1;
+  min-inline-size: 0;
   overflow: auto;
 }

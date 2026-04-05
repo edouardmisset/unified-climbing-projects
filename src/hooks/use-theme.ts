@@ -24,6 +24,12 @@ export function useTheme() {
     }
   }, [])
 
+  useEffect(() => {
+    if (typeof globalThis.window === 'undefined') return
+
+    globalThis.window.document.documentElement.setAttribute('data-color-scheme', theme)
+  }, [theme])
+
   const toggleTheme = useCallback(() => {
     setTheme(prev => {
       const next = prev === 'dark' ? 'light' : 'dark'

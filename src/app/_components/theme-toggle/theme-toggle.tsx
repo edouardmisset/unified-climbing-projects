@@ -8,13 +8,18 @@ export function ThemeToggle({
   checked: boolean
   onChange: (checked: boolean) => void
 }) {
-  const handleThemeChange = useCallback(() => onChange(!checked), [checked, onChange])
+  const handleThemeChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(event.target.checked)
+    },
+    [onChange],
+  )
 
   return (
     <label className={styles.switch}>
       <input
         aria-label='Toggle theme'
-        checked={!checked}
+        checked={checked}
         onChange={handleThemeChange}
         type='checkbox'
       />

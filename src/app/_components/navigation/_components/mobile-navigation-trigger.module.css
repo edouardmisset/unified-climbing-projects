@@ -1,0 +1,88 @@
+.mobileTrigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--size-8);
+  block-size: var(--size-8);
+  margin-inline: var(--size-2);
+  padding: var(--size-2);
+  border: var(--border-size-1) solid color-mix(in oklch, var(--surface-4), var(--gray-12) 35%);
+  border-radius: var(--radius-3);
+  background: color-mix(in oklch, var(--surface-1), var(--gray-12) 68%);
+  box-shadow: inset 0 1px 0 oklch(from var(--surface-4) l c h / 20%);
+  overflow: hidden;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      border-radius var(--sneeze) var(--ease-out-3),
+      border-color var(--sneeze) var(--ease-out-3),
+      background-color var(--sneeze) var(--ease-out-3),
+      box-shadow var(--sneeze) var(--ease-out-3);
+  }
+}
+
+.mobileTriggerBar {
+  position: absolute;
+  inset-inline: var(--size-2);
+  block-size: var(--border-size-2);
+  border-radius: var(--radius-6);
+  background-color: var(--gray-0);
+  transform-origin: center;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      transform var(--sneeze) var(--ease-3),
+      opacity var(--sneeze) var(--ease-out-3);
+  }
+}
+
+.mobileTriggerBarTop {
+  inset-block-start: var(--size-2);
+}
+
+.mobileTriggerBarMiddleForward,
+.mobileTriggerBarMiddleBackward {
+  inset-block-start: calc(50% - (var(--border-size-2) / 2));
+}
+
+.mobileTriggerBarBottom {
+  inset-block-end: var(--size-2);
+}
+
+.mobileTrigger:where([aria-expanded='true']) {
+  border-color: var(--control-border-focus);
+}
+
+.mobileTrigger:where([aria-expanded='true']) .mobileTriggerBar {
+  background-color: color-mix(in oklch, var(--gray-0), var(--accent) 18%);
+}
+
+.mobileTrigger:is(:hover, :focus-visible, [aria-expanded='true']) {
+  border-radius: var(--radius-5);
+  border-color: var(--control-border-hover);
+  background: color-mix(in oklch, var(--surface-1), var(--gray-12) 75%);
+}
+
+.mobileTrigger:is(:hover, :focus-visible, [aria-expanded='true']) .mobileTriggerBarMiddleForward {
+  transform: rotate(45deg);
+}
+
+.mobileTrigger:is(:hover, :focus-visible, [aria-expanded='true']) .mobileTriggerBarMiddleBackward {
+  transform: rotate(-45deg);
+}
+
+.mobileTrigger:is(:hover, :focus-visible, [aria-expanded='true'])
+  :is(.mobileTriggerBarTop, .mobileTriggerBarBottom) {
+  opacity: 0;
+  transform: scaleX(0.6);
+}
+
+.mobileTrigger:focus-visible {
+  border-color: var(--control-border-focus);
+  box-shadow: 0 0 0 3px var(--control-ring);
+}
+
+.mobileTrigger:active {
+  background: color-mix(in oklch, var(--surface-1), var(--gray-12) 80%);
+}
