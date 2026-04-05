@@ -9,6 +9,8 @@ import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { getGradeFrequencyAndColors } from '../ascents-pyramid/get-grade-frequency'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 
+type AscentPyramidDatum = ReturnType<typeof getGradeFrequencyAndColors>[number]
+
 const AXIS_LABELS = {
   grades: 'Grades',
   numberOfAscents: '# Ascents',
@@ -22,13 +24,18 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascent Pyramid'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={gradeFrequency}>
+        <BarChart<AscentPyramidDatum> barCategoryGap={BAR_CATEGORY_GAP} data={gradeFrequency}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
+          <ChartXAxis<AscentPyramidDatum, AscentPyramidDatum['grade']> dataKey='grade' />
+          <ChartYAxis<AscentPyramidDatum, number> labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {ASCENT_STYLE.map(style => (
-            <Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />
+            <Bar<AscentPyramidDatum, number>
+              key={style}
+              dataKey={style}
+              fill={ASCENT_STYLE_TO_COLOR[style]}
+              stackId='styles'
+            />
           ))}
         </BarChart>
       </ResponsiveContainer>

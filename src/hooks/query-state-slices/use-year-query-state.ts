@@ -6,7 +6,7 @@ import type { OrAll } from '~/app/_components/dashboard/types'
 export const useYearQueryState = (): UseQueryStateReturn<OrAll<string>, typeof ALL_VALUE> =>
   useQueryState<OrAll<string>>('year', {
     defaultValue: ALL_VALUE,
-    parse: value => {
+    parse: (value): OrAll<string> | null => {
       if (value === ALL_VALUE) return ALL_VALUE
       if (isValidNumber(Number(value))) return value
       // oxlint-disable-next-line unicorn/no-null

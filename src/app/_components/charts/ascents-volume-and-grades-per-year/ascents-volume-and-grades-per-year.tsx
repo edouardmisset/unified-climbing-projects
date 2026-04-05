@@ -24,6 +24,10 @@ import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER, type Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
 
+type AscentsVolumeAndGradesPerYearDatum = ReturnType<
+  typeof getAscentsVolumeAndGradesPerYear
+>[number]
+
 const AXIS_LABELS = {
   ascents: '# Ascents',
   grades: 'Grades',
@@ -137,10 +141,17 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <ComposedChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <ComposedChart<AscentsVolumeAndGradesPerYearDatum>
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={data}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <YAxis
+          <ChartXAxis<AscentsVolumeAndGradesPerYearDatum, number>
+            dataKey='year'
+            labelText={AXIS_LABELS.years}
+            tickFormatter={formatYearTick}
+          />
+          <YAxis<AscentsVolumeAndGradesPerYearDatum, number | undefined>
             yAxisId='left'
             domain={gradeDomain}
             ticks={gradeTicks}
@@ -152,7 +163,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             tick={AXIS_TICK_STYLE}
             tickFormatter={formatGradeTick}
           />
-          <YAxis
+          <YAxis<AscentsVolumeAndGradesPerYearDatum, number>
             yAxisId='right'
             allowDecimals={false}
             domain={[0, dataMax => roundUpToStep(Number(dataMax), ASCENTS_AXIS_STEP)]}
@@ -174,20 +185,20 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
 
-          <Bar
+          <Bar<AscentsVolumeAndGradesPerYearDatum, number>
             dataKey='Boulder'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={CHART_LABELS.boulderAscents}
             yAxisId='right'
           />
-          <Bar
+          <Bar<AscentsVolumeAndGradesPerYearDatum, number>
             dataKey='Route'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={CHART_LABELS.routeAscents}
             yAxisId='right'
           />
 
-          <Line
+          <Line<AscentsVolumeAndGradesPerYearDatum, number | undefined>
             dataKey='maxBoulderGrade'
             dot={false}
             name={CHART_LABELS.maxBoulderGrade}
@@ -196,7 +207,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Line<AscentsVolumeAndGradesPerYearDatum, number | undefined>
             dataKey='maxRouteGrade'
             dot={false}
             name={CHART_LABELS.maxRouteGrade}
@@ -205,7 +216,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Line<AscentsVolumeAndGradesPerYearDatum, number | undefined>
             dataKey='avgBoulderGrade'
             dot={false}
             name={CHART_LABELS.avgBoulderGrade}
@@ -215,7 +226,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Line<AscentsVolumeAndGradesPerYearDatum, number | undefined>
             dataKey='avgRouteGrade'
             dot={false}
             name={CHART_LABELS.avgRouteGrade}

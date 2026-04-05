@@ -17,6 +17,8 @@ import { renderPieArcLabel } from '../pie-chart-utils'
 import type { TrainingSession } from '~/schema/training'
 import { getSessionsPerDiscipline } from './get-sessions-per-discipline'
 
+type TrainingSessionsPerDisciplineDatum = ReturnType<typeof getSessionsPerDiscipline>[number]
+
 export function TrainingSessionsPerDiscipline({
   trainingSessions,
 }: {
@@ -40,10 +42,10 @@ export function TrainingSessionsPerDiscipline({
   return (
     <ChartContainer caption='Sessions by Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart<TrainingSessionsPerDisciplineDatum>>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
-          <Pie
+          <Pie<TrainingSessionsPerDisciplineDatum, string | number>
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'

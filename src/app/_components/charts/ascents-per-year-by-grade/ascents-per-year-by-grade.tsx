@@ -9,6 +9,8 @@ import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { _GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
+type AscentsPerYearByGradeDatum = ReturnType<typeof getAscentsPerYearByGrade>[number]
+
 const AXIS_LABELS = {
   numberOfAscents: '# Ascents',
   years: 'Years',
@@ -25,13 +27,25 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents Per Year By Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsPerYearByGrade}>
+        <BarChart<AscentsPerYearByGradeDatum>
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={ascentsPerYearByGrade}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
+          <ChartXAxis<AscentsPerYearByGradeDatum, number>
+            dataKey='year'
+            labelText={AXIS_LABELS.years}
+            tickFormatter={formatYearTick}
+          />
+          <ChartYAxis<AscentsPerYearByGradeDatum, number> labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {_GRADES.map(key => (
-            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+            <Bar<AscentsPerYearByGradeDatum, number | undefined>
+              key={key}
+              dataKey={key}
+              fill={fromGradeToBackgroundColor(key)}
+              stackId='grades'
+            />
           ))}
         </BarChart>
       </ResponsiveContainer>

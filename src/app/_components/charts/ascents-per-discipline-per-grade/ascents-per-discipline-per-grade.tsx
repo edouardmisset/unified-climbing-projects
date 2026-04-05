@@ -9,6 +9,8 @@ import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 
+type AscentsPerDisciplinePerGradeDatum = ReturnType<typeof getAscentsPerDisciplinePerGrade>[number]
+
 const ROUTE_AND_BOULDER = [
   'Boulder',
   'Route',
@@ -31,13 +33,22 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
   return (
     <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <BarChart<AscentsPerDisciplinePerGradeDatum> barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
+          <ChartXAxis<AscentsPerDisciplinePerGradeDatum, AscentsPerDisciplinePerGradeDatum['grade']>
+            dataKey='grade'
+            labelText={AXIS_LABELS.grades}
+          />
+          <ChartYAxis<AscentsPerDisciplinePerGradeDatum, number>
+            labelText={AXIS_LABELS.numberOfAscents}
+          />
           <ChartTooltip />
           {ROUTE_AND_BOULDER.map(key => (
-            <Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
+            <Bar<AscentsPerDisciplinePerGradeDatum, number>
+              key={key}
+              dataKey={key}
+              fill={CLIMBING_DISCIPLINE_TO_COLOR[key]}
+            />
           ))}
         </BarChart>
       </ResponsiveContainer>

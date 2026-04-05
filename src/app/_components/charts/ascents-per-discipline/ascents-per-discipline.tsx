@@ -16,6 +16,8 @@ import { renderPieArcLabel } from '../pie-chart-utils'
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
+type AscentsPerDisciplineDatum = ReturnType<typeof getAscentsPerDiscipline>[number]
+
 export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   const routesVsBoulders = useMemo(() => getAscentsPerDiscipline(ascents), [ascents])
 
@@ -35,9 +37,9 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents per Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart<AscentsPerDisciplineDatum>>
           <ChartTooltip />
-          <Pie
+          <Pie<AscentsPerDisciplineDatum, string | number>
             {...DEFAULT_PIE_PROPS}
             data={routesVsBoulders}
             dataKey='value'

@@ -24,6 +24,8 @@ import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { getTopTenEvolution } from './get-top-ten-evolution'
 
+type TopTenEvolutionDatum = ReturnType<typeof getTopTenEvolution>[number]
+
 const AXIS_LABELS = {
   ascents: '# Ascents',
   boulders: 'Boulders',
@@ -43,10 +45,14 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Top Ten Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <ComposedChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <ComposedChart<TopTenEvolutionDatum> barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <YAxis
+          <ChartXAxis<TopTenEvolutionDatum, number>
+            dataKey='year'
+            labelText={AXIS_LABELS.years}
+            tickFormatter={formatYearTick}
+          />
+          <YAxis<TopTenEvolutionDatum, number>
             yAxisId='left'
             label={{
               ...AXIS_LABEL_STYLE,
@@ -56,7 +62,7 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
             tick={AXIS_TICK_STYLE}
             tickFormatter={value => frenchNumberFormatter.format(Number(value))}
           />
-          <YAxis
+          <YAxis<TopTenEvolutionDatum, number>
             yAxisId='right'
             allowDecimals={false}
             domain={[0, 'dataMax']}
@@ -76,27 +82,27 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
             }}
           />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
-          <Bar
+          <Bar<TopTenEvolutionDatum, number>
             dataKey='Boulder'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={AXIS_LABELS.boulders}
             stackId='ascents'
             yAxisId='right'
           />
-          <Bar
+          <Bar<TopTenEvolutionDatum, number>
             dataKey='Route'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={AXIS_LABELS.routes}
             stackId='ascents'
             yAxisId='right'
           />
-          <Bar
+          <Bar<TopTenEvolutionDatum, number>
             dataKey='outdoorDays'
             fill='var(--outdoor)'
             name={AXIS_LABELS.outdoorDays}
             yAxisId='right'
           />
-          <Line
+          <Line<TopTenEvolutionDatum, number>
             dataKey='topTenScore'
             dot={DOT_STYLE}
             name={AXIS_LABELS.score}
