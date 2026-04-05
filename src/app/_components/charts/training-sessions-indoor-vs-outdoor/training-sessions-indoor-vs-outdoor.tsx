@@ -17,6 +17,8 @@ import { ChartTooltip } from '../chart-elements'
 import { DEFAULT_PIE_PROPS } from '../constants'
 import { getSessionsIndoorVsOutdoor } from './get-sessions-indoor-vs-outdoor'
 
+type TrainingSessionsIndoorVsOutdoorDatum = ReturnType<typeof getSessionsIndoorVsOutdoor>[number]
+
 export function TrainingSessionsIndoorVsOutdoor({
   trainingSessions,
 }: {
@@ -39,10 +41,10 @@ export function TrainingSessionsIndoorVsOutdoor({
   return (
     <ChartContainer caption='Indoor vs Outdoor'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart<TrainingSessionsIndoorVsOutdoorDatum>>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
-          <Pie
+          <Pie<TrainingSessionsIndoorVsOutdoorDatum, string | number>
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'

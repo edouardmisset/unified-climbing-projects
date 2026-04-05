@@ -1,11 +1,12 @@
 import { capitalize } from '@edouardmisset/text/capitalize.ts'
 import { memo } from 'react'
-import type { TooltipContentProps } from 'recharts/types/component/Tooltip'
+import type { TooltipContentProps } from 'recharts'
 import styles from './tries-by-grades.module.css'
 
-type PayloadEntry = NonNullable<TooltipContentProps['payload']>[number]
+type TriesByGradeTooltipProps = TooltipContentProps
+type PayloadEntry = NonNullable<TriesByGradeTooltipProps['payload']>[number]
 
-function TriesByGradeTooltipComponent({ active, label, payload }: TooltipContentProps) {
+function TriesByGradeTooltipComponent({ active, label, payload }: TriesByGradeTooltipProps) {
   if (!active || !payload?.length) return
 
   return (

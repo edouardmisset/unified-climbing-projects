@@ -14,6 +14,8 @@ import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { _GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
+type AscentsByGradesPerCragDatum = ReturnType<typeof getAscentsByGradesPerCrag>[number]
+
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   const ascentsByGradesPerCrag = useMemo(
     () => getAscentsByGradesPerCrag(ascents).reverse(),
@@ -28,13 +30,28 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsByGradesPerCrag} layout='vertical'>
+        <BarChart<AscentsByGradesPerCragDatum>
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={ascentsByGradesPerCrag}
+          layout='vertical'
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical horizontal={false} />
-          <XAxis tick={AXIS_TICK_STYLE} type='number' />
-          <YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
+          <XAxis<AscentsByGradesPerCragDatum, number> tick={AXIS_TICK_STYLE} type='number' />
+          <YAxis<AscentsByGradesPerCragDatum, string>
+            reversed
+            dataKey='crag'
+            tick={AXIS_TICK_STYLE}
+            type='category'
+            width={200}
+          />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
           {_GRADES.map(key => (
-            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+            <Bar<AscentsByGradesPerCragDatum, number | undefined>
+              key={key}
+              dataKey={key}
+              fill={fromGradeToBackgroundColor(key)}
+              stackId='grades'
+            />
           ))}
         </BarChart>
       </ResponsiveContainer>

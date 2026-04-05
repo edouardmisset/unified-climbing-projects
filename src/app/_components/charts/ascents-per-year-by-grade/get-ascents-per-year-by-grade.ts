@@ -2,12 +2,16 @@ import { createYearList } from '~/data/helpers'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
 import { filterAscents } from '~/helpers/filter-ascents'
-import type { Ascent } from '~/schema/ascent'
+import type { Ascent, Grade } from '~/schema/ascent'
 
-export function getAscentsPerYearByGrade(ascents: Ascent[]): {
+type GradeColorKey = `${Grade}Color`
+
+export type AscentsPerYearByGradeDatum = {
   year: number
-  [grade: string]: number
-}[] {
+} & Partial<Record<Grade, number>> &
+  Partial<Record<GradeColorKey, string>>
+
+export function getAscentsPerYearByGrade(ascents: Ascent[]): AscentsPerYearByGradeDatum[] {
   const years = createYearList(ascents, { descending: false, continuous: true })
 
   return years.map(year => {
@@ -17,18 +21,20 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
 
     const gradeScale = createGradeScaleFromAscents(ascentsForYear)
 
-    const frequency: Record<string, string | number> = {}
+    const frequency: Omit<AscentsPerYearByGradeDatum, 'year'> = {}
 
     for (const grade of gradeScale) {
       frequency[grade] = 0
-      frequency[`${grade}Color`] = fromGradeToBackgroundColor(grade)
+      const gradeColorKey = `${grade}Color` as GradeColorKey
+      frequency[gradeColorKey] = fromGradeToBackgroundColor(grade)
     }
 
     // Calculate frequency counts in a single pass over the ascents
     for (const { topoGrade } of ascentsForYear) {
-      if (frequency?.[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') continue
+      const value = frequency[topoGrade]
+      if (typeof value !== 'number') continue
 
-      frequency[topoGrade] += 1
+      frequency[topoGrade] = value + 1
     }
 
     return { year, ...frequency }

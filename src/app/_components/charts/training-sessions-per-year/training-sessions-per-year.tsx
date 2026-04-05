@@ -6,6 +6,8 @@ import { ChartContainer } from '../chart-container/chart-container'
 import { formatPercentageTick, formatYearTick, GRID_STROKE } from '../constants'
 import { getSessionsPerYear } from './get-sessions-per-year'
 
+type TrainingSessionsPerYearDatum = ReturnType<typeof getSessionsPerYear>[number]
+
 export function TrainingSessionsPerYear({
   trainingSessions,
 }: {
@@ -23,13 +25,17 @@ export function TrainingSessionsPerYear({
   return (
     <ChartContainer caption='Sessions per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <AreaChart data={data} stackOffset='expand'>
+        <AreaChart<TrainingSessionsPerYearDatum> data={data} stackOffset='expand'>
           <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
-          <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
-          <ChartYAxis tickFormatter={formatPercentageTick} />
+          <ChartXAxis<TrainingSessionsPerYearDatum, number>
+            dataKey='year'
+            tickFormatter={formatYearTick}
+            labelText='Years'
+          />
+          <ChartYAxis<TrainingSessionsPerYearDatum, number> tickFormatter={formatPercentageTick} />
           <ChartTooltip formatter={percentFormatter} />
           <Legend align='center' verticalAlign='top' />
-          <Area
+          <Area<TrainingSessionsPerYearDatum, number>
             type='monotone'
             dataKey='indoorRoute'
             stackId='1'
@@ -37,7 +43,7 @@ export function TrainingSessionsPerYear({
             fill='var(--indoorRoute)'
             name='Indoor Route'
           />
-          <Area
+          <Area<TrainingSessionsPerYearDatum, number>
             type='monotone'
             dataKey='indoorBoulder'
             stackId='1'
@@ -45,7 +51,7 @@ export function TrainingSessionsPerYear({
             fill='var(--indoorBoulder)'
             name='Indoor Boulder'
           />
-          <Area
+          <Area<TrainingSessionsPerYearDatum, number>
             type='monotone'
             dataKey='outdoorRoute'
             stackId='1'
@@ -53,7 +59,7 @@ export function TrainingSessionsPerYear({
             fill='var(--route)'
             name='Outdoor Route'
           />
-          <Area
+          <Area<TrainingSessionsPerYearDatum, number>
             type='monotone'
             dataKey='outdoorBoulder'
             stackId='1'

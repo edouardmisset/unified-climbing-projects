@@ -19,17 +19,19 @@ import {
   TOOLTIP_STYLE,
 } from './constants'
 
-type XAxisProps = {
-  dataKey?: string
+type XAxisProps<DataPointType, DataValueType> = {
+  dataKey?: RechartsXAxisProps<DataPointType, DataValueType>['dataKey']
   labelText?: LabelProps['value']
   offset?: LabelProps['offset']
   position?: LabelProps['position']
-  tickFormatter?: RechartsXAxisProps['tickFormatter']
-  type?: RechartsXAxisProps['type']
+  tickFormatter?: RechartsXAxisProps<DataPointType, DataValueType>['tickFormatter']
+  type?: RechartsXAxisProps<DataPointType, DataValueType>['type']
   width?: CartesianAxisProps['width']
 }
 
-export function ChartXAxis(props: XAxisProps) {
+export function ChartXAxis<DataPointType = unknown, DataValueType = unknown>(
+  props: XAxisProps<DataPointType, DataValueType>,
+) {
   const {
     dataKey,
     labelText,
@@ -46,7 +48,7 @@ export function ChartXAxis(props: XAxisProps) {
   }, [labelText, offset, position])
 
   return (
-    <XAxis
+    <XAxis<DataPointType, DataValueType>
       dataKey={dataKey}
       label={label}
       tick={AXIS_TICK_STYLE}
@@ -57,14 +59,17 @@ export function ChartXAxis(props: XAxisProps) {
   )
 }
 
-type YAxisProps = {
+type YAxisProps<DataPointType, DataValueType> = {
+  dataKey?: RechartsYAxisProps<DataPointType, DataValueType>['dataKey']
   labelText?: LabelProps['value']
-  domain?: RechartsYAxisProps['domain']
-  tickFormatter?: RechartsYAxisProps['tickFormatter']
+  domain?: RechartsYAxisProps<DataPointType, DataValueType>['domain']
+  tickFormatter?: RechartsYAxisProps<DataPointType, DataValueType>['tickFormatter']
 }
 
-export function ChartYAxis(props: YAxisProps) {
-  const { labelText, domain, tickFormatter } = props
+export function ChartYAxis<DataPointType = unknown, DataValueType = unknown>(
+  props: YAxisProps<DataPointType, DataValueType>,
+) {
+  const { dataKey, labelText, domain, tickFormatter } = props
 
   const label = useMemo<LabelProps | undefined>(() => {
     if (!labelText) return undefined
@@ -72,7 +77,13 @@ export function ChartYAxis(props: YAxisProps) {
   }, [labelText])
 
   return (
-    <YAxis label={label} domain={domain} tick={AXIS_TICK_STYLE} tickFormatter={tickFormatter} />
+    <YAxis<DataPointType, DataValueType>
+      dataKey={dataKey}
+      label={label}
+      domain={domain}
+      tick={AXIS_TICK_STYLE}
+      tickFormatter={tickFormatter}
+    />
   )
 }
 

@@ -1,5 +1,10 @@
 import type { PieProps } from 'recharts'
 
+type DefaultPieDatum = {
+  label: string
+  value: number
+}
+
 export const DEFAULT_X_AXIS_OFFSET = 20
 
 export const AXIS_TICK_STYLE = {
@@ -32,7 +37,7 @@ export const DEFAULT_PIE_PROPS = {
   innerRadius: '50%',
   outerRadius: '80%',
   labelLine: false,
-} as const satisfies Partial<PieProps>
+} as const satisfies Partial<PieProps<DefaultPieDatum, number>>
 
 export function formatYearTick(year: unknown): string {
   return typeof year === 'number' || typeof year === 'string'

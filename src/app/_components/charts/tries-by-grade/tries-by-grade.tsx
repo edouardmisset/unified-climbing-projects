@@ -81,13 +81,19 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Tries by Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <LineChart data={chartData}>
+        <LineChart<TriesByGradeChartDatum> data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
-          <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
+          <ChartXAxis<TriesByGradeChartDatum, string>
+            dataKey='grade'
+            labelText={AXIS_LABELS.grades}
+          />
+          <ChartYAxis<TriesByGradeChartDatum, number>
+            domain={yAxisDomain}
+            labelText={AXIS_LABELS.numberOfTries}
+          />
           <ChartTooltip content={TriesByGradeTooltip} />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
-          <Line
+          <Line<TriesByGradeChartDatum, number>
             dataKey='min'
             dot={dotStyle}
             name='Min'
@@ -95,7 +101,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
-          <Line
+          <Line<TriesByGradeChartDatum, number>
             dataKey='average'
             dot={dotStyle}
             name='Average'
@@ -103,7 +109,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
-          <Line
+          <Line<TriesByGradeChartDatum, number>
             dataKey='max'
             dot={dotStyle}
             name='Max'
