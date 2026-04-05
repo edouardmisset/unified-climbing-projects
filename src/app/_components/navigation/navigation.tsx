@@ -2,10 +2,9 @@
 import { Drawer } from '@base-ui/react/drawer'
 import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
-import { ThemeToggle } from '~/app/_components/theme-toggle/theme-toggle'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem } from './_components/navigation-item'
-import { UserStatus } from './_components/user-status'
+import { NavigationUserSection } from './_components/navigation-user-section'
 import { NAVIGATION_ITEMS } from './constants'
 import { createNavigationElementKey } from './helpers'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
@@ -62,15 +61,7 @@ export const Navigation = memo(
                 key={`desktop-${createNavigationElementKey(item, index)}`}
               />
             ))}
-            <li className={styles.user}>
-              <hr className={styles.breakLine} />
-              <div className={styles.userContent}>
-                <UserStatus />
-              </div>
-              <div className={styles.themeToggle}>
-                <ThemeToggle checked={isDark} onChange={onToggleTheme} />
-              </div>
-            </li>
+            <NavigationUserSection isDark={isDark} onToggleTheme={onToggleTheme} />
           </ul>
         </div>
 
@@ -100,15 +91,7 @@ export const Navigation = memo(
                       key={`mobile-${createNavigationElementKey(item, index)}`}
                     />
                   ))}
-                  <li className={styles.user}>
-                    <hr className={styles.breakLine} />
-                    <div className={styles.userContent}>
-                      <UserStatus />
-                    </div>
-                    <div className={styles.themeToggle}>
-                      <ThemeToggle checked={isDark} onChange={onToggleTheme} />
-                    </div>
-                  </li>
+                  <NavigationUserSection isDark={isDark} onToggleTheme={onToggleTheme} />
                 </ul>
               </Drawer.Popup>
             </Drawer.Portal>

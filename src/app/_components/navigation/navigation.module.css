@@ -170,29 +170,6 @@
   );
 }
 
-.user {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-2);
-  margin-block-start: auto;
-}
-
-.userContent {
-  display: flex;
-  gap: var(--size-2);
-  align-items: center;
-  min-block-size: 2.5rem;
-  padding-inline: var(--size-2);
-  font-weight: var(--font-weight-5);
-}
-
-.themeToggle {
-  display: flex;
-  align-items: center;
-  min-block-size: 2.5rem;
-  padding-inline: var(--size-2);
-}
-
 .mobileMenu {
   display: none;
 }
@@ -285,10 +262,11 @@
   inline-size: 2.25rem;
   block-size: 2.25rem;
   border-radius: var(--radius-2);
+  border: 1px solid transparent;
 
   &:focus-visible {
     outline: none;
-    border: 1px solid var(--control-border-focus);
+    border-color: var(--control-border-focus);
     box-shadow: 0 0 0 3px var(--control-ring);
   }
 }
