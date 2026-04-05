@@ -39,7 +39,7 @@ export function TrainingSessionsIndoorVsOutdoor({
   return (
     <ChartContainer caption='Indoor vs Outdoor'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
           <Pie

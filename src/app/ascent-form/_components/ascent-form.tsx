@@ -198,6 +198,7 @@ export default function AscentForm(props: AscentFormProps) {
           <label htmlFor='date'>Date</label>
           <input
             {...register('date')}
+            // oxlint-disable-next-line jsx_a11y/no-autofocus
             autoFocus
             className={`${styles.input} contrastColor`}
             enterKeyHint='next'

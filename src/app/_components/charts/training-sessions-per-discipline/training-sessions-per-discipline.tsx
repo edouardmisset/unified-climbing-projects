@@ -40,7 +40,7 @@ export function TrainingSessionsPerDiscipline({
   return (
     <ChartContainer caption='Sessions by Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
           <Pie

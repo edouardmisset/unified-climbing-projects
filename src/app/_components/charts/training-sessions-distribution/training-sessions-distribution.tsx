@@ -80,10 +80,15 @@ export function TrainingSessionsDistribution({
   return (
     <ChartContainer caption='Session Distribution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={chartData} layout='vertical'>
+        <BarChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={chartData}
+          layout='vertical'
+        >
           <XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type='number' />
           <YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
           <Legend align='center' verticalAlign='top' />
           {barConfigs.map(config => (
             <Bar

@@ -28,11 +28,16 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={ascentsByGradesPerCrag} layout='vertical'>
+        <BarChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={ascentsByGradesPerCrag}
+          layout='vertical'
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical horizontal={false} />
           <XAxis tick={AXIS_TICK_STYLE} type='number' />
           <YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
           {_GRADES.map(key => (
             <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
           ))}

@@ -31,7 +31,7 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
   return (
     <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />

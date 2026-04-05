@@ -22,7 +22,11 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascent Pyramid'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={gradeFrequency}>
+        <BarChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={gradeFrequency}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='grade' />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />

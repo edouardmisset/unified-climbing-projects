@@ -34,7 +34,7 @@ export function AscentsPerDisciplinePerYear({ ascents }: { ascents: Ascent[] }) 
   return (
     <ChartContainer caption='Ascents per Discipline per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />

@@ -33,7 +33,7 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascent By Style'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Pie
             {...DEFAULT_PIE_PROPS}

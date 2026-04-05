@@ -137,7 +137,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <ComposedChart barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <YAxis

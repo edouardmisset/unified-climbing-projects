@@ -21,7 +21,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Distance climbed per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart barCategoryGap={0} data={data}>
+        <BarChart accessibilityLayer={false} barCategoryGap={0} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.height} />

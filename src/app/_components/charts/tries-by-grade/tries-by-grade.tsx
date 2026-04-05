@@ -81,7 +81,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Tries by Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <LineChart data={chartData}>
+        <LineChart accessibilityLayer={false} data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />

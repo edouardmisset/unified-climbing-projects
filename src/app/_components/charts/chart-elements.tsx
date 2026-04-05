@@ -85,6 +85,7 @@ type ChartTooltipProps = {
 export function ChartTooltip({ formatter, showCursor = true, content }: ChartTooltipProps) {
   return (
     <Tooltip
+      trigger='click'
       content={content}
       contentStyle={TOOLTIP_STYLE}
       formatter={formatter}

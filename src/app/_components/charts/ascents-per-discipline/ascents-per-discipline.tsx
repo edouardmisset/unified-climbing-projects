@@ -35,7 +35,7 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents per Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart>
+        <PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Pie
             {...DEFAULT_PIE_PROPS}

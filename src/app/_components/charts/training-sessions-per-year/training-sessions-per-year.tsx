@@ -23,7 +23,7 @@ export function TrainingSessionsPerYear({
   return (
     <ChartContainer caption='Sessions per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <AreaChart data={data} stackOffset='expand'>
+        <AreaChart accessibilityLayer={false} data={data} stackOffset='expand'>
           <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
           <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
           <ChartYAxis tickFormatter={formatPercentageTick} />
