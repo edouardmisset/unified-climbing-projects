@@ -3,7 +3,7 @@ import { Drawer } from '@base-ui/react/drawer'
 import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
 import { memo, useCallback, useState } from 'react'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
-import { NavigationItem, type NavigationRenderMode } from './_components/navigation-item'
+import { NavigationItem } from './_components/navigation-item'
 import { UserStatus } from './_components/user-status'
 import { NAVIGATION_ITEMS } from './constants'
 import { createNavigationElementKey } from './helpers'
@@ -18,9 +18,7 @@ type NavigationProps = {
 export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: NavigationProps) => {
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const desktopMode: NavigationRenderMode = desktopExpanded
-    ? 'desktop-expanded'
-    : 'desktop-collapsed'
+  const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
 
   const handleDesktopToggle = useCallback(
     () => onDesktopExpandedChange(!desktopExpanded),
@@ -56,7 +54,6 @@ export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: Na
           {NAVIGATION_ITEMS.map((item, index) => (
             <NavigationItem
               item={item}
-              mode={desktopMode}
               // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
               key={`desktop-${createNavigationElementKey(item, index)}`}
             />
@@ -91,7 +88,6 @@ export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: Na
                 {NAVIGATION_ITEMS.map((item, index) => (
                   <NavigationItem
                     item={item}
-                    mode='mobile'
                     onNavigate={handleMobileNavigate}
                     // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
                     key={`mobile-${createNavigationElementKey(item, index)}`}
@@ -111,3 +107,5 @@ export const Navigation = memo(({ desktopExpanded, onDesktopExpandedChange }: Na
     </nav>
   )
 })
+
+Navigation.displayName = 'Navigation'

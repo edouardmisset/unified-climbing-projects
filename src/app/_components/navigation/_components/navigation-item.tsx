@@ -2,11 +2,8 @@ import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import styles from '../navigation.module.css'
 
-export type NavigationRenderMode = 'desktop-expanded' | 'desktop-collapsed' | 'mobile'
-
 type NavigationItemProps = {
   item: NavigationElement
-  mode: NavigationRenderMode
   onNavigate?: () => void
 }
 

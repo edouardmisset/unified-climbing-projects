@@ -50,11 +50,11 @@
   inset-block-end: var(--size-2);
 }
 
-.mobileTrigger:where([data-popup-open], [aria-expanded='true']) {
+.mobileTrigger:where([aria-expanded='true']) {
   border-color: var(--control-border-focus);
 }
 
-.mobileTrigger:where([data-popup-open], [aria-expanded='true']) .mobileTriggerBar {
+.mobileTrigger:where([aria-expanded='true']) .mobileTriggerBar {
   background-color: color-mix(in oklch, var(--gray-0), var(--accent) 18%);
 }
 
