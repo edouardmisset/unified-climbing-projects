@@ -1,7 +1,7 @@
 // oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
-import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
+import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { LocationType } from '~/app/_components/filter-bar/types'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { PERIOD_TO_DATES, type Period } from '~/schema/generic'

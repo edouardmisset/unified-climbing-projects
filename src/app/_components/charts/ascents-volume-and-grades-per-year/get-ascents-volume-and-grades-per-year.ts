@@ -4,7 +4,7 @@ import { createYearList } from '~/data/helpers'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import type { Ascent } from '~/schema/ascent'
 
-export type AscentsVolumeAndGradesPerYearDatum = {
+type AscentsVolumeAndGradesPerYearDatum = {
   Boulder: number
   Route: number
   avgBoulderGrade: number | undefined

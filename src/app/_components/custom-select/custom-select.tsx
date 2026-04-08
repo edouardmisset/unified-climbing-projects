@@ -1,4 +1,4 @@
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
+import { capitalize } from '@edouardmisset/text'
 import type { ChangeEventHandler } from 'react'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import { CustomLabel } from '../ui/custom-label/custom-label'

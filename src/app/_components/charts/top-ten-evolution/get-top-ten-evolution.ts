@@ -4,7 +4,7 @@ import { calculateTopTenScore } from '~/helpers/calculate-top-ten'
 import { countUniqueDates } from '~/helpers/count-unique-dates'
 import type { Ascent } from '~/schema/ascent'
 
-export type TopTenEvolutionDatum = {
+type TopTenEvolutionDatum = {
   Boulder: number
   Route: number
   ascents: number

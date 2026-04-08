@@ -1,7 +1,7 @@
 // oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
 import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
-import { stringEqualsCaseInsensitive } from '@edouardmisset/text/string-equals.ts'
+import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { z } from '~/helpers/zod'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'

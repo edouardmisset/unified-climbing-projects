@@ -1,4 +1,4 @@
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
+import { capitalize } from '@edouardmisset/text'
 import type { ComponentPropsWithoutRef } from 'react'
 import { CustomLabel } from '../custom-label/custom-label'
 import styles from './custom-input.module.css'

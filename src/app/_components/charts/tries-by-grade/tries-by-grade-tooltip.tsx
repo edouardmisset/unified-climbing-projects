@@ -1,4 +1,4 @@
-import { capitalize } from '@edouardmisset/text/capitalize.ts'
+import { capitalize } from '@edouardmisset/text'
 import { memo } from 'react'
 import type { TooltipContentProps } from 'recharts/types/component/Tooltip'
 import styles from './tries-by-grades.module.css'
