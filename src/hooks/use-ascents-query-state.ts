@@ -1,6 +1,7 @@
 import type { OrAll } from '~/app/_components/dashboard/types'
 import type { Ascent } from '~/schema/ascent'
 import type { Period } from '~/schema/generic'
+import { useAreaQueryState } from './query-state-slices/use-area-query-state'
 import { useCragQueryState } from './query-state-slices/use-crag-query-state'
 import { useDisciplineQueryState } from './query-state-slices/use-discipline-query-state'
 import { useGradeQueryState } from './query-state-slices/use-grade-query-state'
@@ -15,10 +16,12 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
   const [selectedDiscipline, setDiscipline] = useDisciplineQueryState()
   const [selectedStyle, setStyle] = useStyleQueryState()
   const [selectedCrag, setCrag] = useCragQueryState()
+  const [selectedArea, setArea] = useAreaQueryState()
   const [selectedGrade, setGrade] = useGradeQueryState()
   const [selectedRoute, setRoute] = useRouteQueryState()
 
   return {
+    selectedArea,
     selectedCrag,
     selectedDiscipline,
     selectedGrade,
@@ -26,6 +29,7 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
     selectedRoute,
     selectedStyle,
     selectedYear,
+    setArea,
     setCrag,
     setDiscipline,
     setGrade,
@@ -37,6 +41,7 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
 }
 
 type UseAscentsQueryStateReturn = {
+  selectedArea: OrAll<string>
   selectedCrag: OrAll<Ascent['crag']>
   selectedDiscipline: OrAll<Ascent['climbingDiscipline']>
   selectedGrade: OrAll<Ascent['topoGrade']>
@@ -44,6 +49,7 @@ type UseAscentsQueryStateReturn = {
   selectedRoute: Ascent['routeName']
   selectedStyle: OrAll<Ascent['style']>
   selectedYear: OrAll<string>
+  setArea: (area: OrAll<string>) => void
   setCrag: (crag: OrAll<Ascent['crag']>) => void
   setDiscipline: (discipline: OrAll<Ascent['climbingDiscipline']>) => void
   setGrade: (grade: OrAll<Ascent['topoGrade']>) => void

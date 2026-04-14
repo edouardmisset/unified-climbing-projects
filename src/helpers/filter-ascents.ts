@@ -22,6 +22,7 @@ type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
  */
 export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter): Ascent[] {
   const {
+    area,
     climbingDiscipline,
     crag,
     grade,
@@ -53,6 +54,7 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
       (holds === undefined || ascent.holds === holds) &&
       (tries === undefined || ascent.tries === tries) &&
       (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
+      (area === undefined || stringEqualsCaseInsensitive(ascent.area ?? '', area)) &&
       (period === undefined ||
         (period in PERIOD_TO_DATES && isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
     )

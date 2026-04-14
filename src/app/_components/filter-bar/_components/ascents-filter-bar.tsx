@@ -32,12 +32,21 @@ export default function AscentsFilterBar({
     [allAscents],
   )
 
+  const sectorList = useMemo(
+    () =>
+      [...new Set(allAscents.map(({ area }) => area?.trim() ?? '').filter(Boolean))]
+        .sort((a, b) => compareStringsAscending(a, b)),
+    [allAscents],
+  )
+
   const {
+    selectedArea,
     selectedCrag,
     selectedDiscipline,
     selectedPeriod,
     selectedStyle,
     selectedYear,
+    setArea,
     setCrag,
     setDiscipline,
     setPeriod,
@@ -72,6 +81,13 @@ export default function AscentsFilterBar({
           title: 'Crag',
         },
         {
+          setValue: createValueSetter(setArea),
+          name: 'Sector',
+          options: sectorList,
+          selectedValue: selectedArea,
+          title: 'Sector',
+        },
+        {
           setValue: createValueSetter(setStyle),
           name: 'Style',
           options: ASCENT_STYLE,
@@ -88,11 +104,14 @@ export default function AscentsFilterBar({
       ] as const satisfies FilterConfig[],
     [
       cragList,
+      sectorList,
+      selectedArea,
       selectedCrag,
       selectedDiscipline,
       selectedPeriod,
       selectedStyle,
       selectedYear,
+      setArea,
       setCrag,
       setDiscipline,
       setPeriod,

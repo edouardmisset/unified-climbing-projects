@@ -17,6 +17,7 @@ import { useAscentsQueryState } from './use-ascents-query-state'
 export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const {
     selectedYear,
+    selectedArea,
     selectedCrag,
     selectedDiscipline,
     selectedGrade,
@@ -25,6 +26,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     selectedStyle,
   } = useAscentsQueryState()
 
+  const deferredSelectedArea = useDeferredValue(selectedArea)
   const deferredSelectedCrag = useDeferredValue(selectedCrag)
   const deferredSelectedDiscipline = useDeferredValue(selectedDiscipline)
   const deferredSelectedGrade = useDeferredValue(selectedGrade)
@@ -37,6 +39,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     const selectedYearNumber = Number(deferredSelectedYear)
 
     return filterAscents(ascents, {
+      area: normalizeFilterValue(deferredSelectedArea),
       climbingDiscipline: normalizeFilterValue(deferredSelectedDiscipline),
       crag: normalizeFilterValue(deferredSelectedCrag),
       grade: normalizeFilterValue(deferredSelectedGrade),
@@ -49,6 +52,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     })
   }, [
     ascents,
+    deferredSelectedArea,
     deferredSelectedCrag,
     deferredSelectedDiscipline,
     deferredSelectedGrade,
