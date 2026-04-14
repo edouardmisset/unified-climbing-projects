@@ -7,5 +7,5 @@ export const useAreaQueryState = (): UseQueryStateReturn<OrAll<string>, typeof A
   useQueryState<OrAll<string>>('area', {
     defaultValue: ALL_VALUE,
     parse: value =>
-      value === ALL_VALUE ? ALL_VALUE : (ascentSchema.shape.area.parse(value) ?? ALL_VALUE),
+      value === ALL_VALUE ? ALL_VALUE : ascentSchema.shape.area.parse(value),
   })

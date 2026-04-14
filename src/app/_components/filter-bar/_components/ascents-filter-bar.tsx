@@ -34,7 +34,7 @@ export default function AscentsFilterBar({
 
   const sectorList = useMemo(
     () =>
-      [...new Set(allAscents.map(({ area }) => area?.trim() ?? '').filter(Boolean))]
+      [...new Set(allAscents.map(({ area }) => area?.trim()).filter(Boolean))]
         .sort((a, b) => compareStringsAscending(a, b)),
     [allAscents],
   )
