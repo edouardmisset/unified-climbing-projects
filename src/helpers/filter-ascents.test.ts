@@ -40,6 +40,29 @@ describe('filterAscents', () => {
     }
   })
 
+  it('should filter ascents by area using case insensitive matching', () => {
+    const result = filterAscents(sampleAscents, { area: 'Rive Droite' })
+    expect(result.length).toBe(3)
+    for (const { area } of result) expect(area?.toLowerCase()).toBe('rive droite')
+  })
+
+  it('should filter ascents by area case-insensitively', () => {
+    const upperResult = filterAscents(sampleAscents, { area: 'RIVE DROITE' })
+    const lowerResult = filterAscents(sampleAscents, { area: 'rive droite' })
+    expect(upperResult).toEqual(lowerResult)
+    expect(upperResult.length).toBe(3)
+  })
+
+  it('should not match ascents with no area when an area filter is applied', () => {
+    const result = filterAscents(sampleAscents, { area: 'Rive Droite' })
+    for (const ascent of result) expect(ascent.area).toBeDefined()
+  })
+
+  it('should return an empty array when no ascent matches the area filter', () => {
+    const result = filterAscents(sampleAscents, { area: 'nonexistent area' })
+    expect(result.length).toBe(0)
+  })
+
   it('should return an empty array when no ascents are passed', () => {
     const result = filterAscents([])
     expect(result.length).toBe(0)
