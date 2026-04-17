@@ -6,5 +6,5 @@ import { type Ascent, ascentSchema } from '~/schema/ascent'
 export const useCragQueryState = (): UseQueryStateReturn<OrAll<Ascent['crag']>, typeof ALL_VALUE> =>
   useQueryState<OrAll<Ascent['crag']>>('crag', {
     defaultValue: ALL_VALUE,
-    parse: value => (value === ALL_VALUE ? ALL_VALUE : ascentSchema.shape.crag.parse(value)),
+    parse: value => (value === ALL_VALUE ? ALL_VALUE : ascentSchema.unwrap().shape.crag.parse(value)),
   })

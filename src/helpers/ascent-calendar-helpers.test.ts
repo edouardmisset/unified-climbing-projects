@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { ascentSchema } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
@@ -11,7 +11,7 @@ describe('fromAscentsToCalendarEntries', () => {
 
   it('should return calendar entries with empty shortText when ascents are undefined', () => {
     const year = 2_024
-    const ascentsArray: Ascent[][] = [[], [], []]
+    const ascentsArray = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
     expect(result.length).toBe(3)
     for (const { shortText } of result) expect(shortText).toBe('')
@@ -19,9 +19,9 @@ describe('fromAscentsToCalendarEntries', () => {
 
   it('should return calendar entries with correct data when ascents are provided', () => {
     const year = 2_024
-    const ascentsArray: Ascent[][] = [
+    const ascentsArray = [
       [
-        {
+        ascentSchema.parse({
           area: 'Wig Wam',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -38,10 +38,10 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Onsight',
           topoGrade: '7a',
           tries: 1,
-        },
+        }),
       ],
       [
-        {
+        ascentSchema.parse({
           area: 'Envers du canyon',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -59,7 +59,7 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Redpoint',
           topoGrade: '7b',
           tries: 2,
-        },
+        }),
       ],
     ]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)

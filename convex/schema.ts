@@ -3,12 +3,12 @@ import { zodToConvex } from 'convex-helpers/server/zod'
 import { ascentSchema } from '~/schema/ascent'
 import { trainingSessionSchema } from '~/schema/training'
 
-const convexGetAscentSchema = zodToConvex(ascentSchema)
-export const convexPostAscentSchema = zodToConvex(ascentSchema.omit({ _id: true }))
+const convexGetAscentSchema = zodToConvex(ascentSchema.unwrap())
+export const convexPostAscentSchema = zodToConvex(ascentSchema.unwrap().omit({ _id: true }))
 
-const convexGetTrainingSessionSchema = zodToConvex(trainingSessionSchema)
+const convexGetTrainingSessionSchema = zodToConvex(trainingSessionSchema.unwrap())
 export const convexPostTrainingSessionSchema = zodToConvex(
-  trainingSessionSchema.omit({ _id: true }),
+  trainingSessionSchema.unwrap().omit({ _id: true }),
 )
 
 export default defineSchema({

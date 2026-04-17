@@ -10,7 +10,7 @@ export const useAreaQueryState = (): UseQueryStateReturn<OrAll<string>, typeof A
       if (value === ALL_VALUE) return ALL_VALUE
       if (value.trim() === '') return null
 
-      const result = ascentSchema.required({ area: true }).shape.area.safeParse(value)
+      const result = ascentSchema.unwrap().required({ area: true }).shape.area.safeParse(value)
       return result.success ? result.data : null
     },
   })

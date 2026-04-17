@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { calculateLoad } from '~/helpers/calculate-load'
 import { trimAndNormalizeStringsInObject } from '~/helpers/trim-and-normalize-string-in-object'
-import { type TrainingSession, trainingSessionFormSchema } from '~/schema/training'
+import { trainingSessionFormSchema } from '~/schema/training'
 import { addTrainingSession } from '~/services/training'
 import type { Object_ } from '~/types/generic'
 
@@ -24,7 +24,7 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
   const newTrainingSession = {
     ...form,
     load: calculateLoad(volume, intensity),
-  } satisfies Omit<TrainingSession, '_id'>
+  }
 
   try {
     await addTrainingSession(newTrainingSession)

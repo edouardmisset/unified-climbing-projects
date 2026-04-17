@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import type { TrainingSession } from '~/schema/training'
+import { trainingSessionSchema } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
 describe('filterTrainingSessions', () => {
-  const trainingSessions = [
+  const trainingSessions = trainingSessionSchema.array().parse([
     {
       anatomicalRegion: 'Ar',
       climbingDiscipline: 'Route',
@@ -37,7 +37,7 @@ describe('filterTrainingSessions', () => {
       sessionType: 'MS',
       volume: 80,
     },
-  ] satisfies TrainingSession[]
+  ])
 
   it('should return all training sessions when no filters are applied', () => {
     const result = filterTrainingSessions(trainingSessions, {})
