@@ -158,7 +158,7 @@ export const AscentList = memo(
                 <tr
                   className={`${styles.row} gridFullWidth`}
                   key={_id}
-                  onClick={() => handleRowClick(ascent)}
+                  onDoubleClick={() => handleRowClick(ascent)}
                   onKeyDown={event => {
                     if (event.key !== 'Enter' && event.key !== ' ') return
 
