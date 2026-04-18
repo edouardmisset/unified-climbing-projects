@@ -245,9 +245,12 @@ export type Rating = z.infer<typeof ratingSchema>
 export { commentSchema }
 export type { Comment } from './generic'
 
+const DEFAULT_CLIMBER_NAME = climberNameSchema.parse('Edouard Misset')
+const DEFAULT_ROUTE_NAME = routeNameSchema.parse('No Name')
+
 export const ascentSchema = z.object({
   area: areaSchema.optional(),
-  climber: z.string().transform(() => climberNameSchema.parse('Edouard Misset')).optional(),
+  climber: z.string().transform(() => DEFAULT_CLIMBER_NAME).optional(),
   climbingDiscipline: climbingDisciplineSchema,
   comments: commentSchema.optional(),
   crag: cragNameSchema,
@@ -260,7 +263,7 @@ export const ascentSchema = z.object({
   profile: profileSchema.optional(),
   rating: ratingSchema.optional(),
   region: regionSchema.optional(),
-  routeName: routeNameSchema.default(routeNameSchema.parse('No Name')),
+  routeName: routeNameSchema.default(DEFAULT_ROUTE_NAME),
   style: ascentStyleSchema,
   topoGrade: gradeSchema,
   tries: triesSchema,
