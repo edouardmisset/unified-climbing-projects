@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer } from 'recharts'
+import { CartesianGrid, createHorizontalChart, Legend, Line, LineChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { ChartTooltip, ChartXAxis, ChartYAxis } from '../chart-elements'
@@ -27,6 +27,11 @@ type TriesByGradeChartDatum = {
   max: number
   min: number
 }
+
+const Chart = createHorizontalChart<TriesByGradeChartDatum>()({
+  LineChart,
+  Line,
+})
 
 const AXIS_LABELS = {
   grades: 'Grades',
@@ -81,13 +86,13 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Tries by Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <LineChart accessibilityLayer={false} data={chartData}>
+        <Chart.LineChart accessibilityLayer={false} data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
           <ChartTooltip content={TriesByGradeTooltip} />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
-          <Line
+          <Chart.Line
             dataKey='min'
             dot={dotStyle}
             name='Min'
@@ -95,7 +100,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
-          <Line
+          <Chart.Line
             dataKey='average'
             dot={dotStyle}
             name='Average'
@@ -103,7 +108,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
-          <Line
+          <Chart.Line
             dataKey='max'
             dot={dotStyle}
             name='Max'
@@ -111,7 +116,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
             strokeWidth={LINE_STROKE_WIDTH}
             type='natural'
           />
-        </LineChart>
+        </Chart.LineChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

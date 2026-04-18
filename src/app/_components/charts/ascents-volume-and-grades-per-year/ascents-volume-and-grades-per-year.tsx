@@ -3,6 +3,7 @@ import {
   Bar,
   CartesianGrid,
   ComposedChart,
+  createHorizontalChart,
   Legend,
   Line,
   ResponsiveContainer,
@@ -23,6 +24,15 @@ import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER, type Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
+
+type AscentsVolumeAndGradesPerYearDatum = ReturnType<typeof getAscentsVolumeAndGradesPerYear>[number]
+
+const Chart = createHorizontalChart<AscentsVolumeAndGradesPerYearDatum>()({
+  ComposedChart,
+  Bar,
+  Line,
+  YAxis,
+})
 
 const AXIS_LABELS = {
   ascents: '# Ascents',
@@ -137,10 +147,10 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <Chart.ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <YAxis
+          <Chart.YAxis
             yAxisId='left'
             domain={gradeDomain}
             ticks={gradeTicks}
@@ -152,7 +162,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             tick={AXIS_TICK_STYLE}
             tickFormatter={formatGradeTick}
           />
-          <YAxis
+          <Chart.YAxis
             yAxisId='right'
             allowDecimals={false}
             domain={[0, dataMax => roundUpToStep(Number(dataMax), ASCENTS_AXIS_STEP)]}
@@ -174,20 +184,20 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
 
-          <Bar
+          <Chart.Bar
             dataKey='Boulder'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={CHART_LABELS.boulderAscents}
             yAxisId='right'
           />
-          <Bar
+          <Chart.Bar
             dataKey='Route'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={CHART_LABELS.routeAscents}
             yAxisId='right'
           />
 
-          <Line
+          <Chart.Line
             dataKey='maxBoulderGrade'
             dot={false}
             name={CHART_LABELS.maxBoulderGrade}
@@ -196,7 +206,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Chart.Line
             dataKey='maxRouteGrade'
             dot={false}
             name={CHART_LABELS.maxRouteGrade}
@@ -205,7 +215,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Chart.Line
             dataKey='avgBoulderGrade'
             dot={false}
             name={CHART_LABELS.avgBoulderGrade}
@@ -215,7 +225,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-          <Line
+          <Chart.Line
             dataKey='avgRouteGrade'
             dot={false}
             name={CHART_LABELS.avgRouteGrade}
@@ -225,7 +235,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             type='natural'
             yAxisId='left'
           />
-        </ComposedChart>
+        </Chart.ComposedChart>
       </ResponsiveContainer>
     </ChartContainer>
   )
