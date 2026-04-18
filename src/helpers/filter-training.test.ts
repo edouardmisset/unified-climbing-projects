@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { trainingSessionSchema } from '~/schema/training'
+import { percentSchema } from '~/schema/generic'
+import { trainingSessionIdSchema, type TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
 describe('filterTrainingSessions', () => {
-  const trainingSessions = trainingSessionSchema.array().parse([
+  const trainingSessions = [
     {
       anatomicalRegion: 'Ar',
       climbingDiscipline: 'Route',
@@ -11,9 +12,9 @@ describe('filterTrainingSessions', () => {
       date: '2023-01-01',
       energySystem: 'AA',
       gymCrag: 'Gym 1',
-      _id: '1',
+      _id: trainingSessionIdSchema.parse('1'),
       sessionType: 'CS',
-      volume: 70,
+      volume: percentSchema.parse(70),
     },
     {
       anatomicalRegion: 'Fi',
@@ -22,9 +23,9 @@ describe('filterTrainingSessions', () => {
       date: '2023-02-01',
       energySystem: 'AL',
       gymCrag: 'Crag 1',
-      _id: '2',
+      _id: trainingSessionIdSchema.parse('2'),
       sessionType: 'PE',
-      volume: 60,
+      volume: percentSchema.parse(60),
     },
     {
       anatomicalRegion: 'Ge',
@@ -33,11 +34,11 @@ describe('filterTrainingSessions', () => {
       date: '2024-01-01',
       energySystem: 'AE',
       gymCrag: 'Gym 1',
-      _id: '3',
+      _id: trainingSessionIdSchema.parse('3'),
       sessionType: 'MS',
-      volume: 80,
+      volume: percentSchema.parse(80),
     },
-  ])
+  ] satisfies TrainingSession[]
 
   it('should return all training sessions when no filters are applied', () => {
     const result = filterTrainingSessions(trainingSessions, {})

@@ -1,17 +1,15 @@
 import { average, clampValueInRange } from '@edouardmisset/math'
 import { describe, expect, it } from 'vitest'
 import { COEFFICIENT_ASCENTS_PER_DAY, COEFFICIENT_ONSIGHT_FLASH_RATIO } from '~/constants/ascents'
-import { ascentSchema } from '~/schema/ascent'
-import { trainingSessionSchema } from '~/schema/training'
+import { ascentIdSchema, type Ascent } from '~/schema/ascent'
+import { trainingSessionIdSchema, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 
 describe('calculateEfficiencyPercentage', () => {
   it('should return 0 when there are no ascents', () => {
     const result = calculateEfficiencyPercentage({
       ascents: [],
-      trainingSessions: [
-        trainingSessionSchema.parse({ date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' }),
-      ],
+      trainingSessions: [{ date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' }],
     })
 
     expect(result).toBe(0)
@@ -20,16 +18,16 @@ describe('calculateEfficiencyPercentage', () => {
   it('should return 0 when there are no training sessions', () => {
     const result = calculateEfficiencyPercentage({
       ascents: [
-        ascentSchema.parse({
+        {
           climbingDiscipline: 'Boulder',
           crag: 'Test Crag',
           date: '2023-01-01T11:00:00Z',
-          _id: '1',
+          _id: ascentIdSchema.parse('1'),
           routeName: 'Test Route 1',
           style: 'Flash',
           topoGrade: '6b',
           tries: 1,
-        }),
+        },
       ],
       trainingSessions: [],
     })
@@ -39,22 +37,22 @@ describe('calculateEfficiencyPercentage', () => {
 
   it('should calculate efficiency percentage correctly for a simple case', () => {
     // Scenario: 1 day outside, 1 ascent Flash, 1 try
-    const ascents = ascentSchema.array().parse([
+    const ascents: Ascent[] = [
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
         tries: 1,
       },
-    ])
+    ]
 
-    const trainingSessions = trainingSessionSchema.array().parse([
-      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-    ])
+    const trainingSessions: TrainingSession[] = [
+      { date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' },
+    ]
 
     const result = calculateEfficiencyPercentage({
       ascents,
@@ -79,20 +77,20 @@ describe('calculateEfficiencyPercentage', () => {
 
   it('should handle multiple days and ascents correctly', () => {
     // 3 different days outside
-    const trainingSessions = trainingSessionSchema.array().parse([
-      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-      { date: '2023-01-02T10:00:00Z', _id: '2', sessionType: 'Out' },
-      { date: '2023-01-03T10:00:00Z', _id: '3', sessionType: 'Out' },
-    ])
+    const trainingSessions: TrainingSession[] = [
+      { date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' },
+      { date: '2023-01-02T10:00:00Z', _id: trainingSessionIdSchema.parse('2'), sessionType: 'Out' },
+      { date: '2023-01-03T10:00:00Z', _id: trainingSessionIdSchema.parse('3'), sessionType: 'Out' },
+    ]
 
     // 3 ascents on 2 different days
-    const ascents = ascentSchema.array().parse([
+    const ascents: Ascent[] = [
       // Day 1: 2 ascents
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
@@ -102,7 +100,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T12:00:00Z',
-        _id: '2',
+        _id: ascentIdSchema.parse('2'),
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6c',
@@ -113,13 +111,13 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
-        _id: '3',
+        _id: ascentIdSchema.parse('3'),
         routeName: 'Test Route 3',
         style: 'Onsight',
         topoGrade: '6a+',
         tries: 1,
       },
-    ])
+    ]
 
     const result = calculateEfficiencyPercentage({
       ascents,
@@ -145,18 +143,18 @@ describe('calculateEfficiencyPercentage', () => {
   })
 
   it('should handle a high efficiency scenario correctly', () => {
-    const trainingSessions = trainingSessionSchema.array().parse([
-      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-      { date: '2023-01-02T10:00:00Z', _id: '2', sessionType: 'Out' },
-    ])
+    const trainingSessions: TrainingSession[] = [
+      { date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' },
+      { date: '2023-01-02T10:00:00Z', _id: trainingSessionIdSchema.parse('2'), sessionType: 'Out' },
+    ]
 
     // High efficiency: all days with ascents, all onsight/flash, low tries
-    const highEfficiencyAscents = ascentSchema.array().parse([
+    const highEfficiencyAscents: Ascent[] = [
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Onsight',
         topoGrade: '6b',
@@ -166,7 +164,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
-        _id: '2',
+        _id: ascentIdSchema.parse('2'),
         routeName: 'Test Route 2',
         style: 'Flash',
         topoGrade: '6b',
@@ -176,7 +174,7 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-02T11:00:00Z',
-        _id: '3',
+        _id: ascentIdSchema.parse('3'),
         routeName: 'Test Route 3',
         style: 'Onsight',
         topoGrade: '6b',
@@ -186,13 +184,13 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-02T14:00:00Z',
-        _id: '4',
+        _id: ascentIdSchema.parse('4'),
         routeName: 'Test Route 4',
         style: 'Flash',
         topoGrade: '6b',
         tries: 1,
       },
-    ])
+    ]
 
     const highEfficiencyResult = calculateEfficiencyPercentage({
       ascents: highEfficiencyAscents,
@@ -200,12 +198,12 @@ describe('calculateEfficiencyPercentage', () => {
     })
 
     // Low efficiency: fewer days with ascents, all redpoint, high tries
-    const lowEfficiencyAscents = ascentSchema.array().parse([
+    const lowEfficiencyAscents: Ascent[] = [
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Redpoint',
         topoGrade: '6b',
@@ -215,13 +213,13 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T14:00:00Z',
-        _id: '2',
+        _id: ascentIdSchema.parse('2'),
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6b',
         tries: 10,
       },
-    ])
+    ]
 
     const lowEfficiencyResult = calculateEfficiencyPercentage({
       ascents: lowEfficiencyAscents,
@@ -233,22 +231,22 @@ describe('calculateEfficiencyPercentage', () => {
   })
 
   it('should handle edge case with very high number of tries', () => {
-    const trainingSessions = trainingSessionSchema.array().parse([
-      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-    ])
+    const trainingSessions: TrainingSession[] = [
+      { date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' },
+    ]
 
-    const highTriesAscents = ascentSchema.array().parse([
+    const highTriesAscents: Ascent[] = [
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Redpoint',
         topoGrade: '6b',
         tries: 100, // Extreme case
       },
-    ])
+    ]
 
     const result = calculateEfficiencyPercentage({
       ascents: highTriesAscents,
@@ -262,18 +260,18 @@ describe('calculateEfficiencyPercentage', () => {
 
   it('should handle multiple days but same date ascents correctly', () => {
     // 3 different training session days but only 1 unique date
-    const trainingSessions = trainingSessionSchema.array().parse([
-      { date: '2023-01-01T10:00:00Z', _id: '1', sessionType: 'Out' },
-      { date: '2023-01-01T12:00:00Z', _id: '2', sessionType: 'Out' },
-      { date: '2023-01-01T14:00:00Z', _id: '3', sessionType: 'Out' },
-    ])
+    const trainingSessions: TrainingSession[] = [
+      { date: '2023-01-01T10:00:00Z', _id: trainingSessionIdSchema.parse('1'), sessionType: 'Out' },
+      { date: '2023-01-01T12:00:00Z', _id: trainingSessionIdSchema.parse('2'), sessionType: 'Out' },
+      { date: '2023-01-01T14:00:00Z', _id: trainingSessionIdSchema.parse('3'), sessionType: 'Out' },
+    ]
 
-    const ascents = ascentSchema.array().parse([
+    const ascents: Ascent[] = [
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T11:00:00Z',
-        _id: '1',
+        _id: ascentIdSchema.parse('1'),
         routeName: 'Test Route 1',
         style: 'Flash',
         topoGrade: '6b',
@@ -283,13 +281,13 @@ describe('calculateEfficiencyPercentage', () => {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
         date: '2023-01-01T13:00:00Z',
-        _id: '2',
+        _id: ascentIdSchema.parse('2'),
         routeName: 'Test Route 2',
         style: 'Redpoint',
         topoGrade: '6c',
         tries: 3,
       },
-    ])
+    ]
 
     const result = calculateEfficiencyPercentage({
       ascents,

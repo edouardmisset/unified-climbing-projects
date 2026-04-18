@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
-import type { Ascent } from '~/schema/ascent'
+import { ascentIdSchema, type Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
 
 describe('getAscentsVolumeAndGradesPerYear', () => {
@@ -19,35 +19,35 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
     const ascents: Ascent[] = [
       {
         ...firstAscent,
-        _id: 'volume-and-grade-1',
+        _id: ascentIdSchema.parse('volume-and-grade-1'),
         climbingDiscipline: 'Route',
         date: '2023-01-10',
         topoGrade: '6a',
       },
       {
         ...secondAscent,
-        _id: 'volume-and-grade-2',
+        _id: ascentIdSchema.parse('volume-and-grade-2'),
         climbingDiscipline: 'Route',
         date: '2023-05-08',
         topoGrade: '6b',
       },
       {
         ...thirdAscent,
-        _id: 'volume-and-grade-3',
+        _id: ascentIdSchema.parse('volume-and-grade-3'),
         climbingDiscipline: 'Boulder',
         date: '2023-08-02',
         topoGrade: '7a',
       },
       {
         ...fourthAscent,
-        _id: 'volume-and-grade-4',
+        _id: ascentIdSchema.parse('volume-and-grade-4'),
         climbingDiscipline: 'Boulder',
         date: '2025-03-17',
         topoGrade: '7b+',
       },
       {
         ...fifthAscent,
-        _id: 'volume-and-grade-5',
+        _id: ascentIdSchema.parse('volume-and-grade-5'),
         climbingDiscipline: 'Multi-Pitch',
         date: '2025-09-13',
         topoGrade: '8a',
