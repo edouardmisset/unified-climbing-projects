@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 import { createYearList } from '~/data/helpers.ts'
+import { filterTrainingSessions } from '~/helpers/filter-training'
+import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { PERIOD } from '~/schema/generic'
@@ -9,15 +11,6 @@ import { StickyFilterBar } from '../sticky-filter-bar'
 import { type FilterConfig, LOCATION_TYPES } from '../types'
 
 export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSessionListProps) {
-  const yearList = useMemo(
-    () =>
-      createYearList(trainingSessions, {
-        descending: true,
-        continuous: false,
-      }).map(String),
-    [trainingSessions],
-  )
-
   const {
     selectedYear,
     selectedPeriod,
@@ -28,6 +21,18 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setDiscipline,
     setLocationType,
   } = useTrainingSessionsQueryState()
+
+  const yearList = useMemo(() => {
+    const filteredForYear = filterTrainingSessions(trainingSessions, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      locationType: normalizeFilterValue(selectedLocationType),
+      period: normalizeFilterValue(selectedPeriod),
+    })
+    return createYearList(filteredForYear, {
+      descending: true,
+      continuous: false,
+    }).map(String)
+  }, [trainingSessions, selectedDiscipline, selectedLocationType, selectedPeriod])
 
   const filters = useMemo<FilterConfig[]>(
     () =>
