@@ -7,7 +7,6 @@ import {
   type Points,
   gradeSchema,
   pointsSchema,
-  type RawGrade,
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
 
@@ -23,7 +22,7 @@ type ColorGrade = keyof typeof ASCENT_GRADE_TO_COLOR
  * @param {Grade} [grade] - The climbing grade.
  * @returns {string} The background color for the given grade.
  */
-export function fromGradeToBackgroundColor(grade?: RawGrade): string {
+export function fromGradeToBackgroundColor(grade?: Grade): string {
   if (grade !== undefined && grade in ASCENT_GRADE_TO_COLOR) {
     return ASCENT_GRADE_TO_COLOR[grade as ColorGrade]
   }

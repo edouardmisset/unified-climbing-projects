@@ -11,7 +11,7 @@ import {
 } from '../constants'
 
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
-import { _GRADES, type Ascent } from '~/schema/ascent'
+import { _GRADES, type Ascent, gradeSchema } from '~/schema/ascent'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
@@ -39,7 +39,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
           <YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
           {_GRADES.map(key => (
-            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+            <Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(gradeSchema.parse(key))} stackId='grades' />
           ))}
         </BarChart>
       </ResponsiveContainer>
