@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import type { TrainingSession } from '~/schema/training'
+import { climbingDisciplineSchema } from '~/schema/ascent'
+import { trainingSessionSchema, type TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
 describe('filterTrainingSessions', () => {
   const trainingSessions = [
-    {
+    trainingSessionSchema.parse({
       anatomicalRegion: 'Ar',
       climbingDiscipline: 'Route',
       comments: 'Good session',
@@ -14,8 +15,8 @@ describe('filterTrainingSessions', () => {
       _id: '1',
       sessionType: 'CS',
       volume: 70,
-    },
-    {
+    }),
+    trainingSessionSchema.parse({
       anatomicalRegion: 'Fi',
       climbingDiscipline: 'Boulder',
       comments: 'Hard session',
@@ -25,8 +26,8 @@ describe('filterTrainingSessions', () => {
       _id: '2',
       sessionType: 'PE',
       volume: 60,
-    },
-    {
+    }),
+    trainingSessionSchema.parse({
       anatomicalRegion: 'Ge',
       climbingDiscipline: 'Route',
       comments: 'Easy session',
@@ -36,8 +37,8 @@ describe('filterTrainingSessions', () => {
       _id: '3',
       sessionType: 'MS',
       volume: 80,
-    },
-  ] satisfies TrainingSession[]
+    }),
+  ]
 
   it('should return all training sessions when no filters are applied', () => {
     const result = filterTrainingSessions(trainingSessions, {})
@@ -55,7 +56,7 @@ describe('filterTrainingSessions', () => {
 
   it('should filter training sessions by climbingDiscipline', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      climbingDiscipline: 'Boulder',
+      climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
     })
     expect(result.length).toBe(1)
     expect(result[0]?.climbingDiscipline).toBe('Boulder')

@@ -4,11 +4,13 @@ import {
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   type Grade,
+  type Points,
+  gradeSchema,
+  pointsSchema,
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
 
 type ColorGrade = keyof typeof ASCENT_GRADE_TO_COLOR
-const isColorGrade = (g: Grade): g is ColorGrade => g in ASCENT_GRADE_TO_COLOR
 
 /**
  * Converts a climbing grade to its corresponding background color.
@@ -21,8 +23,9 @@ const isColorGrade = (g: Grade): g is ColorGrade => g in ASCENT_GRADE_TO_COLOR
  * @returns {string} The background color for the given grade.
  */
 export function fromGradeToBackgroundColor(grade?: Grade): string {
-  const isValidColorGrade = grade && grade in ASCENT_GRADE_TO_COLOR && isColorGrade(grade)
-  if (isValidColorGrade) return ASCENT_GRADE_TO_COLOR[grade]
+  if (grade !== undefined && grade in ASCENT_GRADE_TO_COLOR) {
+    return ASCENT_GRADE_TO_COLOR[grade as ColorGrade]
+  }
 
   return 'black'
 }
@@ -51,18 +54,29 @@ export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | unde
  * @param {Grade} params.topoGrade - The topo grade of the ascent.
  * @param {string} params.style - The style of the ascent.
  * @param {string} params.climbingDiscipline - The discipline of the climb.
- * @returns {number} The total points for the ascent.
+ * @returns {Points} The total points for the ascent.
  */
-export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
+export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): Points {
   type PointsGrade = keyof typeof GRADE_TO_POINTS
-  const hasPoints = (grade: Grade): grade is PointsGrade => grade in GRADE_TO_POINTS
+  const hasPoints = (grade: Grade): grade is Grade & PointsGrade => grade in GRADE_TO_POINTS
 
   // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
-  const gradePoints = hasPoints(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
-  const stylePoints = STYLE_TO_POINTS[style] ?? 0
+  const gradePoints = hasPoints(topoGrade) ? GRADE_TO_POINTS[topoGrade as PointsGrade] : 0
+  const stylePoints = STYLE_TO_POINTS[style as keyof typeof STYLE_TO_POINTS] ?? 0
   const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
-  return gradePoints + stylePoints + climbingDisciplineBonus
+  return pointsSchema.parse(gradePoints + stylePoints + climbingDisciplineBonus)
+}
+
+/**
+ * Adds two Points values, preserving the Points brand.
+ *
+ * @param {Points} a - The first points value.
+ * @param {Points} b - The second points value.
+ * @returns {Points} The sum of the two points values.
+ */
+export function addPoints(a: Points, b: Points): Points {
+  return pointsSchema.parse(a + b)
 }
 
 /**
@@ -92,7 +106,7 @@ export function fromPointToGrade(
 
   const adjustedPoints =
     points -
-    (STYLE_TO_POINTS[style] ?? 0) -
+    (STYLE_TO_POINTS[style as keyof typeof STYLE_TO_POINTS] ?? 0) -
     (climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0)
 
   if (!listOfPoints.includes(adjustedPoints)) {
@@ -119,5 +133,5 @@ export function fromPointToGrade(
     return DEFAULT_GRADE
   }
 
-  return matchingGrade
+  return gradeSchema.parse(matchingGrade)
 }

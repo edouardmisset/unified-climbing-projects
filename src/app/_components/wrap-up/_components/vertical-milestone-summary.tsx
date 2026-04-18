@@ -3,13 +3,16 @@ import { sum } from '@edouardmisset/math/sum.ts'
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { AscentListProps } from '~/schema/ascent'
+import { climbingDisciplineSchema, type AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
 
+const ROUTE = climbingDisciplineSchema.parse('Route')
+const BOULDER = climbingDisciplineSchema.parse('Boulder')
+
 export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
-  const boulders = filterAscents(ascents, { climbingDiscipline: 'Boulder' })
-  const routes = filterAscents(ascents, { climbingDiscipline: 'Route' })
+  const boulders = filterAscents(ascents, { climbingDiscipline: BOULDER })
+  const routes = filterAscents(ascents, { climbingDiscipline: ROUTE })
 
   if (boulders.length === 0 && routes.length === 0) return
 

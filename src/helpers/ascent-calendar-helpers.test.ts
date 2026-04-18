@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { ascentSchema, type Ascent } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
@@ -21,7 +21,7 @@ describe('fromAscentsToCalendarEntries', () => {
     const year = 2_024
     const ascentsArray: Ascent[][] = [
       [
-        {
+        ascentSchema.parse({
           area: 'Wig Wam',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -38,10 +38,10 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Onsight',
           topoGrade: '7a',
           tries: 1,
-        },
+        }),
       ],
       [
-        {
+        ascentSchema.parse({
           area: 'Envers du canyon',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -59,7 +59,7 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Redpoint',
           topoGrade: '7b',
           tries: 2,
-        },
+        }),
       ],
     ]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)

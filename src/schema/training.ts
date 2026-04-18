@@ -2,7 +2,10 @@ import { getDateAtNoon } from '~/helpers/date.ts'
 import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
-import { percentSchema } from './generic.ts'
+import { commentSchema, percentSchema } from './generic.ts'
+
+export const trainingSessionIdSchema = z.string().brand('TrainingSessionId')
+export type TrainingSessionId = z.infer<typeof trainingSessionIdSchema>
 
 export const SESSION_TYPES = [
   'Out',
@@ -46,52 +49,56 @@ const SESSION_TYPES_TO_TEXT = {
   Ta: 'Tapper',
 } as const satisfies Record<(typeof SESSION_TYPES)[number], string>
 
-export function fromSessionTypeToLabel(sessionType: (typeof SESSION_TYPES)[number]) {
-  return SESSION_TYPES_TO_TEXT[sessionType]
+export const sessionTypeSchema = z.enum(SESSION_TYPES).brand('SessionType')
+export type SessionType = z.infer<typeof sessionTypeSchema>
+
+export function fromSessionTypeToLabel(sessionType: SessionType) {
+  return SESSION_TYPES_TO_TEXT[sessionType as (typeof SESSION_TYPES)[number]]
 }
 
 export const ANATOMICAL_REGIONS = ['Ar', 'Fi', 'Ge'] as const
-export type AnatomicalRegion = (typeof ANATOMICAL_REGIONS)[number]
+export const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS).brand('AnatomicalRegion')
+export type AnatomicalRegion = z.infer<typeof anatomicalRegionSchema>
 
 const ANATOMICAL_REGIONS_TO_TEXT = {
   Ar: 'Arms',
   Fi: 'Fingers',
   Ge: 'General',
-} as const satisfies Record<AnatomicalRegion, string>
+} as const satisfies Record<(typeof ANATOMICAL_REGIONS)[number], string>
 
 export function fromAnatomicalRegionToLabel(anatomicalRegion: AnatomicalRegion) {
-  return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion]
+  return ANATOMICAL_REGIONS_TO_TEXT[anatomicalRegion as (typeof ANATOMICAL_REGIONS)[number]]
 }
 
 export const ENERGY_SYSTEMS = ['AA', 'AL', 'AE'] as const
-export type EnergySystem = (typeof ENERGY_SYSTEMS)[number]
+export const energySystemSchema = z.enum(ENERGY_SYSTEMS).brand('EnergySystem')
+export type EnergySystem = z.infer<typeof energySystemSchema>
 
 const ENERGY_SYSTEMS_TO_TEXT = {
   AA: 'Anaerobic Alactic',
   AE: 'Aerobic',
   AL: 'Anaerobic Lactic',
-} as const satisfies Record<EnergySystem, string>
+} as const satisfies Record<(typeof ENERGY_SYSTEMS)[number], string>
 
 export function fromEnergySystemToLabel(energySystem: EnergySystem) {
-  return ENERGY_SYSTEMS_TO_TEXT[energySystem]
+  return ENERGY_SYSTEMS_TO_TEXT[energySystem as (typeof ENERGY_SYSTEMS)[number]]
 }
 
 export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
-export const loadCategorySchema = z.enum(LOAD_CATEGORIES)
+export const loadCategorySchema = z.enum(LOAD_CATEGORIES).brand('LoadCategory')
 export type LoadCategory = z.infer<typeof loadCategorySchema>
 
-const sessionTypeSchema = z.enum(SESSION_TYPES)
-const energySystemSchema = z.enum(ENERGY_SYSTEMS)
-const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
+export const gymCragSchema = z.string().brand('GymCrag')
+export type GymCrag = z.infer<typeof gymCragSchema>
 
 export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
-  comments: z.string().optional(),
-  date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
+  comments: commentSchema.optional(),
+  date: z.string().transform(date => new Date(date).toISOString()).brand('ISODate'),
   energySystem: energySystemSchema.optional(),
-  gymCrag: z.string().optional(),
-  _id: z.string(),
+  gymCrag: gymCragSchema.optional(),
+  _id: trainingSessionIdSchema,
   intensity: percentSchema.optional(),
   load: percentSchema.optional(),
   sessionType: sessionTypeSchema.optional(),
@@ -106,9 +113,10 @@ export const trainingSessionFormSchema = z.object({
   date: z
     .string()
     .trim()
-    .transform(date => getDateAtNoon(new Date(date)).toISOString()),
+    .transform(date => getDateAtNoon(new Date(date)).toISOString())
+    .brand('ISODate'),
   energySystem: z.preprocess(emptyStringToUndefined, energySystemSchema.optional()),
-  gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
+  gymCrag: z.preprocess(emptyStringToUndefined, gymCragSchema.optional()),
   intensity: z.preprocess(
     (v: unknown) => (v === '' ? undefined : Number(v)),
     percentSchema.optional(),

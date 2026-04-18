@@ -1,16 +1,16 @@
-import type { Ascent, Grade } from '~/schema/ascent'
+import { ASCENT_STYLE, CLIMBING_DISCIPLINE, type RawGrade, gradeSchema } from '~/schema/ascent'
 
 export const ASCENT_STYLE_TO_COLOR = {
   Flash: 'var(--flash)',
   Onsight: 'var(--onsight)',
   Redpoint: 'var(--redpoint)',
-} as const satisfies Record<Ascent['style'], string>
+} as const satisfies Record<(typeof ASCENT_STYLE)[number], string>
 
 export const CLIMBING_DISCIPLINE_TO_COLOR = {
   Boulder: 'var(--boulder)',
   'Multi-Pitch': 'var(--multiPitch)',
   Route: 'var(--route)',
-} as const satisfies Record<Ascent['climbingDiscipline'], string>
+} as const satisfies Record<(typeof CLIMBING_DISCIPLINE)[number], string>
 
 /**
  * This is a mapping from ascent grades to colors.
@@ -39,11 +39,11 @@ export const ASCENT_GRADE_TO_COLOR = {
   '8b+': 'var(--8b_)',
   '8c': 'var(--8c)',
   '8c+': 'var(--8c_)',
-} as const satisfies Partial<Record<Grade, string>>
+} as const satisfies Partial<Record<RawGrade, string>>
 
 export const DEFAULT_BOULDER_HEIGHT = 2
 
-export const DEFAULT_GRADE = '1a' as const satisfies Grade
+export const DEFAULT_GRADE = gradeSchema.parse('1a')
 
 // COEFFICIENTS
 export const COEFFICIENT_ONSIGHT_FLASH_RATIO = 1.5

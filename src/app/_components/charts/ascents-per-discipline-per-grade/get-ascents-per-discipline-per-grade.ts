@@ -1,5 +1,5 @@
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
-import type { Ascent, Grade } from '~/schema/ascent'
+import { type Ascent, CLIMBING_DISCIPLINE, type Grade } from '~/schema/ascent'
 
 type AscentsPerDisciplinePerGrade = {
   grade: Grade
@@ -15,7 +15,7 @@ export const getAscentsPerDisciplinePerGrade = (
   const grades = createGradeScaleFromAscents(ascents)
   const validGrades = new Set(grades)
 
-  const groupByGrade = new Map<Grade, Record<Ascent['climbingDiscipline'], number>>(
+  const groupByGrade = new Map<Grade, Record<(typeof CLIMBING_DISCIPLINE)[number], number>>(
     grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]),
   )
 
@@ -25,7 +25,7 @@ export const getAscentsPerDisciplinePerGrade = (
     const ascentCountsByGrade = groupByGrade.get(topoGrade)
     if (ascentCountsByGrade === undefined) continue
 
-    ascentCountsByGrade[climbingDiscipline] += 1
+    ascentCountsByGrade[climbingDiscipline as (typeof CLIMBING_DISCIPLINE)[number]] += 1
   }
 
   return grades.map(grade => {

@@ -1,5 +1,5 @@
 import type { Ascent } from '~/schema/ascent'
-import type { TrainingSession } from '~/schema/training'
+import { SESSION_TYPES, type TrainingSession } from '~/schema/training'
 import { fromGradeToNumber } from './grade-converter.ts'
 
 /**
@@ -39,9 +39,9 @@ export function sortByGrade(
  */
 export const fromSessionTypeToSortOrder = (
   sessionType: Required<TrainingSession>['sessionType'],
-): number => SESSION_TYPE_TO_SORT_ORDER[sessionType]
+): number => SESSION_TYPE_TO_SORT_ORDER[sessionType as (typeof SESSION_TYPES)[number]]
 
-const SESSION_TYPE_TO_SORT_ORDER: Record<Required<TrainingSession>['sessionType'], number> = {
+const SESSION_TYPE_TO_SORT_ORDER: Record<(typeof SESSION_TYPES)[number], number> = {
   Co: 7,
   CS: 2,
   En: 3,

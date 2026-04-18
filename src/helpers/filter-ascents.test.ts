@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
+import { ascentStyleSchema, climbingDisciplineSchema, gradeSchema } from '~/schema/ascent'
 import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
@@ -10,14 +11,14 @@ describe('filterAscents', () => {
   })
 
   it('should filter ascents by grade using case insensitive matching', () => {
-    const result = filterAscents(sampleAscents, { grade: '7a' })
+    const result = filterAscents(sampleAscents, { grade: gradeSchema.parse('7a') })
     expect(result.length).toBe(38)
 
     for (const { topoGrade } of result) expect(topoGrade).toBe('7a')
   })
 
   it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
+    const result = filterAscents(sampleAscents, { climbingDiscipline: climbingDisciplineSchema.parse('Route') })
     expect(result.length).toBe(84)
     for (const { climbingDiscipline } of result) expect(climbingDiscipline).toBe('Route')
   })
@@ -30,8 +31,8 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      climbingDiscipline: 'Route',
-      style: 'Redpoint',
+      climbingDiscipline: climbingDisciplineSchema.parse('Route'),
+      style: ascentStyleSchema.parse('Redpoint'),
     })
     expect(result.length).toBe(27)
     for (const { climbingDiscipline, style } of result) {

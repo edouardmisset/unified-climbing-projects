@@ -1,7 +1,9 @@
+import { type Percent, percentSchema } from '~/schema/generic'
+
 export function calculateLoad(
-  volume: number | undefined,
-  intensity: number | undefined,
-): number | undefined {
+  volume: Percent | undefined,
+  intensity: Percent | undefined,
+): Percent | undefined {
   if (volume === undefined || intensity === undefined) return
-  return Math.round((volume * intensity) / 100)
+  return percentSchema.parse(Math.round((volume * intensity) / 100))
 }

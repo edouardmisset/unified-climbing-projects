@@ -21,7 +21,7 @@ export function fromSessionTypeToBackgroundColor(
 ): string {
   return sessionType === undefined
     ? 'var(--surface-1)'
-    : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType].toString()
+    : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType as keyof typeof TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR].toString()
 }
 
 /**
@@ -39,7 +39,7 @@ export function fromSessionTypeToBackgroundColor(
 export function fromSessionTypeToClassName(
   sessionType: TrainingSession['sessionType'],
 ): string | undefined {
-  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[sessionType]
+  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[sessionType as keyof typeof TRAINING_SESSION_TYPE_TO_CLASS_NAME]
 }
 
 /**
@@ -54,7 +54,7 @@ export function fromSessionTypeToClassName(
  * is defined, or undefined.
  */
 function fromSessionTypeToString(sessionType: TrainingSession['sessionType']): string | undefined {
-  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[sessionType]
+  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[sessionType as keyof typeof TRAINING_SESSION_TYPE_TO_STRING]
 }
 
 /**

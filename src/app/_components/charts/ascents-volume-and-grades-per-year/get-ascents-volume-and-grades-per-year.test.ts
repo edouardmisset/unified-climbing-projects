@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
-import type { Ascent } from '~/schema/ascent'
+import { ascentIdSchema, gradeSchema, climbingDisciplineSchema, type Ascent } from '~/schema/ascent'
+import { isoDateSchema } from '~/schema/generic'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
 
 describe('getAscentsVolumeAndGradesPerYear', () => {
@@ -19,38 +20,38 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
     const ascents: Ascent[] = [
       {
         ...firstAscent,
-        _id: 'volume-and-grade-1',
-        climbingDiscipline: 'Route',
-        date: '2023-01-10',
-        topoGrade: '6a',
+        _id: ascentIdSchema.parse('volume-and-grade-1'),
+        climbingDiscipline: climbingDisciplineSchema.parse('Route'),
+        date: isoDateSchema.parse('2023-01-10'),
+        topoGrade: gradeSchema.parse('6a'),
       },
       {
         ...secondAscent,
-        _id: 'volume-and-grade-2',
-        climbingDiscipline: 'Route',
-        date: '2023-05-08',
-        topoGrade: '6b',
+        _id: ascentIdSchema.parse('volume-and-grade-2'),
+        climbingDiscipline: climbingDisciplineSchema.parse('Route'),
+        date: isoDateSchema.parse('2023-05-08'),
+        topoGrade: gradeSchema.parse('6b'),
       },
       {
         ...thirdAscent,
-        _id: 'volume-and-grade-3',
-        climbingDiscipline: 'Boulder',
-        date: '2023-08-02',
-        topoGrade: '7a',
+        _id: ascentIdSchema.parse('volume-and-grade-3'),
+        climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
+        date: isoDateSchema.parse('2023-08-02'),
+        topoGrade: gradeSchema.parse('7a'),
       },
       {
         ...fourthAscent,
-        _id: 'volume-and-grade-4',
-        climbingDiscipline: 'Boulder',
-        date: '2025-03-17',
-        topoGrade: '7b+',
+        _id: ascentIdSchema.parse('volume-and-grade-4'),
+        climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
+        date: isoDateSchema.parse('2025-03-17'),
+        topoGrade: gradeSchema.parse('7b+'),
       },
       {
         ...fifthAscent,
-        _id: 'volume-and-grade-5',
-        climbingDiscipline: 'Multi-Pitch',
-        date: '2025-09-13',
-        topoGrade: '8a',
+        _id: ascentIdSchema.parse('volume-and-grade-5'),
+        climbingDiscipline: climbingDisciplineSchema.parse('Multi-Pitch'),
+        date: isoDateSchema.parse('2025-09-13'),
+        topoGrade: gradeSchema.parse('8a'),
       },
     ]
 
@@ -60,10 +61,10 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
       {
         Boulder: 1,
         Route: 2,
-        avgBoulderGrade: fromGradeToNumber('7a'),
-        avgRouteGrade: fromGradeToNumber('6a+'),
-        maxBoulderGrade: fromGradeToNumber('7a'),
-        maxRouteGrade: fromGradeToNumber('6b'),
+        avgBoulderGrade: fromGradeToNumber(gradeSchema.parse('7a')),
+        avgRouteGrade: fromGradeToNumber(gradeSchema.parse('6a+')),
+        maxBoulderGrade: fromGradeToNumber(gradeSchema.parse('7a')),
+        maxRouteGrade: fromGradeToNumber(gradeSchema.parse('6b')),
         year: 2_023,
       },
       {
@@ -78,9 +79,9 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
       {
         Boulder: 1,
         Route: 0,
-        avgBoulderGrade: fromGradeToNumber('7b+'),
+        avgBoulderGrade: fromGradeToNumber(gradeSchema.parse('7b+')),
         avgRouteGrade: undefined,
-        maxBoulderGrade: fromGradeToNumber('7b+'),
+        maxBoulderGrade: fromGradeToNumber(gradeSchema.parse('7b+')),
         maxRouteGrade: undefined,
         year: 2_025,
       },

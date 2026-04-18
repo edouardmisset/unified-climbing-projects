@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { ascentSchema, type Ascent } from '~/schema/ascent'
 import { sortByGrade } from './sorter'
 
-const easierAscent: Ascent = {
+const easierAscent = ascentSchema.parse({
   area: 'Wig Wam',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -19,9 +19,9 @@ const easierAscent: Ascent = {
   style: 'Onsight',
   topoGrade: '7a',
   tries: 1,
-}
+})
 
-const harderAscent: Ascent = {
+const harderAscent = ascentSchema.parse({
   area: 'Envers du canyon',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -39,7 +39,7 @@ const harderAscent: Ascent = {
   style: 'Redpoint',
   topoGrade: '7b',
   tries: 2,
-}
+})
 
 describe('sortByGrade', () => {
   it('should return a negative value when the first ascent has a higher grade than the second in descending order', () => {

@@ -1,5 +1,5 @@
 import { average, isValidNumber } from '@edouardmisset/math'
-import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME } from '~/constants/ascents'
+import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME, DEFAULT_GRADE } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
@@ -55,7 +55,7 @@ export function calculateScore({
 
   const averageGrade = getAverageGrade(currentFilteredAscents)
   const volume =
-    fromGradeToNumber(averageGrade === 'N/A' ? '1a' : averageGrade) *
+    fromGradeToNumber(averageGrade === 'N/A' ? DEFAULT_GRADE : averageGrade) *
     currentFilteredAscents.length *
     COEFFICIENT_VOLUME
 

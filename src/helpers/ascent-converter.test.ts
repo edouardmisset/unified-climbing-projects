@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
-import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS } from '~/schema/ascent'
+import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS, ascentStyleSchema, climbingDisciplineSchema, gradeSchema } from '~/schema/ascent'
 import {
   fromAscentToPoints,
   fromGradeToBackgroundColor,
@@ -16,7 +16,7 @@ describe('fromGradeToBackgroundColor', () => {
   })
 
   it('should return the correct background color based on grade', () => {
-    const result = fromGradeToBackgroundColor('7a+')
+    const result = fromGradeToBackgroundColor(gradeSchema.parse('7a+'))
     expect(result).toBe('var(--7a_)')
   })
 })
@@ -28,7 +28,7 @@ describe('fromGradeToClassName', () => {
   })
 
   it('should return a class name with underscores replacing plus signs', () => {
-    const result = fromGradeToClassName('7a+')
+    const result = fromGradeToClassName(gradeSchema.parse('7a+'))
     expect(result).toBe('_7a_')
   })
 })
@@ -77,7 +77,7 @@ describe('fromPointToGrade', () => {
 
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
     const boulderGrade = fromPointToGrade(pointsWith7aBoulderBonus, {
-      climbingDiscipline: 'Boulder',
+      climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
     })
 
     expect(boulderGrade).toBe('7a')
@@ -88,13 +88,13 @@ describe('fromPointToGrade', () => {
 
     const flashPoints = STYLE_TO_POINTS.Flash
     const pointsWith7aFlash = pointsFor7a + flashPoints
-    const flash7a = fromPointToGrade(pointsWith7aFlash, { style: 'Flash' })
+    const flash7a = fromPointToGrade(pointsWith7aFlash, { style: ascentStyleSchema.parse('Flash') })
     expect(flash7a).toBe('7a')
 
     const onsightPoints = STYLE_TO_POINTS.Onsight
     const pointsWith7aOnsight = pointsFor7a + onsightPoints
     const onsight7a = fromPointToGrade(pointsWith7aOnsight, {
-      style: 'Onsight',
+      style: ascentStyleSchema.parse('Onsight'),
     })
     expect(onsight7a).toBe('7a')
   })
@@ -106,8 +106,8 @@ describe('fromPointToGrade', () => {
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
     expect(
       fromPointToGrade(combinedPoints, {
-        climbingDiscipline: 'Boulder',
-        style: 'Flash',
+        climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
+        style: ascentStyleSchema.parse('Flash'),
       }),
     ).toBe('7a')
   })

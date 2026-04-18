@@ -1,4 +1,4 @@
-import type { TrainingSession } from '~/schema/training'
+import { SESSION_TYPES } from '~/schema/training'
 
 /**
  * Training session types. We purposefully omit "Sg", "FB", "Co" and "Ro" from
@@ -14,14 +14,14 @@ export const INDOOR_SESSION_TYPES = [
   'Sk',
   'St',
   'Ta',
-] as const satisfies TrainingSession['sessionType'][]
+] as const satisfies (typeof SESSION_TYPES)[number][]
 
 // Training load/intensity constants
 export const DEFAULT_INTENSITY_PERCENT = 65
 export const DEFAULT_VOLUME_PERCENT = 65
 
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
-  NonNullable<TrainingSession['sessionType']>,
+  (typeof SESSION_TYPES)[number],
   string
 > = {
   Out: 'var(--outdoor)',
@@ -43,10 +43,10 @@ export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   Ro: 'var(--otherTraining)',
   FB: 'var(--otherTraining)',
   Sg: 'var(--otherTraining)',
-} as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
+} as const satisfies Record<(typeof SESSION_TYPES)[number], string>
 
 export const TRAINING_SESSION_TYPE_TO_CLASS_NAME: Record<
-  NonNullable<TrainingSession['sessionType']>,
+  (typeof SESSION_TYPES)[number],
   string
 > = {
   Co: 'otherTraining',
@@ -67,7 +67,7 @@ export const TRAINING_SESSION_TYPE_TO_CLASS_NAME: Record<
   St: 'stamina',
 
   Ta: 'tapered',
-} as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
+} as const satisfies Record<(typeof SESSION_TYPES)[number], string>
 
 export const TRAINING_SESSION_TYPE_TO_STRING = {
   Co: 'otherTraining',
@@ -84,4 +84,4 @@ export const TRAINING_SESSION_TYPE_TO_STRING = {
   Sk: 'stamina',
   St: 'stamina',
   Ta: 'tapered',
-} as const satisfies Record<NonNullable<TrainingSession['sessionType']>, string>
+} as const satisfies Record<(typeof SESSION_TYPES)[number], string>

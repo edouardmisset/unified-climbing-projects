@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { type Ascent, GRADE_TO_NUMBER } from '~/schema/ascent'
+import { ascentSchema, GRADE_TO_NUMBER } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'
 
@@ -15,8 +15,8 @@ describe('minMaxGrades', () => {
   })
 
   it('should return the same grade for both min and max with a single ascent', () => {
-    const ascents: Ascent[] = [
-      {
+    const ascents = [
+      ascentSchema.parse({
         area: 'Wig Wam',
         climber: 'Edouard Misset',
         climbingDiscipline: 'Route',
@@ -33,7 +33,7 @@ describe('minMaxGrades', () => {
         style: 'Onsight',
         topoGrade: '7a',
         tries: 1,
-      },
+      }),
     ]
     const [min, max] = minMaxGrades(ascents)
     expect(min).toBe(ascents[0]?.topoGrade)

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { NOT_AVAILABLE } from '~/constants/generic'
-import type { Ascent } from '~/schema/ascent'
+import { ascentSchema, type Ascent } from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'
 
-const ascent1: Ascent = {
+const ascent1 = ascentSchema.parse({
   area: 'Wig Wam',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -20,8 +20,8 @@ const ascent1: Ascent = {
   style: 'Onsight',
   topoGrade: '7a',
   tries: 1,
-}
-const ascent2: Ascent = {
+})
+const ascent2 = ascentSchema.parse({
   area: 'Envers du canyon',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -39,8 +39,8 @@ const ascent2: Ascent = {
   style: 'Redpoint',
   topoGrade: '7b',
   tries: 2,
-}
-const ascent3: Ascent = {
+})
+const ascent3 = ascentSchema.parse({
   area: 'Tarzoon',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -57,7 +57,7 @@ const ascent3: Ascent = {
   style: 'Onsight',
   topoGrade: '7b',
   tries: 1,
-}
+})
 
 describe('getAverageGrade', () => {
   it('should return NOT_AVAILABLE when no ascents are provided', () => {
