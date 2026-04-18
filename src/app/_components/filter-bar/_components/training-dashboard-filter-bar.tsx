@@ -1,12 +1,14 @@
+import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
+import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
-import { PERIOD } from '~/schema/generic'
+import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
@@ -61,9 +63,12 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
     })
-    return LOCATION_TYPES.filter(
-      locationType =>
-        filterTrainingSessions(filteredForLocationType, { locationType }).length > 0,
+    const hasIndoor = filteredForLocationType.some(({ sessionType }) =>
+      isIndoorSession({ sessionType }),
+    )
+    const hasOutdoor = filteredForLocationType.some(({ sessionType }) => sessionType === 'Out')
+    return LOCATION_TYPES.filter(locationType =>
+      locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
   }, [trainingSessions, selectedYear, selectedDiscipline, selectedPeriod])
 
@@ -77,7 +82,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       locationType: normalizeFilterValue(selectedLocationType),
     })
-    return PERIOD.filter(period => filterTrainingSessions(filteredForPeriod, { period }).length > 0)
+    return PERIOD.filter(period =>
+      filteredForPeriod.some(({ date }) =>
+        isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
+      ),
+    )
   }, [trainingSessions, selectedYear, selectedDiscipline, selectedLocationType])
 
   const filters = useMemo<FilterConfig[]>(
