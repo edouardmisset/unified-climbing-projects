@@ -1,5 +1,5 @@
 import { z } from '~/helpers/zod'
-import { isoDateSchema, positiveInteger } from './generic'
+import { commentSchema, isoDateSchema, positiveInteger } from './generic'
 
 export const _GRADES = [
   '1a',
@@ -211,34 +211,59 @@ export const PROFILES = [
 
 export const ascentStyleSchema = z.enum(ASCENT_STYLE).brand('AscentStyle')
 export type AscentStyle = z.infer<typeof ascentStyleSchema>
-export const profileSchema = z.enum(PROFILES)
-export const holdsSchema = z.enum(HOLDS)
-const optionalStringSchema = z.string().optional()
+export const profileSchema = z.enum(PROFILES).brand('Profile')
+export type Profile = z.infer<typeof profileSchema>
+export const holdsSchema = z.enum(HOLDS).brand('Holds')
+export type Holds = z.infer<typeof holdsSchema>
 
 const MAX_RATING = 5
 
+export const cragNameSchema = z.string().trim().min(1).brand('CragName')
+export type CragName = z.infer<typeof cragNameSchema>
+
+export const areaSchema = z.string().trim().brand('Area')
+export type Area = z.infer<typeof areaSchema>
+
+export const regionSchema = z.string().brand('Region')
+export type Region = z.infer<typeof regionSchema>
+
+export const routeNameSchema = z.string().trim().min(1).brand('RouteName')
+export type RouteName = z.infer<typeof routeNameSchema>
+
+export const climberNameSchema = z.string().brand('ClimberName')
+export type ClimberName = z.infer<typeof climberNameSchema>
+
+export const heightSchema = positiveInteger.brand('Height')
+export type Height = z.infer<typeof heightSchema>
+
+export const triesSchema = z.number().int().min(1).brand('Tries')
+export type Tries = z.infer<typeof triesSchema>
+
+export const ratingSchema = z.number().int().min(0).max(MAX_RATING).brand('Rating')
+export type Rating = z.infer<typeof ratingSchema>
+
+export { commentSchema }
+export type { Comment } from './generic'
+
 export const ascentSchema = z.object({
-  area: z.string().trim().optional(),
-  climber: z
-    .string()
-    .transform(() => 'Edouard Misset')
-    .optional(),
+  area: areaSchema.optional(),
+  climber: z.string().transform(() => climberNameSchema.parse('Edouard Misset')).optional(),
   climbingDiscipline: climbingDisciplineSchema,
-  comments: optionalStringSchema,
-  crag: z.string().trim().min(1),
-  date: isoDateSchema, // ISO 8601 date format
-  height: positiveInteger.optional(),
+  comments: commentSchema.optional(),
+  crag: cragNameSchema,
+  date: isoDateSchema,
+  height: heightSchema.optional(),
   holds: holdsSchema.optional(),
   _id: ascentIdSchema,
   personalGrade: gradeSchema.optional(),
   points: pointsSchema.optional(),
   profile: profileSchema.optional(),
-  rating: z.number().int().min(0).max(MAX_RATING).optional(),
-  region: optionalStringSchema,
-  routeName: z.string().trim().min(1).default('No Name'),
+  rating: ratingSchema.optional(),
+  region: regionSchema.optional(),
+  routeName: routeNameSchema.default(routeNameSchema.parse('No Name')),
   style: ascentStyleSchema,
   topoGrade: gradeSchema,
-  tries: z.number().int().min(1),
+  tries: triesSchema,
 })
 export type Ascent = z.infer<typeof ascentSchema>
 

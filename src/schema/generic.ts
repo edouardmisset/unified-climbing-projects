@@ -18,6 +18,9 @@ export type ISODate = z.infer<typeof isoDateSchema>
 export const percentSchema = z.number().int().min(0).max(100).brand('Percent')
 export type Percent = z.infer<typeof percentSchema>
 
+export const commentSchema = z.string().brand('Comment')
+export type Comment = z.infer<typeof commentSchema>
+
 export const PERIOD = ['Road-Trip', 'Unemployment'] as const
 export const periodSchema = z.enum(PERIOD)
 export type Period = z.infer<typeof periodSchema>
