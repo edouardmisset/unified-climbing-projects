@@ -176,6 +176,12 @@ export const STYLE_TO_POINTS = {
 
 export const BOULDERING_BONUS_POINTS = 100 as const
 
+export const ascentIdSchema = z.string().brand('AscentId')
+export type AscentId = z.infer<typeof ascentIdSchema>
+
+export const pointsSchema = positiveInteger.brand('Points')
+export type Points = z.infer<typeof pointsSchema>
+
 export const gradeSchema = z.enum(_GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
@@ -208,31 +214,29 @@ const optionalStringSchema = z.string().optional()
 
 const MAX_RATING = 5
 
-export const ascentSchema = z
-  .object({
-    area: z.string().trim().optional(),
-    climber: z
-      .string()
-      .transform(() => 'Edouard Misset')
-      .optional(),
-    climbingDiscipline: climbingDisciplineSchema,
-    comments: optionalStringSchema,
-    crag: z.string().trim().min(1),
-    date: z.string(), // ISO 8601 date format
-    height: positiveInteger.optional(),
-    holds: holdsSchema.optional(),
-    _id: z.string(),
-    personalGrade: gradeSchema.optional(),
-    points: positiveInteger.optional(),
-    profile: profileSchema.optional(),
-    rating: z.number().int().min(0).max(MAX_RATING).optional(),
-    region: optionalStringSchema,
-    routeName: z.string().trim().min(1).default('No Name'),
-    style: ascentStyleSchema,
-    topoGrade: gradeSchema,
-    tries: z.number().int().min(1),
-  })
-  .brand('Ascent')
+export const ascentSchema = z.object({
+  area: z.string().trim().optional(),
+  climber: z
+    .string()
+    .transform(() => 'Edouard Misset')
+    .optional(),
+  climbingDiscipline: climbingDisciplineSchema,
+  comments: optionalStringSchema,
+  crag: z.string().trim().min(1),
+  date: z.string(), // ISO 8601 date format
+  height: positiveInteger.optional(),
+  holds: holdsSchema.optional(),
+  _id: ascentIdSchema,
+  personalGrade: gradeSchema.optional(),
+  points: pointsSchema.optional(),
+  profile: profileSchema.optional(),
+  rating: z.number().int().min(0).max(MAX_RATING).optional(),
+  region: optionalStringSchema,
+  routeName: z.string().trim().min(1).default('No Name'),
+  style: ascentStyleSchema,
+  topoGrade: gradeSchema,
+  tries: z.number().int().min(1),
+})
 export type Ascent = z.infer<typeof ascentSchema>
 
 export type AscentListProps = {

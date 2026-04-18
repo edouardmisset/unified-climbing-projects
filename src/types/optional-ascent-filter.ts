@@ -11,17 +11,17 @@ import { optionalAscentYear, periodSchema } from '~/schema/generic'
 
 export const optionalAscentFilterSchema = z
   .object({
-    area: ascentSchema.unwrap().shape.area,
+    area: ascentSchema.shape.area,
     climbingDiscipline: climbingDisciplineSchema,
-    crag: ascentSchema.unwrap().shape.crag,
+    crag: ascentSchema.shape.crag,
     grade: gradeSchema,
-    height: ascentSchema.unwrap().shape.height,
+    height: ascentSchema.shape.height,
     holds: holdsSchema,
     period: periodSchema,
     profile: profileSchema,
-    rating: ascentSchema.unwrap().shape.rating,
+    rating: ascentSchema.shape.rating,
     style: ascentStyleSchema,
-    tries: ascentSchema.unwrap().shape.tries,
+    tries: ascentSchema.shape.tries,
     year: optionalAscentYear,
   })
   .partial()

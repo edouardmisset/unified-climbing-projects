@@ -44,7 +44,7 @@ const numberGradeToGradeSchema = z
   .or(z.string())
   .transform(stringOrNumberGrade => fromNumberToGrade(Number(stringOrNumberGrade)))
 
-export const ascentFormOutputSchema = ascentSchema.unwrap().omit({ _id: true }).extend({
+export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   date: z
     .string()

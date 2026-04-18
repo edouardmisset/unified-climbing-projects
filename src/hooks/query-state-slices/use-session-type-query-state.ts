@@ -12,5 +12,5 @@ export const useSessionTypeQueryState = (): UseQueryStateReturn<
     parse: value =>
       value === ALL_VALUE
         ? ALL_VALUE
-        : trainingSessionSchema.unwrap().required({ sessionType: true }).shape.sessionType.parse(value),
+        : trainingSessionSchema.required({ sessionType: true }).shape.sessionType.parse(value),
   })

@@ -4,6 +4,9 @@ import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
 import { percentSchema } from './generic.ts'
 
+export const trainingSessionIdSchema = z.string().brand('TrainingSessionId')
+export type TrainingSessionId = z.infer<typeof trainingSessionIdSchema>
+
 export const SESSION_TYPES = [
   'Out',
 
@@ -84,21 +87,19 @@ const sessionTypeSchema = z.enum(SESSION_TYPES)
 const energySystemSchema = z.enum(ENERGY_SYSTEMS)
 const anatomicalRegionSchema = z.enum(ANATOMICAL_REGIONS)
 
-export const trainingSessionSchema = z
-  .object({
-    anatomicalRegion: anatomicalRegionSchema.optional(),
-    climbingDiscipline: climbingDisciplineSchema.optional(),
-    comments: z.string().optional(),
-    date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
-    energySystem: energySystemSchema.optional(),
-    gymCrag: z.string().optional(),
-    _id: z.string(),
-    intensity: percentSchema.optional(),
-    load: percentSchema.optional(),
-    sessionType: sessionTypeSchema.optional(),
-    volume: percentSchema.optional(),
-  })
-  .brand('TrainingSession')
+export const trainingSessionSchema = z.object({
+  anatomicalRegion: anatomicalRegionSchema.optional(),
+  climbingDiscipline: climbingDisciplineSchema.optional(),
+  comments: z.string().optional(),
+  date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
+  energySystem: energySystemSchema.optional(),
+  gymCrag: z.string().optional(),
+  _id: trainingSessionIdSchema,
+  intensity: percentSchema.optional(),
+  load: percentSchema.optional(),
+  sessionType: sessionTypeSchema.optional(),
+  volume: percentSchema.optional(),
+})
 export type TrainingSession = z.infer<typeof trainingSessionSchema>
 
 export const trainingSessionFormSchema = z.object({

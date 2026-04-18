@@ -3,7 +3,7 @@ import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
 import { type TrainingSession, trainingSessionSchema } from '~/schema/training'
 
-const requiredGymCrag = trainingSessionSchema.unwrap().required({ gymCrag: true }).shape.gymCrag
+const requiredGymCrag = trainingSessionSchema.required({ gymCrag: true }).shape.gymCrag
 
 export const useLocationQueryState = (): UseQueryStateReturn<
   OrAll<NonNullable<TrainingSession['gymCrag']>>,

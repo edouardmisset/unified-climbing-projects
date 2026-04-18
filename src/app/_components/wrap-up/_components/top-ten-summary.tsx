@@ -1,8 +1,8 @@
 import { sum } from '@edouardmisset/math'
 import { useMemo } from 'react'
-import { fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
+import { addPoints, fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import type { AscentListProps } from '~/schema/ascent'
+import { type AscentListProps, pointsSchema } from '~/schema/ascent'
 import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
@@ -30,7 +30,10 @@ export function TopTenSummary({ ascents }: AscentListProps) {
 
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
 
-  const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
+  const nextStepPoints = addPoints(
+    lowestTopTenAscent?.points ?? pointsSchema.parse(0),
+    pointsSchema.parse(SCORE_INCREMENT),
+  )
   const displayHowToImprove =
     lowestTopTenAscent &&
     (new Date().getFullYear() === new Date(lowestTopTenAscent.date).getFullYear() ||

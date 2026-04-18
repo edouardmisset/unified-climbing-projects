@@ -4,6 +4,8 @@ import {
   BOULDERING_BONUS_POINTS,
   GRADE_TO_POINTS,
   type Grade,
+  type Points,
+  pointsSchema,
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
 
@@ -51,9 +53,9 @@ export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | unde
  * @param {Grade} params.topoGrade - The topo grade of the ascent.
  * @param {string} params.style - The style of the ascent.
  * @param {string} params.climbingDiscipline - The discipline of the climb.
- * @returns {number} The total points for the ascent.
+ * @returns {Points} The total points for the ascent.
  */
-export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
+export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): Points {
   type PointsGrade = keyof typeof GRADE_TO_POINTS
   const hasPoints = (grade: Grade): grade is PointsGrade => grade in GRADE_TO_POINTS
 
@@ -62,7 +64,18 @@ export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Asc
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
-  return gradePoints + stylePoints + climbingDisciplineBonus
+  return pointsSchema.parse(gradePoints + stylePoints + climbingDisciplineBonus)
+}
+
+/**
+ * Adds two Points values, preserving the Points brand.
+ *
+ * @param {Points} a - The first points value.
+ * @param {Points} b - The second points value.
+ * @returns {Points} The sum of the two points values.
+ */
+export function addPoints(a: Points, b: Points): Points {
+  return pointsSchema.parse(a + b)
 }
 
 /**
