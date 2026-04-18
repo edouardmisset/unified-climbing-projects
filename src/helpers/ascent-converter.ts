@@ -133,5 +133,5 @@ export function fromPointToGrade(
     return DEFAULT_GRADE
   }
 
-  return matchingGrade ? gradeSchema.parse(matchingGrade) : DEFAULT_GRADE
+  return gradeSchema.parse(matchingGrade)
 }

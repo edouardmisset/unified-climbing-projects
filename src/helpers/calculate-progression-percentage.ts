@@ -3,6 +3,14 @@ import { ascentStyleSchema, climbingDisciplineSchema } from '~/schema/ascent'
 import { fromGradeToNumber } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'
 
+const PROGRESSION_CATEGORIES = [
+  { climbingDiscipline: climbingDisciplineSchema.parse('Boulder'), style: ascentStyleSchema.parse('Redpoint') },
+  { climbingDiscipline: climbingDisciplineSchema.parse('Boulder'), style: ascentStyleSchema.parse('Flash') },
+  { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Redpoint') },
+  { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Flash') },
+  { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Onsight') },
+] satisfies Pick<Ascent, 'climbingDiscipline' | 'style'>[]
+
 /**
  * Calculates the progression percentage by comparing climbing performance between years.
  *
@@ -39,14 +47,6 @@ export function calculateProgressionPercentage({
 
   const previousYear = year - 1
 
-  const categories = [
-    { climbingDiscipline: climbingDisciplineSchema.parse('Boulder'), style: ascentStyleSchema.parse('Redpoint') },
-    { climbingDiscipline: climbingDisciplineSchema.parse('Boulder'), style: ascentStyleSchema.parse('Flash') },
-    { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Redpoint') },
-    { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Flash') },
-    { climbingDiscipline: climbingDisciplineSchema.parse('Route'), style: ascentStyleSchema.parse('Onsight') },
-  ] satisfies Pick<Ascent, 'climbingDiscipline' | 'style'>[]
-
   // Create lookup maps by year for quick filtering
   const currentYearAscents: Ascent[] = []
   const previousYearAscents: Ascent[] = []
@@ -67,7 +67,7 @@ export function calculateProgressionPercentage({
 
   let progressionCount = 0
 
-  for (const { climbingDiscipline, style } of categories) {
+  for (const { climbingDiscipline, style } of PROGRESSION_CATEGORIES) {
     const categoryKey = generateCategoryKey(climbingDiscipline, style)
 
     const currentYearHardest = currentYearMap.get(categoryKey)
@@ -86,7 +86,7 @@ export function calculateProgressionPercentage({
     if (isClimbingProgressing) progressionCount++
   }
 
-  return Math.round((progressionCount / categories.length) * 100)
+  return Math.round((progressionCount / PROGRESSION_CATEGORIES.length) * 100)
 }
 
 /**
