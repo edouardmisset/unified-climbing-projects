@@ -2,6 +2,8 @@ import type { Ascent } from '~/schema/ascent'
 import { type Points, pointsSchema } from '~/schema/ascent'
 import { addPoints, fromAscentToPoints } from './ascent-converter'
 
+const ZERO_POINTS = pointsSchema.parse(0)
+
 /**
  * Calculates the total score from the hardest ten ascents.
  *
@@ -18,5 +20,5 @@ export function calculateTopTenScore(ascents: Ascent[]): Points {
     .map(ascent => fromAscentToPoints(ascent))
     .toSorted((a, b) => b - a)
     .slice(0, 10)
-    .reduce(addPoints, pointsSchema.parse(0))
+    .reduce(addPoints, ZERO_POINTS)
 }

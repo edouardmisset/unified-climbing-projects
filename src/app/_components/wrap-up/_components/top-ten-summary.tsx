@@ -8,6 +8,9 @@ import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
+const ZERO_POINTS = pointsSchema.parse(0)
+const SCORE_INCREMENT_POINTS = pointsSchema.parse(SCORE_INCREMENT)
+
 export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,
@@ -31,8 +34,8 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
 
   const nextStepPoints = addPoints(
-    lowestTopTenAscent?.points ?? pointsSchema.parse(0),
-    pointsSchema.parse(SCORE_INCREMENT),
+    lowestTopTenAscent?.points ?? ZERO_POINTS,
+    SCORE_INCREMENT_POINTS,
   )
   const displayHowToImprove =
     lowestTopTenAscent &&
