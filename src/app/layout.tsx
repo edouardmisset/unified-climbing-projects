@@ -9,6 +9,7 @@ import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
+import { RscBoundaryProvider } from 'rsc-boundary'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { useTheme } from '~/hooks/use-theme'
@@ -58,7 +59,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Header />
             <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>
-                <NuqsAdapter>{children}</NuqsAdapter>
+                <RscBoundaryProvider>
+                  <NuqsAdapter>{children}</NuqsAdapter>
+                </RscBoundaryProvider>
               </Suspense>
             </main>
 
