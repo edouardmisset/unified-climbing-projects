@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import {
   Bar,
   BarChart,
+  createVerticalChart,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -28,6 +29,13 @@ type BarConfig = {
   name: string
   color: string
 }
+
+const Chart = createVerticalChart<ChartDatum>()({
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+})
 
 export function TrainingSessionsDistribution({
   trainingSessions,
@@ -80,18 +88,17 @@ export function TrainingSessionsDistribution({
   return (
     <ChartContainer caption='Session Distribution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart
+        <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={chartData}
-          layout='vertical'
         >
-          <XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type='number' />
-          <YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
+          <Chart.XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type='number' />
+          <Chart.YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
           <Legend align='center' verticalAlign='top' />
           {barConfigs.map(config => (
-            <Bar
+            <Chart.Bar
               key={config.dataKey}
               dataKey={config.dataKey}
               fill={config.color}
@@ -99,7 +106,7 @@ export function TrainingSessionsDistribution({
               stackId='a'
             />
           ))}
-        </BarChart>
+        </Chart.BarChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

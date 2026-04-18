@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts'
+import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { BAR_CATEGORY_GAP, GRID_STROKE } from '../constants'
@@ -8,6 +8,13 @@ import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
+
+type AscentsPerDisciplinePerGradeDatum = ReturnType<typeof getAscentsPerDisciplinePerGrade>[number]
+
+const Chart = createHorizontalChart<AscentsPerDisciplinePerGradeDatum>()({
+  BarChart,
+  Bar,
+})
 
 const ROUTE_AND_BOULDER = [
   'Boulder',
@@ -31,15 +38,15 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
   return (
     <ChartContainer caption='Ascents per Discipline per Grade'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <Chart.BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {ROUTE_AND_BOULDER.map(key => (
-            <Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
+            <Chart.Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
           ))}
-        </BarChart>
+        </Chart.BarChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import {
+  createRadialChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -15,6 +16,13 @@ import { renderPieArcLabel } from '../pie-chart-utils'
 
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
+
+type AscentsByStyleDatum = ReturnType<typeof getAscentsByStyle>[number]
+
+const Chart = createRadialChart<AscentsByStyleDatum>()({
+  PieChart,
+  Pie,
+})
 
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getAscentsByStyle(ascents), [ascents])
@@ -33,9 +41,9 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascent By Style'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart accessibilityLayer={false}>
+        <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
-          <Pie
+          <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'
@@ -43,7 +51,7 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
             nameKey='label'
             shape={shapeRenderer}
           />
-        </PieChart>
+        </Chart.PieChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

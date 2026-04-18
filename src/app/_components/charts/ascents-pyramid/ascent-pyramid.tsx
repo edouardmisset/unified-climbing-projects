@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts'
+import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { BAR_CATEGORY_GAP, GRID_STROKE } from '../constants'
@@ -8,6 +8,13 @@ import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { getGradeFrequencyAndColors } from '../ascents-pyramid/get-grade-frequency'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
+
+type GradeFrequencyDatum = ReturnType<typeof getGradeFrequencyAndColors>[number]
+
+const Chart = createHorizontalChart<GradeFrequencyDatum>()({
+  BarChart,
+  Bar,
+})
 
 const AXIS_LABELS = {
   grades: 'Grades',
@@ -22,7 +29,7 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascent Pyramid'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart
+        <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={gradeFrequency}
@@ -32,9 +39,9 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {ASCENT_STYLE.map(style => (
-            <Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />
+            <Chart.Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />
           ))}
-        </BarChart>
+        </Chart.BarChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

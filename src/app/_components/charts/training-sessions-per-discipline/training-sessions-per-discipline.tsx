@@ -1,5 +1,6 @@
 import { useMemo, useCallback } from 'react'
 import {
+  createRadialChart,
   Legend,
   Pie,
   PieChart,
@@ -16,6 +17,13 @@ import { renderPieArcLabel } from '../pie-chart-utils'
 
 import type { TrainingSession } from '~/schema/training'
 import { getSessionsPerDiscipline } from './get-sessions-per-discipline'
+
+type SessionsPerDisciplineDatum = ReturnType<typeof getSessionsPerDiscipline>[number]
+
+const Chart = createRadialChart<SessionsPerDisciplineDatum>()({
+  PieChart,
+  Pie,
+})
 
 export function TrainingSessionsPerDiscipline({
   trainingSessions,
@@ -40,10 +48,10 @@ export function TrainingSessionsPerDiscipline({
   return (
     <ChartContainer caption='Sessions by Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart accessibilityLayer={false}>
+        <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
-          <Pie
+          <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'
@@ -51,7 +59,7 @@ export function TrainingSessionsPerDiscipline({
             nameKey='label'
             shape={shapeRenderer}
           />
-        </PieChart>
+        </Chart.PieChart>
       </ResponsiveContainer>
     </ChartContainer>
   )
