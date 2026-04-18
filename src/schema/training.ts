@@ -91,7 +91,7 @@ export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: z.string().optional(),
-  date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
+  date: z.string().transform(date => new Date(date).toISOString()).brand('ISODate'), // ISO 8601 date format
   energySystem: energySystemSchema.optional(),
   gymCrag: z.string().optional(),
   _id: trainingSessionIdSchema,

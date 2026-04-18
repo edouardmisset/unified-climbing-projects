@@ -1,6 +1,6 @@
 import { invert } from '@edouardmisset/object/invert.ts'
 import { DEFAULT_GRADE } from '~/constants/ascents'
-import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
+import { GRADE_TO_NUMBER, type Grade, gradeSchema } from '~/schema/ascent'
 
 export const NUMBER_TO_GRADE = invert(GRADE_TO_NUMBER)
 
@@ -40,5 +40,5 @@ export const fromNumberToGrade = (gradeNumber: number): Grade => {
     return DEFAULT_GRADE
   }
 
-  return isValidGradeNumber(gradeNumber) ? NUMBER_TO_GRADE[gradeNumber] : DEFAULT_GRADE
+  return isValidGradeNumber(gradeNumber) ? gradeSchema.parse(NUMBER_TO_GRADE[gradeNumber]) : DEFAULT_GRADE
 }

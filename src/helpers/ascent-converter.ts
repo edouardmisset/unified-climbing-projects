@@ -5,6 +5,7 @@ import {
   GRADE_TO_POINTS,
   type Grade,
   type Points,
+  gradeSchema,
   pointsSchema,
   STYLE_TO_POINTS,
 } from '~/schema/ascent'
@@ -132,5 +133,5 @@ export function fromPointToGrade(
     return DEFAULT_GRADE
   }
 
-  return matchingGrade
+  return matchingGrade ? gradeSchema.parse(matchingGrade) : DEFAULT_GRADE
 }

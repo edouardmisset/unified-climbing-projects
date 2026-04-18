@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ascentIdSchema, type Ascent } from '~/schema/ascent'
+import { ascentSchema, type Ascent } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
 describe('fromAscentsToCalendarEntries', () => {
@@ -21,7 +21,7 @@ describe('fromAscentsToCalendarEntries', () => {
     const year = 2_024
     const ascentsArray: Ascent[][] = [
       [
-        {
+        ascentSchema.parse({
           area: 'Wig Wam',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -30,7 +30,7 @@ describe('fromAscentsToCalendarEntries', () => {
           date: '2024-10-27T12:00:00.000Z',
           height: 25,
           holds: 'Crimp',
-          _id: ascentIdSchema.parse('1'),
+          _id: '1',
           personalGrade: '6c+',
           profile: 'Arête',
           rating: 4,
@@ -38,10 +38,10 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Onsight',
           topoGrade: '7a',
           tries: 1,
-        },
+        }),
       ],
       [
-        {
+        ascentSchema.parse({
           area: 'Envers du canyon',
           climber: 'Edouard Misset',
           climbingDiscipline: 'Route',
@@ -50,7 +50,7 @@ describe('fromAscentsToCalendarEntries', () => {
           date: '2023-08-01T12:00:00.000Z',
           height: 25,
           holds: 'Pocket',
-          _id: ascentIdSchema.parse('2'),
+          _id: '2',
           personalGrade: '7b+',
           profile: 'Overhang',
           rating: 3,
@@ -59,7 +59,7 @@ describe('fromAscentsToCalendarEntries', () => {
           style: 'Redpoint',
           topoGrade: '7b',
           tries: 2,
-        },
+        }),
       ],
     ]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)

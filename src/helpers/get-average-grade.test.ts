@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { NOT_AVAILABLE } from '~/constants/generic'
-import { ascentIdSchema, type Ascent } from '~/schema/ascent'
+import { ascentSchema, type Ascent } from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'
 
-const ascent1: Ascent = {
+const ascent1 = ascentSchema.parse({
   area: 'Wig Wam',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -12,7 +12,7 @@ const ascent1: Ascent = {
   date: '2024-10-27T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
-  _id: ascentIdSchema.parse('1'),
+  _id: '1',
   personalGrade: '6c+',
   profile: 'Arête',
   rating: 4,
@@ -20,8 +20,8 @@ const ascent1: Ascent = {
   style: 'Onsight',
   topoGrade: '7a',
   tries: 1,
-}
-const ascent2: Ascent = {
+})
+const ascent2 = ascentSchema.parse({
   area: 'Envers du canyon',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -30,7 +30,7 @@ const ascent2: Ascent = {
   date: '2023-08-01T12:00:00.000Z',
   height: 25,
   holds: 'Pocket',
-  _id: ascentIdSchema.parse('2'),
+  _id: '2',
   personalGrade: '7b+',
   profile: 'Overhang',
   rating: 3,
@@ -39,8 +39,8 @@ const ascent2: Ascent = {
   style: 'Redpoint',
   topoGrade: '7b',
   tries: 2,
-}
-const ascent3: Ascent = {
+})
+const ascent3 = ascentSchema.parse({
   area: 'Tarzoon',
   climber: 'Edouard Misset',
   climbingDiscipline: 'Route',
@@ -48,7 +48,7 @@ const ascent3: Ascent = {
   date: '2024-01-01T12:00:00.000Z',
   height: 25,
   holds: 'Crimp',
-  _id: ascentIdSchema.parse('3'),
+  _id: '3',
   personalGrade: '7b',
   profile: 'Overhang',
   rating: 4,
@@ -57,7 +57,7 @@ const ascent3: Ascent = {
   style: 'Onsight',
   topoGrade: '7b',
   tries: 1,
-}
+})
 
 describe('getAverageGrade', () => {
   it('should return NOT_AVAILABLE when no ascents are provided', () => {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { ascentIdSchema, type Ascent } from '~/schema/ascent'
+import { isoDateSchema } from '~/schema/generic'
 import { getTopTenEvolution } from './get-top-ten-evolution'
 
 function countDisciplineForYear(
@@ -47,17 +48,17 @@ describe('getTopTenEvolution', () => {
       {
         ...firstAscent,
         _id: ascentIdSchema.parse('top-ten-evolution-1'),
-        date: '2022-01-10',
+        date: isoDateSchema.parse('2022-01-10'),
       },
       {
         ...secondAscent,
         _id: ascentIdSchema.parse('top-ten-evolution-2'),
-        date: '2024-03-12',
+        date: isoDateSchema.parse('2024-03-12'),
       },
       {
         ...thirdAscent,
         _id: ascentIdSchema.parse('top-ten-evolution-3'),
-        date: '2024-09-05',
+        date: isoDateSchema.parse('2024-09-05'),
       },
     ]
 

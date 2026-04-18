@@ -1,5 +1,5 @@
 import { createGradeScaleFromAscents } from '~/helpers/create-grade-scale'
-import type { Ascent, Grade } from '~/schema/ascent'
+import { type Ascent, ASCENT_STYLE, type Grade } from '~/schema/ascent'
 
 type GradeFrequency = {
   grade: Grade
@@ -14,7 +14,7 @@ export function getGradeFrequencyAndColors(ascents: Ascent[]): GradeFrequency {
   const grades = createGradeScaleFromAscents(ascents)
 
   const gradeClimbingStylesCount: GradeFrequency = grades.map(grade => {
-    const initialStyleFrequency: Record<Ascent['style'], number> = {
+    const initialStyleFrequency: Record<(typeof ASCENT_STYLE)[number], number> = {
       Flash: 0,
       Onsight: 0,
       Redpoint: 0,
