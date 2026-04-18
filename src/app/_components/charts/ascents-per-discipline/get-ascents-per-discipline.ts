@@ -1,6 +1,11 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { type Ascent, CLIMBING_DISCIPLINE, climbingDisciplineSchema } from '~/schema/ascent'
 
+const PARSED_DISCIPLINES = CLIMBING_DISCIPLINE.map(raw => ({
+  color: CLIMBING_DISCIPLINE_TO_COLOR[raw] ?? 'var(--gray-5)',
+  branded: climbingDisciplineSchema.parse(raw),
+}))
+
 type AscentsPerDiscipline = {
   id: Ascent['climbingDiscipline']
   label: Ascent['climbingDiscipline']
@@ -11,15 +16,12 @@ type AscentsPerDiscipline = {
 export function getAscentsPerDiscipline(ascents: Ascent[]): AscentsPerDiscipline {
   if (ascents.length === 0) return []
 
-  const initialValue: AscentsPerDiscipline = CLIMBING_DISCIPLINE.map(rawDiscipline => {
-    const climbingDiscipline = climbingDisciplineSchema.parse(rawDiscipline)
-    return {
-      color: CLIMBING_DISCIPLINE_TO_COLOR[rawDiscipline] ?? 'var(--gray-5)',
-      id: climbingDiscipline,
-      label: climbingDiscipline,
-      value: 0,
-    }
-  })
+  const initialValue: AscentsPerDiscipline = PARSED_DISCIPLINES.map(({ branded, color }) => ({
+    color,
+    id: branded,
+    label: branded,
+    value: 0,
+  }))
 
   return ascents
     .reduce((acc, { climbingDiscipline }) => {
