@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { climbingDisciplineSchema } from '~/schema/ascent'
 import { trainingSessionSchema, type TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
@@ -55,7 +56,7 @@ describe('filterTrainingSessions', () => {
 
   it('should filter training sessions by climbingDiscipline', () => {
     const result = filterTrainingSessions(trainingSessions, {
-      climbingDiscipline: 'Boulder',
+      climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
     })
     expect(result.length).toBe(1)
     expect(result[0]?.climbingDiscipline).toBe('Boulder')

@@ -109,7 +109,8 @@ export const trainingSessionFormSchema = z.object({
   date: z
     .string()
     .trim()
-    .transform(date => getDateAtNoon(new Date(date)).toISOString()),
+    .transform(date => getDateAtNoon(new Date(date)).toISOString())
+    .brand('ISODate'),
   energySystem: z.preprocess(emptyStringToUndefined, energySystemSchema.optional()),
   gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   intensity: z.preprocess(

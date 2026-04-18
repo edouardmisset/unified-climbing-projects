@@ -49,7 +49,8 @@ export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   date: z
     .string()
     .trim()
-    .transform(s => getDateAtNoon(new Date(s)).toISOString()),
+    .transform(s => getDateAtNoon(new Date(s)).toISOString())
+    .brand('ISODate'),
   height: z
     .string()
     .trim()

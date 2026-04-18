@@ -26,7 +26,7 @@ export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsP
 
   return [...disciplineCounts.entries()]
     .map(([discipline, count]) => ({
-      fill: CLIMBING_DISCIPLINE_TO_COLOR[discipline] ?? 'var(--gray-5)',
+      fill: CLIMBING_DISCIPLINE_TO_COLOR[discipline as keyof typeof CLIMBING_DISCIPLINE_TO_COLOR] ?? 'var(--gray-5)',
       id: discipline,
       label: discipline,
       value: count,

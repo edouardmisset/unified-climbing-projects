@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { sampleAscents } from '~/backup/sample-ascents'
-import { ascentIdSchema, type Ascent } from '~/schema/ascent'
+import { ascentIdSchema, climbingDisciplineSchema, type Ascent } from '~/schema/ascent'
 import { isoDateSchema } from '~/schema/generic'
 import { getTopTenEvolution } from './get-top-ten-evolution'
+
+const BOULDER = climbingDisciplineSchema.parse('Boulder')
+const ROUTE = climbingDisciplineSchema.parse('Route')
 
 function countDisciplineForYear(
   ascents: Ascent[],
@@ -28,8 +31,8 @@ describe('getTopTenEvolution', () => {
 
     expect(result).toEqual([
       {
-        Boulder: countDisciplineForYear(ascentsIn2024, 'Boulder', 2_024),
-        Route: countDisciplineForYear(ascentsIn2024, 'Route', 2_024),
+        Boulder: countDisciplineForYear(ascentsIn2024, BOULDER, 2_024),
+        Route: countDisciplineForYear(ascentsIn2024, ROUTE, 2_024),
         ascents: ascentsIn2024.length,
         outdoorDays: 17,
         topTenScore: 9_250,
@@ -66,8 +69,8 @@ describe('getTopTenEvolution', () => {
 
     expect(result).toEqual([
       {
-        Boulder: countDisciplineForYear(ascents, 'Boulder', 2_022),
-        Route: countDisciplineForYear(ascents, 'Route', 2_022),
+        Boulder: countDisciplineForYear(ascents, BOULDER, 2_022),
+        Route: countDisciplineForYear(ascents, ROUTE, 2_022),
         ascents: 1,
         outdoorDays: 1,
         topTenScore: 850,
@@ -82,8 +85,8 @@ describe('getTopTenEvolution', () => {
         year: 2_023,
       },
       {
-        Boulder: countDisciplineForYear(ascents, 'Boulder', 2_024),
-        Route: countDisciplineForYear(ascents, 'Route', 2_024),
+        Boulder: countDisciplineForYear(ascents, BOULDER, 2_024),
+        Route: countDisciplineForYear(ascents, ROUTE, 2_024),
         ascents: 2,
         outdoorDays: 2,
         topTenScore: 1_750,

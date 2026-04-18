@@ -2,7 +2,7 @@ import { sum } from '@edouardmisset/math'
 import { useMemo } from 'react'
 import { addPoints, fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
-import { type AscentListProps, pointsSchema } from '~/schema/ascent'
+import { ascentStyleSchema, climbingDisciplineSchema, type AscentListProps, pointsSchema } from '~/schema/ascent'
 import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
@@ -10,6 +10,12 @@ import { SCORE_INCREMENT } from '../constants'
 
 const ZERO_POINTS = pointsSchema.parse(0)
 const SCORE_INCREMENT_POINTS = pointsSchema.parse(SCORE_INCREMENT)
+
+const ROUTE = climbingDisciplineSchema.parse('Route')
+const BOULDER = climbingDisciplineSchema.parse('Boulder')
+const ONSIGHT = ascentStyleSchema.parse('Onsight')
+const FLASH = ascentStyleSchema.parse('Flash')
+const REDPOINT = ascentStyleSchema.parse('Redpoint')
 
 export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
@@ -53,26 +59,26 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className='block'>
               Lead climb{' '}
               <DisplayGrade
-                climbingDiscipline='Route'
+                climbingDiscipline={ROUTE}
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
-                  style: 'Onsight',
+                  climbingDiscipline: ROUTE,
+                  style: ONSIGHT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle='Onsight' />,{' '}
               <DisplayGrade
-                climbingDiscipline='Route'
+                climbingDiscipline={ROUTE}
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
-                  style: 'Flash',
+                  climbingDiscipline: ROUTE,
+                  style: FLASH,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                climbingDiscipline='Route'
+                climbingDiscipline={ROUTE}
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Route',
-                  style: 'Redpoint',
+                  climbingDiscipline: ROUTE,
+                  style: REDPOINT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle='Redpoint' />
@@ -81,18 +87,18 @@ export function TopTenSummary({ ascents }: AscentListProps) {
             <span className='block'>
               Boulder{' '}
               <DisplayGrade
-                climbingDiscipline='Boulder'
+                climbingDiscipline={BOULDER}
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
-                  style: 'Flash',
+                  climbingDiscipline: BOULDER,
+                  style: FLASH,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                climbingDiscipline='Boulder'
+                climbingDiscipline={BOULDER}
                 grade={fromPointToGrade(nextStepPoints, {
-                  climbingDiscipline: 'Boulder',
-                  style: 'Redpoint',
+                  climbingDiscipline: BOULDER,
+                  style: REDPOINT,
                 })}
               />{' '}
               <ClimbingStyle climbingStyle='Redpoint' />

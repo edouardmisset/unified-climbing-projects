@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME, DEFAULT_GRADE } from '~/constants/ascents'
-import { ascentSchema, type Ascent } from '~/schema/ascent'
+import { ascentSchema, gradeSchema, type Ascent } from '~/schema/ascent'
 import { trainingSessionSchema, type TrainingSession } from '~/schema/training'
 import { calculateEfficiencyPercentage } from './calculate-efficiency-percentage'
 import {
@@ -104,7 +104,7 @@ describe('calculateScore', () => {
       year,
     })
 
-    const averageGradeValue = fromGradeToNumber('7a')
+    const averageGradeValue = fromGradeToNumber(gradeSchema.parse('7a'))
     const volumeScore = averageGradeValue * currentYearAscents.length * COEFFICIENT_VOLUME
 
     const hardestGradeValues = [...createHardestGradeMap(currentYearAscents).values()].map(

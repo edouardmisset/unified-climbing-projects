@@ -1,3 +1,4 @@
+import { ASCENT_STYLE, CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
@@ -67,7 +68,7 @@ export function formatStyleAndTriers({
 
 type Emoji = string
 
-const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], Emoji> = {
+const ASCENT_STYLE_TO_EMOJI: Record<(typeof ASCENT_STYLE)[number], Emoji> = {
   Flash: '🔦',
   Onsight: '👁️',
   Redpoint: '🔴',
@@ -76,7 +77,7 @@ const ASCENT_STYLE_TO_EMOJI: Record<Ascent['style'], Emoji> = {
 export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
   return style === undefined
     ? ASCENT_STYLE_TO_EMOJI.Redpoint
-    : (ASCENT_STYLE_TO_EMOJI[style] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
+    : (ASCENT_STYLE_TO_EMOJI[style as keyof typeof ASCENT_STYLE_TO_EMOJI] ?? ASCENT_STYLE_TO_EMOJI.Redpoint)
 }
 
 const ENERGY_SYSTEM_TO_EMOJI: Record<Exclude<TrainingSession['energySystem'], undefined>, Emoji> = {
@@ -104,17 +105,14 @@ export function fromAnatomicalRegionToEmoji(
   return anatomicalRegion === undefined ? '' : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
 }
 
-const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
-  NonNullable<TrainingSession['climbingDiscipline']>,
-  Emoji
-> = {
+const CLIMBING_DISCIPLINE_TO_EMOJI: Record<(typeof CLIMBING_DISCIPLINE)[number], Emoji> = {
   Boulder: '🪨',
   'Multi-Pitch': '⛰️',
   Route: '🧗',
 }
 
 export function fromClimbingDisciplineToEmoji(
-  climbingDiscipline: TrainingSession['climbingDiscipline'],
+  climbingDiscipline: (typeof CLIMBING_DISCIPLINE)[number] | undefined,
 ): Emoji {
   return climbingDiscipline === undefined
     ? ''

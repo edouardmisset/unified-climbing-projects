@@ -25,7 +25,7 @@ export const getAscentsPerDisciplinePerGrade = (
     const ascentCountsByGrade = groupByGrade.get(topoGrade)
     if (ascentCountsByGrade === undefined) continue
 
-    ascentCountsByGrade[climbingDiscipline] += 1
+    ascentCountsByGrade[climbingDiscipline as (typeof CLIMBING_DISCIPLINE)[number]] += 1
   }
 
   return grades.map(grade => {

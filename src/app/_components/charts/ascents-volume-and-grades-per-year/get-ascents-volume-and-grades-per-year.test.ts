@@ -61,10 +61,10 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
       {
         Boulder: 1,
         Route: 2,
-        avgBoulderGrade: fromGradeToNumber('7a'),
-        avgRouteGrade: fromGradeToNumber('6a+'),
-        maxBoulderGrade: fromGradeToNumber('7a'),
-        maxRouteGrade: fromGradeToNumber('6b'),
+        avgBoulderGrade: fromGradeToNumber(gradeSchema.parse('7a')),
+        avgRouteGrade: fromGradeToNumber(gradeSchema.parse('6a+')),
+        maxBoulderGrade: fromGradeToNumber(gradeSchema.parse('7a')),
+        maxRouteGrade: fromGradeToNumber(gradeSchema.parse('6b')),
         year: 2_023,
       },
       {
@@ -79,9 +79,9 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
       {
         Boulder: 1,
         Route: 0,
-        avgBoulderGrade: fromGradeToNumber('7b+'),
+        avgBoulderGrade: fromGradeToNumber(gradeSchema.parse('7b+')),
         avgRouteGrade: undefined,
-        maxBoulderGrade: fromGradeToNumber('7b+'),
+        maxBoulderGrade: fromGradeToNumber(gradeSchema.parse('7b+')),
         maxRouteGrade: undefined,
         year: 2_025,
       },

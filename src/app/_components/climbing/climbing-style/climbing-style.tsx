@@ -1,8 +1,9 @@
 import type { ComponentProps } from 'react'
-import type { Ascent } from '~/schema/ascent'
+import { ASCENT_STYLE } from '~/schema/ascent'
 import styles from './climbing-style.module.css'
 
-type InsensitiveStyle = Ascent['style'] | Lowercase<Ascent['style']>
+type RawAscentStyle = (typeof ASCENT_STYLE)[number]
+type InsensitiveStyle = RawAscentStyle | Lowercase<RawAscentStyle>
 type Suffix = 'ed' | 'ing'
 type StyleWithSuffix = `${InsensitiveStyle}${Suffix}` | InsensitiveStyle
 

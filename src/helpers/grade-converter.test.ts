@@ -9,7 +9,7 @@ describe('fromGradeToNumber', () => {
     const [validGrade] = objectKeys(GRADE_TO_NUMBER)
     if (!validGrade) throw new Error('No valid grade keys found in GRADE_TO_NUMBER')
 
-    const expectedNumber = GRADE_TO_NUMBER[validGrade]
+    const expectedNumber = GRADE_TO_NUMBER[validGrade as keyof typeof GRADE_TO_NUMBER]
     const result = fromGradeToNumber(validGrade)
     expect(result).toBe(expectedNumber)
   })

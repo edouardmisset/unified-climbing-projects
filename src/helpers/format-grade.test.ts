@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent } from '~/schema/ascent'
+import { climbingDisciplineSchema, gradeSchema, type Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 
 describe('formatGrade', () => {
@@ -11,9 +11,9 @@ describe('formatGrade', () => {
   for (const { input, expected } of BOULDER_TEST_CASES)
     it(`should return uppercase grade for Bouldering (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        climbingDiscipline: 'Boulder',
-        topoGrade: input,
-      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+        climbingDiscipline: climbingDisciplineSchema.parse('Boulder'),
+        topoGrade: gradeSchema.parse(input),
+      } satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
       expect(
         formatGrade({
           climbingDiscipline: ascentDetails.climbingDiscipline,
@@ -31,9 +31,9 @@ describe('formatGrade', () => {
   for (const { input, expected } of ROUTE_TEST_CASES)
     it(`should return grade as is for Route (${input} -> ${expected})`, () => {
       const ascentDetails = {
-        climbingDiscipline: 'Route',
-        topoGrade: input,
-      } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+        climbingDiscipline: climbingDisciplineSchema.parse('Route'),
+        topoGrade: gradeSchema.parse(input),
+      } satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
       expect(
         formatGrade({
           climbingDiscipline: ascentDetails.climbingDiscipline,
@@ -44,9 +44,9 @@ describe('formatGrade', () => {
 
   it('should return grade as is for Multi-Pitch (e.g., 8a -> 8a)', () => {
     const ascentDetails = {
-      climbingDiscipline: 'Multi-Pitch',
-      topoGrade: '8a',
-    } as const satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
+      climbingDiscipline: climbingDisciplineSchema.parse('Multi-Pitch'),
+      topoGrade: gradeSchema.parse('8a'),
+    } satisfies Pick<Ascent, 'topoGrade' | 'climbingDiscipline'>
     expect(
       formatGrade({
         climbingDiscipline: ascentDetails.climbingDiscipline,

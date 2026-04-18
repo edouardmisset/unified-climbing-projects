@@ -19,7 +19,7 @@ export function fromGradeToNumber(grade: Grade): number {
     return 1
   }
 
-  return GRADE_TO_NUMBER[grade]
+  return GRADE_TO_NUMBER[grade as keyof typeof GRADE_TO_NUMBER]
 }
 
 type GradeNumber = keyof typeof NUMBER_TO_GRADE

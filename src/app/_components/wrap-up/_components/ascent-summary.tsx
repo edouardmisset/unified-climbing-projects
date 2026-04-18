@@ -1,19 +1,27 @@
 import { getAverageGrade } from '~/helpers/get-average-grade'
 import { sortByDate } from '~/helpers/sort-by-date'
-import type { AscentListProps } from '~/schema/ascent'
+import { ASCENT_STYLE, CLIMBING_DISCIPLINE, climbingDisciplineSchema, type AscentListProps } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 
+const ROUTE = climbingDisciplineSchema.parse('Route')
+const BOULDER = climbingDisciplineSchema.parse('Boulder')
+
 export function AscentSummary({ ascents }: AscentListProps) {
   const [mostRecentAscent] = ascents.toSorted((a, b) => sortByDate(a, b))
 
   if (ascents.length === 0 || mostRecentAscent === undefined) return
 
-  const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style)
-  const ascentsByDiscipline = Object.groupBy(ascents, ascent => ascent.climbingDiscipline)
+  const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style) as Partial<
+    Record<(typeof ASCENT_STYLE)[number], typeof ascents>
+  >
+  const ascentsByDiscipline = Object.groupBy(
+    ascents,
+    ascent => ascent.climbingDiscipline,
+  ) as Partial<Record<(typeof CLIMBING_DISCIPLINE)[number], typeof ascents>>
 
   const onsightAscents = ascentsByStyle.Onsight ?? []
   const flashAscents = ascentsByStyle.Flash ?? []
@@ -57,13 +65,13 @@ export function AscentSummary({ ascents }: AscentListProps) {
         {averageRouteGrade === 'N/A' ? undefined : (
           <span className='block'>
             Your average route grade was{' '}
-            <DisplayGrade climbingDiscipline='Route' grade={averageRouteGrade} />
+            <DisplayGrade climbingDiscipline={ROUTE} grade={averageRouteGrade} />
           </span>
         )}
         {averageBoulderGrade === 'N/A' ? undefined : (
           <span className='block'>
             Your average bouldering grade was{' '}
-            <DisplayGrade climbingDiscipline='Boulder' grade={averageBoulderGrade} />
+            <DisplayGrade climbingDiscipline={BOULDER} grade={averageBoulderGrade} />
           </span>
         )}
       </p>

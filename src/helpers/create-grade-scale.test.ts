@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { Ascent, Grade } from '~/schema/ascent'
+import { gradeSchema, type Ascent, type Grade } from '~/schema/ascent'
 import { createGradeScaleFromAscents } from './create-grade-scale'
 
 describe('createGradeScaleFromAscents', () => {
@@ -19,14 +19,14 @@ describe('createGradeScaleFromAscents', () => {
       { topoGrade: '7a' } as Ascent,
       { topoGrade: '6b+' } as Ascent,
     ]
-    const expectedScale: Grade[] = ['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a']
+    const expectedScale: Grade[] = (['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a'] as const).map(g => gradeSchema.parse(g))
     const result = createGradeScaleFromAscents(ascents)
     expect(result).toEqual(expectedScale)
   })
 
   it('should handle single ascent', () => {
     const ascents: Ascent[] = [{ topoGrade: '7a' } as Ascent]
-    const expectedScale: Grade[] = ['7a']
+    const expectedScale: Grade[] = [gradeSchema.parse('7a')]
     const result = createGradeScaleFromAscents(ascents)
     expect(result).toEqual(expectedScale)
   })
@@ -37,7 +37,7 @@ describe('createGradeScaleFromAscents', () => {
       { topoGrade: '6b' } as Ascent,
       { topoGrade: '6b' } as Ascent,
     ]
-    const expectedScale: Grade[] = ['6b']
+    const expectedScale: Grade[] = [gradeSchema.parse('6b')]
     const result = createGradeScaleFromAscents(ascents)
     expect(result).toEqual(expectedScale)
   })
