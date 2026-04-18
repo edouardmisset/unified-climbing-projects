@@ -26,6 +26,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setLocationType,
   } = useTrainingSessionsQueryState()
 
+  const selectedYearNumber = useMemo(() => {
+    const n = Number(selectedYear)
+    return selectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
+  }, [selectedYear])
+
   const yearList = useMemo(() => {
     const filteredForYear = filterTrainingSessions(trainingSessions, {
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
@@ -39,27 +44,19 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
   }, [trainingSessions, selectedDiscipline, selectedLocationType, selectedPeriod])
 
   const disciplineList = useMemo(() => {
-    const selectedYearNumber = Number(selectedYear)
     const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
-      year:
-        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-          ? selectedYearNumber
-          : undefined,
+      year: selectedYearNumber,
       locationType: normalizeFilterValue(selectedLocationType),
       period: normalizeFilterValue(selectedPeriod),
     })
     return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
       filteredForDiscipline.some(session => session.climbingDiscipline === discipline),
     )
-  }, [trainingSessions, selectedYear, selectedLocationType, selectedPeriod])
+  }, [trainingSessions, selectedYearNumber, selectedLocationType, selectedPeriod])
 
   const locationTypeList = useMemo(() => {
-    const selectedYearNumber = Number(selectedYear)
     const filteredForLocationType = filterTrainingSessions(trainingSessions, {
-      year:
-        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-          ? selectedYearNumber
-          : undefined,
+      year: selectedYearNumber,
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
     })
@@ -70,15 +67,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     return LOCATION_TYPES.filter(locationType =>
       locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
-  }, [trainingSessions, selectedYear, selectedDiscipline, selectedPeriod])
+  }, [trainingSessions, selectedYearNumber, selectedDiscipline, selectedPeriod])
 
   const periodList = useMemo(() => {
-    const selectedYearNumber = Number(selectedYear)
     const filteredForPeriod = filterTrainingSessions(trainingSessions, {
-      year:
-        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-          ? selectedYearNumber
-          : undefined,
+      year: selectedYearNumber,
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
       locationType: normalizeFilterValue(selectedLocationType),
     })
@@ -87,7 +80,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),
     )
-  }, [trainingSessions, selectedYear, selectedDiscipline, selectedLocationType])
+  }, [trainingSessions, selectedYearNumber, selectedDiscipline, selectedLocationType])
 
   const filters = useMemo<FilterConfig[]>(
     () =>
