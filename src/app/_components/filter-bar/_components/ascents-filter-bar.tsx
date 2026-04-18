@@ -1,5 +1,9 @@
+import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useMemo } from 'react'
+import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
+import { filterAscents } from '~/helpers/filter-ascents'
+import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
 import { ASCENT_STYLE, type Ascent, AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
@@ -15,35 +19,6 @@ export default function AscentsFilterBar({
   allAscents: Ascent[]
   showSearch: boolean
 }) {
-  const yearList = useMemo(
-    () =>
-      createYearList(allAscents, {
-        descending: true,
-        continuous: false,
-      }).map(String),
-    [allAscents],
-  )
-
-  const cragList = useMemo(
-    () =>
-      [...new Set(allAscents.map(({ crag }) => crag.trim()))]
-        .filter(Boolean)
-        .sort((a, b) => compareStringsAscending(a, b)),
-    [allAscents],
-  )
-
-  const areaList = useMemo(
-    () =>
-      [
-        ...new Set(
-          allAscents
-            .map(({ area }) => area?.trim())
-            .filter((area): area is string => Boolean(area)),
-        ),
-      ].sort((a, b) => compareStringsAscending(a, b)),
-    [allAscents],
-  )
-
   const {
     selectedArea,
     selectedCrag,
@@ -60,6 +35,58 @@ export default function AscentsFilterBar({
     selectedRoute,
     setRoute,
   } = useAscentsQueryState()
+
+  const yearList = useMemo(() => {
+    const filteredForYear = filterAscents(allAscents, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      style: normalizeFilterValue(selectedStyle),
+      period: normalizeFilterValue(selectedPeriod),
+      crag: normalizeFilterValue(selectedCrag),
+      area: normalizeFilterValue(selectedArea),
+    })
+    return createYearList(filteredForYear, {
+      descending: true,
+      continuous: false,
+    }).map(String)
+  }, [allAscents, selectedDiscipline, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
+
+  const cragList = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    const filteredForCrag = filterAscents(allAscents, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      style: normalizeFilterValue(selectedStyle),
+      period: normalizeFilterValue(selectedPeriod),
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      area: normalizeFilterValue(selectedArea),
+    })
+    return [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
+      .filter(Boolean)
+      .sort((a, b) => compareStringsAscending(a, b))
+  }, [allAscents, selectedDiscipline, selectedStyle, selectedPeriod, selectedYear, selectedArea])
+
+  const areaList = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    const filteredForArea = filterAscents(allAscents, {
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      style: normalizeFilterValue(selectedStyle),
+      period: normalizeFilterValue(selectedPeriod),
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      crag: normalizeFilterValue(selectedCrag),
+    })
+    return [
+      ...new Set(
+        filteredForArea
+          .map(({ area }) => area?.trim())
+          .filter((area): area is string => Boolean(area)),
+      ),
+    ].sort((a, b) => compareStringsAscending(a, b))
+  }, [allAscents, selectedDiscipline, selectedStyle, selectedPeriod, selectedYear, selectedCrag])
 
   const filters = useMemo<FilterConfig[]>(
     () =>
