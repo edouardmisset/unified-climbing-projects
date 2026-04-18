@@ -41,10 +41,7 @@ export function filterTrainingSessions(
     locationType,
   } = filters ?? {}
 
-  if (!trainingSessions || trainingSessions.length === 0) {
-    globalThis.console.log('No training sessions passed to filterTrainingSessions')
-    return []
-  }
+  if (!trainingSessions || trainingSessions.length === 0) return []
 
   return trainingSessions.filter(trainingSession => {
     const trainingSessionDate = new Date(trainingSession.date)
