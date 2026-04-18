@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
@@ -81,6 +81,24 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       ),
     )
   }, [trainingSessions, selectedYearNumber, selectedDiscipline, selectedLocationType])
+
+  useEffect(() => {
+    if (selectedYear !== ALL_VALUE && !yearList.includes(selectedYear)) setYear(ALL_VALUE)
+  }, [yearList, selectedYear, setYear])
+
+  useEffect(() => {
+    if (selectedDiscipline !== ALL_VALUE && !disciplineList.includes(selectedDiscipline))
+      setDiscipline(ALL_VALUE)
+  }, [disciplineList, selectedDiscipline, setDiscipline])
+
+  useEffect(() => {
+    if (selectedLocationType !== ALL_VALUE && !locationTypeList.includes(selectedLocationType))
+      setLocationType(ALL_VALUE)
+  }, [locationTypeList, selectedLocationType, setLocationType])
+
+  useEffect(() => {
+    if (selectedPeriod !== ALL_VALUE && !periodList.includes(selectedPeriod)) setPeriod(ALL_VALUE)
+  }, [periodList, selectedPeriod, setPeriod])
 
   const filters = useMemo<FilterConfig[]>(
     () =>

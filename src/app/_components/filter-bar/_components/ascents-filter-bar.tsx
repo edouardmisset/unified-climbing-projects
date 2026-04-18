@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
 import { filterAscents } from '~/helpers/filter-ascents'
@@ -124,6 +124,31 @@ export default function AscentsFilterBar({
       ),
     )
   }, [allAscents, selectedYearNumber, selectedDiscipline, selectedStyle, selectedCrag, selectedArea])
+
+  useEffect(() => {
+    if (selectedYear !== ALL_VALUE && !yearList.includes(selectedYear)) setYear(ALL_VALUE)
+  }, [yearList, selectedYear, setYear])
+
+  useEffect(() => {
+    if (selectedDiscipline !== ALL_VALUE && !disciplineList.includes(selectedDiscipline))
+      setDiscipline(ALL_VALUE)
+  }, [disciplineList, selectedDiscipline, setDiscipline])
+
+  useEffect(() => {
+    if (selectedStyle !== ALL_VALUE && !styleList.includes(selectedStyle)) setStyle(ALL_VALUE)
+  }, [styleList, selectedStyle, setStyle])
+
+  useEffect(() => {
+    if (selectedCrag !== ALL_VALUE && !cragList.includes(selectedCrag)) setCrag(ALL_VALUE)
+  }, [cragList, selectedCrag, setCrag])
+
+  useEffect(() => {
+    if (selectedArea !== ALL_VALUE && !areaList.includes(selectedArea)) setArea(ALL_VALUE)
+  }, [areaList, selectedArea, setArea])
+
+  useEffect(() => {
+    if (selectedPeriod !== ALL_VALUE && !periodList.includes(selectedPeriod)) setPeriod(ALL_VALUE)
+  }, [periodList, selectedPeriod, setPeriod])
 
   const filters = useMemo<FilterConfig[]>(
     () =>
