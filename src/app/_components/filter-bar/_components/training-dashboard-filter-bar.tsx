@@ -1,4 +1,6 @@
+import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { useMemo } from 'react'
+import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -34,6 +36,50 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     }).map(String)
   }, [trainingSessions, selectedDiscipline, selectedLocationType, selectedPeriod])
 
+  const disciplineList = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      locationType: normalizeFilterValue(selectedLocationType),
+      period: normalizeFilterValue(selectedPeriod),
+    })
+    return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
+      filteredForDiscipline.some(session => session.climbingDiscipline === discipline),
+    )
+  }, [trainingSessions, selectedYear, selectedLocationType, selectedPeriod])
+
+  const locationTypeList = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    const filteredForLocationType = filterTrainingSessions(trainingSessions, {
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      period: normalizeFilterValue(selectedPeriod),
+    })
+    return LOCATION_TYPES.filter(
+      locationType =>
+        filterTrainingSessions(filteredForLocationType, { locationType }).length > 0,
+    )
+  }, [trainingSessions, selectedYear, selectedDiscipline, selectedPeriod])
+
+  const periodList = useMemo(() => {
+    const selectedYearNumber = Number(selectedYear)
+    const filteredForPeriod = filterTrainingSessions(trainingSessions, {
+      year:
+        selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+          ? selectedYearNumber
+          : undefined,
+      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      locationType: normalizeFilterValue(selectedLocationType),
+    })
+    return PERIOD.filter(period => filterTrainingSessions(filteredForPeriod, { period }).length > 0)
+  }, [trainingSessions, selectedYear, selectedDiscipline, selectedLocationType])
+
   const filters = useMemo<FilterConfig[]>(
     () =>
       [
@@ -47,26 +93,29 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
         {
           setValue: createValueSetter(setLocationType),
           name: 'Location Type',
-          options: LOCATION_TYPES,
+          options: locationTypeList,
           selectedValue: selectedLocationType,
           title: 'Indoor / Outdoor',
         },
         {
           setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
-          options: AVAILABLE_CLIMBING_DISCIPLINE,
+          options: disciplineList,
           selectedValue: selectedDiscipline,
           title: 'Climbing Discipline',
         },
         {
           setValue: createValueSetter(setPeriod),
           name: 'Period',
-          options: PERIOD,
+          options: periodList,
           selectedValue: selectedPeriod,
           title: 'Period',
         },
       ] as const satisfies FilterConfig[],
     [
+      disciplineList,
+      locationTypeList,
+      periodList,
       selectedDiscipline,
       selectedLocationType,
       selectedPeriod,
