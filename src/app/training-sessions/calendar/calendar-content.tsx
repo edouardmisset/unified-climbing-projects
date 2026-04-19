@@ -4,10 +4,14 @@ import NotFound from '~/app/not-found'
 import { createYearList, groupDataDaysByYear } from '~/data/helpers'
 import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
 import type { TrainingSession } from '~/schema/training'
+import { getAllAscents } from '~/services/ascents'
 import { getAllTrainingSessions } from '~/services/training'
 
 export async function CalendarContent() {
-  const trainingSessions = await getAllTrainingSessions()
+  const [trainingSessions, allAscents] = await Promise.all([
+    getAllTrainingSessions(),
+    getAllAscents(),
+  ])
 
   if (!trainingSessions) return <NotFound />
 
@@ -22,7 +26,7 @@ export async function CalendarContent() {
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear<TrainingSession>}
             fromDataToCalendarEntries={(calendarYear, sessions) =>
-              fromTrainingSessionsToCalendarEntries(calendarYear, sessions)
+              fromTrainingSessionsToCalendarEntries(calendarYear, sessions, allAscents ?? [])
             }
             year={year}
           />

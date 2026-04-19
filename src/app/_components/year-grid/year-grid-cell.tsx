@@ -47,14 +47,29 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
   // LAZY LOADING: Create description component only when we have data
   const lazyDescription = useMemo(() => {
-    if (ascents && ascents.length > 0)
+    const hasAscents = ascents && ascents.length > 0
+    const hasTrainingSessions = trainingSessions && trainingSessions.length > 0
+
+    if (hasTrainingSessions && hasAscents)
+      return (
+        <>
+          <Suspense fallback='Loading...'>
+            <TrainingPopoverDescription trainingSessions={trainingSessions} />
+          </Suspense>
+          <Suspense fallback='Loading...'>
+            <AscentsPopoverDescription ascents={ascents} />
+          </Suspense>
+        </>
+      )
+
+    if (hasAscents)
       return (
         <Suspense fallback='Loading...'>
           <AscentsPopoverDescription ascents={ascents} />
         </Suspense>
       )
 
-    if (trainingSessions && trainingSessions.length > 0)
+    if (hasTrainingSessions)
       return (
         <Suspense fallback='Loading...'>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
