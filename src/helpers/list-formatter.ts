@@ -1,4 +1,4 @@
-import { FR_LOCALE, US_LOCALE } from '~/constants/generic'
+import { US_LOCALE } from '~/constants/generic'
 
 /**
  * Creates a list formatter using Intl.ListFormat.
@@ -44,19 +44,4 @@ export const conjunctiveListFormatter = createListFormatter(
     type: 'conjunction',
   },
   US_LOCALE,
-)
-
-/**
- * Formats a list of items using conjunctive (et) grouping in French.
- * Example: "A, B et C"
- *
- * @param {string[] | readonly string[]} list - The list of strings to format.
- * @returns {string} The formatted list string.
- */
-export const frenchConjunctiveListFormatter = createListFormatter(
-  {
-    style: 'long',
-    type: 'conjunction',
-  },
-  FR_LOCALE,
 )

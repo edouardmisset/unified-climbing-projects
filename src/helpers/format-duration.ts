@@ -1,4 +1,4 @@
-import { FR_LOCALE } from '~/constants/generic'
+import { US_LOCALE } from '~/constants/generic'
 import { formatUnit } from './number-formatter'
 
 const DAYS_IN_WEEK = 7
@@ -30,7 +30,7 @@ type DurationFormatInput = {
   weeks?: number
 }
 
-const frenchDurationFormatter = new Intl.DurationFormat(FR_LOCALE, { style: 'long' })
+const usDurationFormatter = new Intl.DurationFormat(US_LOCALE, { style: 'long' })
 
 function getDurationParts(totalDays: number): DurationPart[] {
   let remainingDays = Math.round(totalDays)
@@ -73,5 +73,5 @@ export function formatFrenchDurationFromDays(totalDays: number): string {
   const durationParts = getDurationParts(totalDays).slice(0, 2)
   if (durationParts.length === 0) return formatUnit(0, 'day', durationFormatOptions)
 
-  return frenchDurationFormatter.format(fromDurationPartsToDurationFormatInput(durationParts))
+  return usDurationFormatter.format(fromDurationPartsToDurationFormatInput(durationParts))
 }

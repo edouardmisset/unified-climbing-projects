@@ -1,4 +1,4 @@
-import { FR_LOCALE } from '~/constants/generic'
+import { US_LOCALE } from '~/constants/generic'
 
 const DATE_TIME_OPTIONS = {
   longDate: {
@@ -35,7 +35,7 @@ const DATE_TIME_OPTIONS = {
  */
 export const buildDateTimeFormat = (
   options: keyof typeof DATE_TIME_OPTIONS = 'longDateTime',
-  locale: string = FR_LOCALE,
+  locale: string = US_LOCALE,
 ): ((date: string) => string) => {
   const formatter = new Intl.DateTimeFormat(locale, DATE_TIME_OPTIONS[options])
 

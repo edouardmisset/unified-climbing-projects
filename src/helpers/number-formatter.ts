@@ -1,4 +1,4 @@
-import { FR_LOCALE } from '~/constants/generic'
+import { US_LOCALE } from '~/constants/generic'
 
 type NumberFormatOptions = Intl.NumberFormatOptions
 type NumberFormatUnit = NonNullable<NumberFormatOptions['unit']>
@@ -25,7 +25,7 @@ function getNumberFormatter(options: NumberFormatOptions = {}): Intl.NumberForma
   const cachedFormatter = numberFormatterCache.get(cacheKey)
   if (cachedFormatter) return cachedFormatter
 
-  const formatter = new Intl.NumberFormat(FR_LOCALE, normalizedOptions)
+  const formatter = new Intl.NumberFormat(US_LOCALE, normalizedOptions)
   numberFormatterCache.set(cacheKey, formatter)
   return formatter
 }
