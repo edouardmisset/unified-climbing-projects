@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: false,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     setupFiles: ['./vitest.setup.ts'],
     exclude: ['node_modules/', 'dist/', 'src/backup/', 'src/scripts/', '**/*smoke*.*'],
     css: true,
