@@ -16,4 +16,11 @@ describe('formatFrenchDurationFromDays', () => {
       ]),
     )
   })
+  it('formats a single day in French', () => {
+    expect(formatFrenchDurationFromDays(1)).toBe(formatUnit(1, 'day', { unitDisplay: 'long' }))
+  })
+
+  it('handles zero days', () => {
+    expect(formatFrenchDurationFromDays(0)).toBe(formatUnit(0, 'day', { unitDisplay: 'long' }))
+  })
 })

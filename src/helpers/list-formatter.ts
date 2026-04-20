@@ -12,7 +12,8 @@ function createListFormatter(
   options: Intl.ListFormatOptions,
   locale: string = US_LOCALE,
 ): (list: string[] | readonly string[]) => string {
-  return list => new Intl.ListFormat(locale, options).format(list)
+  const formatter = new Intl.ListFormat(locale, options)
+  return list => formatter.format(list)
 }
 
 /**
@@ -45,6 +46,13 @@ export const conjunctiveListFormatter = createListFormatter(
   US_LOCALE,
 )
 
+/**
+ * Formats a list of items using conjunctive (et) grouping in French.
+ * Example: "A, B et C"
+ *
+ * @param {string[] | readonly string[]} list - The list of strings to format.
+ * @returns {string} The formatted list string.
+ */
 export const frenchConjunctiveListFormatter = createListFormatter(
   {
     style: 'long',
