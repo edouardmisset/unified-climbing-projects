@@ -1,6 +1,28 @@
 import type { Ascent } from '~/schema/ascent'
+import { selectEnglishPluralForm } from './format-plurals'
 
-type ClimbingActivity = `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${'s' | ''}`
+const ENGLISH_CLIMBING_ACTIVITY = {
+  ascent: {
+    one: 'ascent',
+    other: 'ascents',
+  },
+  Boulder: {
+    one: 'boulder',
+    other: 'boulders',
+  },
+  'Multi-Pitch': {
+    one: 'multi-pitch',
+    other: 'multi-pitches',
+  },
+  Route: {
+    one: 'route',
+    other: 'routes',
+  },
+} as const satisfies Record<string, { one: string; other: string }>
+
+type ClimbingActivity = (typeof ENGLISH_CLIMBING_ACTIVITY)[keyof typeof ENGLISH_CLIMBING_ACTIVITY][
+  | 'one'
+  | 'other']
 
 /**
  * Generates a text for ascents based on their climbing discipline.
@@ -17,14 +39,13 @@ type ClimbingActivity = `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${
 export function writeAscentsDisciplineText(
   ascents: Pick<Ascent, 'climbingDiscipline'>[],
 ): ClimbingActivity {
-  if (ascents[0] === undefined) return 'ascents'
-
-  const maybePlural = ascents.length > 1 ? 's' : ''
+  if (ascents[0] === undefined) return ENGLISH_CLIMBING_ACTIVITY.ascent.other
 
   const firstDiscipline = ascents[0].climbingDiscipline
 
   for (const { climbingDiscipline } of ascents)
-    if (climbingDiscipline !== firstDiscipline) return `ascent${maybePlural}`
+    if (climbingDiscipline !== firstDiscipline)
+      return selectEnglishPluralForm(ascents.length, ENGLISH_CLIMBING_ACTIVITY.ascent)
 
-  return `${firstDiscipline.toLowerCase()}${maybePlural}` as ClimbingActivity
+  return selectEnglishPluralForm(ascents.length, ENGLISH_CLIMBING_ACTIVITY[firstDiscipline])
 }

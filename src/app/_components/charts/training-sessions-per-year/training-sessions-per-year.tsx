@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
+import { formatRatioAsPercent } from '~/helpers/number-formatter'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
 import { formatPercentageTick, formatYearTick, GRID_STROKE } from '../constants'
@@ -28,7 +29,7 @@ export function TrainingSessionsPerYear({
   const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
 
   const percentFormatter = useCallback(
-    (value: unknown) => (typeof value === 'number' ? `${value}%` : ''),
+    (value: unknown) => (typeof value === 'number' ? formatRatioAsPercent(value) : ''),
     [],
   )
 

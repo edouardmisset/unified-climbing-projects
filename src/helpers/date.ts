@@ -1,3 +1,4 @@
+import { capitalize } from '@edouardmisset/text'
 import { isValidDate } from '@edouardmisset/date'
 import {
   DAYS_IN_COMMON_YEAR,
@@ -8,6 +9,7 @@ import {
   NOON_HOUR,
   SATURDAY_DAY_NUMBER,
   THURSDAY_DAY_NUMBER,
+  US_LOCALE,
 } from '~/constants/generic'
 import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
@@ -16,17 +18,49 @@ import { sortNumericalValues } from './sort-values'
 const MILLISECONDS_IN_DAY = 1_000 * 60 * 60 * 24
 const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
+const REFERENCE_WEEKDAY_YEAR = 2_024
+const REFERENCE_WEEKDAY_MONTH_INDEX = 0
+const FIRST_DAY_OF_MONTH = 1
+
+const englishRelativeDayFormatter = new Intl.RelativeTimeFormat(US_LOCALE, { numeric: 'auto' })
+const ENGLISH_WEEKDAY_FORMATTERS = {
+  long: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'long' }),
+  short: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'short' }),
+} as const
+const WEEKDAY_LABEL_REFERENCE_DATES = Array.from(
+  { length: DAYS_IN_WEEK },
+  (_, index) =>
+    new Date(
+      Date.UTC(REFERENCE_WEEKDAY_YEAR, REFERENCE_WEEKDAY_MONTH_INDEX, index + FIRST_DAY_OF_MONTH),
+    ),
+)
+
+type WeekdayLabelStyle = keyof typeof ENGLISH_WEEKDAY_FORMATTERS
+
+export function formatEnglishWeekdayLabel(date: Date, style: WeekdayLabelStyle = 'short'): string {
+  return ENGLISH_WEEKDAY_FORMATTERS[style].format(date)
+}
+
+export function getEnglishWeekdayLabels(style: WeekdayLabelStyle = 'short'): string[] {
+  return WEEKDAY_LABEL_REFERENCE_DATES.map(date => formatEnglishWeekdayLabel(date, style))
+}
 
 export function createRecentDateOptions(): ValueAndLabel[] {
+  const lastSaturday = getLastSaturday()
+  const lastSunday = getLastSunday()
+
   return [
-    { label: 'Yesterday', value: fromDateToStringDate(getYesterday()) },
     {
-      label: 'Last Saturday',
-      value: fromDateToStringDate(getLastSaturday()),
+      label: capitalize(englishRelativeDayFormatter.format(-1, 'day')),
+      value: fromDateToStringDate(getYesterday()),
     },
     {
-      label: 'Last Sunday',
-      value: fromDateToStringDate(getLastSunday()),
+      label: `Last ${formatEnglishWeekdayLabel(lastSaturday, 'long')}`,
+      value: fromDateToStringDate(lastSaturday),
+    },
+    {
+      label: `Last ${formatEnglishWeekdayLabel(lastSunday, 'long')}`,
+      value: fromDateToStringDate(lastSunday),
     },
   ]
 }

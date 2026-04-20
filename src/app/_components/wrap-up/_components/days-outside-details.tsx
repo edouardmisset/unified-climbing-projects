@@ -1,4 +1,5 @@
 import type { Ascent } from '~/schema/ascent'
+import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 
 type DaysOutsideDetailsProps = {
@@ -12,8 +13,14 @@ export function DaysOutsideDetails(props: DaysOutsideDetailsProps) {
 
   return (
     <span className='block'>
-      You climbed <AscentsWithPopover ascents={ascents} /> in <strong>{daysOutside}</strong> days (
-      <strong>{ascentsRatio}</strong> ascents per day outside)
+      You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
+      <strong>
+        {formatCountWithEnglishNoun(daysOutside, {
+          one: 'day',
+          other: 'days',
+        })}
+      </strong>{' '}
+      (<strong>{ascentsRatio}</strong> ascents per day outside)
     </span>
   )
 }

@@ -1,14 +1,15 @@
 import type { Ascent, Grade } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { buildDateTimeFormat } from './format-date'
-import { formatOrdinals } from './format-plurals'
+import { formatCountWithEnglishNoun, formatOrdinals } from './format-plurals'
+import { formatUnit } from './number-formatter'
 
 export function formatComments(comments: Ascent['comments']): string {
   return comments ? `💬 “${comments}”` : ''
 }
 
 export function formatHeight(height: Ascent['height']): string {
-  return height ? `📏 ${height}m` : ''
+  return height ? `📏 ${formatUnit(height, 'meter', { unitDisplay: 'short' })}` : ''
 }
 
 export function formatHolds(holds: Ascent['holds']): string {
@@ -58,7 +59,10 @@ export function formatStyleAndTriers({
   const styleText = showDetails ? style : ''
 
   let triesText = ''
-  if (tries > 1) triesText = showDetails ? `(${tries} tries)` : `(${formatOrdinals(tries)})`
+  if (tries > 1)
+    triesText = showDetails
+      ? `(${formatCountWithEnglishNoun(tries, { one: 'try', other: 'tries' })})`
+      : `(${formatOrdinals(tries)})`
 
   return [styleEmoji, styleText, triesText].filter(string => string !== '').join(' ')
 }

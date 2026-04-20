@@ -1,5 +1,7 @@
 import { lazy, memo, Suspense, useMemo } from 'react'
 import { getWeekNumber } from '~/helpers/date'
+import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
+import { formatNumber } from '~/helpers/number-formatter'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import {
   fromSessionTypeToBackgroundColor,
@@ -79,7 +81,12 @@ function getTrainingSessionSummary(trainingSessionInWeek: TrainingSession[]) {
   const [firstSession] = trainingSessionInWeek
   return firstSession === undefined
     ? ''
-    : `${trainingSessionInWeek.length} training sessions in week # ${getWeekNumber(new Date(firstSession.date))}`
+    : `${formatCountWithEnglishNoun(trainingSessionInWeek.length, {
+        one: 'training session',
+        other: 'training sessions',
+      })} in week # ${formatNumber(getWeekNumber(new Date(firstSession.date)), {
+        useGrouping: false,
+      })}`
 }
 
 type TrainingBarsProps = {

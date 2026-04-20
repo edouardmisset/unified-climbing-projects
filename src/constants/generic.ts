@@ -1,3 +1,4 @@
+export const APP_LANGUAGE = 'en'
 export const US_LOCALE = 'en-US'
 export const FR_LOCALE = 'fr-FR'
 

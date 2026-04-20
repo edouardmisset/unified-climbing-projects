@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify'
 import { RscBoundaryProvider } from 'rsc-boundary'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
+import { APP_LANGUAGE } from '~/constants/generic'
 import { useTheme } from '~/hooks/use-theme'
 
 import '~/styles/sizes.css'
@@ -49,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           className={font.className}
           data-color-scheme={theme}
           data-scroll-behavior='smooth'
-          lang='en'
+          lang={APP_LANGUAGE}
           suppressHydrationWarning
         >
           <body className={styles.body}>

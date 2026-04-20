@@ -1,6 +1,8 @@
 import { lazy, memo, Suspense, useMemo } from 'react'
 import { fromGradeToBackgroundColor, fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getWeekNumber } from '~/helpers/date'
+import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
+import { formatNumber } from '~/helpers/number-formatter'
 import { sortByGrade } from '~/helpers/sorter'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
@@ -47,7 +49,12 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
 
   if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
 
-  const title = `${weeklyAscentsByDescendingGrade.length} ascents in week # ${getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date))}`
+  const title = `${formatCountWithEnglishNoun(weeklyAscentsByDescendingGrade.length, {
+    one: 'ascent',
+    other: 'ascents',
+  })} in week # ${formatNumber(getWeekNumber(new Date(weeklyAscentsByDescendingGrade[0].date)), {
+    useGrouping: false,
+  })}`
   const triggerClassName = `${
     isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
   } ${styles.bar}`
