@@ -56,6 +56,9 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
           <Suspense fallback='Loading...'>
             <TrainingPopoverDescription trainingSessions={trainingSessions} />
           </Suspense>
+          <br />
+          <hr />
+          <br />
           <Suspense fallback='Loading...'>
             <AscentsPopoverDescription ascents={ascents} />
           </Suspense>
