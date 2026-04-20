@@ -19,7 +19,7 @@ import { getAscentsByStyle } from '../ascents-by-style/get-ascents-by-style'
 
 type AscentsByStyleDatum = ReturnType<typeof getAscentsByStyle>[number]
 
-const Chart = createRadialChart<AscentsByStyleDatum>()({
+const Chart = createRadialChart<AscentsByStyleDatum, string, string | number>()({
   PieChart,
   Pie,
 })

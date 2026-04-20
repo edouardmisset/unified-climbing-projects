@@ -10,11 +10,13 @@ type ClimbingActivity = `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${
  * - If all ascents share the same discipline, returns the discipline in lowercase with no trailing "s" if there is a single ascent,
  *   or with an "s" if there are multiple ascents.
  *
- * @param {Ascent[]} ascents - The list of ascent objects.
+ * @param {Pick<Ascent, 'climbingDiscipline'>[]} ascents - The list of ascent objects.
  * @returns {ClimbingActivity} The text for the ascents ('boulder', 'boulders',
  * 'route', etc).
  */
-export function writeAscentsDisciplineText(ascents: Ascent[]): ClimbingActivity {
+export function writeAscentsDisciplineText(
+  ascents: Pick<Ascent, 'climbingDiscipline'>[],
+): ClimbingActivity {
   if (ascents[0] === undefined) return 'ascents'
 
   const maybePlural = ascents.length > 1 ? 's' : ''

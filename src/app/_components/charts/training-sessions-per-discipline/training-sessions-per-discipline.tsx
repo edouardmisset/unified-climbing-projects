@@ -20,7 +20,7 @@ import { getSessionsPerDiscipline } from './get-sessions-per-discipline'
 
 type SessionsPerDisciplineDatum = ReturnType<typeof getSessionsPerDiscipline>[number]
 
-const Chart = createRadialChart<SessionsPerDisciplineDatum>()({
+const Chart = createRadialChart<SessionsPerDisciplineDatum, string, string | number>()({
   PieChart,
   Pie,
 })

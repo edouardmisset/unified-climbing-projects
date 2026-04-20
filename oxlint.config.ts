@@ -70,6 +70,7 @@ export default defineConfig({
     'unicorn/prefer-spread': 'error',
     'unicorn/prefer-ternary': 'error',
     'unicorn/require-array-join-separator': 'error',
+    'typescript/consistent-return': 'off',
     'unicorn/numeric-separators-style': [
       'warn',
       {
@@ -123,6 +124,12 @@ export default defineConfig({
       files: ['src/**/*.tsx'],
       rules: {
         'typescript/consistent-return': 'off',
+      },
+    },
+    {
+      files: ['src/**/use*-query-state.ts'],
+      rules: {
+        'unicorn/no-null': 'off',
       },
     },
   ],

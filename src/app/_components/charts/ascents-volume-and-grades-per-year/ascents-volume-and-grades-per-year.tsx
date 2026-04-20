@@ -29,7 +29,11 @@ type AscentsVolumeAndGradesPerYearDatum = ReturnType<
   typeof getAscentsVolumeAndGradesPerYear
 >[number]
 
-const Chart = createHorizontalChart<AscentsVolumeAndGradesPerYearDatum>()({
+const Chart = createHorizontalChart<
+  AscentsVolumeAndGradesPerYearDatum,
+  string,
+  number | undefined
+>()({
   ComposedChart,
   Bar,
   Line,

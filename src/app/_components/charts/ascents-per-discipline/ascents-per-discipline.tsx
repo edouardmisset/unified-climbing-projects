@@ -19,7 +19,7 @@ import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
 type AscentsPerDisciplineDatum = ReturnType<typeof getAscentsPerDiscipline>[number]
 
-const Chart = createRadialChart<AscentsPerDisciplineDatum>()({
+const Chart = createRadialChart<AscentsPerDisciplineDatum, string, string | number>()({
   PieChart,
   Pie,
 })

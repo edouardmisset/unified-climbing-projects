@@ -20,7 +20,7 @@ import { getSessionsIndoorVsOutdoor } from './get-sessions-indoor-vs-outdoor'
 
 type SessionsIndoorVsOutdoorDatum = ReturnType<typeof getSessionsIndoorVsOutdoor>[number]
 
-const Chart = createRadialChart<SessionsIndoorVsOutdoorDatum>()({
+const Chart = createRadialChart<SessionsIndoorVsOutdoorDatum, string, string | number>()({
   PieChart,
   Pie,
 })
