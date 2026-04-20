@@ -70,6 +70,7 @@ export default defineConfig({
     'unicorn/prefer-spread': 'error',
     'unicorn/prefer-ternary': 'error',
     'unicorn/require-array-join-separator': 'error',
+    'typescript/consistent-return': 'off',
     'unicorn/numeric-separators-style': [
       'warn',
       {
@@ -109,12 +110,20 @@ export default defineConfig({
       rules: {
         'no-magic-numbers': 'off',
         'typescript/no-unsafe-type-assertion': 'off',
+        'vitest/prefer-to-be-truthy': 'off',
+        'vitest/prefer-to-be-falsy': 'off',
       },
     },
     {
       files: ['src/backup/**/*.ts', 'src/scripts/**/*.ts'],
       rules: {
         'jest/require-hook': 'off',
+      },
+    },
+    {
+      files: ['src/**/use*-query-state.ts'],
+      rules: {
+        'unicorn/no-null': 'off',
       },
     },
   ],

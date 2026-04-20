@@ -3,7 +3,7 @@ import { PIE_LABEL_TEXT_COLOR } from './constants'
 
 export function renderPieArcLabel(params: { props: PieLabelRenderProps; total: number }) {
   const { props, total } = params
-  const value = Number(props.value)
+  const { value } = props
 
   if (!Number.isFinite(value) || value <= 0 || total <= 0) return
 

@@ -23,7 +23,7 @@ describe('trimAndNormalizeStringsInObject', () => {
 
     expect(result.name).toBe('Alice')
     expect(result.age).toBe(30)
-    expect(result.isActive).toBeTruthy()
+    expect(result.isActive).toBe(true)
   })
 
   it('should handle empty objects', () => {

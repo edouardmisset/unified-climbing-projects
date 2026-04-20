@@ -7,15 +7,14 @@ import type { StringDate } from '~/types/generic'
 /**
  * Extracts unique years from data and returns them sorted.
  *
- * @template T - The type of data, must extend StringDate.
- * @param {T[]} data - Array of data objects containing a `date` property.
+ * @param {StringDate[]} data - Array of data objects containing a `date` property.
  * @param {Object} [options] - Optional configuration.
  * @param {boolean} [options.descending=true] - Whether to sort years in descending order.
  * @param {boolean} [options.continuous=false] - Whether to fill gaps between min and max years.
  * @returns {number[]} Array of years, sorted as specified.
  */
-export function createYearList<T extends StringDate = TrainingSession | Ascent>(
-  data: T[],
+export function createYearList(
+  data: StringDate[],
   options?: { descending?: boolean; continuous?: boolean },
 ): number[] {
   const { descending = true, continuous = false } = options ?? {}

@@ -21,7 +21,7 @@ export function fromSessionTypeToBackgroundColor(
 ): string {
   return sessionType === undefined
     ? 'var(--surface-1)'
-    : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType].toString()
+    : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
 }
 
 /**

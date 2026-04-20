@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer } from 'recharts'
+import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { formatYearTick, GRID_STROKE } from '../constants'
@@ -7,6 +7,13 @@ import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
 import type { Ascent } from '~/schema/ascent'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
+
+type DistanceClimbedDatum = ReturnType<typeof getDistanceClimbedPerYear>[number]
+
+const Chart = createHorizontalChart<DistanceClimbedDatum>()({
+  BarChart,
+  Bar,
+})
 
 const AXIS_LABELS = {
   height: 'Height',
@@ -21,13 +28,13 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Distance climbed per Year'>
       <ResponsiveContainer height='100%' width='100%'>
-        <BarChart accessibilityLayer={false} barCategoryGap={0} data={data}>
+        <Chart.BarChart accessibilityLayer={false} barCategoryGap={0} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.height} />
           <ChartTooltip />
-          <Bar dataKey='distance' fill='var(--blue-3)' />
-        </BarChart>
+          <Chart.Bar dataKey='distance' fill='var(--blue-3)' />
+        </Chart.BarChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

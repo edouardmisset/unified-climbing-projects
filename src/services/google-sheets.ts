@@ -43,9 +43,9 @@ export async function createOrReplaceWorksheet(
   return await spreadsheet.addSheet({ title })
 }
 
-export async function backupDataToWorksheet<T extends Object_ & AddRowsRow>(
+export async function backupDataToWorksheet(
   sheet: GoogleSpreadsheetWorksheet,
-  data: T[],
+  data: (Object_ & AddRowsRow)[],
 ): Promise<void> {
   if (data.length === 0) return
 
@@ -53,7 +53,7 @@ export async function backupDataToWorksheet<T extends Object_ & AddRowsRow>(
   for (const element of data)
     // oxlint-disable-next-line curly
     for (const key of objectKeys(element)) {
-      headersSet.add(String(key))
+      headersSet.add(key)
     }
 
   await sheet.setHeaderRow([...headersSet])

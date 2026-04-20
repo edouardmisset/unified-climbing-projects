@@ -38,7 +38,7 @@ describe('calculateVersatilityPercentage', () => {
 
     // With missing properties, the ratios for holds, profile, and height will be 0
     // Only style and crag will contribute to versatility
-    expect(result > 0).toBeTruthy()
+    expect(result > 0).toBe(true)
   })
 
   it('should calculate versatility correctly for a variety of ascents', () => {
@@ -90,8 +90,8 @@ describe('calculateVersatilityPercentage', () => {
     // 3 different heights (3/10), and 3 different crags (3/15)
     // Expected ratios: [3/7, 3/10, 3/7, 1, 0.2]
     // Average: ~0.47 -> 47%
-    expect(result > 0).toBeTruthy()
-    expect(result < 100).toBeTruthy()
+    expect(result > 0).toBe(true)
+    expect(result < 100).toBe(true)
   })
 
   it('should handle maximum versatility', () => {
@@ -149,7 +149,7 @@ describe('calculateVersatilityPercentage', () => {
         _id: String(id++),
         profile: PROFILES[1],
         routeName: `Route with ${style}`,
-        style: style,
+        style,
         topoGrade: '6a',
         tries: 1,
       } as Ascent)

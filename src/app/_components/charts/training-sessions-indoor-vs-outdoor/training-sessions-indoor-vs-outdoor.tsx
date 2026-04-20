@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import {
+  createRadialChart,
   Legend,
   Pie,
   PieChart,
@@ -16,6 +17,13 @@ import type { TrainingSession } from '~/schema/training'
 import { ChartTooltip } from '../chart-elements'
 import { DEFAULT_PIE_PROPS } from '../constants'
 import { getSessionsIndoorVsOutdoor } from './get-sessions-indoor-vs-outdoor'
+
+type SessionsIndoorVsOutdoorDatum = ReturnType<typeof getSessionsIndoorVsOutdoor>[number]
+
+const Chart = createRadialChart<SessionsIndoorVsOutdoorDatum, string, string | number>()({
+  PieChart,
+  Pie,
+})
 
 export function TrainingSessionsIndoorVsOutdoor({
   trainingSessions,
@@ -39,10 +47,10 @@ export function TrainingSessionsIndoorVsOutdoor({
   return (
     <ChartContainer caption='Indoor vs Outdoor'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart accessibilityLayer={false}>
+        <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Legend align='center' verticalAlign='top' />
-          <Pie
+          <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
             dataKey='value'
@@ -50,7 +58,7 @@ export function TrainingSessionsIndoorVsOutdoor({
             nameKey='label'
             shape={shapeRenderer}
           />
-        </PieChart>
+        </Chart.PieChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import {
+  createRadialChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -15,6 +16,13 @@ import { renderPieArcLabel } from '../pie-chart-utils'
 
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
+
+type AscentsPerDisciplineDatum = ReturnType<typeof getAscentsPerDiscipline>[number]
+
+const Chart = createRadialChart<AscentsPerDisciplineDatum, string, string | number>()({
+  PieChart,
+  Pie,
+})
 
 export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   const routesVsBoulders = useMemo(() => getAscentsPerDiscipline(ascents), [ascents])
@@ -35,9 +43,9 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Ascents per Discipline'>
       <ResponsiveContainer height='100%' width='100%'>
-        <PieChart accessibilityLayer={false}>
+        <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
-          <Pie
+          <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={routesVsBoulders}
             dataKey='value'
@@ -45,7 +53,7 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
             nameKey='label'
             shape={shapeRenderer}
           />
-        </PieChart>
+        </Chart.PieChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

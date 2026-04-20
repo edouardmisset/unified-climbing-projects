@@ -3,6 +3,7 @@ import {
   Bar,
   CartesianGrid,
   ComposedChart,
+  createHorizontalChart,
   Legend,
   Line,
   ResponsiveContainer,
@@ -24,6 +25,15 @@ import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { getTopTenEvolution } from './get-top-ten-evolution'
 
+type TopTenEvolutionDatum = ReturnType<typeof getTopTenEvolution>[number]
+
+const Chart = createHorizontalChart<TopTenEvolutionDatum>()({
+  ComposedChart,
+  Bar,
+  Line,
+  YAxis,
+})
+
 const AXIS_LABELS = {
   ascents: '# Ascents',
   boulders: 'Boulders',
@@ -43,10 +53,14 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Top Ten Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <Chart.ComposedChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={data}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <YAxis
+          <Chart.YAxis
             yAxisId='left'
             label={{
               ...AXIS_LABEL_STYLE,
@@ -56,7 +70,7 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
             tick={AXIS_TICK_STYLE}
             tickFormatter={value => frenchNumberFormatter.format(Number(value))}
           />
-          <YAxis
+          <Chart.YAxis
             yAxisId='right'
             allowDecimals={false}
             domain={[0, 'dataMax']}
@@ -76,27 +90,27 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
             }}
           />
           <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
-          <Bar
+          <Chart.Bar
             dataKey='Boulder'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={AXIS_LABELS.boulders}
             stackId='ascents'
             yAxisId='right'
           />
-          <Bar
+          <Chart.Bar
             dataKey='Route'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={AXIS_LABELS.routes}
             stackId='ascents'
             yAxisId='right'
           />
-          <Bar
+          <Chart.Bar
             dataKey='outdoorDays'
             fill='var(--outdoor)'
             name={AXIS_LABELS.outdoorDays}
             yAxisId='right'
           />
-          <Line
+          <Chart.Line
             dataKey='topTenScore'
             dot={DOT_STYLE}
             name={AXIS_LABELS.score}
@@ -105,7 +119,7 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
             type='natural'
             yAxisId='left'
           />
-        </ComposedChart>
+        </Chart.ComposedChart>
       </ResponsiveContainer>
     </ChartContainer>
   )

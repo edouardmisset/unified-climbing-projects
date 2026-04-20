@@ -1,13 +1,13 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import { ASCENT_STYLE, type Ascent, AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import { ASCENT_STYLE, AVAILABLE_CLIMBING_DISCIPLINE, type Ascent } from '~/schema/ascent'
 import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
@@ -37,11 +37,6 @@ export default function AscentsFilterBar({
     setRoute,
   } = useAscentsQueryState()
 
-  const selectedYearNumber = useMemo(() => {
-    const n = Number(selectedYear)
-    return selectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  }, [selectedYear])
-
   const yearList = useMemo(() => {
     const filteredForYear = filterAscents(allAscents, {
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
@@ -56,6 +51,13 @@ export default function AscentsFilterBar({
     }).map(String)
   }, [allAscents, selectedDiscipline, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
 
+  const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
+
+  const selectedYearNumber = useMemo(() => {
+    const n = Number(effectiveSelectedYear)
+    return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
+  }, [effectiveSelectedYear])
+
   const disciplineList = useMemo(() => {
     const filteredForDiscipline = filterAscents(allAscents, {
       year: selectedYearNumber,
@@ -69,37 +71,59 @@ export default function AscentsFilterBar({
     )
   }, [allAscents, selectedYearNumber, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
 
+  const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
+    ? selectedDiscipline
+    : ALL_VALUE
+
   const styleList = useMemo(() => {
     const filteredForStyle = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
       crag: normalizeFilterValue(selectedCrag),
       area: normalizeFilterValue(selectedArea),
     })
     return ASCENT_STYLE.filter(style => filteredForStyle.some(ascent => ascent.style === style))
-  }, [allAscents, selectedYearNumber, selectedDiscipline, selectedPeriod, selectedCrag, selectedArea])
+  }, [
+    allAscents,
+    selectedYearNumber,
+    effectiveSelectedDiscipline,
+    selectedPeriod,
+    selectedCrag,
+    selectedArea,
+  ])
+
+  const effectiveSelectedStyle = styleList.includes(selectedStyle) ? selectedStyle : ALL_VALUE
 
   const cragList = useMemo(() => {
     const filteredForCrag = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
-      style: normalizeFilterValue(selectedStyle),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      style: normalizeFilterValue(effectiveSelectedStyle),
       period: normalizeFilterValue(selectedPeriod),
       area: normalizeFilterValue(selectedArea),
     })
     return [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
       .filter(Boolean)
-      .sort(compareStringsAscending)
-  }, [allAscents, selectedYearNumber, selectedDiscipline, selectedStyle, selectedPeriod, selectedArea])
+      .toSorted(compareStringsAscending)
+  }, [
+    allAscents,
+    selectedYearNumber,
+    effectiveSelectedDiscipline,
+    effectiveSelectedStyle,
+    selectedPeriod,
+    selectedArea,
+  ])
+
+  const effectiveSelectedCrag = cragList.includes(selectedCrag) ? selectedCrag : ALL_VALUE
 
   const areaList = useMemo(() => {
     const filteredForArea = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
-      style: normalizeFilterValue(selectedStyle),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      style: normalizeFilterValue(effectiveSelectedStyle),
       period: normalizeFilterValue(selectedPeriod),
-      crag: normalizeFilterValue(selectedCrag),
+      crag: normalizeFilterValue(effectiveSelectedCrag),
     })
     return [
       ...new Set(
@@ -107,48 +131,41 @@ export default function AscentsFilterBar({
           .map(({ area }) => area?.trim())
           .filter((area): area is string => Boolean(area)),
       ),
-    ].sort(compareStringsAscending)
-  }, [allAscents, selectedYearNumber, selectedDiscipline, selectedStyle, selectedPeriod, selectedCrag])
+    ].toSorted(compareStringsAscending)
+  }, [
+    allAscents,
+    selectedYearNumber,
+    effectiveSelectedDiscipline,
+    effectiveSelectedStyle,
+    selectedPeriod,
+    effectiveSelectedCrag,
+  ])
+
+  const effectiveSelectedArea = areaList.includes(selectedArea) ? selectedArea : ALL_VALUE
 
   const periodList = useMemo(() => {
     const filteredForPeriod = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
-      style: normalizeFilterValue(selectedStyle),
-      crag: normalizeFilterValue(selectedCrag),
-      area: normalizeFilterValue(selectedArea),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      style: normalizeFilterValue(effectiveSelectedStyle),
+      crag: normalizeFilterValue(effectiveSelectedCrag),
+      area: normalizeFilterValue(effectiveSelectedArea),
     })
     return PERIOD.filter(period =>
       filteredForPeriod.some(({ date }) =>
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),
     )
-  }, [allAscents, selectedYearNumber, selectedDiscipline, selectedStyle, selectedCrag, selectedArea])
+  }, [
+    allAscents,
+    selectedYearNumber,
+    effectiveSelectedDiscipline,
+    effectiveSelectedStyle,
+    effectiveSelectedCrag,
+    effectiveSelectedArea,
+  ])
 
-  useEffect(() => {
-    if (selectedYear !== ALL_VALUE && !yearList.includes(selectedYear)) setYear(ALL_VALUE)
-  }, [yearList, selectedYear, setYear])
-
-  useEffect(() => {
-    if (selectedDiscipline !== ALL_VALUE && !disciplineList.includes(selectedDiscipline))
-      setDiscipline(ALL_VALUE)
-  }, [disciplineList, selectedDiscipline, setDiscipline])
-
-  useEffect(() => {
-    if (selectedStyle !== ALL_VALUE && !styleList.includes(selectedStyle)) setStyle(ALL_VALUE)
-  }, [styleList, selectedStyle, setStyle])
-
-  useEffect(() => {
-    if (selectedCrag !== ALL_VALUE && !cragList.includes(selectedCrag)) setCrag(ALL_VALUE)
-  }, [cragList, selectedCrag, setCrag])
-
-  useEffect(() => {
-    if (selectedArea !== ALL_VALUE && !areaList.includes(selectedArea)) setArea(ALL_VALUE)
-  }, [areaList, selectedArea, setArea])
-
-  useEffect(() => {
-    if (selectedPeriod !== ALL_VALUE && !periodList.includes(selectedPeriod)) setPeriod(ALL_VALUE)
-  }, [periodList, selectedPeriod, setPeriod])
+  const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
   const filters = useMemo<FilterConfig[]>(
     () =>
@@ -157,42 +174,42 @@ export default function AscentsFilterBar({
           setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
           options: disciplineList,
-          selectedValue: selectedDiscipline,
+          selectedValue: effectiveSelectedDiscipline,
           title: 'Climbing Discipline',
         },
         {
           setValue: createValueSetter(setYear),
           name: 'Year',
           options: yearList,
-          selectedValue: selectedYear,
+          selectedValue: effectiveSelectedYear,
           title: 'Year',
         },
         {
           setValue: createValueSetter(setCrag),
           name: 'Crag',
           options: cragList,
-          selectedValue: selectedCrag,
+          selectedValue: effectiveSelectedCrag,
           title: 'Crag',
         },
         {
           setValue: createValueSetter(setArea),
           name: 'Area',
           options: areaList,
-          selectedValue: selectedArea,
+          selectedValue: effectiveSelectedArea,
           title: 'Area',
         },
         {
           setValue: createValueSetter(setStyle),
           name: 'Style',
           options: styleList,
-          selectedValue: selectedStyle,
+          selectedValue: effectiveSelectedStyle,
           title: 'Ascent Style',
         },
         {
           setValue: createValueSetter(setPeriod),
           name: 'Period',
           options: periodList,
-          selectedValue: selectedPeriod,
+          selectedValue: effectiveSelectedPeriod,
           title: 'Period',
         },
       ] as const satisfies FilterConfig[],
@@ -200,13 +217,13 @@ export default function AscentsFilterBar({
       areaList,
       cragList,
       disciplineList,
+      effectiveSelectedArea,
+      effectiveSelectedCrag,
+      effectiveSelectedDiscipline,
+      effectiveSelectedPeriod,
+      effectiveSelectedStyle,
+      effectiveSelectedYear,
       periodList,
-      selectedArea,
-      selectedCrag,
-      selectedDiscipline,
-      selectedPeriod,
-      selectedStyle,
-      selectedYear,
       setArea,
       setCrag,
       setDiscipline,

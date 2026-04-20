@@ -12,7 +12,7 @@ export async function IndicatorsTimeline() {
   return (
     <Timeline>
       {indicators.map(({ year, progression, efficiency, versatility, score }) => (
-        <Event interval={String(year)} key={year} title={''}>
+        <Event interval={String(year)} key={year} title=''>
           <ul className={styles.list}>
             <li className={`${styles.item} textNoWrap`}>Progression: {progression}%</li>
             <li className={`${styles.item} textNoWrap`}>Efficiency: {efficiency}%</li>

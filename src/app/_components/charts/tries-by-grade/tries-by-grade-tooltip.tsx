@@ -1,6 +1,6 @@
 import { capitalize } from '@edouardmisset/text'
 import { memo } from 'react'
-import type { TooltipContentProps } from 'recharts/types/component/Tooltip'
+import type { TooltipContentProps } from 'recharts'
 import styles from './tries-by-grades.module.css'
 
 type PayloadEntry = NonNullable<TooltipContentProps['payload']>[number]
