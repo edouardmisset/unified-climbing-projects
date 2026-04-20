@@ -483,7 +483,6 @@ not to see them */
 
 :where(hr) {
   height: var(--border-size-2);
-  margin-block: var(--size-fluid-5);
   background-color: var(--surface-3);
 }
 

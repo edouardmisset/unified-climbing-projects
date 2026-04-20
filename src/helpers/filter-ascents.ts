@@ -36,10 +36,7 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
     period,
   } = filters ?? {}
 
-  if (ascents.length === 0) {
-    globalThis.console.log('No ascents passed to `filterAscents`')
-    return []
-  }
+  if (ascents.length === 0) return []
 
   return ascents.filter(ascent => {
     const ascentDate = new Date(ascent.date)
