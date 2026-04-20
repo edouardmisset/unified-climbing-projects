@@ -5,12 +5,9 @@ import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
-import { filterAscents } from '~/helpers/filter-ascents'
-import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import { ASCENT_STYLE, type Ascent, AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
-import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
+import { ASCENT_STYLE, AVAILABLE_CLIMBING_DISCIPLINE, type Ascent } from '~/schema/ascent'
 import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
@@ -218,7 +215,6 @@ export default function AscentsFilterBar({
       ] as const satisfies FilterConfig[],
     [
       areaList,
-      areaList,
       cragList,
       disciplineList,
       effectiveSelectedArea,
@@ -234,7 +230,6 @@ export default function AscentsFilterBar({
       setPeriod,
       setStyle,
       setYear,
-      styleList,
       styleList,
       yearList,
     ],
