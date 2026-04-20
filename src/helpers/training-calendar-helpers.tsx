@@ -14,11 +14,8 @@ export function fromTrainingSessionsToCalendarEntries(
   for (const ascent of allAscents) {
     const dateKey = ascent.date.slice(0, 10)
     const existing = ascentsByDate.get(dateKey)
-    if (existing) {
-      existing.push(ascent)
-    } else {
-      ascentsByDate.set(dateKey, [ascent])
-    }
+    if (existing) existing.push(ascent)
+    else ascentsByDate.set(dateKey, [ascent])
   }
 
   return (
