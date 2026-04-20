@@ -121,12 +121,6 @@ export default defineConfig({
       },
     },
     {
-      files: ['src/**/*.tsx'],
-      rules: {
-        'typescript/consistent-return': 'off',
-      },
-    },
-    {
       files: ['src/**/use*-query-state.ts'],
       rules: {
         'unicorn/no-null': 'off',
