@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, createVerticalChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  createVerticalChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import {
@@ -47,7 +56,12 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
           <Chart.YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
           {_GRADES.map(key => (
-            <Chart.Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+            <Chart.Bar
+              key={key}
+              dataKey={key}
+              fill={fromGradeToBackgroundColor(key)}
+              stackId='grades'
+            />
           ))}
         </Chart.BarChart>
       </ResponsiveContainer>

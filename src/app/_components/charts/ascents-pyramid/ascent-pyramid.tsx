@@ -39,7 +39,12 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {ASCENT_STYLE.map(style => (
-            <Chart.Bar key={style} dataKey={style} fill={ASCENT_STYLE_TO_COLOR[style]} stackId='styles' />
+            <Chart.Bar
+              key={style}
+              dataKey={style}
+              fill={ASCENT_STYLE_TO_COLOR[style]}
+              stackId='styles'
+            />
           ))}
         </Chart.BarChart>
       </ResponsiveContainer>

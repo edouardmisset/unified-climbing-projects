@@ -42,7 +42,12 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
           {_GRADES.map(key => (
-            <Chart.Bar key={key} dataKey={key} fill={fromGradeToBackgroundColor(key)} stackId='grades' />
+            <Chart.Bar
+              key={key}
+              dataKey={key}
+              fill={fromGradeToBackgroundColor(key)}
+              stackId='grades'
+            />
           ))}
         </Chart.BarChart>
       </ResponsiveContainer>

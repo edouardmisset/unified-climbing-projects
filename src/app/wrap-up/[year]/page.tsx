@@ -14,7 +14,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ year: string }>
 }): Promise<Metadata> {
-  const { year = '' } = await params
+  const { year } = await params
   return {
     description: `Textual description of all my climbing ascents in ${year}`,
     keywords: ['climbing', 'ascents', 'description', year],

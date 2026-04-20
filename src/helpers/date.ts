@@ -92,14 +92,11 @@ export const getDayOfYear = (date: Date): number => {
 /**
  * Returns the most frequent date from an array of objects containing a date field.
  *
- * @template TypeWithDate
- * @param {TypeWithDate[]} data - The array of objects that contain a 'date' string field
+ * @param {StringDate[]} data - The array of objects that contain a 'date' string field
  * @returns {[string, number]} A tuple where the first element is the date and
  * the second element is the frequency
  */
-export function getMostFrequentDate<TypeWithDate extends { date: string }>(
-  data: TypeWithDate[],
-): [string, number] {
+export function getMostFrequentDate(data: StringDate[]): [string, number] {
   const dateFrequency = frequencyBy(data, 'date')
   const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
     ascending: false,
@@ -204,8 +201,7 @@ export function extractDateFromISODateString(isoDate: string): string {
  * A streak is defined as consecutive days without gaps. The function counts
  * unique dates only, so multiple entries on the same date are treated as one.
  *
- * @template T - Type extending StringDate with a date property
- * @param {T[]} data - Array of objects containing date strings in ISO format
+ * @param {StringDate[]} data - Array of objects containing date strings in ISO format
  * (YYYY-MM-DD)
  * @returns {number} The length of the longest consecutive streak of dates
  *
@@ -220,7 +216,7 @@ export function extractDateFromISODateString(isoDate: string): string {
  * const streak = findLongestStreak(activities); // Returns 3
  * ```
  */
-export function findLongestStreak<T extends StringDate>(data: T[]): number {
+export function findLongestStreak(data: StringDate[]): number {
   if (data.length === 0) return 0
 
   const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
@@ -262,8 +258,7 @@ export function findLongestStreak<T extends StringDate>(data: T[]): number {
  * The function counts unique dates only, so multiple entries on the same date
  * are treated as one.
  *
- * @template T - Type extending StringDate with a date property
- * @param {T[]} data - Array of objects containing date strings in ISO format
+ * @param {StringDate[]} data - Array of objects containing date strings in ISO format
  * (YYYY-MM-DD)
  * @returns {number} The length of the longest gap between consecutive dates in
  * days, or 0 if no gaps exist
@@ -279,7 +274,7 @@ export function findLongestStreak<T extends StringDate>(data: T[]): number {
  * const longestGap = findLongestGap(activities); // Returns 7
  * ```
  */
-export function findLongestGap<T extends StringDate>(data: T[]): number {
+export function findLongestGap(data: StringDate[]): number {
   if (data.length <= 1) return 0
 
   const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]

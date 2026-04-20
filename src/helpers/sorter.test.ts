@@ -44,12 +44,12 @@ const harderAscent: Ascent = {
 describe('sortByGrade', () => {
   it('should return a negative value when the first ascent has a higher grade than the second in descending order', () => {
     const result = sortByGrade(harderAscent, easierAscent)
-    expect(result < 0).toBeTruthy()
+    expect(result < 0).toBe(true)
   })
 
   it('should return a positive value when the first ascent has a lower grade than the second in descending order', () => {
     const result = sortByGrade(easierAscent, harderAscent)
-    expect(result > 0).toBeTruthy()
+    expect(result > 0).toBe(true)
   })
 
   it('should sort an array of ascents in descending order by grade (default behavior)', () => {

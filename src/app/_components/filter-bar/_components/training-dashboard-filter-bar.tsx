@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
@@ -26,11 +26,6 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setLocationType,
   } = useTrainingSessionsQueryState()
 
-  const selectedYearNumber = useMemo(() => {
-    const n = Number(selectedYear)
-    return selectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  }, [selectedYear])
-
   const yearList = useMemo(() => {
     const filteredForYear = filterTrainingSessions(trainingSessions, {
       climbingDiscipline: normalizeFilterValue(selectedDiscipline),
@@ -43,6 +38,13 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     }).map(String)
   }, [trainingSessions, selectedDiscipline, selectedLocationType, selectedPeriod])
 
+  const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
+
+  const selectedYearNumber = useMemo(() => {
+    const n = Number(effectiveSelectedYear)
+    return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
+  }, [effectiveSelectedYear])
+
   const disciplineList = useMemo(() => {
     const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
@@ -54,10 +56,14 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     )
   }, [trainingSessions, selectedYearNumber, selectedLocationType, selectedPeriod])
 
+  const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
+    ? selectedDiscipline
+    : ALL_VALUE
+
   const locationTypeList = useMemo(() => {
     const filteredForLocationType = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
     })
     const hasIndoor = filteredForLocationType.some(({ sessionType }) =>
@@ -67,38 +73,31 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     return LOCATION_TYPES.filter(locationType =>
       locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
-  }, [trainingSessions, selectedYearNumber, selectedDiscipline, selectedPeriod])
+  }, [trainingSessions, selectedYearNumber, effectiveSelectedDiscipline, selectedPeriod])
+
+  const effectiveSelectedLocationType = locationTypeList.includes(selectedLocationType)
+    ? selectedLocationType
+    : ALL_VALUE
 
   const periodList = useMemo(() => {
     const filteredForPeriod = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
-      locationType: normalizeFilterValue(selectedLocationType),
+      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      locationType: normalizeFilterValue(effectiveSelectedLocationType),
     })
     return PERIOD.filter(period =>
       filteredForPeriod.some(({ date }) =>
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),
     )
-  }, [trainingSessions, selectedYearNumber, selectedDiscipline, selectedLocationType])
+  }, [
+    trainingSessions,
+    selectedYearNumber,
+    effectiveSelectedDiscipline,
+    effectiveSelectedLocationType,
+  ])
 
-  useEffect(() => {
-    if (selectedYear !== ALL_VALUE && !yearList.includes(selectedYear)) setYear(ALL_VALUE)
-  }, [yearList, selectedYear, setYear])
-
-  useEffect(() => {
-    if (selectedDiscipline !== ALL_VALUE && !disciplineList.includes(selectedDiscipline))
-      setDiscipline(ALL_VALUE)
-  }, [disciplineList, selectedDiscipline, setDiscipline])
-
-  useEffect(() => {
-    if (selectedLocationType !== ALL_VALUE && !locationTypeList.includes(selectedLocationType))
-      setLocationType(ALL_VALUE)
-  }, [locationTypeList, selectedLocationType, setLocationType])
-
-  useEffect(() => {
-    if (selectedPeriod !== ALL_VALUE && !periodList.includes(selectedPeriod)) setPeriod(ALL_VALUE)
-  }, [periodList, selectedPeriod, setPeriod])
+  const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
   const filters = useMemo<FilterConfig[]>(
     () =>
@@ -107,39 +106,39 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
           setValue: createValueSetter(setYear),
           name: 'Year',
           options: yearList,
-          selectedValue: selectedYear,
+          selectedValue: effectiveSelectedYear,
           title: 'Year',
         },
         {
           setValue: createValueSetter(setLocationType),
           name: 'Location Type',
           options: locationTypeList,
-          selectedValue: selectedLocationType,
+          selectedValue: effectiveSelectedLocationType,
           title: 'Indoor / Outdoor',
         },
         {
           setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
           options: disciplineList,
-          selectedValue: selectedDiscipline,
+          selectedValue: effectiveSelectedDiscipline,
           title: 'Climbing Discipline',
         },
         {
           setValue: createValueSetter(setPeriod),
           name: 'Period',
           options: periodList,
-          selectedValue: selectedPeriod,
+          selectedValue: effectiveSelectedPeriod,
           title: 'Period',
         },
       ] as const satisfies FilterConfig[],
     [
       disciplineList,
+      effectiveSelectedDiscipline,
+      effectiveSelectedLocationType,
+      effectiveSelectedPeriod,
+      effectiveSelectedYear,
       locationTypeList,
       periodList,
-      selectedDiscipline,
-      selectedLocationType,
-      selectedPeriod,
-      selectedYear,
       setDiscipline,
       setLocationType,
       setPeriod,

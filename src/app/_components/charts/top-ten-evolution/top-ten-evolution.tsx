@@ -53,7 +53,11 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
   return (
     <ChartContainer caption='Top Ten Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <Chart.ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <Chart.ComposedChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={data}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <Chart.YAxis

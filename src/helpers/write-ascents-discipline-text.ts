@@ -14,9 +14,7 @@ type ClimbingActivity = `${Lowercase<Ascent['climbingDiscipline']> | 'ascent'}${
  * @returns {ClimbingActivity} The text for the ascents ('boulder', 'boulders',
  * 'route', etc).
  */
-export function writeAscentsDisciplineText<T extends Pick<Ascent, 'climbingDiscipline'>>(
-  ascents: T[],
-): ClimbingActivity {
+export function writeAscentsDisciplineText(ascents: Ascent[]): ClimbingActivity {
   if (ascents[0] === undefined) return 'ascents'
 
   const maybePlural = ascents.length > 1 ? 's' : ''

@@ -25,7 +25,9 @@ import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER, type Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
 
-type AscentsVolumeAndGradesPerYearDatum = ReturnType<typeof getAscentsVolumeAndGradesPerYear>[number]
+type AscentsVolumeAndGradesPerYearDatum = ReturnType<
+  typeof getAscentsVolumeAndGradesPerYear
+>[number]
 
 const Chart = createHorizontalChart<AscentsVolumeAndGradesPerYearDatum>()({
   ComposedChart,
@@ -147,7 +149,11 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
       <ResponsiveContainer height='100%' width='100%'>
-        <Chart.ComposedChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
+        <Chart.ComposedChart
+          accessibilityLayer={false}
+          barCategoryGap={BAR_CATEGORY_GAP}
+          data={data}
+        >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <Chart.YAxis
@@ -165,7 +171,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           <Chart.YAxis
             yAxisId='right'
             allowDecimals={false}
-            domain={[0, dataMax => roundUpToStep(Number(dataMax), ASCENTS_AXIS_STEP)]}
+            domain={[0, dataMax => roundUpToStep(dataMax, ASCENTS_AXIS_STEP)]}
             label={{
               ...AXIS_LABEL_STYLE,
               angle: -90,

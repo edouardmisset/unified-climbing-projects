@@ -1,5 +1,12 @@
 import { useMemo } from 'react'
-import { CartesianGrid, createHorizontalChart, Legend, Line, LineChart, ResponsiveContainer } from 'recharts'
+import {
+  CartesianGrid,
+  createHorizontalChart,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+} from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { ChartTooltip, ChartXAxis, ChartYAxis } from '../chart-elements'

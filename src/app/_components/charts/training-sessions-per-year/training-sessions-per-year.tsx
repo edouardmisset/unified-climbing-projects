@@ -1,5 +1,12 @@
 import { useMemo, useCallback } from 'react'
-import { Area, AreaChart, CartesianGrid, createHorizontalChart, Legend, ResponsiveContainer } from 'recharts'
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  createHorizontalChart,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 import type { TrainingSession } from '~/schema/training'
 import { ChartContainer } from '../chart-container/chart-container'
