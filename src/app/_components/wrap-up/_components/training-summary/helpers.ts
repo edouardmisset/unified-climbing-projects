@@ -1,5 +1,6 @@
 import { INDOOR_SESSION_TYPES } from '~/constants/training'
 import { roundToTen } from '~/helpers/math'
+import { formatWholePercent } from '~/helpers/number-formatter'
 import type { TrainingSession } from '~/schema/training'
 
 /**
@@ -10,7 +11,7 @@ export function calculateSessionPercentage(firstCount: number, secondCount: numb
   const total = firstCount + secondCount
   if (total === 0) return 'N/A'
 
-  return roundToTen((firstCount / total) * 100).toString()
+  return formatWholePercent(roundToTen((firstCount / total) * 100))
 }
 
 /**

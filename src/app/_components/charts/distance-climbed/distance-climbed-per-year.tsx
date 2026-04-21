@@ -7,6 +7,7 @@ import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
 import type { Ascent } from '~/schema/ascent'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
+import { formatNumber } from '~/helpers/number-formatter'
 
 type DistanceClimbedDatum = ReturnType<typeof getDistanceClimbedPerYear>[number]
 
@@ -22,6 +23,8 @@ const AXIS_LABELS = {
 
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
+  const formattedDistance = (value: unknown) =>
+    typeof value === 'number' ? formatNumber(value) : String(value)
 
   if (data.length === 0) return
 
@@ -31,7 +34,7 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
         <Chart.BarChart accessibilityLayer={false} barCategoryGap={0} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
           <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <ChartYAxis labelText={AXIS_LABELS.height} />
+          <ChartYAxis labelText={AXIS_LABELS.height} tickFormatter={formattedDistance} />
           <ChartTooltip />
           <Chart.Bar dataKey='distance' fill='var(--blue-3)' />
         </Chart.BarChart>

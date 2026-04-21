@@ -1,4 +1,5 @@
 import type { PieProps } from 'recharts'
+import { formatRatioAsPercent } from '~/helpers/number-formatter'
 
 export const DEFAULT_X_AXIS_OFFSET = 20
 
@@ -41,5 +42,5 @@ export function formatYearTick(year: unknown): string {
 }
 
 export function formatPercentageTick(value: unknown): string {
-  return typeof value === 'number' ? `${Math.round(value * 100)}%` : String(value)
+  return typeof value === 'number' ? formatRatioAsPercent(value) : String(value)
 }

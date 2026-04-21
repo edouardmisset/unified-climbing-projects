@@ -1,4 +1,5 @@
 import type { PieLabelRenderProps } from 'recharts'
+import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
 import { PIE_LABEL_TEXT_COLOR } from './constants'
 
 export function renderPieArcLabel(params: { props: PieLabelRenderProps; total: number }) {
@@ -17,7 +18,7 @@ export function renderPieArcLabel(params: { props: PieLabelRenderProps; total: n
       textAnchor='middle'
       dominantBaseline='central'
     >
-      {`${value} (${percentage}%)`}
+      {`${formatNumber(value)} (${formatWholePercent(percentage)})`}
     </text>
   )
 }

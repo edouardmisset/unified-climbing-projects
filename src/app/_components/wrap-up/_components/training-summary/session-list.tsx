@@ -1,6 +1,5 @@
-import { stringifyDate } from '@edouardmisset/date'
 import { NON_BREAKING_SPACE } from '~/constants/generic'
-import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
+import { formatShortDate, fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { TrainingSession } from '~/schema/training'
 import styles from './training-summary.module.css'
 
@@ -16,7 +15,7 @@ export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
           <li className={styles.item} key={_id}>
             {disciplineIcon}
             {NON_BREAKING_SPACE}
-            <span className='monospace'>{stringifyDate(new Date(date))}</span>
+            <span className='monospace'>{formatShortDate(date)}</span>
             {gymCrag && ` - ${gymCrag}`}
           </li>
         )

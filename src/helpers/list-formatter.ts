@@ -10,8 +10,10 @@ import { US_LOCALE } from '~/constants/generic'
  */
 function createListFormatter(
   options: Intl.ListFormatOptions,
+  locale: string = US_LOCALE,
 ): (list: string[] | readonly string[]) => string {
-  return list => new Intl.ListFormat(US_LOCALE, options).format(list)
+  const formatter = new Intl.ListFormat(locale, options)
+  return list => formatter.format(list)
 }
 
 /**
@@ -21,10 +23,13 @@ function createListFormatter(
  * @param {string[] | readonly string[]} list - The list of strings to format.
  * @returns {string} The formatted list string.
  */
-export const disjunctiveListFormatter = createListFormatter({
-  style: 'long',
-  type: 'disjunction',
-})
+export const disjunctiveListFormatter = createListFormatter(
+  {
+    style: 'long',
+    type: 'disjunction',
+  },
+  US_LOCALE,
+)
 
 /**
  * Formats a list of items using conjunctive (and) grouping.
@@ -33,7 +38,10 @@ export const disjunctiveListFormatter = createListFormatter({
  * @param {string[] | readonly string[]} list - The list of strings to format.
  * @returns {string} The formatted list string.
  */
-export const conjunctiveListFormatter = createListFormatter({
-  style: 'long',
-  type: 'conjunction',
-})
+export const conjunctiveListFormatter = createListFormatter(
+  {
+    style: 'long',
+    type: 'conjunction',
+  },
+  US_LOCALE,
+)

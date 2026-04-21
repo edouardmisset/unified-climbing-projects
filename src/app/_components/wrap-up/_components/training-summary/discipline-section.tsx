@@ -1,4 +1,5 @@
 import type { TrainingSession } from '~/schema/training'
+import { formatNumber } from '~/helpers/number-formatter'
 import { Popover } from '../../../ui/popover/popover'
 import { getSessionRatioData } from './helpers'
 import { SessionList } from './session-list'
@@ -32,17 +33,17 @@ export function DisciplineSection(props: DisciplineSectionProps) {
     secondSessions: boulderSessions,
   })
 
-  const sectionTitle = `${header} sessions ${sessionCount}`
+  const sectionTitle = `${header} sessions ${formatNumber(sessionCount)}`
 
   return (
     <>
       <h4 title={sectionTitle}>
-        {header} <span className={styles.headerSmall}>({percentage}%)</span>
+        {header} <span className={styles.headerSmall}>({percentage})</span>
       </h4>
       <Popover
         className={styles.target}
-        popoverTitle={`${firstLabel}: ${firstCount} sessions`}
-        title={`${firstLabel} Training Sessions: ${firstCount}`}
+        popoverTitle={`${firstLabel}: ${formatNumber(firstCount)} sessions`}
+        title={`${firstLabel} Training Sessions: ${formatNumber(firstCount)}`}
         trigger={firstLabel}
       >
         <SessionList sessions={firstSessions} />
@@ -50,13 +51,13 @@ export function DisciplineSection(props: DisciplineSectionProps) {
       /{' '}
       <Popover
         className={styles.target}
-        popoverTitle={`${secondLabel}: ${secondCount} sessions`}
-        title={`${secondLabel} Training Sessions: ${secondCount}`}
+        popoverTitle={`${secondLabel}: ${formatNumber(secondCount)} sessions`}
+        title={`${secondLabel} Training Sessions: ${formatNumber(secondCount)}`}
         trigger={secondLabel}
       >
         <SessionList sessions={secondSessions} />
       </Popover>
-      : {disciplinePercentage}%
+      : {disciplinePercentage}
     </>
   )
 }

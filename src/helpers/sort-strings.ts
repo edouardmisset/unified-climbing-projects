@@ -1,4 +1,4 @@
-import { FR_LOCALE } from '~/constants/generic'
+import { US_LOCALE } from '~/constants/generic'
 
 /**
  * Creates a comparator function for sorting strings.
@@ -14,7 +14,7 @@ import { FR_LOCALE } from '~/constants/generic'
  */
 const createCompareStrings = (
   order: 'asc' | 'desc' = 'asc',
-  locale: string = FR_LOCALE,
+  locale: string = US_LOCALE,
   options?: Intl.CollatorOptions,
 ): ((a: string, b: string) => number) => {
   const { sensitivity = 'base', ...rest } = options ?? {}
@@ -31,7 +31,7 @@ const createCompareStrings = (
  * @returns {number} A negative number if a precedes b, a positive number if a
  * follows b, otherwise 0.
  */
-export const compareStringsAscending = createCompareStrings('asc')
+export const compareStringsAscending = createCompareStrings('asc', 'fr-FR')
 
 /**
  * Comparator function for sorting strings in descending order.
@@ -41,4 +41,4 @@ export const compareStringsAscending = createCompareStrings('asc')
  * @returns {number} A negative number if a follows b, a positive number if a
  * precedes b, otherwise 0.
  */
-export const compareStringsDescending = createCompareStrings('desc')
+export const compareStringsDescending = createCompareStrings('desc', 'fr-FR')

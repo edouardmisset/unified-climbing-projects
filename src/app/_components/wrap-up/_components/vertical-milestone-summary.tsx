@@ -2,7 +2,7 @@ import { average } from '@edouardmisset/math'
 import { sum } from '@edouardmisset/math/sum.ts'
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
-import { frenchNumberFormatter } from '~/helpers/number-formatter'
+import { formatUnit } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
@@ -21,7 +21,8 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const averageHeight =
     routes.length > 0 ? Math.round(average(...routes.map(({ height }) => height ?? 0))) : 0
 
-  const formattedTotalHeight = frenchNumberFormatter.format(totalHeight)
+  const formattedTotalHeight = formatUnit(totalHeight, 'meter', { unitDisplay: 'long' })
+  const formattedAverageHeight = formatUnit(averageHeight, 'meter', { unitDisplay: 'long' })
 
   return (
     <Card>
@@ -39,12 +40,12 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
         )}
         {totalHeight !== 0 && (
           <span className='block'>
-            In total, you climbed <strong>{formattedTotalHeight}</strong> meters
+            In total, you climbed <strong>{formattedTotalHeight}</strong>
           </span>
         )}
         {averageHeight !== 0 && (
           <span className='block'>
-            Your average route height is <strong>{averageHeight}</strong> meters
+            Your average route height is <strong>{formattedAverageHeight}</strong>
           </span>
         )}
       </p>

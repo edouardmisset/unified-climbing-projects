@@ -1,5 +1,6 @@
 import { capitalize } from '@edouardmisset/text'
 import { useMemo } from 'react'
+import { formatNumber } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { AscentListProps } from '~/schema/ascent'
 import { Popover } from '../ui/popover/popover'
@@ -17,7 +18,7 @@ export function AscentsWithPopover({ ascents }: AscentListProps) {
       popoverTitle={title}
       trigger={
         <strong>
-          {ascents.length} {ascentsDisciplineText}
+          {formatNumber(ascents.length)} {ascentsDisciplineText}
         </strong>
       }
     >

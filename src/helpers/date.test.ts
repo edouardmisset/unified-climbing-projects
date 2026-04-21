@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import {
+  createRecentDateOptions,
   extractDateFromISODateString,
   findLongestGap,
   findLongestStreak,
+  formatEnglishWeekdayLabel,
   fromDateToStringDate,
   getDayOfYear,
   getDaysInYear,
+  getEnglishWeekdayLabels,
   getLastSaturday,
   getLastSunday,
   getMostFrequentDate,
@@ -72,6 +75,29 @@ describe('getMostFrequentDate', () => {
   it('should return a default value when the input array is empty', () => {
     const result = getMostFrequentDate([])
     expect(result).toEqual(['', 0])
+  })
+})
+
+describe('createRecentDateOptions', () => {
+  it('should return English date shortcut labels', () => {
+    expect(createRecentDateOptions().map(({ label }) => label)).toEqual([
+      'Yesterday',
+      'Last Saturday',
+      'Last Sunday',
+    ])
+  })
+})
+
+describe('formatEnglishWeekdayLabel', () => {
+  it('should format weekday names in English', () => {
+    expect(formatEnglishWeekdayLabel(new Date(Date.UTC(2_024, 0, 1)), 'long')).toBe('Monday')
+    expect(formatEnglishWeekdayLabel(new Date(Date.UTC(2_024, 0, 1)), 'short')).toBe('Mon')
+  })
+})
+
+describe('getEnglishWeekdayLabels', () => {
+  it('should return Monday-first English weekday labels', () => {
+    expect(getEnglishWeekdayLabels()).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
   })
 })
 

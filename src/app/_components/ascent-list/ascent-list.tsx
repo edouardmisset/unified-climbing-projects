@@ -14,7 +14,7 @@ import {
   prettyLongDate,
   prettyShortDate,
 } from '~/helpers/formatters'
-import { frenchNumberFormatter } from '~/helpers/number-formatter'
+import { formatNumber, formatUnit, frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
 import { GradeTag } from './grade-tag'
@@ -207,7 +207,11 @@ export const AscentList = memo(
                       </td>
                       <td
                         className={`${styles.cell} monospace`}
-                        title={height === undefined ? undefined : `${height}m`}
+                        title={
+                          height === undefined
+                            ? undefined
+                            : formatUnit(height, 'meter', { unitDisplay: 'short' })
+                        }
                       >
                         {formatHeight(height)}
                       </td>
@@ -237,7 +241,8 @@ export const AscentList = memo(
                 <>
                   <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
                   <td className={`${styles.footerCell} ${styles.cell}`}>
-                    <strong>{ascents.length}</strong> {writeAscentsDisciplineText(ascents)}
+                    <strong>{formatNumber(ascents.length)}</strong>{' '}
+                    {writeAscentsDisciplineText(ascents)}
                   </td>
                 </>
               )}

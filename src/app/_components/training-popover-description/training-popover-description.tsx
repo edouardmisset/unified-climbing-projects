@@ -6,6 +6,7 @@ import {
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
 import { roundToTen } from '~/helpers/math'
+import { formatWholePercent } from '~/helpers/number-formatter'
 import { fromSessionTypeToLabel, type TrainingSessionListProps } from '~/schema/training'
 import styles from './training-popover-description.module.css'
 
@@ -43,9 +44,9 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
             ) : (
               ''
             )}{' '}
-            {volume === undefined ? '' : `Volume: ${volume}%`}{' '}
-            {intensity === undefined ? '' : `Intensity: ${intensity}%`}{' '}
-            {load === undefined ? '' : `Load: ${roundToTen(load)}%`}{' '}
+            {volume === undefined ? '' : `Volume: ${formatWholePercent(volume)}`}{' '}
+            {intensity === undefined ? '' : `Intensity: ${formatWholePercent(intensity)}`}{' '}
+            {load === undefined ? '' : `Load: ${formatWholePercent(roundToTen(load))}`}{' '}
             {anatomicalRegion === undefined
               ? ''
               : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}

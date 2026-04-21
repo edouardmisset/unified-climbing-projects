@@ -1,5 +1,6 @@
 import { createYearList } from '~/data/helpers'
 import { getIndicatorsForYear } from '~/helpers/get-indicators-for-year'
+import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
 import { getAllAscents } from '~/services/ascents'
 import { getAllTrainingSessions } from '~/services/training'
 import { Event } from '../_components/timeline/event'
@@ -14,12 +15,18 @@ export async function IndicatorsTimeline() {
       {indicators.map(({ year, progression, efficiency, versatility, score }) => (
         <Event interval={String(year)} key={year} title=''>
           <ul className={styles.list}>
-            <li className={`${styles.item} textNoWrap`}>Progression: {progression}%</li>
-            <li className={`${styles.item} textNoWrap`}>Efficiency: {efficiency}%</li>
-            <li className={`${styles.item} textNoWrap`}>Versatility: {versatility}%</li>
+            <li className={`${styles.item} textNoWrap`}>
+              Progression: {formatWholePercent(progression)}
+            </li>
+            <li className={`${styles.item} textNoWrap`}>
+              Efficiency: {formatWholePercent(efficiency)}
+            </li>
+            <li className={`${styles.item} textNoWrap`}>
+              Versatility: {formatWholePercent(versatility)}
+            </li>
             <hr className={styles.hr} />
             <li className={`${styles.item} textNoWrap`}>
-              <strong>Score</strong>: {score}
+              <strong>Score</strong>: {formatNumber(score)}
             </li>
           </ul>
         </Event>

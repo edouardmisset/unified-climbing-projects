@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import NotFound from '~/app/not-found'
 import { prettyLongDate, prettyShortDate } from '~/helpers/formatters'
+import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
 import { fromSessionTypeToLabel, type TrainingSessionListProps } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
@@ -40,8 +41,8 @@ export const TrainingSessionList = memo(({ trainingSessions }: TrainingSessionLi
             >
               {sessionType === undefined ? '—' : fromSessionTypeToLabel(sessionType)}
             </td>
-            <td className={styles.cell} title={load === undefined ? '—' : `${load}%`}>
-              {load === undefined ? '—' : `${load}%`}
+            <td className={styles.cell} title={load === undefined ? '—' : formatWholePercent(load)}>
+              {load === undefined ? '—' : formatWholePercent(load)}
             </td>
           </tr>
         ))}
@@ -50,7 +51,7 @@ export const TrainingSessionList = memo(({ trainingSessions }: TrainingSessionLi
         <tr className={`${styles.row} gridFullWidth`}>
           <th className={styles.footerCell}>Total</th>
           <td className={styles.footerCell}>
-            <strong>{trainingSessions.length}</strong> sessions
+            <strong>{formatNumber(trainingSessions.length)}</strong> sessions
           </td>
         </tr>
       </tfoot>

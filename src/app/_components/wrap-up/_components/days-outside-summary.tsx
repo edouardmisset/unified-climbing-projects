@@ -1,4 +1,3 @@
-import humanizeDuration from 'humanize-duration'
 import { Suspense } from 'react'
 import { calculateAscentsPerDay } from '~/helpers/calculate-ascents-per-day'
 import {
@@ -7,8 +6,11 @@ import {
   findLongestStreak,
   getMostFrequentDate,
 } from '~/helpers/date'
+import { formatFrenchDurationFromDays } from '~/helpers/format-duration'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
 import { formatLongDate } from '~/helpers/formatters'
+import { formatNumber } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
@@ -46,7 +48,10 @@ export async function DaysOutsideSummary({
     }
   })
 
-  const ascentsRatio = calculateAscentsPerDay(ascents, trainingSessions).toFixed(1)
+  const ascentsRatio = formatNumber(calculateAscentsPerDay(ascents, trainingSessions), {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 1,
+  })
 
   const isBelowMinGapThreshold = MIN_GAP_THRESHOLD < longestGap
   return (
@@ -75,21 +80,20 @@ export async function DaysOutsideSummary({
         )}
         {consecutiveClimbingDays === 0 ? undefined : (
           <span className='block'>
-            Your longest streak was <strong>{consecutiveClimbingDays}</strong> days.
+            Your longest streak was{' '}
+            <strong>
+              {formatCountWithEnglishNoun(consecutiveClimbingDays, {
+                one: 'day',
+                other: 'days',
+              })}
+            </strong>
+            .
           </span>
         )}
         {isBelowMinGapThreshold ? undefined : (
           <span className='block'>
             Your longest gap without climbing was{' '}
-            <strong>
-              {humanizeDuration(longestGap * 24 * 60 * 60 * 1_000, {
-                units: ['mo', 'w', 'd'],
-                largest: 2,
-                conjunction: ' and ',
-                round: true,
-              })}
-            </strong>
-            .
+            <strong>{formatFrenchDurationFromDays(longestGap)}</strong>.
           </span>
         )}
       </p>
