@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { getAllTrainingSessions } from '~/services/training'
+import { groupDataDaysByYear } from '~/shared/data/helpers'
+import { getAllTrainingSessions } from '~/training/services'
 
 // LAZY LOADING: Load QR code component only when needed
 const TrainingQRCode = lazy(async () =>
-  import('~/app/_components/qr-code/qr-code').then(module => ({
+  import('~/shared/components/qr-code/qr-code').then(module => ({
     default: module.TrainingQRCode,
   })),
 )

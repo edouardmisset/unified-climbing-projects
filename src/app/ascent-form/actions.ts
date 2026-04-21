@@ -1,9 +1,9 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { trimAndNormalizeStringsInObject } from '~/helpers/trim-and-normalize-string-in-object.ts'
-import { addAscent } from '~/services/ascents'
-import type { Object_ } from '~/types/generic.ts'
+import { trimAndNormalizeStringsInObject } from '~/shared/helpers/trim-and-normalize-string-in-object.ts'
+import { addAscent } from '~/ascents/services'
+import type { Object_ } from '~/shared/types.ts'
 import { ascentFormOutputSchema } from './types.ts'
 
 export const onSubmit = async (formData: Object_): Promise<boolean> => {

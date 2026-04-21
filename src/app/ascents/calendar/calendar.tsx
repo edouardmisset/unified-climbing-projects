@@ -1,9 +1,9 @@
 import { Suspense } from 'react'
-import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
-import type { Ascent } from '~/schema/ascent'
+import { DataCalendar } from '~/shared/components/data-calendar/data-calendar'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import { groupDataDaysByYear } from '~/shared/data/helpers'
+import { fromAscentsToCalendarEntries } from '~/ascents/helpers/ascent-calendar-helpers'
+import type { Ascent } from '~/ascents/schema'
 
 export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; year: number }) {
   return (

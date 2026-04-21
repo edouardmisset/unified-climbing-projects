@@ -1,6 +1,6 @@
-import { extractDateFromISODateString } from '~/helpers/date'
-import { getAllAscents } from '~/services/ascents'
-import { getAllTrainingSessions } from '~/services/training'
+import { extractDateFromISODateString } from '~/shared/helpers/date'
+import { getAllAscents } from '~/ascents/services'
+import { getAllTrainingSessions } from '~/training/services'
 
 // Write a function to find missing outdoor sessions.
 // To do this, first compile a list (set) of all the days with ascents based on

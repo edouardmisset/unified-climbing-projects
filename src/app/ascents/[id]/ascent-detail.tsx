@@ -1,5 +1,5 @@
-import { AscentCard } from '~/app/_components/ascent-card/ascent-card'
-import { getAscentById } from '~/services/ascents'
+import { AscentCard } from '~/ascents/components/ascent-card/ascent-card'
+import { getAscentById } from '~/ascents/services'
 
 type AscentDetailProps = {
   ascentId: string

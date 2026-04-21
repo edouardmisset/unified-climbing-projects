@@ -1,12 +1,12 @@
 'use client'
 
 import { Suspense, useDeferredValue, useMemo } from 'react'
-import { AscentList } from '~/app/_components/ascent-list/ascent-list'
-import { Loader } from '~/app/_components/ui/loader/loader'
+import { AscentList } from '~/ascents/components/ascent-list/ascent-list'
+import { Loader } from '~/shared/components/ui/loader/loader'
 import NotFound from '~/app/not-found'
-import { getTopTenAscents } from '~/helpers/get-top-ten-ascents'
-import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'
-import type { AscentListProps } from '~/schema/ascent'
+import { getTopTenAscents } from '~/ascents/helpers/get-top-ten-ascents'
+import { useTimeframeQueryState } from '~/shared/hooks/query-state-slices/use-timeframe-query-state'
+import type { AscentListProps } from '~/ascents/schema'
 import { TimeframeSelect } from './timeframe-select'
 
 export function TableAndSelect({ ascents }: AscentListProps) {

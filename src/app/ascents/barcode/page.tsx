@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
-import { groupDataWeeksByYear } from '~/data/helpers'
-import { getAllAscents } from '~/services/ascents'
+import { groupDataWeeksByYear } from '~/shared/data/helpers'
+import { getAllAscents } from '~/ascents/services'
 
 // LAZY LOADING: Load barcode component only when needed
 const AscentsBarcode = lazy(async () =>
-  import('~/app/_components/barcode/barcode').then(module => ({
+  import('~/shared/components/barcode/barcode').then(module => ({
     default: module.AscentsBarcode,
   })),
 )

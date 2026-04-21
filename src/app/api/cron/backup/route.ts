@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { getWeekNumber } from '~/helpers/date'
-import { getDataFromDB } from '~/services/backup'
+import { getWeekNumber } from '~/shared/helpers/date'
+import { getDataFromDB } from '~/shared/services/backup'
 import {
   backupDataToWorksheet,
   createOrReplaceWorksheet,
   loadBackupSpreadsheet,
-} from '~/services/google-sheets'
+} from '~/shared/services/google-sheets'
 
 export async function GET() {
   try {

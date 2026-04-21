@@ -1,7 +1,7 @@
 import { filterByDate } from '@edouardmisset/array'
 import NotFound from '~/app/not-found'
-import { createYearList } from '~/data/helpers'
-import { getAllAscents } from '~/services/ascents'
+import { createYearList } from '~/shared/data/helpers'
+import { getAllAscents } from '~/ascents/services'
 import { AscentCalendar } from './calendar'
 
 export async function CalendarContent() {

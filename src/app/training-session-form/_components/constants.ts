@@ -1,5 +1,5 @@
-import { disjunctiveListFormatter } from '~/helpers/list-formatter'
-import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import { disjunctiveListFormatter } from '~/shared/helpers/list-formatter'
+import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/ascents/schema'
 import {
   ANATOMICAL_REGIONS,
   ENERGY_SYSTEMS,
@@ -7,7 +7,7 @@ import {
   fromAnatomicalRegionToLabel,
   fromEnergySystemToLabel,
   fromSessionTypeToLabel,
-} from '~/schema/training'
+} from '~/training/schema'
 
 function getFormattedList<T extends string>(list: readonly T[], transform: (item: T) => string) {
   return disjunctiveListFormatter(list.map(transform))

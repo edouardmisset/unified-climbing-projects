@@ -5,20 +5,20 @@ import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import styles from '~/app/_components/forms/form.module.css'
-import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button'
-import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
+import styles from '~/shared/components/forms/form.module.css'
+import { KeycapButton } from '~/shared/components/ui/keycap-button/keycap-button'
+import { Spacer } from '~/shared/components/ui/spacer/spacer.tsx'
 import { DataList } from '~/app/ascent-form/_components/data-list'
-import { _0To100RegEx } from '~/constants/generic'
-import { LINKS } from '~/constants/links'
-import { createValueAndLabel } from '~/helpers/create-value-and-label'
-import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
+import { _0To100RegEx } from '~/shared/constants/generic'
+import { LINKS } from '~/shared/constants/links'
+import { createValueAndLabel } from '~/shared/helpers/create-value-and-label'
+import { createRecentDateOptions, fromDateToStringDate } from '~/shared/helpers/date'
 import {
   fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
-} from '~/helpers/formatters'
-import { CLIMBING_DISCIPLINE } from '~/schema/ascent'
+} from '~/shared/helpers/formatters'
+import { CLIMBING_DISCIPLINE } from '~/ascents/schema'
 import {
   ANATOMICAL_REGIONS,
   ENERGY_SYSTEMS,
@@ -27,7 +27,7 @@ import {
   fromSessionTypeToLabel,
   SESSION_TYPES,
   type TrainingSessionForm as TrainingSessionFormType,
-} from '~/schema/training'
+} from '~/training/schema'
 import { onSubmit } from '../actions'
 import { MAX_PERCENT, MIN_PERCENT } from '../constants'
 import {

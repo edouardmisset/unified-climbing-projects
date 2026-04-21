@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 import { CalendarContent } from './calendar-content'
 
 export default async function TrainingSessionsCalendarPage() {

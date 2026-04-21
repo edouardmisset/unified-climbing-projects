@@ -1,0 +1,75 @@
+// oxlint-disable complexity
+import { isDateInRange } from '@edouardmisset/date'
+import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
+import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
+import type { z } from '~/shared/helpers/zod'
+import type { Ascent } from '~/ascents/schema.ts'
+import { PERIOD_TO_DATES } from '~/shared/schema.ts'
+import type { optionalAscentFilterSchema } from '~/ascents/types'
+import { fromGradeToNumber } from './grade-converter.ts'
+
+type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
+
+/**
+ * Filters the provided ascents based on the given filter criteria.
+ *
+ * NB: `undefined` is pass through. Meaning that if a filter is `undefined`, no
+ * ascents will be filtered out based on that criteria.
+ *
+ * @param {Ascent[]} ascents - The array of ascents to filter.
+ * @param {OptionalAscentFilter} [filters] - An optional set of filter criteria.
+ * @returns {Ascent[]} - The filtered array of ascents.
+ */
+export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter): Ascent[] {
+  const {
+    area,
+    climbingDiscipline,
+    crag,
+    grade,
+    height,
+    holds,
+    profile,
+    rating,
+    style,
+    tries,
+    year,
+    period,
+  } = filters ?? {}
+
+  if (ascents.length === 0) return []
+
+  return ascents.filter(ascent => {
+    const ascentDate = new Date(ascent.date)
+    return (
+      (grade === undefined || stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
+      (climbingDiscipline === undefined || ascent.climbingDiscipline === climbingDiscipline) &&
+      (year === undefined || isDateInYear(ascentDate, year)) &&
+      (style === undefined || ascent.style === style) &&
+      (profile === undefined || ascent.profile === profile) &&
+      (rating === undefined || ascent.rating === rating) &&
+      (height === undefined || ascent.height === height) &&
+      (holds === undefined || ascent.holds === holds) &&
+      (tries === undefined || ascent.tries === tries) &&
+      (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
+      (area === undefined ||
+        (ascent.area !== undefined && stringEqualsCaseInsensitive(ascent.area, area))) &&
+      (period === undefined ||
+        (period in PERIOD_TO_DATES && isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
+    )
+  })
+}
+
+export function getHardestAscent(ascents: Ascent[]): Ascent | undefined {
+  if (ascents.length === 0) return undefined
+
+  return ascents.reduce((hardestAscent, currentAscent) => {
+    const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
+    const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
+
+    const isCurrentAscentHarder = hardestGrade < currentGrade
+
+    if (isCurrentAscentHarder) return currentAscent
+
+    return hardestAscent
+  })
+}

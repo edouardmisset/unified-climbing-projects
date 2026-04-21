@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader.tsx'
-import Layout from '../_components/page-layout/page-layout.tsx'
-import { UnauthorizedAccess } from '../_components/unauthorized-access/unauthorized-access.tsx'
+import { Loader } from '~/shared/components/ui/loader/loader.tsx'
+import Layout from '~/shared/components/page-layout/page-layout.tsx'
+import { UnauthorizedAccess } from '~/shared/components/unauthorized-access/unauthorized-access.tsx'
 import { TrainingFormWrapper } from './training-form-wrapper'
 
 export default async function TrainingSessionFormPage() {

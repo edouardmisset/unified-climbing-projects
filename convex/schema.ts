@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from 'convex/server'
 import { zodToConvex } from 'convex-helpers/server/zod'
-import { ascentSchema } from '~/schema/ascent'
-import { trainingSessionSchema } from '~/schema/training'
+import { ascentSchema } from '~/ascents/schema'
+import { trainingSessionSchema } from '~/training/schema'
 
 const convexGetAscentSchema = zodToConvex(ascentSchema)
 export const convexPostAscentSchema = zodToConvex(ascentSchema.omit({ _id: true }))

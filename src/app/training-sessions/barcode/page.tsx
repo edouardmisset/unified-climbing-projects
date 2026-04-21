@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
-import { groupDataWeeksByYear } from '~/data/helpers'
-import { getAllTrainingSessions } from '~/services/training'
+import { groupDataWeeksByYear } from '~/shared/data/helpers'
+import { getAllTrainingSessions } from '~/training/services'
 
 // LAZY LOADING: Load barcode component only when needed
 const TrainingSessionsBarcode = lazy(async () =>
-  import('~/app/_components/barcode/barcode').then(module => ({
+  import('~/shared/components/barcode/barcode').then(module => ({
     default: module.TrainingSessionsBarcode,
   })),
 )

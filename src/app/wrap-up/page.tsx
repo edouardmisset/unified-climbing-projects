@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import WrapUp from '~/app/_components/wrap-up/wrap-up'
+import WrapUp from '~/wrap-up/components/wrap-up/wrap-up'
 
 export default async function Page() {
   return <WrapUp />

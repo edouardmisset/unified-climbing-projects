@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Dashboard } from '~/app/_components/dashboard/dashboard'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
-import { getAllAscents } from '~/services/ascents'
+import { Dashboard } from '~/shared/components/dashboard/dashboard'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
+import { getAllAscents } from '~/ascents/services'
 
 export const revalidate = 3_600
 

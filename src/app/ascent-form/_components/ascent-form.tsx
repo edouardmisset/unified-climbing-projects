@@ -5,19 +5,19 @@ import { useTransitionRouter } from 'next-view-transitions'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
-import { GradeInput, type HandleGradeChange } from '~/app/_components/grade-input/grade-input.tsx'
-import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button.tsx'
-import { Loader } from '~/app/_components/ui/loader/loader.tsx'
-import { Option } from '~/app/_components/ui/option/option.tsx'
-import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
-import { _0To100RegEx } from '~/constants/generic.ts'
-import { createValueAndLabel } from '~/helpers/create-value-and-label.ts'
-import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date.ts'
-import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
-import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/grade-converter.ts'
-import { disjunctiveListFormatter } from '~/helpers/list-formatter.ts'
-import { validPositiveNumber } from '~/helpers/valid-positive-number.ts'
+import { ClimbingStyleToggleGroup } from '~/shared/components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
+import { GradeInput, type HandleGradeChange } from '~/shared/components/grade-input/grade-input.tsx'
+import { KeycapButton } from '~/shared/components/ui/keycap-button/keycap-button.tsx'
+import { Loader } from '~/shared/components/ui/loader/loader.tsx'
+import { Option } from '~/shared/components/ui/option/option.tsx'
+import { Spacer } from '~/shared/components/ui/spacer/spacer.tsx'
+import { _0To100RegEx } from '~/shared/constants/generic.ts'
+import { createValueAndLabel } from '~/shared/helpers/create-value-and-label.ts'
+import { createRecentDateOptions, fromDateToStringDate } from '~/shared/helpers/date.ts'
+import { fromClimbingDisciplineToEmoji } from '~/shared/helpers/formatters.ts'
+import { fromGradeToNumber, fromNumberToGrade } from '~/ascents/helpers/grade-converter.ts'
+import { disjunctiveListFormatter } from '~/shared/helpers/list-formatter.ts'
+import { validPositiveNumber } from '~/shared/helpers/valid-positive-number.ts'
 import {
   type Ascent,
   AVAILABLE_CLIMBING_DISCIPLINE,
@@ -26,7 +26,7 @@ import {
   type Grade,
   HOLDS,
   PROFILES,
-} from '~/schema/ascent'
+} from '~/ascents/schema'
 import { onSubmit } from '../actions.ts'
 import {
   _1To5RegEx,
@@ -39,7 +39,7 @@ import {
   MIN_TRIES,
 } from '../constants.ts'
 import { type AscentFormInput, ascentFormInputSchema } from '../types.ts'
-import styles from '~/app/_components/forms/form.module.css'
+import styles from '~/shared/components/forms/form.module.css'
 import { DataList } from './data-list'
 
 const numberOfGradesBelowMinimum = 6

@@ -1,10 +1,10 @@
-import { createYearList } from '~/data/helpers'
-import { getIndicatorsForYear } from '~/helpers/get-indicators-for-year'
-import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
-import { getAllAscents } from '~/services/ascents'
-import { getAllTrainingSessions } from '~/services/training'
-import { Event } from '../_components/timeline/event'
-import { Timeline } from '../_components/timeline/timeline'
+import { createYearList } from '~/shared/data/helpers'
+import { getIndicatorsForYear } from '~/indicators/helpers/get-indicators-for-year'
+import { formatNumber, formatWholePercent } from '~/shared/helpers/number-formatter'
+import { getAllAscents } from '~/ascents/services'
+import { getAllTrainingSessions } from '~/training/services'
+import { Event } from '~/shared/components/timeline/event'
+import { Timeline } from '~/shared/components/timeline/timeline'
 import styles from './page.module.css'
 
 export async function IndicatorsTimeline() {

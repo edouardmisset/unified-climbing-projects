@@ -1,0 +1,60 @@
+import type { OrAll } from '~/shared/components/dashboard/types'
+import type { Ascent } from '~/ascents/schema'
+import type { Period } from '~/shared/schema'
+import { useAreaQueryState } from './query-state-slices/use-area-query-state'
+import { useCragQueryState } from './query-state-slices/use-crag-query-state'
+import { useDisciplineQueryState } from './query-state-slices/use-discipline-query-state'
+import { useGradeQueryState } from './query-state-slices/use-grade-query-state'
+import { usePeriodQueryState } from '~/shared/hooks/query-state-slices/use-period-query-state'
+import { useRouteQueryState } from './query-state-slices/use-route-query-state'
+import { useStyleQueryState } from './query-state-slices/use-style-query-state'
+import { useYearQueryState } from '~/shared/hooks/query-state-slices/use-year-query-state'
+
+export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
+  const [selectedYear, setYear] = useYearQueryState()
+  const [selectedPeriod, setPeriod] = usePeriodQueryState()
+  const [selectedDiscipline, setDiscipline] = useDisciplineQueryState()
+  const [selectedStyle, setStyle] = useStyleQueryState()
+  const [selectedCrag, setCrag] = useCragQueryState()
+  const [selectedArea, setArea] = useAreaQueryState()
+  const [selectedGrade, setGrade] = useGradeQueryState()
+  const [selectedRoute, setRoute] = useRouteQueryState()
+
+  return {
+    selectedArea,
+    selectedCrag,
+    selectedDiscipline,
+    selectedGrade,
+    selectedPeriod,
+    selectedRoute,
+    selectedStyle,
+    selectedYear,
+    setArea,
+    setCrag,
+    setDiscipline,
+    setGrade,
+    setPeriod,
+    setRoute,
+    setStyle,
+    setYear,
+  }
+}
+
+type UseAscentsQueryStateReturn = {
+  selectedArea: OrAll<string>
+  selectedCrag: OrAll<Ascent['crag']>
+  selectedDiscipline: OrAll<Ascent['climbingDiscipline']>
+  selectedGrade: OrAll<Ascent['topoGrade']>
+  selectedPeriod: OrAll<Period>
+  selectedRoute: Ascent['routeName']
+  selectedStyle: OrAll<Ascent['style']>
+  selectedYear: OrAll<string>
+  setArea: (area: OrAll<string>) => void
+  setCrag: (crag: OrAll<Ascent['crag']>) => void
+  setDiscipline: (discipline: OrAll<Ascent['climbingDiscipline']>) => void
+  setGrade: (grade: OrAll<Ascent['topoGrade']>) => void
+  setPeriod: (period: OrAll<Period>) => void
+  setRoute: (route: Ascent['routeName']) => void
+  setStyle: (style: OrAll<Ascent['style']>) => void
+  setYear: (year: OrAll<string>) => void
+}

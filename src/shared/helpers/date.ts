@@ -1,0 +1,337 @@
+import { capitalize } from '@edouardmisset/text'
+import { isValidDate } from '@edouardmisset/date'
+import {
+  DAYS_IN_COMMON_YEAR,
+  DAYS_IN_LEAP_YEAR,
+  DAYS_IN_WEEK,
+  FRIDAY_DAY_NUMBER,
+  LEAP_YEAR_DAY_CHECK,
+  NOON_HOUR,
+  SATURDAY_DAY_NUMBER,
+  THURSDAY_DAY_NUMBER,
+  US_LOCALE,
+} from '~/shared/constants/generic'
+import type { StringDate, ValueAndLabel } from '~/shared/types'
+import { frequencyBy } from './frequency-by'
+import { sortNumericalValues } from './sort-values'
+
+const MILLISECONDS_IN_DAY = 1_000 * 60 * 60 * 24
+const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
+const REFERENCE_WEEKDAY_YEAR = 2_024
+const REFERENCE_WEEKDAY_MONTH_INDEX = 0
+const FIRST_DAY_OF_MONTH = 1
+
+const englishRelativeDayFormatter = new Intl.RelativeTimeFormat(US_LOCALE, { numeric: 'auto' })
+const ENGLISH_WEEKDAY_FORMATTERS = {
+  long: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'long' }),
+  short: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'short' }),
+} as const
+const WEEKDAY_LABEL_REFERENCE_DATES = Array.from(
+  { length: DAYS_IN_WEEK },
+  (_, index) =>
+    new Date(
+      Date.UTC(REFERENCE_WEEKDAY_YEAR, REFERENCE_WEEKDAY_MONTH_INDEX, index + FIRST_DAY_OF_MONTH),
+    ),
+)
+
+type WeekdayLabelStyle = keyof typeof ENGLISH_WEEKDAY_FORMATTERS
+
+export function formatEnglishWeekdayLabel(date: Date, style: WeekdayLabelStyle = 'short'): string {
+  return ENGLISH_WEEKDAY_FORMATTERS[style].format(date)
+}
+
+export function getEnglishWeekdayLabels(style: WeekdayLabelStyle = 'short'): string[] {
+  return WEEKDAY_LABEL_REFERENCE_DATES.map(date => formatEnglishWeekdayLabel(date, style))
+}
+
+export function createRecentDateOptions(): ValueAndLabel[] {
+  const lastSaturday = getLastSaturday()
+  const lastSunday = getLastSunday()
+
+  return [
+    {
+      label: capitalize(englishRelativeDayFormatter.format(-1, 'day')),
+      value: fromDateToStringDate(getYesterday()),
+    },
+    {
+      label: `Last ${formatEnglishWeekdayLabel(lastSaturday, 'long')}`,
+      value: fromDateToStringDate(lastSaturday),
+    },
+    {
+      label: `Last ${formatEnglishWeekdayLabel(lastSunday, 'long')}`,
+      value: fromDateToStringDate(lastSunday),
+    },
+  ]
+}
+
+export const getWeekNumber = (date: Date): number => {
+  const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
+  const startOfYear = new Date(date.getFullYear(), 0, 1)
+  startOfYear.setDate(
+    startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % DAYS_IN_WEEK)),
+  )
+  return Math.round((date.getTime() - startOfYear.getTime()) / MILLISECONDS_IN_WEEK) + 1
+}
+
+/**
+ * Returns the number of weeks in the specified year.
+ *
+ * This function calculates the difference in weeks between the
+ * first Monday of the given year and the first Monday of the next year.
+ *
+ * @param {number} year - The year to evaluate
+ * @returns {number} The number of weeks in the specified year
+ */
+export const getWeeksInYear = (year: number): number => {
+  const firstMondayThisYear = new Date(
+    year,
+    0,
+    FRIDAY_DAY_NUMBER - (new Date(year, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
+  )
+
+  const firstMondayNextYear = new Date(
+    year + 1,
+    0,
+    FRIDAY_DAY_NUMBER - (new Date(year + 1, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
+  )
+
+  return (firstMondayNextYear.getTime() - firstMondayThisYear.getTime()) / MILLISECONDS_IN_WEEK
+}
+
+/**
+ * Returns the number of days in the specified year.
+ *
+ * @param {number} year - The year to evaluate
+ * @returns {number} The number of days in the specified year
+ */
+export const getDaysInYear = (year: number): number => {
+  const isLeap = new Date(year, 1, LEAP_YEAR_DAY_CHECK).getMonth() === 1
+  return isLeap ? DAYS_IN_LEAP_YEAR : DAYS_IN_COMMON_YEAR
+}
+
+/**
+ * Returns the day of the year (1-based index) for the specified date.
+ *
+ * @param {Date} date - The date to evaluate
+ * @returns {number} The day of the year
+ */
+export const getDayOfYear = (date: Date): number => {
+  const newDate = new Date(date)
+  return Math.floor(
+    (newDate.getTime() - new Date(newDate.getFullYear(), 0, 0).getTime()) / MILLISECONDS_IN_DAY,
+  )
+}
+
+/**
+ * Returns the most frequent date from an array of objects containing a date field.
+ *
+ * @param {StringDate[]} data - The array of objects that contain a 'date' string field
+ * @returns {[string, number]} A tuple where the first element is the date and
+ * the second element is the frequency
+ */
+export function getMostFrequentDate(data: StringDate[]): [string, number] {
+  const dateFrequency = frequencyBy(data, 'date')
+  const sortedDateByFrequency = sortNumericalValues(dateFrequency, {
+    ascending: false,
+  })
+  const [firstEntry] = Object.entries(sortedDateByFrequency)
+
+  if (!firstEntry) return ['', 0]
+
+  const [date, count] = firstEntry
+
+  // Ensure count is a number
+  if (typeof count !== 'number') return ['', 0]
+
+  return [date, count]
+}
+
+/**
+ * Returns a new Date object set to noon (12:00:00.000) of the given date.
+ * @param {Date} date - The date to normalize
+ * @returns {Date} The normalized date at noon
+ */
+export function getDateAtNoon(date: Date): Date {
+  const normalized = new Date(date)
+  normalized.setHours(NOON_HOUR, 0, 0, 0)
+  return normalized
+}
+
+/**
+ * Returns a Date object representing yesterday at noon.
+ * @returns {Date} Yesterday's date at noon
+ */
+export function getYesterday(): Date {
+  const now = new Date()
+  const yesterday = new Date(now)
+  yesterday.setDate(now.getDate() - 1)
+  return getDateAtNoon(yesterday)
+}
+
+/**
+ * Returns a Date object representing the most recent Saturday at noon.
+ * If today is Saturday, returns last week's Saturday.
+ * @returns {Date} Last Saturday at noon
+ */
+export function getLastSaturday(): Date {
+  const now = new Date()
+  const dayOfWeek = now.getDay() // 0 = Sunday, 6 = Saturday
+  // If today is Saturday (6), go back 7 days; else, go back to last Saturday
+  const daysSinceSaturday = dayOfWeek === SATURDAY_DAY_NUMBER ? DAYS_IN_WEEK : dayOfWeek + 1
+  const lastSaturday = new Date(now)
+  lastSaturday.setDate(now.getDate() - daysSinceSaturday)
+  return getDateAtNoon(lastSaturday)
+}
+
+/**
+ * Returns a Date object representing the most recent Sunday at noon.
+ * If today is Sunday, returns last week's Sunday.
+ * @returns {Date} Last Sunday at noon
+ */
+export function getLastSunday(): Date {
+  const now = new Date()
+  const dayOfWeek = now.getDay() // 0 = Sunday
+  // If today is Sunday (0), go back 7 days; else, go back to last Sunday
+  const daysSinceSunday = dayOfWeek === 0 ? DAYS_IN_WEEK : dayOfWeek
+  const lastSunday = new Date(now)
+  lastSunday.setDate(now.getDate() - daysSinceSunday)
+  return getDateAtNoon(lastSunday)
+}
+
+/**
+ * Returns an ISO date string (YYYY-MM-DD) from a Date object.
+ * Throws if the date is invalid.
+ *
+ * @param {Date} date - The date to convert
+ * @returns {string} The ISO date string (YYYY-MM-DD)
+ */
+export function fromDateToStringDate(date: Date): string {
+  if (!isValidDate(date)) throw new Error('Invalid date')
+
+  const isoDateString = date.toISOString()
+  return extractDateFromISODateString(isoDateString)
+}
+
+/**
+ * Extracts the date portion (YYYY-MM-DD) from an ISO 8601 string.
+ * Throws if the input is not a string or is not a valid ISO date string.
+ *
+ * @param {string} isoDate - The ISO 8601 date string
+ * @returns {string} The date portion (YYYY-MM-DD)
+ */
+export function extractDateFromISODateString(isoDate: string): string {
+  if (isoDate.length < 10) throw new Error('Invalid ISO date string')
+
+  const datePart = isoDate.slice(0, 10)
+  if (!ISO_DATE_REGEX.test(datePart)) throw new Error('Invalid ISO date string')
+
+  return datePart
+}
+
+/**
+ * Finds the longest consecutive streak of dates in the provided data.
+ *
+ * A streak is defined as consecutive days without gaps. The function counts
+ * unique dates only, so multiple entries on the same date are treated as one.
+ *
+ * @param {StringDate[]} data - Array of objects containing date strings in ISO format
+ * (YYYY-MM-DD)
+ * @returns {number} The length of the longest consecutive streak of dates
+ *
+ * @example
+ * ```typescript
+ * const activities = [
+ *   { date: '2024-01-01', activity: 'climb' },
+ *   { date: '2024-01-02', activity: 'climb' },
+ *   { date: '2024-01-03', activity: 'climb' },
+ *   { date: '2024-01-05', activity: 'climb' } // Gap here
+ * ];
+ * const streak = findLongestStreak(activities); // Returns 3
+ * ```
+ */
+export function findLongestStreak(data: StringDate[]): number {
+  if (data.length === 0) return 0
+
+  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
+  const sortedDates = uniqueDatesAsStrings
+    .map(dateString => new Date(dateString))
+    .filter(date => isValidDate(date))
+    .toSorted((a, b) => a.getTime() - b.getTime())
+
+  if (sortedDates.length === 0) return 0
+  if (sortedDates.length === 1) return 1
+
+  let maxStreak = 1
+  let currentStreak = 1
+
+  for (let i = 1; i < sortedDates.length; i++) {
+    const currentDate = sortedDates[i]
+    const previousDate = sortedDates[i - 1]
+
+    if (currentDate === undefined || previousDate === undefined) continue
+
+    const timeDifference = currentDate.getTime() - previousDate.getTime()
+    const isConsecutive = timeDifference === MILLISECONDS_IN_DAY
+
+    if (isConsecutive) {
+      currentStreak++
+      maxStreak = Math.max(maxStreak, currentStreak)
+    } else currentStreak = 1
+  }
+
+  return maxStreak
+}
+
+/**
+ * Finds the longest gap (in days) between consecutive dates in the provided data.
+ *
+ * A gap is defined as the number of days between two consecutive dates minus 1.
+ * For example, if you have activities on 2024-01-01 and 2024-01-05, the gap is
+ * 3 days.
+ * The function counts unique dates only, so multiple entries on the same date
+ * are treated as one.
+ *
+ * @param {StringDate[]} data - Array of objects containing date strings in ISO format
+ * (YYYY-MM-DD)
+ * @returns {number} The length of the longest gap between consecutive dates in
+ * days, or 0 if no gaps exist
+ *
+ * @example
+ * ```typescript
+ * const activities = [
+ *   { date: '2024-01-01', activity: 'climb' },
+ *   { date: '2024-01-02', activity: 'climb' },
+ *   { date: '2024-01-07', activity: 'climb' }, // 4-day gap (Jan 3-6)
+ *   { date: '2024-01-15', activity: 'climb' }  // 7-day gap (Jan 8-14)
+ * ];
+ * const longestGap = findLongestGap(activities); // Returns 7
+ * ```
+ */
+export function findLongestGap(data: StringDate[]): number {
+  if (data.length <= 1) return 0
+
+  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
+  const sortedDates = uniqueDatesAsStrings
+    .map(dateString => new Date(dateString))
+    .filter(date => isValidDate(date))
+    .toSorted((a, b) => a.getTime() - b.getTime())
+
+  if (sortedDates.length <= 1) return 0
+
+  let maxGap = 0
+
+  for (let i = 1; i < sortedDates.length; i++) {
+    const currentDate = sortedDates[i]
+    const previousDate = sortedDates[i - 1]
+
+    if (currentDate === undefined || previousDate === undefined) continue
+
+    const timeDifference = currentDate.getTime() - previousDate.getTime()
+    const gapInDays = Math.floor(timeDifference / MILLISECONDS_IN_DAY) - 1
+
+    if (gapInDays > 0) maxGap = Math.max(maxGap, gapInDays)
+  }
+
+  return maxGap
+}

@@ -1,5 +1,5 @@
 import TrainingSessionForm from './_components/training-session-form.tsx'
-import { getAllTrainingLocations } from '~/services/training'
+import { getAllTrainingLocations } from '~/training/services'
 
 export async function TrainingFormWrapper() {
   const allLocations = await getAllTrainingLocations()

@@ -1,4 +1,4 @@
-import { writeClimbingDBToBackupJson } from '~/services/backup'
+import { writeClimbingDBToBackupJson } from '~/shared/services/backup'
 
 await writeClimbingDBToBackupJson()
 

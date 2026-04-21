@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Loader } from './_components/ui/loader/loader'
-import WrapUp from './_components/wrap-up/wrap-up'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import WrapUp from '~/wrap-up/components/wrap-up/wrap-up'
 
 export const revalidate = 3_600
 

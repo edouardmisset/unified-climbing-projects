@@ -1,15 +1,15 @@
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { getDateAtNoon } from '~/helpers/date.ts'
-import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
-import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
-import { z } from '~/helpers/zod'
+import { getDateAtNoon } from '~/shared/helpers/date.ts'
+import { emptyStringToUndefined } from '~/shared/helpers/empty-string-to-undefined.ts'
+import { fromNumberToGrade } from '~/ascents/helpers/grade-converter.ts'
+import { z } from '~/shared/helpers/zod'
 import {
   ascentSchema,
   ascentStyleSchema,
   climbingDisciplineSchema,
   holdsSchema,
   profileSchema,
-} from '~/schema/ascent'
+} from '~/ascents/schema'
 import { _1To9999RegEx, MAX_HEIGHT, MAX_RATING, MAX_TRIES } from './constants.ts'
 
 const optionalNumberGradeSchema = z.number().optional()

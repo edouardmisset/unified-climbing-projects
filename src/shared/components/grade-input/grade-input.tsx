@@ -1,0 +1,83 @@
+'use client'
+
+import { NumberField } from '@base-ui/react/number-field'
+import { MinusIcon, PlusIcon } from 'lucide-react'
+import { useId } from 'react'
+import { fromNumberToGrade } from '~/ascents/helpers/grade-converter'
+import { GRADE_TO_NUMBER } from '~/ascents/schema'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
+import customLabelStyles from '../ui/custom-label/custom-label.module.css'
+import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
+import styles from './grade-input.module.css'
+
+const globalMinGrade = Math.min(...Object.values(GRADE_TO_NUMBER))
+const globalMaxGrade = Math.max(...Object.values(GRADE_TO_NUMBER))
+
+export function GradeInput(
+  props: NumberField.Root.Props & {
+    label?: string
+    gradeType?: 'Personal' | 'Topo'
+  },
+) {
+  const {
+    label,
+    onValueChange,
+    value,
+    gradeType = 'Topo',
+    min = globalMinGrade,
+    max = globalMaxGrade,
+    ...rest
+  } = props
+  const id = useId()
+
+  if (value === null || value === undefined || !onValueChange) {
+    console.error('This should be a controlled component')
+    return undefined
+  }
+
+  return (
+    <NumberField.Root
+      {...rest}
+      className={styles.Field}
+      id={id}
+      max={max}
+      min={min}
+      onValueChange={onValueChange}
+      value={value}
+    >
+      <NumberField.ScrubArea className={styles.ScrubArea}>
+        {label ? (
+          <label className={`${customLabelStyles.labelText} ${styles.Label}`} htmlFor={id}>
+            {label}
+          </label>
+        ) : undefined}
+        <NumberField.ScrubAreaCursor className={styles.ScrubAreaCursor}>
+          <CursorGrowIcon />
+        </NumberField.ScrubAreaCursor>
+      </NumberField.ScrubArea>
+
+      <NumberField.Group className={styles.Group}>
+        <NumberField.Decrement
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Decrement}`}
+          title='Decrease grade (-)'
+        >
+          <MinusIcon />
+        </NumberField.Decrement>
+        <NumberField.Input
+          className={styles.Input}
+          inputMode='text'
+          render={renderProps => <input {...renderProps} value={fromNumberToGrade(value)} />}
+          title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
+        />
+        <NumberField.Increment
+          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.Increment}`}
+          title='Increase grade (+)'
+        >
+          <PlusIcon />
+        </NumberField.Increment>
+      </NumberField.Group>
+    </NumberField.Root>
+  )
+}
+
+export type HandleGradeChange = NumberField.Root.Props['onValueChange']

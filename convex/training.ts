@@ -1,4 +1,4 @@
-import { trainingSessionSchema } from '~/schema/training'
+import { trainingSessionSchema } from '~/training/schema'
 import { api } from './_generated/api'
 import { action, mutation, query } from './_generated/server'
 import { convexPostTrainingSessionSchema } from './schema'

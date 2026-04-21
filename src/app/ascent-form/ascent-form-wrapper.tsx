@@ -4,7 +4,7 @@ import {
   getAllCrags,
   getLatestAscent,
   getMinMaxGrades,
-} from '~/services/ascent-helpers'
+} from '~/ascents/service-helpers'
 
 export async function AscentFormWrapper() {
   const [latestAscent, [minGrade, maxGrade], allCrags, allAreas] = await Promise.all([

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { getAllTrainingSessions } from '~/services/training'
-import { FilteredTrainingSessionList } from '../_components/filtered-training-sessions-list/filtered-training-sessions-list'
-import { Loader } from '../_components/ui/loader/loader'
-import Layout from '../_components/page-layout/page-layout'
+import { getAllTrainingSessions } from '~/training/services'
+import { FilteredTrainingSessionList } from '~/training/components/filtered-training-sessions-list/filtered-training-sessions-list'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 
 export const revalidate = 3_600
 

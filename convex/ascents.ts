@@ -1,4 +1,4 @@
-import { ascentSchema } from '~/schema/ascent'
+import { ascentSchema } from '~/ascents/schema'
 import { api } from './_generated/api'
 import { action, mutation, query } from './_generated/server'
 import { convexPostAscentSchema } from './schema'

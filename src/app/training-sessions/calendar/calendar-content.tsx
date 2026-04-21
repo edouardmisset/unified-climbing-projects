@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
-import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { DataCalendar } from '~/shared/components/data-calendar/data-calendar'
 import NotFound from '~/app/not-found'
-import { createYearList, groupDataDaysByYear } from '~/data/helpers'
-import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
-import type { TrainingSession } from '~/schema/training'
-import { getAllAscents } from '~/services/ascents'
-import { getAllTrainingSessions } from '~/services/training'
+import { createYearList, groupDataDaysByYear } from '~/shared/data/helpers'
+import { fromTrainingSessionsToCalendarEntries } from '~/training/helpers/training-calendar-helpers'
+import type { TrainingSession } from '~/training/schema'
+import { getAllAscents } from '~/ascents/services'
+import { getAllTrainingSessions } from '~/training/services'
 
 export async function CalendarContent() {
   const [trainingSessions, allAscents] = await Promise.all([

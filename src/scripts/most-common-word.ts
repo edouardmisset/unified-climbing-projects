@@ -1,7 +1,7 @@
 import { frequency } from '@edouardmisset/array/count-by.ts'
 import { removeAccents } from '@edouardmisset/text'
 import ascents from '~/backup/ascent-data.json' with { type: 'json' }
-import { sortNumericalValues } from '~/helpers/sort-values'
+import { sortNumericalValues } from '~/shared/helpers/sort-values'
 
 const meaninglessWords = [
   'a',

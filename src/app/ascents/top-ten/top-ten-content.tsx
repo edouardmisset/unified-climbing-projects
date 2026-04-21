@@ -1,4 +1,4 @@
-import { getAllAscents } from '~/services/ascents'
+import { getAllAscents } from '~/ascents/services'
 import { TableAndSelect } from './_components/table-and-select'
 
 export async function TopTenContent() {

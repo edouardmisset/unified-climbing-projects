@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 import { lazy, Suspense } from 'react'
-import { Loader } from '~/app/_components/ui/loader/loader'
-import Layout from '~/app/_components/page-layout/page-layout'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 import NotFound from '~/app/not-found'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { sortByGrade } from '~/helpers/sorter'
-import { getAllAscents } from '~/services/ascents'
+import { groupDataDaysByYear } from '~/shared/data/helpers'
+import { sortByGrade } from '~/shared/helpers/sorter'
+import { getAllAscents } from '~/ascents/services'
 
 // LAZY LOADING: Load QR code component only when needed
 const AscentsQRCode = lazy(async () =>
-  import('~/app/_components/qr-code/qr-code').then(module => ({
+  import('~/shared/components/qr-code/qr-code').then(module => ({
     default: module.AscentsQRCode,
   })),
 )

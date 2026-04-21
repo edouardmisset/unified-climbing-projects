@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { LINKS } from '~/constants/links'
+import { LINKS } from '~/shared/constants/links'
 
 export default function NotFound() {
   return (

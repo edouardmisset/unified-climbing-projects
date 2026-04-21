@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { getAllAscents } from '~/services/ascents'
-import { FilteredAscentList } from '../_components/filtered-ascents-list/filtered-ascents-list'
-import { Loader } from '../_components/ui/loader/loader'
-import Layout from '../_components/page-layout/page-layout'
+import { getAllAscents } from '~/ascents/services'
+import { FilteredAscentList } from '~/ascents/components/filtered-ascents-list/filtered-ascents-list'
+import { Loader } from '~/shared/components/ui/loader/loader'
+import Layout from '~/shared/components/page-layout/page-layout'
 
 export const revalidate = 3_600
 

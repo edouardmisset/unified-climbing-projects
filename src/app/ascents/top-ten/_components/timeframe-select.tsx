@@ -1,11 +1,11 @@
 'use client'
 import { Select } from '@base-ui/react/select'
-import { CheckIcon } from '~/app/_components/svg/check/check'
-import { ChevronUpDownIcon } from '~/app/_components/svg/chevron-up-down/chevron-up-down'
-import { deSlugify } from '~/helpers/de-slugify'
-import { useTimeframeQueryState } from '~/hooks/query-state-slices/use-timeframe-query-state'
-import { TIMEFRAMES, type Timeframe } from '~/schema/generic'
-import baseUiStyles from '../../../_components/ui/base-ui/base-ui-primitives.module.css'
+import { CheckIcon } from '~/shared/components/svg/check/check'
+import { ChevronUpDownIcon } from '~/shared/components/svg/chevron-up-down/chevron-up-down'
+import { deSlugify } from '~/shared/helpers/de-slugify'
+import { useTimeframeQueryState } from '~/shared/hooks/query-state-slices/use-timeframe-query-state'
+import { TIMEFRAMES, type Timeframe } from '~/shared/schema'
+import baseUiStyles from '~/shared/components/ui/base-ui/base-ui-primitives.module.css'
 import styles from './timeframe-select.module.css'
 
 export function TimeframeSelect() {

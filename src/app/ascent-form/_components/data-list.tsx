@@ -1,6 +1,6 @@
 import { memo } from 'react'
-import { Option } from '~/app/_components/ui/option/option'
-import type { ValueAndLabel } from '~/types/generic'
+import { Option } from '~/shared/components/ui/option/option'
+import type { ValueAndLabel } from '~/shared/types'
 
 function DataListComponent({ id, options }: DataListProps) {
   return (
