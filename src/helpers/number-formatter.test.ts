@@ -10,7 +10,7 @@ const OPTIONAL_THIN_SPACE = String.raw`[\s\u00A0\u202F]?`
 
 describe('number formatter', () => {
   it('formats plain numbers using US conventions', () => {
-    expect(formatNumber(1_234.5)).toMatch(new RegExp(`1,234.5`, 'u'))
+    expect(formatNumber(1_234.5)).toMatch(new RegExp(`1${OPTIONAL_THIN_SPACE}234,5`, 'u'))
   })
 
   it('formats whole percentages using US conventions', () => {
@@ -22,6 +22,8 @@ describe('number formatter', () => {
   })
 
   it('formats metric units using US conventions', () => {
-    expect(formatUnit(12, 'meter', { unitDisplay: 'short' })).toMatch(new RegExp(`12 m`, 'u'))
+    expect(formatUnit(12, 'meter', { unitDisplay: 'short' })).toMatch(
+      new RegExp(`12${OPTIONAL_THIN_SPACE}m`, 'u'),
+    )
   })
 })
