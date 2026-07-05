@@ -9,7 +9,7 @@ export default defineConfig({
     globals: false,
     environment: 'happy-dom',
     setupFiles: ['./vitest.setup.ts'],
-    exclude: ['node_modules/', 'dist/', 'src/backup/', 'src/scripts/', '**/*smoke*.*'],
+    include: ['src/**/*.test.{ts,tsx}'],
     css: true,
     coverage: {
       provider: 'v8',
