@@ -10,7 +10,7 @@ function isThemeMode(value: string): value is ThemeMode {
 const THEME_STORAGE_KEY = 'theme'
 const THEME_CHANGE_EVENT = 'themechange'
 
-function getStoredTheme() {
+function getStoredTheme(): ThemeMode | undefined {
   if (typeof globalThis.window === 'undefined') return undefined
 
   try {
