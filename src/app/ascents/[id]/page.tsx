@@ -5,12 +5,12 @@ import { AscentDetail } from './ascent-detail'
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const awaitedParams = await params
-  const _id = awaitedParams?.id ?? ''
-  if (_id.length === 0) return <h2>Invalid ascent ID</h2>
+  const ascentId = awaitedParams?.id ?? ''
+  if (ascentId.length === 0) return <h2>Invalid ascent ID</h2>
 
   return (
     <Suspense fallback={<Loader />}>
-      <AscentDetail ascentId={_id} />
+      <AscentDetail ascentId={ascentId} />
     </Suspense>
   )
 }

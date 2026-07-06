@@ -65,6 +65,9 @@ export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Asc
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
 
+type PointsGrade = keyof typeof GRADE_TO_POINTS
+const isPointsGrade = (grade: string): grade is PointsGrade => grade in GRADE_TO_POINTS
+
 /**
  * Converts a points value to its corresponding climbing grade.
  *
@@ -105,8 +108,6 @@ export function fromPointToGrade(
   }
 
   // Find the grade that matches the adjusted points
-  type PointsGrade = keyof typeof GRADE_TO_POINTS
-  const isPointsGrade = (grade: string): grade is PointsGrade => grade in GRADE_TO_POINTS
   const matchingEntry = Object.entries(GRADE_TO_POINTS).find(
     ([, entryPoints]) => entryPoints === adjustedPoints,
   )

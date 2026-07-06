@@ -57,7 +57,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
   const clearFilters = useCallback(() => {
     setLocalSelectedValueByName(
-      Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])) as Record<string, string>,
+      Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])),
     )
     setLocalSearch('')
 

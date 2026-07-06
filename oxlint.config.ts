@@ -2,7 +2,7 @@ import { defineConfig } from 'oxlint'
 
 export default defineConfig({
   jsPlugins: ['@shopify/eslint-plugin', 'eslint-plugin-react-you-might-not-need-an-effect'],
-  plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn', 'vitest'],
+  plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
   categories: {
     correctness: 'error',
     suspicious: 'warn',
@@ -28,6 +28,7 @@ export default defineConfig({
     'import/prefer-default-export': 'off',
     'max-statements': 'off',
     'no-continue': 'off',
+    'no-underscore-dangle': ['warn', { allow: ['_id'] }],
     'no-magic-numbers': ['warn', { ignore: [-2, -1, 0, 1, 2, 10, 24, 60, 100, 1_000, 1_900] }],
     'no-ternary': 'off',
     'no-unassigned-import': 'off',
@@ -96,8 +97,6 @@ export default defineConfig({
         case: 'kebabCase',
       },
     ],
-    'vitest/no-importing-vitest-globals': 'off',
-    'vitest/prefer-called-times': 'off',
     complexity: 'warn',
     curly: ['error', 'multi'],
     eqeqeq: ['error', 'always', { null: 'ignore' }],
@@ -116,11 +115,15 @@ export default defineConfig({
   overrides: [
     {
       files: ['**/*.test.*', '**/*.spec.*', 'tests/**'],
+      plugins: ['vitest'],
       rules: {
         'no-magic-numbers': 'off',
         'typescript/no-unsafe-type-assertion': 'off',
         'vitest/prefer-to-be-truthy': 'off',
         'vitest/prefer-to-be-falsy': 'off',
+        'vitest/prefer-expect-assertions': 'off',
+        'vitest/no-importing-vitest-globals': 'off',
+        'vitest/prefer-called-times': 'off',
       },
     },
     {
@@ -133,6 +136,13 @@ export default defineConfig({
       files: ['src/**/use*-query-state.ts'],
       rules: {
         'unicorn/no-null': 'off',
+      },
+    },
+    {
+      files: ['src/backup/**/*.ts'],
+
+      rules: {
+        'vitest/require-hook': 'off',
       },
     },
   ],

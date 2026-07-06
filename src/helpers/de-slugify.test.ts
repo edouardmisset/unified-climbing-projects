@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { deSlugify } from './de-slugify.js'
 
 describe('deSlugify', () => {
-  describe('Basic functionality', () => {
+  describe('basic functionality', () => {
     it('should convert a simple slug to readable text with default options', () => {
       const result = deSlugify('hello-world')
       expect(result).toBe('Hello world')
@@ -24,7 +24,7 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Capitalization options', () => {
+  describe('capitalization options', () => {
     it('should capitalize when capitalize option is true', () => {
       const result = deSlugify('hello-world', { capitalize: true })
       expect(result).toBe('Hello world')
@@ -41,7 +41,7 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Custom separators', () => {
+  describe('custom separators', () => {
     it('should handle underscore separators', () => {
       const result = deSlugify('hello_world_test', { separator: '_' })
       expect(result).toBe('Hello world test')
@@ -68,7 +68,7 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Combined options', () => {
+  describe('combined options', () => {
     it('should handle custom separator without capitalization', () => {
       const result = deSlugify('hello_world_test', {
         separator: '_',
@@ -86,7 +86,7 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Edge cases', () => {
+  describe('edge cases', () => {
     it('should handle strings with only separators (empty string)', () => {
       const result = deSlugify('---', { separator: '-' })
       expect(result).toBe('')
@@ -118,7 +118,7 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Real-world examples', () => {
+  describe('real-world examples', () => {
     it('should handle typical URL slugs', () => {
       const testCases = [
         { input: 'about-us', expected: 'About us' },
@@ -163,17 +163,17 @@ describe('deSlugify', () => {
     })
   })
 
-  describe('Performance and stability', () => {
+  describe('performance and stability', () => {
     it('should handle long strings efficiently', () => {
       const longSlug = Array.from({ length: 100 }, (_, i) => `word${i}`).join('-')
       const result = deSlugify(longSlug)
 
       // Should start with capitalized first word and contain spaces
       expect(result.startsWith('Word0')).toBe(true)
-      expect(result.includes(' ')).toBe(true)
+      expect(result).toContain(' ')
 
       // Should have replaced all separators
-      expect(result.includes('-')).toBe(false)
+      expect(result).not.toContain('-')
     })
 
     it('should handle empty options object', () => {

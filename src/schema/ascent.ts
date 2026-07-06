@@ -1,7 +1,7 @@
 import { z } from '~/helpers/zod'
 import { positiveInteger } from './generic'
 
-export const _GRADES = [
+export const GRADES = [
   '1a',
   '1a+',
   '1b',
@@ -176,7 +176,7 @@ export const STYLE_TO_POINTS = {
 
 export const BOULDERING_BONUS_POINTS = 100 as const
 
-export const gradeSchema = z.enum(_GRADES)
+export const gradeSchema = z.enum(GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
 

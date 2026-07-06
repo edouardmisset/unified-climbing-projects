@@ -5,7 +5,7 @@ import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 describe('getAscentsPerDiscipline', () => {
   it('should return empty array for empty input', () => {
     const result = getAscentsPerDiscipline([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -25,7 +25,7 @@ describe('getAscentsPerDiscipline', () => {
     ]
     const result = getAscentsPerDiscipline(sampleAscents)
     const totalValue = result.reduce((sum, item) => sum + item.value, 0)
-    expect(totalValue).toEqual(sampleAscents.length)
-    expect(result).toEqual(expected)
+    expect(totalValue).toStrictEqual(sampleAscents.length)
+    expect(result).toStrictEqual(expected)
   })
 })

@@ -8,7 +8,7 @@ const CLICK_ME_REGEX = /click me/i
 const DISABLED_REGEX = /disabled/i
 const KEYBOARD_TEST_REGEX = /keyboard test/i
 
-describe('KeycapButton Component', () => {
+describe('keycapButton Component', () => {
   it('renders button with label', () => {
     render(<KeycapButton label='Submit' type='button' />)
 

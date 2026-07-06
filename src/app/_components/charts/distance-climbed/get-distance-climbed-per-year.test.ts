@@ -5,7 +5,7 @@ import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
 describe('getDistanceClimbedPerYear', () => {
   it('should return empty array for empty input', () => {
     const result = getDistanceClimbedPerYear([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should compute distance and average height for a multiple years', () => {
@@ -44,6 +44,6 @@ describe('getDistanceClimbedPerYear', () => {
       },
     ]
     const result = getDistanceClimbedPerYear(sampleAscents)
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 })

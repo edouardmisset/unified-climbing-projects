@@ -41,14 +41,14 @@ describe('filterTrainingSessions', () => {
 
   it('should return all training sessions when no filters are applied', () => {
     const result = filterTrainingSessions(trainingSessions, {})
-    expect(result).toEqual(trainingSessions)
+    expect(result).toStrictEqual(trainingSessions)
   })
 
   it('should filter training sessions by gymCrag', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
       gymCrag: 'Gym 1',
     })
-    expect(sessions.length).toBe(2)
+    expect(sessions).toHaveLength(2)
 
     for (const { gymCrag } of sessions) expect(gymCrag).toBe('Gym 1')
   })
@@ -57,13 +57,13 @@ describe('filterTrainingSessions', () => {
     const result = filterTrainingSessions(trainingSessions, {
       climbingDiscipline: 'Boulder',
     })
-    expect(result.length).toBe(1)
+    expect(result).toHaveLength(1)
     expect(result[0]?.climbingDiscipline).toBe('Boulder')
   })
 
   it('should filter training sessions by year', () => {
     const result = filterTrainingSessions(trainingSessions, { year: 2_024 })
-    expect(result.length).toBe(1)
+    expect(result).toHaveLength(1)
     if (result[0]) expect(new Date(result[0].date).getFullYear()).toBe(2_024)
     else throw new Error('result[0] is undefined')
   })
@@ -72,14 +72,14 @@ describe('filterTrainingSessions', () => {
     const sessions = filterTrainingSessions(trainingSessions, {
       gymCrag: 'This gym does not exist',
     })
-    expect(sessions).toEqual([])
+    expect(sessions).toStrictEqual([])
   })
 
   it('should filter training sessions by sessionType', () => {
     const result = filterTrainingSessions(trainingSessions, {
       sessionType: 'CS',
     })
-    expect(result.length).toBe(1)
+    expect(result).toHaveLength(1)
     expect(result[0]?.sessionType).toBe('CS')
   })
 
@@ -87,7 +87,7 @@ describe('filterTrainingSessions', () => {
     const result = filterTrainingSessions(trainingSessions, {
       energySystem: 'AA',
     })
-    expect(result.length).toBe(1)
+    expect(result).toHaveLength(1)
     expect(result[0]?.energySystem).toBe('AA')
   })
 
@@ -96,7 +96,7 @@ describe('filterTrainingSessions', () => {
       gymCrag: 'Gym 1',
       sessionType: 'CS',
     })
-    expect(result.length).toBe(1)
+    expect(result).toHaveLength(1)
     expect(result[0]?.sessionType).toBe('CS')
     expect(result[0]?.gymCrag).toBe('Gym 1')
   })

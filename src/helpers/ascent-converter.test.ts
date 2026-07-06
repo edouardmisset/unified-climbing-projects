@@ -24,7 +24,7 @@ describe('fromGradeToBackgroundColor', () => {
 describe('fromGradeToClassName', () => {
   it('should return undefined when grade is undefined', () => {
     const result = fromGradeToClassName(undefined)
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return a class name with underscores replacing plus signs', () => {

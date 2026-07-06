@@ -9,7 +9,7 @@ const HEADER_REGEX = /header/i
 const SECTION_CONTENT_REGEX = /section content/i
 const ACTION_REGEX = /action/i
 
-describe('Card Component', () => {
+describe('card Component', () => {
   it('renders children correctly', () => {
     render(
       <Card>

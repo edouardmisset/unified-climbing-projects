@@ -5,7 +5,7 @@ import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per
 describe('getAscentsPerDisciplinePerYear', () => {
   it('should return empty array for empty input', () => {
     const result = getAscentsPerDisciplinePerYear([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -19,6 +19,6 @@ describe('getAscentsPerDisciplinePerYear', () => {
     const result = getAscentsPerDisciplinePerYear(
       sampleAscents.filter(({ date }) => new Date(date).getFullYear() === 2_024),
     )
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 })

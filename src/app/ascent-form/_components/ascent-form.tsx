@@ -11,7 +11,7 @@ import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button.t
 import { Loader } from '~/app/_components/ui/loader/loader.tsx'
 import { Option } from '~/app/_components/ui/option/option.tsx'
 import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
-import { _0To100RegEx } from '~/constants/generic.ts'
+import { zeroTo100RegEx } from '~/constants/generic.ts'
 import { createValueAndLabel } from '~/helpers/create-value-and-label.ts'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date.ts'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
@@ -29,8 +29,8 @@ import {
 } from '~/schema/ascent'
 import { onSubmit } from '../actions.ts'
 import {
-  _1To5RegEx,
-  _1To9999RegEx,
+  oneTo5RegEx,
+  oneTo9999RegEx,
   MAX_HEIGHT,
   MAX_RATING,
   MAX_TRIES,
@@ -306,7 +306,7 @@ export default function AscentForm(props: AscentFormProps) {
             max={MAX_TRIES}
             min={MIN_TRIES}
             onChange={handleTriesChange}
-            pattern={_1To9999RegEx.source}
+            pattern={oneTo9999RegEx.source}
             placeholder='1'
             required
             step={1}
@@ -407,7 +407,7 @@ export default function AscentForm(props: AscentFormProps) {
             inputMode='numeric'
             max={MAX_HEIGHT}
             min={MIN_HEIGHT}
-            pattern={_0To100RegEx.source}
+            pattern={zeroTo100RegEx.source}
             placeholder='25'
             step={5}
             title='Height of the route in meters (does not apply for boulders)'
@@ -425,7 +425,7 @@ export default function AscentForm(props: AscentFormProps) {
             inputMode='numeric'
             max={MAX_RATING}
             min={MIN_RATING}
-            pattern={_1To5RegEx.source}
+            pattern={oneTo5RegEx.source}
             placeholder={(MAX_RATING - 1).toString()}
             step={1}
             title={`The climb's rating on a ${MAX_RATING} stars system`}

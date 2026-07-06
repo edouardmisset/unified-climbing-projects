@@ -10,13 +10,13 @@ import {
   holdsSchema,
   profileSchema,
 } from '~/schema/ascent'
-import { _1To9999RegEx, MAX_HEIGHT, MAX_RATING, MAX_TRIES } from './constants.ts'
+import { oneTo9999RegEx, MAX_HEIGHT, MAX_RATING, MAX_TRIES } from './constants.ts'
 
 const optionalNumberGradeSchema = z.number().optional()
 const numberOfTriesSchema = z
   .string()
   .min(1)
-  .refine(val => _1To9999RegEx.test(val), {
+  .refine(val => oneTo9999RegEx.test(val), {
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
   .transform(Number)

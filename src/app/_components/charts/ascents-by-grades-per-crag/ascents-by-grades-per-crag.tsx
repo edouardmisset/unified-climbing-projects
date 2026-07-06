@@ -20,7 +20,7 @@ import {
 } from '../constants'
 
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
-import { _GRADES, type Ascent } from '~/schema/ascent'
+import { GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
 type AscentsByGradesPerCragDatum = ReturnType<typeof getAscentsByGradesPerCrag>[number]
@@ -55,7 +55,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
           <Chart.XAxis tick={AXIS_TICK_STYLE} type='number' />
           <Chart.YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
-          {_GRADES.map(key => (
+          {GRADES.map(key => (
             <Chart.Bar
               key={key}
               dataKey={key}

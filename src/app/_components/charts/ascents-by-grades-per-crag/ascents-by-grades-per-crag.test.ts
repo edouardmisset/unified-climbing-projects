@@ -5,7 +5,7 @@ import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 describe('getAscentsByGradesPerCrag', () => {
   it('should return empty array for empty input', () => {
     const result = getAscentsByGradesPerCrag([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return correct structure and counts for top 10 crags', () => {

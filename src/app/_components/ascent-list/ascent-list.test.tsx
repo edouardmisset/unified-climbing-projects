@@ -16,7 +16,7 @@ const ascent: Ascent = {
   tries: 2,
 }
 
-describe('AscentList', () => {
+describe('ascentList', () => {
   it('opens the ascent dialog on double click', async () => {
     render(<AscentList ascents={[ascent]} />)
 
@@ -25,7 +25,7 @@ describe('AscentList', () => {
 
     await userEvent.dblClick(row)
 
-    expect(await screen.findByLabelText(/close dialog/i)).toBeInTheDocument()
+    await expect(screen.findByLabelText(/close dialog/i)).resolves.toBeInTheDocument()
   })
 
   it('does not open the ascent dialog on single click', async () => {

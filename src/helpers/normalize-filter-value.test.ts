@@ -5,7 +5,7 @@ import { normalizeFilterValue } from './normalize-filter-value'
 describe('normalizeFilterValue', () => {
   it('should return undefined when value is ALL_VALUE', () => {
     const result = normalizeFilterValue(ALL_VALUE)
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return the original value when value is not ALL_VALUE', () => {

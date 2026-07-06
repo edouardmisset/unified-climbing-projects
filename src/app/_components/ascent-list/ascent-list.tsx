@@ -232,7 +232,7 @@ export const AscentList = memo(
               {showPoints ? (
                 <>
                   <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
-                  <td className={`${styles.footerCell} ${styles.cell}`} />
+                  <td className={`${styles.footerCell} ${styles.cell}`} aria-hidden='true' />
                   <td className={`${styles.footerCell} ${styles.cell}`}>
                     <strong>{frenchNumberFormatter.format(totalAscentPoints)}</strong>
                   </td>

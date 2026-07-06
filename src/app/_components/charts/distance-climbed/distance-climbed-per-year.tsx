@@ -21,10 +21,11 @@ const AXIS_LABELS = {
   years: 'Years',
 }
 
+const formattedDistance = (value: unknown) =>
+  typeof value === 'number' ? formatNumber(value) : String(value)
+
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
-  const formattedDistance = (value: unknown) =>
-    typeof value === 'number' ? formatNumber(value) : String(value)
 
   if (data.length === 0) return
 

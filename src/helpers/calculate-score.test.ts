@@ -25,9 +25,9 @@ describe('calculateScore', () => {
           style: 'Redpoint',
           topoGrade: '5a',
           tries: 1,
-        } as Ascent,
+        },
       ],
-      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' } as TrainingSession],
+      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' }],
       year: -1,
     })
 
@@ -37,7 +37,7 @@ describe('calculateScore', () => {
   it('should return 0 when ascents array is empty', () => {
     const result = calculateScore({
       ascents: [],
-      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' } as TrainingSession],
+      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' }],
       year: 2_023,
     })
 

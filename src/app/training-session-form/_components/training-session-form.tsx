@@ -9,7 +9,7 @@ import styles from '~/app/_components/forms/form.module.css'
 import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button'
 import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
 import { DataList } from '~/app/ascent-form/_components/data-list'
-import { _0To100RegEx } from '~/constants/generic'
+import { zeroTo100RegEx } from '~/constants/generic'
 import { LINKS } from '~/constants/links'
 import { createValueAndLabel } from '~/helpers/create-value-and-label'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
@@ -229,7 +229,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
             inputMode='numeric'
             max={MAX_PERCENT}
             min={MIN_PERCENT}
-            pattern={_0To100RegEx.source}
+            pattern={zeroTo100RegEx.source}
             placeholder='50'
             step={5}
             title='The perceived intensity of the session (0 - 100%)'
@@ -247,7 +247,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
             inputMode='numeric'
             max={MAX_PERCENT}
             min={MIN_PERCENT}
-            pattern={_0To100RegEx.source}
+            pattern={zeroTo100RegEx.source}
             placeholder='80'
             step={5}
             title='The perceived volume of the session (0 - 100%)'
