@@ -11,13 +11,13 @@ const THEME_STORAGE_KEY = 'theme'
 const THEME_CHANGE_EVENT = 'themechange'
 
 function getStoredTheme() {
-  if (typeof globalThis.window === 'undefined') return null
+  if (typeof globalThis.window === 'undefined') return undefined
 
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY)
-    return stored && isThemeMode(stored) ? stored : null
+    return stored && isThemeMode(stored) ? stored : undefined
   } catch {
-    return null
+    return undefined
   }
 }
 
