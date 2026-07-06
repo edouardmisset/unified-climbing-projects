@@ -1,7 +1,7 @@
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
-  jsPlugins: ['@shopify/eslint-plugin'],
+  jsPlugins: ['@shopify/eslint-plugin', 'eslint-plugin-react-you-might-not-need-an-effect'],
   plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn', 'vitest'],
   categories: {
     correctness: 'error',
@@ -41,6 +41,15 @@ export default defineConfig({
     'promise/prefer-await-to-then': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
+    'react-you-might-not-need-an-effect/no-adjust-state-on-prop-change': 'warn',
+    'react-you-might-not-need-an-effect/no-chain-state-updates': 'warn',
+    'react-you-might-not-need-an-effect/no-derived-state': 'warn',
+    'react-you-might-not-need-an-effect/no-event-handler': 'warn',
+    'react-you-might-not-need-an-effect/no-external-store-subscription': 'warn',
+    'react-you-might-not-need-an-effect/no-initialize-state': 'warn',
+    'react-you-might-not-need-an-effect/no-pass-data-to-parent': 'warn',
+    'react-you-might-not-need-an-effect/no-pass-live-state-to-parent': 'warn',
+    'react-you-might-not-need-an-effect/no-reset-all-state-on-prop-change': 'warn',
     'react-perf/jsx-no-new-array-as-prop': 'warn',
     'react-perf/jsx-no-new-function-as-prop': 'warn',
     'react-perf/jsx-no-new-object-as-prop': 'warn',
