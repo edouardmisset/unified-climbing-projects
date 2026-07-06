@@ -1,0 +1,24 @@
+.list {
+  display: grid;
+  gap: var(--size-fluid-0);
+  inline-size: min(100%, 50ch);
+  margin-inline: auto;
+  padding-inline-start: 3ch;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: min-content minmax(0, 1fr) min-content;
+  gap: var(--size-fluid-1);
+  align-items: center;
+  padding: var(--size-fluid-0);
+  border-radius: var(--radius-2);
+}
+
+.list > li::marker {
+  font-family: var(--font-monospace-code);
+}
+
+.list > li:nth-child(even) .item {
+  background-color: var(--surface-2);
+}
