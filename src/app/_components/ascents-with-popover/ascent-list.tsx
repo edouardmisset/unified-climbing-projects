@@ -9,7 +9,7 @@ function AscentListComponent(props: AscentListProps) {
   return (
     <ul className={styles.list}>
       {ascents.map(({ _id, ...ascent }) => (
-        <AscentListItem key={_id} {...ascent} />
+        <AscentListItem {...ascent} key={_id} />
       ))}
     </ul>
   )
