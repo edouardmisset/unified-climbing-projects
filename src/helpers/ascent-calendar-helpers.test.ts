@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 

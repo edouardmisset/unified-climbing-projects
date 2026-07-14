@@ -1,5 +1,5 @@
 import { objectKeys } from '@edouardmisset/object'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import { GRADE_TO_NUMBER, type Grade } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade, NUMBER_TO_GRADE } from './grade-converter'

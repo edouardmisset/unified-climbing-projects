@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { type Ascent, GRADE_TO_NUMBER } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS } from '~/schema/ascent'

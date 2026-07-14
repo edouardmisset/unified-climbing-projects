@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { trimAndNormalizeStringsInObject } from './trim-and-normalize-string-in-object.js'
 
 describe('trimAndNormalizeStringsInObject', () => {

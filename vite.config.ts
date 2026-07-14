@@ -1,6 +1,57 @@
-import { defineConfig } from 'oxlint'
+// oxlint-disable import/no-nodejs-modules
+import path from 'node:path'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite-plus'
 
 export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: false,
+    environment: 'happy-dom',
+    setupFiles: ['./vitest.setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    css: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/backup/',
+        'src/scripts/',
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '**/*.config.*',
+        '**/types.ts',
+      ],
+    },
+  },
+  resolve: {
+    alias: {
+      '~': path.join(import.meta.dirname, './src'),
+    },
+  },
+  fmt: {
+    ignorePatterns: [
+      '.next/**',
+      'node_modules/**',
+      'out/**',
+      'build/**',
+      'dist/**',
+      'coverage/**',
+      'playwright-report/**',
+      'test-results/**',
+      'convex/_generated/**',
+    ],
+    singleQuote: true,
+    semi: false,
+    sortPackageJson: true,
+  },
+  lint: {
+    options: {
+      typeAware: true,
+      typeCheck: true,
+      fix: true,
+    },
   jsPlugins: ['@shopify/eslint-plugin', 'eslint-plugin-react-you-might-not-need-an-effect'],
   plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
   categories: {
@@ -153,5 +204,10 @@ export default defineConfig({
   },
   env: {
     builtin: true,
+  },
+  },
+  staged: {
+    '*.{js,jsx,ts,tsx}': 'vp check --fix',
+    '*.css': 'vp fmt',
   },
 })

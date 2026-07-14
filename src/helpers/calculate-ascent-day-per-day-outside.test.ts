@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { calculateAscentDayPerDayOutside } from './calculate-ascent-day-per-day-outside'
