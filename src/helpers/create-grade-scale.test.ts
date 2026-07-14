@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent, Grade } from '~/schema/ascent'
 import { createGradeScaleFromAscents } from './create-grade-scale'
 

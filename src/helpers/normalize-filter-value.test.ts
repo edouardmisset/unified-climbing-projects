@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { normalizeFilterValue } from './normalize-filter-value'
 

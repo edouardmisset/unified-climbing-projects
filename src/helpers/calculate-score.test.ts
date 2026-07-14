@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME, DEFAULT_GRADE } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
