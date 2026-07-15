@@ -16,7 +16,7 @@ export const getAscentsPerDisciplinePerGrade = (
   const validGrades = new Set(grades)
 
   const groupByGrade = new Map<Grade, Record<Ascent['climbingDiscipline'], number>>(
-    grades.map(grade => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]),
+    grades.map((grade) => [grade, { Boulder: 0, 'Multi-Pitch': 0, Route: 0 }]),
   )
 
   for (const { topoGrade, climbingDiscipline } of ascents) {
@@ -28,7 +28,7 @@ export const getAscentsPerDisciplinePerGrade = (
     ascentCountsByGrade[climbingDiscipline] += 1
   }
 
-  return grades.map(grade => {
+  return grades.map((grade) => {
     const { Boulder = 0, Route = 0 } = groupByGrade.get(grade) ?? {}
 
     return {

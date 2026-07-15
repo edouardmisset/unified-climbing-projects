@@ -6,5 +6,5 @@ import { type Period, periodSchema } from '~/schema/generic'
 export const usePeriodQueryState = (): UseQueryStateReturn<OrAll<Period>, typeof ALL_VALUE> =>
   useQueryState<OrAll<Period>>('period', {
     defaultValue: ALL_VALUE,
-    parse: value => (value === ALL_VALUE ? ALL_VALUE : periodSchema.parse(value)),
+    parse: (value) => (value === ALL_VALUE ? ALL_VALUE : periodSchema.parse(value)),
   })

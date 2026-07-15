@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   createRecentDateOptions,
   extractDateFromISODateString,
@@ -91,7 +91,7 @@ describe('createRecentDateOptions', () => {
 describe('formatEnglishWeekdayLabel', () => {
   it('should format weekday names in English', () => {
     const monday = new Date(Date.UTC(2_024, 0, 1)) // January 1, 2024 is a Monday
-    expect(formatEnglishWeekdayLabel(monday)).toBe('Monday')
+    expect(formatEnglishWeekdayLabel(monday, 'long')).toBe('Monday')
     expect(formatEnglishWeekdayLabel(monday, 'short')).toBe('Mon')
   })
 })

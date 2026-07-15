@@ -15,7 +15,7 @@ export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
           <li className={styles.item} key={_id}>
             {disciplineIcon}
             {NON_BREAKING_SPACE}
-            <span className='monospace'>{formatShortDate(date)}</span>
+            <span className="monospace">{formatShortDate(date)}</span>
             {gymCrag && ` - ${gymCrag}`}
           </li>
         )

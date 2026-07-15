@@ -66,8 +66,8 @@ export default function AscentsFilterBar({
       crag: normalizeFilterValue(selectedCrag),
       area: normalizeFilterValue(selectedArea),
     })
-    return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
-      filteredForDiscipline.some(ascent => ascent.climbingDiscipline === discipline),
+    return AVAILABLE_CLIMBING_DISCIPLINE.filter((discipline) =>
+      filteredForDiscipline.some((ascent) => ascent.climbingDiscipline === discipline),
     )
   }, [allAscents, selectedYearNumber, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
 
@@ -83,7 +83,7 @@ export default function AscentsFilterBar({
       crag: normalizeFilterValue(selectedCrag),
       area: normalizeFilterValue(selectedArea),
     })
-    return ASCENT_STYLE.filter(style => filteredForStyle.some(ascent => ascent.style === style))
+    return ASCENT_STYLE.filter((style) => filteredForStyle.some((ascent) => ascent.style === style))
   }, [
     allAscents,
     selectedYearNumber,
@@ -151,7 +151,7 @@ export default function AscentsFilterBar({
       crag: normalizeFilterValue(effectiveSelectedCrag),
       area: normalizeFilterValue(effectiveSelectedArea),
     })
-    return PERIOD.filter(period =>
+    return PERIOD.filter((period) =>
       filteredForPeriod.some(({ date }) =>
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),

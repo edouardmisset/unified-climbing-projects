@@ -13,7 +13,7 @@ function createListFormatter(
   locale: string = US_LOCALE,
 ): (list: string[] | readonly string[]) => string {
   const formatter = new Intl.ListFormat(locale, options)
-  return list => formatter.format(list)
+  return (list) => formatter.format(list)
 }
 
 /**

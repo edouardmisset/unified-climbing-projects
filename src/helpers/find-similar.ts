@@ -22,7 +22,7 @@ function formatAscentName(ascentName: string): string {
     .replaceAll(/[^a-z0-9\s]/gi, '') // Remove special characters
     .replaceAll(/\s+/g, ' ') // Replace multiple spaces with a single space
     .split(' ') // Split the string into words
-    .map(word => synonyms[word] ?? word) // Replace synonyms
+    .map((word) => synonyms[word] ?? word) // Replace synonyms
     .join(' ') // Join the words back into a string
 }
 
@@ -42,7 +42,7 @@ export function groupSimilarStrings(strings: string[], maxDistance = 2): Map<str
     if (seen.has(str)) continue
 
     const similarStrings = strings.filter(
-      s => s !== str && !seen.has(s) && getDistance(str, formatAscentName(s)) <= maxDistance,
+      (s) => s !== str && !seen.has(s) && getDistance(str, formatAscentName(s)) <= maxDistance,
     )
 
     if (similarStrings.length > 1) similarStringsMap.set(str, similarStrings)

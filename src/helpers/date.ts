@@ -42,7 +42,7 @@ export function formatEnglishWeekdayLabel(date: Date, style: WeekdayLabelStyle =
 }
 
 export function getEnglishWeekdayLabels(style: WeekdayLabelStyle = 'short'): string[] {
-  return WEEKDAY_LABEL_REFERENCE_DATES.map(date => formatEnglishWeekdayLabel(date, style))
+  return WEEKDAY_LABEL_REFERENCE_DATES.map((date) => formatEnglishWeekdayLabel(date, style))
 }
 
 export function createRecentDateOptions(): ValueAndLabel[] {
@@ -255,8 +255,8 @@ export function findLongestStreak(data: StringDate[]): number {
 
   const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
   const sortedDates = uniqueDatesAsStrings
-    .map(dateString => new Date(dateString))
-    .filter(date => isValidDate(date))
+    .map((dateString) => new Date(dateString))
+    .filter((date) => isValidDate(date))
     .toSorted((a, b) => a.getTime() - b.getTime())
 
   if (sortedDates.length === 0) return 0
@@ -313,8 +313,8 @@ export function findLongestGap(data: StringDate[]): number {
 
   const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
   const sortedDates = uniqueDatesAsStrings
-    .map(dateString => new Date(dateString))
-    .filter(date => isValidDate(date))
+    .map((dateString) => new Date(dateString))
+    .filter((date) => isValidDate(date))
     .toSorted((a, b) => a.getTime() - b.getTime())
 
   if (sortedDates.length <= 1) return 0

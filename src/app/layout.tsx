@@ -48,16 +48,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html
           className={font.className}
           data-color-scheme={theme}
-          data-scroll-behavior='smooth'
+          data-scroll-behavior="smooth"
           lang={APP_LANGUAGE}
           suppressHydrationWarning
         >
           <body className={styles.body}>
-            <a className={styles.skipLink} href='#main-content'>
+            <a className={styles.skipLink} href="#main-content">
               Skip to content
             </a>
             <Header />
-            <main className={styles.main} id='main-content' tabIndex={-1}>
+            <main className={styles.main} id="main-content" tabIndex={-1}>
               <Suspense fallback={<Loader />}>
                 <NuqsAdapter>{children}</NuqsAdapter>
               </Suspense>
@@ -66,9 +66,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ToastContainer
               closeOnClick
               draggable
-              draggableDirection='x'
+              draggableDirection="x"
               draggablePercent={20}
-              theme='colored'
+              theme="colored"
             />
             <SpeedInsights />
             <Analytics />

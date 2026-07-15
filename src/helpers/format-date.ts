@@ -39,5 +39,5 @@ export const buildDateTimeFormat = (
 ): ((date: string) => string) => {
   const formatter = new Intl.DateTimeFormat(locale, DATE_TIME_OPTIONS[options])
 
-  return date => formatter.format(new Date(date))
+  return (date) => formatter.format(new Date(date))
 }

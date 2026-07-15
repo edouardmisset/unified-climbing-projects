@@ -1,0 +1,29 @@
+packages:
+  - .
+
+overrides:
+  vite: 'catalog:'
+  vitest: 'catalog:'
+
+onlyBuiltDependencies:
+  - '@clerk/shared'
+  - '@vercel/speed-insights'
+  - core-js
+  - esbuild
+  - oxc-resolver
+  - protobufjs
+  - sharp
+  - unrs-resolver
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.4
+  vitest: 4.1.10
+  vite-plus: 0.2.4
+  '@vitest/coverage-v8': 4.1.10
+  '@vitest/ui': 4.1.10
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

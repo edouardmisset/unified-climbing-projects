@@ -10,13 +10,13 @@ import styles from './year-grid.module.css'
 // Lazy load the popover components
 const AscentsPopoverDescription = lazy(async () =>
   import('~/app/_components/ascents-popover-description/ascents-popover-description').then(
-    module => ({ default: module.AscentsPopoverDescription }),
+    (module) => ({ default: module.AscentsPopoverDescription }),
   ),
 )
 
 const TrainingPopoverDescription = lazy(async () =>
   import('~/app/_components/training-popover-description/training-popover-description').then(
-    module => ({ default: module.TrainingPopoverDescription }),
+    (module) => ({ default: module.TrainingPopoverDescription }),
   ),
 )
 
@@ -53,13 +53,13 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     if (hasTrainingSessions && hasAscents)
       return (
         <>
-          <Suspense fallback='Loading...'>
+          <Suspense fallback="Loading...">
             <TrainingPopoverDescription trainingSessions={trainingSessions} />
           </Suspense>
           <br />
           <hr />
           <br />
-          <Suspense fallback='Loading...'>
+          <Suspense fallback="Loading...">
             <AscentsPopoverDescription ascents={ascents} />
           </Suspense>
         </>
@@ -67,14 +67,14 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
     if (hasAscents)
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback="Loading...">
           <AscentsPopoverDescription ascents={ascents} />
         </Suspense>
       )
 
     if (hasTrainingSessions)
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback="Loading...">
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )

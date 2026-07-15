@@ -33,7 +33,7 @@ export function getAscentsVolumeAndGradesPerYear(
 
   const years = createYearList(ascents, { descending: false, continuous: true })
 
-  return years.map(year => {
+  return years.map((year) => {
     const boulderGrades: number[] = []
     const routeGrades: number[] = []
 

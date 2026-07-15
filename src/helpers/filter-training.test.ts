@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { TrainingSession } from '~/schema/training'
 import { filterTrainingSessions } from './filter-training'
 
@@ -64,8 +64,7 @@ describe('filterTrainingSessions', () => {
   it('should filter training sessions by year', () => {
     const result = filterTrainingSessions(trainingSessions, { year: 2_024 })
     expect(result).toHaveLength(1)
-    if (result[0]) expect(new Date(result[0].date).getFullYear()).toBe(2_024)
-    else throw new Error('result[0] is undefined')
+    expect(new Date(result[0]?.date ?? '').getFullYear()).toBe(2_024)
   })
 
   it('should return an empty array when no training sessions match the filters', () => {

@@ -110,8 +110,8 @@
 
 /* submit, form > button, reset matching hover border color */
 :where([type='submit'], [type='reset'], form button:not([type])):is(:hover, :focus-visible):not(
-    [disabled]
-  ) {
+  [disabled]
+) {
   --_border: currentcolor;
 }
 

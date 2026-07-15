@@ -72,14 +72,14 @@ export async function DaysOutsideSummary({
           />
         </Suspense>
         {mostAscentDate === '' || ascentsInMostAscentDay[0] === undefined ? undefined : (
-          <span className='block'>
+          <span className="block">
             Your best day was <strong>{formatLongDate(mostAscentDate)}</strong> where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
           </span>
         )}
         {consecutiveClimbingDays === 0 ? undefined : (
-          <span className='block'>
+          <span className="block">
             Your longest streak was{' '}
             <strong>
               {formatCountWithEnglishNoun(consecutiveClimbingDays, {
@@ -91,7 +91,7 @@ export async function DaysOutsideSummary({
           </span>
         )}
         {isBelowMinGapThreshold ? undefined : (
-          <span className='block'>
+          <span className="block">
             Your longest gap without climbing was{' '}
             <strong>{formatFrenchDurationFromDays(longestGap)}</strong>.
           </span>

@@ -11,5 +11,5 @@ export const useLocationQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<NonNullable<TrainingSession['gymCrag']>>>('location', {
     defaultValue: ALL_VALUE,
-    parse: value => (value === ALL_VALUE ? ALL_VALUE : requiredGymCrag.parse(value)),
+    parse: (value) => (value === ALL_VALUE ? ALL_VALUE : requiredGymCrag.parse(value)),
   })

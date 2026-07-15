@@ -58,7 +58,7 @@ export function groupDataDaysByYear<T extends StringDate = Ascent | TrainingSess
   return groupDataByYear(data, {
     getFractionInYear: getDaysInYear,
     // We want the index to be 0-based to index into an array
-    getIndex: date => getDayOfYear(date) - 1,
+    getIndex: (date) => getDayOfYear(date) - 1,
   })
 }
 

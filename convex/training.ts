@@ -5,7 +5,7 @@ import { convexPostTrainingSessionSchema } from './schema'
 
 export const get = query({
   args: {},
-  handler: async ctx => {
+  handler: async (ctx) => {
     const trainingRecords = await ctx.db.query('training').collect()
 
     const validatedTrainingSessions = trainingSessionSchema.array().safeParse(trainingRecords)

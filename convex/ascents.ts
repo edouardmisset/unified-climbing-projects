@@ -5,7 +5,7 @@ import { convexPostAscentSchema } from './schema'
 
 export const get = query({
   args: {},
-  handler: async ctx => {
+  handler: async (ctx) => {
     const ascentRecords = await ctx.db.query('ascents').collect()
 
     const validatedAscents = ascentSchema.array().safeParse(ascentRecords)

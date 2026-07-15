@@ -18,7 +18,7 @@ export function getTopTenEvolution(ascents: Ascent[]): TopTenEvolutionDatum[] {
 
   const years = createYearList(ascents, { descending: false, continuous: true })
 
-  return years.map(year => {
+  return years.map((year) => {
     const ascentsInYear = ascents.filter(({ date }) => isDateInYear(date, year))
     const { Boulder, Route } = ascentsInYear.reduce(
       (acc, { climbingDiscipline }) => {

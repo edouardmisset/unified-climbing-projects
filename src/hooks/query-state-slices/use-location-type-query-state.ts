@@ -17,5 +17,5 @@ export const useLocationTypeQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<LocationType>>('locationType', {
     defaultValue: ALL_VALUE,
-    parse: value => (isValidLocationTypeOrAll(value) ? value : ALL_VALUE),
+    parse: (value) => (isValidLocationTypeOrAll(value) ? value : ALL_VALUE),
   })

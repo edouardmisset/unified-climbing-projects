@@ -15,7 +15,7 @@ export const getAscentsPerDisciplinePerYear = (
 
   const years = createYearList(ascents, { descending: false, continuous: true })
 
-  return years.map(year => {
+  return years.map((year) => {
     let boulderCount = 0
     let routeCount = 0
 

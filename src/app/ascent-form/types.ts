@@ -16,7 +16,7 @@ const optionalNumberGradeSchema = z.number().optional()
 const numberOfTriesSchema = z
   .string()
   .min(1)
-  .refine(val => oneTo9999RegEx.test(val), {
+  .refine((val) => oneTo9999RegEx.test(val), {
     message: `The number of tries should be a number between 1 and ${MAX_TRIES}`,
   })
   .transform(Number)
@@ -25,7 +25,7 @@ export const ascentFormInputSchema = z.object({
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: z.string().trim().optional(),
   crag: z.string().trim().optional(),
-  date: z.date().transform(date => stringifyDate(date)),
+  date: z.date().transform((date) => stringifyDate(date)),
   height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
   holds: holdsSchema.optional(),
   personalGrade: optionalNumberGradeSchema,
@@ -34,7 +34,7 @@ export const ascentFormInputSchema = z.object({
   routeName: z.string().trim().optional(),
   style: ascentStyleSchema.optional(),
   topoGrade: optionalNumberGradeSchema,
-  tries: numberOfTriesSchema.transform(num => num?.toString()),
+  tries: numberOfTriesSchema.transform((num) => num?.toString()),
 })
 
 export type AscentFormInput = z.input<typeof ascentFormInputSchema>
@@ -42,22 +42,22 @@ export type AscentFormInput = z.input<typeof ascentFormInputSchema>
 const numberGradeToGradeSchema = z
   .number()
   .or(z.string())
-  .transform(stringOrNumberGrade => fromNumberToGrade(Number(stringOrNumberGrade)))
+  .transform((stringOrNumberGrade) => fromNumberToGrade(Number(stringOrNumberGrade)))
 
 export const ascentFormOutputSchema = ascentSchema.omit({ _id: true }).extend({
   comments: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   date: z
     .string()
     .trim()
-    .transform(s => getDateAtNoon(new Date(s)).toISOString()),
+    .transform((s) => getDateAtNoon(new Date(s)).toISOString()),
   height: z
     .string()
     .trim()
-    .transform(height => (height === '' ? undefined : Number(height))),
+    .transform((height) => (height === '' ? undefined : Number(height))),
   holds: z.preprocess(emptyStringToUndefined, holdsSchema.optional()),
   personalGrade: numberGradeToGradeSchema,
   profile: z.preprocess(emptyStringToUndefined, profileSchema.optional()),
-  rating: z.string().transform(rating => (rating === '' ? undefined : Number(rating))),
+  rating: z.string().transform((rating) => (rating === '' ? undefined : Number(rating))),
   topoGrade: numberGradeToGradeSchema,
   tries: numberOfTriesSchema,
 })

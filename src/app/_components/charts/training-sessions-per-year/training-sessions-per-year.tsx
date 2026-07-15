@@ -36,45 +36,45 @@ export function TrainingSessionsPerYear({
   if (data.length === 0) return
 
   return (
-    <ChartContainer caption='Sessions per Year'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.AreaChart accessibilityLayer={false} data={data} stackOffset='expand'>
-          <CartesianGrid strokeDasharray='3 3' stroke={GRID_STROKE} opacity={0.3} />
-          <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
+    <ChartContainer caption="Sessions per Year">
+      <ResponsiveContainer height="100%" width="100%">
+        <Chart.AreaChart accessibilityLayer={false} data={data} stackOffset="expand">
+          <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} opacity={0.3} />
+          <ChartXAxis dataKey="year" tickFormatter={formatYearTick} labelText="Years" />
           <ChartYAxis tickFormatter={formatPercentageTick} />
           <ChartTooltip formatter={percentFormatter} />
-          <Legend align='center' verticalAlign='top' />
+          <Legend align="center" verticalAlign="top" />
           <Chart.Area
-            type='monotone'
-            dataKey='indoorRoute'
-            stackId='1'
-            stroke='var(--indoorRoute)'
-            fill='var(--indoorRoute)'
-            name='Indoor Route'
+            type="monotone"
+            dataKey="indoorRoute"
+            stackId="1"
+            stroke="var(--indoorRoute)"
+            fill="var(--indoorRoute)"
+            name="Indoor Route"
           />
           <Chart.Area
-            type='monotone'
-            dataKey='indoorBoulder'
-            stackId='1'
-            stroke='var(--indoorBoulder)'
-            fill='var(--indoorBoulder)'
-            name='Indoor Boulder'
+            type="monotone"
+            dataKey="indoorBoulder"
+            stackId="1"
+            stroke="var(--indoorBoulder)"
+            fill="var(--indoorBoulder)"
+            name="Indoor Boulder"
           />
           <Chart.Area
-            type='monotone'
-            dataKey='outdoorRoute'
-            stackId='1'
-            stroke='var(--route)'
-            fill='var(--route)'
-            name='Outdoor Route'
+            type="monotone"
+            dataKey="outdoorRoute"
+            stackId="1"
+            stroke="var(--route)"
+            fill="var(--route)"
+            name="Outdoor Route"
           />
           <Chart.Area
-            type='monotone'
-            dataKey='outdoorBoulder'
-            stackId='1'
-            stroke='var(--boulder)'
-            fill='var(--boulder)'
-            name='Outdoor Boulder'
+            type="monotone"
+            dataKey="outdoorBoulder"
+            stackId="1"
+            stroke="var(--boulder)"
+            fill="var(--boulder)"
+            name="Outdoor Boulder"
           />
         </Chart.AreaChart>
       </ResponsiveContainer>

@@ -27,7 +27,7 @@ export function TimeframeSelect() {
         <Select.Positioner className={styles.Positioner} sideOffset={8}>
           <Select.ScrollUpArrow className={styles.ScrollArrow} />
           <Select.Popup className={`${baseUiStyles.popupSurface} ${styles.Popup}`}>
-            {TIMEFRAMES.map(timeframeOption => (
+            {TIMEFRAMES.map((timeframeOption) => (
               <Select.Item
                 className={`${baseUiStyles.highlightedItem} ${styles.Item}`}
                 key={timeframeOption}

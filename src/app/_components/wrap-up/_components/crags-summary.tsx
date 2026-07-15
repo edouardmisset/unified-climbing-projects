@@ -23,7 +23,7 @@ export function CragsSummary({
       .map(({ gymCrag = '' }) => gymCrag),
   )
   const cragsWithoutAscents = [...cragsWithTrainingSessions].filter(
-    crag => crag.trim() !== '' && !cragsWithAscents.has(crag),
+    (crag) => crag.trim() !== '' && !cragsWithAscents.has(crag),
   )
 
   if (numberOfCrags === 0 || mostFrequentCrag === undefined || mostFrequentCrag === '') return
@@ -35,7 +35,7 @@ export function CragsSummary({
         You visited{' '}
         <Popover
           className={ascentsWithPopoverStyles.popover}
-          popoverTitle='Crags'
+          popoverTitle="Crags"
           trigger={
             <span>
               <strong>{numberOfCrags}</strong> crags
@@ -43,7 +43,7 @@ export function CragsSummary({
           }
         >
           <ul className={ascentsWithPopoverStyles.list}>
-            {crags.toSorted(compareStringsAscending).map(crag => (
+            {crags.toSorted(compareStringsAscending).map((crag) => (
               <li className={ascentsWithPopoverStyles.item} key={crag}>
                 {crag}
               </li>
@@ -57,7 +57,7 @@ export function CragsSummary({
             Crags without ascents:{' '}
             <Popover
               className={ascentsWithPopoverStyles.popover}
-              popoverTitle='Crags without ascents'
+              popoverTitle="Crags without ascents"
               trigger={
                 <span>
                   <strong>{cragsWithoutAscents.length}</strong> crags
@@ -65,7 +65,7 @@ export function CragsSummary({
               }
             >
               <ul className={ascentsWithPopoverStyles.list}>
-                {cragsWithoutAscents.map(crag => (
+                {cragsWithoutAscents.map((crag) => (
                   <li className={ascentsWithPopoverStyles.item} key={crag}>
                     {crag}
                   </li>

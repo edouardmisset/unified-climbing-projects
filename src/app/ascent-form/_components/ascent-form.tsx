@@ -144,7 +144,7 @@ export default function AscentForm(props: AscentFormProps) {
   )
 
   const handleTriesChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    async event => {
+    async (event) => {
       // Set the style value to 'Redpoint' when the number of tries is greater than 1
       if (Number(event.target.value) > 1) setValue('style', 'Redpoint')
 
@@ -162,12 +162,12 @@ export default function AscentForm(props: AscentFormProps) {
   const areaOptions = createValueAndLabel(areas)
   return user?.fullName === 'Edouard' ? (
     <form
-      aria-describedby='form-description'
-      autoComplete='off'
+      aria-describedby="form-description"
+      autoComplete="off"
       className={styles.form}
-      name='ascent-form'
+      name="ascent-form"
       onSubmit={handleSubmit(
-        async data => {
+        async (data) => {
           const promise = onSubmit(data)
           await toast.promise(promise, {
             error: 'Submission failed, please try again.',
@@ -180,14 +180,14 @@ export default function AscentForm(props: AscentFormProps) {
           reset()
           router.refresh()
         },
-        error => {
+        (error) => {
           console.error(error)
           toast.error('Something went wrong')
         },
       )}
       spellCheck={false}
     >
-      <div aria-hidden='true' className={styles.groupHeader}>
+      <div aria-hidden="true" className={styles.groupHeader}>
         <span />
         Location
         <span />
@@ -195,33 +195,33 @@ export default function AscentForm(props: AscentFormProps) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor='date'>Date</label>
+          <label htmlFor="date">Date</label>
           <input
             {...register('date')}
             // oxlint-disable-next-line jsx_a11y/no-autofocus
             autoFocus
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='date'
-            list='date-list'
+            enterKeyHint="next"
+            id="date"
+            list="date-list"
             max={fromDateToStringDate(new Date())}
             required
-            title='Date'
-            type='date'
+            title="Date"
+            type="date"
           />
-          <DataList id='date-list' options={createRecentDateOptions()} />
+          <DataList id="date-list" options={createRecentDateOptions()} />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor='climbingDiscipline'>Climbing Discipline</label>
+          <label htmlFor="climbingDiscipline">Climbing Discipline</label>
           <select
             {...register('climbingDiscipline')}
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='climbingDiscipline'
+            enterKeyHint="next"
+            id="climbingDiscipline"
             title={`The climbing discipline (e.g. ${climbingDisciplineFormattedList})`}
           >
-            {AVAILABLE_CLIMBING_DISCIPLINE.map(disciplineOption => (
+            {AVAILABLE_CLIMBING_DISCIPLINE.map((disciplineOption) => (
               <Option
                 key={disciplineOption}
                 label={`${fromClimbingDisciplineToEmoji(disciplineOption)} ${disciplineOption}`}
@@ -234,59 +234,59 @@ export default function AscentForm(props: AscentFormProps) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor='routeName'>Route Name</label>
+          <label htmlFor="routeName">Route Name</label>
           <input
             {...register('routeName')}
-            autoCapitalize='on'
-            autoComplete='off'
-            autoCorrect='off'
+            autoCapitalize="on"
+            autoComplete="off"
+            autoCorrect="off"
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='routeName'
-            placeholder='Biographie, La Dura Dura, etc.'
+            enterKeyHint="next"
+            id="routeName"
+            placeholder="Biographie, La Dura Dura, etc."
             required
-            title='The name of the route or boulder climbed (use `N/A` for routes without name)'
-            type='text'
+            title="The name of the route or boulder climbed (use `N/A` for routes without name)"
+            type="text"
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor='crag'>Crag</label>
+          <label htmlFor="crag">Crag</label>
           <input
             {...register('crag')}
-            autoCapitalize='on'
-            autoComplete='off'
+            autoCapitalize="on"
+            autoComplete="off"
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='crag'
-            list='crag-list'
-            placeholder='Saint-Léger, Fontainebleau, etc.'
+            enterKeyHint="next"
+            id="crag"
+            list="crag-list"
+            placeholder="Saint-Léger, Fontainebleau, etc."
             required
-            title='The name of the crag'
-            type='text'
+            title="The name of the crag"
+            type="text"
           />
-          <DataList id='crag-list' options={cragOptions} />
+          <DataList id="crag-list" options={cragOptions} />
         </div>
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='area'>Area</label>
+        <label htmlFor="area">Area</label>
         <input
           {...register('area')}
-          autoCapitalize='on'
-          autoComplete='off'
+          autoCapitalize="on"
+          autoComplete="off"
           className={`${styles.input} contrastColor`}
-          enterKeyHint='next'
-          id='area'
-          list='area-list'
-          placeholder='Biographie'
+          enterKeyHint="next"
+          id="area"
+          list="area-list"
+          placeholder="Biographie"
           title="The name of the crag's sector (or area)"
-          type='text'
+          type="text"
         />
-        <DataList id='area-list' options={areaOptions} />
+        <DataList id="area-list" options={areaOptions} />
       </div>
 
-      <div aria-hidden='true' className={styles.groupHeader}>
+      <div aria-hidden="true" className={styles.groupHeader}>
         <span />
         Performance
         <span />
@@ -294,46 +294,46 @@ export default function AscentForm(props: AscentFormProps) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label className='required' htmlFor='tries'>
+          <label className="required" htmlFor="tries">
             Tries
           </label>
           <input
             {...triesRegister}
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='tries'
-            inputMode='numeric'
+            enterKeyHint="next"
+            id="tries"
+            inputMode="numeric"
             max={MAX_TRIES}
             min={MIN_TRIES}
             onChange={handleTriesChange}
             pattern={oneTo9999RegEx.source}
-            placeholder='1'
+            placeholder="1"
             required
             step={1}
-            title='Total number of tries'
-            type='number'
+            title="Total number of tries"
+            type="number"
           />
         </div>
         <div className={styles.field}>
-          <label htmlFor='climbing-style'>Style</label>
+          <label htmlFor="climbing-style">Style</label>
           <ClimbingStyleToggleGroup
             display={Number(numberOfTries) === 1}
             isOnsightDisable={isBoulder}
             onValueChange={handleStyleChange}
             value={styleValue}
-            id='climbing-style'
+            id="climbing-style"
           />
         </div>
       </div>
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label className='required' htmlFor='topoGrade'>
+          <label className="required" htmlFor="topoGrade">
             Topo Grade
           </label>
           <GradeInput
             {...topoGradeRegister}
-            gradeType='Topo'
+            gradeType="Topo"
             max={adjustedMaxGrade}
             min={adjustedMinGrade}
             onValueChange={handleTopoGradeChange}
@@ -344,10 +344,10 @@ export default function AscentForm(props: AscentFormProps) {
         </div>
 
         <div className={styles.field}>
-          <label htmlFor='personalGrade'>Personal Grade</label>
+          <label htmlFor="personalGrade">Personal Grade</label>
           <GradeInput
             {...personalGradeRegister}
-            gradeType='Personal'
+            gradeType="Personal"
             max={adjustedMaxGrade}
             min={adjustedMinGrade}
             onValueChange={handlePersonalGradeChange}
@@ -357,7 +357,7 @@ export default function AscentForm(props: AscentFormProps) {
         </div>
       </div>
 
-      <div aria-hidden='true' className={styles.groupHeader}>
+      <div aria-hidden="true" className={styles.groupHeader}>
         <span />
         Route Details
         <span />
@@ -365,87 +365,87 @@ export default function AscentForm(props: AscentFormProps) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor='holds'>Holds</label>
+          <label htmlFor="holds">Holds</label>
           <input
             {...register('holds')}
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='holds'
-            list='hold-types'
-            placeholder='Crimp'
-            title='The main hold type in the route or the holds of the crux section'
-            type='text'
+            enterKeyHint="next"
+            id="holds"
+            list="hold-types"
+            placeholder="Crimp"
+            title="The main hold type in the route or the holds of the crux section"
+            type="text"
           />
-          <DataList id='hold-types' options={holdOptions} />
+          <DataList id="hold-types" options={holdOptions} />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor='profile'>Profile</label>
+          <label htmlFor="profile">Profile</label>
           <input
             {...register('profile')}
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='profile'
-            list='profile-types'
-            placeholder='Vertical'
+            enterKeyHint="next"
+            id="profile"
+            list="profile-types"
+            placeholder="Vertical"
             title={`The main profile of the route or the profile of the crux section (e.g. ${PROFILES.slice(0, 2).join(', ')}, ...)`}
-            type='text'
+            type="text"
           />
-          <DataList id='profile-types' options={profileOptions} />
+          <DataList id="profile-types" options={profileOptions} />
         </div>
       </div>
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor='height'>Height (m)</label>
+          <label htmlFor="height">Height (m)</label>
           <input
             {...register('height')}
             className={`${styles.input} contrastColor ${isBoulder ? 'notAllowed' : ''}`}
             disabled={isBoulder}
-            enterKeyHint='next'
-            id='height'
-            inputMode='numeric'
+            enterKeyHint="next"
+            id="height"
+            inputMode="numeric"
             max={MAX_HEIGHT}
             min={MIN_HEIGHT}
             pattern={zeroTo100RegEx.source}
-            placeholder='25'
+            placeholder="25"
             step={5}
-            title='Height of the route in meters (does not apply for boulders)'
-            type='number'
+            title="Height of the route in meters (does not apply for boulders)"
+            type="number"
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor='rating'>Rating ★</label>
+          <label htmlFor="rating">Rating ★</label>
           <input
             {...register('rating')}
             className={`${styles.input} contrastColor`}
-            enterKeyHint='next'
-            id='rating'
-            inputMode='numeric'
+            enterKeyHint="next"
+            id="rating"
+            inputMode="numeric"
             max={MAX_RATING}
             min={MIN_RATING}
             pattern={oneTo5RegEx.source}
             placeholder={(MAX_RATING - 1).toString()}
             step={1}
             title={`The climb's rating on a ${MAX_RATING} stars system`}
-            type='number'
+            type="number"
           />
         </div>
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='comments'>Comments</label>
+        <label htmlFor="comments">Comments</label>
         <textarea
           {...register('comments')}
-          autoComplete='off'
-          autoCorrect='on'
+          autoComplete="off"
+          autoCorrect="on"
           className={`${styles.input} ${styles.textarea}`}
-          enterKeyHint='send'
-          id='comments'
+          enterKeyHint="send"
+          id="comments"
           placeholder="This was my first 9b+. I thought I was going to die at the crux. It's so far! Thank you Sam for the belay and the encouragements. I didn't use the tiny foothold, instead I jump to the jug directly..."
           spellCheck
-          title='Feelings, partners, betas...'
+          title="Feelings, partners, betas..."
         />
       </div>
 
@@ -454,12 +454,12 @@ export default function AscentForm(props: AscentFormProps) {
         <KeycapButton
           disabled={isSubmitting}
           label={isSubmitting ? 'Sending...' : 'Send 📮'}
-          type='submit'
+          type="submit"
         />
       </div>
     </form>
   ) : (
-    <section className='flexColumn gap'>
+    <section className="flexColumn gap">
       <p>You are not authorized to log an ascent.</p>
     </section>
   )

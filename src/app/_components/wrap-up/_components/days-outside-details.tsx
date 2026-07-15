@@ -12,7 +12,7 @@ export function DaysOutsideDetails(props: DaysOutsideDetailsProps) {
   const { ascents, ascentsRatio, daysOutside } = props
 
   return (
-    <span className='block'>
+    <span className="block">
       You climbed <AscentsWithPopover ascents={ascents} /> in{' '}
       <strong>
         {formatCountWithEnglishNoun(daysOutside, {

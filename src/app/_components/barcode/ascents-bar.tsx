@@ -11,7 +11,7 @@ import styles from './barcode.module.css'
 
 // Lazy load the popover component
 const AscentsPopoverDescription = lazy(async () =>
-  import('../ascents-popover-description/ascents-popover-description').then(module => ({
+  import('../ascents-popover-description/ascents-popover-description').then((module) => ({
     default: module.AscentsPopoverDescription,
   })),
 )
@@ -41,7 +41,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (weeklyAscentsByDescendingGrade.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback="Loading...">
         <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
       </Suspense>
     )
@@ -60,7 +60,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   } ${styles.bar}`
 
   return (
-    <Popover className={triggerClassName} popoverTitle={title} style={buttonStyle} trigger=''>
+    <Popover className={triggerClassName} popoverTitle={title} style={buttonStyle} trigger="">
       {lazyDescription}
     </Popover>
   )

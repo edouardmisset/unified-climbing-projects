@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { trimAndNormalizeStringsInObject } from './trim-and-normalize-string-in-object.js'
 
 describe('trimAndNormalizeStringsInObject', () => {
@@ -62,8 +62,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     const result = trimAndNormalizeStringsInObject(input)
 
     expect(result.text).toBe('café')
-
-    if (typeof result.text === 'string') expect(result.text).toHaveLength(4)
+    expect(result.text).toHaveLength(4)
   })
 
   it('should normalize AND trim', () => {

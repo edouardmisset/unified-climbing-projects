@@ -43,7 +43,7 @@ export function filterTrainingSessions(
 
   if (!trainingSessions || trainingSessions.length === 0) return []
 
-  return trainingSessions.filter(trainingSession => {
+  return trainingSessions.filter((trainingSession) => {
     const trainingSessionDate = new Date(trainingSession.date)
 
     return (

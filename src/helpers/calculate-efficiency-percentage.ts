@@ -37,7 +37,7 @@ export function calculateEfficiencyPercentage({
   const onsightFlashRatio = calculateOnsightFlashRatio(ascents) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
   const percentages = [ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio].map(
-    ratio => clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
+    (ratio) => clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
   )
 
   return Math.round(average(percentages))

@@ -54,11 +54,8 @@ export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | unde
  * @returns {number} The total points for the ascent.
  */
 export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
-  type PointsGrade = keyof typeof GRADE_TO_POINTS
-  const hasPoints = (grade: Grade): grade is PointsGrade => grade in GRADE_TO_POINTS
-
   // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
-  const gradePoints = hasPoints(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
+  const gradePoints = isPointsGrade(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 

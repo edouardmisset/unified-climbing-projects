@@ -39,14 +39,14 @@ export function AscentsPerDisciplinePerYear({ ascents }: { ascents: Ascent[] }) 
   if (uniqueYearsCount <= 1) return
   if (isSingleDiscipline) return
   return (
-    <ChartContainer caption='Ascents per Discipline per Year'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents per Discipline per Year">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartXAxis dataKey="year" labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
-          {ROUTE_AND_BOULDER.map(key => (
+          {ROUTE_AND_BOULDER.map((key) => (
             <Chart.Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
           ))}
         </Chart.BarChart>

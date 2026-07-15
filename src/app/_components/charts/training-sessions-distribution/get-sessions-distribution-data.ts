@@ -46,9 +46,9 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
 } {
   if (sessions.length === 0) return { colors: {}, data: [], legendData: [], totals: {} }
 
-  const sessionsWithEnergySystem = sessions.filter(session => session.energySystem !== undefined)
+  const sessionsWithEnergySystem = sessions.filter((session) => session.energySystem !== undefined)
 
-  const sessionsWithRegion = sessions.filter(session => session.anatomicalRegion !== undefined)
+  const sessionsWithRegion = sessions.filter((session) => session.anatomicalRegion !== undefined)
 
   const energySystemCounts = new Map<EnergySystem, number>()
   const regionCounts = new Map<AnatomicalRegion, number>()
@@ -66,11 +66,11 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
   const colors: Record<string, string> = {}
 
   // Build Energy System ring data
-  const energySystemData = ENERGY_SYSTEMS.map(key => ({
+  const energySystemData = ENERGY_SYSTEMS.map((key) => ({
     x: ENERGY_SYSTEM_LABELS[key],
     y: energySystemCounts.get(key) ?? 0,
   }))
-    .filter(item => item.y > 0)
+    .filter((item) => item.y > 0)
     .toSorted((a, b) => b.y - a.y)
 
   for (const key of ENERGY_SYSTEMS) {
@@ -79,11 +79,11 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
   }
 
   // Build Anatomical Region ring data
-  const anatomicalRegionData = ANATOMICAL_REGIONS.map(key => ({
+  const anatomicalRegionData = ANATOMICAL_REGIONS.map((key) => ({
     x: ANATOMICAL_REGION_LABELS[key],
     y: regionCounts.get(key) ?? 0,
   }))
-    .filter(item => item.y > 0)
+    .filter((item) => item.y > 0)
     .toSorted((a, b) => b.y - a.y)
 
   for (const key of ANATOMICAL_REGIONS) {

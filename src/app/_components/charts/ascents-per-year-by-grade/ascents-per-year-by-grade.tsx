@@ -29,23 +29,23 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   if (uniqueYearsCount <= 1 || ascentsPerYearByGrade.length === 0) return
 
   return (
-    <ChartContainer caption='Ascents Per Year By Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents Per Year By Grade">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={ascentsPerYearByGrade}
         >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartXAxis dataKey="year" labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
-          {GRADES.map(key => (
+          {GRADES.map((key) => (
             <Chart.Bar
               key={key}
               dataKey={key}
               fill={fromGradeToBackgroundColor(key)}
-              stackId='grades'
+              stackId="grades"
             />
           ))}
         </Chart.BarChart>

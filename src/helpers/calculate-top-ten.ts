@@ -14,7 +14,7 @@ import { fromAscentToPoints } from './ascent-converter'
  */
 export function calculateTopTenScore(ascents: Ascent[]): number {
   return ascents
-    .map(ascent => fromAscentToPoints(ascent))
+    .map((ascent) => fromAscentToPoints(ascent))
     .toSorted((a, b) => b - a)
     .slice(0, 10)
     .reduce((acc, points) => acc + points, 0)

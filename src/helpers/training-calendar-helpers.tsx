@@ -36,7 +36,7 @@ export function fromTrainingSessionsToCalendarEntries(
         volumePercent: volume,
       })
 
-      const isOutdoorSession = sessions.some(session => session.sessionType === 'Out')
+      const isOutdoorSession = sessions.some((session) => session.sessionType === 'Out')
       const matchingAscents = isOutdoorSession ? (ascentsByDate.get(date.slice(0, 10)) ?? []) : []
 
       return {

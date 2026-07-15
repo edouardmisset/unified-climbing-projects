@@ -86,24 +86,24 @@ export function TrainingSessionsDistribution({
 
   if (chartData.length === 0) return
   return (
-    <ChartContainer caption='Session Distribution'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Session Distribution">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={chartData}
         >
-          <Chart.XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type='number' />
-          <Chart.YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
-          <Legend align='center' verticalAlign='top' />
-          {barConfigs.map(config => (
+          <Chart.XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type="number" />
+          <Chart.YAxis dataKey="category" tick={AXIS_TICK_STYLE} type="category" width={150} />
+          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger="click" />
+          <Legend align="center" verticalAlign="top" />
+          {barConfigs.map((config) => (
             <Chart.Bar
               key={config.dataKey}
               dataKey={config.dataKey}
               fill={config.color}
               name={config.name}
-              stackId='a'
+              stackId="a"
             />
           ))}
         </Chart.BarChart>

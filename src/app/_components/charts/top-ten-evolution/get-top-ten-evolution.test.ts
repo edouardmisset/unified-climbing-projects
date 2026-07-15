@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { getTopTenEvolution } from './get-top-ten-evolution'
@@ -9,7 +9,7 @@ function countDisciplineForYear(
   year: number,
 ): number {
   return ascents.filter(
-    ascent =>
+    (ascent) =>
       ascent.climbingDiscipline === discipline && new Date(ascent.date).getFullYear() === year,
   ).length
 }

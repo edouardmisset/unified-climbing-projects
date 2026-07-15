@@ -15,8 +15,8 @@ export function renderPieArcLabel(params: { props: PieLabelRenderProps; total: n
       x={props.x}
       y={props.y}
       fill={PIE_LABEL_TEXT_COLOR}
-      textAnchor='middle'
-      dominantBaseline='central'
+      textAnchor="middle"
+      dominantBaseline="central"
     >
       {`${formatNumber(value)} (${formatWholePercent(percentage)})`}
     </text>

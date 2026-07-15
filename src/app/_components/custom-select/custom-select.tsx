@@ -26,7 +26,7 @@ export function CustomSelect(props: CustomSelectProps) {
         value={selectedOption}
       >
         <Option label={capitalize(ALL_VALUE)} value={ALL_VALUE} />
-        {options.map(option => (
+        {options.map((option) => (
           <Option key={option} label={String(option)} value={String(option)} />
         ))}
       </select>

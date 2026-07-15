@@ -11,7 +11,7 @@ type AscentsPerDiscipline = {
 export function getAscentsPerDiscipline(ascents: Ascent[]): AscentsPerDiscipline {
   if (ascents.length === 0) return []
 
-  const initialValue: AscentsPerDiscipline = CLIMBING_DISCIPLINE.map(climbingDiscipline => ({
+  const initialValue: AscentsPerDiscipline = CLIMBING_DISCIPLINE.map((climbingDiscipline) => ({
     color: CLIMBING_DISCIPLINE_TO_COLOR[climbingDiscipline] ?? 'var(--gray-5)',
     id: climbingDiscipline,
     label: climbingDiscipline,

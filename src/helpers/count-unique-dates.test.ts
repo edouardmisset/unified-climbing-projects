@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { StringDate } from '~/types/generic'
 import { countUniqueDates } from './count-unique-dates'
 

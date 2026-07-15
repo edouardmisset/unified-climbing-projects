@@ -9,7 +9,7 @@ export default function Layout({
   title,
 }: GridLayoutProps) {
   return (
-    <section className='flexColumn w100 h100 overflowXClip'>
+    <section className="flexColumn w100 h100 overflowXClip">
       <Header title={title} />
       <Suspense fallback={<Loader />}>
         <div className={`${layout} ${gridClassName}`}>{children}</div>

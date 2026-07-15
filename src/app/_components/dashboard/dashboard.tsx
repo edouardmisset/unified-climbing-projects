@@ -9,7 +9,7 @@ import { DashboardStatistics } from './dashboard-statistics'
 import { Loader } from '../ui/loader/loader.tsx'
 
 const AscentList = lazy(() =>
-  import('../ascent-list/ascent-list').then(module => ({ default: module.AscentList })),
+  import('../ascent-list/ascent-list').then((module) => ({ default: module.AscentList })),
 )
 
 export function Dashboard({ ascents }: AscentListProps) {
@@ -18,12 +18,12 @@ export function Dashboard({ ascents }: AscentListProps) {
   if (ascents.length === 0) return <NotFound />
 
   return (
-    <div className='flex flexColumn alignCenter gridFullWidth'>
+    <div className="flex flexColumn alignCenter gridFullWidth">
       <AscentsFilterBar allAscents={ascents} showSearch={false} />
       <Suspense fallback={<Loader />}>
         <DashboardStatistics ascents={filteredAscents} />
       </Suspense>
-      <section className='w100 padding'>
+      <section className="w100 padding">
         <Suspense fallback={<Loader />}>
           <AscentList ascents={filteredAscents} />
         </Suspense>

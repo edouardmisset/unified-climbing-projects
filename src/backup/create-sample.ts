@@ -19,7 +19,7 @@ function getRandomSample(arr: any[], size: number): any[] {
 // Function to perform stratified sampling by multiple keys
 function stratifiedSample(data: any[], size: number, stratificationKeys: string[]): any[] {
   const strata = data.reduce<Record<string, any[]>>((acc, entry) => {
-    const key = stratificationKeys.map(factor => entry[factor]).join('|')
+    const key = stratificationKeys.map((factor) => entry[factor]).join('|')
     if (!acc[key]) acc[key] = []
 
     acc[key].push(entry)
