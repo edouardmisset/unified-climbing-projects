@@ -59,8 +59,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# AI
-repomix-output.xml
-
 # Convex
 /convex/_generated/
+
+# Fallow
+.fallow/

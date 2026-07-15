@@ -28,7 +28,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "vp run test:e2e --ui",
     "test:all": "vp run test:unit:silent && vp run test:e2e",
-    "knip": "knip",
+    "fallow": "fallow",
     "validate": "vp run check && vp run test:all && vp run build",
     "prepare": "vp config"
   },
@@ -47,6 +47,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "convex": "^1.42.2",
     "convex-helpers": "^0.1.120",
+    "fallow": "^3.6.0",
     "google-auth-library": "^10.5.0",
     "google-spreadsheet": "^5.3.0",
     "lucide-react": "^1.23.0",
@@ -79,7 +80,6 @@
     "cspell": "^10.0.1",
     "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.1",
     "happy-dom": "^20.10.6",
-    "knip": "^6.27.0",
     "stylelint": "^17.14.0",
     "stylelint-config-standard": "^40.0.0",
     "vite": "catalog:",
@@ -89,12 +89,5 @@
   "packageManager": "pnpm@10.28.1",
   "ct3aMetadata": {
     "initVersion": "7.38.1"
-  },
-  "knip": {
-    "entry": [
-      "convex/**/*.ts",
-      "src/backup/create-sample.ts",
-      "src/scripts/**/*.ts"
-    ]
   }
 }
