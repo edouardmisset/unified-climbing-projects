@@ -30,18 +30,3 @@ export const disjunctiveListFormatter = createListFormatter(
   },
   US_LOCALE,
 )
-
-/**
- * Formats a list of items using conjunctive (and) grouping.
- * Example: "A, B, and C"
- *
- * @param {string[] | readonly string[]} list - The list of strings to format.
- * @returns {string} The formatted list string.
- */
-export const conjunctiveListFormatter = createListFormatter(
-  {
-    style: 'long',
-    type: 'conjunction',
-  },
-  US_LOCALE,
-)

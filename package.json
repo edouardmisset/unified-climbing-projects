@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "backup": "NEXT_PUBLIC_CONVEX_URL=https://watchful-platypus-57.convex.cloud vp node src/scripts/backup-from-db.ts && vp fmt ./src/backup",
+    "backup": "NEXT_PUBLIC_CONVEX_URL=https://watchful-platypus-57.convex.cloud node src/scripts/backup-from-db.ts && vp fmt ./src/backup",
     "preseed": "vp run backup",
-    "seed": "pnpm exec convex import --replace --table ascents ./src/backup/ascent-data.json && pnpm exec convex import --replace --table training ./src/backup/training-data.json",
-    "seed:prod": "pnpm exec convex import --prod --replace --table ascents ./src/backup/ascent-data.json && pnpm exec convex import --prod --replace --table training ./src/backup/training-data.json",
+    "seed": "vp exec convex import --replace --table ascents ./src/backup/ascent-data.json && vp exec convex import --replace --table training ./src/backup/training-data.json",
+    "seed:prod": "vp exec convex import --prod --replace --table ascents ./src/backup/ascent-data.json && vp exec convex import --prod --replace --table training ./src/backup/training-data.json",
     "format": "vp fmt ./src",
     "lint": "vp lint --fix ./src",
     "check": "vp check && vp run style:lint",
@@ -17,7 +17,7 @@
     "convex:dev": "vp exec convex dev",
     "convex:dashboard": "open -a \"Brave Browser\" \"https://dashboard.convex.dev/t/edouard-6ac94/unified-climbing-app/small-monitor-700\"",
     "preview": "vp run build && next start",
-    "reset": "rm -rf node_modules pnpm-lock.yaml && vp install",
+    "reset": "rm -f pnpm-lock.yaml && vp install --force",
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix 'src/**/*.css'",
@@ -25,10 +25,10 @@
     "test:unit:watch": "vp run test:unit --watch",
     "test:unit:ui": "vp run test:unit --ui",
     "test:unit:silent": "vp run test:unit --silent=passed-only",
-    "test:e2e": "vp exec playwright test",
+    "test:e2e": "playwright test",
     "test:e2e:ui": "vp run test:e2e --ui",
     "test:all": "vp run test:unit:silent && vp run test:e2e",
-    "knip": "clear && knip",
+    "knip": "knip",
     "validate": "vp run check && vp run test:all && vp run build",
     "prepare": "vp config"
   },
@@ -41,7 +41,6 @@
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^4.0.0",
     "@edouardmisset/object": "npm:@jsr/edouardmisset__object@^4.0.1",
     "@edouardmisset/text": "npm:@jsr/edouardmisset__text@^4.1.0",
-    "@std/text": "npm:@jsr/std__text@^1.0.19",
     "@t3-oss/env-nextjs": "^0.13.10",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -74,7 +73,6 @@
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@typescript/native-preview": "^7.0.0-dev.20260706.1",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
@@ -91,5 +89,12 @@
   "packageManager": "pnpm@10.28.1",
   "ct3aMetadata": {
     "initVersion": "7.38.1"
+  },
+  "knip": {
+    "entry": [
+      "convex/**/*.ts",
+      "src/backup/create-sample.ts",
+      "src/scripts/**/*.ts"
+    ]
   }
 }
