@@ -10,7 +10,7 @@ type AscentByStyle = {
 }
 
 export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] =>
-  ASCENT_STYLE.map(style => {
+  ASCENT_STYLE.map((style) => {
     const filteredAscentsByStyle = filterAscents(ascents, { style })
 
     if (filteredAscentsByStyle.length === 0) return
@@ -21,7 +21,7 @@ export const getAscentsByStyle = (ascents: Ascent[]): AscentByStyle[] =>
       label: style,
       value: filteredAscentsByStyle.length,
     }
-  }).filter(style => style !== undefined)
+  }).filter((style) => style !== undefined)
 
 function fromAscentStyleToBackgroundColor(ascentStyle: Ascent['style']): string {
   return ASCENT_STYLE_TO_COLOR[ascentStyle] ?? 'var(--gray-5)'

@@ -10,11 +10,7 @@ type BarcodeProps = {
 function BarcodeComponent(props: BarcodeProps) {
   const { children } = props
 
-  return (
-    <div className={styles.barcode} role='img'>
-      {children}
-    </div>
-  )
+  return <div className={styles.barcode}>{children}</div>
 }
 
 export const Barcode = memo(BarcodeComponent)

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { NOT_AVAILABLE } from '~/constants/generic'
 import type { Ascent } from '~/schema/ascent'
 import { getAverageGrade } from './get-average-grade'

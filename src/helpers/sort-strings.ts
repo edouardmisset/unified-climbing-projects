@@ -32,13 +32,3 @@ const createCompareStrings = (
  * follows b, otherwise 0.
  */
 export const compareStringsAscending = createCompareStrings('asc', 'fr-FR')
-
-/**
- * Comparator function for sorting strings in descending order.
- *
- * @param {string} a - The first string to compare.
- * @param {string} b - The second string to compare.
- * @returns {number} A negative number if a follows b, a positive number if a
- * precedes b, otherwise 0.
- */
-export const compareStringsDescending = createCompareStrings('desc', 'fr-FR')

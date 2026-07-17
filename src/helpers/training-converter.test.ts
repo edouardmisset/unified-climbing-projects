@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   fromSessionTypeToBackgroundColor,
   fromSessionTypeToClassName,
@@ -20,7 +20,7 @@ describe('fromSessionTypeToBackgroundColor', () => {
 describe('fromSessionTypeToClassName', () => {
   it('should return undefined when sessionType is undefined', () => {
     const result = fromSessionTypeToClassName(undefined)
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return a class name based on sessionType', () => {

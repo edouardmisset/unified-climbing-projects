@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getTriesByGrade } from './get-tries-by-grade'
 
 describe('getTriesByGrade', () => {
   it('should return empty array for empty input', () => {
     const result = getTriesByGrade([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -138,6 +138,6 @@ describe('getTriesByGrade', () => {
       },
     ]
     const result = getTriesByGrade(sampleAscents)
-    expect(result).toEqual(expected)
+    expect(result).toStrictEqual(expected)
   })
 })

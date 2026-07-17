@@ -8,7 +8,7 @@ to try new libraries and patterns.
 
 ## Stack
 
-- Next.js (App Router) + TypeScript, Bun, CSS Modules
+- Next.js (App Router) + TypeScript, Vite+, CSS Modules
 - UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas
 - Performance: ISR and React cache() wrappers
@@ -18,36 +18,36 @@ to try new libraries and patterns.
 
 Prerequisites:
 
-- Bun installed (recommended)
+- Vite+ installed
 
 Install dependencies:
 
 ```sh
-bun install
+vp install
 ```
 
 Start the app in development:
 
 ```sh
-bun run dev
+vp run dev
 ```
 
 Note: You may need to configure environment variables (for example: Convex, Google Sheet).
 
 ## Scripts
 
-- Lint: `bun lint`
-- Format: `bun format`
-- Typecheck and checks (linting, style linting, formatting, etc.): `bun check`
-- Validate (checks, tests, build): `bun validate`
-- Spellcheck: `bun spell`
-- File lint & style lint: `bun ls-lint`, `bun style:lint`
+- Lint: `vp run lint`
+- Format: `vp run format`
+- Typecheck and checks (linting, style linting, formatting, etc.): `vp run check`
+- Validate (checks, tests, build): `vp run validate`
+- Spellcheck: `vp run spell`
+- Style lint: `vp run style:lint`
 
 ## Testing
 
-- Unit tests: `bun test:unit`
-- E2E tests: `bun test:e2e`
-- All tests: `bun test:all`
+- Unit tests: `vp run test:unit`
+- E2E tests: `vp run test:e2e`
+- All tests: `vp run test:all`
 
 ## Notable Directories
 

@@ -15,11 +15,11 @@ function QRCodeComponent(props: QRCodeProps) {
 
   return (
     <div className={styles.qrcode}>
-      <Marker placement='TopLeft' />
-      <Marker placement='TopRight' />
-      <Marker placement='BottomLeft' />
+      <Marker placement="TopLeft" />
+      <Marker placement="TopRight" />
+      <Marker placement="BottomLeft" />
       <Image
-        alt='emoji of a person climbing'
+        alt="emoji of a person climbing"
         className={styles.image}
         height={120}
         priority

@@ -6,7 +6,7 @@ const [, defaultTimeframe] = TIMEFRAMES
 export const useTimeframeQueryState = (): UseQueryStateReturn<Timeframe, typeof defaultTimeframe> =>
   useQueryState<Timeframe>('timeframe', {
     defaultValue: defaultTimeframe,
-    parse: value => {
+    parse: (value) => {
       const parsedTimeframe = timeframeSchema.safeParse(value)
       return parsedTimeframe.success ? parsedTimeframe.data : defaultTimeframe
     },

@@ -21,7 +21,7 @@ export function getTopTenAscents(params: GetTopTenParams): Ascent[] {
       if (timeframe === 'last-12-months') return isDateInLast12Months(date)
       return true
     })
-    .map(ascent => ({ ...ascent, points: fromAscentToPoints(ascent) }))
+    .map((ascent) => ({ ...ascent, points: fromAscentToPoints(ascent) }))
     .toSorted((a, b) => b.points - a.points)
   return sortedAscentsWithPoints.slice(0, 10)
 }

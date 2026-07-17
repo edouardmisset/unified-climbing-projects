@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { mostFrequentBy } from './most-frequent-by'
 
 describe('mostFrequentBy', () => {
   it('should return undefined for an empty array', () => {
     const result = mostFrequentBy([], 'property')
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return the property value for an array with one record', () => {
@@ -59,13 +59,13 @@ describe('mostFrequentBy', () => {
   it('should return undefined if all property values are undefined', () => {
     const records = [{ property: undefined }, { property: undefined }]
     const result = mostFrequentBy(records, 'property')
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should handle objects with missing properties gracefully', () => {
     const records = [{ otherProperty: 'a' }, { otherProperty: 'b' }]
     // @ts-expect-error: Intentionally testing behavior when the specified property is missing
     const result = mostFrequentBy(records, 'property')
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 })

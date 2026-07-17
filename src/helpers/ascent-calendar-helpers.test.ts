@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 
@@ -6,14 +6,14 @@ describe('fromAscentsToCalendarEntries', () => {
   it('should return an empty array when ascentsArray is undefined', () => {
     const year = 2_024
     const result = fromAscentsToCalendarEntries(year, undefined)
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return calendar entries with empty shortText when ascents are undefined', () => {
     const year = 2_024
     const ascentsArray: Ascent[][] = [[], [], []]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
-    expect(result.length).toBe(3)
+    expect(result).toHaveLength(3)
     for (const { shortText } of result) expect(shortText).toBe('')
   })
 
@@ -63,7 +63,7 @@ describe('fromAscentsToCalendarEntries', () => {
       ],
     ]
     const result = fromAscentsToCalendarEntries(year, ascentsArray)
-    expect(result.length).toBe(2)
+    expect(result).toHaveLength(2)
 
     expect(result[0]?.shortText).toBe('7a')
     expect(result[1]?.shortText).toBe('7b')

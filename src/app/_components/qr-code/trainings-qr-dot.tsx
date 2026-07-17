@@ -6,7 +6,7 @@ import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
 const TrainingPopoverDescription = lazy(async () =>
-  import('../training-popover-description/training-popover-description').then(module => ({
+  import('../training-popover-description/training-popover-description').then((module) => ({
     default: module.TrainingPopoverDescription,
   })),
 )
@@ -25,7 +25,7 @@ export const TrainingsQRDot = memo(
     const lazyDescription = useMemo(() => {
       if (trainingSessions.length === 0) return ''
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback="Loading...">
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )
@@ -34,7 +34,7 @@ export const TrainingsQRDot = memo(
     if (trainingSessions.length === 0 || firstSession === undefined) return <span />
 
     return (
-      <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>
+      <Popover className={sessionClassName} popoverTitle={formattedDate} trigger="">
         {lazyDescription}
       </Popover>
     )

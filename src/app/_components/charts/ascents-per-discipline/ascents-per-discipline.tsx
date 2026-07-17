@@ -41,16 +41,16 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   if (routesVsBoulders.length <= 1) return
 
   return (
-    <ChartContainer caption='Ascents per Discipline'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents per Discipline">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
           <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={routesVsBoulders}
-            dataKey='value'
+            dataKey="value"
             label={labelRenderer}
-            nameKey='label'
+            nameKey="label"
             shape={shapeRenderer}
           />
         </Chart.PieChart>

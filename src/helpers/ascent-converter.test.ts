@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { DEFAULT_GRADE } from '~/constants/ascents'
 import { BOULDERING_BONUS_POINTS, GRADE_TO_POINTS, STYLE_TO_POINTS } from '~/schema/ascent'
@@ -24,7 +24,7 @@ describe('fromGradeToBackgroundColor', () => {
 describe('fromGradeToClassName', () => {
   it('should return undefined when grade is undefined', () => {
     const result = fromGradeToClassName(undefined)
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return a class name with underscores replacing plus signs', () => {
@@ -125,14 +125,13 @@ describe('fromPointToGrade', () => {
   it('should handle conversion from real ascent examples', () => {
     const testAscents = [sampleAscents[0], sampleAscents[1], sampleAscents[24]]
 
-    for (const ascent of testAscents)
-      if (ascent) {
-        const points = fromAscentToPoints(ascent)
-        const convertedGrade = fromPointToGrade(points, {
-          climbingDiscipline: ascent.climbingDiscipline,
-          style: ascent.style,
-        })
-        expect(convertedGrade).toBe(ascent.topoGrade)
-      }
+    for (const ascent of testAscents.filter((candidate) => candidate !== undefined)) {
+      const points = fromAscentToPoints(ascent)
+      const convertedGrade = fromPointToGrade(points, {
+        climbingDiscipline: ascent.climbingDiscipline,
+        style: ascent.style,
+      })
+      expect(convertedGrade).toBe(ascent.topoGrade)
+    }
   })
 })

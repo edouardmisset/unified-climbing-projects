@@ -30,16 +30,16 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
       .map(({ date }) => extractDateFromISODateString(date)),
   )
 
-  const missingDays = [...ascentDaysSet].filter(date => !outdoorSessionsSet.has(date))
+  const missingDays = [...ascentDaysSet].filter((date) => !outdoorSessionsSet.has(date))
   return missingDays
 }
 
 findMissingOutdoorSessions()
-  .then(missingDays => {
+  .then((missingDays) => {
     globalThis.console.log(
       `Missing outdoor sessions on the following days: ${missingDays.join(', ')}`,
     )
   })
-  .catch(error => {
+  .catch((error) => {
     globalThis.console.error('Error:', error)
   })

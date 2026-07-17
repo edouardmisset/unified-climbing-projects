@@ -25,7 +25,7 @@ export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
   return [
     {
       color: 'var(--minTries)',
-      data: grades.map(grade => ({
+      data: grades.map((grade) => ({
         x: grade,
         y: gradeStats.get(grade)?.min ?? 0,
       })),
@@ -33,7 +33,7 @@ export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
     },
     {
       color: 'var(--averageTries)',
-      data: grades.map(grade => {
+      data: grades.map((grade) => {
         const { sum, count } = gradeStats.get(grade) ?? { sum: 0, count: 1 }
         return {
           x: grade,
@@ -44,7 +44,7 @@ export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
     },
     {
       color: 'var(--maxTries)',
-      data: grades.map(grade => ({
+      data: grades.map((grade) => ({
         x: grade,
         y: gradeStats.get(grade)?.max ?? 0,
       })),

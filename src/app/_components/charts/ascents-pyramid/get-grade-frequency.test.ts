@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
 describe('getGradeFrequencyAndColors', () => {
   it('should return empty array for empty input', () => {
     const result = getGradeFrequencyAndColors([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return correct structure and counts based on sample data', () => {
@@ -50,6 +50,6 @@ describe('getGradeFrequencyAndColors', () => {
     const resultFor7Degree = getGradeFrequencyAndColors(
       sampleAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
     )
-    expect(resultFor7Degree).toEqual(expected)
+    expect(resultFor7Degree).toStrictEqual(expected)
   })
 })

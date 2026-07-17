@@ -1,7 +1,7 @@
 import { z } from '~/helpers/zod'
 import { positiveInteger } from './generic'
 
-export const _GRADES = [
+export const GRADES = [
   '1a',
   '1a+',
   '1b',
@@ -176,7 +176,7 @@ export const STYLE_TO_POINTS = {
 
 export const BOULDERING_BONUS_POINTS = 100 as const
 
-export const gradeSchema = z.enum(_GRADES)
+export const gradeSchema = z.enum(GRADES)
 
 export type Grade = z.infer<typeof gradeSchema>
 
@@ -184,7 +184,7 @@ export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
 const UNAVAILABLE_CLIMBING_DISCIPLINE = new Set<Ascent['climbingDiscipline']>(['Multi-Pitch'])
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
-  d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
+  (d) => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )
 
 export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)

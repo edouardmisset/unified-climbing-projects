@@ -104,7 +104,7 @@ function formatGradeTick(value: unknown): string {
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = useMemo(
     () =>
-      getAscentsVolumeAndGradesPerYear(ascents).map(datum => ({
+      getAscentsVolumeAndGradesPerYear(ascents).map((datum) => ({
         ...datum,
         avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
         avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
@@ -115,7 +115,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   )
 
   const gradeDomain = useMemo<[number, number]>(() => {
-    const grades = data.flatMap(datum => [
+    const grades = data.flatMap((datum) => [
       datum.avgBoulderGrade,
       datum.avgRouteGrade,
       datum.maxBoulderGrade,
@@ -140,7 +140,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
 
   const gradeTicks = useMemo(() => {
     const [minDomain, maxDomain] = gradeDomain
-    return GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
+    return GRADE_TICKS.filter((tick) => tick >= minDomain && tick <= maxDomain)
   }, [gradeDomain])
 
   const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
@@ -151,17 +151,17 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   if (!hasDisciplineData) return
 
   return (
-    <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents Volume and Max / Average Grade Evolution">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.ComposedChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={data}
         >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartXAxis dataKey="year" labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <Chart.YAxis
-            yAxisId='left'
+            yAxisId="left"
             domain={gradeDomain}
             ticks={gradeTicks}
             label={{
@@ -173,15 +173,15 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             tickFormatter={formatGradeTick}
           />
           <Chart.YAxis
-            yAxisId='right'
+            yAxisId="right"
             allowDecimals={false}
-            domain={[0, dataMax => roundUpToStep(dataMax, ASCENTS_AXIS_STEP)]}
+            domain={[0, (dataMax) => roundUpToStep(dataMax, ASCENTS_AXIS_STEP)]}
             label={{
               ...AXIS_LABEL_STYLE,
               angle: -90,
               value: AXIS_LABELS.ascents,
             }}
-            orientation='right'
+            orientation="right"
             tick={AXIS_TICK_STYLE}
           />
           <ChartTooltip
@@ -192,58 +192,58 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
               return [fromNumberToGrade(clampGrade(Math.round(value))), name]
             }}
           />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend align="center" iconType="circle" layout="horizontal" verticalAlign="top" />
 
           <Chart.Bar
-            dataKey='Boulder'
+            dataKey="Boulder"
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={CHART_LABELS.boulderAscents}
-            yAxisId='right'
+            yAxisId="right"
           />
           <Chart.Bar
-            dataKey='Route'
+            dataKey="Route"
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={CHART_LABELS.routeAscents}
-            yAxisId='right'
+            yAxisId="right"
           />
 
           <Chart.Line
-            dataKey='maxBoulderGrade'
+            dataKey="maxBoulderGrade"
             dot={false}
             name={CHART_LABELS.maxBoulderGrade}
             stroke={DISCIPLINE_SHADED_COLORS.Boulder.max}
             strokeWidth={2}
-            type='natural'
-            yAxisId='left'
+            type="natural"
+            yAxisId="left"
           />
           <Chart.Line
-            dataKey='maxRouteGrade'
+            dataKey="maxRouteGrade"
             dot={false}
             name={CHART_LABELS.maxRouteGrade}
             stroke={DISCIPLINE_SHADED_COLORS.Route.max}
             strokeWidth={2}
-            type='natural'
-            yAxisId='left'
+            type="natural"
+            yAxisId="left"
           />
           <Chart.Line
-            dataKey='avgBoulderGrade'
+            dataKey="avgBoulderGrade"
             dot={false}
             name={CHART_LABELS.avgBoulderGrade}
             stroke={DISCIPLINE_SHADED_COLORS.Boulder.average}
             strokeDasharray={DOTTED_LINE_STROKE}
             strokeWidth={2}
-            type='natural'
-            yAxisId='left'
+            type="natural"
+            yAxisId="left"
           />
           <Chart.Line
-            dataKey='avgRouteGrade'
+            dataKey="avgRouteGrade"
             dot={false}
             name={CHART_LABELS.avgRouteGrade}
             stroke={DISCIPLINE_SHADED_COLORS.Route.average}
             strokeDasharray={DOTTED_LINE_STROKE}
             strokeWidth={2}
-            type='natural'
-            yAxisId='left'
+            type="natural"
+            yAxisId="left"
           />
         </Chart.ComposedChart>
       </ResponsiveContainer>

@@ -13,7 +13,7 @@ export async function IndicatorsTimeline() {
   return (
     <Timeline>
       {indicators.map(({ year, progression, efficiency, versatility, score }) => (
-        <Event interval={String(year)} key={year} title=''>
+        <Event interval={String(year)} key={year} title="">
           <ul className={styles.list}>
             <li className={`${styles.item} textNoWrap`}>
               Progression: {formatWholePercent(progression)}
@@ -46,7 +46,7 @@ async function getIndicators() {
     descending: true,
   })
 
-  return years.map(year =>
+  return years.map((year) =>
     getIndicatorsForYear({
       allAscents,
       allTrainingSessions,

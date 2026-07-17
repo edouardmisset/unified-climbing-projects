@@ -1,4 +1,4 @@
-import { _GRADES, type Ascent, type Grade } from '~/schema/ascent'
+import { GRADES, type Ascent, type Grade } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 
 /**
@@ -10,7 +10,7 @@ import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
  * grade in the list of grades.
  */
 export function minMaxGrades(ascents: Ascent[]): [Grade, Grade] {
-  if (ascents.length === 0) return [fromNumberToGrade(1), fromNumberToGrade(_GRADES.length)]
+  if (ascents.length === 0) return [fromNumberToGrade(1), fromNumberToGrade(GRADES.length)]
 
   const numberGrades = ascents.map(({ topoGrade }) => fromGradeToNumber(topoGrade))
 

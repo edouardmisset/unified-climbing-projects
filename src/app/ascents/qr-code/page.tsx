@@ -9,7 +9,7 @@ import { getAllAscents } from '~/services/ascents'
 
 // LAZY LOADING: Load QR code component only when needed
 const AscentsQRCode = lazy(async () =>
-  import('~/app/_components/qr-code/qr-code').then(module => ({
+  import('~/app/_components/qr-code/qr-code').then((module) => ({
     default: module.AscentsQRCode,
   })),
 )
@@ -22,18 +22,18 @@ export default async function AscentsQRCodePage() {
   const groupedAscentsDaily = groupDataDaysByYear(allAscents)
 
   return (
-    <Layout title='Ascents QR'>
+    <Layout title="Ascents QR">
       {Object.entries(groupedAscentsDaily)
         .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {
           if (yearlyAscents === undefined)
-            return <span key='unexpected-error'>Unexpected error</span>
-          const sortedAscents = yearlyAscents.map(ascents =>
+            return <span key="unexpected-error">Unexpected error</span>
+          const sortedAscents = yearlyAscents.map((ascents) =>
             ascents.toSorted((a, b) => sortByGrade(a, b)),
           )
           return (
-            <div className='flexColumn alignCenter' key={year}>
-              <h2 className='centerText'>{year}</h2>
+            <div className="flexColumn alignCenter" key={year}>
+              <h2 className="centerText">{year}</h2>
               <Suspense fallback={<Loader />}>
                 <AscentsQRCode yearlyAscents={sortedAscents} />
               </Suspense>

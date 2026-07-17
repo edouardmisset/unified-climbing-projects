@@ -14,7 +14,7 @@ import styles from './barcode.module.css'
 
 // Lazy load the popover component
 const TrainingPopoverDescription = lazy(async () =>
-  import('../training-popover-description/training-popover-description').then(module => ({
+  import('../training-popover-description/training-popover-description').then((module) => ({
     default: module.TrainingPopoverDescription,
   })),
 )
@@ -53,7 +53,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (filteredSortedWeeklyTraining.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback="Loading...">
         <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
       </Suspense>
     )
@@ -70,7 +70,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       className={trainingBarClassName}
       popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
       style={buttonStyle}
-      trigger=''
+      trigger=""
     >
       {lazyDescription}
     </Popover>

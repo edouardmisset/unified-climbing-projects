@@ -66,7 +66,7 @@ function getWordFrequency(): void {
     removeAccents(routeName)
       .toLowerCase()
       .split(WORD_SPLIT_REGEX)
-      .filter(word => word.length > 2 && !meaninglessWords.includes(word)),
+      .filter((word) => word.length > 2 && !meaninglessWords.includes(word)),
   )
 
   const wordFrequency = Object.fromEntries(

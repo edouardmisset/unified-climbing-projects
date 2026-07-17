@@ -6,7 +6,7 @@ import { ascentSchema } from '~/schema/ascent'
 export const useAreaQueryState = (): UseQueryStateReturn<OrAll<string>, typeof ALL_VALUE> =>
   useQueryState<OrAll<string>>('area', {
     defaultValue: ALL_VALUE,
-    parse: value => {
+    parse: (value) => {
       if (value === ALL_VALUE) return ALL_VALUE
       if (value.trim() === '') return null
 

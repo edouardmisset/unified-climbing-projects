@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   createRecentDateOptions,
   extractDateFromISODateString,
@@ -69,18 +69,18 @@ describe('getMostFrequentDate', () => {
       { date: '2024-01-03' },
     ]
     const result = getMostFrequentDate(data)
-    expect(result).toEqual(['2024-01-03', 3])
+    expect(result).toStrictEqual(['2024-01-03', 3])
   })
 
   it('should return a default value when the input array is empty', () => {
     const result = getMostFrequentDate([])
-    expect(result).toEqual(['', 0])
+    expect(result).toStrictEqual(['', 0])
   })
 })
 
 describe('createRecentDateOptions', () => {
   it('should return English date shortcut labels', () => {
-    expect(createRecentDateOptions().map(({ label }) => label)).toEqual([
+    expect(createRecentDateOptions().map(({ label }) => label)).toStrictEqual([
       'Yesterday',
       'Last Saturday',
       'Last Sunday',
@@ -90,14 +90,23 @@ describe('createRecentDateOptions', () => {
 
 describe('formatEnglishWeekdayLabel', () => {
   it('should format weekday names in English', () => {
-    expect(formatEnglishWeekdayLabel(new Date(Date.UTC(2_024, 0, 1)), 'long')).toBe('Monday')
-    expect(formatEnglishWeekdayLabel(new Date(Date.UTC(2_024, 0, 1)), 'short')).toBe('Mon')
+    const monday = new Date(Date.UTC(2_024, 0, 1)) // January 1, 2024 is a Monday
+    expect(formatEnglishWeekdayLabel(monday, 'long')).toBe('Monday')
+    expect(formatEnglishWeekdayLabel(monday, 'short')).toBe('Mon')
   })
 })
 
 describe('getEnglishWeekdayLabels', () => {
   it('should return Monday-first English weekday labels', () => {
-    expect(getEnglishWeekdayLabels()).toEqual(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
+    expect(getEnglishWeekdayLabels()).toStrictEqual([
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun',
+    ])
   })
 })
 

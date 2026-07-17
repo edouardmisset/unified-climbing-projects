@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 
 const THEMES = ['light', 'dark'] as const
 type ThemeMode = (typeof THEMES)[number]
@@ -7,40 +7,63 @@ function isThemeMode(value: string): value is ThemeMode {
   return THEMES.includes(value)
 }
 
+const THEME_STORAGE_KEY = 'theme'
+const THEME_CHANGE_EVENT = 'themechange'
+
+function getStoredTheme(): ThemeMode | undefined {
+  if (typeof globalThis.window === 'undefined') return undefined
+
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY)
+    return stored && isThemeMode(stored) ? stored : undefined
+  } catch {
+    return undefined
+  }
+}
+
+function getSystemTheme(): ThemeMode {
+  if (typeof globalThis.window === 'undefined') return 'light'
+
+  return globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function getThemeSnapshot(): ThemeMode {
+  return getStoredTheme() ?? getSystemTheme()
+}
+
+function subscribeToThemeChanges(onStoreChange: () => void) {
+  if (typeof globalThis.window === 'undefined') return () => {}
+
+  const mediaQuery = globalThis.window.matchMedia('(prefers-color-scheme: dark)')
+  const handleThemeChange = () => onStoreChange()
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === THEME_STORAGE_KEY) onStoreChange()
+  }
+
+  mediaQuery.addEventListener('change', handleThemeChange)
+  globalThis.window.addEventListener('storage', handleStorage)
+  globalThis.window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange)
+
+  return () => {
+    mediaQuery.removeEventListener('change', handleThemeChange)
+    globalThis.window.removeEventListener('storage', handleStorage)
+    globalThis.window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange)
+  }
+}
+
 export function useTheme() {
-  const [theme, setTheme] = useState<ThemeMode>('dark')
-
-  useEffect(() => {
-    if (typeof globalThis.window === 'undefined') return
-
-    const stored = localStorage.getItem('theme') ?? 'light'
-    if (isThemeMode(stored)) {
-      setTheme(stored)
-      return
-    }
-    if (globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark')
-      return
-    }
-  }, [])
-
-  useEffect(() => {
-    if (typeof globalThis.window === 'undefined') return
-
-    globalThis.window.document.documentElement.setAttribute('data-color-scheme', theme)
-  }, [theme])
+  const theme = useSyncExternalStore(subscribeToThemeChanges, getThemeSnapshot, () => 'light')
 
   const toggleTheme = useCallback(() => {
-    setTheme(prev => {
-      const next = prev === 'dark' ? 'light' : 'dark'
-      try {
-        localStorage.setItem('theme', next)
-      } catch (error) {
-        console.warn('Failed to save theme preference:', error)
-      }
-      return next
-    })
-  }, [])
+    const next = theme === 'dark' ? 'light' : 'dark'
+
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next)
+      globalThis.window.dispatchEvent(new Event(THEME_CHANGE_EVENT))
+    } catch (error) {
+      console.warn('Failed to save theme preference:', error)
+    }
+  }, [theme])
 
   return { theme, toggleTheme }
 }

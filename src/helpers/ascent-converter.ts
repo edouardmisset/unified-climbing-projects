@@ -54,16 +54,16 @@ export function fromGradeToClassName(grade?: Ascent['topoGrade']): string | unde
  * @returns {number} The total points for the ascent.
  */
 export function fromAscentToPoints({ topoGrade, style, climbingDiscipline }: Ascent): number {
-  type PointsGrade = keyof typeof GRADE_TO_POINTS
-  const hasPoints = (grade: Grade): grade is PointsGrade => grade in GRADE_TO_POINTS
-
   // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
-  const gradePoints = hasPoints(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
+  const gradePoints = isPointsGrade(topoGrade) ? GRADE_TO_POINTS[topoGrade] : 0
   const stylePoints = STYLE_TO_POINTS[style] ?? 0
   const climbingDisciplineBonus = climbingDiscipline === 'Boulder' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + climbingDisciplineBonus
 }
+
+type PointsGrade = keyof typeof GRADE_TO_POINTS
+const isPointsGrade = (grade: string): grade is PointsGrade => grade in GRADE_TO_POINTS
 
 /**
  * Converts a points value to its corresponding climbing grade.
@@ -105,8 +105,6 @@ export function fromPointToGrade(
   }
 
   // Find the grade that matches the adjusted points
-  type PointsGrade = keyof typeof GRADE_TO_POINTS
-  const isPointsGrade = (grade: string): grade is PointsGrade => grade in GRADE_TO_POINTS
   const matchingEntry = Object.entries(GRADE_TO_POINTS).find(
     ([, entryPoints]) => entryPoints === adjustedPoints,
   )

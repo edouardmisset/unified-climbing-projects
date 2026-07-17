@@ -13,7 +13,7 @@ function createListFormatter(
   locale: string = US_LOCALE,
 ): (list: string[] | readonly string[]) => string {
   const formatter = new Intl.ListFormat(locale, options)
-  return list => formatter.format(list)
+  return (list) => formatter.format(list)
 }
 
 /**
@@ -27,21 +27,6 @@ export const disjunctiveListFormatter = createListFormatter(
   {
     style: 'long',
     type: 'disjunction',
-  },
-  US_LOCALE,
-)
-
-/**
- * Formats a list of items using conjunctive (and) grouping.
- * Example: "A, B, and C"
- *
- * @param {string[] | readonly string[]} list - The list of strings to format.
- * @returns {string} The formatted list string.
- */
-export const conjunctiveListFormatter = createListFormatter(
-  {
-    style: 'long',
-    type: 'conjunction',
   },
   US_LOCALE,
 )

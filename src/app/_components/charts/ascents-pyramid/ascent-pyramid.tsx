@@ -27,23 +27,23 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
   if (gradeFrequency.length === 0) return
 
   return (
-    <ChartContainer caption='Ascent Pyramid'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascent Pyramid">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={gradeFrequency}
         >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' />
+          <ChartXAxis dataKey="grade" />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
-          {ASCENT_STYLE.map(style => (
+          {ASCENT_STYLE.map((style) => (
             <Chart.Bar
               key={style}
               dataKey={style}
               fill={ASCENT_STYLE_TO_COLOR[style]}
-              stackId='styles'
+              stackId="styles"
             />
           ))}
         </Chart.BarChart>

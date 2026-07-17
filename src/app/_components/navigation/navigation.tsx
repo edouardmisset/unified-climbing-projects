@@ -36,7 +36,7 @@ export const Navigation = memo(
 
     return (
       <nav
-        aria-label='Primary navigation'
+        aria-label="Primary navigation"
         className={styles.nav}
         data-desktop-expanded={desktopExpanded}
       >
@@ -46,7 +46,7 @@ export const Navigation = memo(
             aria-label={desktopToggleLabel}
             className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.desktopToggle}`}
             onClick={handleDesktopToggle}
-            type='button'
+            type="button"
           >
             <span aria-hidden className={styles.toggleIcon}>
               {desktopExpanded ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
@@ -66,7 +66,7 @@ export const Navigation = memo(
         </div>
 
         <div className={styles.mobileMenu}>
-          <Drawer.Root onOpenChange={setMobileOpen} open={mobileOpen} swipeDirection='left'>
+          <Drawer.Root onOpenChange={setMobileOpen} open={mobileOpen} swipeDirection="left">
             <MobileNavigationTrigger open={mobileOpen} />
             <Drawer.SwipeArea className={styles.drawerSwipeArea} />
             <Drawer.Portal>
@@ -75,14 +75,14 @@ export const Navigation = memo(
                 <div className={styles.drawerHeader}>
                   <Drawer.Title className={styles.drawerTitle}>Navigation</Drawer.Title>
                   <Drawer.Close
-                    aria-label='Close navigation drawer'
+                    aria-label="Close navigation drawer"
                     className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.drawerClose}`}
                   >
                     <XIcon size={18} />
                   </Drawer.Close>
                 </div>
 
-                <ul className={styles.navList} data-mode='mobile'>
+                <ul className={styles.navList} data-mode="mobile">
                   {NAVIGATION_ITEMS.map((item, index) => (
                     <NavigationItem
                       item={item}

@@ -50,7 +50,9 @@ test('should show a single ascent', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Lévitation' })).toBeVisible()
 })
 
-test('skip link should move users to content', async ({ page }) => {
+test('skip link should move users to content', async ({ isMobile, page }) => {
+  test.skip(isMobile, 'Keyboard navigation is covered by the desktop project')
+
   await page.goto('/')
 
   await page.keyboard.press('Tab')

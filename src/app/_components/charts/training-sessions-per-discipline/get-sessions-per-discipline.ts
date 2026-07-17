@@ -14,7 +14,7 @@ export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsP
   if (sessions.length === 0) return []
 
   const sessionsWithDiscipline = sessions.filter(
-    session => session.climbingDiscipline !== undefined,
+    (session) => session.climbingDiscipline !== undefined,
   )
 
   const disciplineCounts = new Map<Discipline, number>()

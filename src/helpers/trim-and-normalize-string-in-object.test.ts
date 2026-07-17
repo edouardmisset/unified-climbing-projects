@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { trimAndNormalizeStringsInObject } from './trim-and-normalize-string-in-object.js'
 
 describe('trimAndNormalizeStringsInObject', () => {
@@ -29,7 +29,7 @@ describe('trimAndNormalizeStringsInObject', () => {
   it('should handle empty objects', () => {
     const result = trimAndNormalizeStringsInObject({})
 
-    expect(result).toEqual({})
+    expect(result).toStrictEqual({})
   })
 
   it('should trim various whitespace types', () => {
@@ -62,8 +62,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     const result = trimAndNormalizeStringsInObject(input)
 
     expect(result.text).toBe('café')
-
-    if (typeof result.text === 'string') expect(result.text.length).toBe(4)
+    expect(result.text).toHaveLength(4)
   })
 
   it('should normalize AND trim', () => {
@@ -95,8 +94,8 @@ describe('trimAndNormalizeStringsInObject', () => {
     const result = trimAndNormalizeStringsInObject(input)
 
     // oxlint-disable-next-line unicorn/no-null
-    expect(result.nullValue).toBe(null)
-    expect(result.undefinedValue).toBe(undefined)
+    expect(result.nullValue).toBeNull()
+    expect(result.undefinedValue).toBeUndefined()
   })
 
   it('should preserve arrays without processing', () => {
@@ -105,7 +104,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    expect(result.items).toEqual(['  item1  ', '  item2  '])
+    expect(result.items).toStrictEqual(['  item1  ', '  item2  '])
   })
 
   it('should preserve nested objects without processing', () => {
@@ -116,7 +115,7 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    expect(result.nested).toEqual({ value: '  untrimmed  ' })
+    expect(result.nested).toStrictEqual({ value: '  untrimmed  ' })
   })
 
   it('should return a new object without mutating original', () => {

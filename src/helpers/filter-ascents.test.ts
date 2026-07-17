@@ -1,30 +1,30 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
   it('should return all ascents when no filters are provided', () => {
     const result = filterAscents(sampleAscents)
-    expect(result.length).toBe(sampleAscents.length)
-    expect(result).toEqual(sampleAscents)
+    expect(result).toHaveLength(sampleAscents.length)
+    expect(result).toStrictEqual(sampleAscents)
   })
 
   it('should filter ascents by grade using case insensitive matching', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
-    expect(result.length).toBe(38)
+    expect(result).toHaveLength(38)
 
     for (const { topoGrade } of result) expect(topoGrade).toBe('7a')
   })
 
   it('should filter ascents by climbingDiscipline', () => {
     const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
-    expect(result.length).toBe(84)
+    expect(result).toHaveLength(84)
     for (const { climbingDiscipline } of result) expect(climbingDiscipline).toBe('Route')
   })
 
   it('should filter ascents by year', () => {
     const result = filterAscents(sampleAscents, { year: 2_022 })
-    expect(result.length).toBe(13)
+    expect(result).toHaveLength(13)
     for (const { date } of result) expect(new Date(date).getFullYear()).toBe(2_022)
   })
 
@@ -33,7 +33,7 @@ describe('filterAscents', () => {
       climbingDiscipline: 'Route',
       style: 'Redpoint',
     })
-    expect(result.length).toBe(27)
+    expect(result).toHaveLength(27)
     for (const { climbingDiscipline, style } of result) {
       expect(climbingDiscipline).toBe('Route')
       expect(style).toBe('Redpoint')
@@ -42,15 +42,15 @@ describe('filterAscents', () => {
 
   it('should filter ascents by area using case insensitive matching', () => {
     const result = filterAscents(sampleAscents, { area: 'Rive Droite' })
-    expect(result.length).toBe(3)
+    expect(result).toHaveLength(3)
     for (const { area } of result) expect(area?.toLowerCase()).toBe('rive droite')
   })
 
   it('should filter ascents by area case-insensitively', () => {
     const upperResult = filterAscents(sampleAscents, { area: 'RIVE DROITE' })
     const lowerResult = filterAscents(sampleAscents, { area: 'rive droite' })
-    expect(upperResult).toEqual(lowerResult)
-    expect(upperResult.length).toBe(3)
+    expect(upperResult).toStrictEqual(lowerResult)
+    expect(upperResult).toHaveLength(3)
   })
 
   it('should not match ascents with no area when an area filter is applied', () => {
@@ -60,12 +60,12 @@ describe('filterAscents', () => {
 
   it('should return an empty array when no ascent matches the area filter', () => {
     const result = filterAscents(sampleAscents, { area: 'nonexistent area' })
-    expect(result.length).toBe(0)
+    expect(result).toHaveLength(0)
   })
 
   it('should return an empty array when no ascents are passed', () => {
     const result = filterAscents([])
-    expect(result.length).toBe(0)
+    expect(result).toHaveLength(0)
   })
 })
 

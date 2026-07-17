@@ -18,14 +18,14 @@ export function TrainingSummary({ trainingSessions }: TrainingSessionListProps) 
       <h2>Training</h2>
       <DisciplineSection
         boulderSessions={indoorBoulder}
-        header='Indoor'
+        header="Indoor"
         percentage={indoorPercentage}
         routeSessions={indoorRoute}
         sessionCount={indoor.length}
       />
       <DisciplineSection
         boulderSessions={outdoorBoulder}
-        header='Outdoor'
+        header="Outdoor"
         percentage={outdoorPercentage}
         routeSessions={outdoorRoute}
         sessionCount={outdoor.length}

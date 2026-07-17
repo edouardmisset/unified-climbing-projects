@@ -88,7 +88,7 @@ export const trainingSessionSchema = z.object({
   anatomicalRegion: anatomicalRegionSchema.optional(),
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: z.string().optional(),
-  date: z.string().transform(date => new Date(date).toISOString()), // ISO 8601 date format
+  date: z.string().transform((date) => new Date(date).toISOString()), // ISO 8601 date format
   energySystem: energySystemSchema.optional(),
   gymCrag: z.string().optional(),
   _id: z.string(),
@@ -106,7 +106,7 @@ export const trainingSessionFormSchema = z.object({
   date: z
     .string()
     .trim()
-    .transform(date => getDateAtNoon(new Date(date)).toISOString()),
+    .transform((date) => getDateAtNoon(new Date(date)).toISOString()),
   energySystem: z.preprocess(emptyStringToUndefined, energySystemSchema.optional()),
   gymCrag: z.preprocess(emptyStringToUndefined, z.string().trim().optional()),
   intensity: z.preprocess(

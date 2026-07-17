@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import type { Ascent } from '~/schema/ascent'
@@ -7,7 +7,7 @@ import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grade
 describe('getAscentsVolumeAndGradesPerYear', () => {
   it('should return empty array for empty input', () => {
     const result = getAscentsVolumeAndGradesPerYear([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return yearly discipline counts with max and average grades', () => {
@@ -56,7 +56,7 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
 
     const result = getAscentsVolumeAndGradesPerYear(ascents)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         Boulder: 1,
         Route: 2,

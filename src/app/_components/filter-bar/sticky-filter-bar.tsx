@@ -30,7 +30,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       const matchingFilter = filters.find(({ name }) => name === filterName)
       if (matchingFilter === undefined) return
 
-      setLocalSelectedValueByName(previousValues => ({
+      setLocalSelectedValueByName((previousValues) => ({
         ...previousValues,
         [filterName]: value,
       }))
@@ -56,9 +56,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
   )
 
   const clearFilters = useCallback(() => {
-    setLocalSelectedValueByName(
-      Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])) as Record<string, string>,
-    )
+    setLocalSelectedValueByName(Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])))
     setLocalSearch('')
 
     startTransition(() => {
@@ -70,14 +68,14 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
   const isOneFilterActive = useMemo(
     () =>
-      filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
+      filters.some((filter) => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
       displayedSearch !== '',
     [displayedSearch, displayedSelectedValueByName, filters],
   )
 
   const renderedFilters = useMemo(
     () =>
-      filters.map(filter => ({
+      filters.map((filter) => ({
         ...filter,
         handleChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
           applyFilterValue(filter.name, event.target.value),
@@ -93,10 +91,10 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       <div className={`${styles.filters} ${isPending ? styles.filtersPending : ''}`}>
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <CustomInput
-            name='search route'
-            onChange={event => handleSearchChange(event.target.value)}
-            placeholder='Biographie'
-            type='search'
+            name="search route"
+            onChange={(event) => handleSearchChange(event.target.value)}
+            placeholder="Biographie"
+            type="search"
             value={displayedSearch}
           />
         )}
@@ -105,11 +103,11 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
           className={styles.reset}
           disabled={!isOneFilterActive}
           onClick={clearFilters}
-          title='Clear filters'
-          type='reset'
+          title="Clear filters"
+          type="reset"
         >
           <CircleX opacity={isOneFilterActive ? 1 : 1 / 2} />
-          <span className='visuallyHidden'>Clear filters</span>
+          <span className="visuallyHidden">Clear filters</span>
         </button>
       </div>
     </search>

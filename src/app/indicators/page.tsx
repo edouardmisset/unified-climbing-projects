@@ -9,7 +9,7 @@ export const revalidate = 3_600
 
 export default async function Page() {
   return (
-    <Layout gridClassName={styles.container} layout='flexRow' title='Indicators'>
+    <Layout gridClassName={styles.container} layout="flexRow" title="Indicators">
       <Suspense fallback={<Loader />}>
         <IndicatorsTimeline />
       </Suspense>

@@ -51,27 +51,27 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
   if (data.length === 0) return
 
   return (
-    <ChartContainer caption='Top Ten Evolution'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Top Ten Evolution">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.ComposedChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={data}
         >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartXAxis dataKey="year" labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <Chart.YAxis
-            yAxisId='left'
+            yAxisId="left"
             label={{
               ...AXIS_LABEL_STYLE,
               angle: -90,
               value: AXIS_LABELS.score,
             }}
             tick={AXIS_TICK_STYLE}
-            tickFormatter={value => frenchNumberFormatter.format(Number(value))}
+            tickFormatter={(value) => frenchNumberFormatter.format(Number(value))}
           />
           <Chart.YAxis
-            yAxisId='right'
+            yAxisId="right"
             allowDecimals={false}
             domain={[0, 'dataMax']}
             label={{
@@ -79,7 +79,7 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
               angle: -90,
               value: AXIS_LABELS.ascents,
             }}
-            orientation='right'
+            orientation="right"
             tick={AXIS_TICK_STYLE}
           />
           <ChartTooltip
@@ -89,35 +89,35 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
               return [value, name]
             }}
           />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend align="center" iconType="circle" layout="horizontal" verticalAlign="top" />
           <Chart.Bar
-            dataKey='Boulder'
+            dataKey="Boulder"
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
             name={AXIS_LABELS.boulders}
-            stackId='ascents'
-            yAxisId='right'
+            stackId="ascents"
+            yAxisId="right"
           />
           <Chart.Bar
-            dataKey='Route'
+            dataKey="Route"
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
             name={AXIS_LABELS.routes}
-            stackId='ascents'
-            yAxisId='right'
+            stackId="ascents"
+            yAxisId="right"
           />
           <Chart.Bar
-            dataKey='outdoorDays'
-            fill='var(--outdoor)'
+            dataKey="outdoorDays"
+            fill="var(--outdoor)"
             name={AXIS_LABELS.outdoorDays}
-            yAxisId='right'
+            yAxisId="right"
           />
           <Chart.Line
-            dataKey='topTenScore'
+            dataKey="topTenScore"
             dot={DOT_STYLE}
             name={AXIS_LABELS.score}
-            stroke='var(--flash)'
+            stroke="var(--flash)"
             strokeWidth={2}
-            type='natural'
-            yAxisId='left'
+            type="natural"
+            yAxisId="left"
           />
         </Chart.ComposedChart>
       </ResponsiveContainer>

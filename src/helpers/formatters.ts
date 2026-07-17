@@ -64,7 +64,7 @@ export function formatStyleAndTriers({
       ? `(${formatCountWithEnglishNoun(tries, { one: 'try', other: 'tries' })})`
       : `(${formatOrdinals(tries)})`
 
-  return [styleEmoji, styleText, triesText].filter(string => string !== '').join(' ')
+  return [styleEmoji, styleText, triesText].filter((string) => string !== '').join(' ')
 }
 
 // EMOJIS

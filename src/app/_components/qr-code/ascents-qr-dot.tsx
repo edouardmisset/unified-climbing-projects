@@ -7,7 +7,7 @@ import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
 const AscentsPopoverDescription = lazy(async () =>
-  import('../ascents-popover-description/ascents-popover-description').then(module => ({
+  import('../ascents-popover-description/ascents-popover-description').then((module) => ({
     default: module.AscentsPopoverDescription,
   })),
 )
@@ -36,7 +36,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
   const lazyDescription = useMemo(() => {
     if (!ascents || ascents.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback="Loading...">
         <AscentsPopoverDescription ascents={ascents} />
       </Suspense>
     )
@@ -49,7 +49,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
       aria-label={`Ascent on ${dateAndCrag}`}
       className={gradeClassName}
       popoverTitle={dateAndCrag}
-      trigger=''
+      trigger=""
     >
       {lazyDescription}
     </Popover>

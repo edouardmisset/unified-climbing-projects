@@ -32,8 +32,8 @@ export function Dialog({
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
-          <BaseDialog.Description>{content}</BaseDialog.Description>
-          <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
+          <BaseDialog.Description render={<div>{content}</div>} />
+          <BaseDialog.Close className={styles.button} data-close="true" aria-label="Close dialog">
             <XIcon />
           </BaseDialog.Close>
         </BaseDialog.Popup>

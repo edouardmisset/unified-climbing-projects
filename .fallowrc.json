@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": ["convex/**/*.ts", "src/backup/create-sample.ts", "src/scripts/**/*.ts"],
+  "workspaces": {
+    "patterns": ["."]
+  },
+  "ignoreDependencies": [
+    "@shopify/eslint-plugin",
+    "eslint-plugin-react-you-might-not-need-an-effect"
+  ],
+  "duplicates": {
+    "minOccurrences": 3,
+    "ignore": ["**/lib/**", "**/legacy/**", "**/__generated__/**", "**/generated/**"]
+  },
+  "rules": {
+    "unused-dependencies": "warn"
+  }
+}

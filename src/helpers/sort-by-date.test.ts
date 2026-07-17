@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sortByDate } from './sort-by-date'
 
 describe('sortByDate', () => {
@@ -13,7 +13,7 @@ describe('sortByDate', () => {
     const unsortedArray = [dateA, dateB, dateC]
     const sortedArray = unsortedArray.toSorted(sortByDate)
 
-    expect(sortedArray.map(item => item.id)).toEqual(
+    expect(sortedArray.map((item) => item.id)).toStrictEqual(
       [2, 1, 3], // dateB (Feb), dateA (Jan), dateC (Dec)
     )
   })
@@ -22,7 +22,7 @@ describe('sortByDate', () => {
     const unsortedArray = [dateA, dateB, dateC]
     const sortedArray = unsortedArray.toSorted((a, b) => sortByDate(a, b, false))
 
-    expect(sortedArray.map(item => item.id)).toEqual(
+    expect(sortedArray.map((item) => item.id)).toStrictEqual(
       [3, 1, 2], // dateC (Dec), dateA (Jan), dateB (Feb)
     )
   })
@@ -43,6 +43,6 @@ describe('sortByDate', () => {
     const sortedArray = unsortedArray.toSorted(sortByDate)
 
     // Expected order: equalDate1/2 (Mar), dateB (Feb), dateA (Jan), dateC (Dec)
-    expect(sortedArray.map(item => item.id)).toEqual([4, 5, 2, 1, 3])
+    expect(sortedArray.map((item) => item.id)).toStrictEqual([4, 5, 2, 1, 3])
   })
 })

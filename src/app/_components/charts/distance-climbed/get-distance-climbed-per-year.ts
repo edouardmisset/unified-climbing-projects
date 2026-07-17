@@ -9,7 +9,7 @@ type DistanceClimbedPerYear = {
 
 export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPerYear[] => {
   const filteredAscents = ascents.filter(
-    ascent =>
+    (ascent) =>
       ascent.climbingDiscipline === 'Route' && ascent.height !== undefined && ascent.height > 0,
   )
 
@@ -20,7 +20,7 @@ export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPer
     continuous: true,
   })
 
-  const ascentsByYear = new Map<number, Ascent[]>(years.map(year => [year, []]))
+  const ascentsByYear = new Map<number, Ascent[]>(years.map((year) => [year, []]))
 
   for (const ascent of filteredAscents) {
     const year = new Date(ascent.date).getFullYear()
@@ -28,7 +28,7 @@ export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPer
     ascentsByYear.get(year)?.push(ascent)
   }
 
-  return years.map(year => {
+  return years.map((year) => {
     const yearAscents = ascentsByYear.get(year) ?? []
     const totalDistance = yearAscents.reduce((acc, ascent) => acc + (ascent.height ?? 0), 0)
 

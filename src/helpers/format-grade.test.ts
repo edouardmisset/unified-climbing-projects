@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import { formatGrade } from './format-grade'
 
@@ -52,6 +52,6 @@ describe('formatGrade', () => {
         climbingDiscipline: ascentDetails.climbingDiscipline,
         grade: ascentDetails.topoGrade,
       }),
-    ).toStrictEqual('8a')
+    ).toBe('8a')
   })
 })

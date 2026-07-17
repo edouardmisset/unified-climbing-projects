@@ -9,7 +9,7 @@ export const useSessionTypeQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<NonNullable<TrainingSession['sessionType']>>>('sessionType', {
     defaultValue: ALL_VALUE,
-    parse: value =>
+    parse: (value) =>
       value === ALL_VALUE
         ? ALL_VALUE
         : trainingSessionSchema.required({ sessionType: true }).shape.sessionType.parse(value),

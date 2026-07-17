@@ -20,6 +20,7 @@
 .header {
   position: sticky;
   inset: 0;
+  margin: 0;
   font-size: clamp(1rem, 1rem + 3vw, 2.5rem);
   font-weight: 600;
   padding-block: var(--size-fluid-3);

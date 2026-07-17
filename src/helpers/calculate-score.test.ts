@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { COEFFICIENT_TOP_TEN, COEFFICIENT_VOLUME, DEFAULT_GRADE } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -25,9 +25,9 @@ describe('calculateScore', () => {
           style: 'Redpoint',
           topoGrade: '5a',
           tries: 1,
-        } as Ascent,
+        },
       ],
-      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' } as TrainingSession],
+      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' }],
       year: -1,
     })
 
@@ -37,7 +37,7 @@ describe('calculateScore', () => {
   it('should return 0 when ascents array is empty', () => {
     const result = calculateScore({
       ascents: [],
-      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' } as TrainingSession],
+      trainingSessions: [{ _id: '1', date: '2023-01-01T00:00:00Z' }],
       year: 2_023,
     })
 

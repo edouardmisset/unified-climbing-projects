@@ -8,7 +8,7 @@ export const getAscentById = cache(async (_id: string): Promise<Ascent | undefin
   'use cache'
   const { getAllAscents } = await import('./convex')
   const ascents = await getAllAscents()
-  return ascents.find(ascent => ascent._id === _id) ?? undefined
+  return ascents.find((ascent) => ascent._id === _id) ?? undefined
 })
 
 export { addAscent, getAllAscents } from './convex'

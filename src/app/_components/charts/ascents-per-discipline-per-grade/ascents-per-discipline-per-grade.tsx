@@ -36,14 +36,14 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
   if (isSingleDiscipline) return
 
   return (
-    <ChartContainer caption='Ascents per Discipline per Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents per Discipline per Grade">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
+          <ChartXAxis dataKey="grade" labelText={AXIS_LABELS.grades} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
-          {ROUTE_AND_BOULDER.map(key => (
+          {ROUTE_AND_BOULDER.map((key) => (
             <Chart.Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
           ))}
         </Chart.BarChart>

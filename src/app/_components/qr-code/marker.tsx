@@ -16,7 +16,7 @@ export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
 
   return (
     <>
-      {squareIndices.map(index => {
+      {squareIndices.map((index) => {
         const remainingMarkerSize = markerSize - index
 
         const rowStart = index <= 1 ? startingRow : startingRow * index

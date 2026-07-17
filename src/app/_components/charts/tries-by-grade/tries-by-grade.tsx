@@ -53,7 +53,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   const chartData = useMemo<TriesByGradeChartDatum[]>(() => {
     if (series.length === 0) return []
 
-    const grades = series[0]?.data.map(point => point.x) ?? []
+    const grades = series[0]?.data.map((point) => point.x) ?? []
 
     return grades.map((grade, index) => {
       const datum: TriesByGradeChartDatum = {
@@ -83,7 +83,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
     return colors
   }, [series])
 
-  const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
+  const isFirstTry = series.every((item) => item.data.every((point) => point.y === 1))
 
   const dotStyle = useMemo(() => ({ r: DOT_RADIUS }), [])
   const yAxisDomain = useMemo(() => [0, 'dataMax'] as const, [])
@@ -91,37 +91,37 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   if (series.length === 0 || isFirstTry) return
 
   return (
-    <ChartContainer caption='Tries by Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Tries by Grade">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.LineChart accessibilityLayer={false} data={chartData}>
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
+          <ChartXAxis dataKey="grade" labelText={AXIS_LABELS.grades} />
           <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
           <ChartTooltip content={TriesByGradeTooltip} />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend align="center" iconType="circle" layout="horizontal" verticalAlign="top" />
           <Chart.Line
-            dataKey='min'
+            dataKey="min"
             dot={dotStyle}
-            name='Min'
+            name="Min"
             stroke={seriesColors.get('min') ?? 'var(--minTries)'}
             strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
+            type="natural"
           />
           <Chart.Line
-            dataKey='average'
+            dataKey="average"
             dot={dotStyle}
-            name='Average'
+            name="Average"
             stroke={seriesColors.get('average') ?? 'var(--averageTries)'}
             strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
+            type="natural"
           />
           <Chart.Line
-            dataKey='max'
+            dataKey="max"
             dot={dotStyle}
-            name='Max'
+            name="Max"
             stroke={seriesColors.get('max') ?? 'var(--maxTries)'}
             strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
+            type="natural"
           />
         </Chart.LineChart>
       </ResponsiveContainer>

@@ -19,9 +19,9 @@ export async function CalendarContent() {
 
   return (
     <>
-      {trainingYears.map(year => (
+      {trainingYears.map((year) => (
         <Fragment key={year}>
-          <h2 className='superCenter'>{year}</h2>
+          <h2 className="superCenter">{year}</h2>
           <DataCalendar
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear<TrainingSession>}

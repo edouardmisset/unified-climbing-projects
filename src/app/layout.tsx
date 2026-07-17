@@ -9,7 +9,6 @@ import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { RscBoundaryProvider } from 'rsc-boundary'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { APP_LANGUAGE } from '~/constants/generic'
@@ -49,29 +48,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html
           className={font.className}
           data-color-scheme={theme}
-          data-scroll-behavior='smooth'
+          data-scroll-behavior="smooth"
           lang={APP_LANGUAGE}
           suppressHydrationWarning
         >
           <body className={styles.body}>
-            <a className={styles.skipLink} href='#main-content'>
+            <a className={styles.skipLink} href="#main-content">
               Skip to content
             </a>
             <Header />
-            <main className={styles.main} id='main-content' tabIndex={-1}>
+            <main className={styles.main} id="main-content" tabIndex={-1}>
               <Suspense fallback={<Loader />}>
-                <RscBoundaryProvider>
-                  <NuqsAdapter>{children}</NuqsAdapter>
-                </RscBoundaryProvider>
+                <NuqsAdapter>{children}</NuqsAdapter>
               </Suspense>
             </main>
 
             <ToastContainer
               closeOnClick
               draggable
-              draggableDirection='x'
+              draggableDirection="x"
               draggablePercent={20}
-              theme='colored'
+              theme="colored"
             />
             <SpeedInsights />
             <Analytics />

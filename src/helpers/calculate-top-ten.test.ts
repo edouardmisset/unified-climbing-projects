@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentToPoints } from './ascent-converter'
@@ -16,7 +16,7 @@ describe('calculateTopTenScore', () => {
 
     // Calculate expected score manually
     const expectedTotal = fewAscents
-      .map(ascent => fromAscentToPoints(ascent))
+      .map((ascent) => fromAscentToPoints(ascent))
       .reduce((sum, points) => sum + points, 0)
 
     const result = calculateTopTenScore(fewAscents)
@@ -30,7 +30,7 @@ describe('calculateTopTenScore', () => {
 
     // Calculate top 10 scores manually
     const expectedTotal = manyAscents
-      .map(ascent => fromAscentToPoints(ascent))
+      .map((ascent) => fromAscentToPoints(ascent))
       .toSorted((a, b) => b - a)
       .slice(0, 10)
       .reduce((sum, points) => sum + points, 0)
@@ -70,7 +70,7 @@ describe('calculateTopTenScore', () => {
 
     // Calculate expected manually
     const expectedTotal = mockAscents
-      .map(ascent => fromAscentToPoints(ascent))
+      .map((ascent) => fromAscentToPoints(ascent))
       .toSorted((a, b) => b - a)
       .slice(0, 10)
       .reduce((sum, points) => sum + points, 0)

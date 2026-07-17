@@ -38,7 +38,7 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
 
   if (ascents.length === 0) return []
 
-  return ascents.filter(ascent => {
+  return ascents.filter((ascent) => {
     const ascentDate = new Date(ascent.date)
     return (
       (grade === undefined || stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vite-plus/test'
 import { KeycapButton } from './keycap-button'
 
 const SUBMIT_REGEX = /submit/i
@@ -8,9 +8,9 @@ const CLICK_ME_REGEX = /click me/i
 const DISABLED_REGEX = /disabled/i
 const KEYBOARD_TEST_REGEX = /keyboard test/i
 
-describe('KeycapButton Component', () => {
+describe('keycapButton Component', () => {
   it('renders button with label', () => {
-    render(<KeycapButton label='Submit' type='button' />)
+    render(<KeycapButton label="Submit" type="button" />)
 
     const button = screen.getByRole('button', { name: SUBMIT_REGEX })
     expect(button).toBeInTheDocument()
@@ -20,7 +20,7 @@ describe('KeycapButton Component', () => {
   it('handles click events', async () => {
     const handleClick = vi.fn<() => void>()
 
-    render(<KeycapButton label='Click me' onClick={handleClick} type='button' />)
+    render(<KeycapButton label="Click me" onClick={handleClick} type="button" />)
 
     const button = screen.getByRole('button', { name: CLICK_ME_REGEX })
     await userEvent.click(button)
@@ -29,7 +29,7 @@ describe('KeycapButton Component', () => {
   })
 
   it('can be disabled', () => {
-    render(<KeycapButton disabled label='Disabled' type='button' />)
+    render(<KeycapButton disabled label="Disabled" type="button" />)
 
     const button = screen.getByRole('button', { name: DISABLED_REGEX })
     expect(button).toBeDisabled()
@@ -38,10 +38,10 @@ describe('KeycapButton Component', () => {
   it('forwards additional props', () => {
     render(
       <KeycapButton
-        aria-label='Custom label'
-        data-testid='custom-button'
-        label='Test'
-        type='submit'
+        aria-label="Custom label"
+        data-testid="custom-button"
+        label="Test"
+        type="submit"
       />,
     )
 
@@ -53,7 +53,7 @@ describe('KeycapButton Component', () => {
   it('handles keyboard interaction', async () => {
     const handleClick = vi.fn<() => void>()
 
-    render(<KeycapButton label='Keyboard test' onClick={handleClick} type='button' />)
+    render(<KeycapButton label="Keyboard test" onClick={handleClick} type="button" />)
 
     const button = screen.getByRole('button', { name: KEYBOARD_TEST_REGEX })
     button.focus()

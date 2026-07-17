@@ -6,7 +6,7 @@ import { BAR_CATEGORY_GAP, formatYearTick, GRID_STROKE } from '../constants'
 import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
-import { _GRADES, type Ascent } from '~/schema/ascent'
+import { GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
 type AscentsPerYearByGradeDatum = ReturnType<typeof getAscentsPerYearByGrade>[number]
@@ -29,23 +29,23 @@ export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
   if (uniqueYearsCount <= 1 || ascentsPerYearByGrade.length === 0) return
 
   return (
-    <ChartContainer caption='Ascents Per Year By Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Ascents Per Year By Grade">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.BarChart
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={ascentsPerYearByGrade}
         >
           <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
+          <ChartXAxis dataKey="year" labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
           <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
           <ChartTooltip />
-          {_GRADES.map(key => (
+          {GRADES.map((key) => (
             <Chart.Bar
               key={key}
               dataKey={key}
               fill={fromGradeToBackgroundColor(key)}
-              stackId='grades'
+              stackId="grades"
             />
           ))}
         </Chart.BarChart>

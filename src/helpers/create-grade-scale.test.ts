@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent, Grade } from '~/schema/ascent'
 import { createGradeScaleFromAscents } from './create-grade-scale'
 
@@ -21,14 +21,14 @@ describe('createGradeScaleFromAscents', () => {
     ]
     const expectedScale: Grade[] = ['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a']
     const result = createGradeScaleFromAscents(ascents)
-    expect(result).toEqual(expectedScale)
+    expect(result).toStrictEqual(expectedScale)
   })
 
   it('should handle single ascent', () => {
     const ascents: Ascent[] = [{ topoGrade: '7a' } as Ascent]
     const expectedScale: Grade[] = ['7a']
     const result = createGradeScaleFromAscents(ascents)
-    expect(result).toEqual(expectedScale)
+    expect(result).toStrictEqual(expectedScale)
   })
 
   it('should handle ascents with same grade', () => {
@@ -39,6 +39,6 @@ describe('createGradeScaleFromAscents', () => {
     ]
     const expectedScale: Grade[] = ['6b']
     const result = createGradeScaleFromAscents(ascents)
-    expect(result).toEqual(expectedScale)
+    expect(result).toStrictEqual(expectedScale)
   })
 })

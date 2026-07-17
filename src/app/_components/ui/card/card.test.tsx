@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { Card } from './card'
 
 const TEST_TITLE_REGEX = /test title/i
@@ -9,7 +9,7 @@ const HEADER_REGEX = /header/i
 const SECTION_CONTENT_REGEX = /section content/i
 const ACTION_REGEX = /action/i
 
-describe('Card Component', () => {
+describe('card Component', () => {
   it('renders children correctly', () => {
     render(
       <Card>
@@ -43,7 +43,7 @@ describe('Card Component', () => {
           <p>Section content</p>
         </section>
         <footer>
-          <button type='button'>Action</button>
+          <button type="button">Action</button>
         </footer>
       </Card>,
     )

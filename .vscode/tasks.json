@@ -22,8 +22,8 @@
       "problemMatcher": []
     },
     {
-      "command": "bunx convex dev",
-      "detail": "bunx convex dev",
+      "command": "pnpm exec convex dev",
+      "detail": "convex dev",
       "isBackground": true,
       "label": "Dev:Convex",
       "problemMatcher": [],
@@ -37,7 +37,7 @@
       }
     },
     {
-      "command": "bun run dev",
+      "command": "pnpm dev",
       "detail": "next dev",
       "isBackground": true,
       "label": "Dev:Next",

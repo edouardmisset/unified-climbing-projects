@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import { calculateProgressionPercentage } from './calculate-progression-percentage'
 
@@ -22,7 +22,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -32,7 +32,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     const result = calculateProgressionPercentage({
@@ -53,7 +53,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -63,7 +63,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     const result = calculateProgressionPercentage({
@@ -85,7 +85,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -95,7 +95,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -105,7 +105,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -115,7 +115,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -125,7 +125,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c+',
         tries: 1,
-      } as Ascent,
+      },
 
       // Current year ascents - all harder
       {
@@ -137,7 +137,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a+',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -147,7 +147,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -157,7 +157,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b+',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -167,7 +167,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a+',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -177,7 +177,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     const result = calculateProgressionPercentage({
@@ -199,7 +199,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -209,7 +209,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -219,7 +219,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -229,7 +229,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -239,7 +239,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c+',
         tries: 1,
-      } as Ascent,
+      },
 
       // Current year ascents - 3 harder, 2 same
       {
@@ -251,7 +251,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a+', // Better
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -261,7 +261,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a', // Better
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -271,7 +271,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b', // Same
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -281,7 +281,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a', // Same
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -291,7 +291,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '7a', // Better
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     const result = calculateProgressionPercentage({
@@ -313,7 +313,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -323,7 +323,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -333,7 +333,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '8a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -343,7 +343,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7b',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -353,7 +353,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '7a+',
         tries: 1,
-      } as Ascent,
+      },
 
       // Current year ascents - all easier
       {
@@ -365,7 +365,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -375,7 +375,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -385,7 +385,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7c',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -395,7 +395,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -405,7 +405,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c',
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     const result = calculateProgressionPercentage({
@@ -427,7 +427,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -437,7 +437,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -447,7 +447,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '6c+',
         tries: 1,
-      } as Ascent,
+      },
 
       // Current year - all 5 categories, all better
       {
@@ -459,7 +459,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7a+',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Boulder',
         crag: 'Test Crag',
@@ -469,7 +469,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -479,7 +479,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Redpoint',
         topoGrade: '7b+',
         tries: 2,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -489,7 +489,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Flash',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
       {
         climbingDiscipline: 'Route',
         crag: 'Test Crag',
@@ -499,7 +499,7 @@ describe('calculateProgressionPercentage', () => {
         style: 'Onsight',
         topoGrade: '7a',
         tries: 1,
-      } as Ascent,
+      },
     ]
 
     // Should show progression only in the 3 categories that have data for both years

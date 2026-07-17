@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { sampleAscents } from '~/backup/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { getTopTenEvolution } from './get-top-ten-evolution'
@@ -9,7 +9,7 @@ function countDisciplineForYear(
   year: number,
 ): number {
   return ascents.filter(
-    ascent =>
+    (ascent) =>
       ascent.climbingDiscipline === discipline && new Date(ascent.date).getFullYear() === year,
   ).length
 }
@@ -17,7 +17,7 @@ function countDisciplineForYear(
 describe('getTopTenEvolution', () => {
   it('should return empty array for empty input', () => {
     const result = getTopTenEvolution([])
-    expect(result).toEqual([])
+    expect(result).toStrictEqual([])
   })
 
   it('should return one entry for a single-year dataset', () => {
@@ -25,7 +25,7 @@ describe('getTopTenEvolution', () => {
 
     const result = getTopTenEvolution(ascentsIn2024)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         Boulder: countDisciplineForYear(ascentsIn2024, 'Boulder', 2_024),
         Route: countDisciplineForYear(ascentsIn2024, 'Route', 2_024),
@@ -63,7 +63,7 @@ describe('getTopTenEvolution', () => {
 
     const result = getTopTenEvolution(ascents)
 
-    expect(result).toEqual([
+    expect(result).toStrictEqual([
       {
         Boulder: countDisciplineForYear(ascents, 'Boulder', 2_022),
         Route: countDisciplineForYear(ascents, 'Route', 2_022),

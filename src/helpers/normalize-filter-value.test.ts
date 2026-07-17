@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { normalizeFilterValue } from './normalize-filter-value'
 
 describe('normalizeFilterValue', () => {
   it('should return undefined when value is ALL_VALUE', () => {
     const result = normalizeFilterValue(ALL_VALUE)
-    expect(result).toBe(undefined)
+    expect(result).toBeUndefined()
   })
 
   it('should return the original value when value is not ALL_VALUE', () => {

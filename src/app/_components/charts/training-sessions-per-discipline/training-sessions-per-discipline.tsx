@@ -46,17 +46,17 @@ export function TrainingSessionsPerDiscipline({
   if (data.length <= 1) return
 
   return (
-    <ChartContainer caption='Sessions by Discipline'>
-      <ResponsiveContainer height='100%' width='100%'>
+    <ChartContainer caption="Sessions by Discipline">
+      <ResponsiveContainer height="100%" width="100%">
         <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
-          <Legend align='center' verticalAlign='top' />
+          <Legend align="center" verticalAlign="top" />
           <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
-            dataKey='value'
+            dataKey="value"
             label={labelRenderer}
-            nameKey='label'
+            nameKey="label"
             shape={shapeRenderer}
           />
         </Chart.PieChart>

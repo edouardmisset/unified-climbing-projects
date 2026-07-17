@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { ASCENT_STYLE, type Ascent, HOLDS, PROFILES } from '~/schema/ascent'
 import { calculateVersatilityPercentage } from './calculate-versatility-percentage'
 
@@ -38,7 +38,7 @@ describe('calculateVersatilityPercentage', () => {
 
     // With missing properties, the ratios for holds, profile, and height will be 0
     // Only style and crag will contribute to versatility
-    expect(result > 0).toBe(true)
+    expect(result).toBeGreaterThan(0)
   })
 
   it('should calculate versatility correctly for a variety of ascents', () => {
@@ -90,8 +90,8 @@ describe('calculateVersatilityPercentage', () => {
     // 3 different heights (3/10), and 3 different crags (3/15)
     // Expected ratios: [3/7, 3/10, 3/7, 1, 0.2]
     // Average: ~0.47 -> 47%
-    expect(result > 0).toBe(true)
-    expect(result < 100).toBe(true)
+    expect(result).toBeGreaterThan(0)
+    expect(result).toBeLessThan(100)
   })
 
   it('should handle maximum versatility', () => {
@@ -168,7 +168,7 @@ describe('calculateVersatilityPercentage', () => {
         style: ASCENT_STYLE[0],
         topoGrade: '6a',
         tries: 1,
-      } as Ascent)
+      })
 
     // Create one ascent for each height
     for (const height of heights)

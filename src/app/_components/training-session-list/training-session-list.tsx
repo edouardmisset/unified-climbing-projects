@@ -12,16 +12,16 @@ export const TrainingSessionList = memo(({ trainingSessions }: TrainingSessionLi
     <table className={styles.table}>
       <thead className={`${styles.header} gridFullWidth`}>
         <tr className={`${styles.headerRow} gridFullWidth`}>
-          <th className={`${styles.cell} ${styles.headerCell}`} title='Date of the session'>
+          <th className={`${styles.cell} ${styles.headerCell}`} title="Date of the session">
             Date
           </th>
-          <th className={`${styles.cell} ${styles.headerCell}`} title='Location of the session'>
+          <th className={`${styles.cell} ${styles.headerCell}`} title="Location of the session">
             Location
           </th>
-          <th className={`${styles.cell} ${styles.headerCell}`} title='Type of the session'>
+          <th className={`${styles.cell} ${styles.headerCell}`} title="Type of the session">
             Type
           </th>
-          <th className={`${styles.cell} ${styles.headerCell}`} title='Load level of the session'>
+          <th className={`${styles.cell} ${styles.headerCell}`} title="Load level of the session">
             Load
           </th>
         </tr>

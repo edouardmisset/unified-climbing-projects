@@ -14,7 +14,7 @@ export function TrainingDashboard({ trainingSessions }: TrainingSessionListProps
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
-    <div className='flex flexColumn alignCenter gridFullWidth'>
+    <div className="flex flexColumn alignCenter gridFullWidth">
       <TrainingDashboardFilterBar trainingSessions={trainingSessions} />
       <Suspense fallback={<Loader />}>
         <DashboardStats trainingSessions={filteredTrainingSessions} />
