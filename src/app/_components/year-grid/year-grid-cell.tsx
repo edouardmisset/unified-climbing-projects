@@ -20,6 +20,9 @@ const TrainingPopoverDescription = lazy(async () =>
   ),
 )
 
+// Computed once at module load for efficient per-cell comparisons
+const TODAY = new Date()
+
 export const YearGridCell = memo((props: YearGridCellProps) => {
   const {
     date,
@@ -32,6 +35,8 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     ascents,
     trainingSessions,
   } = props
+
+  const isToday = date !== '' && datesEqual(new Date(date), TODAY)
 
   const cellStyle: CSSProperties = useMemo(
     () => ({
@@ -86,11 +91,12 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     return <EmptyGridCell cellStyle={cellStyle} date={date} />
 
   if (lazyDescription === '' || date === '')
-    return <EmptyGridCell cellStyle={cellStyle} date={date} />
+    return <EmptyGridCell cellStyle={cellStyle} date={date} id={isToday ? 'today' : undefined} />
 
   return (
     <Popover
       className={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrastColor`}
+      id={isToday ? 'today' : undefined}
       popoverTitle={title}
       style={cellStyle}
       trigger={shortText}
