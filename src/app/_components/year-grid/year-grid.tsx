@@ -63,12 +63,14 @@ export const YearGrid = memo(
 
     const gridRef = useRef<HTMLDivElement>(null)
 
+    const currentYear = new Date().getFullYear()
+
     useEffect(() => {
-      if (new Date().getFullYear() !== year) return
+      if (currentYear !== year) return
       gridRef.current
         ?.querySelector<HTMLElement>('#today')
         ?.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' })
-    }, [year])
+    }, [currentYear, year])
 
     return (
       <div ref={gridRef} className={styles.yearGrid} style={gridTemplateStyle}>

@@ -33,7 +33,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     trainingSessions,
   } = props
 
-  const isToday = useMemo(() => date !== '' && datesEqual(new Date(date), new Date()), [date])
+  const isToday = date !== '' && datesEqual(new Date(date), new Date())
 
   const cellStyle: CSSProperties = useMemo(
     () => ({
