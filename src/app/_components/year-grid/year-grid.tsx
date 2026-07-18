@@ -16,6 +16,9 @@ const MONDAY_INDEX = 1
 const WEEK_53_START_INDEX = 4
 const PREVIOUS_MONDAY_OFFSET = 6
 
+// Computed once at module load to avoid repeated Date instantiation
+const CURRENT_YEAR = new Date().getFullYear()
+
 export const YearGrid = memo(
   ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
     const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
@@ -63,14 +66,12 @@ export const YearGrid = memo(
 
     const gridRef = useRef<HTMLDivElement>(null)
 
-    const currentYear = new Date().getFullYear()
-
     useEffect(() => {
-      if (currentYear !== year) return
+      if (CURRENT_YEAR !== year) return
       gridRef.current
         ?.querySelector<HTMLElement>('#today')
         ?.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' })
-    }, [currentYear, year])
+    }, [year])
 
     return (
       <div ref={gridRef} className={styles.yearGrid} style={gridTemplateStyle}>

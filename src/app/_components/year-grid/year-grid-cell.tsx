@@ -20,6 +20,9 @@ const TrainingPopoverDescription = lazy(async () =>
   ),
 )
 
+// Computed once at module load for efficient per-cell comparisons
+const TODAY = new Date()
+
 export const YearGridCell = memo((props: YearGridCellProps) => {
   const {
     date,
@@ -33,7 +36,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     trainingSessions,
   } = props
 
-  const isToday = date !== '' && datesEqual(new Date(date), new Date())
+  const isToday = date !== '' && datesEqual(new Date(date), TODAY)
 
   const cellStyle: CSSProperties = useMemo(
     () => ({
