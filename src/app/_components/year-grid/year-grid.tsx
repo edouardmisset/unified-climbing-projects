@@ -61,12 +61,14 @@ export const YearGrid = memo(
       [numberOfColumns],
     )
 
+    const currentYear = useMemo(() => new Date().getFullYear(), [])
+
     useEffect(() => {
-      if (new Date().getFullYear() !== year) return
+      if (currentYear !== year) return
       document
         .getElementById('today')
         ?.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' })
-    }, [year])
+    }, [currentYear, year])
 
     return (
       <div className={styles.yearGrid} style={gridTemplateStyle}>
