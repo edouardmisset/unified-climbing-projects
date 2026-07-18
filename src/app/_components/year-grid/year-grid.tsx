@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, type ReactNode, useMemo } from 'react'
+import { memo, type ReactNode, useEffect, useMemo } from 'react'
 import { DAYS_IN_WEEK, NOON_HOUR, WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import type { Ascent } from '~/schema/ascent'
@@ -60,6 +60,13 @@ export const YearGrid = memo(
       }),
       [numberOfColumns],
     )
+
+    useEffect(() => {
+      if (new Date().getFullYear() !== year) return
+      document
+        .getElementById('today')
+        ?.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' })
+    }, [year])
 
     return (
       <div className={styles.yearGrid} style={gridTemplateStyle}>
