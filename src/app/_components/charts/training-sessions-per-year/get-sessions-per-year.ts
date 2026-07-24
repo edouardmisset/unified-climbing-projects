@@ -42,14 +42,14 @@ export function getSessionsPerYear(sessions: TrainingSession[]): SessionsPerYear
       sessionsPerYearMap.set(sessionYear, counts)
     }
 
-    const { sessionType, climbingDiscipline } = session
-    const isIndoor = isIndoorSession({ sessionType })
-    const isOutdoor = sessionType === 'Out'
+    const { type, discipline } = session
+    const isIndoor = isIndoorSession({ type })
+    const isOutdoor = type === 'Outdoor'
 
-    if (isIndoor && climbingDiscipline === 'Boulder') counts.indoorBoulder++
-    else if (isIndoor && climbingDiscipline === 'Route') counts.indoorRoute++
-    else if (isOutdoor && climbingDiscipline === 'Boulder') counts.outdoorBoulder++
-    else if (isOutdoor && climbingDiscipline === 'Route') counts.outdoorRoute++
+    if (isIndoor && discipline === 'Bouldering') counts.indoorBoulder++
+    else if (isIndoor && discipline === 'Sport') counts.indoorRoute++
+    else if (isOutdoor && discipline === 'Bouldering') counts.outdoorBoulder++
+    else if (isOutdoor && discipline === 'Sport') counts.outdoorRoute++
   }
 
   const result: SessionsPerYear[] = []

@@ -5,12 +5,11 @@ import { getTopTenEvolution } from './get-top-ten-evolution'
 
 function countDisciplineForYear(
   ascents: Ascent[],
-  discipline: Ascent['climbingDiscipline'],
+  discipline: Ascent['discipline'],
   year: number,
 ): number {
   return ascents.filter(
-    (ascent) =>
-      ascent.climbingDiscipline === discipline && new Date(ascent.date).getFullYear() === year,
+    (ascent) => ascent.discipline === discipline && new Date(ascent.date).getFullYear() === year,
   ).length
 }
 
@@ -27,8 +26,8 @@ describe('getTopTenEvolution', () => {
 
     expect(result).toStrictEqual([
       {
-        Boulder: countDisciplineForYear(ascentsIn2024, 'Boulder', 2_024),
-        Route: countDisciplineForYear(ascentsIn2024, 'Route', 2_024),
+        Bouldering: countDisciplineForYear(ascentsIn2024, 'Bouldering', 2_024),
+        Sport: countDisciplineForYear(ascentsIn2024, 'Sport', 2_024),
         ascents: ascentsIn2024.length,
         outdoorDays: 17,
         topTenScore: 9_250,
@@ -65,24 +64,24 @@ describe('getTopTenEvolution', () => {
 
     expect(result).toStrictEqual([
       {
-        Boulder: countDisciplineForYear(ascents, 'Boulder', 2_022),
-        Route: countDisciplineForYear(ascents, 'Route', 2_022),
+        Bouldering: countDisciplineForYear(ascents, 'Bouldering', 2_022),
+        Sport: countDisciplineForYear(ascents, 'Sport', 2_022),
         ascents: 1,
         outdoorDays: 1,
         topTenScore: 850,
         year: 2_022,
       },
       {
-        Boulder: 0,
-        Route: 0,
+        Bouldering: 0,
+        Sport: 0,
         ascents: 0,
         outdoorDays: 0,
         topTenScore: 0,
         year: 2_023,
       },
       {
-        Boulder: countDisciplineForYear(ascents, 'Boulder', 2_024),
-        Route: countDisciplineForYear(ascents, 'Route', 2_024),
+        Bouldering: countDisciplineForYear(ascents, 'Bouldering', 2_024),
+        Sport: countDisciplineForYear(ascents, 'Sport', 2_024),
         ascents: 2,
         outdoorDays: 2,
         topTenScore: 1_750,

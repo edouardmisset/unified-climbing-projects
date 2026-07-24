@@ -6,7 +6,7 @@ const ENGLISH_CLIMBING_ACTIVITY = {
     one: 'ascent',
     other: 'ascents',
   },
-  Boulder: {
+  Bouldering: {
     one: 'boulder',
     other: 'boulders',
   },
@@ -14,7 +14,7 @@ const ENGLISH_CLIMBING_ACTIVITY = {
     one: 'multi-pitch',
     other: 'multi-pitches',
   },
-  Route: {
+  Sport: {
     one: 'route',
     other: 'routes',
   },
@@ -32,19 +32,19 @@ type ClimbingActivity = (typeof ENGLISH_CLIMBING_ACTIVITY)[keyof typeof ENGLISH_
  * - If all ascents share the same discipline, returns the discipline in lowercase with no trailing "s" if there is a single ascent,
  *   or with an "s" if there are multiple ascents.
  *
- * @param {Pick<Ascent, 'climbingDiscipline'>[]} ascents - The list of ascent objects.
+ * @param {Pick<Ascent, 'discipline'>[]} ascents - The list of ascent objects.
  * @returns {ClimbingActivity} The text for the ascents ('boulder', 'boulders',
  * 'route', etc).
  */
 export function writeAscentsDisciplineText(
-  ascents: Pick<Ascent, 'climbingDiscipline'>[],
+  ascents: Pick<Ascent, 'discipline'>[],
 ): ClimbingActivity {
   if (ascents[0] === undefined) return ENGLISH_CLIMBING_ACTIVITY.ascent.other
 
-  const firstDiscipline = ascents[0].climbingDiscipline
+  const firstDiscipline = ascents[0].discipline
 
-  for (const { climbingDiscipline } of ascents)
-    if (climbingDiscipline !== firstDiscipline)
+  for (const { discipline } of ascents)
+    if (discipline !== firstDiscipline)
       return selectEnglishPluralForm(ascents.length, ENGLISH_CLIMBING_ACTIVITY.ascent)
 
   return selectEnglishPluralForm(ascents.length, ENGLISH_CLIMBING_ACTIVITY[firstDiscipline])

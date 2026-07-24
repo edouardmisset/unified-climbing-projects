@@ -8,6 +8,6 @@ import { countUniqueDates } from './count-unique-dates'
  * @returns {number} The count of unique outdoor climbing days
  */
 export function countOutdoorDays(trainingSessions: TrainingSession[]): number {
-  const outdoorSessions = trainingSessions.filter(({ sessionType }) => sessionType === 'Out')
+  const outdoorSessions = trainingSessions.filter(({ type }) => type === 'Outdoor')
   return countUniqueDates(outdoorSessions)
 }

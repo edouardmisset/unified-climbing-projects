@@ -16,9 +16,9 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
 
   const locationList = useMemo(
     () =>
-      [...new Set(trainingSessions.map(({ gymCrag }) => gymCrag?.trim()).filter(Boolean))].toSorted(
-        compareStringsAscending,
-      ),
+      [
+        ...new Set(trainingSessions.map(({ location }) => location?.trim()).filter(Boolean)),
+      ].toSorted(compareStringsAscending),
     [trainingSessions],
   )
 

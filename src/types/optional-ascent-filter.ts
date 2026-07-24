@@ -1,27 +1,27 @@
 import { z } from '~/helpers/zod'
 import {
-  ascentSchema,
+  ascentDisciplineSchema,
+  ascentDomainSchema,
+  ascentGradeSchema,
+  ascentHoldsSchema,
+  ascentProfileSchema,
   ascentStyleSchema,
-  climbingDisciplineSchema,
-  gradeSchema,
-  holdsSchema,
-  profileSchema,
-} from '~/schema/ascent'
+} from '~/domain/canonical/ascent'
 import { optionalAscentYear, periodSchema } from '~/schema/generic'
 
 export const optionalAscentFilterSchema = z
   .object({
-    area: ascentSchema.shape.area,
-    climbingDiscipline: climbingDisciplineSchema,
-    crag: ascentSchema.shape.crag,
-    grade: gradeSchema,
-    height: ascentSchema.shape.height,
-    holds: holdsSchema,
+    area: ascentDomainSchema.shape.area,
+    discipline: ascentDisciplineSchema,
+    crag: ascentDomainSchema.shape.crag,
+    grade: ascentGradeSchema,
+    height: ascentDomainSchema.shape.height,
+    holds: ascentHoldsSchema,
     period: periodSchema,
-    profile: profileSchema,
-    rating: ascentSchema.shape.rating,
+    profile: ascentProfileSchema,
+    rating: ascentDomainSchema.shape.rating,
     style: ascentStyleSchema,
-    tries: ascentSchema.shape.tries,
+    tries: ascentDomainSchema.shape.tries,
     year: optionalAscentYear,
   })
   .partial()

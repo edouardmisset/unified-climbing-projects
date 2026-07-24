@@ -18,9 +18,7 @@ export function CragsSummary({
 
   const cragsWithAscents = new Set(crags)
   const cragsWithTrainingSessions = new Set(
-    trainingSessions
-      .filter(({ sessionType }) => sessionType === 'Out')
-      .map(({ gymCrag = '' }) => gymCrag),
+    trainingSessions.filter(({ type }) => type === 'Outdoor').map(({ location = '' }) => location),
   )
   const cragsWithoutAscents = [...cragsWithTrainingSessions].filter(
     (crag) => crag.trim() !== '' && !cragsWithAscents.has(crag),

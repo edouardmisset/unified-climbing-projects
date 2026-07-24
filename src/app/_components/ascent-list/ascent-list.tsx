@@ -2,6 +2,7 @@ import { sum } from '@edouardmisset/math/sum.ts'
 import { type CSSProperties, lazy, memo, Suspense, useCallback, useMemo, useState } from 'react'
 import NotFound from '~/app/not-found'
 import { MAX_COLUMNS_THRESHOLD } from '~/constants/generic'
+import { fromAscentToPoints } from '~/helpers/ascent-converter'
 import { formatOrdinals } from '~/helpers/format-plurals'
 import {
   formatCragAndArea,
@@ -49,10 +50,7 @@ export const AscentList = memo(
       if (!isOpen) setSelectedAscent(undefined)
     }, [])
 
-    const totalAscentPoints = useMemo(
-      () => sum(ascents?.map(({ points }) => points ?? 0)),
-      [ascents],
-    )
+    const totalAscentPoints = useMemo(() => sum(ascents.map(fromAscentToPoints)), [ascents])
 
     const columns =
       BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)
@@ -138,11 +136,11 @@ export const AscentList = memo(
             {ascents.map((ascent) => {
               const {
                 _id,
-                routeName,
+                name,
                 crag,
-                topoGrade,
+                grade,
                 date,
-                climbingDiscipline,
+                discipline,
                 style,
                 tries,
                 area,
@@ -151,8 +149,8 @@ export const AscentList = memo(
                 personalGrade,
                 profile,
                 rating,
-                points,
               } = ascent
+              const points = fromAscentToPoints(ascent)
 
               return (
                 <tr
@@ -169,23 +167,19 @@ export const AscentList = memo(
                   role="button"
                   tabIndex={0}
                 >
-                  <td className={`${styles.cell} marginAuto`} title={climbingDiscipline}>
-                    {fromClimbingDisciplineToEmoji(climbingDiscipline)}
+                  <td className={`${styles.cell} marginAuto`} title={discipline}>
+                    {fromClimbingDisciplineToEmoji(discipline)}
                   </td>
                   <td className={styles.cell}>
-                    <strong title={routeName}>{routeName}</strong>
+                    <strong title={name}>{name}</strong>
                   </td>
                   {showPoints && (
-                    <td className={`${styles.cell} monospace`} title={points?.toString()}>
-                      {points === undefined ? '—' : <strong>{points}</strong>}
+                    <td className={`${styles.cell} monospace`} title={points.toString()}>
+                      <strong>{points}</strong>
                     </td>
                   )}
                   <td className={`${styles.cell} ${styles.gradeTD}`}>
-                    <GradeTag
-                      climbingDiscipline={climbingDiscipline}
-                      personalGrade={personalGrade}
-                      topoGrade={topoGrade}
-                    />
+                    <GradeTag discipline={discipline} personalGrade={personalGrade} grade={grade} />
                   </td>
                   <td className={styles.cell} title={tries === 1 ? style : formatOrdinals(tries)}>
                     <span>{fromAscentStyleToEmoji(style)}</span>

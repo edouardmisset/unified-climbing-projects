@@ -12,7 +12,7 @@ import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 export function minMaxGrades(ascents: Ascent[]): [Grade, Grade] {
   if (ascents.length === 0) return [fromNumberToGrade(1), fromNumberToGrade(GRADES.length)]
 
-  const numberGrades = ascents.map(({ topoGrade }) => fromGradeToNumber(topoGrade))
+  const numberGrades = ascents.map(({ grade }) => fromGradeToNumber(grade))
 
   const lowestGrade = fromNumberToGrade(Math.min(...numberGrades))
   const highestGrade = fromNumberToGrade(Math.max(...numberGrades))

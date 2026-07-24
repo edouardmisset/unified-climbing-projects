@@ -10,51 +10,49 @@ import type { TrainingSession } from '~/schema/training'
 /**
  * Converts a training session type to its corresponding background color.
  *
- * If sessionType is undefined, returns a default surface color.
+ * If type is undefined, returns a default surface color.
  * Otherwise, returns the string representation of the background color associated with the training session type.
  *
- * @param {TrainingSession['sessionType']} sessionType - The type of the training session.
+ * @param {TrainingSession['type']} type - The type of the training session.
  * @returns {string} The background color as a string.
  */
 export function fromSessionTypeToBackgroundColor(
-  sessionType: TrainingSession['sessionType'],
+  type: TrainingSession['type'] | undefined,
 ): string {
-  return sessionType === undefined
-    ? 'var(--surface-1)'
-    : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[sessionType]
+  return type === undefined ? 'var(--surface-1)' : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[type]
 }
 
 /**
  * Converts a training session type to its corresponding class name.
  *
- * If sessionType is undefined, returns undefined.
+ * If type is undefined, returns undefined.
  * Otherwise, returns the pre-defined class name associated with the given
  * session type.
  *
- * @param {TrainingSession['sessionType']} sessionType - The type of the
+ * @param {TrainingSession['type']} type - The type of the
  * training session.
- * @returns {string | undefined} The corresponding class name if sessionType is
+ * @returns {string | undefined} The corresponding class name if type is
  * defined; otherwise, undefined.
  */
 export function fromSessionTypeToClassName(
-  sessionType: TrainingSession['sessionType'],
+  type: TrainingSession['type'] | undefined,
 ): string | undefined {
-  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[sessionType]
+  return type === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[type]
 }
 
 /**
  * Converts a training session type to its corresponding string.
  *
- * If sessionType is undefined, the function returns undefined.
+ * If type is undefined, the function returns undefined.
  * Otherwise, it maps the session type to the pre-defined string representation.
  *
- * @param {TrainingSession['sessionType']} sessionType - The type of the
+ * @param {TrainingSession['type']} type - The type of the
  * training session.
- * @returns {string | undefined} The corresponding string value if sessionType
+ * @returns {string | undefined} The corresponding string value if type
  * is defined, or undefined.
  */
-function fromSessionTypeToString(sessionType: TrainingSession['sessionType']): string | undefined {
-  return sessionType === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[sessionType]
+function fromSessionTypeToString(type: TrainingSession['type'] | undefined): string | undefined {
+  return type === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[type]
 }
 
 /**
@@ -62,21 +60,21 @@ function fromSessionTypeToString(sessionType: TrainingSession['sessionType']): s
  * intensityPercent, and volumePercent thresholds.
  *
  * @param {Object} params - The parameters object
- * @param {TrainingSession['sessionType']} params.sessionType - The type of the training session
+ * @param {TrainingSession['type']} params.type - The type of the training session
  * @param {number} [params.intensityPercent=DEFAULT_INTENSITY_PERCENT] - The current intensity percentage
  * @param {number} [params.volumePercent=DEFAULT_VOLUME_PERCENT] - The current volume percentage
  * @returns {{ backgroundColor: string; foreColor: string }} The resulting color configuration
  */
 export function getSessionTypeColors({
-  sessionType,
+  type,
   intensityPercent = DEFAULT_INTENSITY_PERCENT,
   volumePercent = DEFAULT_VOLUME_PERCENT,
 }: {
-  sessionType: TrainingSession['sessionType']
+  type: TrainingSession['type'] | undefined
   intensityPercent?: number
   volumePercent?: number
 }): string {
-  if (sessionType === undefined) return 'var(--cellColor)'
+  if (type === undefined) return 'var(--cellColor)'
 
   const upperThreshold = 80
   const lowerThreshold = 50
@@ -87,7 +85,7 @@ export function getSessionTypeColors({
   const isOneComponentBelowThreshold =
     intensityPercent <= lowerThreshold || volumePercent <= lowerThreshold
 
-  const convertedSessionType = fromSessionTypeToString(sessionType) ?? 'otherTraining'
+  const convertedSessionType = fromSessionTypeToString(type) ?? 'otherTraining'
   if (isOneComponentBelowThreshold) return `var(--${convertedSessionType}Low)`
 
   if (isOneComponentAboveThreshold) return `var(--${convertedSessionType}High)`

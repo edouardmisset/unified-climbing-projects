@@ -38,7 +38,7 @@ export function calculateScore({
     year: year - 1,
   })
   const outdoorTrainingSession = filterTrainingSessions(trainingSessions, {
-    sessionType: 'Out',
+    type: 'Outdoor',
     year,
   })
 

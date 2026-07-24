@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vite-plus/test'
 import type { Ascent } from '~/schema/ascent'
 import { writeAscentsDisciplineText } from './write-ascents-discipline-text'
 
-const route = { climbingDiscipline: 'Route' } as const
-const boulder = { climbingDiscipline: 'Boulder' } as const
-const multiPitch = { climbingDiscipline: 'Multi-Pitch' } as const
+const route = { discipline: 'Sport' } as const
+const boulder = { discipline: 'Bouldering' } as const
+const multiPitch = { discipline: 'Multi-Pitch' } as const
 
 describe('writeAscentsDisciplineText', () => {
   it('should return "ascents" when no ascents are provided', () => {

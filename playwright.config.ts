@@ -20,7 +20,7 @@ export default defineConfig({
   forbidOnly: isCI,
   /* Retry on CI only */
   retries: isCI ? 2 : 1,
-  /* Avoid rate limiting shared external services during smoke tests. */
+  /* Keep deterministic acceptance coverage serial and resource-bounded. */
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
@@ -80,8 +80,10 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'vp run preview',
+    command: 'CLIMBING_DATA_SOURCE=synthetic next start',
+    stderr: 'pipe',
+    stdout: 'pipe',
     url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 })

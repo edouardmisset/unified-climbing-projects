@@ -77,7 +77,7 @@ describe('fromPointToGrade', () => {
 
     const pointsWith7aBoulderBonus = pointsFor7a + BOULDERING_BONUS_POINTS
     const boulderGrade = fromPointToGrade(pointsWith7aBoulderBonus, {
-      climbingDiscipline: 'Boulder',
+      discipline: 'Bouldering',
     })
 
     expect(boulderGrade).toBe('7a')
@@ -106,7 +106,7 @@ describe('fromPointToGrade', () => {
     const combinedPoints = pointsFor7a + flashPoints + BOULDERING_BONUS_POINTS
     expect(
       fromPointToGrade(combinedPoints, {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Bouldering',
         style: 'Flash',
       }),
     ).toBe('7a')
@@ -128,10 +128,10 @@ describe('fromPointToGrade', () => {
     for (const ascent of testAscents.filter((candidate) => candidate !== undefined)) {
       const points = fromAscentToPoints(ascent)
       const convertedGrade = fromPointToGrade(points, {
-        climbingDiscipline: ascent.climbingDiscipline,
+        discipline: ascent.discipline,
         style: ascent.style,
       })
-      expect(convertedGrade).toBe(ascent.topoGrade)
+      expect(convertedGrade).toBe(ascent.grade)
     }
   })
 })

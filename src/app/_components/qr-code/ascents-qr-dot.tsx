@@ -19,10 +19,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
     [ascents],
   )
 
-  const gradeClassName = useMemo(
-    () => fromGradeToClassName(hardestAscent?.topoGrade),
-    [hardestAscent],
-  )
+  const gradeClassName = useMemo(() => fromGradeToClassName(hardestAscent?.grade), [hardestAscent])
 
   const dateAndCrag = useMemo(
     () =>

@@ -48,7 +48,7 @@ describe('getGradeFrequencyAndColors', () => {
       },
     ]
     const resultFor7Degree = getGradeFrequencyAndColors(
-      sampleAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
+      sampleAscents.filter(({ grade }) => grade.startsWith('7')),
     )
     expect(resultFor7Degree).toStrictEqual(expected)
   })

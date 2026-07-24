@@ -5,35 +5,30 @@ import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './grade-tag.module.css'
 
-type GradeTagProps = Pick<Ascent, 'topoGrade' | 'personalGrade'> &
-  Partial<Pick<Ascent, 'climbingDiscipline'>>
+type GradeTagProps = Pick<Ascent, 'grade' | 'personalGrade'> & Partial<Pick<Ascent, 'discipline'>>
 
 type GradeTagStyle = CSSProperties & {
   '--color': string
 }
 
-export function GradeTag({
-  topoGrade,
-  personalGrade,
-  climbingDiscipline = 'Route',
-}: GradeTagProps) {
+export function GradeTag({ grade, personalGrade, discipline = 'Sport' }: GradeTagProps) {
   const formattedTopoGrade = formatGrade({
-    climbingDiscipline,
-    grade: topoGrade,
+    discipline,
+    grade,
   })
 
-  const hasDifferentPersonalGrade = personalGrade !== undefined && personalGrade !== topoGrade
+  const hasDifferentPersonalGrade = personalGrade !== undefined && personalGrade !== grade
 
   return (
     <em
-      title={`Topo Grade: ${formattedTopoGrade}${hasDifferentPersonalGrade ? ` | Personal Grade: ${formatGrade({ climbingDiscipline, grade: personalGrade })}` : ''}`}
+      title={`Topo Grade: ${formattedTopoGrade}${hasDifferentPersonalGrade ? ` | Personal Grade: ${formatGrade({ discipline, grade: personalGrade })}` : ''}`}
       className={`${styles.gradeEM} monospace`}
     >
       <span
         className={`${styles.gradeCell}`}
         style={
           {
-            '--color': `var(--${gradeToClassName(topoGrade)})`,
+            '--color': `var(--${gradeToClassName(grade)})`,
           } as GradeTagStyle
         }
       >
@@ -42,7 +37,7 @@ export function GradeTag({
 
       {hasDifferentPersonalGrade ? (
         <span className={styles.personalGrade}>
-          <DisplayGrade climbingDiscipline={climbingDiscipline} grade={personalGrade} />
+          <DisplayGrade discipline={discipline} grade={personalGrade} />
         </span>
       ) : undefined}
     </em>

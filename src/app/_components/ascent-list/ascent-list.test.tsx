@@ -6,13 +6,13 @@ import { AscentList } from './ascent-list'
 
 const ascent: Ascent = {
   _id: 'ascent-id',
-  climbingDiscipline: 'Route',
+  discipline: 'Sport',
   comments: 'A good route',
   crag: 'Buoux',
   date: '2026-01-10',
-  routeName: 'La rose et le vampire',
+  name: 'La rose et le vampire',
   style: 'Redpoint',
-  topoGrade: '7a',
+  grade: '7a',
   tries: 2,
 }
 

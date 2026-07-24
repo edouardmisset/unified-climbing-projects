@@ -5,9 +5,10 @@ import {
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
+import { calculateLoad } from '~/helpers/calculate-load'
 import { roundToTen } from '~/helpers/math'
 import { formatWholePercent } from '~/helpers/number-formatter'
-import { fromSessionTypeToLabel, type TrainingSessionListProps } from '~/schema/training'
+import type { TrainingSessionListProps } from '~/schema/training'
 import styles from './training-popover-description.module.css'
 
 export function TrainingPopoverDescription({ trainingSessions }: TrainingSessionListProps) {
@@ -18,46 +19,40 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
       {trainingSessions.map(
         ({
           anatomicalRegion,
-          climbingDiscipline,
+          discipline,
           comments,
           energySystem,
-          gymCrag,
+          location,
           intensity,
-          load,
-          sessionType,
+          type,
           volume,
           _id,
-        }) => (
-          <li className={styles.item} key={_id}>
-            {climbingDiscipline === undefined ? (
-              ''
-            ) : (
-              <span title={climbingDiscipline}>
-                {fromClimbingDisciplineToEmoji(climbingDiscipline)}
-              </span>
-            )}{' '}
-            {gymCrag}{' '}
-            {sessionType ? (
-              <span title={fromSessionTypeToLabel(sessionType)}>
-                {wrapInParentheses(fromSessionTypeToLabel(sessionType))}
-              </span>
-            ) : (
-              ''
-            )}{' '}
-            {volume === undefined ? '' : `Volume: ${formatWholePercent(volume)}`}{' '}
-            {intensity === undefined ? '' : `Intensity: ${formatWholePercent(intensity)}`}{' '}
-            {load === undefined ? '' : `Load: ${formatWholePercent(roundToTen(load))}`}{' '}
-            {anatomicalRegion === undefined
-              ? ''
-              : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
-            {energySystem === undefined ? '' : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
-            {comments === undefined || trainingSessions.length > 1 ? (
-              ''
-            ) : (
-              <div title={comments}>{formatComments(comments)}</div>
-            )}
-          </li>
-        ),
+        }) => {
+          const load = calculateLoad(volume, intensity)
+
+          return (
+            <li className={styles.item} key={_id}>
+              {discipline === undefined ? (
+                ''
+              ) : (
+                <span title={discipline}>{fromClimbingDisciplineToEmoji(discipline)}</span>
+              )}{' '}
+              {location} {type ? <span title={type}>{wrapInParentheses(type)}</span> : ''}{' '}
+              {volume === undefined ? '' : `Volume: ${formatWholePercent(volume)}`}{' '}
+              {intensity === undefined ? '' : `Intensity: ${formatWholePercent(intensity)}`}{' '}
+              {load === undefined ? '' : `Load: ${formatWholePercent(roundToTen(load))}`}{' '}
+              {anatomicalRegion === undefined
+                ? ''
+                : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
+              {energySystem === undefined ? '' : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
+              {comments === undefined || trainingSessions.length > 1 ? (
+                ''
+              ) : (
+                <div title={comments}>{formatComments(comments)}</div>
+              )}
+            </li>
+          )
+        },
       )}
     </ul>
   )

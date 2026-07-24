@@ -12,6 +12,7 @@ import { Loader } from '~/app/_components/ui/loader/loader.tsx'
 import { Option } from '~/app/_components/ui/option/option.tsx'
 import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
 import { zeroTo100RegEx } from '~/constants/generic.ts'
+import { toCanonicalDiscipline, toLegacyDiscipline } from '~/domain/canonical/legacy-transformers'
 import { createValueAndLabel } from '~/helpers/create-value-and-label.ts'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date.ts'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
@@ -67,12 +68,13 @@ export default function AscentForm(props: AscentFormProps) {
 
   const defaultAscentToParse = {
     area: latestAscent?.area,
-    climbingDiscipline: latestAscent?.climbingDiscipline,
+    climbingDiscipline:
+      latestAscent === undefined ? undefined : toLegacyDiscipline(latestAscent.discipline),
     crag: latestAscent?.crag,
     date: new Date(),
     personalGrade: fromGradeToNumber(minGrade),
     routeName: '',
-    style: latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+    style: latestAscent?.discipline === 'Bouldering' ? 'Flash' : 'Onsight',
     topoGrade: fromGradeToNumber(minGrade),
     tries: '1',
   } satisfies AscentFormInput
@@ -224,7 +226,7 @@ export default function AscentForm(props: AscentFormProps) {
             {AVAILABLE_CLIMBING_DISCIPLINE.map((disciplineOption) => (
               <Option
                 key={disciplineOption}
-                label={`${fromClimbingDisciplineToEmoji(disciplineOption)} ${disciplineOption}`}
+                label={`${fromClimbingDisciplineToEmoji(toCanonicalDiscipline(disciplineOption))} ${disciplineOption}`}
                 value={disciplineOption}
               />
             ))}

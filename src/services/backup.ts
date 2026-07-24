@@ -2,9 +2,9 @@
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { extractDateFromISODateString } from '~/helpers/date'
-import type { AscentListProps } from '~/schema/ascent'
-import type { TrainingSessionListProps } from '~/schema/training'
-import { getAllAscents, getAllTrainingSessions } from './convex'
+import type { LegacyAscent } from '~/schema/ascent'
+import type { LegacyTrainingSession } from '~/schema/training'
+import { getAllLegacyAscents, getAllLegacyTrainingSessions } from './convex'
 
 const BACKUP_DIRECTORY = './src/backup/'
 
@@ -45,7 +45,10 @@ export async function writeClimbingDBToBackupJson(): Promise<{
 }
 
 export async function getDataFromDB(): Promise<DataToBackup> {
-  const [ascents, trainingSessions] = await Promise.all([getAllAscents(), getAllTrainingSessions()])
+  const [ascents, trainingSessions] = await Promise.all([
+    getAllLegacyAscents(),
+    getAllLegacyTrainingSessions(),
+  ])
 
   return { ascents, trainingSessions }
 }
@@ -56,4 +59,7 @@ function generateTimestampedFilename(baseFileName: string): string {
   return `${baseFileName}-${formattedDate}.json`
 }
 
-type DataToBackup = AscentListProps & TrainingSessionListProps
+type DataToBackup = {
+  ascents: LegacyAscent[]
+  trainingSessions: LegacyTrainingSession[]
+}

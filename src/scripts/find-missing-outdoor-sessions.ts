@@ -26,7 +26,7 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
 
   const outdoorSessionsSet = new Set(
     outdoorSessions
-      .filter(({ sessionType }) => sessionType === 'Out')
+      .filter(({ type }) => type === 'Outdoor')
       .map(({ date }) => extractDateFromISODateString(date)),
   )
 

@@ -1,4 +1,5 @@
 import { getDateAtNoon } from '~/helpers/date.ts'
+import type { TrainingSessionRecord } from '~/domain/canonical/training-session'
 import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { z } from '~/helpers/zod'
 import { climbingDisciplineSchema } from './ascent.ts'
@@ -97,7 +98,8 @@ export const trainingSessionSchema = z.object({
   sessionType: sessionTypeSchema.optional(),
   volume: percentSchema.optional(),
 })
-export type TrainingSession = z.infer<typeof trainingSessionSchema>
+export type LegacyTrainingSession = z.infer<typeof trainingSessionSchema>
+export type TrainingSession = TrainingSessionRecord
 
 export const trainingSessionFormSchema = z.object({
   anatomicalRegion: z.preprocess(emptyStringToUndefined, anatomicalRegionSchema.optional()),

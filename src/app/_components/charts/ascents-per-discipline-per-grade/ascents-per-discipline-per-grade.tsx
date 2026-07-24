@@ -5,7 +5,7 @@ import { ChartContainer } from '../chart-container/chart-container'
 import { BAR_CATEGORY_GAP, GRID_STROKE } from '../constants'
 import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
 
-import type { Ascent, CLIMBING_DISCIPLINE } from '~/schema/ascent'
+import type { Ascent } from '~/schema/ascent'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 
@@ -16,10 +16,7 @@ const Chart = createHorizontalChart<AscentsPerDisciplinePerGradeDatum>()({
   Bar,
 })
 
-const ROUTE_AND_BOULDER = [
-  'Boulder',
-  'Route',
-] as const satisfies (typeof CLIMBING_DISCIPLINE)[number][]
+const ROUTE_AND_BOULDER = ['Bouldering', 'Sport'] as const satisfies Ascent['discipline'][]
 
 const AXIS_LABELS = {
   grades: 'Grades',
@@ -30,7 +27,7 @@ export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] })
   const data = useMemo(() => getAscentsPerDisciplinePerGrade(ascents), [ascents])
 
   const isSingleDiscipline =
-    data.every(({ Boulder }) => !Boulder) || data.every(({ Route }) => !Route)
+    data.every(({ Bouldering }) => !Bouldering) || data.every(({ Sport }) => !Sport)
 
   if (data.length === 0) return
   if (isSingleDiscipline) return

@@ -30,7 +30,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       background: isSingleAscent
         ? undefined
         : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
-            .map(({ topoGrade }) => fromGradeToBackgroundColor(topoGrade))
+            .map(({ grade }) => fromGradeToBackgroundColor(grade))
             .join(', ')})`,
       inlineSize: `${numberOfAscents / 2}%`,
     }),
@@ -56,7 +56,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
     useGrouping: false,
   })}`
   const triggerClassName = `${
-    isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.topoGrade) : ''
+    isSingleAscent ? fromGradeToClassName(weeklyAscents[0]?.grade) : ''
   } ${styles.bar}`
 
   return (

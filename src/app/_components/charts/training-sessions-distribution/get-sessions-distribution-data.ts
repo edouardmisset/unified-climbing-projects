@@ -1,10 +1,8 @@
-import {
-  ANATOMICAL_REGIONS,
-  ENERGY_SYSTEMS,
-  type AnatomicalRegion,
-  type EnergySystem,
-  type TrainingSession,
-} from '~/schema/training'
+import { ANATOMICAL_REGIONS, ENERGY_SYSTEMS } from '~/domain/canonical/training-session'
+import type { TrainingSession } from '~/schema/training'
+
+type AnatomicalRegion = NonNullable<TrainingSession['anatomicalRegion']>
+type EnergySystem = NonNullable<TrainingSession['energySystem']>
 
 type RadialBarData = {
   id: string
@@ -15,27 +13,27 @@ type RadialBarData = {
 }[]
 
 const ENERGY_SYSTEM_COLORS = {
-  AA: 'var(--energySystemAA)',
-  AE: 'var(--energySystemAE)',
-  AL: 'var(--energySystemAL)',
+  'Anaerobic Alactic': 'var(--energySystemAA)',
+  Aerobic: 'var(--energySystemAE)',
+  'Anaerobic Lactic': 'var(--energySystemAL)',
 } as const
 
 const ENERGY_SYSTEM_LABELS = {
-  AA: 'Anaerobic Alactic',
-  AE: 'Aerobic',
-  AL: 'Anaerobic Lactic',
+  'Anaerobic Alactic': 'Anaerobic Alactic',
+  Aerobic: 'Aerobic',
+  'Anaerobic Lactic': 'Anaerobic Lactic',
 } as const
 
 const ANATOMICAL_REGION_COLORS = {
-  Ar: 'var(--anatomicalRegionAr)',
-  Fi: 'var(--anatomicalRegionFi)',
-  Ge: 'var(--anatomicalRegionGe)',
+  Arms: 'var(--anatomicalRegionAr)',
+  Fingers: 'var(--anatomicalRegionFi)',
+  General: 'var(--anatomicalRegionGe)',
 } as const
 
 const ANATOMICAL_REGION_LABELS = {
-  Ar: 'Arms',
-  Fi: 'Fingers',
-  Ge: 'General',
+  Arms: 'Arms',
+  Fingers: 'Fingers',
+  General: 'General',
 } as const
 
 export function getSessionsDistributionData(sessions: TrainingSession[]): {
@@ -109,34 +107,34 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
 
   const legendData = [
     {
-      color: ENERGY_SYSTEM_COLORS.AA,
-      id: 'AA',
-      label: ENERGY_SYSTEM_LABELS.AA,
+      color: ENERGY_SYSTEM_COLORS['Anaerobic Alactic'],
+      id: 'Anaerobic Alactic',
+      label: ENERGY_SYSTEM_LABELS['Anaerobic Alactic'],
     },
     {
-      color: ENERGY_SYSTEM_COLORS.AE,
-      id: 'AE',
-      label: ENERGY_SYSTEM_LABELS.AE,
+      color: ENERGY_SYSTEM_COLORS.Aerobic,
+      id: 'Aerobic',
+      label: ENERGY_SYSTEM_LABELS.Aerobic,
     },
     {
-      color: ENERGY_SYSTEM_COLORS.AL,
-      id: 'AL',
-      label: ENERGY_SYSTEM_LABELS.AL,
+      color: ENERGY_SYSTEM_COLORS['Anaerobic Lactic'],
+      id: 'Anaerobic Lactic',
+      label: ENERGY_SYSTEM_LABELS['Anaerobic Lactic'],
     },
     {
-      color: ANATOMICAL_REGION_COLORS.Ar,
-      id: 'Ar',
-      label: ANATOMICAL_REGION_LABELS.Ar,
+      color: ANATOMICAL_REGION_COLORS.Arms,
+      id: 'Arms',
+      label: ANATOMICAL_REGION_LABELS.Arms,
     },
     {
-      color: ANATOMICAL_REGION_COLORS.Fi,
-      id: 'Fi',
-      label: ANATOMICAL_REGION_LABELS.Fi,
+      color: ANATOMICAL_REGION_COLORS.Fingers,
+      id: 'Fingers',
+      label: ANATOMICAL_REGION_LABELS.Fingers,
     },
     {
-      color: ANATOMICAL_REGION_COLORS.Ge,
-      id: 'Ge',
-      label: ANATOMICAL_REGION_LABELS.Ge,
+      color: ANATOMICAL_REGION_COLORS.General,
+      id: 'General',
+      label: ANATOMICAL_REGION_LABELS.General,
     },
   ]
 

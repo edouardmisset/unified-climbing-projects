@@ -28,7 +28,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
 
   const yearList = useMemo(() => {
     const filteredForYear = filterTrainingSessions(trainingSessions, {
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      discipline: normalizeFilterValue(selectedDiscipline),
       locationType: normalizeFilterValue(selectedLocationType),
       period: normalizeFilterValue(selectedPeriod),
     })
@@ -52,7 +52,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       period: normalizeFilterValue(selectedPeriod),
     })
     return AVAILABLE_CLIMBING_DISCIPLINE.filter((discipline) =>
-      filteredForDiscipline.some((session) => session.climbingDiscipline === discipline),
+      filteredForDiscipline.some((session) => session.discipline === discipline),
     )
   }, [trainingSessions, selectedYearNumber, selectedLocationType, selectedPeriod])
 
@@ -63,13 +63,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
   const locationTypeList = useMemo(() => {
     const filteredForLocationType = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
     })
-    const hasIndoor = filteredForLocationType.some(({ sessionType }) =>
-      isIndoorSession({ sessionType }),
-    )
-    const hasOutdoor = filteredForLocationType.some(({ sessionType }) => sessionType === 'Out')
+    const hasIndoor = filteredForLocationType.some(({ type }) => isIndoorSession({ type }))
+    const hasOutdoor = filteredForLocationType.some(({ type }) => type === 'Outdoor')
     return LOCATION_TYPES.filter((locationType) =>
       locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
@@ -82,7 +80,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
   const periodList = useMemo(() => {
     const filteredForPeriod = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       locationType: normalizeFilterValue(effectiveSelectedLocationType),
     })
     return PERIOD.filter((period) =>

@@ -12,14 +12,14 @@ describe('getAscentsPerDiscipline', () => {
     const expected = [
       {
         color: 'var(--route)',
-        id: 'Route',
-        label: 'Route',
+        id: 'Sport',
+        label: 'Sport',
         value: 84,
       },
       {
         color: 'var(--boulder)',
-        id: 'Boulder',
-        label: 'Boulder',
+        id: 'Bouldering',
+        label: 'Bouldering',
         value: 16,
       },
     ]

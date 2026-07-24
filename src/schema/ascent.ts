@@ -1,4 +1,5 @@
 import { z } from '~/helpers/zod'
+import type { AscentRecord } from '~/domain/canonical/ascent'
 import { positiveInteger } from './generic'
 
 export const GRADES = [
@@ -182,7 +183,7 @@ export type Grade = z.infer<typeof gradeSchema>
 
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
 export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
-const UNAVAILABLE_CLIMBING_DISCIPLINE = new Set<Ascent['climbingDiscipline']>(['Multi-Pitch'])
+const UNAVAILABLE_CLIMBING_DISCIPLINE = new Set<LegacyAscent['climbingDiscipline']>(['Multi-Pitch'])
 export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
   (d) => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
 )
@@ -231,7 +232,8 @@ export const ascentSchema = z.object({
   topoGrade: gradeSchema,
   tries: z.number().int().min(1),
 })
-export type Ascent = z.infer<typeof ascentSchema>
+export type LegacyAscent = z.infer<typeof ascentSchema>
+export type Ascent = AscentRecord
 
 export type AscentListProps = {
   ascents: Ascent[]

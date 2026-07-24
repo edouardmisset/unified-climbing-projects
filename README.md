@@ -40,14 +40,18 @@ Note: You may need to configure environment variables (for example: Convex, Goog
 - Format: `vp run format`
 - Typecheck and checks (linting, style linting, formatting, etc.): `vp run check`
 - Validate (checks, tests, build): `vp run validate`
+- Validate locally with synthetic data and no Convex reads or writes: `vp run validate:offline`
 - Spellcheck: `vp run spell`
 - Style lint: `vp run style:lint`
 
 ## Testing
 
 - Unit tests: `vp run test:unit`
-- E2E tests: `vp run test:e2e`
+- Synthetic offline E2E tests: `vp run test:e2e:offline`
 - All tests: `vp run test:all`
+
+The acceptance fixture and deferred user A/user B contract are documented in
+[`docs/acceptance-and-isolation.md`](docs/acceptance-and-isolation.md).
 
 ## Notable Directories
 
@@ -57,9 +61,12 @@ Note: You may need to configure environment variables (for example: Convex, Goog
 - `src/schema/` — Zod schemas for strong typing and validation
 - `src/services/` — Data access layer with React cache() wrappers
 - `src/data/` — Data grouping and time-based helpers
+- `src/domain/canonical/` — Canonical validators, adapters, fingerprints, and CSV portability
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
 - `tests/` — Playwright E2E tests and reports
 - `backup/` — Sample data for local development
+
+The canonical import/export format is documented in [`docs/canonical-csv.md`](docs/canonical-csv.md).
 
 ## Development Guidelines
 

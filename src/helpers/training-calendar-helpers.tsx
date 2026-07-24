@@ -29,20 +29,20 @@ export function fromTrainingSessionsToCalendarEntries(
           title: '',
         }
 
-      const { date, sessionType, intensity, volume } = firstSession
+      const { date, type, intensity, volume } = firstSession
       const backgroundColor = getSessionTypeColors({
         intensityPercent: intensity,
-        sessionType,
+        type,
         volumePercent: volume,
       })
 
-      const isOutdoorSession = sessions.some((session) => session.sessionType === 'Out')
+      const isOutdoorSession = sessions.some((session) => session.type === 'Outdoor')
       const matchingAscents = isOutdoorSession ? (ascentsByDate.get(date.slice(0, 10)) ?? []) : []
 
       return {
         backgroundColor,
         date,
-        shortText: sessionType ?? '',
+        shortText: type ?? '',
         title: prettyLongDate(date),
         trainingSessions: sessions,
         ...(matchingAscents.length > 0 && { ascents: matchingAscents }),

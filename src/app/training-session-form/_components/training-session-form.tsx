@@ -11,6 +11,11 @@ import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
 import { DataList } from '~/app/ascent-form/_components/data-list'
 import { zeroTo100RegEx } from '~/constants/generic'
 import { LINKS } from '~/constants/links'
+import {
+  toCanonicalAnatomicalRegion,
+  toCanonicalDiscipline,
+  toCanonicalEnergySystem,
+} from '~/domain/canonical/legacy-transformers'
 import { createValueAndLabel } from '~/helpers/create-value-and-label'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
 import {
@@ -161,7 +166,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="climbing-discipline-list"
             options={CLIMBING_DISCIPLINE.map((discipline) => ({
-              label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
+              label: `${fromClimbingDisciplineToEmoji(toCanonicalDiscipline(discipline))} ${discipline}`,
               value: discipline,
             }))}
           />
@@ -190,7 +195,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="anatomical-region-list"
             options={ANATOMICAL_REGIONS.map((region) => ({
-              label: `${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`,
+              label: `${fromAnatomicalRegionToEmoji(toCanonicalAnatomicalRegion(region))} ${fromAnatomicalRegionToLabel(region)}`,
               value: region,
             }))}
           />
@@ -211,7 +216,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="energy-system-list"
             options={ENERGY_SYSTEMS.map((system) => ({
-              label: `${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`,
+              label: `${fromEnergySystemToEmoji(toCanonicalEnergySystem(system))} ${fromEnergySystemToLabel(system)}`,
               value: system,
             }))}
           />

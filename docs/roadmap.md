@@ -20,7 +20,7 @@ The release also needs a public landing page, factual beta/privacy terms, owner 
 ## Scope
 
 - Clerk is the account source of truth. Convex stores its stable subject as `ownerId`; there is no app users table.
-- Production data access closes before work starts and reopens only after the release smoke test.
+- Production data access closes before any remote data operation, deployment, authentication change, restore rehearsal, or migration execution, and reopens only after the release smoke test. Local work using synthetic or sanitized fixtures may happen beforehand.
 - One in-place migration canonicalizes data, adds ownership, and generates fingerprints while preserving Convex IDs.
 - Dates are calendar dates (`YYYY-MM-DD`), not timestamps.
 - `/` becomes the landing page; the existing app home remains `/wrap-up`.
@@ -113,6 +113,21 @@ Imported records receive `importJobId` and are indexed by `(ownerId, importJobId
 Spreadsheet-formula neutralization is out of scope. Do not describe the CSV files as spreadsheet-safe; they are primarily for portability and re-import.
 
 ## Plan
+
+### P. Complete local pre-migration groundwork
+
+This phase is strictly local. It must not contact or alter Convex deployments, Clerk configuration, Vercel, GitHub history, or production data.
+
+- [x] Add an explicit synthetic data source and offline verification commands that never query Convex.
+- [x] Define separate canonical validators for stored records, public inputs, public outputs, forms, import rows, and export rows without changing the deployed Convex schema.
+- [x] Implement and test pure legacy transformers, calendar-date normalization, and deterministic fingerprint inputs against synthetic or sanitized fixtures.
+- [x] Move application consumers to the canonical read model behind temporary legacy compatibility adapters.
+- [x] Implement and test the shared canonical CSV parser, serializer, templates, and round trips as pure browser-compatible modules.
+- [x] Replace live-data-coupled smoke coverage with synthetic acceptance fixtures and prepare the user A/user B isolation matrix.
+
+Do not deploy this phase. Do not run Convex import, export, migration, backup, restore, or schema commands. Do not configure Clerk, assign ownership, remove the active backup mechanism, rewrite Git history, or publish legal pages.
+
+**Gate:** the application and its domain logic operate on canonical synthetic data; legacy conversion and CSV portability are deterministic and tested; checks, tests, and the production build can run without remote data access; and production behavior remains untouched.
 
 ### 0. Close production and secure the data
 
@@ -211,7 +226,8 @@ Spreadsheet-formula neutralization is out of scope. Do not describe the CSV file
 ## Order
 
 ```text
-Close production
+Complete local pre-migration groundwork
+  → close production
   → authenticate and migrate
   → add public routes and restricted sign-in
   → establish the shared CSV contract
