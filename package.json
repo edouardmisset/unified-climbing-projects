@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "backup": "NEXT_PUBLIC_CONVEX_URL=https://watchful-platypus-57.convex.cloud node src/scripts/backup-from-db.ts && vp fmt ./src/backup",
+    "backup": "NEXT_PUBLIC_CONVEX_URL=https://watchful-platypus-57.convex.cloud bun run src/scripts/backup-from-db.ts && vp fmt ./src/backup",
     "preseed": "vp run backup",
     "seed": "vp exec convex import --replace --table ascents ./src/backup/ascent-data.json && vp exec convex import --replace --table training ./src/backup/training-data.json",
     "seed:prod": "vp exec convex import --prod --replace --table ascents ./src/backup/ascent-data.json && vp exec convex import --prod --replace --table training ./src/backup/training-data.json",
