@@ -11,8 +11,9 @@ to try new libraries and patterns.
 - Next.js (App Router) + TypeScript, Vite+, CSS Modules
 - UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas
-- Performance: ISR and React cache() wrappers
-- Testing: vitest (unit) and Playwright (e2e)
+- User-specific server reads are deliberately uncached
+- Testing: vitest (unit), Playwright (e2e smoke test, see `.env.example` for
+  required test-user credentials)
 
 ## Getting Started
 
@@ -32,7 +33,8 @@ Start the app in development:
 vp run dev
 ```
 
-Note: You may need to configure environment variables (for example: Convex, Google Sheet).
+Configure Clerk and Convex using `.env.example`, then set the matching Clerk issuer in the Convex
+deployment environment.
 
 ## Scripts
 
@@ -46,8 +48,10 @@ Note: You may need to configure environment variables (for example: Convex, Goog
 ## Testing
 
 - Unit tests: `vp run test:unit`
-- E2E tests: `vp run test:e2e`
 - All tests: `vp run test:all`
+
+The owner-isolation contract is documented in
+[`docs/acceptance-and-isolation.md`](docs/acceptance-and-isolation.md).
 
 ## Notable Directories
 
@@ -55,11 +59,15 @@ Note: You may need to configure environment variables (for example: Convex, Goog
 - `src/app/_components/` — Reusable UI components (charts, inputs, dialogs)
 - `src/helpers/` — Core utilities (dates, grades, transforms) with tests
 - `src/schema/` — Zod schemas for strong typing and validation
-- `src/services/` — Data access layer with React cache() wrappers
+- `src/services/` — Authenticated, owner-scoped data access
 - `src/data/` — Data grouping and time-based helpers
+- `src/domain/canonical/` — Canonical validators, adapters, fingerprints, and CSV portability
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
-- `tests/` — Playwright E2E tests and reports
-- `backup/` — Sample data for local development
+- `scripts/` — Repository safety checks
+
+The canonical import/export format is documented in [`docs/canonical-csv.md`](docs/canonical-csv.md).
+Backup, restore, migration, and deletion procedures are in
+[`docs/operations.md`](docs/operations.md).
 
 ## Development Guidelines
 

@@ -1,0 +1,22 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1rem 2rem;
+}
+
+.controls button {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--surface-4);
+  border-radius: 0.6rem;
+  background: var(--surface-2);
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.controls button:first-child {
+  border-color: var(--orange-8);
+  background: var(--orange-8);
+  color: white;
+  font-weight: 700;
+}

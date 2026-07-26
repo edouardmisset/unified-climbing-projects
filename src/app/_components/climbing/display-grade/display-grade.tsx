@@ -5,18 +5,15 @@ import styles from './display-grade.module.css'
 
 type ClimbingGradeProps = {
   grade: Grade
-  climbingDiscipline?: Ascent['climbingDiscipline']
+  discipline?: Ascent['discipline']
 }
 
 export function DisplayGrade(
   props: Omit<ComponentProps<'strong'>, 'children'> & ClimbingGradeProps,
 ) {
-  const { grade, climbingDiscipline = 'Route', className = '', ...otherProps } = props
+  const { grade, discipline = 'Sport', className = '', ...otherProps } = props
 
-  const formattedGrade = useMemo(
-    () => formatGrade({ grade, climbingDiscipline }),
-    [grade, climbingDiscipline],
-  )
+  const formattedGrade = useMemo(() => formatGrade({ grade, discipline }), [grade, discipline])
 
   return (
     <strong {...otherProps} className={`${styles.grade} ${className}`}>

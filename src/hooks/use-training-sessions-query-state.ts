@@ -39,17 +39,17 @@ export const useTrainingSessionsQueryState = (): UseTrainingSessionsQueryStateRe
 
 type UseTrainingSessionsQueryStateReturn = {
   selectedLoad: OrAll<LoadCategory>
-  selectedLocation: OrAll<NonNullable<TrainingSession['gymCrag']>>
+  selectedLocation: OrAll<NonNullable<TrainingSession['location']>>
   selectedPeriod: OrAll<Period>
-  selectedSessionType: OrAll<NonNullable<TrainingSession['sessionType']>>
+  selectedSessionType: OrAll<NonNullable<TrainingSession['type']>>
   selectedYear: OrAll<string>
-  selectedDiscipline: OrAll<NonNullable<TrainingSession['climbingDiscipline']>>
+  selectedDiscipline: OrAll<NonNullable<TrainingSession['discipline']>>
   selectedLocationType: OrAll<LocationType>
   setLoad: (load: OrAll<LoadCategory>) => void
-  setLocation: (location: OrAll<NonNullable<TrainingSession['gymCrag']>>) => void
+  setLocation: (location: OrAll<NonNullable<TrainingSession['location']>>) => void
   setPeriod: (period: OrAll<Period>) => void
-  setSessionType: (sessionType: OrAll<NonNullable<TrainingSession['sessionType']>>) => void
+  setSessionType: (type: OrAll<NonNullable<TrainingSession['type']>>) => void
   setYear: (year: OrAll<string>) => void
-  setDiscipline: (discipline: OrAll<NonNullable<TrainingSession['climbingDiscipline']>>) => void
+  setDiscipline: (discipline: OrAll<NonNullable<TrainingSession['discipline']>>) => void
   setLocationType: (locationType: OrAll<LocationType>) => void
 }

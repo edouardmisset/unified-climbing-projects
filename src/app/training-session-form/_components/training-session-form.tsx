@@ -1,6 +1,5 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
@@ -11,6 +10,11 @@ import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
 import { DataList } from '~/app/ascent-form/_components/data-list'
 import { zeroTo100RegEx } from '~/constants/generic'
 import { LINKS } from '~/constants/links'
+import {
+  toCanonicalAnatomicalRegion,
+  toCanonicalDiscipline,
+  toCanonicalEnergySystem,
+} from '~/domain/canonical/legacy-transformers'
 import { createValueAndLabel } from '~/helpers/create-value-and-label'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date'
 import {
@@ -39,7 +43,6 @@ import {
 
 export default function TrainingSessionForm({ allLocations }: { allLocations: string[] }) {
   'use no memo'
-  const { user } = useUser()
   const router = useTransitionRouter()
 
   const defaultDate = stringifyDate(new Date())
@@ -55,7 +58,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
     },
   })
 
-  return user?.fullName === 'Edouard' ? (
+  return (
     <form
       aria-describedby="form-description"
       autoComplete="off"
@@ -161,7 +164,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="climbing-discipline-list"
             options={CLIMBING_DISCIPLINE.map((discipline) => ({
-              label: `${fromClimbingDisciplineToEmoji(discipline)} ${discipline}`,
+              label: `${fromClimbingDisciplineToEmoji(toCanonicalDiscipline(discipline))} ${discipline}`,
               value: discipline,
             }))}
           />
@@ -190,7 +193,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="anatomical-region-list"
             options={ANATOMICAL_REGIONS.map((region) => ({
-              label: `${fromAnatomicalRegionToEmoji(region)} ${fromAnatomicalRegionToLabel(region)}`,
+              label: `${fromAnatomicalRegionToEmoji(toCanonicalAnatomicalRegion(region))} ${fromAnatomicalRegionToLabel(region)}`,
               value: region,
             }))}
           />
@@ -211,7 +214,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
           <DataList
             id="energy-system-list"
             options={ENERGY_SYSTEMS.map((system) => ({
-              label: `${fromEnergySystemToEmoji(system)} ${fromEnergySystemToLabel(system)}`,
+              label: `${fromEnergySystemToEmoji(toCanonicalEnergySystem(system))} ${fromEnergySystemToLabel(system)}`,
               value: system,
             }))}
           />
@@ -286,9 +289,5 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
         />
       </div>
     </form>
-  ) : (
-    <section className="flexColumn gap">
-      <p>You are not authorized to log a training session.</p>
-    </section>
   )
 }

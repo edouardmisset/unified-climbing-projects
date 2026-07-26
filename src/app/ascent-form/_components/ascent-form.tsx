@@ -1,6 +1,5 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
 import { useTransitionRouter } from 'next-view-transitions'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,10 +7,10 @@ import { toast } from 'react-toastify'
 import { ClimbingStyleToggleGroup } from '~/app/_components/climbing-style-toggle-group/climbing-style-toggle-group.tsx'
 import { GradeInput, type HandleGradeChange } from '~/app/_components/grade-input/grade-input.tsx'
 import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button.tsx'
-import { Loader } from '~/app/_components/ui/loader/loader.tsx'
 import { Option } from '~/app/_components/ui/option/option.tsx'
 import { Spacer } from '~/app/_components/ui/spacer/spacer.tsx'
 import { zeroTo100RegEx } from '~/constants/generic.ts'
+import { toCanonicalDiscipline, toLegacyDiscipline } from '~/domain/canonical/legacy-transformers'
 import { createValueAndLabel } from '~/helpers/create-value-and-label.ts'
 import { createRecentDateOptions, fromDateToStringDate } from '~/helpers/date.ts'
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters.ts'
@@ -61,18 +60,17 @@ const profileOptions = createValueAndLabel(PROFILES)
 export default function AscentForm(props: AscentFormProps) {
   'use no memo'
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
-  const { user, isLoaded: isUserLoaded } = useUser()
-
   const router = useTransitionRouter()
 
   const defaultAscentToParse = {
     area: latestAscent?.area,
-    climbingDiscipline: latestAscent?.climbingDiscipline,
+    climbingDiscipline:
+      latestAscent === undefined ? undefined : toLegacyDiscipline(latestAscent.discipline),
     crag: latestAscent?.crag,
     date: new Date(),
     personalGrade: fromGradeToNumber(minGrade),
     routeName: '',
-    style: latestAscent?.climbingDiscipline === 'Boulder' ? 'Flash' : 'Onsight',
+    style: latestAscent?.discipline === 'Bouldering' ? 'Flash' : 'Onsight',
     topoGrade: fromGradeToNumber(minGrade),
     tries: '1',
   } satisfies AscentFormInput
@@ -156,11 +154,9 @@ export default function AscentForm(props: AscentFormProps) {
     [handleTriesChangeRegister, isBoulder, setValue],
   )
 
-  if (!isUserLoaded) return <Loader />
-
   const cragOptions = createValueAndLabel(crags)
   const areaOptions = createValueAndLabel(areas)
-  return user?.fullName === 'Edouard' ? (
+  return (
     <form
       aria-describedby="form-description"
       autoComplete="off"
@@ -224,7 +220,7 @@ export default function AscentForm(props: AscentFormProps) {
             {AVAILABLE_CLIMBING_DISCIPLINE.map((disciplineOption) => (
               <Option
                 key={disciplineOption}
-                label={`${fromClimbingDisciplineToEmoji(disciplineOption)} ${disciplineOption}`}
+                label={`${fromClimbingDisciplineToEmoji(toCanonicalDiscipline(disciplineOption))} ${disciplineOption}`}
                 value={disciplineOption}
               />
             ))}
@@ -458,9 +454,5 @@ export default function AscentForm(props: AscentFormProps) {
         />
       </div>
     </form>
-  ) : (
-    <section className="flexColumn gap">
-      <p>You are not authorized to log an ascent.</p>
-    </section>
   )
 }

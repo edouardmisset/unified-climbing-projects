@@ -39,7 +39,7 @@ export default function AscentsFilterBar({
 
   const yearList = useMemo(() => {
     const filteredForYear = filterAscents(allAscents, {
-      climbingDiscipline: normalizeFilterValue(selectedDiscipline),
+      discipline: normalizeFilterValue(selectedDiscipline),
       style: normalizeFilterValue(selectedStyle),
       period: normalizeFilterValue(selectedPeriod),
       crag: normalizeFilterValue(selectedCrag),
@@ -67,7 +67,7 @@ export default function AscentsFilterBar({
       area: normalizeFilterValue(selectedArea),
     })
     return AVAILABLE_CLIMBING_DISCIPLINE.filter((discipline) =>
-      filteredForDiscipline.some((ascent) => ascent.climbingDiscipline === discipline),
+      filteredForDiscipline.some((ascent) => ascent.discipline === discipline),
     )
   }, [allAscents, selectedYearNumber, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
 
@@ -78,7 +78,7 @@ export default function AscentsFilterBar({
   const styleList = useMemo(() => {
     const filteredForStyle = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       period: normalizeFilterValue(selectedPeriod),
       crag: normalizeFilterValue(selectedCrag),
       area: normalizeFilterValue(selectedArea),
@@ -98,7 +98,7 @@ export default function AscentsFilterBar({
   const cragList = useMemo(() => {
     const filteredForCrag = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       style: normalizeFilterValue(effectiveSelectedStyle),
       period: normalizeFilterValue(selectedPeriod),
       area: normalizeFilterValue(selectedArea),
@@ -120,7 +120,7 @@ export default function AscentsFilterBar({
   const areaList = useMemo(() => {
     const filteredForArea = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       style: normalizeFilterValue(effectiveSelectedStyle),
       period: normalizeFilterValue(selectedPeriod),
       crag: normalizeFilterValue(effectiveSelectedCrag),
@@ -146,7 +146,7 @@ export default function AscentsFilterBar({
   const periodList = useMemo(() => {
     const filteredForPeriod = filterAscents(allAscents, {
       year: selectedYearNumber,
-      climbingDiscipline: normalizeFilterValue(effectiveSelectedDiscipline),
+      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       style: normalizeFilterValue(effectiveSelectedStyle),
       crag: normalizeFilterValue(effectiveSelectedCrag),
       area: normalizeFilterValue(effectiveSelectedArea),

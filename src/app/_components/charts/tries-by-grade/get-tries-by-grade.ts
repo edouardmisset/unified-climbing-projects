@@ -7,17 +7,17 @@ export function getTriesByGrade(ascents: Ascent[]): TriesByGradeSeries[] {
 
   const gradeStats = new Map<Grade, { min: number; max: number; sum: number; count: number }>()
 
-  for (const { topoGrade, tries } of ascents) {
-    const topoGradeStat = gradeStats.get(topoGrade)
-    if (!topoGradeStat) {
-      gradeStats.set(topoGrade, { count: 1, max: tries, min: tries, sum: tries })
+  for (const { grade, tries } of ascents) {
+    const gradeStat = gradeStats.get(grade)
+    if (!gradeStat) {
+      gradeStats.set(grade, { count: 1, max: tries, min: tries, sum: tries })
       continue
     }
 
-    topoGradeStat.min = Math.min(topoGradeStat.min, tries)
-    topoGradeStat.max = Math.max(topoGradeStat.max, tries)
-    topoGradeStat.sum += tries
-    topoGradeStat.count++
+    gradeStat.min = Math.min(gradeStat.min, tries)
+    gradeStat.max = Math.max(gradeStat.max, tries)
+    gradeStat.sum += tries
+    gradeStat.count++
   }
 
   const grades = [...gradeStats.keys()].toSorted((a, b) => compareStringsAscending(a, b))

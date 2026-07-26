@@ -29,12 +29,12 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
     const selectedYearNumber = Number(deferredSelectedYear)
 
     return filterTrainingSessions(trainingSessions, {
-      climbingDiscipline: normalizeFilterValue(deferredSelectedDiscipline),
-      gymCrag: normalizeFilterValue(deferredSelectedLocation),
+      discipline: normalizeFilterValue(deferredSelectedDiscipline),
+      location: normalizeFilterValue(deferredSelectedLocation),
       load: normalizeFilterValue(deferredSelectedLoad),
       locationType: normalizeFilterValue(deferredSelectedLocationType),
       period: normalizeFilterValue(deferredSelectedPeriod),
-      sessionType: normalizeFilterValue(deferredSelectedSessionType),
+      type: normalizeFilterValue(deferredSelectedSessionType),
       year:
         deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
           ? selectedYearNumber

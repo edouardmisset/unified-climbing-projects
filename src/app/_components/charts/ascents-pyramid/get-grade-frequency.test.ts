@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
 describe('getGradeFrequencyAndColors', () => {
@@ -48,7 +48,7 @@ describe('getGradeFrequencyAndColors', () => {
       },
     ]
     const resultFor7Degree = getGradeFrequencyAndColors(
-      sampleAscents.filter(({ topoGrade }) => topoGrade.startsWith('7')),
+      sampleAscents.filter(({ grade }) => grade.startsWith('7')),
     )
     expect(resultFor7Degree).toStrictEqual(expected)
   })

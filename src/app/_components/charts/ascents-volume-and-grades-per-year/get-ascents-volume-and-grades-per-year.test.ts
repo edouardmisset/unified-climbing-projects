@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
@@ -20,37 +20,37 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
       {
         ...firstAscent,
         _id: 'volume-and-grade-1',
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: '2023-01-10',
-        topoGrade: '6a',
+        grade: '6a',
       },
       {
         ...secondAscent,
         _id: 'volume-and-grade-2',
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: '2023-05-08',
-        topoGrade: '6b',
+        grade: '6b',
       },
       {
         ...thirdAscent,
         _id: 'volume-and-grade-3',
-        climbingDiscipline: 'Boulder',
+        discipline: 'Bouldering',
         date: '2023-08-02',
-        topoGrade: '7a',
+        grade: '7a',
       },
       {
         ...fourthAscent,
         _id: 'volume-and-grade-4',
-        climbingDiscipline: 'Boulder',
+        discipline: 'Bouldering',
         date: '2025-03-17',
-        topoGrade: '7b+',
+        grade: '7b+',
       },
       {
         ...fifthAscent,
         _id: 'volume-and-grade-5',
-        climbingDiscipline: 'Multi-Pitch',
+        discipline: 'Multi-Pitch',
         date: '2025-09-13',
-        topoGrade: '8a',
+        grade: '8a',
       },
     ]
 
@@ -58,8 +58,8 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
 
     expect(result).toStrictEqual([
       {
-        Boulder: 1,
-        Route: 2,
+        Bouldering: 1,
+        Sport: 2,
         avgBoulderGrade: fromGradeToNumber('7a'),
         avgRouteGrade: fromGradeToNumber('6a+'),
         maxBoulderGrade: fromGradeToNumber('7a'),
@@ -67,8 +67,8 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
         year: 2_023,
       },
       {
-        Boulder: 0,
-        Route: 0,
+        Bouldering: 0,
+        Sport: 0,
         avgBoulderGrade: undefined,
         avgRouteGrade: undefined,
         maxBoulderGrade: undefined,
@@ -76,8 +76,8 @@ describe('getAscentsVolumeAndGradesPerYear', () => {
         year: 2_024,
       },
       {
-        Boulder: 1,
-        Route: 0,
+        Bouldering: 1,
+        Sport: 0,
         avgBoulderGrade: fromGradeToNumber('7b+'),
         avgRouteGrade: undefined,
         maxBoulderGrade: fromGradeToNumber('7b+'),

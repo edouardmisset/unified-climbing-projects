@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
 
 describe('getAscentsPerDisciplinePerGrade', () => {
@@ -11,44 +11,44 @@ describe('getAscentsPerDisciplinePerGrade', () => {
   it('should return correct structure and counts based on sample data', () => {
     const expected = [
       {
-        Boulder: 1,
+        Bouldering: 1,
         grade: '7a',
-        Route: 6,
+        Sport: 6,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '7a+',
-        Route: 4,
+        Sport: 4,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '7b',
-        Route: 5,
+        Sport: 5,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '7b+',
-        Route: 1,
+        Sport: 1,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '7c',
-        Route: 1,
+        Sport: 1,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '7c+',
-        Route: 1,
+        Sport: 1,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '8a',
-        Route: 0,
+        Sport: 0,
       },
       {
-        Boulder: 0,
+        Bouldering: 0,
         grade: '8a+',
-        Route: 1,
+        Sport: 1,
       },
     ]
     const result = getAscentsPerDisciplinePerGrade(

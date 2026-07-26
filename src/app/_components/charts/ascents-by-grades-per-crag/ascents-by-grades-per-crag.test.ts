@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
 describe('getAscentsByGradesPerCrag', () => {

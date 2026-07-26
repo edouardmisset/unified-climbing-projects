@@ -27,7 +27,7 @@ export async function DaysOutsideSummary({
   trainingSessions: TrainingSession[]
 }) {
   const outdoorSessions = filterTrainingSessions(trainingSessions, {
-    sessionType: 'Out',
+    type: 'Outdoor',
   })
 
   const consecutiveClimbingDays = findLongestStreak(outdoorSessions)

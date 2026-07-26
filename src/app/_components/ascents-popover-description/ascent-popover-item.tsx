@@ -5,20 +5,20 @@ import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascents-popover-description.module.css'
 
 type AscentPopoverItemProps = {
-  climbingDiscipline: Ascent['climbingDiscipline']
+  discipline: Ascent['discipline']
   crag: Ascent['crag']
-  routeName: Ascent['routeName']
+  name: Ascent['name']
   showCrag: boolean
-  topoGrade: Ascent['topoGrade']
+  grade: Ascent['grade']
 }
 
 function AscentPopoverItemComponent(props: AscentPopoverItemProps) {
-  const { climbingDiscipline, crag, routeName, showCrag, topoGrade } = props
+  const { discipline, crag, name, showCrag, grade } = props
   const cragDescription = showCrag ? `- ${crag}` : ''
   return (
     <li className={styles.item}>
-      {fromClimbingDisciplineToEmoji(climbingDiscipline)} {routeName} (
-      <DisplayGrade climbingDiscipline={climbingDiscipline} grade={topoGrade} />) {cragDescription}
+      {fromClimbingDisciplineToEmoji(discipline)} {name} (
+      <DisplayGrade discipline={discipline} grade={grade} />) {cragDescription}
     </li>
   )
 }

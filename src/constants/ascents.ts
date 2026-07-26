@@ -7,10 +7,10 @@ export const ASCENT_STYLE_TO_COLOR = {
 } as const satisfies Record<Ascent['style'], string>
 
 export const CLIMBING_DISCIPLINE_TO_COLOR = {
-  Boulder: 'var(--boulder)',
+  Bouldering: 'var(--boulder)',
   'Multi-Pitch': 'var(--multiPitch)',
-  Route: 'var(--route)',
-} as const satisfies Record<Ascent['climbingDiscipline'], string>
+  Sport: 'var(--route)',
+} as const satisfies Record<Ascent['discipline'], string>
 
 /**
  * This is a mapping from ascent grades to colors.

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 import { getAscentsByStyle } from './get-ascents-by-style'
 

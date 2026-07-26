@@ -27,9 +27,9 @@ export function DisciplineSection(props: DisciplineSectionProps) {
     secondCount,
     percentage: disciplinePercentage,
   } = getSessionRatioData({
-    firstLabel: 'Route',
+    firstLabel: 'Sport',
     firstSessions: routeSessions,
-    secondLabel: 'Boulder',
+    secondLabel: 'Bouldering',
     secondSessions: boulderSessions,
   })
 

@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.pnpm-store/
 /.pnp
 .pnp.js
 
@@ -52,8 +53,10 @@ yarn-error.log*
 .stylelintcache
 .eslintcache
 
-# Playwright
+# Dependencies
 node_modules/
+
+# Test artifacts
 /test-results/
 /playwright-report/
 /blob-report/
@@ -61,6 +64,12 @@ node_modules/
 
 # Convex
 /convex/_generated/
+/.migration-private/
+
+# Data exports and provider snapshots must never enter Git
+/src/backup/
+/exports/
+*.zip
 
 # Fallow
 .fallow/

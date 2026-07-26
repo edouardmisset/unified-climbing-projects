@@ -23,7 +23,7 @@ type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter): Ascent[] {
   const {
     area,
-    climbingDiscipline,
+    discipline,
     crag,
     grade,
     height,
@@ -41,8 +41,8 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
   return ascents.filter((ascent) => {
     const ascentDate = new Date(ascent.date)
     return (
-      (grade === undefined || stringEqualsCaseInsensitive(ascent.topoGrade, grade)) &&
-      (climbingDiscipline === undefined || ascent.climbingDiscipline === climbingDiscipline) &&
+      (grade === undefined || stringEqualsCaseInsensitive(ascent.grade, grade)) &&
+      (discipline === undefined || ascent.discipline === discipline) &&
       (year === undefined || isDateInYear(ascentDate, year)) &&
       (style === undefined || ascent.style === style) &&
       (profile === undefined || ascent.profile === profile) &&
@@ -63,8 +63,8 @@ export function getHardestAscent(ascents: Ascent[]): Ascent | undefined {
   if (ascents.length === 0) return undefined
 
   return ascents.reduce((hardestAscent, currentAscent) => {
-    const hardestGrade = fromGradeToNumber(hardestAscent.topoGrade)
-    const currentGrade = fromGradeToNumber(currentAscent.topoGrade)
+    const hardestGrade = fromGradeToNumber(hardestAscent.grade)
+    const currentGrade = fromGradeToNumber(currentAscent.grade)
 
     const isCurrentAscentHarder = hardestGrade < currentGrade
 

@@ -11,17 +11,14 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
 
   const parsedFormData = ascentFormOutputSchema.safeParse(normalizedFormData)
 
-  if (!parsedFormData.success) {
-    globalThis.console.error(parsedFormData.error)
-    return false
-  }
+  if (!parsedFormData.success) return false
 
   try {
     await addAscent(parsedFormData.data)
     revalidatePath('/', 'layout')
     return true
   } catch (error) {
-    globalThis.console.error('Error adding ascent:', error)
+    globalThis.console.error('Error adding ascent:', error instanceof Error ? error.message : error)
     return false
   }
 }

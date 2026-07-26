@@ -16,9 +16,9 @@ export function getSessionsIndoorVsOutdoor(sessions: TrainingSession[]): Session
   let outdoorCount = 0
 
   for (const session of sessions) {
-    const { sessionType } = session
-    if (sessionType === 'Out') outdoorCount++
-    else if (isIndoorSession({ sessionType })) indoorCount++
+    const { type } = session
+    if (type === 'Outdoor') outdoorCount++
+    else if (isIndoorSession({ type })) indoorCount++
   }
 
   const result: SessionsIndoorVsOutdoor = []

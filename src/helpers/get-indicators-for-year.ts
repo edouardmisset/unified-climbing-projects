@@ -35,7 +35,7 @@ export function getIndicatorsForYear({
   const currentYearAscents = filterAscents(allAscents, { year })
   const previousYearAscents = filterAscents(allAscents, { year: year - 1 })
   const outdoorTrainingSessions = filterTrainingSessions(allTrainingSessions, {
-    sessionType: 'Out',
+    type: 'Outdoor',
     year,
   })
 

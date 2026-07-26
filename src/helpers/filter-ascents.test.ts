@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { filterAscents, getHardestAscent } from './filter-ascents'
 
 describe('filterAscents', () => {
@@ -13,13 +13,13 @@ describe('filterAscents', () => {
     const result = filterAscents(sampleAscents, { grade: '7a' })
     expect(result).toHaveLength(38)
 
-    for (const { topoGrade } of result) expect(topoGrade).toBe('7a')
+    for (const { grade } of result) expect(grade).toBe('7a')
   })
 
-  it('should filter ascents by climbingDiscipline', () => {
-    const result = filterAscents(sampleAscents, { climbingDiscipline: 'Route' })
+  it('should filter ascents by discipline', () => {
+    const result = filterAscents(sampleAscents, { discipline: 'Sport' })
     expect(result).toHaveLength(84)
-    for (const { climbingDiscipline } of result) expect(climbingDiscipline).toBe('Route')
+    for (const { discipline } of result) expect(discipline).toBe('Sport')
   })
 
   it('should filter ascents by year', () => {
@@ -30,12 +30,12 @@ describe('filterAscents', () => {
 
   it('should filter ascents using multiple criteria', () => {
     const result = filterAscents(sampleAscents, {
-      climbingDiscipline: 'Route',
+      discipline: 'Sport',
       style: 'Redpoint',
     })
     expect(result).toHaveLength(27)
-    for (const { climbingDiscipline, style } of result) {
-      expect(climbingDiscipline).toBe('Route')
+    for (const { discipline, style } of result) {
+      expect(discipline).toBe('Sport')
       expect(style).toBe('Redpoint')
     }
   })
@@ -73,6 +73,6 @@ describe('getHardestAscent', () => {
   it('should return the ascent with the highest grade', () => {
     const hardest = getHardestAscent(sampleAscents)
     expect(hardest).toBeDefined()
-    expect(hardest?.topoGrade).toBe('8b+')
+    expect(hardest?.grade).toBe('8b+')
   })
 })

@@ -23,17 +23,17 @@ export function fromAscentsToCalendarEntries(
         }
       }
 
-      const { date, crag, climbingDiscipline } = firstAscent
+      const { date, crag, discipline } = firstAscent
       const hardestInGroup = getHardestAscent(ascents)
-      const topoGrade = hardestInGroup?.topoGrade ?? firstAscent.topoGrade
-      const backgroundColor = fromGradeToBackgroundColor(topoGrade)
+      const grade = hardestInGroup?.grade ?? firstAscent.grade
+      const backgroundColor = fromGradeToBackgroundColor(grade)
       const dateAndCrag = `${prettyLongDate(date)} - ${crag}`
 
       return {
         backgroundColor,
         date,
-        isSpecialCase: ascents.every((ascent) => ascent.climbingDiscipline === 'Boulder'),
-        shortText: formatGrade({ climbingDiscipline, grade: topoGrade }),
+        isSpecialCase: ascents.every((ascent) => ascent.discipline === 'Bouldering'),
+        shortText: formatGrade({ discipline, grade }),
         title: dateAndCrag,
         ascents,
       }

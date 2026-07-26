@@ -19,10 +19,10 @@ export const getAscentsPerDisciplinePerYear = (
     let boulderCount = 0
     let routeCount = 0
 
-    for (const { date, climbingDiscipline } of ascents) {
+    for (const { date, discipline } of ascents) {
       if (!isDateInYear(date, year)) continue
-      if (climbingDiscipline === 'Boulder') boulderCount++
-      if (climbingDiscipline === 'Route') routeCount++
+      if (discipline === 'Bouldering') boulderCount++
+      if (discipline === 'Sport') routeCount++
     }
 
     return {

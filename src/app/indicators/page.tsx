@@ -5,8 +5,6 @@ import { IndicatorsTimeline } from './indicators-timeline'
 import styles from './page.module.css'
 import type { Metadata } from 'next'
 
-export const revalidate = 3_600
-
 export default async function Page() {
   return (
     <Layout gridClassName={styles.container} layout="flexRow" title="Indicators">

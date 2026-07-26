@@ -42,10 +42,10 @@ export function getAscentsByGradesPerCrag(ascents: Ascent[]): Record<string, str
 
     for (const grade of gradeScale) frequency[grade] = 0
 
-    for (const { topoGrade } of cragAscents) {
-      if (frequency[topoGrade] === undefined || typeof frequency[topoGrade] !== 'number') continue
+    for (const { grade } of cragAscents) {
+      if (frequency[grade] === undefined || typeof frequency[grade] !== 'number') continue
 
-      frequency[topoGrade] += 1
+      frequency[grade] += 1
     }
 
     return frequency

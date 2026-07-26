@@ -1,7 +1,7 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import type { TrainingSession } from '~/schema/training'
 
-type Discipline = NonNullable<TrainingSession['climbingDiscipline']>
+type Discipline = NonNullable<TrainingSession['discipline']>
 
 type SessionsPerDiscipline = {
   id: Discipline
@@ -13,15 +13,13 @@ type SessionsPerDiscipline = {
 export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsPerDiscipline {
   if (sessions.length === 0) return []
 
-  const sessionsWithDiscipline = sessions.filter(
-    (session) => session.climbingDiscipline !== undefined,
-  )
+  const sessionsWithDiscipline = sessions.filter((session) => session.discipline !== undefined)
 
   const disciplineCounts = new Map<Discipline, number>()
 
-  for (const { climbingDiscipline } of sessionsWithDiscipline) {
-    if (!climbingDiscipline) continue
-    disciplineCounts.set(climbingDiscipline, (disciplineCounts.get(climbingDiscipline) ?? 0) + 1)
+  for (const { discipline } of sessionsWithDiscipline) {
+    if (!discipline) continue
+    disciplineCounts.set(discipline, (disciplineCounts.get(discipline) ?? 0) + 1)
   }
 
   return [...disciplineCounts.entries()]

@@ -9,7 +9,7 @@ describe('normalizeFilterValue', () => {
   })
 
   it('should return the original value when value is not ALL_VALUE', () => {
-    const testValue = 'Route'
+    const testValue = 'Sport'
     const result = normalizeFilterValue(testValue)
     expect(result).toBe(testValue)
   })

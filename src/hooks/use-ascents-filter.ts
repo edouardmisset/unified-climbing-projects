@@ -40,7 +40,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
 
     return filterAscents(ascents, {
       area: normalizeFilterValue(deferredSelectedArea),
-      climbingDiscipline: normalizeFilterValue(deferredSelectedDiscipline),
+      discipline: normalizeFilterValue(deferredSelectedDiscipline),
       crag: normalizeFilterValue(deferredSelectedCrag),
       grade: normalizeFilterValue(deferredSelectedGrade),
       style: normalizeFilterValue(deferredSelectedStyle),
@@ -65,8 +65,8 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     () =>
       deferredSelectedRoute === ''
         ? filteredAscents
-        : filteredAscents.filter(({ routeName }) =>
-            stringIncludesCaseInsensitive(routeName, deferredSelectedRoute),
+        : filteredAscents.filter(({ name }) =>
+            stringIncludesCaseInsensitive(name, deferredSelectedRoute),
           ),
     [deferredSelectedRoute, filteredAscents],
   )

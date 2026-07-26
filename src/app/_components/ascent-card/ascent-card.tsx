@@ -22,7 +22,7 @@ type CommentDirectionStyle = CSSProperties & {
 export function AscentCard({ ascent }: { ascent: Ascent }) {
   const {
     area,
-    climbingDiscipline,
+    discipline,
     comments,
     crag,
     date,
@@ -30,9 +30,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     holds,
     profile,
     rating,
-    routeName,
+    name,
     style,
-    topoGrade,
+    grade,
     tries,
   } = ascent
 
@@ -43,17 +43,14 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     return { '--direction': isLongComment ? 'row' : 'column' }
   }, [comments])
 
-  const formattedGrade = useMemo(
-    () => formatGrade({ climbingDiscipline, grade: topoGrade }),
-    [climbingDiscipline, topoGrade],
-  )
+  const formattedGrade = useMemo(() => formatGrade({ discipline, grade }), [discipline, grade])
 
   return (
     <div className={styles.card}>
       <h2
         className={`${styles.header} textNoWrap`}
-        title={`${routeName} ${formattedGrade}`}
-      >{`${fromClimbingDisciplineToEmoji(climbingDiscipline)} ${routeName} ${wrapInParentheses(formattedGrade)}`}</h2>
+        title={`${name} ${formattedGrade}`}
+      >{`${fromClimbingDisciplineToEmoji(discipline)} ${name} ${wrapInParentheses(formattedGrade)}`}</h2>
       <div className={styles.content}>
         <div className={styles.placeAndTime}>
           <time>{prettyLongDate(date)}</time>

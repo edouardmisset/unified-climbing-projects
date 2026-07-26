@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
 describe('getAscentsPerDiscipline', () => {
@@ -12,14 +12,14 @@ describe('getAscentsPerDiscipline', () => {
     const expected = [
       {
         color: 'var(--route)',
-        id: 'Route',
-        label: 'Route',
+        id: 'Sport',
+        label: 'Sport',
         value: 84,
       },
       {
         color: 'var(--boulder)',
-        id: 'Boulder',
-        label: 'Boulder',
+        id: 'Bouldering',
+        label: 'Bouldering',
         value: 16,
       },
     ]

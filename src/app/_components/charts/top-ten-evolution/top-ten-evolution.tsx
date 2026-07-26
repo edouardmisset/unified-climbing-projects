@@ -91,15 +91,15 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
           />
           <Legend align="center" iconType="circle" layout="horizontal" verticalAlign="top" />
           <Chart.Bar
-            dataKey="Boulder"
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
+            dataKey="Bouldering"
+            fill={CLIMBING_DISCIPLINE_TO_COLOR.Bouldering}
             name={AXIS_LABELS.boulders}
             stackId="ascents"
             yAxisId="right"
           />
           <Chart.Bar
-            dataKey="Route"
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
+            dataKey="Sport"
+            fill={CLIMBING_DISCIPLINE_TO_COLOR.Sport}
             name={AXIS_LABELS.routes}
             stackId="ascents"
             yAxisId="right"

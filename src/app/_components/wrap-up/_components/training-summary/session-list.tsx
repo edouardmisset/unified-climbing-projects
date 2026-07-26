@@ -6,17 +6,15 @@ import styles from './training-summary.module.css'
 export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
   return (
     <ul className={styles.list}>
-      {sessions.map(({ _id, climbingDiscipline, date, gymCrag }) => {
-        const disciplineIcon = climbingDiscipline
-          ? fromClimbingDisciplineToEmoji(climbingDiscipline)
-          : '―'
+      {sessions.map(({ _id, discipline, date, location }) => {
+        const disciplineIcon = discipline ? fromClimbingDisciplineToEmoji(discipline) : '―'
 
         return (
           <li className={styles.item} key={_id}>
             {disciplineIcon}
             {NON_BREAKING_SPACE}
             <span className="monospace">{formatShortDate(date)}</span>
-            {gymCrag && ` - ${gymCrag}`}
+            {location && ` - ${location}`}
           </li>
         )
       })}

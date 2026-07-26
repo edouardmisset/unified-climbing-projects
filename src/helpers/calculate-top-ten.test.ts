@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentToPoints } from './ascent-converter'
 import { calculateTopTenScore } from './calculate-top-ten'
@@ -44,25 +44,25 @@ describe('calculateTopTenScore', () => {
     // Create mock ascents with known point values
     const mockAscents = [
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: new Date().toISOString(),
         _id: '1',
         style: 'Redpoint',
-        topoGrade: '5c',
+        grade: '5c',
       },
       {
-        climbingDiscipline: 'Route',
+        discipline: 'Sport',
         date: new Date().toISOString(),
         _id: '2',
         style: 'Onsight',
-        topoGrade: '7a',
+        grade: '7a',
       },
       {
-        climbingDiscipline: 'Boulder',
+        discipline: 'Bouldering',
         date: new Date().toISOString(),
         _id: '3',
         style: 'Flash',
-        topoGrade: '6a',
+        grade: '6a',
       },
     ] as Ascent[]
 

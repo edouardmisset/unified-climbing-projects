@@ -47,20 +47,20 @@ const AXIS_LABELS = {
 }
 
 const CHART_LABELS = {
-  avgBoulderGrade: 'Average Boulder Grade',
+  avgBoulderGrade: 'Average Bouldering Grade',
   avgRouteGrade: 'Average Route Grade',
   boulderAscents: 'Boulders',
-  maxBoulderGrade: 'Max Boulder Grade',
+  maxBoulderGrade: 'Max Bouldering Grade',
   maxRouteGrade: 'Max Route Grade',
   routeAscents: 'Routes',
 }
 
 const DISCIPLINE_SHADED_COLORS = {
-  Boulder: {
+  Bouldering: {
     average: 'color-mix(in oklch, var(--boulder) 65%, white)',
     max: 'color-mix(in oklch, var(--boulder) 70%, black)',
   },
-  Route: {
+  Sport: {
     average: 'color-mix(in oklch, var(--route) 65%, white)',
     max: 'color-mix(in oklch, var(--route) 70%, black)',
   },
@@ -144,7 +144,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   }, [gradeDomain])
 
   const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
-  const hasDisciplineData = data.some(({ Boulder, Route }) => Boulder > 0 || Route > 0)
+  const hasDisciplineData = data.some(({ Bouldering, Sport }) => Bouldering > 0 || Sport > 0)
 
   if (data.length === 0) return
   if (uniqueYearsCount <= 1) return
@@ -195,14 +195,14 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           <Legend align="center" iconType="circle" layout="horizontal" verticalAlign="top" />
 
           <Chart.Bar
-            dataKey="Boulder"
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Boulder}
+            dataKey="Bouldering"
+            fill={CLIMBING_DISCIPLINE_TO_COLOR.Bouldering}
             name={CHART_LABELS.boulderAscents}
             yAxisId="right"
           />
           <Chart.Bar
-            dataKey="Route"
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Route}
+            dataKey="Sport"
+            fill={CLIMBING_DISCIPLINE_TO_COLOR.Sport}
             name={CHART_LABELS.routeAscents}
             yAxisId="right"
           />
@@ -211,7 +211,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             dataKey="maxBoulderGrade"
             dot={false}
             name={CHART_LABELS.maxBoulderGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Boulder.max}
+            stroke={DISCIPLINE_SHADED_COLORS.Bouldering.max}
             strokeWidth={2}
             type="natural"
             yAxisId="left"
@@ -220,7 +220,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             dataKey="maxRouteGrade"
             dot={false}
             name={CHART_LABELS.maxRouteGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Route.max}
+            stroke={DISCIPLINE_SHADED_COLORS.Sport.max}
             strokeWidth={2}
             type="natural"
             yAxisId="left"
@@ -229,7 +229,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             dataKey="avgBoulderGrade"
             dot={false}
             name={CHART_LABELS.avgBoulderGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Boulder.average}
+            stroke={DISCIPLINE_SHADED_COLORS.Bouldering.average}
             strokeDasharray={DOTTED_LINE_STROKE}
             strokeWidth={2}
             type="natural"
@@ -239,7 +239,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
             dataKey="avgRouteGrade"
             dot={false}
             name={CHART_LABELS.avgRouteGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Route.average}
+            stroke={DISCIPLINE_SHADED_COLORS.Sport.average}
             strokeDasharray={DOTTED_LINE_STROKE}
             strokeWidth={2}
             type="natural"

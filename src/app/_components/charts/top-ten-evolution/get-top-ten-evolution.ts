@@ -5,8 +5,8 @@ import { countUniqueDates } from '~/helpers/count-unique-dates'
 import type { Ascent } from '~/schema/ascent'
 
 type TopTenEvolutionDatum = {
-  Boulder: number
-  Route: number
+  Bouldering: number
+  Sport: number
   ascents: number
   outdoorDays: number
   topTenScore: number
@@ -20,18 +20,18 @@ export function getTopTenEvolution(ascents: Ascent[]): TopTenEvolutionDatum[] {
 
   return years.map((year) => {
     const ascentsInYear = ascents.filter(({ date }) => isDateInYear(date, year))
-    const { Boulder, Route } = ascentsInYear.reduce(
-      (acc, { climbingDiscipline }) => {
-        if (climbingDiscipline === 'Boulder') acc.Boulder++
-        if (climbingDiscipline === 'Route') acc.Route++
+    const { Bouldering, Sport } = ascentsInYear.reduce(
+      (acc, { discipline }) => {
+        if (discipline === 'Bouldering') acc.Bouldering++
+        if (discipline === 'Sport') acc.Sport++
         return acc
       },
-      { Boulder: 0, Route: 0 },
+      { Bouldering: 0, Sport: 0 },
     )
 
     return {
-      Boulder,
-      Route,
+      Bouldering,
+      Sport,
       ascents: ascentsInYear.length,
       outdoorDays: countUniqueDates(ascentsInYear),
       topTenScore: calculateTopTenScore(ascentsInYear),

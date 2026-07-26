@@ -27,7 +27,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
     () =>
       weeklyTraining
         .filter(Boolean)
-        .sort(({ sessionType: aType }, { sessionType: bType }) =>
+        .sort(({ type: aType }, { type: bType }) =>
           aType === undefined || bType === undefined
             ? 0
             : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
@@ -42,7 +42,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       background: isSingleWeekTraining
         ? undefined
         : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
-            .map(({ sessionType }) => fromSessionTypeToBackgroundColor(sessionType))
+            .map(({ type }) => fromSessionTypeToBackgroundColor(type))
             .join(', ')})`,
       inlineSize: `${numberOfTraining / 2}%`,
     }),
@@ -62,7 +62,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   if (firstTraining === undefined) return <span />
 
   const trainingBarClassName = `${
-    isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining?.sessionType) : ''
+    isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining?.type) : ''
   } ${styles.bar}`
 
   return (

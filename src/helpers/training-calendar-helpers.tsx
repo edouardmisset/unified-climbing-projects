@@ -1,4 +1,5 @@
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
+import { TRAINING_SESSION_TYPE_TO_CALENDAR_LABEL } from '~/constants/training'
 import { getSessionTypeColors } from '~/helpers/training-converter'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -29,20 +30,20 @@ export function fromTrainingSessionsToCalendarEntries(
           title: '',
         }
 
-      const { date, sessionType, intensity, volume } = firstSession
+      const { date, type, intensity, volume } = firstSession
       const backgroundColor = getSessionTypeColors({
         intensityPercent: intensity,
-        sessionType,
+        type,
         volumePercent: volume,
       })
 
-      const isOutdoorSession = sessions.some((session) => session.sessionType === 'Out')
+      const isOutdoorSession = sessions.some((session) => session.type === 'Outdoor')
       const matchingAscents = isOutdoorSession ? (ascentsByDate.get(date.slice(0, 10)) ?? []) : []
 
       return {
         backgroundColor,
         date,
-        shortText: sessionType ?? '',
+        shortText: TRAINING_SESSION_TYPE_TO_CALENDAR_LABEL[type],
         title: prettyLongDate(date),
         trainingSessions: sessions,
         ...(matchingAscents.length > 0 && { ascents: matchingAscents }),

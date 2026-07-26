@@ -7,6 +7,12 @@ import type { Object_ } from '~/types/generic'
  */
 export const LINKS = {
   home: '/',
+  import: '/import',
+  privacy: '/privacy',
+  settings: '/settings',
+  signIn: '/sign-in',
+  signUp: '/sign-up',
+  terms: '/terms',
   ascentForm: '/ascent-form',
   trainingSessionForm: '/training-session-form',
   indicators: '/indicators',

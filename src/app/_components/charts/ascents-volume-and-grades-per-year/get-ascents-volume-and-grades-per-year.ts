@@ -5,8 +5,8 @@ import { fromGradeToNumber } from '~/helpers/grade-converter'
 import type { Ascent } from '~/schema/ascent'
 
 type AscentsVolumeAndGradesPerYearDatum = {
-  Boulder: number
-  Route: number
+  Bouldering: number
+  Sport: number
   avgBoulderGrade: number | undefined
   avgRouteGrade: number | undefined
   maxBoulderGrade: number | undefined
@@ -37,18 +37,18 @@ export function getAscentsVolumeAndGradesPerYear(
     const boulderGrades: number[] = []
     const routeGrades: number[] = []
 
-    for (const { climbingDiscipline, date, topoGrade } of ascents) {
+    for (const { discipline, date, grade } of ascents) {
       if (!isDateInYear(date, year)) continue
-      if (climbingDiscipline === 'Boulder') boulderGrades.push(fromGradeToNumber(topoGrade))
-      if (climbingDiscipline === 'Route') routeGrades.push(fromGradeToNumber(topoGrade))
+      if (discipline === 'Bouldering') boulderGrades.push(fromGradeToNumber(grade))
+      if (discipline === 'Sport') routeGrades.push(fromGradeToNumber(grade))
     }
 
     const boulderGradeStats = getGradeStats(boulderGrades)
     const routeGradeStats = getGradeStats(routeGrades)
 
     return {
-      Boulder: boulderGrades.length,
-      Route: routeGrades.length,
+      Bouldering: boulderGrades.length,
+      Sport: routeGrades.length,
       avgBoulderGrade: boulderGradeStats.avg,
       avgRouteGrade: routeGradeStats.avg,
       maxBoulderGrade: boulderGradeStats.max,

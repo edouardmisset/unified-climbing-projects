@@ -84,9 +84,9 @@ export function fromAscentStyleToEmoji(style: Ascent['style']): Emoji {
 }
 
 const ENERGY_SYSTEM_TO_EMOJI: Record<Exclude<TrainingSession['energySystem'], undefined>, Emoji> = {
-  AA: '🔥',
-  AE: '🫀',
-  AL: '🪫',
+  'Anaerobic Alactic': '🔥',
+  Aerobic: '🫀',
+  'Anaerobic Lactic': '🪫',
 }
 
 export function fromEnergySystemToEmoji(energySystem: TrainingSession['energySystem']): Emoji {
@@ -97,9 +97,9 @@ const ANATOMICAL_REGION_TO_EMOJI: Record<
   Exclude<TrainingSession['anatomicalRegion'], undefined>,
   Emoji
 > = {
-  Ar: '💪',
-  Fi: '🖐️',
-  Ge: '🦵',
+  Arms: '💪',
+  Fingers: '🖐️',
+  General: '🦵',
 }
 
 export function fromAnatomicalRegionToEmoji(
@@ -108,21 +108,14 @@ export function fromAnatomicalRegionToEmoji(
   return anatomicalRegion === undefined ? '' : (ANATOMICAL_REGION_TO_EMOJI[anatomicalRegion] ?? '')
 }
 
-const CLIMBING_DISCIPLINE_TO_EMOJI: Record<
-  NonNullable<TrainingSession['climbingDiscipline']>,
-  Emoji
-> = {
-  Boulder: '🪨',
+const CLIMBING_DISCIPLINE_TO_EMOJI: Record<NonNullable<TrainingSession['discipline']>, Emoji> = {
+  Bouldering: '🪨',
   'Multi-Pitch': '⛰️',
-  Route: '🧗',
+  Sport: '🧗',
 }
 
-export function fromClimbingDisciplineToEmoji(
-  climbingDiscipline: TrainingSession['climbingDiscipline'],
-): Emoji {
-  return climbingDiscipline === undefined
-    ? ''
-    : (CLIMBING_DISCIPLINE_TO_EMOJI[climbingDiscipline] ?? '')
+export function fromClimbingDisciplineToEmoji(discipline: TrainingSession['discipline']): Emoji {
+  return discipline === undefined ? '' : (CLIMBING_DISCIPLINE_TO_EMOJI[discipline] ?? '')
 }
 
 export const gradeToClassName = (grade: Grade): string => grade.replace('+', '_')
