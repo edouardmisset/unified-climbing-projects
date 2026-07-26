@@ -21,8 +21,10 @@ function downloadBlob(blob: Blob, fileName: string): void {
   const link = document.createElement('a')
   link.href = url
   link.download = fileName
+  document.body.append(link)
   link.click()
-  URL.revokeObjectURL(url)
+  link.remove()
+  globalThis.setTimeout(() => URL.revokeObjectURL(url), 0)
 }
 
 function downloadText(text: string, fileName: string): void {

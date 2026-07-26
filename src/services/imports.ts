@@ -96,7 +96,10 @@ export async function runCanonicalImport(
     await fetchMutation(api.imports.finishJob, { failed: false, jobId }, { token })
     return { inserted, jobId, skipped }
   } catch (error) {
-    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token })
+    // Preserve the original import failure if recording the terminal status also fails.
+    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token }).catch(
+      () => undefined,
+    )
     throw error
   }
 }

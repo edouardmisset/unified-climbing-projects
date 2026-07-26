@@ -6,7 +6,7 @@ import {
 import { omitServerControlledFields } from '~/domain/canonical/common'
 import { createAscentFingerprintInput } from '~/domain/canonical/fingerprint-input'
 import { zodToConvex } from 'convex-helpers/server/zod'
-import { ConvexError, v } from 'convex/values'
+import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'
 import { requireIdentity } from './auth'
 import { createContentFingerprint } from './fingerprint'
@@ -48,12 +48,13 @@ export const post = mutation({
 })
 
 export const getById = query({
-  args: { id: v.id('ascents') },
+  args: { id: v.string() },
   handler: async (ctx, { id }) => {
     const { subject } = await requireIdentity(ctx)
-    const record = await ctx.db.get(id)
-    if (!record || !('ownerId' in record) || record.ownerId !== subject)
-      throw new ConvexError('Ascent not found')
+    const normalizedId = ctx.db.normalizeId('ascents', id)
+    if (!normalizedId) return
+    const record = await ctx.db.get(normalizedId)
+    if (!record || record.ownerId !== subject) return
     return toPublicAscent(record)
   },
 })

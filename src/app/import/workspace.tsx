@@ -44,9 +44,13 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
   const [isWorking, setIsWorking] = useState(false)
 
   const selectFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+    const input = event.currentTarget
+    const file = input.files?.[0]
+    // Allow selecting the same file again after an error or a completed import.
+    input.value = ''
     setRows([])
     setPreview(undefined)
+    setAllowDuplicates(false)
     setMessage('')
     if (!file) return
     if (file.size > MAX_FILE_BYTES) {
@@ -116,6 +120,8 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
               setSource(event.target.value as ImportSource)
               setRows([])
               setPreview(undefined)
+              setAllowDuplicates(false)
+              setMessage('')
             }}
             value={source}
           >
@@ -173,7 +179,8 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
                 <strong>{job.kind}</strong> · {job.status} · {job.inserted} inserted · {job.skipped}{' '}
                 skipped
               </span>
-              {(job.status === 'completed' || job.status === 'failed') && job.inserted > 0 ? (
+              {['running', 'undoing', 'completed', 'failed'].includes(job.status) &&
+              job.inserted > 0 ? (
                 <button disabled={isWorking} onClick={() => undo(job._id)} type="button">
                   Undo
                 </button>

@@ -65,6 +65,15 @@ export async function getAllAscents(): Promise<AscentRecord[]> {
   return ascentPublicOutputSchema.array().parse(records).toSorted(compareDates)
 }
 
+export async function getAscentById(_id: string): Promise<AscentRecord | undefined> {
+  if (getDataSource() === 'synthetic')
+    return syntheticAscents.map(toCanonicalAscentRecord).find((ascent) => ascent._id === _id)
+
+  const token = await getConvexAuthToken()
+  const record = await fetchQuery(api.ascents.getById, { id: _id }, { token })
+  return record ? ascentPublicOutputSchema.parse(record) : undefined
+}
+
 export async function addAscent(
   ascent: AscentPublicInput | Omit<LegacyAscent, '_id'>,
 ): Promise<void> {

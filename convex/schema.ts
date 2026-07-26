@@ -10,6 +10,7 @@ const importKindValidator = v.union(v.literal('ascents'), v.literal('training'))
 const importStatusValidator = v.union(
   v.literal('pending'),
   v.literal('running'),
+  v.literal('undoing'),
   v.literal('completed'),
   v.literal('failed'),
   v.literal('undone'),

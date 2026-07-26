@@ -233,7 +233,11 @@ export const finishJob = mutation({
   handler: async (ctx, args) => {
     assertWritesEnabled()
     const { subject } = await requireIdentity(ctx)
-    await requireOwnedJob(ctx, args.jobId, subject)
+    const job = await requireOwnedJob(ctx, args.jobId, subject)
+    if (job.status !== 'pending' && job.status !== 'running')
+      throw new ConvexError('Import job is already finished')
+    if (!args.failed && job.inserted + job.skipped !== job.total)
+      throw new ConvexError('Import job cannot complete before every row is accounted for')
     await ctx.db.patch(args.jobId, { status: args.failed ? 'failed' : 'completed' })
   },
 })
@@ -244,8 +248,9 @@ export const undoBatch = mutation({
     assertWritesEnabled()
     const { subject } = await requireIdentity(ctx)
     const job = await requireOwnedJob(ctx, args.jobId, subject)
-    if (!['completed', 'failed'].includes(job.status))
-      throw new ConvexError('Only completed or failed imports can be undone')
+    if (!['running', 'undoing', 'completed', 'failed'].includes(job.status))
+      throw new ConvexError('Only active, completed, or failed imports can be undone')
+    if (job.status !== 'undoing') await ctx.db.patch(args.jobId, { status: 'undoing' })
     const table = job.kind === 'ascents' ? 'ascents' : 'training'
     const records = await ctx.db
       .query(table)

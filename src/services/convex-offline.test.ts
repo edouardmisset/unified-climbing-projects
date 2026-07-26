@@ -40,6 +40,20 @@ describe('convex service in synthetic mode', () => {
     })
   })
 
+  it('looks up synthetic ascents without loading remote data', async () => {
+    await runInSyntheticMode(async () => {
+      const expected = syntheticAscents.map(toCanonicalAscentRecord).at(0)
+      const { getAscentById } = await import('./convex')
+
+      expect(expected).toBeDefined()
+      if (!expected) return
+
+      await expect(getAscentById(expected._id)).resolves.toStrictEqual(expected)
+      await expect(getAscentById('unknown-ascent')).resolves.toBeUndefined()
+      expect(convexMocks.fetchQuery).not.toHaveBeenCalled()
+    })
+  })
+
   it('returns synthetic training sessions without querying Convex', async () => {
     await runInSyntheticMode(async () => {
       const { getAllTrainingSessions } = await import('./convex')

@@ -165,7 +165,7 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 - [x] Replace `/` with the landing page and keep the app at `/wrap-up`.
 - [ ] Add marketing/app route groups without changing other stable URLs.
 - [x] Keep `/`, `/sign-in`, `/sign-up`, `/privacy`, and `/terms` public; protect all app, import, and settings routes through `src/proxy.ts`.
-- [ ] Enable Clerk Restricted mode and invitations.
+- [x] Enable Clerk Restricted mode and invitations.
 - [ ] Test Google, GitHub, and email/password sign-in, verification, recovery, redirects, cancelled OAuth, denied consent, and verified-email linking.
 - [ ] Build no merge tool. Delete empty duplicate Clerk identities; freeze and resolve any duplicate containing data with a reviewed one-off migration.
 - [x] Publish the landing page, beta indicator, privacy page, beta terms, and existing support/deletion email.
@@ -183,13 +183,15 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 ### 4. Add imports and undo
 
 - [x] Limit files to 5 MB and 10,000 rows. Tell users to split larger files; build no assisted path.
-- [x] Parse and preview files in the browser; never upload or log the original file.
+- [x] Parse files in the browser; send validated canonical rows for preview matching, but never
+      upload or log the original file.
 - [x] Implement the 8a.nu adapter from the sanitized fixture and publish current export instructions.
 - [x] Show invalid rows and existing exact fingerprint matches before confirmation.
 - [x] Revalidate and insert valid rows in atomic Convex batches under the authenticated owner.
 - [x] Create one job per attempt, stamp inserted records with its ID, skip duplicates by default, and offer “import anyway.”
 - [x] Stop at the first failed batch. Retry by selecting the file again; fingerprints skip earlier inserts.
-- [x] Allow completed or failed jobs with inserted rows to be undone in bounded batches.
+- [x] Allow interrupted, completed, or failed jobs with inserted rows to be undone in bounded
+      batches.
 - [ ] Test malformed files, limits, quoting, Unicode, duplicates, failed retry, undo, and two users.
 
 **Gate:** all three import sources work, default re-import is idempotent, retry is safe, undo works, and owner isolation passes.
@@ -210,7 +212,8 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 - [x] After restore, keep access closed, compare restored owners with Clerk, delete orphaned owners' data, then reopen.
 - [x] Document manual deletion: identify and disable the Clerk subject, delete its records/jobs in batches, verify zero live data, delete the Clerk user, and confirm by email.
 - [x] Rehearse restore and deletion with synthetic accounts.
-- [ ] Audit completed Convex functions, server code, route handlers, caches, logs, secrets, ID lookups, input limits, and preview/production separation.
+- [x] Audit completed Convex functions, server code, route handlers, caches, logs, secrets, ID
+      lookups, input limits, and preview/production separation.
 
 **Gate:** backup/restore and deletion work, old backup plumbing is gone, all completed surfaces were audited, and no known critical/high issue remains.
 

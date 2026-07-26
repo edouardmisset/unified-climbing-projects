@@ -8,8 +8,9 @@ export default async function ImportPage() {
     <article>
       <h1>Import</h1>
       <p>
-        Files are parsed and previewed in your browser. The original file is never uploaded or
-        logged. Confirmed canonical records are inserted in atomic batches.
+        Files are parsed in your browser. The original file is never uploaded or logged; validated
+        canonical rows are sent securely to the app for duplicate matching during preview. Only
+        confirmed records are stored, in atomic batches.
       </p>
       <p>
         For 8a.nu, download your climbing-data CSV export and select “8a.nu data export” below.

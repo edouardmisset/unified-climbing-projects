@@ -25,7 +25,8 @@ const config: NextConfig = {
   reactCompiler: { compilationMode: 'infer' },
   experimental: {
     serverActions: {
-      bodySizeLimit: '6mb',
+      // A 5 MiB CSV can more than double as escaped JSON with repeated field names.
+      bodySizeLimit: '12mb',
     },
     useCache: true,
   },
