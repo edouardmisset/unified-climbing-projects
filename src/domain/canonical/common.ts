@@ -27,6 +27,14 @@ export const serverControlledFields = {
   ownerId: nonEmptyStringSchema,
 } as const
 
+export function omitServerControlledFields<T extends Record<string, unknown>>(
+  record: T,
+): Omit<T, keyof typeof serverControlledFields> {
+  const publicRecord: Record<string, unknown> = { ...record }
+  for (const field of Object.keys(serverControlledFields)) delete publicRecord[field]
+  return publicRecord as Omit<T, keyof typeof serverControlledFields>
+}
+
 export function emptyStringToUndefined(value: unknown): unknown {
   return typeof value === 'string' && value.trim() === '' ? undefined : value
 }

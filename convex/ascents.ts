@@ -1,4 +1,9 @@
-import { ascentPublicInputSchema, ascentPublicOutputSchema } from '~/domain/canonical/ascent'
+import {
+  ascentPublicInputSchema,
+  ascentPublicOutputSchema,
+  ascentStoredDocumentSchema,
+} from '~/domain/canonical/ascent'
+import { omitServerControlledFields } from '~/domain/canonical/common'
 import { createAscentFingerprintInput } from '~/domain/canonical/fingerprint-input'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { ConvexError, v } from 'convex/values'
@@ -10,7 +15,9 @@ import { assertWritesEnabled } from './maintenance'
 const publicAscentInputValidator = zodToConvex(ascentPublicInputSchema)
 
 function toPublicAscent(record: unknown) {
-  return ascentPublicOutputSchema.parse(record)
+  return ascentPublicOutputSchema.parse(
+    omitServerControlledFields(ascentStoredDocumentSchema.parse(record)),
+  )
 }
 
 export const get = query({

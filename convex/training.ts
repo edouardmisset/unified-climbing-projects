@@ -2,7 +2,9 @@ import { createTrainingSessionFingerprintInput } from '~/domain/canonical/finger
 import {
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
+  trainingSessionStoredDocumentSchema,
 } from '~/domain/canonical/training-session'
+import { omitServerControlledFields } from '~/domain/canonical/common'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { ConvexError, v } from 'convex/values'
 import { mutation, query } from './_generated/server'
@@ -13,7 +15,9 @@ import { assertWritesEnabled } from './maintenance'
 const publicTrainingInputValidator = zodToConvex(trainingSessionPublicInputSchema)
 
 function toPublicTrainingSession(record: unknown) {
-  return trainingSessionPublicOutputSchema.parse(record)
+  return trainingSessionPublicOutputSchema.parse(
+    omitServerControlledFields(trainingSessionStoredDocumentSchema.parse(record)),
+  )
 }
 
 export const get = query({

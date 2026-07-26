@@ -10,6 +10,7 @@ import {
   trainingSessionStoredDocumentSchema,
   trainingSessionStoredFieldsSchema,
 } from './training-session'
+import { omitServerControlledFields } from './common'
 
 const trainingSession = {
   anatomicalRegion: 'Fingers',
@@ -91,6 +92,24 @@ describe('training session public boundaries', () => {
     expect(
       trainingSessionPublicOutputSchema.safeParse({ ...output, ownerId: 'owner' }).success,
     ).toBe(false)
+  })
+
+  it('projects a stored document to strict public output', () => {
+    const output = {
+      ...trainingSession,
+      _creationTime: 1,
+      _id: 'training-id',
+    }
+    const stored = trainingSessionStoredDocumentSchema.parse({
+      ...output,
+      contentFingerprint: 'fingerprint',
+      importJobId: 'job',
+      ownerId: 'owner',
+    })
+
+    expect(
+      trainingSessionPublicOutputSchema.parse(omitServerControlledFields(stored)),
+    ).toStrictEqual(output)
   })
 
   it('requires a canonical session type', () => {

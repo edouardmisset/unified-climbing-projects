@@ -10,6 +10,7 @@ import {
   ascentStoredDocumentSchema,
   ascentStoredFieldsSchema,
 } from './ascent'
+import { omitServerControlledFields } from './common'
 
 const ascent = {
   area: 'North Sector',
@@ -91,6 +92,22 @@ describe('ascent public boundaries', () => {
 
     expect(output._id).toBe('ascent-id')
     expect(ascentPublicOutputSchema.safeParse({ ...output, ownerId: 'owner' }).success).toBe(false)
+  })
+
+  it('projects a stored document to strict public output', () => {
+    const output = {
+      ...ascent,
+      _creationTime: 1,
+      _id: 'ascent-id',
+    }
+    const stored = ascentStoredDocumentSchema.parse({
+      ...output,
+      contentFingerprint: 'fingerprint',
+      importJobId: 'job',
+      ownerId: 'owner',
+    })
+
+    expect(ascentPublicOutputSchema.parse(omitServerControlledFields(stored))).toStrictEqual(output)
   })
 
   it('rejects legacy fields', () => {
