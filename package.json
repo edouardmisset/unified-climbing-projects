@@ -97,20 +97,16 @@
     "baseline newly available"
   ],
   "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.x",
-      "onFail": "error"
-    },
     "runtime": {
       "name": "node",
-      "version": "26.x",
+      "version": "24.x",
       "onFail": "error"
     }
   },
   "engines": {
-    "node": ">=26 <27"
+    "node": "24.x"
   },
+  "packageManager": "pnpm@11.17.0",
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   }
