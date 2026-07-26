@@ -27,7 +27,11 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
     await addTrainingSession(newTrainingSession)
     revalidatePath('/', 'layout')
     return true
-  } catch {
+  } catch (error) {
+    globalThis.console.error(
+      'Error adding training session:',
+      error instanceof Error ? error.message : error,
+    )
     return false
   }
 }

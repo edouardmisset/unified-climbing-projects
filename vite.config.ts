@@ -11,7 +11,6 @@ export default defineConfig({
     globals: false,
     environment: 'happy-dom',
     setupFiles: ['./vitest.setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}'],
     css: true,
     coverage: {
       provider: 'v8',
@@ -26,6 +25,27 @@ export default defineConfig({
         '**/types.ts',
       ],
     },
+    // Convex functions run in a runtime closer to Vercel's Edge Runtime than
+    // to Node/happy-dom, and their tests must not load the DOM-testing setup
+    // used by the frontend project, so they get their own project.
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'frontend',
+          include: ['src/**/*.test.{ts,tsx}'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          environment: 'edge-runtime',
+          include: ['convex/**/*.test.ts'],
+          name: 'convex',
+          setupFiles: [],
+        },
+      },
+    ],
   },
   resolve: {
     alias: {

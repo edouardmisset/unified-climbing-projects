@@ -12,7 +12,8 @@ to try new libraries and patterns.
 - UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas
 - User-specific server reads are deliberately uncached
-- Testing: vitest
+- Testing: vitest (unit), Playwright (e2e smoke test, see `.env.example` for
+  required test-user credentials)
 
 ## Getting Started
 

@@ -111,8 +111,15 @@ describe('serializeCanonicalCsv', () => {
     expect(error).toMatchObject({ code: 'INVALID_EXPORT_ROW', column: 1, row: 2 })
   })
 
-  it('does not neutralize spreadsheet formulas', () => {
-    expect(serializeCanonicalCsv([{ value: '=1+1' }], ['value'])).toBe('value\r\n=1+1\r\n')
+  it.each([['=1+1'], ['+1'], ['-1'], ['@SUM(A1)'], ['\t=1'], ['\r=1']])(
+    'neutralizes spreadsheet formulas by quoting and prefixing %s with a single quote',
+    (value) => {
+      expect(serializeCanonicalCsv([{ value }], ['value'])).toBe(`value\r\n"'${value}"\r\n`)
+    },
+  )
+
+  it('does not alter values that merely contain, but do not start with, formula-trigger characters', () => {
+    expect(serializeCanonicalCsv([{ value: 'a=b+c' }], ['value'])).toBe('value\r\na=b+c\r\n')
   })
 })
 

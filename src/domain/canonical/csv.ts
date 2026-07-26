@@ -250,9 +250,20 @@ export function parseCanonicalCsv<T>(text: string, contract: CanonicalCsvContrac
   })
 }
 
+// Spreadsheet applications (Excel, Google Sheets, LibreOffice) treat a cell
+// as a formula when it starts with one of these characters. Free-text fields
+// (comments, crag names, etc.) are user input, so without this guard an
+// exported CSV can execute attacker-controlled formulas when opened
+// (CSV/Formula Injection, OWASP). Prefixing with a single quote is the
+// standard mitigation: spreadsheet apps render the value as literal text.
+const FORMULA_TRIGGER_PATTERN = /^[\t\r+=@-]/u
+
 function serializeCsvCell(value: string): string {
-  const requiresQuotes = value === '' || /[^\x20-\x7E]|[",]/u.test(value)
-  return requiresQuotes ? `"${value.replaceAll('"', '""')}"` : value
+  const needsFormulaGuard = FORMULA_TRIGGER_PATTERN.test(value)
+  const guardedValue = needsFormulaGuard ? `'${value}` : value
+  const requiresQuotes =
+    needsFormulaGuard || guardedValue === '' || /[^\x20-\x7E]|[",]/u.test(guardedValue)
+  return requiresQuotes ? `"${guardedValue.replaceAll('"', '""')}"` : guardedValue
 }
 
 export function serializeCanonicalCsv(rows: readonly object[], columns: readonly string[]): string {

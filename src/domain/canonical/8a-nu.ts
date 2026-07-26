@@ -57,9 +57,9 @@ const styleBy8aNuType = {
   f: 'Flash',
   os: 'Onsight',
   rp: 'Redpoint',
-  // 8a.nu exports top-rope ascents as `tr`; v1 has no top-rope style, so a
-  // completed top-rope ascent uses the closest non-onsight canonical style.
-  tr: 'Redpoint',
+  // v1 does not track top-rope ascents. 8a.nu top-rope rows (`tr`) are
+  // intentionally absent here so the `!style` check below rejects them
+  // instead of importing them under another style.
 } as const
 
 function optionalText(value: string): string | undefined {

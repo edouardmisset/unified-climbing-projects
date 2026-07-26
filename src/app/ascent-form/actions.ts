@@ -17,7 +17,8 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
     await addAscent(parsedFormData.data)
     revalidatePath('/', 'layout')
     return true
-  } catch {
+  } catch (error) {
+    globalThis.console.error('Error adding ascent:', error instanceof Error ? error.message : error)
     return false
   }
 }

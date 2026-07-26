@@ -86,7 +86,7 @@ The import page also accepts the current 19-column 8a.nu climbing-data export. T
 
 - maps `ROUTE` to `Sport` and `BOULDER` to `Bouldering`;
 - maps `os`, `f`, and `rp` to `Onsight`, `Flash`, and `Redpoint`;
-- maps 8a.nu top-rope (`tr`) to `Redpoint`, the closest v1 canonical send style;
+- rejects 8a.nu top-rope (`tr`) rows entirely, since v1 does not track top-rope ascents;
 - lowercases Fontainebleau-style grade capitalization;
 - maps location to crag and a known sector to area;
 - preserves date, attempts, rating, height, and comments when present; and

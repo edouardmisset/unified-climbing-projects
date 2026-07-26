@@ -31,6 +31,11 @@ export const ownerCounts = query({
 export const reconcile = internalQuery({
   args: { ownerId: v.string() },
   handler: async (ctx, args) => {
+    // Intentional full-table scan: this is an `internalQuery` used only for
+    // the one-time migration rehearsal/cutover reconciliation (see
+    // docs/acceptance-and-isolation.md), not something reachable by clients
+    // or run on a schedule. It is not safe to call once the tables grow
+    // beyond what fits in a single Convex query's read set.
     const [ascents, training] = await Promise.all([
       ctx.db.query('ascents').collect(),
       ctx.db.query('training').collect(),

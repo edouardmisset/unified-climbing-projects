@@ -35,9 +35,9 @@ describe('8a.nu CSV adapter', () => {
         discipline: 'Sport',
         grade: '6b',
         height: 15,
-        name: 'Synthetic Top Rope',
+        name: 'Synthetic Onsight',
         rating: 3,
-        style: 'Redpoint',
+        style: 'Onsight',
         tries: 1,
       },
     ])
@@ -52,6 +52,12 @@ describe('8a.nu CSV adapter', () => {
   it('reports unsupported ascent types as invalid rows', () => {
     expect(() => parse8aNuAscentCsv(SANITIZED_8A_NU_FIXTURE.replace('"f"', '"unknown"'))).toThrow(
       expect.objectContaining({ code: 'INVALID_ROW', row: 3 }),
+    )
+  })
+
+  it('rejects top-rope (`tr`) rows since v1 does not track top-rope ascents', () => {
+    expect(() => parse8aNuAscentCsv(SANITIZED_8A_NU_FIXTURE.replace('"os"', '"tr"'))).toThrow(
+      expect.objectContaining({ code: 'INVALID_ROW', row: 4 }),
     )
   })
 })
