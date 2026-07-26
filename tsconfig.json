@@ -4,7 +4,7 @@
     // "rootDir": "./src",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "target": "es2024",
+    "target": "ESNext",
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
@@ -15,7 +15,7 @@
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
     /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ESNext"],
+    "lib": ["dom", "ES2025"],
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",

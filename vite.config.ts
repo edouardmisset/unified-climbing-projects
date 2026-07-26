@@ -3,6 +3,8 @@ import path from 'node:path'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite-plus'
 
+const compileTarget = 'esnext'
+
 export default defineConfig({
   plugins: [react()],
   test: {
@@ -56,7 +58,11 @@ export default defineConfig({
       typeAware: true,
       typeCheck: true,
     },
-    jsPlugins: ['@shopify/eslint-plugin', 'eslint-plugin-react-you-might-not-need-an-effect'],
+    jsPlugins: [
+      '@shopify/eslint-plugin',
+      'eslint-plugin-react-you-might-not-need-an-effect',
+      'eslint-plugin-compat',
+    ],
     plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
     categories: {
       correctness: 'error',
@@ -65,6 +71,7 @@ export default defineConfig({
       style: 'warn',
     },
     rules: {
+      'eslint-plugin-compat/compat': 'error',
       '@shopify/eslint-plugin/prefer-early-return': 'error',
       'capitalized-comments': 'off',
       'eslint/arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: false }],
@@ -216,5 +223,8 @@ export default defineConfig({
   staged: {
     '*.{js,jsx,ts,tsx}': 'vp check --fix',
     '*.css': 'vp fmt',
+  },
+  oxc: {
+    target: compileTarget,
   },
 })
