@@ -106,6 +106,7 @@
   "engines": {
     "node": "24.x"
   },
+  "packageManager": "pnpm@11.17.0",
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   }
