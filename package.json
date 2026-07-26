@@ -99,12 +99,12 @@
     },
     "runtime": {
       "name": "node",
-      "version": "26.x",
+      "version": "24.x",
       "onFail": "error"
     }
   },
   "engines": {
-    "node": ">=26 <27"
+    "node": "24.x"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"
