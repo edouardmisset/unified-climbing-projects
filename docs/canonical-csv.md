@@ -79,3 +79,18 @@ training-session parsers, serializers, and header-only template strings.
 
 Parsing errors identify their category and, when applicable, the physical row and column. Domain
 validation failures retain the underlying schema error as their `cause`.
+
+## 8a.nu exports
+
+The import page also accepts the current 19-column 8a.nu climbing-data export. The adapter:
+
+- maps `ROUTE` to `Sport` and `BOULDER` to `Bouldering`;
+- maps `os`, `f`, and `rp` to `Onsight`, `Flash`, and `Redpoint`;
+- maps 8a.nu top-rope (`tr`) to `Redpoint`, the closest v1 canonical send style;
+- lowercases Fontainebleau-style grade capitalization;
+- maps location to crag and a known sector to area;
+- preserves date, attempts, rating, height, and comments when present; and
+- treats a zero or missing attempt count on a completed ascent as one.
+
+Unknown provider headers or enum codes are rejected so an upstream export-format change cannot be
+silently misinterpreted.

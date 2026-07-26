@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { type ChangeEvent, useState } from 'react'
+import { parse8aNuAscentCsv } from '~/domain/canonical/8a-nu'
 import type { AscentImportRow } from '~/domain/canonical/ascent'
 import { parseAscentCsv, parseTrainingSessionCsv } from '~/domain/canonical/csv-contract'
 import { decodeUtf8Csv } from '~/domain/canonical/csv'
@@ -15,11 +16,18 @@ import styles from './workspace.module.css'
 const MAX_FILE_BYTES = 5 * 1_024 * 1_024
 const MAX_ROWS = 10_000
 type ImportKind = 'ascents' | 'training'
+type ImportSource = '8a-nu' | 'canonical-ascents' | 'canonical-training'
 type ImportRows = AscentImportRow[] | TrainingSessionImportRow[]
 type ImportPreview = {
   duplicatesInFile: number
   existingMatches: number
   total: number
+}
+
+function parseImportSource(source: ImportSource, text: string): ImportRows {
+  if (source === '8a-nu') return parse8aNuAscentCsv(text)
+  if (source === 'canonical-ascents') return parseAscentCsv(text)
+  return parseTrainingSessionCsv(text)
 }
 
 type ImportWorkspaceProps = {
@@ -28,7 +36,7 @@ type ImportWorkspaceProps = {
 
 export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
   const router = useRouter()
-  const [kind, setKind] = useState<ImportKind>('ascents')
+  const [source, setSource] = useState<ImportSource>('canonical-ascents')
   const [rows, setRows] = useState<ImportRows>([])
   const [preview, setPreview] = useState<ImportPreview>()
   const [allowDuplicates, setAllowDuplicates] = useState(false)
@@ -49,10 +57,11 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
     setIsWorking(true)
     try {
       const text = decodeUtf8Csv(await file.arrayBuffer())
-      const parsed = kind === 'ascents' ? parseAscentCsv(text) : parseTrainingSessionCsv(text)
+      const parsed = parseImportSource(source, text)
       if (parsed.length === 0) throw new Error('The file has headers but no data rows.')
       if (parsed.length > MAX_ROWS)
         throw new Error('File exceeds 10,000 rows. Split it into smaller files.')
+      const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
       const result = await previewImport(kind, parsed)
       setRows(parsed)
       setPreview(result)
@@ -68,6 +77,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
     setIsWorking(true)
     setMessage('')
     try {
+      const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
       const result = await runImport(kind, rows, allowDuplicates)
       setMessage(`Imported ${result.inserted} records; skipped ${result.skipped} duplicates.`)
       setRows([])
@@ -103,14 +113,15 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
           <select
             disabled={isWorking}
             onChange={(event) => {
-              setKind(event.target.value as ImportKind)
+              setSource(event.target.value as ImportSource)
               setRows([])
               setPreview(undefined)
             }}
-            value={kind}
+            value={source}
           >
-            <option value="ascents">Canonical ascents.csv</option>
-            <option value="training">Canonical training-sessions.csv</option>
+            <option value="canonical-ascents">Canonical ascents.csv</option>
+            <option value="canonical-training">Canonical training-sessions.csv</option>
+            <option value="8a-nu">8a.nu data export</option>
           </select>
         </label>
         <label>

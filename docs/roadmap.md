@@ -131,13 +131,13 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 
 ### 0. Close production and secure the data
 
-- [ ] Pause the production Convex deployment.
+- [x] Pause the production Convex deployment.
 - [ ] Download a fresh backup, record its checksum and table counts outside Git, and rehearse restore in a temporary private Convex deployment. Delete the temporary deployment afterward. (Backup and restore rehearsal complete; temporary deployment cleanup remains.)
-- [ ] Remove real backups and raw fixtures from the working tree; retain only synthetic data and the minimal sanitized 8a.nu fixture.
+- [x] Remove real backups and raw fixtures from the working tree; retain only synthetic data and the minimal sanitized 8a.nu fixture.
 - [x] Add ignore rules and a small CI check blocking backup/export paths and archives.
 - [ ] Close affected PRs, clean writable refs with `git-filter-repo`, force-push, check forks, and prevent old clones from reintroducing history.
 - [ ] Ask GitHub Support to purge affected PR refs/caches; record confirmation or refusal.
-- [ ] Record outside public Git the destination Clerk subject, sanitized 8a.nu fixture, and existing support/deletion email.
+- [x] Record outside public Git the destination Clerk subject, sanitized 8a.nu fixture, and existing support/deletion email.
 
 **Gate:** production is paused, restore works, cleanup is complete as far as GitHub permits, and all three inputs exist.
 
@@ -148,12 +148,12 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 - [x] Add Clerk authentication to Convex and one `requireIdentity(ctx)` helper.
 - [x] Build one idempotent internal migration with dry-run counts and errors.
 - [x] Rehearse it on a temporary private restore. Normal preview/E2E environments use synthetic data only.
-- [ ] While Convex is paused, deploy a widened maintenance build: public reads require identity and expose no ownerless rows; public writes are disabled.
-- [ ] Resume Convex and run the internal migration, assigning the selected owner and fingerprint to every record.
-- [ ] Reconcile unchanged row counts and IDs, exactly three DWS conversions, zero ownerless rows, and zero missing fingerprints.
+- [x] While Convex is paused, deploy a widened maintenance build: public reads require identity and expose no ownerless rows; public writes are disabled.
+- [x] Resume Convex and run the internal migration, assigning the selected owner and fingerprint to every record.
+- [x] Reconcile unchanged row counts and IDs, exactly three DWS conversions, zero ownerless rows, and zero missing fingerprints.
 - [x] Switch every consumer to canonical fields and owner-indexed queries. Lookups by ID must verify ownership.
 - [x] Stamp ownership and fingerprints server-side on inserts; never accept them from public arguments.
-- [ ] Remove public action wrappers, shared user-data caches, legacy fields, and permissive validators.
+- [x] Remove public action wrappers, shared user-data caches, legacy fields, and permissive validators.
 - [x] Test unauthenticated, user A, and user B list/detail/create access.
 
 **Rollback:** pause Convex, redeploy the widened maintenance build, and restore the pre-migration backup. Do not write reverse transformers.
@@ -184,7 +184,7 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 
 - [x] Limit files to 5 MB and 10,000 rows. Tell users to split larger files; build no assisted path.
 - [x] Parse and preview files in the browser; never upload or log the original file.
-- [ ] Implement the 8a.nu adapter from the sanitized fixture and publish current export instructions.
+- [x] Implement the 8a.nu adapter from the sanitized fixture and publish current export instructions.
 - [x] Show invalid rows and existing exact fingerprint matches before confirmation.
 - [x] Revalidate and insert valid rows in atomic Convex batches under the authenticated owner.
 - [x] Create one job per attempt, stamp inserted records with its ID, skip duplicates by default, and offer “import anyway.”
