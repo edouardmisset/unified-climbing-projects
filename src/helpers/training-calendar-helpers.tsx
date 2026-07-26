@@ -1,4 +1,5 @@
 import type { DayDescriptor } from '~/app/_components/year-grid/year-grid'
+import { TRAINING_SESSION_TYPE_TO_CALENDAR_LABEL } from '~/constants/training'
 import { getSessionTypeColors } from '~/helpers/training-converter'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
@@ -42,7 +43,7 @@ export function fromTrainingSessionsToCalendarEntries(
       return {
         backgroundColor,
         date,
-        shortText: type ?? '',
+        shortText: TRAINING_SESSION_TYPE_TO_CALENDAR_LABEL[type],
         title: prettyLongDate(date),
         trainingSessions: sessions,
         ...(matchingAscents.length > 0 && { ascents: matchingAscents }),

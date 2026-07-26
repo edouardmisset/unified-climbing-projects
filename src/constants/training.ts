@@ -20,6 +20,23 @@ export const INDOOR_SESSION_TYPES = [
 export const DEFAULT_INTENSITY_PERCENT = 65
 export const DEFAULT_VOLUME_PERCENT = 65
 
+export const TRAINING_SESSION_TYPE_TO_CALENDAR_LABEL = {
+  Chill: 'Ch',
+  'Contact Strength': 'CS',
+  Core: 'Co',
+  Endurance: 'En',
+  'Finger Board': 'FB',
+  'Max Strength': 'MS',
+  Outdoor: 'Out',
+  Power: 'Po',
+  'Power Endurance': 'PE',
+  Routine: 'Ro',
+  Skill: 'Sk',
+  Stamina: 'St',
+  'Strength Endurance': 'SE',
+  Stretching: 'Sg',
+} as const satisfies Record<NonNullable<TrainingSession['type']>, string>
+
 export const TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR: Record<
   NonNullable<TrainingSession['type']>,
   string
