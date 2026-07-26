@@ -1,5 +1,5 @@
-const FIRST_ACCEPTANCE_YEAR = 2_023
-const SECOND_ACCEPTANCE_YEAR = 2_024
+const FIRST_FIXTURE_YEAR = 2_023
+const SECOND_FIXTURE_YEAR = 2_024
 
 export const SYNTHETIC_ASCENT_FIXTURES = [
   {
@@ -54,7 +54,7 @@ export const SYNTHETIC_TRAINING_SESSION_FIXTURES = [
   },
 ] as const
 
-export const SYNTHETIC_ACCEPTANCE_EXPECTATIONS = {
+export const SYNTHETIC_LEGACY_EXPECTATIONS = {
   ascentCount: 2,
   ascentNames: ['The First Move', 'Second Wind'],
   latestAscent: {
@@ -68,5 +68,5 @@ export const SYNTHETIC_ACCEPTANCE_EXPECTATIONS = {
   trainingSessionCount: 2,
   trainingSessionLocations: ['Example Gym'],
   trainingSessionTypes: ['Endurance', 'Finger Board'],
-  years: [FIRST_ACCEPTANCE_YEAR, SECOND_ACCEPTANCE_YEAR],
+  years: [FIRST_FIXTURE_YEAR, SECOND_FIXTURE_YEAR],
 } as const

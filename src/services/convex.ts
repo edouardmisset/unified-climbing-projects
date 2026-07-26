@@ -1,7 +1,6 @@
 import { fetchMutation, fetchQuery } from 'convex/nextjs'
 import { api } from '~/../convex/_generated/api'
 import { EMPTY_OBJECT } from '~/constants/generic'
-import { syntheticAscents, syntheticTrainingSessions } from '~/data/synthetic-climbing-data'
 import {
   type AscentPublicInput,
   type AscentRecord,
@@ -9,8 +8,6 @@ import {
   ascentPublicOutputSchema,
 } from '~/domain/canonical/ascent'
 import {
-  toCanonicalAscentRecord,
-  toCanonicalTrainingSessionRecord,
   transformLegacyAscent,
   transformLegacyTrainingSession,
 } from '~/domain/canonical/legacy-transformers'
@@ -22,7 +19,6 @@ import {
 } from '~/domain/canonical/training-session'
 import type { LegacyAscent } from '~/schema/ascent'
 import type { LegacyTrainingSession } from '~/schema/training'
-import { assertRemoteWritesEnabled, getDataSource } from './data-source'
 
 const compareDates = (a: { date: string }, b: { date: string }): number =>
   new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -57,18 +53,12 @@ function normalizeTrainingInput(
 }
 
 export async function getAllAscents(): Promise<AscentRecord[]> {
-  if (getDataSource() === 'synthetic')
-    return syntheticAscents.map(toCanonicalAscentRecord).toSorted(compareDates)
-
   const token = await getConvexAuthToken()
   const records = await fetchQuery(api.ascents.get, EMPTY_OBJECT, { token })
   return ascentPublicOutputSchema.array().parse(records).toSorted(compareDates)
 }
 
 export async function getAscentById(_id: string): Promise<AscentRecord | undefined> {
-  if (getDataSource() === 'synthetic')
-    return syntheticAscents.map(toCanonicalAscentRecord).find((ascent) => ascent._id === _id)
-
   const token = await getConvexAuthToken()
   const record = await fetchQuery(api.ascents.getById, { id: _id }, { token })
   return record ? ascentPublicOutputSchema.parse(record) : undefined
@@ -77,15 +67,11 @@ export async function getAscentById(_id: string): Promise<AscentRecord | undefin
 export async function addAscent(
   ascent: AscentPublicInput | Omit<LegacyAscent, '_id'>,
 ): Promise<void> {
-  assertRemoteWritesEnabled()
   const token = await getConvexAuthToken()
   await fetchMutation(api.ascents.post, normalizeAscentInput(ascent), { token })
 }
 
 export async function getAllTrainingSessions(): Promise<TrainingSessionRecord[]> {
-  if (getDataSource() === 'synthetic')
-    return syntheticTrainingSessions.map(toCanonicalTrainingSessionRecord).toSorted(compareDates)
-
   const token = await getConvexAuthToken()
   const records = await fetchQuery(api.training.get, EMPTY_OBJECT, { token })
   return trainingSessionPublicOutputSchema.array().parse(records).toSorted(compareDates)
@@ -94,7 +80,6 @@ export async function getAllTrainingSessions(): Promise<TrainingSessionRecord[]>
 export async function addTrainingSession(
   session: TrainingSessionPublicInput | Omit<LegacyTrainingSession, '_id'>,
 ): Promise<void> {
-  assertRemoteWritesEnabled()
   const token = await getConvexAuthToken()
   await fetchMutation(api.training.post, normalizeTrainingInput(session), { token })
 }

@@ -12,7 +12,7 @@ to try new libraries and patterns.
 - UI: Base UI components; Charts: Recharts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas
 - User-specific server reads are deliberately uncached
-- Testing: vitest (unit) and Playwright (e2e)
+- Testing: vitest
 
 ## Getting Started
 
@@ -41,17 +41,15 @@ deployment environment.
 - Format: `vp run format`
 - Typecheck and checks (linting, style linting, formatting, etc.): `vp run check`
 - Validate (checks, tests, build): `vp run validate`
-- Validate locally with synthetic data and no Convex reads or writes: `vp run validate:offline`
 - Spellcheck: `vp run spell`
 - Style lint: `vp run style:lint`
 
 ## Testing
 
 - Unit tests: `vp run test:unit`
-- Synthetic offline E2E tests: `vp run test:e2e:offline`
 - All tests: `vp run test:all`
 
-The acceptance fixture and deferred user A/user B contract are documented in
+The owner-isolation contract is documented in
 [`docs/acceptance-and-isolation.md`](docs/acceptance-and-isolation.md).
 
 ## Notable Directories
@@ -64,7 +62,6 @@ The acceptance fixture and deferred user A/user B contract are documented in
 - `src/data/` — Data grouping and time-based helpers
 - `src/domain/canonical/` — Canonical validators, adapters, fingerprints, and CSV portability
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
-- `tests/` — Playwright E2E tests and reports
 - `scripts/` — Repository safety checks
 
 The canonical import/export format is documented in [`docs/canonical-csv.md`](docs/canonical-csv.md).

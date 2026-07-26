@@ -118,16 +118,19 @@ Spreadsheet-formula neutralization is out of scope. Do not describe the CSV file
 
 This phase is strictly local. It must not contact or alter Convex deployments, Clerk configuration, Vercel, GitHub history, or production data.
 
-- [x] Add an explicit synthetic data source and offline verification commands that never query Convex.
+- [x] Use an explicit synthetic data source for pre-migration verification, then remove the runtime
+      switch after the v1 release.
 - [x] Define separate canonical validators for stored records, public inputs, public outputs, forms, import rows, and export rows without changing the deployed Convex schema.
 - [x] Implement and test pure legacy transformers, calendar-date normalization, and deterministic fingerprint inputs against synthetic or sanitized fixtures.
 - [x] Move application consumers to the canonical read model behind temporary legacy compatibility adapters.
 - [x] Implement and test the shared canonical CSV parser, serializer, templates, and round trips as pure browser-compatible modules.
-- [x] Replace live-data-coupled smoke coverage with synthetic acceptance fixtures and prepare the user A/user B isolation matrix.
+- [x] Use synthetic fixtures during migration and prepare the user A/user B isolation matrix.
 
 Do not deploy this phase. Do not run Convex import, export, migration, backup, restore, or schema commands. Do not configure Clerk, assign ownership, remove the active backup mechanism, rewrite Git history, or publish legal pages.
 
-**Gate:** the application and its domain logic operate on canonical synthetic data; legacy conversion and CSV portability are deterministic and tested; checks, tests, and the production build can run without remote data access; and production behavior remains untouched.
+**Gate:** the application and its domain logic were verified against canonical synthetic data;
+legacy conversion and CSV portability are deterministic and tested; and production behavior
+remained untouched.
 
 ### 0. Close production and secure the data
 
@@ -147,7 +150,8 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 - [x] Test all mappings, `Ta` → `Chill`, three exact DWS matches, Europe/Paris dates, already-migrated rows, optional values, and non-derivable loads.
 - [x] Add Clerk authentication to Convex and one `requireIdentity(ctx)` helper.
 - [x] Build one idempotent internal migration with dry-run counts and errors.
-- [x] Rehearse it on a temporary private restore. Normal preview/E2E environments use synthetic data only.
+- [x] Rehearse it on a temporary private restore. Pre-release preview/E2E environments used
+      synthetic data only.
 - [x] While Convex is paused, deploy a widened maintenance build: public reads require identity and expose no ownerless rows; public writes are disabled.
 - [x] Resume Convex and run the internal migration, assigning the selected owner and fingerprint to every record.
 - [x] Reconcile unchanged row counts and IDs, exactly three DWS conversions, zero ownerless rows, and zero missing fingerprints.

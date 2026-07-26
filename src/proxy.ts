@@ -9,7 +9,6 @@ const isPublicRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, request) => {
-  if (process.env.CLIMBING_DATA_SOURCE === 'synthetic') return
   if (!isPublicRoute(request)) await auth.protect()
 })
 
