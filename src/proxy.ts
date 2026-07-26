@@ -25,7 +25,8 @@ export const config = {
     // xlsx, ...) here — any current or future route serving those needs its
     // own explicit entry in `isPublicRoute` above so auth isn't bypassed by
     // accident.
-    String.raw`/((?!_next|[^?]*\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|webmanifest)).*)`,
+    // oxlint-disable-next-line unicorn/prefer-string-raw
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|webmanifest)).*)',
     // Always run for API routes
     '/api(.*)',
   ],
