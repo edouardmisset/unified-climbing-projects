@@ -132,9 +132,9 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 ### 0. Close production and secure the data
 
 - [ ] Pause the production Convex deployment.
-- [ ] Download a fresh backup, record its checksum and table counts outside Git, and rehearse restore in a temporary private Convex deployment. Delete the temporary deployment afterward.
+- [ ] Download a fresh backup, record its checksum and table counts outside Git, and rehearse restore in a temporary private Convex deployment. Delete the temporary deployment afterward. (Backup and restore rehearsal complete; temporary deployment cleanup remains.)
 - [ ] Remove real backups and raw fixtures from the working tree; retain only synthetic data and the minimal sanitized 8a.nu fixture.
-- [ ] Add ignore rules and a small CI check blocking backup/export paths and archives.
+- [x] Add ignore rules and a small CI check blocking backup/export paths and archives.
 - [ ] Close affected PRs, clean writable refs with `git-filter-repo`, force-push, check forks, and prevent old clones from reintroducing history.
 - [ ] Ask GitHub Support to purge affected PR refs/caches; record confirmation or refusal.
 - [ ] Record outside public Git the destination Clerk subject, sanitized 8a.nu fixture, and existing support/deletion email.
@@ -143,18 +143,18 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 
 ### 1. Implement authentication and the single migration
 
-- [ ] Define the canonical validators, calendar-date helper, fingerprint helper, and pure legacy transformers.
-- [ ] Test all mappings, `Ta` → `Chill`, three exact DWS matches, Europe/Paris dates, already-migrated rows, optional values, and non-derivable loads.
-- [ ] Add Clerk authentication to Convex and one `requireIdentity(ctx)` helper.
-- [ ] Build one idempotent internal migration with dry-run counts and errors.
-- [ ] Rehearse it on a temporary private restore. Normal preview/E2E environments use synthetic data only.
+- [x] Define the canonical validators, calendar-date helper, fingerprint helper, and pure legacy transformers.
+- [x] Test all mappings, `Ta` → `Chill`, three exact DWS matches, Europe/Paris dates, already-migrated rows, optional values, and non-derivable loads.
+- [x] Add Clerk authentication to Convex and one `requireIdentity(ctx)` helper.
+- [x] Build one idempotent internal migration with dry-run counts and errors.
+- [x] Rehearse it on a temporary private restore. Normal preview/E2E environments use synthetic data only.
 - [ ] While Convex is paused, deploy a widened maintenance build: public reads require identity and expose no ownerless rows; public writes are disabled.
 - [ ] Resume Convex and run the internal migration, assigning the selected owner and fingerprint to every record.
 - [ ] Reconcile unchanged row counts and IDs, exactly three DWS conversions, zero ownerless rows, and zero missing fingerprints.
-- [ ] Switch every consumer to canonical fields and owner-indexed queries. Lookups by ID must verify ownership.
-- [ ] Stamp ownership and fingerprints server-side on inserts; never accept them from public arguments.
+- [x] Switch every consumer to canonical fields and owner-indexed queries. Lookups by ID must verify ownership.
+- [x] Stamp ownership and fingerprints server-side on inserts; never accept them from public arguments.
 - [ ] Remove public action wrappers, shared user-data caches, legacy fields, and permissive validators.
-- [ ] Test unauthenticated, user A, and user B list/detail/create access.
+- [x] Test unauthenticated, user A, and user B list/detail/create access.
 
 **Rollback:** pause Convex, redeploy the widened maintenance build, and restore the pre-migration backup. Do not write reverse transformers.
 
@@ -162,54 +162,54 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 
 ### 2. Add public routes and restricted sign-in
 
-- [ ] Replace `/` with the landing page and keep the app at `/wrap-up`.
+- [x] Replace `/` with the landing page and keep the app at `/wrap-up`.
 - [ ] Add marketing/app route groups without changing other stable URLs.
-- [ ] Keep `/`, `/sign-in`, `/sign-up`, `/privacy`, and `/terms` public; protect all app, import, and settings routes through `src/proxy.ts`.
+- [x] Keep `/`, `/sign-in`, `/sign-up`, `/privacy`, and `/terms` public; protect all app, import, and settings routes through `src/proxy.ts`.
 - [ ] Enable Clerk Restricted mode and invitations.
 - [ ] Test Google, GitHub, and email/password sign-in, verification, recovery, redirects, cancelled OAuth, denied consent, and verified-email linking.
 - [ ] Build no merge tool. Delete empty duplicate Clerk identities; freeze and resolve any duplicate containing data with a reviewed one-off migration.
-- [ ] Publish the landing page, beta indicator, privacy page, beta terms, and existing support/deletion email.
+- [x] Publish the landing page, beta indicator, privacy page, beta terms, and existing support/deletion email.
 
 **Gate:** public/protected routes and all three sign-in methods work, while Convex independently rejects unauthenticated access.
 
 ### 3. Build the shared CSV contract
 
-- [ ] Publish ascent and training templates and document headers, values, dates, encoding, empty cells, and errors.
-- [ ] Implement one shared canonical parser, serializer, normalizer, and fingerprint input format.
-- [ ] Test export/import round trips for every field.
+- [x] Publish ascent and training templates and document headers, values, dates, encoding, empty cells, and errors.
+- [x] Implement one shared canonical parser, serializer, normalizer, and fingerprint input format.
+- [x] Test export/import round trips for every field.
 
 **Gate:** the shared contract is deterministic before import and export use it.
 
 ### 4. Add imports and undo
 
-- [ ] Limit files to 5 MB and 10,000 rows. Tell users to split larger files; build no assisted path.
-- [ ] Parse and preview files in the browser; never upload or log the original file.
+- [x] Limit files to 5 MB and 10,000 rows. Tell users to split larger files; build no assisted path.
+- [x] Parse and preview files in the browser; never upload or log the original file.
 - [ ] Implement the 8a.nu adapter from the sanitized fixture and publish current export instructions.
-- [ ] Show invalid rows and existing exact fingerprint matches before confirmation.
-- [ ] Revalidate and insert valid rows in atomic Convex batches under the authenticated owner.
-- [ ] Create one job per attempt, stamp inserted records with its ID, skip duplicates by default, and offer “import anyway.”
-- [ ] Stop at the first failed batch. Retry by selecting the file again; fingerprints skip earlier inserts.
-- [ ] Allow completed or failed jobs with inserted rows to be undone in bounded batches.
+- [x] Show invalid rows and existing exact fingerprint matches before confirmation.
+- [x] Revalidate and insert valid rows in atomic Convex batches under the authenticated owner.
+- [x] Create one job per attempt, stamp inserted records with its ID, skip duplicates by default, and offer “import anyway.”
+- [x] Stop at the first failed batch. Retry by selecting the file again; fingerprints skip earlier inserts.
+- [x] Allow completed or failed jobs with inserted rows to be undone in bounded batches.
 - [ ] Test malformed files, limits, quoting, Unicode, duplicates, failed retry, undo, and two users.
 
 **Gate:** all three import sources work, default re-import is idempotent, retry is safe, undo works, and owner isolation passes.
 
 ### 5. Add client-side export
 
-- [ ] Add export under `/settings`.
-- [ ] Fetch both owner-scoped datasets and generate the canonical CSV files and ZIP in the browser.
+- [x] Add export under `/settings`.
+- [x] Fetch both owner-scoped datasets and generate the canonical CSV files and ZIP in the browser.
 - [ ] Test empty data, optional fields, Unicode, quoting, realistic large data, ZIP integrity, two users, and export → import.
 
 **Gate:** the ZIP contains only the signed-in user's two files and re-imports without duplicates by default.
 
 ### 6. Finish operations and security
 
-- [ ] Remove the Vercel backup cron, Google Sheets code/dependencies/configuration, backup scripts, and platform-wide dump queries.
-- [ ] Document a weekly manual Convex backup plus mandatory backups before migration, release, and restore. Promise no retention beyond the provider's current policy.
-- [ ] Document destructive restore, code/environment recovery, reconciliation, and smoke testing.
-- [ ] After restore, keep access closed, compare restored owners with Clerk, delete orphaned owners' data, then reopen.
-- [ ] Document manual deletion: identify and disable the Clerk subject, delete its records/jobs in batches, verify zero live data, delete the Clerk user, and confirm by email.
-- [ ] Rehearse restore and deletion with synthetic accounts.
+- [x] Remove the Vercel backup cron, Google Sheets code/dependencies/configuration, backup scripts, and platform-wide dump queries.
+- [x] Document a weekly manual Convex backup plus mandatory backups before migration, release, and restore. Promise no retention beyond the provider's current policy.
+- [x] Document destructive restore, code/environment recovery, reconciliation, and smoke testing.
+- [x] After restore, keep access closed, compare restored owners with Clerk, delete orphaned owners' data, then reopen.
+- [x] Document manual deletion: identify and disable the Clerk subject, delete its records/jobs in batches, verify zero live data, delete the Clerk user, and confirm by email.
+- [x] Rehearse restore and deletion with synthetic accounts.
 - [ ] Audit completed Convex functions, server code, route handlers, caches, logs, secrets, ID lookups, input limits, and preview/production separation.
 
 **Gate:** backup/restore and deletion work, old backup plumbing is gone, all completed surfaces were audited, and no known critical/high issue remains.

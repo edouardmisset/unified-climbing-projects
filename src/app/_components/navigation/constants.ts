@@ -1,7 +1,7 @@
 import { LINKS } from '~/constants/links'
 
 export const NAVIGATION_ITEMS = [
-  { type: 'link', href: LINKS.home, label: '🏠 Home' },
+  { type: 'link', href: LINKS.wrapUp, label: '🏠 Wrap-up' },
   { type: 'link', href: LINKS.ascentForm, label: '📋 Log Ascent' },
   { type: 'link', href: LINKS.trainingSessionForm, label: '📋 Log Training' },
   { type: 'separator' },
@@ -65,6 +65,9 @@ export const NAVIGATION_ITEMS = [
       },
     ],
   },
+  { type: 'separator' },
+  { type: 'link', href: LINKS.import, label: '📥 Import' },
+  { type: 'link', href: LINKS.settings, label: '⚙️ Settings' },
 ] as const satisfies NavigationElement[]
 
 type NavigationLink = {

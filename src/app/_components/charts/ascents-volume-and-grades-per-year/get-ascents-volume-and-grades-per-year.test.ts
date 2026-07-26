@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { fromGradeToNumber } from '~/helpers/grade-converter'
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'

@@ -22,10 +22,6 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
-    GOOGLE_SERVICE_ACCOUNT_EMAIL: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    GOOGLE_SHEET_ID_ASCENTS_BACKUP: process.env.GOOGLE_SHEET_ID_ASCENTS_BACKUP,
-    GOOGLE_SHEET_ID_TRAINING_BACKUP: process.env.GOOGLE_SHEET_ID_TRAINING_BACKUP,
     // Client-side env
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
     NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
@@ -37,10 +33,6 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    GOOGLE_PRIVATE_KEY: z.string(),
-    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string(),
-    GOOGLE_SHEET_ID_ASCENTS_BACKUP: z.string(),
-    GOOGLE_SHEET_ID_TRAINING_BACKUP: z.string(),
     NODE_ENV: z.enum(['development', 'test', 'production']),
   },
   /**

@@ -12,10 +12,7 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
 
   const parsedFormData = trainingSessionFormSchema.safeParse(normalizedFormData)
 
-  if (!parsedFormData.success) {
-    globalThis.console.error(parsedFormData.error)
-    return false
-  }
+  if (!parsedFormData.success) return false
 
   const { data: form } = parsedFormData
 
@@ -30,8 +27,7 @@ export const onSubmit = async (formData: Object_): Promise<boolean> => {
     await addTrainingSession(newTrainingSession)
     revalidatePath('/', 'layout')
     return true
-  } catch (error) {
-    globalThis.console.error('Error adding training session:', error)
+  } catch {
     return false
   }
 }

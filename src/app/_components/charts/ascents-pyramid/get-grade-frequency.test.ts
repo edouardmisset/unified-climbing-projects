@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
 describe('getGradeFrequencyAndColors', () => {

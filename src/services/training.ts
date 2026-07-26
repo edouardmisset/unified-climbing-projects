@@ -1,4 +1,3 @@
-import { cache } from 'react'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 
 export { addTrainingSession, getAllTrainingSessions } from './convex'
@@ -6,8 +5,7 @@ export { addTrainingSession, getAllTrainingSessions } from './convex'
 /**
  * Get all unique training locations sorted alphabetically
  */
-export const getAllTrainingLocations = cache(async (): Promise<string[]> => {
-  'use cache'
+export async function getAllTrainingLocations(): Promise<string[]> {
   const { getAllTrainingSessions } = await import('./convex')
   const allTrainingSessions = await getAllTrainingSessions()
 
@@ -19,4 +17,4 @@ export const getAllTrainingLocations = cache(async (): Promise<string[]> => {
         .toSorted(compareStringsAscending),
     ),
   ]
-})
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { getTopTenEvolution } from './get-top-ten-evolution'
 
@@ -30,7 +30,7 @@ describe('getTopTenEvolution', () => {
         Sport: countDisciplineForYear(ascentsIn2024, 'Sport', 2_024),
         ascents: ascentsIn2024.length,
         outdoorDays: 17,
-        topTenScore: 9_250,
+        topTenScore: 9_700,
         year: 2_024,
       },
     ])
@@ -84,7 +84,7 @@ describe('getTopTenEvolution', () => {
         Sport: countDisciplineForYear(ascents, 'Sport', 2_024),
         ascents: 2,
         outdoorDays: 2,
-        topTenScore: 1_750,
+        topTenScore: 1_650,
         year: 2_024,
       },
     ])

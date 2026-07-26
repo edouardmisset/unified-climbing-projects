@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import type { Ascent } from '~/schema/ascent'
 import { fromAscentToPoints } from './ascent-converter'
 import { calculateTopTenScore } from './calculate-top-ten'

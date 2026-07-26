@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { type Ascent, GRADE_TO_NUMBER } from '~/schema/ascent'
 import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
 import { minMaxGrades } from './min-max-grades'

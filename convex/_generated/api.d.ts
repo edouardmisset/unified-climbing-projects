@@ -9,6 +9,13 @@
  */
 
 import type * as ascents from "../ascents.js";
+import type * as auth from "../auth.js";
+import type * as diagnostics from "../diagnostics.js";
+import type * as fingerprint from "../fingerprint.js";
+import type * as imports from "../imports.js";
+import type * as maintenance from "../maintenance.js";
+import type * as migrations from "../migrations.js";
+import type * as operations from "../operations.js";
 import type * as training from "../training.js";
 
 import type {
@@ -19,6 +26,13 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   ascents: typeof ascents;
+  auth: typeof auth;
+  diagnostics: typeof diagnostics;
+  fingerprint: typeof fingerprint;
+  imports: typeof imports;
+  maintenance: typeof maintenance;
+  migrations: typeof migrations;
+  operations: typeof operations;
   training: typeof training;
 }>;
 

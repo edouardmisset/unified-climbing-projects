@@ -1,0 +1,73 @@
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  gap: 1rem;
+}
+
+.panel {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--surface-4);
+  border-radius: 0.8rem;
+  background: var(--surface-2);
+}
+
+.panel label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.panel select,
+.panel input,
+.panel button {
+  padding: 0.65rem;
+}
+
+.preview dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.preview dl div {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--surface-1);
+}
+
+.preview dt {
+  color: var(--text-2);
+}
+
+.preview dd {
+  margin: 0.25rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.checkbox {
+  grid-template-columns: auto 1fr !important;
+  align-items: center;
+}
+
+.jobs {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.jobs li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (width < 60rem) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}

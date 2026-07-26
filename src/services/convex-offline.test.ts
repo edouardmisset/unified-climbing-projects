@@ -6,7 +6,7 @@ import {
 } from '~/domain/canonical/legacy-transformers'
 
 const convexMocks = vi.hoisted(() => ({
-  fetchAction: vi.fn<(...arguments_: unknown[]) => Promise<unknown>>(),
+  fetchMutation: vi.fn<(...arguments_: unknown[]) => Promise<unknown>>(),
   fetchQuery: vi.fn<(...arguments_: unknown[]) => Promise<unknown>>(),
 }))
 
@@ -15,7 +15,7 @@ vi.mock(import('convex/nextjs'), () => convexMocks)
 async function runInSyntheticMode<T>(task: () => Promise<T>): Promise<T> {
   const originalDataSource = process.env.CLIMBING_DATA_SOURCE
   process.env.CLIMBING_DATA_SOURCE = 'synthetic'
-  convexMocks.fetchAction.mockClear()
+  convexMocks.fetchMutation.mockClear()
   convexMocks.fetchQuery.mockClear()
 
   try {
@@ -64,7 +64,7 @@ describe('convex service in synthetic mode', () => {
       await expect(addAscent(ascent)).rejects.toThrow(
         'Remote writes are disabled while CLIMBING_DATA_SOURCE=synthetic',
       )
-      expect(convexMocks.fetchAction).not.toHaveBeenCalled()
+      expect(convexMocks.fetchMutation).not.toHaveBeenCalled()
     })
   })
 
@@ -79,7 +79,7 @@ describe('convex service in synthetic mode', () => {
       await expect(addTrainingSession(trainingSession)).rejects.toThrow(
         'Remote writes are disabled while CLIMBING_DATA_SOURCE=synthetic',
       )
-      expect(convexMocks.fetchAction).not.toHaveBeenCalled()
+      expect(convexMocks.fetchMutation).not.toHaveBeenCalled()
     })
   })
 })

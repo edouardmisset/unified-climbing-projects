@@ -1,6 +1,5 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
 import { useTransitionRouter } from 'next-view-transitions'
 import { useForm } from 'react-hook-form'
@@ -44,7 +43,6 @@ import {
 
 export default function TrainingSessionForm({ allLocations }: { allLocations: string[] }) {
   'use no memo'
-  const { user } = useUser()
   const router = useTransitionRouter()
 
   const defaultDate = stringifyDate(new Date())
@@ -60,7 +58,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
     },
   })
 
-  return user?.fullName === 'Edouard' ? (
+  return (
     <form
       aria-describedby="form-description"
       autoComplete="off"
@@ -291,9 +289,5 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
         />
       </div>
     </form>
-  ) : (
-    <section className="flexColumn gap">
-      <p>You are not authorized to log a training session.</p>
-    </section>
   )
 }

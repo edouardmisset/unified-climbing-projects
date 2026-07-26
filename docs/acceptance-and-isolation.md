@@ -46,10 +46,19 @@ The matrix covers:
 | Imports         | owner-scoped duplicate lookup; owner-stamped jobs; own/cross-owner job reads; owner-scoped undo            |
 | Exports         | exactly the acting user's ascent and training datasets                                                     |
 
-The matrix is prepared but not yet bound to Clerk or Convex integration tests. Those assertions can
-only become executable after Phase 1 adds server-side identity, ownership fields, owner-indexed
-queries, and ownership checks. Until then, this groundwork must not be described as proof of backend
-owner isolation.
+The matrix is also exercised manually against a temporary private Convex restore before production
+cutover. The rehearsal must prove:
+
+- unauthenticated queries fail;
+- the migrated owner sees the expected records;
+- a second synthetic identity initially sees no records;
+- a synthetic import is visible only to that second identity;
+- an exact repeat is skipped by default;
+- undo removes the imported record; and
+- bounded account deletion removes the synthetic identity's records and jobs without changing the
+  migrated owner's reconciliation counts.
+
+Store the dated command output with the private migration evidence, never in public Git.
 
 ## Full local gate
 

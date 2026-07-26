@@ -5,8 +5,6 @@ import { FilteredAscentList } from '../_components/filtered-ascents-list/filtere
 import { Loader } from '../_components/ui/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
 
-export const revalidate = 3_600
-
 export default async function Page() {
   const ascents = await getAllAscents()
 

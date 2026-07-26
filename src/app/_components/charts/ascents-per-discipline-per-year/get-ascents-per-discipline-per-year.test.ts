@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { sampleAscents } from '~/backup/sample-ascents'
+import { sampleAscents } from '~/data/sample-ascents'
 import { getAscentsPerDisciplinePerYear } from './get-ascents-per-discipline-per-year'
 
 describe('getAscentsPerDisciplinePerYear', () => {

@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.pnpm-store/
 /.pnp
 .pnp.js
 
@@ -61,6 +62,12 @@ node_modules/
 
 # Convex
 /convex/_generated/
+/.migration-private/
+
+# Data exports and provider snapshots must never enter Git
+/src/backup/
+/exports/
+*.zip
 
 # Fallow
 .fallow/
