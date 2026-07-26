@@ -216,7 +216,7 @@ Do not deploy this phase. Do not run Convex import, export, migration, backup, r
 
 ### 7. Release
 
-- [ ] Run `vp run validate` and review migration/reconciliation evidence.
+- [x] Run `vp run validate` and review migration/reconciliation evidence.
 - [ ] Test invitation → sign-in → import → charts → create → export → undo → sign-out in preview.
 - [ ] Repeat with two accounts and attempt every cross-account operation.
 - [ ] Verify production OAuth, recovery, restricted sign-up, beta/legal copy, logs, and export contents.
