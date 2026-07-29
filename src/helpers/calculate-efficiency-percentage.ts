@@ -40,5 +40,5 @@ export function calculateEfficiencyPercentage({
     (ratio) => clampValueInRange({ minimum: 0, maximum: 100, value: ratio * 100 }),
   )
 
-  return Math.round(average(percentages))
+  return Math.round(average(percentages).data ?? 0)
 }

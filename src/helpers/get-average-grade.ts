@@ -7,6 +7,6 @@ export function getAverageGrade(ascents: Ascent[]): Grade | typeof NOT_AVAILABLE
   if (ascents.length === 0) return NOT_AVAILABLE
 
   const numericGrades = ascents.map(({ grade }) => fromGradeToNumber(grade))
-  const avg = average(...numericGrades)
+  const avg = average(...numericGrades).data ?? 0
   return fromNumberToGrade(Math.round(avg))
 }

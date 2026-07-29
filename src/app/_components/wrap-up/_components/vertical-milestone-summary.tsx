@@ -19,7 +19,9 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   )
 
   const averageHeight =
-    routes.length > 0 ? Math.round(average(...routes.map(({ height }) => height ?? 0))) : 0
+    routes.length > 0
+      ? Math.round(average(...routes.map(({ height }) => height ?? 0)).data ?? 0)
+      : 0
 
   const formattedTotalHeight = formatUnit(totalHeight, 'meter', { unitDisplay: 'long' })
   const formattedAverageHeight = formatUnit(averageHeight, 'meter', { unitDisplay: 'long' })

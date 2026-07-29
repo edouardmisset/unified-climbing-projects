@@ -59,9 +59,9 @@ export function calculateScore({
     currentFilteredAscents.length *
     COEFFICIENT_VOLUME
 
-  const averageMaxNumberGrade = average(
-    [...createHardestGradeMap(currentFilteredAscents).values()].map(fromGradeToNumber),
-  )
+  const averageMaxNumberGrade =
+    average([...createHardestGradeMap(currentFilteredAscents).values()].map(fromGradeToNumber))
+      .data ?? 0
   const top =
     calculateTopTenScore(currentFilteredAscents) * averageMaxNumberGrade * COEFFICIENT_TOP_TEN
 

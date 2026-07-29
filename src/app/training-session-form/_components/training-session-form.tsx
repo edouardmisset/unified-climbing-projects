@@ -1,6 +1,6 @@
 'use client'
 
-import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
+import { stringifyDate } from '@edouardmisset/date/stringify-date.ts'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -45,7 +45,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
   'use no memo'
   const router = useRouter()
 
-  const defaultDate = stringifyDate(new Date())
+  const defaultDate = stringifyDate(new Date()).data
 
   const {
     handleSubmit,

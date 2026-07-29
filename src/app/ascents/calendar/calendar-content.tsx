@@ -12,7 +12,17 @@ export async function CalendarContent() {
   const ascentYearsData = createYearList(allAscents, {
     continuous: false,
     descending: true,
-  }).map((year) => [year, allAscents.filter(filterByDate('date', { year }))] as const)
+  }).map(
+    (year) =>
+      [
+        year,
+        filterByDate({
+          array: allAscents,
+          keyOrFunction: 'date',
+          options: { year },
+        }).data ?? [],
+      ] as const,
+  )
 
   return (
     <>

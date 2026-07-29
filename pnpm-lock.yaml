@@ -36,20 +36,20 @@ importers:
         specifier: ^2.4.55
         version: 2.4.57(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@edouardmisset/array':
-        specifier: npm:@jsr/edouardmisset__array@^4.0.3
-        version: '@jsr/edouardmisset__array@4.0.3'
+        specifier: npm:@jsr/edouardmisset__array@^5.0.0
+        version: '@jsr/edouardmisset__array@5.0.1'
       '@edouardmisset/date':
-        specifier: npm:@jsr/edouardmisset__date@^4.2.0
-        version: '@jsr/edouardmisset__date@4.2.0'
+        specifier: npm:@jsr/edouardmisset__date@^5.0.0
+        version: '@jsr/edouardmisset__date@5.0.1'
       '@edouardmisset/math':
-        specifier: npm:@jsr/edouardmisset__math@^4.0.0
-        version: '@jsr/edouardmisset__math@4.0.0'
+        specifier: npm:@jsr/edouardmisset__math@^5.0.0
+        version: '@jsr/edouardmisset__math@5.0.0'
       '@edouardmisset/object':
-        specifier: npm:@jsr/edouardmisset__object@^4.0.1
-        version: '@jsr/edouardmisset__object@4.0.1'
+        specifier: npm:@jsr/edouardmisset__object@^5.0.0
+        version: '@jsr/edouardmisset__object@5.0.0'
       '@edouardmisset/text':
-        specifier: npm:@jsr/edouardmisset__text@^4.1.0
-        version: '@jsr/edouardmisset__text@4.1.0'
+        specifier: npm:@jsr/edouardmisset__text@^5.0.0
+        version: '@jsr/edouardmisset__text@5.0.0'
       '@t3-oss/env-nextjs':
         specifier: ^0.13.10
         version: 0.13.11(typescript@6.0.3)(zod@4.4.3)
@@ -1307,23 +1307,29 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@jsr/edouardmisset__array@4.0.3':
-    resolution: {integrity: sha512-s5iTYtd78VRz+kd5/rqxPo/r5JCsvyiIt6Zm+hRL8zk0bq8Er0wrm0hc6IEoGSSACfVfL9f9vccJCT71YDKZtA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__array/4.0.3.tgz}
+  '@jsr/edouardmisset__array@5.0.1':
+    resolution: {integrity: sha512-dbJbkTZq8yZtV7Bd4HqLdpQi1PktZtzhPHaIDhNOun2At5RhAkZoBWHnZepUVIFKArBRP8ExK2RSsS3R2I3yvA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__array/5.0.1.tgz}
 
-  '@jsr/edouardmisset__date@4.2.0':
-    resolution: {integrity: sha512-2dsYejyMsAPqzVPHi0qd/tFP1cXcNWLWVsj+pDln4PjvUatvhiD+5qnjHXNS354rDIDVG/gIAXRORkNYgxFmFQ==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__date/4.2.0.tgz}
+  '@jsr/edouardmisset__date@5.0.1':
+    resolution: {integrity: sha512-zGn3uIDo87u5NiorHCI6QrGW2g12AGtzY1fF9dhkqLYyXMNzbM5TpIVFSZM8mFzrEHrSVUCEw3tFdvZ/NyBO3A==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__date/5.0.1.tgz}
 
-  '@jsr/edouardmisset__math@4.0.0':
-    resolution: {integrity: sha512-vu2dgXzSJdx2bUlZzNZ487RsGvEjNMvIV/+DySp6e+nu5GLYaeDQvp8TKEisBWCqx9YIxjKhOdDNcsh1bGVvyA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/4.0.0.tgz}
+  '@jsr/edouardmisset__function@5.0.1':
+    resolution: {integrity: sha512-IeoOpaCl7fGoz7IkT0C0Z5bhBn7M76MIb9H9U8WGmjBUzVLEdWkKVGBvLrd2VjvmOJEaGvgt4Hbzz4woNC4IQg==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__function/5.0.1.tgz}
 
-  '@jsr/edouardmisset__object@4.0.1':
-    resolution: {integrity: sha512-RKpIqbkhBF3CPm87ls32DLxXUBSpoc0e6ArYf8jNayNeh+iJhs/muR7cTWCWA0L/GFNaP4PSCEn979sWmn5E5Q==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/4.0.1.tgz}
+  '@jsr/edouardmisset__math@5.0.0':
+    resolution: {integrity: sha512-xLMgdM638RNApL+lcpJQ2VT/hbfU4CPVyMt56ADXAo4gm2mJlEW8tLXiG9S2R4gM1GBabnLl5jCwNHfmHFP9yw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/5.0.0.tgz}
 
-  '@jsr/edouardmisset__text@4.1.0':
-    resolution: {integrity: sha512-7xkstF3ZZ08CBng/BmF+6No/x9augPQVcVApLgj5Meq1jT1zosq+vKwhuOHPSjuVjty0cVdUeda9AwZjGJp9vA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__text/4.1.0.tgz}
+  '@jsr/edouardmisset__object@5.0.0':
+    resolution: {integrity: sha512-WuWoDRxf+uIB4pPsGuJ1f/+ZWS2kkEIzlHP0FTFWfC6yqYCBjHX1BdsKXEolQcIIY4UKf4ycpC36SVx/NmYlyw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.0.0.tgz}
 
-  '@jsr/edouardmisset__type@4.0.1':
-    resolution: {integrity: sha512-TeJyWHl7PKxbItwgEaglvJFVBYzEPUaWG8UdyXjajOnDw5359kUw1Gw0yj5Hkmh6dCEQcEmZ8FtQcEYUlKNR7Q==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__type/4.0.1.tgz}
+  '@jsr/edouardmisset__text@5.0.0':
+    resolution: {integrity: sha512-lPjIkzBu+ktdHB7y9W/DgtYC55AtppET7yqUT63IJVInhNJNtnK9AIucGAYCf/v2A6/7CSsoCwjd2UplC2GvHA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__text/5.0.0.tgz}
+
+  '@jsr/edouardmisset__type@5.0.0':
+    resolution: {integrity: sha512-HomobMsderjoT0+isfigu9z3i9MWx+fMADv9da80stas3Vkunb3uqjIOQqJQ2UYOUzTQC+9AeyUj/n+EwZL7nw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__type/5.0.0.tgz}
+
+  '@jsr/std__dotenv@0.225.7':
+    resolution: {integrity: sha512-Efy4o/d2nZWf6R/mPau5qxqIyW7CGH7NIkfwDpxcTEqyh+3C2niUTgC65LQGSStoFqo/LHQvXFnADAQZLE3p/Q==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.7.tgz}
 
   '@keyv/bigmap@1.3.1':
     resolution: {integrity: sha512-WbzE9sdmQtKy8vrNPa9BRnwZh5UF4s1KTmSK0KUVLo3eff5BlQNNWDnFOouNpKfPKDnms9xynJjsMYjMaT/aFQ==}
@@ -5812,25 +5818,37 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@jsr/edouardmisset__array@4.0.3':
+  '@jsr/edouardmisset__array@5.0.1':
     dependencies:
-      '@jsr/edouardmisset__date': 4.2.0
-      '@jsr/edouardmisset__object': 4.0.1
-      '@jsr/edouardmisset__type': 4.0.1
+      '@jsr/edouardmisset__date': 5.0.1
+      '@jsr/edouardmisset__function': 5.0.1
+      '@jsr/edouardmisset__type': 5.0.0
 
-  '@jsr/edouardmisset__date@4.2.0':
+  '@jsr/edouardmisset__date@5.0.1':
     dependencies:
-      '@jsr/edouardmisset__type': 4.0.1
+      '@jsr/edouardmisset__function': 5.0.1
+      '@jsr/edouardmisset__type': 5.0.0
 
-  '@jsr/edouardmisset__math@4.0.0': {}
-
-  '@jsr/edouardmisset__object@4.0.1':
+  '@jsr/edouardmisset__function@5.0.1':
     dependencies:
-      '@jsr/edouardmisset__type': 4.0.1
+      '@jsr/edouardmisset__object': 5.0.0
+      '@jsr/edouardmisset__type': 5.0.0
+      '@jsr/std__dotenv': 0.225.7
 
-  '@jsr/edouardmisset__text@4.1.0': {}
+  '@jsr/edouardmisset__math@5.0.0':
+    dependencies:
+      '@jsr/edouardmisset__function': 5.0.1
+      '@jsr/edouardmisset__type': 5.0.0
 
-  '@jsr/edouardmisset__type@4.0.1': {}
+  '@jsr/edouardmisset__object@5.0.0':
+    dependencies:
+      '@jsr/edouardmisset__type': 5.0.0
+
+  '@jsr/edouardmisset__text@5.0.0': {}
+
+  '@jsr/edouardmisset__type@5.0.0': {}
+
+  '@jsr/std__dotenv@0.225.7': {}
 
   '@keyv/bigmap@1.3.1(keyv@5.6.0)':
     dependencies:

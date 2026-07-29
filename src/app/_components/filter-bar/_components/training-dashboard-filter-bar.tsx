@@ -1,5 +1,5 @@
 import { isDateInRange } from '@edouardmisset/date'
-import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
+import { isValidNumber } from '@edouardmisset/math'
 import { useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'

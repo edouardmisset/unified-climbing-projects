@@ -1,5 +1,5 @@
-import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
-import { stringIncludesCaseInsensitive } from '@edouardmisset/text'
+import { isValidNumber } from '@edouardmisset/math'
+import { stringIncludes } from '@edouardmisset/text'
 import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
@@ -65,9 +65,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
     () =>
       deferredSelectedRoute === ''
         ? filteredAscents
-        : filteredAscents.filter(({ name }) =>
-            stringIncludesCaseInsensitive(name, deferredSelectedRoute),
-          ),
+        : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute)),
     [deferredSelectedRoute, filteredAscents],
   )
 }

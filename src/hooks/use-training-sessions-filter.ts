@@ -1,4 +1,4 @@
-import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
+import { isValidNumber } from '@edouardmisset/math'
 import { useDeferredValue, useMemo } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'

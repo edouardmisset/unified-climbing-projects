@@ -1,4 +1,4 @@
-import { validNumberWithFallback } from '@edouardmisset/math/is-valid.ts'
+import { validNumberWithFallback } from '@edouardmisset/math'
 import type { Metadata } from 'next'
 import WrapUp from '~/app/_components/wrap-up/wrap-up'
 

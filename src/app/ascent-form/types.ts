@@ -1,4 +1,4 @@
-import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
+import { stringifyDate } from '@edouardmisset/date/stringify-date.ts'
 import { getDateAtNoon } from '~/helpers/date.ts'
 import { emptyStringToUndefined } from '~/helpers/empty-string-to-undefined.ts'
 import { fromNumberToGrade } from '~/helpers/grade-converter.ts'
@@ -25,7 +25,7 @@ export const ascentFormInputSchema = z.object({
   climbingDiscipline: climbingDisciplineSchema.optional(),
   comments: z.string().trim().optional(),
   crag: z.string().trim().optional(),
-  date: z.date().transform((date) => stringifyDate(date)),
+  date: z.date().transform((date) => stringifyDate(date).data ?? ''),
   height: z.number().int().min(0).max(MAX_HEIGHT).transform(String).optional(),
   holds: holdsSchema.optional(),
   personalGrade: optionalNumberGradeSchema,

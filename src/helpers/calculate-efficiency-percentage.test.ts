@@ -69,7 +69,8 @@ describe('calculateEfficiencyPercentage', () => {
       value: COEFFICIENT_ONSIGHT_FLASH_RATIO,
     })
     const expected = Math.round(
-      average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio) * 100,
+      (average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio).data ?? 0) *
+        100,
     )
 
     expect(result).toBe(expected)
@@ -137,7 +138,7 @@ describe('calculateEfficiencyPercentage', () => {
           value: ratio * 100,
         }),
     )
-    const expected = Math.round(average(ratios))
+    const expected = Math.round(average(ratios).data ?? 0)
 
     expect(result).toBe(expected)
   })
@@ -302,7 +303,8 @@ describe('calculateEfficiencyPercentage', () => {
     const onsightFlashRatio = (1 / 2) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
     const expected = Math.round(
-      average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio) * 100,
+      (average(ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio).data ?? 0) *
+        100,
     )
 
     expect(result).toBe(expected)

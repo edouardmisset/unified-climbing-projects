@@ -21,7 +21,7 @@ function getGradeStats(gradeNumbers: number[]): {
   if (gradeNumbers.length === 0) return { avg: undefined, max: undefined }
 
   return {
-    avg: Math.round(average(...gradeNumbers)),
+    avg: Math.round(average(...gradeNumbers).data ?? 0),
     max: Math.max(...gradeNumbers),
   }
 }

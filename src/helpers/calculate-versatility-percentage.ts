@@ -48,5 +48,5 @@ export function calculateVersatilityPercentage(ascents: Ascent[]): number {
     clampValueInRange({ maximum: 100, minimum: 0, value: ratio * 100 }),
   )
 
-  return Math.round(average(ratios))
+  return Math.round(average(ratios).data ?? 0)
 }
