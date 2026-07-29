@@ -18,6 +18,7 @@
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix 'src/**/*.css'",
+    "skeletons:build": "boneyard-js build http://127.0.0.1:3000/skeleton-catalog --force",
     "test:unit": "vp test --reporter=dot",
     "test:unit:watch": "vp run test:unit --watch",
     "test:unit:ui": "vp run test:unit --ui",
@@ -30,7 +31,6 @@
     "prepare": "vp config"
   },
   "dependencies": {
-    "@aejkatappaja/phantom-ui": "^1.4.0",
     "@base-ui/react": "^1.6.0",
     "@clerk/nextjs": "^6.39.2",
     "@clerk/themes": "^2.4.55",
@@ -43,6 +43,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "babel-plugin-react-compiler": "^1.0.0",
+    "boneyard-js": "^1.9.0",
     "convex": "^1.42.3",
     "convex-helpers": "^0.1.120",
     "fallow": "^3.10.0",

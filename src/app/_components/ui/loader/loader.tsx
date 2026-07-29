@@ -1,34 +1,39 @@
 'use client'
 
-import { useEffect } from 'react'
+import { Skeleton } from 'boneyard-js/react'
 import styles from './loader.module.css'
 
-const SKELETON_ROW_COUNT = 4
+const BONE_NAMES = {
+  compact: 'loading-compact',
+  dashboard: 'loading-dashboard',
+  form: 'loading-form',
+  list: 'loading-list',
+  page: 'loading-page',
+} as const
 
-export function Loader({ compact = false }: { compact?: boolean }) {
-  useEffect(() => {
-    void import('@aejkatappaja/phantom-ui')
-  }, [])
+export type LoaderVariant = keyof typeof BONE_NAMES
+
+export function Loader({
+  compact = false,
+  variant = 'page',
+}: {
+  compact?: boolean
+  variant?: Exclude<LoaderVariant, 'compact'>
+}) {
+  const resolvedVariant = compact ? 'compact' : variant
 
   return (
-    <output aria-label='Loading' className={`${styles.loader} ${compact ? styles.compact : ''}`}>
-      <phantom-ui
-        animation='shimmer'
-        count={compact ? 1 : SKELETON_ROW_COUNT}
-        count-gap={12}
+    <output aria-label='Loading' className={styles.loader}>
+      <Skeleton
+        animate='shimmer'
+        className={styles[resolvedVariant]}
+        fallback={<span className={styles.fallback}>Loading…</span>}
         loading
-        loading-label='Loading'
+        name={BONE_NAMES[resolvedVariant]}
+        select='container'
       >
-        {compact ? (
-          <span className={styles.inlineTemplate}>Loading content</span>
-        ) : (
-          <article className={styles.template}>
-            <h2>Loading climbing activity</h2>
-            <p>Preparing your latest climbing statistics and activity.</p>
-            <p>Loading route details</p>
-          </article>
-        )}
-      </phantom-ui>
+        <span />
+      </Skeleton>
     </output>
   )
 }

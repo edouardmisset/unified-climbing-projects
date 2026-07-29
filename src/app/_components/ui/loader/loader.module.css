@@ -1,38 +1,37 @@
 .loader {
   display: block;
   inline-size: 100%;
-  max-inline-size: var(--size-content-3);
-  min-block-size: var(--size-13);
-  padding: var(--size-fluid-3);
   margin-inline: auto;
 }
 
-.template {
-  display: grid;
-  gap: var(--size-2);
+.loader > div {
   inline-size: 100%;
-  padding: var(--size-fluid-2);
-  background: var(--surface-2);
-  border: var(--border-size-1) solid var(--surface-3);
-  border-radius: var(--radius-3);
 }
 
-.template h2,
-.template p {
-  margin: 0;
+.page {
+  min-block-size: min(60vh, 36rem);
 }
 
-.template p:last-child {
-  max-inline-size: 60%;
+.dashboard {
+  min-block-size: min(70vh, 44rem);
+}
+
+.form {
+  min-block-size: min(70vh, 42rem);
+}
+
+.list {
+  min-block-size: min(60vh, 32rem);
 }
 
 .compact {
-  display: inline-block;
-  min-block-size: var(--size-4);
-  padding: 0;
+  min-block-size: var(--size-5);
+  max-inline-size: 18rem;
 }
 
-.inlineTemplate {
-  display: inline-block;
-  min-inline-size: 12ch;
+.fallback {
+  display: grid;
+  min-block-size: inherit;
+  place-items: center;
+  color: var(--text-2);
 }

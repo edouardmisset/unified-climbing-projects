@@ -68,6 +68,7 @@ export default defineConfig({
       'playwright-report/**',
       'test-results/**',
       'convex/_generated/**',
+      'src/bones/**',
     ],
     printWidth: 100,
     tabWidth: 2,

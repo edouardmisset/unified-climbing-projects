@@ -1,0 +1,79 @@
+.catalog {
+  display: grid;
+  gap: var(--size-fluid-5);
+  inline-size: min(100%, var(--size-content-3));
+  padding: var(--size-fluid-3);
+}
+
+.page,
+.dashboard,
+.form,
+.list {
+  inline-size: 100%;
+}
+
+.page,
+.dashboard {
+  display: grid;
+  gap: var(--size-fluid-3);
+}
+
+.toolbar,
+.statistics,
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-3);
+}
+
+.statistics > *,
+.charts > * {
+  flex: 1 1 14rem;
+}
+
+.statistic,
+.charts article,
+.listItem {
+  display: grid;
+  gap: var(--size-2);
+  padding: var(--size-fluid-2);
+  background: var(--surface-2);
+  border: var(--border-size-1) solid var(--surface-3);
+  border-radius: var(--radius-3);
+}
+
+.statistic strong {
+  font-size: var(--font-size-fluid-2);
+}
+
+.chart {
+  min-block-size: 12rem;
+  border-radius: var(--radius-2);
+}
+
+.form {
+  display: grid;
+  gap: var(--size-3);
+  max-inline-size: var(--size-content-1);
+  margin-inline: auto;
+}
+
+.form label {
+  display: grid;
+  gap: var(--size-1);
+}
+
+.form input {
+  min-block-size: var(--size-7);
+}
+
+.list {
+  display: grid;
+  gap: var(--size-2);
+}
+
+.compact {
+  display: inline-grid;
+  gap: var(--size-1);
+  min-inline-size: 12rem;
+}

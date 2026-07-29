@@ -16,7 +16,7 @@ export function TrainingDashboard({ trainingSessions }: TrainingSessionListProps
   return (
     <div className='flex flexColumn alignCenter gridFullWidth'>
       <TrainingDashboardFilterBar trainingSessions={trainingSessions} />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='dashboard' />}>
         <DashboardStats trainingSessions={filteredTrainingSessions} />
       </Suspense>
     </div>

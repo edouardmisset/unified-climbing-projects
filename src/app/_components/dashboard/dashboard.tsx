@@ -20,11 +20,11 @@ export function Dashboard({ ascents }: AscentListProps) {
   return (
     <div className='flex flexColumn alignCenter gridFullWidth'>
       <AscentsFilterBar allAscents={ascents} showSearch={false} />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='dashboard' />}>
         <DashboardStatistics ascents={filteredAscents} />
       </Suspense>
       <section className='w100 padding'>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader variant='list' />}>
           <AscentList ascents={filteredAscents} />
         </Suspense>
       </section>

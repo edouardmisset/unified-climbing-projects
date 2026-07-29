@@ -8,13 +8,13 @@ import { TrainingFormWrapper } from './training-form-wrapper'
 
 export default async function TrainingSessionFormPage() {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader variant='form' />}>
       <SignedIn>
         <Layout gridClassName='padding' title='Train Hard 💪'>
           <span aria-describedby='form-description' className='visuallyHidden'>
             Form to log a training session
           </span>
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader variant='form' />}>
             <TrainingFormWrapper />
           </Suspense>
         </Layout>

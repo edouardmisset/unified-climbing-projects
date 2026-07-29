@@ -6,6 +6,7 @@ const isPublicRoute = createRouteMatcher([
   '/terms',
   '/sign-in(.*)',
   '/sign-up(.*)',
+  ...(process.env.NODE_ENV === 'development' ? ['/skeleton-catalog'] : []),
   // Blank CSV templates for the (auth-required) import flow. Listed
   // explicitly here rather than via a blanket file-extension bypass in
   // `config.matcher`, so a future protected route that happens to end in

@@ -8,9 +8,9 @@ import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense, ViewTransition } from 'react'
 import { ToastContainer } from 'react-toastify'
-import '@aejkatappaja/phantom-ui/ssr.css'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
+import '~/bones/registry'
 import { APP_LANGUAGE } from '~/constants/generic'
 import { useTheme } from '~/hooks/use-theme'
 
