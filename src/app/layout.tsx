@@ -4,10 +4,9 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { ViewTransitions } from 'next-view-transitions'
 import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { type ReactNode, Suspense } from 'react'
+import { type ReactNode, Suspense, ViewTransition } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
@@ -56,38 +55,38 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ViewTransitions>
-      <ClerkProvider appearance={clerkAppearance}>
-        <html
-          className={font.className}
-          data-color-scheme={theme}
-          data-scroll-behavior="smooth"
-          lang={APP_LANGUAGE}
-          suppressHydrationWarning
-        >
-          <body className={styles.body}>
-            <a className={styles.skipLink} href="#main-content">
-              Skip to content
-            </a>
-            <Header />
-            <main className={styles.main} id="main-content" tabIndex={-1}>
-              <Suspense fallback={<Loader />}>
+    <ClerkProvider appearance={clerkAppearance}>
+      <html
+        className={font.className}
+        data-color-scheme={theme}
+        data-scroll-behavior="smooth"
+        lang={APP_LANGUAGE}
+        suppressHydrationWarning
+      >
+        <body className={styles.body}>
+          <a className={styles.skipLink} href="#main-content">
+            Skip to content
+          </a>
+          <Header />
+          <main className={styles.main} id="main-content" tabIndex={-1}>
+            <Suspense fallback={<Loader />}>
+              <ViewTransition>
                 <NuqsAdapter>{children}</NuqsAdapter>
-              </Suspense>
-            </main>
+              </ViewTransition>
+            </Suspense>
+          </main>
 
-            <ToastContainer
-              closeOnClick
-              draggable
-              draggableDirection="x"
-              draggablePercent={20}
-              theme="colored"
-            />
-            <SpeedInsights />
-            <Analytics />
-          </body>
-        </html>
-      </ClerkProvider>
-    </ViewTransitions>
+          <ToastContainer
+            closeOnClick
+            draggable
+            draggableDirection="x"
+            draggablePercent={20}
+            theme="colored"
+          />
+          <SpeedInsights />
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
