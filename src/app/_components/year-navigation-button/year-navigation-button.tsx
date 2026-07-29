@@ -1,6 +1,6 @@
 import { isValidNumber } from '@edouardmisset/math/is-valid.ts'
 import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from 'lucide-react'
-import { Link } from 'next-view-transitions'
+import Link from 'next/link'
 import styles from './year-navigation-button.module.css'
 
 export function YearNavigationButton({
