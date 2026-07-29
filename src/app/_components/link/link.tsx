@@ -1,7 +1,7 @@
 'use client'
 
+import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Link as NextLink } from 'next-view-transitions'
 import { memo, type ReactNode } from 'react'
 import styles from './link.module.css'
 

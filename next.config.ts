@@ -29,6 +29,7 @@ const config: NextConfig = {
       bodySizeLimit: '12mb',
     },
     useCache: true,
+    viewTransition: true,
   },
 }
 

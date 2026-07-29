@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { Link } from 'next-view-transitions'
+import Link from 'next/link'
 import { memo } from 'react'
 import { LINKS } from '~/constants/links'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
