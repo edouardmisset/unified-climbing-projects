@@ -1,9 +1,10 @@
 import { memo, type ReactNode, Suspense } from 'react'
+import { Loader } from '../../ui/loader/loader'
 import styles from './chart-container.module.css'
 
 export const ChartContainer = memo(
   ({ children, caption }: { children: ReactNode; caption: string }) => (
-    <Suspense fallback='Loading chart...'>
+    <Suspense fallback={<Loader compact />}>
       <figure className={`h100 ${styles.container}`}>
         {children}
         <figcaption>{caption}</figcaption>

@@ -9,6 +9,7 @@ import {
 } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
 import type { StringDate } from '~/types/generic'
+import { Loader } from '../ui/loader/loader'
 import { Popover } from '../ui/popover/popover'
 import styles from './barcode.module.css'
 
@@ -53,7 +54,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (filteredSortedWeeklyTraining.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback={<Loader compact />}>
         <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
       </Suspense>
     )

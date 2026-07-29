@@ -6,6 +6,7 @@ import { formatNumber } from '~/helpers/number-formatter'
 import { sortByGrade } from '~/helpers/sorter'
 import type { Ascent } from '~/schema/ascent'
 import type { StringDate } from '~/types/generic'
+import { Loader } from '../ui/loader/loader'
 import { Popover } from '../ui/popover/popover'
 import styles from './barcode.module.css'
 
@@ -41,7 +42,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (weeklyAscentsByDescendingGrade.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback={<Loader compact />}>
         <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
       </Suspense>
     )

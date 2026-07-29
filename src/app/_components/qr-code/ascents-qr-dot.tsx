@@ -3,6 +3,7 @@ import { fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { prettyLongDate } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
+import { Loader } from '../ui/loader/loader'
 import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
@@ -33,7 +34,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
   const lazyDescription = useMemo(() => {
     if (!ascents || ascents.length === 0) return ''
     return (
-      <Suspense fallback='Loading...'>
+      <Suspense fallback={<Loader compact />}>
         <AscentsPopoverDescription ascents={ascents} />
       </Suspense>
     )

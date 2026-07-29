@@ -2,6 +2,7 @@ import { lazy, memo, Suspense, useMemo } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
+import { Loader } from '../ui/loader/loader'
 import { Popover } from '../ui/popover/popover'
 
 // Lazy load the popover component
@@ -23,7 +24,7 @@ export const TrainingsQRDot = memo(
     const lazyDescription = useMemo(() => {
       if (trainingSessions.length === 0) return ''
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback={<Loader compact />}>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )

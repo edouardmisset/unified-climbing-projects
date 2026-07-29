@@ -1,6 +1,7 @@
 import { isDateInYear } from '@edouardmisset/date'
 import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
 import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
+import { Loader } from '../ui/loader/loader'
 import { Popover } from '../ui/popover/popover'
 import { EmptyGridCell } from './empty-grid-cell'
 import { datesEqual } from './helpers'
@@ -53,13 +54,13 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     if (hasTrainingSessions && hasAscents)
       return (
         <>
-          <Suspense fallback='Loading...'>
+          <Suspense fallback={<Loader compact />}>
             <TrainingPopoverDescription trainingSessions={trainingSessions} />
           </Suspense>
           <br />
           <hr />
           <br />
-          <Suspense fallback='Loading...'>
+          <Suspense fallback={<Loader compact />}>
             <AscentsPopoverDescription ascents={ascents} />
           </Suspense>
         </>
@@ -67,14 +68,14 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
     if (hasAscents)
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback={<Loader compact />}>
           <AscentsPopoverDescription ascents={ascents} />
         </Suspense>
       )
 
     if (hasTrainingSessions)
       return (
-        <Suspense fallback='Loading...'>
+        <Suspense fallback={<Loader compact />}>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )
