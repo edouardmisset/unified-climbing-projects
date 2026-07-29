@@ -32,6 +32,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     ascents,
     trainingSessions,
   } = props
+  const isToday = date !== '' && datesEqual(new Date(date), new Date())
 
   const cellStyle: CSSProperties = useMemo(
     () => ({
@@ -83,14 +84,15 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
   }, [ascents, trainingSessions])
 
   if (date === '' || !isDateInYear(date, year))
-    return <EmptyGridCell cellStyle={cellStyle} date={date} />
+    return <EmptyGridCell cellStyle={cellStyle} date={date} isToday={isToday} />
 
   if (lazyDescription === '' || date === '')
-    return <EmptyGridCell cellStyle={cellStyle} date={date} />
+    return <EmptyGridCell cellStyle={cellStyle} date={date} isToday={isToday} />
 
   return (
     <Popover
       className={`${styles.yearGridCell} ${isSpecialCase ? styles.specialCase : ''} contrastColor`}
+      data-today={isToday || undefined}
       popoverTitle={title}
       style={cellStyle}
       trigger={shortText}

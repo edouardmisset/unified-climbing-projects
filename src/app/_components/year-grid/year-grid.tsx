@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, type ReactNode, useMemo } from 'react'
+import { memo, type ReactNode, useEffect, useMemo, useRef } from 'react'
 import { DAYS_IN_WEEK, NOON_HOUR, WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import type { Ascent } from '~/schema/ascent'
@@ -18,6 +18,7 @@ const PREVIOUS_MONDAY_OFFSET = 6
 
 export const YearGrid = memo(
   ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
+    const gridReference = useRef<HTMLDivElement>(null)
     const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
     const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
     const firstDayIndex = firstDayOfYear.getUTCDay()
@@ -61,8 +62,17 @@ export const YearGrid = memo(
       [numberOfColumns],
     )
 
+    useEffect(() => {
+      const todayCell = gridReference.current?.querySelector<HTMLElement>('[data-today="true"]')
+
+      if (!todayCell) return
+
+      todayCell.focus({ preventScroll: true })
+      todayCell.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }, [])
+
     return (
-      <div className={styles.yearGrid} style={gridTemplateStyle}>
+      <div className={styles.yearGrid} ref={gridReference} style={gridTemplateStyle}>
         <DaysColumn />
         <WeeksRow columns={columns} />
         {allDayCollection.map(
