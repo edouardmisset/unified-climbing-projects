@@ -1,7 +1,7 @@
 'use client'
 
 import { stringifyDate } from '@edouardmisset/date/convert-string-date.ts'
-import { useTransitionRouter } from 'next-view-transitions'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import styles from '~/app/_components/forms/form.module.css'
@@ -43,7 +43,7 @@ import {
 
 export default function TrainingSessionForm({ allLocations }: { allLocations: string[] }) {
   'use no memo'
-  const router = useTransitionRouter()
+  const router = useRouter()
 
   const defaultDate = stringifyDate(new Date())
 

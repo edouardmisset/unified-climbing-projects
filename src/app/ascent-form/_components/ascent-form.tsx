@@ -1,6 +1,6 @@
 'use client'
 
-import { useTransitionRouter } from 'next-view-transitions'
+import { useRouter } from 'next/navigation'
 import { type ChangeEventHandler, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -60,7 +60,7 @@ const profileOptions = createValueAndLabel(PROFILES)
 export default function AscentForm(props: AscentFormProps) {
   'use no memo'
   const { latestAscent, maxGrade, minGrade, areas, crags } = props
-  const router = useTransitionRouter()
+  const router = useRouter()
 
   const defaultAscentToParse = {
     area: latestAscent?.area,
