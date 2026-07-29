@@ -9,7 +9,7 @@ import { decodeUtf8Csv } from '~/domain/canonical/csv'
 import type { TrainingSessionImportRow } from '~/domain/canonical/training-session'
 import type { getRecentImportJobs } from '~/services/imports'
 import { previewImport, runImport, undoImport } from './actions'
-import styles from './workspace.module.css'
+import styles from './settings.module.css'
 
 // Product contract: canonical import files are capped at 5 MiB.
 // oxlint-disable-next-line no-magic-numbers
@@ -111,10 +111,11 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
 
   return (
     <div className={styles.workspace}>
-      <section className={styles.panel}>
-        <label>
-          File type
+      <div className={styles.fields}>
+        <label className={styles.field}>
+          <span>File type</span>
           <select
+            className={styles.select}
             disabled={isWorking}
             onChange={(event) => {
               setSource(event.target.value as ImportSource)
@@ -130,47 +131,51 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
             <option value="8a-nu">8a.nu data export</option>
           </select>
         </label>
-        <label>
-          CSV file
+        <label className={styles.field}>
+          <span>CSV file</span>
           <input accept=".csv,text/csv" disabled={isWorking} onChange={selectFile} type="file" />
         </label>
-        <p>Limits: UTF-8 CSV, 5 MB, 10,000 rows.</p>
+      </div>
+      <p className={styles.limit}>Limits: UTF-8 CSV, 5 MB, 10,000 rows.</p>
 
-        {preview ? (
-          <div className={styles.preview}>
-            <h2>Preview</h2>
-            <dl>
-              <div>
-                <dt>Valid rows</dt>
-                <dd>{preview.total}</dd>
-              </div>
-              <div>
-                <dt>Existing exact matches</dt>
-                <dd>{preview.existingMatches}</dd>
-              </div>
-              <div>
-                <dt>Duplicates inside file</dt>
-                <dd>{preview.duplicatesInFile}</dd>
-              </div>
-            </dl>
-            <label className={styles.checkbox}>
-              <input
-                checked={allowDuplicates}
-                onChange={(event) => setAllowDuplicates(event.target.checked)}
-                type="checkbox"
-              />
-              Import exact duplicates anyway
-            </label>
-            <button disabled={isWorking} onClick={confirmImport} type="button">
-              {isWorking ? 'Importing…' : `Import ${preview.total} valid rows`}
-            </button>
-          </div>
-        ) : undefined}
-        {message ? <p aria-live="polite">{message}</p> : undefined}
-      </section>
+      {preview ? (
+        <div className={styles.preview}>
+          <h3>Preview</h3>
+          <dl>
+            <div>
+              <dt>Valid rows</dt>
+              <dd>{preview.total}</dd>
+            </div>
+            <div>
+              <dt>Existing exact matches</dt>
+              <dd>{preview.existingMatches}</dd>
+            </div>
+            <div>
+              <dt>Duplicates inside file</dt>
+              <dd>{preview.duplicatesInFile}</dd>
+            </div>
+          </dl>
+          <label className={styles.checkbox}>
+            <input
+              checked={allowDuplicates}
+              onChange={(event) => setAllowDuplicates(event.target.checked)}
+              type="checkbox"
+            />
+            Import exact duplicates anyway
+          </label>
+          <button disabled={isWorking} onClick={confirmImport} type="button">
+            {isWorking ? 'Importing…' : `Import ${preview.total} valid rows`}
+          </button>
+        </div>
+      ) : undefined}
+      {message ? (
+        <p aria-live="polite" className={styles.message}>
+          {message}
+        </p>
+      ) : undefined}
 
-      <section className={styles.panel}>
-        <h2>Recent imports</h2>
+      <div className={styles.recentImports}>
+        <h3>Recent imports</h3>
         {recentJobs.length === 0 ? <p>No import jobs yet.</p> : undefined}
         <ul className={styles.jobs}>
           {recentJobs.map((job) => (
@@ -188,7 +193,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
             </li>
           ))}
         </ul>
-      </section>
+      </div>
     </div>
   )
 }

@@ -45,7 +45,7 @@ export function ExportControls({ ascents, trainingSessions }: ExportControlsProp
 
   return (
     <div className={styles.controls}>
-      <button onClick={downloadExport} type="button">
+      <button className={styles.primaryAction} onClick={downloadExport} type="button">
         Download ZIP ({ascents.length + trainingSessions.length} records)
       </button>
       <button

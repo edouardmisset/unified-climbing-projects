@@ -1,0 +1,33 @@
+.article {
+  display: grid;
+  gap: var(--size-3);
+  padding: var(--size-fluid-3);
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-3);
+  box-shadow:
+    0 8px 32px var(--panel-shadow-outer),
+    inset 0 1px 0 var(--panel-shadow-inner);
+}
+
+.article h1 {
+  position: relative;
+  padding-block-end: var(--size-3);
+
+  &::after {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: min(100%, var(--size-14));
+    block-size: var(--border-size-2);
+    content: '';
+    background: linear-gradient(to right, var(--patagonia-color-4), transparent);
+  }
+}
+
+@media (width <= 40rem) {
+  .article {
+    padding: var(--size-fluid-2);
+  }
+}

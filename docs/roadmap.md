@@ -168,7 +168,8 @@ remained untouched.
 
 - [x] Replace `/` with the landing page and keep the app at `/wrap-up`.
 - [ ] Add marketing/app route groups without changing other stable URLs.
-- [x] Keep `/`, `/sign-in`, `/sign-up`, `/privacy`, and `/terms` public; protect all app, import, and settings routes through `src/proxy.ts`.
+- [x] Keep `/`, `/sign-in`, `/sign-up`, `/privacy`, and `/terms` public; protect all app routes,
+      including the Import section in Settings, through `src/proxy.ts`.
 - [x] Enable Clerk Restricted mode and invitations.
 - [ ] Test Google, GitHub, and email/password sign-in, verification, recovery, redirects, cancelled OAuth, denied consent, and verified-email linking.
 - [ ] Build no merge tool. Delete empty duplicate Clerk identities; freeze and resolve any duplicate containing data with a reviewed one-off migration.
@@ -186,6 +187,7 @@ remained untouched.
 
 ### 4. Add imports and undo
 
+- [x] Place the import workflow in Settings alongside export and account controls.
 - [x] Limit files to 5 MB and 10,000 rows. Tell users to split larger files; build no assisted path.
 - [x] Parse files in the browser; send validated canonical rows for preview matching, but never
       upload or log the original file.

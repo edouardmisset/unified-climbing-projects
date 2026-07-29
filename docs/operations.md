@@ -89,8 +89,8 @@ Use two invited test accounts and attempt both permitted and cross-account opera
 - public landing/privacy/terms and protected-route redirects;
 - Google, GitHub, and email/password sign-in, recovery, cancellation, and denied consent;
 - list/detail/create for ascents and training sessions;
-- canonical CSV import, duplicate skip, import-anyway, failed retry, and undo;
-- charts, calendars, wrap-up, and settings;
+- canonical CSV import from Settings, duplicate skip, import-anyway, failed retry, and undo;
+- charts, calendars, wrap-up, and the Import, Export, and Account settings sections;
 - ZIP contents (`ascents.csv` and `training-sessions.csv` only) and export-to-import round trip;
 - sign-out and unauthenticated Convex rejection.
 

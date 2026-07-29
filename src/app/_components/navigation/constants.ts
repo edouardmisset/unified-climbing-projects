@@ -66,7 +66,6 @@ export const NAVIGATION_ITEMS = [
     ],
   },
   { type: 'separator' },
-  { type: 'link', href: LINKS.import, label: '📥 Import' },
   { type: 'link', href: LINKS.settings, label: '⚙️ Settings' },
 ] as const satisfies NavigationElement[]
 

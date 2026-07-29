@@ -7,7 +7,6 @@ import type { Object_ } from '~/types/generic'
  */
 export const LINKS = {
   home: '/',
-  import: '/import',
   privacy: '/privacy',
   settings: '/settings',
   signIn: '/sign-in',

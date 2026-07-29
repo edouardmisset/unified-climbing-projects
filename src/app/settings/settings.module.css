@@ -1,22 +1,195 @@
+.settings {
+  gap: var(--size-fluid-3);
+  inline-size: min(100%, 80rem);
+  margin-inline: auto;
+  padding: var(--size-fluid-3);
+}
+
+.section {
+  scroll-margin-block-start: var(--size-fluid-2);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  margin-block-end: var(--size-fluid-2);
+
+  &::after {
+    content: '';
+    flex: 1;
+    block-size: var(--border-size-2);
+    background: linear-gradient(to right, var(--patagonia-color-4), transparent);
+  }
+}
+
+.introduction {
+  display: grid;
+  gap: var(--size-3);
+  margin-block-end: var(--size-fluid-2);
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-block: 1rem 2rem;
+  gap: var(--size-3);
+  margin-block-start: var(--size-fluid-2);
 }
 
-.controls button {
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--surface-4);
-  border-radius: 0.6rem;
-  background: var(--surface-2);
+.primaryAction {
+  --_bg: var(--accent);
+  --_border: var(--accent);
+  --_text: var(--surface-4);
+}
+
+.workspace {
+  display: grid;
+  gap: var(--size-fluid-2);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--size-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+
+  & > span {
+    font-size: var(--font-size-0);
+    font-weight: var(--font-weight-7);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
+
+.select {
+  min-block-size: var(--size-7);
+  padding-block: var(--size-2);
+  padding-inline: var(--size-3);
   color: var(--text-1);
-  cursor: pointer;
+  background: var(--control-bg);
+  backdrop-filter: blur(8px);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-2);
+
+  &:focus {
+    outline: none;
+    background: var(--control-bg-focus);
+    border-color: var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--control-border-hover);
+  }
 }
 
-.controls button:first-child {
-  border-color: var(--orange-8);
-  background: var(--orange-8);
-  color: white;
-  font-weight: 700;
+.limit {
+  color: var(--text-2);
+  font-size: var(--font-size-0);
+}
+
+.preview {
+  display: grid;
+  gap: var(--size-3);
+  padding: var(--size-fluid-2);
+  background: var(--panel-bg);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-3);
+  box-shadow:
+    0 8px 32px var(--panel-shadow-outer),
+    inset 0 1px 0 var(--panel-shadow-inner);
+}
+
+.preview h3 {
+  font-size: var(--font-size-3);
+}
+
+.preview dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: var(--size-2);
+}
+
+.preview dl div {
+  padding: var(--size-3);
+  background: var(--control-bg);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-2);
+}
+
+.preview dt {
+  color: var(--text-2);
+  font-size: var(--font-size-0);
+}
+
+.preview dd {
+  margin-block-start: var(--size-1);
+  font-size: var(--font-size-3);
+  font-weight: var(--font-weight-7);
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-2);
+  align-items: center;
+}
+
+.message {
+  padding: var(--size-3);
+  color: var(--text-1);
+  background: var(--control-bg);
+  border-inline-start: var(--border-size-3) solid var(--accent);
+  border-radius: var(--radius-2);
+}
+
+.recentImports {
+  display: grid;
+  gap: var(--size-3);
+  padding-block-start: var(--size-fluid-2);
+  border-block-start: var(--border-size-1) solid var(--panel-border);
+}
+
+.recentImports h3 {
+  font-size: var(--font-size-3);
+}
+
+.jobs {
+  display: grid;
+  gap: var(--size-2);
+  padding: 0;
+  list-style: none;
+}
+
+.jobs li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-3);
+  padding: var(--size-3);
+  background: var(--control-bg);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-2);
+}
+
+@media (width <= 40rem) {
+  .settings {
+    padding: var(--size-fluid-2);
+  }
+
+  .controls,
+  .jobs li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .controls button,
+  .jobs button {
+    inline-size: 100%;
+  }
 }

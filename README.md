@@ -65,7 +65,8 @@ The owner-isolation contract is documented in
 - `src/styles/` — Design tokens (`colors.css`, `sizes.css`) and CSS Modules
 - `scripts/` — Repository safety checks
 
-The canonical import/export format is documented in [`docs/canonical-csv.md`](docs/canonical-csv.md).
+Import and export are available together in the app's Settings page. The canonical import/export
+format is documented in [`docs/canonical-csv.md`](docs/canonical-csv.md).
 Backup, restore, migration, and deletion procedures are in
 [`docs/operations.md`](docs/operations.md).
 

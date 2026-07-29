@@ -41,10 +41,23 @@ const font = atkinson_Hyperlegible({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const { theme } = useTheme()
+  const clerkAppearance = {
+    baseTheme: theme === 'dark' ? dark : undefined,
+    variables: {
+      borderRadius: 'var(--radius-2)',
+      colorBackground: 'var(--surface-2)',
+      colorInputBackground: 'var(--control-bg)',
+      colorInputText: 'var(--text-1)',
+      colorPrimary: 'var(--accent)',
+      colorText: 'var(--text-1)',
+      colorTextSecondary: 'var(--text-2)',
+      fontFamily: 'var(--font-atkinson)',
+    },
+  }
 
   return (
     <ViewTransitions>
-      <ClerkProvider appearance={dark}>
+      <ClerkProvider appearance={clerkAppearance}>
         <html
           className={font.className}
           data-color-scheme={theme}

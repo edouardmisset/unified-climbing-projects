@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { PublicPageShell } from './_components/public-page-shell/public-page-shell'
 import styles from './landing.module.css'
 
 export const metadata: Metadata = {
@@ -10,26 +11,8 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/">
-          Climbing Log <span>Beta</span>
-        </Link>
-        <nav aria-label="Public navigation">
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <SignedOut>
-            <Link href="/sign-in">Sign in</Link>
-          </SignedOut>
-          <SignedIn>
-            <Link className={styles.primaryLink} href="/wrap-up">
-              Open app
-            </Link>
-          </SignedIn>
-        </nav>
-      </header>
-
-      <main className={styles.hero}>
+    <PublicPageShell>
+      <section className={styles.hero}>
         <p className={styles.eyebrow}>Restricted beta · Invitation only</p>
         <h1>Your climbing history, finally in one place.</h1>
         <p className={styles.lede}>
@@ -38,12 +21,12 @@ export default function LandingPage() {
         </p>
         <div className={styles.actions}>
           <SignedOut>
-            <Link className={styles.primaryLink} href="/sign-in">
+            <Link className={styles.primaryAction} href="/sign-in">
               Sign in
             </Link>
           </SignedOut>
           <SignedIn>
-            <Link className={styles.primaryLink} href="/wrap-up">
+            <Link className={styles.primaryAction} href="/wrap-up">
               Open your log
             </Link>
           </SignedIn>
@@ -63,7 +46,7 @@ export default function LandingPage() {
             <span>Dashboards, calendars, indicators, and yearly climbing wrap-ups.</span>
           </li>
         </ul>
-      </main>
-    </div>
+      </section>
+    </PublicPageShell>
   )
 }

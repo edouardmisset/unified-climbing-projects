@@ -82,7 +82,8 @@ validation failures retain the underlying schema error as their `cause`.
 
 ## 8a.nu exports
 
-The import page also accepts the current 19-column 8a.nu climbing-data export. The adapter:
+The Import section in Settings also accepts the current 19-column 8a.nu climbing-data export. The
+adapter:
 
 - maps `ROUTE` to `Sport` and `BOULDER` to `Bouldering`;
 - maps `os`, `f`, and `rp` to `Onsight`, `Flash`, and `Redpoint`;
