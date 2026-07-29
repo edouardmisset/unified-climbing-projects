@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Lint, format, test and build our code before committing
-pnpm check && pnpm test

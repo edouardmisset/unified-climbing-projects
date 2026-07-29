@@ -14,7 +14,7 @@ export function FilteredAscentList({ ascents }: AscentListProps) {
   if (ascents.length === 0) return <NotFound />
 
   return (
-    <section className="flex flexColumn gridFullWidth padding overflowXClip">
+    <section className='flex flexColumn gridFullWidth padding overflowXClip'>
       <AscentsFilterBar allAscents={ascents} showSearch />
       <Suspense fallback={<Loader />}>
         <AscentList ascents={filteredAscents} />

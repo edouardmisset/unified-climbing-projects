@@ -95,7 +95,7 @@ export const migrateBatch = internalMutation({
     if (!args.dryRun && errors.length === 0)
       await Promise.all(
         replacements.map(
-          async (replacement) => await ctx.db.replace(replacement.id, replacement.value as never),
+          async replacement => await ctx.db.replace(replacement.id, replacement.value as never),
         ),
       )
 
@@ -141,7 +141,7 @@ export const run = internalAction({
         totals[table].migrated += batch.migrated
         totals[table].scanned += batch.scanned
         if (table === 'ascents') totals.ascents.dwsConversions += batch.dwsConversions
-        totals.errors.push(...batch.errors.map((error) => ({ ...error, table })))
+        totals.errors.push(...batch.errors.map(error => ({ ...error, table })))
         cursor = batch.continueCursor
         ;({ isDone } = batch)
       }

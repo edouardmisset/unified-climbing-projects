@@ -25,7 +25,7 @@ export function TableAndSelect({ ascents }: AscentListProps) {
   if (ascents.length === 0) return <NotFound />
 
   return (
-    <div className="flex flexColumn gap gridFullWidth padding">
+    <div className='flex flexColumn gap gridFullWidth padding'>
       <TimeframeSelect />
       <Suspense fallback={<Loader />}>
         <AscentList ascents={topTenAscents} showDetails={false} showPoints />

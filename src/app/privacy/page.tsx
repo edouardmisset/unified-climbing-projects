@@ -4,7 +4,7 @@ import styles from '../legal.module.css'
 
 export default function PrivacyPage() {
   return (
-    <PublicPageShell layout="prose">
+    <PublicPageShell layout='prose'>
       <article className={styles.article}>
         <h1>Privacy</h1>
         <p>
@@ -22,10 +22,10 @@ export default function PrivacyPage() {
         </p>
         <p>
           To request access, a copy of your data, or account and data deletion, email{' '}
-          <a href="mailto:edouardmisset@gmail.com">edouardmisset@gmail.com</a>.
+          <a href='mailto:edouardmisset@gmail.com'>edouardmisset@gmail.com</a>.
         </p>
         <p>
-          <Link href="/">Return home</Link>
+          <Link href='/'>Return home</Link>
         </p>
       </article>
     </PublicPageShell>

@@ -4,7 +4,7 @@ import styles from './sign-in-button.module.css'
 export function SignInButton() {
   return (
     <div className={styles.SignInButton}>
-      <SignIn mode="modal" />
+      <SignIn mode='modal' />
     </div>
   )
 }

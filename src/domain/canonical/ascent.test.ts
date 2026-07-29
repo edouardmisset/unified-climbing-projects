@@ -76,7 +76,7 @@ describe('ascent public boundaries', () => {
 
   it.each(['ownerId', 'contentFingerprint', 'importJobId', '_id', '_creationTime'])(
     'rejects the server-controlled field %s from public input',
-    (field) => {
+    field => {
       expect(ascentPublicInputSchema.safeParse({ ...ascent, [field]: 'forbidden' }).success).toBe(
         false,
       )

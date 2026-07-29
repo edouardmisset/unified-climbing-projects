@@ -9,13 +9,13 @@ import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
 export function TopTenSummary({ ascents }: AscentListProps) {
-  const ascentsWithPoints = ascents.map((ascent) => ({
+  const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,
     points: fromAscentToPoints(ascent),
   }))
 
   const isMultipleYears =
-    new Set(ascents.map((ascent) => new Date(ascent.date).getFullYear())).size > 1
+    new Set(ascents.map(ascent => new Date(ascent.date).getFullYear())).size > 1
 
   const topTenAscents = useMemo(
     () => ascentsWithPoints.toSorted((a, b) => b.points - a.points).slice(0, 10),
@@ -25,7 +25,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0 || ascentsWithPoints.length === 0) return
 
   const lowestTopTenAscent = topTenAscents.findLast(
-    (ascent) => ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
+    ascent => ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
   )
 
   const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
@@ -43,53 +43,53 @@ export function TopTenSummary({ ascents }: AscentListProps) {
         Your score is <strong>{frenchNumberFormatter.format(topTenScore)}</strong>
         {displayHowToImprove === true && (
           <>
-            <strong className="block">Improve by</strong>
-            <span className="block">
+            <strong className='block'>Improve by</strong>
+            <span className='block'>
               Lead climb{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline='Sport'
                 grade={fromPointToGrade(nextStepPoints, {
                   discipline: 'Sport',
                   style: 'Onsight',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Onsight" />,{' '}
+              <ClimbingStyle climbingStyle='Onsight' />,{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline='Sport'
                 grade={fromPointToGrade(nextStepPoints, {
                   discipline: 'Sport',
                   style: 'Flash',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                discipline="Sport"
+                discipline='Sport'
                 grade={fromPointToGrade(nextStepPoints, {
                   discipline: 'Sport',
                   style: 'Redpoint',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Redpoint" />
+              <ClimbingStyle climbingStyle='Redpoint' />
             </span>
 
-            <span className="block">
+            <span className='block'>
               Boulder{' '}
               <DisplayGrade
-                discipline="Bouldering"
+                discipline='Bouldering'
                 grade={fromPointToGrade(nextStepPoints, {
                   discipline: 'Bouldering',
                   style: 'Flash',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Flash" /> or{' '}
+              <ClimbingStyle climbingStyle='Flash' /> or{' '}
               <DisplayGrade
-                discipline="Bouldering"
+                discipline='Bouldering'
                 grade={fromPointToGrade(nextStepPoints, {
                   discipline: 'Bouldering',
                   style: 'Redpoint',
                 })}
               />{' '}
-              <ClimbingStyle climbingStyle="Redpoint" />
+              <ClimbingStyle climbingStyle='Redpoint' />
             </span>
           </>
         )}

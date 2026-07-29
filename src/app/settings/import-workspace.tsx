@@ -117,7 +117,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
           <select
             className={styles.select}
             disabled={isWorking}
-            onChange={(event) => {
+            onChange={event => {
               setSource(event.target.value as ImportSource)
               setRows([])
               setPreview(undefined)
@@ -126,14 +126,14 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
             }}
             value={source}
           >
-            <option value="canonical-ascents">Canonical ascents.csv</option>
-            <option value="canonical-training">Canonical training-sessions.csv</option>
-            <option value="8a-nu">8a.nu data export</option>
+            <option value='canonical-ascents'>Canonical ascents.csv</option>
+            <option value='canonical-training'>Canonical training-sessions.csv</option>
+            <option value='8a-nu'>8a.nu data export</option>
           </select>
         </label>
         <label className={styles.field}>
           <span>CSV file</span>
-          <input accept=".csv,text/csv" disabled={isWorking} onChange={selectFile} type="file" />
+          <input accept='.csv,text/csv' disabled={isWorking} onChange={selectFile} type='file' />
         </label>
       </div>
       <p className={styles.limit}>Limits: UTF-8 CSV, 5 MB, 10,000 rows.</p>
@@ -158,18 +158,18 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
           <label className={styles.checkbox}>
             <input
               checked={allowDuplicates}
-              onChange={(event) => setAllowDuplicates(event.target.checked)}
-              type="checkbox"
+              onChange={event => setAllowDuplicates(event.target.checked)}
+              type='checkbox'
             />
             Import exact duplicates anyway
           </label>
-          <button disabled={isWorking} onClick={confirmImport} type="button">
+          <button disabled={isWorking} onClick={confirmImport} type='button'>
             {isWorking ? 'Importing…' : `Import ${preview.total} valid rows`}
           </button>
         </div>
       ) : undefined}
       {message ? (
-        <p aria-live="polite" className={styles.message}>
+        <p aria-live='polite' className={styles.message}>
           {message}
         </p>
       ) : undefined}
@@ -178,7 +178,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
         <h3>Recent imports</h3>
         {recentJobs.length === 0 ? <p>No import jobs yet.</p> : undefined}
         <ul className={styles.jobs}>
-          {recentJobs.map((job) => (
+          {recentJobs.map(job => (
             <li key={job._id}>
               <span>
                 <strong>{job.kind}</strong> · {job.status} · {job.inserted} inserted · {job.skipped}{' '}
@@ -186,7 +186,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
               </span>
               {['running', 'undoing', 'completed', 'failed'].includes(job.status) &&
               job.inserted > 0 ? (
-                <button disabled={isWorking} onClick={() => undo(job._id)} type="button">
+                <button disabled={isWorking} onClick={() => undo(job._id)} type='button'>
                   Undo
                 </button>
               ) : undefined}

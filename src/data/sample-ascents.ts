@@ -43,9 +43,9 @@ const plans: GradePlan[] = [
   { grade: '8b+', styles: { Redpoint: 1 }, tries: [10] },
 ]
 
-const drafts = plans.flatMap((plan) => {
+const drafts = plans.flatMap(plan => {
   let tryIndex = 0
-  return (['Onsight', 'Flash', 'Redpoint'] as const).flatMap((style) =>
+  return (['Onsight', 'Flash', 'Redpoint'] as const).flatMap(style =>
     Array.from({ length: plan.styles[style] ?? 0 }, () => ({
       grade: plan.grade,
       style,
@@ -116,7 +116,7 @@ const yearHeightTotals = new Map([
 
 const yearByIndex = new Map<number, number>()
 for (const index of indices2024) yearByIndex.set(index, 2_024)
-const remainingIndices = drafts.map((_, index) => index).filter((index) => !indices2024.has(index))
+const remainingIndices = drafts.map((_, index) => index).filter(index => !indices2024.has(index))
 let remainingOffset = 0
 for (const [year, count] of yearCounts) {
   for (const index of remainingIndices.slice(remainingOffset, remainingOffset + count))
@@ -132,7 +132,7 @@ for (const [index, year] of yearByIndex) {
 }
 
 const candidates2023 = indicesByYear.get(2_023) ?? []
-const redpointCandidates2023 = candidates2023.filter((index) => drafts[index]?.style === 'Redpoint')
+const redpointCandidates2023 = candidates2023.filter(index => drafts[index]?.style === 'Redpoint')
 const boulderingIndices = new Set<number>([24, ...redpointCandidates2023.slice(0, 11)])
 for (const index of candidates2023) if (boulderingIndices.size < 16) boulderingIndices.add(index)
 
@@ -140,7 +140,7 @@ const heightByIndex = new Map<number, number>()
 for (const [year, indices] of indicesByYear) {
   const total = yearHeightTotals.get(year)
   if (total === undefined) throw new Error('Synthetic height plan is incomplete')
-  const routeIndices = indices.filter((index) => !boulderingIndices.has(index))
+  const routeIndices = indices.filter(index => !boulderingIndices.has(index))
   const base = Math.floor(total / routeIndices.length)
   let remainder = total - base * routeIndices.length
   for (const index of routeIndices) {

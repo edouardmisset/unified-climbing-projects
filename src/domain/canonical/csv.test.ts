@@ -113,7 +113,7 @@ describe('serializeCanonicalCsv', () => {
 
   it.each([['=1+1'], ['+1'], ['-1'], ['@SUM(A1)'], ['\t=1'], ['\r=1']])(
     'neutralizes spreadsheet formulas by quoting and prefixing %s with a single quote',
-    (value) => {
+    value => {
       expect(serializeCanonicalCsv([{ value }], ['value'])).toBe(`value\r\n"'${value}"\r\n`)
     },
   )

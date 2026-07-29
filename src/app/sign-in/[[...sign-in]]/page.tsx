@@ -3,8 +3,8 @@ import { PublicPageShell } from '~/app/_components/public-page-shell/public-page
 
 export default function SignInPage() {
   return (
-    <PublicPageShell layout="auth">
-      <SignIn fallbackRedirectUrl="/wrap-up" signUpUrl="/sign-up" />
+    <PublicPageShell layout='auth'>
+      <SignIn fallbackRedirectUrl='/wrap-up' signUpUrl='/sign-up' />
     </PublicPageShell>
   )
 }

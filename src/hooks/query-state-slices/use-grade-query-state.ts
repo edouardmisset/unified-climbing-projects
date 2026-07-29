@@ -9,5 +9,5 @@ export const useGradeQueryState = (): UseQueryStateReturn<
 > =>
   useQueryState<OrAll<Ascent['grade']>>('grade', {
     defaultValue: ALL_VALUE,
-    parse: (value) => (value === ALL_VALUE ? ALL_VALUE : gradeSchema.parse(value)),
+    parse: value => (value === ALL_VALUE ? ALL_VALUE : gradeSchema.parse(value)),
   })

@@ -17,7 +17,7 @@ describe('synthetic legacy fixture', () => {
     ]
 
     expect(new Set(ids).size).toBe(ids.length)
-    expect(ids.every((id) => id.startsWith('synthetic-'))).toBe(true)
+    expect(ids.every(id => id.startsWith('synthetic-'))).toBe(true)
   })
 
   it('matches the canonical ascent acceptance expectations', () => {

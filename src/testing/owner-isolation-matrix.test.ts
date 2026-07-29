@@ -27,7 +27,7 @@ describe('owner isolation acceptance matrix', () => {
     const identifiers = fixtureValues.flatMap(Object.values)
 
     expect(new Set(identifiers).size).toBe(identifiers.length)
-    expect(identifiers.every((identifier) => identifier.startsWith('synthetic-'))).toBe(true)
+    expect(identifiers.every(identifier => identifier.startsWith('synthetic-'))).toBe(true)
   })
 
   it('has unique case identifiers', () => {
@@ -86,7 +86,7 @@ describe('owner isolation acceptance matrix', () => {
 
   it('expects cross-owner record and job access to be hidden', () => {
     const crossOwnerCases = authenticatedCases.filter(
-      (testCase) => relationshipToTarget(testCase) === 'other',
+      testCase => relationshipToTarget(testCase) === 'other',
     )
 
     expect(crossOwnerCases).not.toHaveLength(0)

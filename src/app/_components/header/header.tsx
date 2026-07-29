@@ -13,7 +13,7 @@ export function Header() {
 
   const isDark = theme === 'dark'
   const isPublicPage = ['/', '/privacy', '/terms', '/sign-in', '/sign-up'].some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
+    route => pathname === route || pathname.startsWith(`${route}/`),
   )
 
   if (isPublicPage) return <></>

@@ -24,7 +24,7 @@ import { Loader } from '../ui/loader/loader'
 import styles from './ascent-list.module.css'
 
 const AscentCard = lazy(() =>
-  import('../ascent-card/ascent-card').then((module) => ({ default: module.AscentCard })),
+  import('../ascent-card/ascent-card').then(module => ({ default: module.AscentCard })),
 )
 
 const BASE_COLUMNS_COUNT = 6
@@ -68,36 +68,36 @@ export const AscentList = memo(
           <thead className={`${styles.header} gridFullWidth`}>
             <tr className={`${styles.headerRow} gridFullWidth`}>
               <th
-                aria-label="Discipline"
+                aria-label='Discipline'
                 className={`${styles.cell} ${styles.headerCell}`}
-                title="Discipline: 🧗 route, 🪨 boulder..."
+                title='Discipline: 🧗 route, 🪨 boulder...'
               />
-              <th className={`${styles.cell} ${styles.headerCell}`} title="Name of the route">
+              <th className={`${styles.cell} ${styles.headerCell}`} title='Name of the route'>
                 Name
               </th>
               {showPoints && (
-                <th className={`${styles.cell} ${styles.headerCell}`} title="Points of the ascent">
+                <th className={`${styles.cell} ${styles.headerCell}`} title='Points of the ascent'>
                   Points
                 </th>
               )}
               <th
                 className={`${styles.cell} ${styles.headerCell}`}
-                title="French grade of the route as shown in the guide book"
+                title='French grade of the route as shown in the guide book'
               >
                 Grade
               </th>
               <th
                 className={`${styles.cell} ${styles.headerCell}`}
-                title="Style of the ascent (onsight, flash, redpoint) and # tries"
+                title='Style of the ascent (onsight, flash, redpoint) and # tries'
               >
                 Style
               </th>
-              <th className={`${styles.cell} ${styles.headerCell}`} title="Date of the ascent">
+              <th className={`${styles.cell} ${styles.headerCell}`} title='Date of the ascent'>
                 Date
               </th>
               <th
                 className={`${styles.cell} ${styles.headerCell}`}
-                title="Location (crag and sector if available) of the ascent"
+                title='Location (crag and sector if available) of the ascent'
               >
                 Location
               </th>
@@ -106,25 +106,25 @@ export const AscentList = memo(
                 <>
                   <th
                     className={`${styles.cell} ${styles.headerCell}`}
-                    title="Most common holds on the route (or boulder) or holds of the crux section"
+                    title='Most common holds on the route (or boulder) or holds of the crux section'
                   >
                     Holds
                   </th>
                   <th
                     className={`${styles.cell} ${styles.headerCell}`}
-                    title="General profile of the route or profile of the crux section"
+                    title='General profile of the route or profile of the crux section'
                   >
                     Profile
                   </th>
                   <th
                     className={`${styles.cell} ${styles.headerCell}`}
-                    title="Height of the route in meters"
+                    title='Height of the route in meters'
                   >
                     Height
                   </th>
                   <th
                     className={`${styles.cell} ${styles.headerCell}`}
-                    title="Rating of the ascent (out of 5 stars)"
+                    title='Rating of the ascent (out of 5 stars)'
                   >
                     Rating
                   </th>
@@ -133,7 +133,7 @@ export const AscentList = memo(
             </tr>
           </thead>
           <tbody className={`${styles.body} gridFullWidth`}>
-            {ascents.map((ascent) => {
+            {ascents.map(ascent => {
               const {
                 _id,
                 name,
@@ -157,14 +157,14 @@ export const AscentList = memo(
                   className={`${styles.row} gridFullWidth`}
                   key={_id}
                   onDoubleClick={() => handleRowClick(ascent)}
-                  onKeyDown={(event) => {
+                  onKeyDown={event => {
                     if (event.key !== 'Enter' && event.key !== ' ') return
 
                     event.preventDefault()
                     handleRowClick(ascent)
                   }}
                   // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
-                  role="button"
+                  role='button'
                   tabIndex={0}
                 >
                   <td className={`${styles.cell} marginAuto`} title={discipline}>
@@ -226,7 +226,7 @@ export const AscentList = memo(
               {showPoints ? (
                 <>
                   <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
-                  <td className={`${styles.footerCell} ${styles.cell}`} aria-hidden="true" />
+                  <td className={`${styles.footerCell} ${styles.cell}`} aria-hidden='true' />
                   <td className={`${styles.footerCell} ${styles.cell}`}>
                     <strong>{frenchNumberFormatter.format(totalAscentPoints)}</strong>
                   </td>

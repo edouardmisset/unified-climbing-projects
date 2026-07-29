@@ -9,7 +9,7 @@ function countDisciplineForYear(
   year: number,
 ): number {
   return ascents.filter(
-    (ascent) => ascent.discipline === discipline && new Date(ascent.date).getFullYear() === year,
+    ascent => ascent.discipline === discipline && new Date(ascent.date).getFullYear() === year,
   ).length
 }
 

@@ -22,11 +22,11 @@ function toPublicTrainingSession(record: unknown) {
 
 export const get = query({
   args: {},
-  handler: async (ctx) => {
+  handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const records = await ctx.db
       .query('training')
-      .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', subject))
+      .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
     return records.map(toPublicTrainingSession)
   },

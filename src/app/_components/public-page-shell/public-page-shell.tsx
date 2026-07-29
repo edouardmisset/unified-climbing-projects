@@ -12,20 +12,20 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
   return (
     <div className={styles.shell}>
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
+        <Link className={styles.brand} href='/'>
           <span>Climbing Log</span>
           <span className={styles.beta}>Beta</span>
         </Link>
-        <nav aria-label="Public navigation" className={styles.navigation}>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+        <nav aria-label='Public navigation' className={styles.navigation}>
+          <Link href='/privacy'>Privacy</Link>
+          <Link href='/terms'>Terms</Link>
           <SignedOut>
-            <Link className={styles.primaryLink} href="/sign-in">
+            <Link className={styles.primaryLink} href='/sign-in'>
               Sign in
             </Link>
           </SignedOut>
           <SignedIn>
-            <Link className={styles.primaryLink} href="/wrap-up">
+            <Link className={styles.primaryLink} href='/wrap-up'>
               Open app
             </Link>
           </SignedIn>
@@ -38,9 +38,9 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
 
       <footer className={styles.footer}>
         <span>Climbing Log · Restricted beta</span>
-        <nav aria-label="Legal navigation">
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+        <nav aria-label='Legal navigation'>
+          <Link href='/privacy'>Privacy</Link>
+          <Link href='/terms'>Terms</Link>
         </nav>
       </footer>
     </div>

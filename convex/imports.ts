@@ -52,16 +52,14 @@ export const findExistingAscents = query({
     if (args.rows.length > MAX_BATCH_SIZE)
       throw new ConvexError(`Preview batches cannot exceed ${MAX_BATCH_SIZE} rows`)
     const fingerprints = await Promise.all(
-      args.rows.map(
-        async (row) => await createContentFingerprint(createAscentFingerprintInput(row)),
-      ),
+      args.rows.map(async row => await createContentFingerprint(createAscentFingerprintInput(row))),
     )
     return await Promise.all(
-      fingerprints.map(async (contentFingerprint) =>
+      fingerprints.map(async contentFingerprint =>
         Boolean(
           await ctx.db
             .query('ascents')
-            .withIndex('by_owner_fingerprint', (queryBuilder) =>
+            .withIndex('by_owner_fingerprint', queryBuilder =>
               queryBuilder.eq('ownerId', subject).eq('contentFingerprint', contentFingerprint),
             )
             .first(),
@@ -79,15 +77,15 @@ export const findExistingTrainingSessions = query({
       throw new ConvexError(`Preview batches cannot exceed ${MAX_BATCH_SIZE} rows`)
     const fingerprints = await Promise.all(
       args.rows.map(
-        async (row) => await createContentFingerprint(createTrainingSessionFingerprintInput(row)),
+        async row => await createContentFingerprint(createTrainingSessionFingerprintInput(row)),
       ),
     )
     return await Promise.all(
-      fingerprints.map(async (contentFingerprint) =>
+      fingerprints.map(async contentFingerprint =>
         Boolean(
           await ctx.db
             .query('training')
-            .withIndex('by_owner_fingerprint', (queryBuilder) =>
+            .withIndex('by_owner_fingerprint', queryBuilder =>
               queryBuilder.eq('ownerId', subject).eq('contentFingerprint', contentFingerprint),
             )
             .first(),
@@ -116,19 +114,17 @@ export const insertAscents = mutation({
       throw new ConvexError('Import batch exceeds the declared job size')
 
     const fingerprints = await Promise.all(
-      args.rows.map(
-        async (row) => await createContentFingerprint(createAscentFingerprintInput(row)),
-      ),
+      args.rows.map(async row => await createContentFingerprint(createAscentFingerprintInput(row))),
     )
     const seen = new Set<string>()
     let inserted = 0
     let skipped = 0
     const existingRecords = await Promise.all(
       fingerprints.map(
-        async (contentFingerprint) =>
+        async contentFingerprint =>
           await ctx.db
             .query('ascents')
-            .withIndex('by_owner_fingerprint', (queryBuilder) =>
+            .withIndex('by_owner_fingerprint', queryBuilder =>
               queryBuilder.eq('ownerId', subject).eq('contentFingerprint', contentFingerprint),
             )
             .first(),
@@ -152,7 +148,7 @@ export const insertAscents = mutation({
       })
       inserted += 1
     }
-    await Promise.all(rowsToInsert.map(async (row) => await ctx.db.insert('ascents', row)))
+    await Promise.all(rowsToInsert.map(async row => await ctx.db.insert('ascents', row)))
     await ctx.db.patch(args.jobId, {
       inserted: job.inserted + inserted,
       skipped: job.skipped + skipped,
@@ -183,7 +179,7 @@ export const insertTrainingSessions = mutation({
 
     const fingerprints = await Promise.all(
       args.rows.map(
-        async (row) => await createContentFingerprint(createTrainingSessionFingerprintInput(row)),
+        async row => await createContentFingerprint(createTrainingSessionFingerprintInput(row)),
       ),
     )
     const seen = new Set<string>()
@@ -191,10 +187,10 @@ export const insertTrainingSessions = mutation({
     let skipped = 0
     const existingRecords = await Promise.all(
       fingerprints.map(
-        async (contentFingerprint) =>
+        async contentFingerprint =>
           await ctx.db
             .query('training')
-            .withIndex('by_owner_fingerprint', (queryBuilder) =>
+            .withIndex('by_owner_fingerprint', queryBuilder =>
               queryBuilder.eq('ownerId', subject).eq('contentFingerprint', contentFingerprint),
             )
             .first(),
@@ -218,7 +214,7 @@ export const insertTrainingSessions = mutation({
       })
       inserted += 1
     }
-    await Promise.all(rowsToInsert.map(async (row) => await ctx.db.insert('training', row)))
+    await Promise.all(rowsToInsert.map(async row => await ctx.db.insert('training', row)))
     await ctx.db.patch(args.jobId, {
       inserted: job.inserted + inserted,
       skipped: job.skipped + skipped,
@@ -254,11 +250,11 @@ export const undoBatch = mutation({
     const table = job.kind === 'ascents' ? 'ascents' : 'training'
     const records = await ctx.db
       .query(table)
-      .withIndex('by_owner_import_job', (queryBuilder) =>
+      .withIndex('by_owner_import_job', queryBuilder =>
         queryBuilder.eq('ownerId', subject).eq('importJobId', args.jobId),
       )
       .take(MAX_BATCH_SIZE)
-    await Promise.all(records.map(async (record) => await ctx.db.delete(record._id)))
+    await Promise.all(records.map(async record => await ctx.db.delete(record._id)))
     const isDone = records.length < MAX_BATCH_SIZE
     if (isDone) await ctx.db.patch(args.jobId, { status: 'undone' })
     return { deleted: records.length, isDone }
@@ -267,11 +263,11 @@ export const undoBatch = mutation({
 
 export const listJobs = query({
   args: {},
-  handler: async (ctx) => {
+  handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const jobs = await ctx.db
       .query('importJobs')
-      .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', subject))
+      .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .order('desc')
       .take(MAX_RECENT_JOBS)
     return jobs.map(({ ownerId: _ownerId, ...job }) => job)

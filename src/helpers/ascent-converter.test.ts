@@ -125,7 +125,7 @@ describe('fromPointToGrade', () => {
   it('should handle conversion from real ascent examples', () => {
     const testAscents = [sampleAscents[0], sampleAscents[1], sampleAscents[24]]
 
-    for (const ascent of testAscents.filter((candidate) => candidate !== undefined)) {
+    for (const ascent of testAscents.filter(candidate => candidate !== undefined)) {
       const points = fromAscentToPoints(ascent)
       const convertedGrade = fromPointToGrade(points, {
         discipline: ascent.discipline,

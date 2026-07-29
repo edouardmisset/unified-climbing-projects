@@ -69,13 +69,13 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
             formatRating(rating),
           ]
             .filter(Boolean)
-            .map((formattedContent) => (
-              <span className="textNoWrap" key={formattedContent}>
+            .map(formattedContent => (
+              <span className='textNoWrap' key={formattedContent}>
                 {formattedContent}
               </span>
             ))}
         </div>
-        <span className="block">{formatComments(comments)}</span>
+        <span className='block'>{formatComments(comments)}</span>
       </div>
     </div>
   )

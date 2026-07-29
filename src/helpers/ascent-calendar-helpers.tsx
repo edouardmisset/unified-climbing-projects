@@ -32,7 +32,7 @@ export function fromAscentsToCalendarEntries(
       return {
         backgroundColor,
         date,
-        isSpecialCase: ascents.every((ascent) => ascent.discipline === 'Bouldering'),
+        isSpecialCase: ascents.every(ascent => ascent.discipline === 'Bouldering'),
         shortText: formatGrade({ discipline, grade }),
         title: dateAndCrag,
         ascents,

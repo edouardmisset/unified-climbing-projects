@@ -71,7 +71,7 @@ describe('training session public boundaries', () => {
 
   it.each(['ownerId', 'contentFingerprint', 'importJobId', '_id', '_creationTime', 'load'])(
     'rejects the internal field %s from public input',
-    (field) => {
+    field => {
       expect(
         trainingSessionPublicInputSchema.safeParse({
           ...trainingSession,

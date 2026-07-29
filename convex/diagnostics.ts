@@ -4,20 +4,20 @@ import { requireIdentity } from './auth'
 
 export const ownerCounts = query({
   args: {},
-  handler: async (ctx) => {
+  handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const [ascents, training, importJobs] = await Promise.all([
       ctx.db
         .query('ascents')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', subject))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
         .collect(),
       ctx.db
         .query('training')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', subject))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
         .collect(),
       ctx.db
         .query('importJobs')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', subject))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
         .collect(),
     ])
     return {
@@ -44,16 +44,16 @@ export const reconcile = internalQuery({
     return {
       ascents: ascents.length,
       missingFingerprints: records.filter(
-        (record) =>
+        record =>
           !('contentFingerprint' in record) ||
           typeof record.contentFingerprint !== 'string' ||
           record.contentFingerprint.length === 0,
       ).length,
       ownerless: records.filter(
-        (record) => !('ownerId' in record) || typeof record.ownerId !== 'string',
+        record => !('ownerId' in record) || typeof record.ownerId !== 'string',
       ).length,
       training: training.length,
-      wrongOwner: records.filter((record) => 'ownerId' in record && record.ownerId !== args.ownerId)
+      wrongOwner: records.filter(record => 'ownerId' in record && record.ownerId !== args.ownerId)
         .length,
     }
   },

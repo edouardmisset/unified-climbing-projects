@@ -13,7 +13,7 @@ type SessionsPerDiscipline = {
 export function getSessionsPerDiscipline(sessions: TrainingSession[]): SessionsPerDiscipline {
   if (sessions.length === 0) return []
 
-  const sessionsWithDiscipline = sessions.filter((session) => session.discipline !== undefined)
+  const sessionsWithDiscipline = sessions.filter(session => session.discipline !== undefined)
 
   const disciplineCounts = new Map<Discipline, number>()
 

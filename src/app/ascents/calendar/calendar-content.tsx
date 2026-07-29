@@ -13,7 +13,7 @@ export async function CalendarContent() {
     continuous: false,
     descending: true,
   }).map(
-    (year) =>
+    year =>
       [
         year,
         filterByDate({

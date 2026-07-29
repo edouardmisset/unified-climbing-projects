@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
 
 export default async function Page() {
   return (
-    <Layout gridClassName={styles.container} layout="flexRow" title="Indicators">
+    <Layout gridClassName={styles.container} layout='flexRow' title='Indicators'>
       <Suspense fallback={<Loader />}>
         <IndicatorsTimeline />
       </Suspense>

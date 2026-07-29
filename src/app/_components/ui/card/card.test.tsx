@@ -43,7 +43,7 @@ describe('card Component', () => {
           <p>Section content</p>
         </section>
         <footer>
-          <button type="button">Action</button>
+          <button type='button'>Action</button>
         </footer>
       </Card>,
     )

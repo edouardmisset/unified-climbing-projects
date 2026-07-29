@@ -12,8 +12,8 @@ export function AscentSummary({ ascents }: AscentListProps) {
 
   if (ascents.length === 0 || mostRecentAscent === undefined) return
 
-  const ascentsByStyle = Object.groupBy(ascents, (ascent) => ascent.style)
-  const ascentsByDiscipline = Object.groupBy(ascents, (ascent) => ascent.discipline)
+  const ascentsByStyle = Object.groupBy(ascents, ascent => ascent.style)
+  const ascentsByDiscipline = Object.groupBy(ascents, ascent => ascent.discipline)
 
   const onsightAscents = ascentsByStyle.Onsight ?? []
   const flashAscents = ascentsByStyle.Flash ?? []
@@ -30,40 +30,40 @@ export function AscentSummary({ ascents }: AscentListProps) {
       <h2>Ascents</h2>
 
       <p>
-        <span className="block">
+        <span className='block'>
           Your last {mostRecentAscent.discipline.toLowerCase()} was{' '}
           <AscentComponent ascent={mostRecentAscent} />
         </span>
 
         {onsightAscents.length === 0 ? undefined : (
-          <span className="block">
-            You <ClimbingStyle climbingStyle="onsighted" />{' '}
+          <span className='block'>
+            You <ClimbingStyle climbingStyle='onsighted' />{' '}
             <AscentsWithPopover ascents={onsightAscents} />
           </span>
         )}
         {flashAscents.length === 0 ? undefined : (
-          <span className="block">
-            You <ClimbingStyle climbingStyle="flashed" />{' '}
+          <span className='block'>
+            You <ClimbingStyle climbingStyle='flashed' />{' '}
             <AscentsWithPopover ascents={flashAscents} />
           </span>
         )}
         {redpointAscents.length === 0 ? undefined : (
-          <span className="block">
-            You <ClimbingStyle climbingStyle="redpointed" />{' '}
+          <span className='block'>
+            You <ClimbingStyle climbingStyle='redpointed' />{' '}
             <AscentsWithPopover ascents={redpointAscents} />
           </span>
         )}
 
         {averageRouteGrade === 'N/A' ? undefined : (
-          <span className="block">
+          <span className='block'>
             Your average route grade was{' '}
-            <DisplayGrade discipline="Sport" grade={averageRouteGrade} />
+            <DisplayGrade discipline='Sport' grade={averageRouteGrade} />
           </span>
         )}
         {averageBoulderGrade === 'N/A' ? undefined : (
-          <span className="block">
+          <span className='block'>
             Your average bouldering grade was{' '}
-            <DisplayGrade discipline="Bouldering" grade={averageBoulderGrade} />
+            <DisplayGrade discipline='Bouldering' grade={averageBoulderGrade} />
           </span>
         )}
       </p>

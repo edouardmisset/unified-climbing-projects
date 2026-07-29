@@ -60,12 +60,12 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
   return (
     <form
-      aria-describedby="form-description"
-      autoComplete="off"
+      aria-describedby='form-description'
+      autoComplete='off'
       className={styles.form}
-      name="training-session-form"
+      name='training-session-form'
       onSubmit={handleSubmit(
-        async (data) => {
+        async data => {
           const promise = onSubmit(data)
           await toast.promise(promise, {
             error: 'Failed to submit ❌',
@@ -79,14 +79,14 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
           if (data.sessionType === 'Out') router.push(LINKS.ascentForm)
         },
-        (error) => {
+        error => {
           console.error(error)
           toast.error('Something went wrong')
         },
       )}
       spellCheck={false}
     >
-      <div aria-hidden="true" className={styles.groupHeader}>
+      <div aria-hidden='true' className={styles.groupHeader}>
         <span />
         Location
         <span />
@@ -94,38 +94,38 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="date">Date</label>
+          <label htmlFor='date'>Date</label>
           <input
             {...register('date')}
             // oxlint-disable-next-line jsx_a11y/no-autofocus
             autoFocus
             className={styles.input}
-            enterKeyHint="next"
-            id="date"
-            list="date-list"
+            enterKeyHint='next'
+            id='date'
+            list='date-list'
             max={fromDateToStringDate(new Date())}
             required
-            title="Date"
-            type="date"
+            title='Date'
+            type='date'
           />
-          <DataList id="date-list" options={createRecentDateOptions()} />
+          <DataList id='date-list' options={createRecentDateOptions()} />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="session-type">Session Type</label>
+          <label htmlFor='session-type'>Session Type</label>
           <input
             {...register('sessionType')}
             className={styles.input}
-            enterKeyHint="next"
-            id="session-type"
-            list="session-type-list"
-            placeholder="Out"
+            enterKeyHint='next'
+            id='session-type'
+            list='session-type-list'
+            placeholder='Out'
             title={sessionTypeFormattedList}
-            type="text"
+            type='text'
           />
           <DataList
-            id="session-type-list"
-            options={SESSION_TYPES.map((sessionType) => ({
+            id='session-type-list'
+            options={SESSION_TYPES.map(sessionType => ({
               label: fromSessionTypeToLabel(sessionType),
               value: sessionType,
             }))}
@@ -135,35 +135,35 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="gymCrag">Location</label>
+          <label htmlFor='gymCrag'>Location</label>
           <input
             {...register('gymCrag')}
             className={styles.input}
-            enterKeyHint="next"
-            id="gymCrag"
-            list="gym-crag-list"
-            placeholder="Ceüse"
-            title="The name of the gym or crag"
-            type="text"
+            enterKeyHint='next'
+            id='gymCrag'
+            list='gym-crag-list'
+            placeholder='Ceüse'
+            title='The name of the gym or crag'
+            type='text'
           />
-          <DataList id="gym-crag-list" options={createValueAndLabel(allLocations)} />
+          <DataList id='gym-crag-list' options={createValueAndLabel(allLocations)} />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="climbing-discipline">Climbing Discipline</label>
+          <label htmlFor='climbing-discipline'>Climbing Discipline</label>
           <input
             {...register('climbingDiscipline')}
             className={styles.input}
-            enterKeyHint="next"
-            id="climbing-discipline"
-            list="climbing-discipline-list"
-            placeholder="Route"
+            enterKeyHint='next'
+            id='climbing-discipline'
+            list='climbing-discipline-list'
+            placeholder='Route'
             title={`The climbing discipline of the session (e.g. ${climbingDisciplineFormattedList})`}
-            type="text"
+            type='text'
           />
           <DataList
-            id="climbing-discipline-list"
-            options={CLIMBING_DISCIPLINE.map((discipline) => ({
+            id='climbing-discipline-list'
+            options={CLIMBING_DISCIPLINE.map(discipline => ({
               label: `${fromClimbingDisciplineToEmoji(toCanonicalDiscipline(discipline))} ${discipline}`,
               value: discipline,
             }))}
@@ -171,7 +171,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
         </div>
       </div>
 
-      <div aria-hidden="true" className={styles.groupHeader}>
+      <div aria-hidden='true' className={styles.groupHeader}>
         <span />
         Focus
         <span />
@@ -179,20 +179,20 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="anatomical-region">Anatomical Region</label>
+          <label htmlFor='anatomical-region'>Anatomical Region</label>
           <input
             {...register('anatomicalRegion')}
             className={styles.input}
-            enterKeyHint="next"
-            id="anatomical-region"
-            list="anatomical-region-list"
-            placeholder="Fi"
+            enterKeyHint='next'
+            id='anatomical-region'
+            list='anatomical-region-list'
+            placeholder='Fi'
             title={`The anatomical region targeted during the training session (e.g. ${anatomicalRegionFormattedList})`}
-            type="text"
+            type='text'
           />
           <DataList
-            id="anatomical-region-list"
-            options={ANATOMICAL_REGIONS.map((region) => ({
+            id='anatomical-region-list'
+            options={ANATOMICAL_REGIONS.map(region => ({
               label: `${fromAnatomicalRegionToEmoji(toCanonicalAnatomicalRegion(region))} ${fromAnatomicalRegionToLabel(region)}`,
               value: region,
             }))}
@@ -200,20 +200,20 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="energy-system">Energy System</label>
+          <label htmlFor='energy-system'>Energy System</label>
           <input
             {...register('energySystem')}
             className={styles.input}
-            enterKeyHint="next"
-            id="energy-system"
-            list="energy-system-list"
-            placeholder="AL"
+            enterKeyHint='next'
+            id='energy-system'
+            list='energy-system-list'
+            placeholder='AL'
             title={`The energy system targeted during the training session (e.g. ${energySystemFormattedList})`}
-            type="text"
+            type='text'
           />
           <DataList
-            id="energy-system-list"
-            options={ENERGY_SYSTEMS.map((system) => ({
+            id='energy-system-list'
+            options={ENERGY_SYSTEMS.map(system => ({
               label: `${fromEnergySystemToEmoji(toCanonicalEnergySystem(system))} ${fromEnergySystemToLabel(system)}`,
               value: system,
             }))}
@@ -223,60 +223,60 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="intensity">Intensity (%)</label>
+          <label htmlFor='intensity'>Intensity (%)</label>
           <input
             {...register('intensity')}
             className={styles.input}
-            enterKeyHint="next"
-            id="intensity"
-            inputMode="numeric"
+            enterKeyHint='next'
+            id='intensity'
+            inputMode='numeric'
             max={MAX_PERCENT}
             min={MIN_PERCENT}
             pattern={zeroTo100RegEx.source}
-            placeholder="50"
+            placeholder='50'
             step={5}
-            title="The perceived intensity of the session (0 - 100%)"
-            type="number"
+            title='The perceived intensity of the session (0 - 100%)'
+            type='number'
           />
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="volume">Volume (%)</label>
+          <label htmlFor='volume'>Volume (%)</label>
           <input
             {...register('volume')}
             className={styles.input}
-            enterKeyHint="next"
-            id="volume"
-            inputMode="numeric"
+            enterKeyHint='next'
+            id='volume'
+            inputMode='numeric'
             max={MAX_PERCENT}
             min={MIN_PERCENT}
             pattern={zeroTo100RegEx.source}
-            placeholder="80"
+            placeholder='80'
             step={5}
-            title="The perceived volume of the session (0 - 100%)"
-            type="number"
+            title='The perceived volume of the session (0 - 100%)'
+            type='number'
           />
         </div>
       </div>
 
-      <div aria-hidden="true" className={styles.groupHeader}>
+      <div aria-hidden='true' className={styles.groupHeader}>
         <span />
         Wrap Up
         <span />
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="comments">Comments</label>
+        <label htmlFor='comments'>Comments</label>
         <textarea
           {...register('comments')}
-          autoComplete="off"
-          autoCorrect="on"
+          autoComplete='off'
+          autoCorrect='on'
           className={`${styles.input} ${styles.textarea}`}
-          enterKeyHint="send"
-          id="comments"
-          placeholder="Felt great, but need to work on my footwork"
+          enterKeyHint='send'
+          id='comments'
+          placeholder='Felt great, but need to work on my footwork'
           spellCheck
-          title="Comments about the training session"
+          title='Comments about the training session'
         />
       </div>
 
@@ -285,7 +285,7 @@ export default function TrainingSessionForm({ allLocations }: { allLocations: st
         <KeycapButton
           disabled={isSubmitting}
           label={isSubmitting ? 'Submitting...' : 'Submit 📮'}
-          type="submit"
+          type='submit'
         />
       </div>
     </form>

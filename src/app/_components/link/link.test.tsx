@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { describe, expect, it, vi } from 'vitest'
 import { Link } from './link'
 
-vi.mock(import('next/navigation'), async (importOriginal) => ({
+vi.mock(import('next/navigation'), async importOriginal => ({
   ...(await importOriginal()),
   usePathname: vi.fn<() => string>(),
 }))
@@ -16,7 +16,7 @@ describe('link', () => {
     const handleClick = vi.fn<() => void>()
     usePathnameMock.mockReturnValue('/settings')
     render(
-      <Link className="custom" href="/settings" onClick={handleClick}>
+      <Link className='custom' href='/settings' onClick={handleClick}>
         Settings
       </Link>,
     )

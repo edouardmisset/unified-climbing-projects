@@ -229,7 +229,7 @@ export function parseCanonicalCsv<T>(text: string, contract: CanonicalCsvContrac
         { row: headerRecord.line },
       )
 
-  return records.slice(1).map((record) => {
+  return records.slice(1).map(record => {
     if (record.cells.length !== headers.length)
       throw new CanonicalCsvError(
         'COLUMN_COUNT_MISMATCH',

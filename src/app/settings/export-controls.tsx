@@ -45,12 +45,12 @@ export function ExportControls({ ascents, trainingSessions }: ExportControlsProp
 
   return (
     <div className={styles.controls}>
-      <button className={styles.primaryAction} onClick={downloadExport} type="button">
+      <button className={styles.primaryAction} onClick={downloadExport} type='button'>
         Download ZIP ({ascents.length + trainingSessions.length} records)
       </button>
       <button
         onClick={() => downloadText(ASCENT_CSV_TEMPLATE, 'ascents-template.csv')}
-        type="button"
+        type='button'
       >
         Ascent template
       </button>
@@ -58,7 +58,7 @@ export function ExportControls({ ascents, trainingSessions }: ExportControlsProp
         onClick={() =>
           downloadText(TRAINING_SESSION_CSV_TEMPLATE, 'training-sessions-template.csv')
         }
-        type="button"
+        type='button'
       >
         Training template
       </button>

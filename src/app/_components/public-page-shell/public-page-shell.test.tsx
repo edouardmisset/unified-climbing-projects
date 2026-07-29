@@ -12,7 +12,7 @@ vi.mock(import('@clerk/nextjs'), () => ({
 describe('publicPageShell', () => {
   it('provides shared branding, navigation, content, and legal links', () => {
     render(
-      <PublicPageShell layout="prose">
+      <PublicPageShell layout='prose'>
         <h1>Public content</h1>
       </PublicPageShell>,
     )

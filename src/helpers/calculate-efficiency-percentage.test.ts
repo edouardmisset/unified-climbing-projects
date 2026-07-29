@@ -131,7 +131,7 @@ describe('calculateEfficiencyPercentage', () => {
     const onsightFlashRatio = (2 / 3) * COEFFICIENT_ONSIGHT_FLASH_RATIO
 
     const ratios = [ascentDayPerDayOutside, ascentsPerDay, averageTries, onsightFlashRatio].map(
-      (ratio) =>
+      ratio =>
         clampValueInRange({
           maximum: 100,
           minimum: 0,

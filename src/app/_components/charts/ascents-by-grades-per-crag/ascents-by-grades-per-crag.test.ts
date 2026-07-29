@@ -12,7 +12,7 @@ describe('getAscentsByGradesPerCrag', () => {
     const result = getAscentsByGradesPerCrag(sampleAscents)
     expect(result.length).toBeLessThanOrEqual(10)
 
-    result.forEach((item) => {
+    result.forEach(item => {
       expect(item.crag).toBeDefined()
       // oxlint-disable-next-line vitest/prefer-expect-type-of
       expect(typeof item.crag).toBe('string')

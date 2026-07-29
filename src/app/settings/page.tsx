@@ -16,8 +16,8 @@ export default async function SettingsPage() {
   ])
 
   return (
-    <Layout gridClassName={styles.settings} layout="flexColumn" title="Settings">
-      <section className={styles.section} id="import">
+    <Layout gridClassName={styles.settings} layout='flexColumn' title='Settings'>
+      <section className={styles.section} id='import'>
         <Card>
           <h2 className={styles.sectionTitle}>Import your data</h2>
           <div className={styles.introduction}>
@@ -36,7 +36,7 @@ export default async function SettingsPage() {
         </Card>
       </section>
 
-      <section className={styles.section} id="export">
+      <section className={styles.section} id='export'>
         <Card>
           <h2 className={styles.sectionTitle}>Export your data</h2>
           <p>
@@ -47,12 +47,12 @@ export default async function SettingsPage() {
         </Card>
       </section>
 
-      <section className={styles.section} id="account">
+      <section className={styles.section} id='account'>
         <Card>
           <h2 className={styles.sectionTitle}>Account and deletion</h2>
           <p>
             To request account support or permanent deletion of your account and records, email{' '}
-            <a href="mailto:edouardmisset@gmail.com">edouardmisset@gmail.com</a>.
+            <a href='mailto:edouardmisset@gmail.com'>edouardmisset@gmail.com</a>.
           </p>
         </Card>
       </section>

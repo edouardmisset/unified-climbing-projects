@@ -5,7 +5,7 @@ describe('navigation items', () => {
   it('links to Settings without exposing a standalone Import route', () => {
     const hrefs = NAVIGATION_ITEMS.flatMap((item): string[] => {
       if (item.type === 'link') return [item.href]
-      if (item.type === 'group') return item.links.map((link) => link.href)
+      if (item.type === 'group') return item.links.map(link => link.href)
       return []
     })
 

@@ -4,7 +4,7 @@ import styles from '../legal.module.css'
 
 export default function TermsPage() {
   return (
-    <PublicPageShell layout="prose">
+    <PublicPageShell layout='prose'>
       <article className={styles.article}>
         <h1>Beta terms</h1>
         <p>
@@ -18,10 +18,10 @@ export default function TermsPage() {
         </p>
         <p>
           Questions can be sent to{' '}
-          <a href="mailto:edouardmisset@gmail.com">edouardmisset@gmail.com</a>.
+          <a href='mailto:edouardmisset@gmail.com'>edouardmisset@gmail.com</a>.
         </p>
         <p>
-          <Link href="/">Return home</Link>
+          <Link href='/'>Return home</Link>
         </p>
       </article>
     </PublicPageShell>

@@ -11,15 +11,15 @@ export const countOwnerData = internalQuery({
     const [ascents, training, importJobs] = await Promise.all([
       ctx.db
         .query('ascents')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', ownerId))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', ownerId))
         .collect(),
       ctx.db
         .query('training')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', ownerId))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', ownerId))
         .collect(),
       ctx.db
         .query('importJobs')
-        .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', ownerId))
+        .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', ownerId))
         .collect(),
     ])
     return {
@@ -40,9 +40,9 @@ export const deleteOwnerBatch = internalMutation({
     const batchSize = Math.min(Math.max(args.batchSize ?? MAX_BATCH_SIZE, 1), MAX_BATCH_SIZE)
     const records = await ctx.db
       .query(args.table)
-      .withIndex('by_owner', (queryBuilder) => queryBuilder.eq('ownerId', args.ownerId))
+      .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', args.ownerId))
       .take(batchSize)
-    await Promise.all(records.map(async (record) => await ctx.db.delete(record._id)))
+    await Promise.all(records.map(async record => await ctx.db.delete(record._id)))
     return records.length
   },
 })

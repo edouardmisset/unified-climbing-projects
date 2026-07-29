@@ -21,16 +21,16 @@ export default function LandingPage() {
         </p>
         <div className={styles.actions}>
           <SignedOut>
-            <Link className={styles.primaryAction} href="/sign-in">
+            <Link className={styles.primaryAction} href='/sign-in'>
               Sign in
             </Link>
           </SignedOut>
           <SignedIn>
-            <Link className={styles.primaryAction} href="/wrap-up">
+            <Link className={styles.primaryAction} href='/wrap-up'>
               Open your log
             </Link>
           </SignedIn>
-          <a href="mailto:edouardmisset@gmail.com">Request beta access</a>
+          <a href='mailto:edouardmisset@gmail.com'>Request beta access</a>
         </div>
         <ul className={styles.features}>
           <li>

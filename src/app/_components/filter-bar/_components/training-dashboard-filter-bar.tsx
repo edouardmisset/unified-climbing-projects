@@ -51,8 +51,8 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       locationType: normalizeFilterValue(selectedLocationType),
       period: normalizeFilterValue(selectedPeriod),
     })
-    return AVAILABLE_CLIMBING_DISCIPLINE.filter((discipline) =>
-      filteredForDiscipline.some((session) => session.discipline === discipline),
+    return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
+      filteredForDiscipline.some(session => session.discipline === discipline),
     )
   }, [trainingSessions, selectedYearNumber, selectedLocationType, selectedPeriod])
 
@@ -68,7 +68,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     })
     const hasIndoor = filteredForLocationType.some(({ type }) => isIndoorSession({ type }))
     const hasOutdoor = filteredForLocationType.some(({ type }) => type === 'Outdoor')
-    return LOCATION_TYPES.filter((locationType) =>
+    return LOCATION_TYPES.filter(locationType =>
       locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
   }, [trainingSessions, selectedYearNumber, effectiveSelectedDiscipline, selectedPeriod])
@@ -83,7 +83,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
       locationType: normalizeFilterValue(effectiveSelectedLocationType),
     })
-    return PERIOD.filter((period) =>
+    return PERIOD.filter(period =>
       filteredForPeriod.some(({ date }) =>
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),

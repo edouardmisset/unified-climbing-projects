@@ -13,7 +13,7 @@ const trackedFiles = execFileSync('git', ['ls-files'], { encoding: 'utf8' })
   .split('\n')
   .filter(Boolean)
 const violations = trackedFiles.filter(
-  (file) => existsSync(file) && forbiddenPatterns.some((pattern) => pattern.test(file)),
+  file => existsSync(file) && forbiddenPatterns.some(pattern => pattern.test(file)),
 )
 
 if (violations.length > 0) {
