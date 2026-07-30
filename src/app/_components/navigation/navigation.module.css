@@ -208,7 +208,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   z-index: var(--layer-4);
-  inline-size: min(86vw, 22rem);
+  inline-size: min(80vw, 18rem);
   max-inline-size: 100%;
   background: var(--panel-bg);
   backdrop-filter: blur(4px) saturate(180%);
@@ -225,8 +225,8 @@
 
   @media (prefers-reduced-motion: no-preference) {
     transition:
-      transform var(--sneeze) var(--ease-3),
-      opacity var(--sneeze) var(--ease-out-3);
+      transform 0.35s var(--ease-spring-2),
+      opacity 0.35s var(--ease-out-3);
   }
 }
 
