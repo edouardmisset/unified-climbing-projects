@@ -10,6 +10,9 @@ concurrency:
   group: pr-ci-guard-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Check format/lint/type
