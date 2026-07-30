@@ -36,12 +36,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     tries,
   } = ascent
 
-  const stylesDependingOnComments = (() => {
-    const maxCommentLength = 120
-    const isLongComment = comments && comments.length > maxCommentLength
-
-    return { '--direction': isLongComment ? 'row' : 'column' }
-  })()
+  const maxCommentLength = 120
+  const isLongComment = comments && comments.length > maxCommentLength
+  const stylesDependingOnComments = { '--direction': isLongComment ? 'row' : 'column' }
 
   const formattedGrade = formatGrade({ discipline, grade })
 
