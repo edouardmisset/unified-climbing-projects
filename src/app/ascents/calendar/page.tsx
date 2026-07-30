@@ -7,7 +7,7 @@ import { CalendarContent } from './calendar-content'
 export default async function AscentsCalendarPage() {
   return (
     <Layout layout='flexColumn' title='Ascents Calendar'>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='dataCalendar' />}>
         <CalendarContent />
       </Suspense>
     </Layout>

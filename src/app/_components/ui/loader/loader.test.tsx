@@ -15,14 +15,14 @@ describe('loader', () => {
   })
 
   it('selects the compact bones for compact loading states', () => {
-    const { container } = render(<Loader compact />)
+    const { container } = render(<Loader variant='compact' />)
 
     expect(container.querySelector('[data-boneyard="loading-compact"]')).toBeInTheDocument()
   })
 
   it('selects layout-specific bones', () => {
-    const { container } = render(<Loader variant='dashboard' />)
+    const { container } = render(<Loader variant='dataCalendar' />)
 
-    expect(container.querySelector('[data-boneyard="loading-dashboard"]')).toBeInTheDocument()
+    expect(container.querySelector('[data-boneyard="loading-data-calendar"]')).toBeInTheDocument()
   })
 })

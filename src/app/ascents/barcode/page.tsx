@@ -27,7 +27,7 @@ export default async function AscentBarcodePage() {
         .map(([year, yearAscents]) => (
           <div className='flexColumn w100' key={year}>
             <h2 className='centerText'>{year}</h2>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Loader variant='barcode' />}>
               <AscentsBarcode yearlyAscents={yearAscents} />
             </Suspense>
           </div>

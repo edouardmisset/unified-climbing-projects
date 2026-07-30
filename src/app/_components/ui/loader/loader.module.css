@@ -8,7 +8,9 @@
   inline-size: 100%;
 }
 
-.page {
+.page,
+.dataCalendar,
+.indicators {
   min-block-size: min(60vh, 36rem);
 }
 
@@ -16,17 +18,39 @@
   min-block-size: min(70vh, 44rem);
 }
 
-.form {
+.ascentForm,
+.trainingForm {
   min-block-size: min(70vh, 42rem);
 }
 
-.list {
+.ascentList,
+.trainingList,
+.topTen {
   min-block-size: min(60vh, 32rem);
 }
 
-.compact {
+.compact,
+.inlineSummary {
   min-block-size: var(--size-5);
   max-inline-size: 18rem;
+}
+
+.chart {
+  min-block-size: 12rem;
+}
+
+.qrCode {
+  min-block-size: 18rem;
+  max-inline-size: 32rem;
+}
+
+.barcode {
+  min-block-size: 8rem;
+}
+
+.ascentDetail {
+  min-block-size: 16rem;
+  max-inline-size: 36rem;
 }
 
 .fallback {

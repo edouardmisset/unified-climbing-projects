@@ -42,7 +42,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (weeklyAscentsByDescendingGrade.length === 0) return ''
     return (
-      <Suspense fallback={<Loader compact />}>
+      <Suspense fallback={<Loader variant='compact' />}>
         <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
       </Suspense>
     )

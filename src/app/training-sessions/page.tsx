@@ -10,7 +10,7 @@ export default async function TrainingSessionsPage() {
 
   return (
     <Layout title='Training'>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='trainingList' />}>
         <FilteredTrainingSessionList trainingSessions={trainingSessions} />
       </Suspense>
     </Layout>

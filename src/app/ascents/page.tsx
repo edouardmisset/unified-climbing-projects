@@ -10,7 +10,7 @@ export default async function Page() {
 
   return (
     <Layout title='Ascents'>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='ascentList' />}>
         <FilteredAscentList ascents={ascents} />
       </Suspense>
     </Layout>

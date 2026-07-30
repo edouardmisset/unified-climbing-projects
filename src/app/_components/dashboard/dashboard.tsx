@@ -24,7 +24,7 @@ export function Dashboard({ ascents }: AscentListProps) {
         <DashboardStatistics ascents={filteredAscents} />
       </Suspense>
       <section className='w100 padding'>
-        <Suspense fallback={<Loader variant='list' />}>
+        <Suspense fallback={<Loader variant='ascentList' />}>
           <AscentList ascents={filteredAscents} />
         </Suspense>
       </section>

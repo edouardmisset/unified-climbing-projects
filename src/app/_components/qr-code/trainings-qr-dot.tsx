@@ -24,7 +24,7 @@ export const TrainingsQRDot = memo(
     const lazyDescription = useMemo(() => {
       if (trainingSessions.length === 0) return ''
       return (
-        <Suspense fallback={<Loader compact />}>
+        <Suspense fallback={<Loader variant='compact' />}>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )

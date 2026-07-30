@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   if (ascentId.length === 0) return <h2>Invalid ascent ID</h2>
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader variant='ascentDetail' />}>
       <AscentDetail ascentId={ascentId} />
     </Suspense>
   )

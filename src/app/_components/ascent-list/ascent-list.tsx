@@ -247,7 +247,7 @@ export const AscentList = memo(
         {selectedAscent !== undefined && (
           <Dialog
             content={
-              <Suspense fallback={<Loader variant='list' />}>
+              <Suspense fallback={<Loader variant='ascentDetail' />}>
                 <AscentCard ascent={selectedAscent} />
               </Suspense>
             }

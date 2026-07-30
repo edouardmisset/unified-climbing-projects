@@ -34,7 +34,7 @@ export default async function AscentsQRCodePage() {
           return (
             <div className='flexColumn alignCenter' key={year}>
               <h2 className='centerText'>{year}</h2>
-              <Suspense fallback={<Loader />}>
+              <Suspense fallback={<Loader variant='qrCode' />}>
                 <AscentsQRCode yearlyAscents={sortedAscents} />
               </Suspense>
             </div>

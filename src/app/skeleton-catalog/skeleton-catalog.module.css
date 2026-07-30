@@ -8,14 +8,22 @@
 .page,
 .dashboard,
 .form,
-.list {
+.list,
+.calendar,
+.topTen,
+.indicators {
   inline-size: 100%;
 }
 
 .page,
-.dashboard {
+.dashboard,
+.form,
+.list,
+.detail,
+.topTen,
+.indicators {
   display: grid;
-  gap: var(--size-fluid-3);
+  gap: var(--size-3);
 }
 
 .toolbar,
@@ -31,29 +39,26 @@
   flex: 1 1 14rem;
 }
 
-.statistic,
-.charts article,
-.listItem {
-  display: grid;
-  gap: var(--size-2);
+.card,
+.listItem,
+.chart {
   padding: var(--size-fluid-2);
   background: var(--surface-2);
   border: var(--border-size-1) solid var(--surface-3);
   border-radius: var(--radius-3);
 }
 
-.statistic strong {
+.card,
+.listItem {
+  display: grid;
+  gap: var(--size-2);
+}
+
+.card strong {
   font-size: var(--font-size-fluid-2);
 }
 
-.chart {
-  min-block-size: 12rem;
-  border-radius: var(--radius-2);
-}
-
 .form {
-  display: grid;
-  gap: var(--size-3);
   max-inline-size: var(--size-content-1);
   margin-inline: auto;
 }
@@ -67,13 +72,99 @@
   min-block-size: var(--size-7);
 }
 
-.list {
+.calendar {
   display: grid;
   gap: var(--size-2);
+  overflow: hidden;
+}
+
+.calendarLabels {
+  word-spacing: var(--size-4);
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 2px;
+  min-block-size: 16rem;
+}
+
+.calendarGrid span,
+.qrCode span,
+.barcode span {
+  background: var(--surface-2);
+  border-radius: var(--radius-1);
+}
+
+.qrCode {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 2px;
+  inline-size: min(100%, 24rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.barcode {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr);
+  gap: 2px;
+  inline-size: 100%;
+  min-block-size: 8rem;
+}
+
+.chart {
+  display: grid;
+  gap: var(--size-2);
+  min-block-size: 14rem;
+}
+
+.chartPlot {
+  display: flex;
+  align-items: end;
+  gap: var(--size-2);
+  min-block-size: 11rem;
+}
+
+.chartPlot span {
+  flex: 1;
+  background: var(--surface-3);
+  border-radius: var(--radius-2) var(--radius-2) 0 0;
+}
+
+.detail dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--size-2) var(--size-4);
+}
+
+.topTen table {
+  inline-size: 100%;
+}
+
+.topTen th,
+.topTen td {
+  padding: var(--size-2);
+  text-align: start;
+}
+
+.indicators {
+  border-inline-start: var(--border-size-2) solid var(--surface-3);
+}
+
+.indicators li {
+  display: grid;
+  gap: var(--size-1);
+  padding: var(--size-3);
 }
 
 .compact {
   display: inline-grid;
   gap: var(--size-1);
   min-inline-size: 12rem;
+}
+
+.inlineSummary {
+  display: inline;
 }

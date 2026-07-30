@@ -54,7 +54,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
   const lazyDescription = useMemo(() => {
     if (filteredSortedWeeklyTraining.length === 0) return ''
     return (
-      <Suspense fallback={<Loader compact />}>
+      <Suspense fallback={<Loader variant='compact' />}>
         <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
       </Suspense>
     )

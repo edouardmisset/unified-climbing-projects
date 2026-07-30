@@ -15,6 +15,7 @@ import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
+import { Loader } from '../../ui/loader/loader'
 import { DaysOutsideDetails } from './days-outside-details'
 
 const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
@@ -58,13 +59,7 @@ export async function DaysOutsideSummary({
     <Card>
       <h2>Days outside</h2>
       <p>
-        <Suspense
-          fallback={
-            <p>
-              <strong>Loading details...</strong>
-            </p>
-          }
-        >
+        <Suspense fallback={<Loader variant='inlineSummary' />}>
           <DaysOutsideDetails
             ascents={ascents}
             ascentsRatio={ascentsRatio}

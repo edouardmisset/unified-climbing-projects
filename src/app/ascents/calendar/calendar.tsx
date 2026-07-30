@@ -9,7 +9,7 @@ export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; yea
   return (
     <>
       <h2 className='superCenter'>{year}</h2>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='dataCalendar' />}>
         <DataCalendar
           data={allAscents}
           dataTransformationFunction={groupDataDaysByYear<Ascent>}

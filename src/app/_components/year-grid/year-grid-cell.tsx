@@ -54,13 +54,13 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     if (hasTrainingSessions && hasAscents)
       return (
         <>
-          <Suspense fallback={<Loader compact />}>
+          <Suspense fallback={<Loader variant='compact' />}>
             <TrainingPopoverDescription trainingSessions={trainingSessions} />
           </Suspense>
           <br />
           <hr />
           <br />
-          <Suspense fallback={<Loader compact />}>
+          <Suspense fallback={<Loader variant='compact' />}>
             <AscentsPopoverDescription ascents={ascents} />
           </Suspense>
         </>
@@ -68,14 +68,14 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
 
     if (hasAscents)
       return (
-        <Suspense fallback={<Loader compact />}>
+        <Suspense fallback={<Loader variant='compact' />}>
           <AscentsPopoverDescription ascents={ascents} />
         </Suspense>
       )
 
     if (hasTrainingSessions)
       return (
-        <Suspense fallback={<Loader compact />}>
+        <Suspense fallback={<Loader variant='compact' />}>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )

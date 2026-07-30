@@ -27,7 +27,7 @@ export function TableAndSelect({ ascents }: AscentListProps) {
   return (
     <div className='flex flexColumn gap gridFullWidth padding'>
       <TimeframeSelect />
-      <Suspense fallback={<Loader variant='list' />}>
+      <Suspense fallback={<Loader variant='topTen' />}>
         <AscentList ascents={topTenAscents} showDetails={false} showPoints />
       </Suspense>
     </div>

@@ -1,0 +1,74 @@
+{
+  "breakpoints": {
+    "390": {
+      "name": "loading-chart",
+      "viewportWidth": 474,
+      "width": 474,
+      "height": 242,
+      "bones": [
+        [
+          0,
+          0,
+          100,
+          242,
+          16,
+          true
+        ],
+        [
+          39.909,
+          201,
+          20.1819,
+          24,
+          8
+        ]
+      ]
+    },
+    "768": {
+      "name": "loading-chart",
+      "viewportWidth": 480,
+      "width": 480,
+      "height": 242,
+      "bones": [
+        [
+          0,
+          0,
+          100,
+          242,
+          16,
+          true
+        ],
+        [
+          40.0326,
+          201,
+          19.9349,
+          24,
+          8
+        ]
+      ]
+    },
+    "1280": {
+      "name": "loading-chart",
+      "viewportWidth": 960,
+      "width": 960,
+      "height": 258,
+      "bones": [
+        [
+          0,
+          0,
+          100,
+          258,
+          16,
+          true
+        ],
+        [
+          45.0163,
+          209,
+          9.9674,
+          24,
+          8
+        ]
+      ]
+    }
+  },
+  "_hash": "d5780d932f0a88f4930b107ee4dd7741"
+}

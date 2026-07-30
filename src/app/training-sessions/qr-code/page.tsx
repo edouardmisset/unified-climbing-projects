@@ -27,7 +27,7 @@ export default async function TrainingSessionsQRCodePage() {
         .map(([year, yearlyTraining]) => (
           <div className='flexColumn alignCenter' key={year}>
             <h2 className='centerText'>{year}</h2>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Loader variant='qrCode' />}>
               <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
             </Suspense>
           </div>

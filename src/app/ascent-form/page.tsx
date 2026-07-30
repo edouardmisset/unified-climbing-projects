@@ -8,13 +8,13 @@ import { AscentFormWrapper } from './ascent-form-wrapper'
 
 export default async function AscentFormPage() {
   return (
-    <Suspense fallback={<Loader variant='form' />}>
+    <Suspense fallback={<Loader variant='ascentForm' />}>
       <SignedIn>
         <Layout gridClassName='padding' title='Congrats 🎉'>
           <span aria-describedby='form-description' className='visuallyHidden'>
             Form to log a climbing ascent
           </span>
-          <Suspense fallback={<Loader variant='form' />}>
+          <Suspense fallback={<Loader variant='ascentForm' />}>
             <AscentFormWrapper />
           </Suspense>
         </Layout>

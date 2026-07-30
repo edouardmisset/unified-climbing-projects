@@ -34,7 +34,7 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
   const lazyDescription = useMemo(() => {
     if (!ascents || ascents.length === 0) return ''
     return (
-      <Suspense fallback={<Loader compact />}>
+      <Suspense fallback={<Loader variant='compact' />}>
         <AscentsPopoverDescription ascents={ascents} />
       </Suspense>
     )

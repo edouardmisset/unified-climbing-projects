@@ -5,16 +5,36 @@ import { configureBoneyard } from 'boneyard-js/react'
 
 import _loading_page from './loading-page.bones.json'
 import _loading_dashboard from './loading-dashboard.bones.json'
-import _loading_form from './loading-form.bones.json'
-import _loading_list from './loading-list.bones.json'
+import _loading_ascent_form from './loading-ascent-form.bones.json'
+import _loading_training_form from './loading-training-form.bones.json'
+import _loading_ascent_list from './loading-ascent-list.bones.json'
+import _loading_training_list from './loading-training-list.bones.json'
+import _loading_data_calendar from './loading-data-calendar.bones.json'
+import _loading_qr_code from './loading-qr-code.bones.json'
+import _loading_barcode from './loading-barcode.bones.json'
+import _loading_chart from './loading-chart.bones.json'
+import _loading_ascent_detail from './loading-ascent-detail.bones.json'
+import _loading_top_ten from './loading-top-ten.bones.json'
+import _loading_indicators from './loading-indicators.bones.json'
 import _loading_compact from './loading-compact.bones.json'
+import _loading_inline_summary from './loading-inline-summary.bones.json'
 
 configureBoneyard({"color":"var(--surface-3)","darkColor":"var(--surface-3)","animate":"shimmer","shimmerColor":"var(--surface-4)","darkShimmerColor":"var(--surface-4)","speed":"1.8s","transition":200})
 
 registerBones({
   "loading-page": _loading_page,
   "loading-dashboard": _loading_dashboard,
-  "loading-form": _loading_form,
-  "loading-list": _loading_list,
+  "loading-ascent-form": _loading_ascent_form,
+  "loading-training-form": _loading_training_form,
+  "loading-ascent-list": _loading_ascent_list,
+  "loading-training-list": _loading_training_list,
+  "loading-data-calendar": _loading_data_calendar,
+  "loading-qr-code": _loading_qr_code,
+  "loading-barcode": _loading_barcode,
+  "loading-chart": _loading_chart,
+  "loading-ascent-detail": _loading_ascent_detail,
+  "loading-top-ten": _loading_top_ten,
+  "loading-indicators": _loading_indicators,
   "loading-compact": _loading_compact,
+  "loading-inline-summary": _loading_inline_summary,
 })

@@ -27,7 +27,7 @@ export default async function TrainingSessionsBarcodePage() {
         .map(([year, yearTraining]) => (
           <div className='flexColumn w100' key={year}>
             <h2 className='centerText'>{year}</h2>
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Loader variant='barcode' />}>
               <TrainingSessionsBarcode yearlyTraining={yearTraining} />
             </Suspense>
           </div>

@@ -7,7 +7,7 @@ import { TopTenContent } from './top-ten-content'
 export default async function Page() {
   return (
     <Layout title='Top Ten'>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader variant='topTen' />}>
         <TopTenContent />
       </Suspense>
     </Layout>

@@ -16,7 +16,7 @@ export function FilteredTrainingSessionList({ trainingSessions }: TrainingSessio
   return (
     <section className='flex flexColumn gridFullWidth padding overflowXClip'>
       <TrainingSessionFilterBar trainingSessions={trainingSessions} />
-      <Suspense fallback={<Loader variant='list' />}>
+      <Suspense fallback={<Loader variant='trainingList' />}>
         <TrainingSessionList trainingSessions={filteredTrainingSessions} />
       </Suspense>
     </section>
