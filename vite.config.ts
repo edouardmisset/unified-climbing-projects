@@ -34,6 +34,7 @@ export default defineConfig({
         test: {
           name: 'frontend',
           include: ['src/**/*.test.{ts,tsx}'],
+          exclude: ['src/**/*.visual.test.{ts,tsx}'],
         },
       },
       {
@@ -43,6 +44,20 @@ export default defineConfig({
           include: ['convex/**/*.test.ts'],
           name: 'convex',
           setupFiles: [],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'browser',
+          include: ['src/**/*.visual.test.{ts,tsx}'],
+          setupFiles: ['./vitest.browser.setup.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: 'playwright',
+            instances: [{ browser: 'chromium' }],
+          },
         },
       },
     ],
