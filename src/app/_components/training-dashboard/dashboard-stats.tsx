@@ -41,7 +41,7 @@ function DashboardStatsComponent(props: TrainingSessionListProps) {
     <div className='flexColumn gap w100 padding'>
       <h2>Nothing there...</h2>
       <p>
-        Try <Link href={LINKS.trainingSessionForm}>logging new training sessions</Link>.
+        Try <Link href={LINKS.log}>logging new training sessions</Link>.
       </p>
     </div>
   ) : (

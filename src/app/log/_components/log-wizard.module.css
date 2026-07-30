@@ -1,0 +1,68 @@
+.progress {
+  display: flex;
+  justify-content: center;
+  gap: var(--size-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progressItem {
+  padding-block: 0.25em;
+  padding-inline: 0.75em;
+  color: var(--text-2);
+  border-block-end: 2px solid transparent;
+}
+
+.activeStep {
+  color: var(--text-1);
+  border-color: var(--patagonia-color-4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--size-2);
+  padding-block-start: var(--size-2);
+}
+
+.ascentCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--size-2) var(--size-3);
+  padding: var(--size-3);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-2);
+
+  & > * {
+    grid-column: 1 / -1;
+  }
+
+  @media (width <= 40rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-2);
+}
+
+.removeButton {
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+}
+
+.error {
+  color: var(--red-6);
+  text-align: center;
+}

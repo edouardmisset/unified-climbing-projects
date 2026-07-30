@@ -13,6 +13,7 @@ import type * as auth from "../auth.js";
 import type * as diagnostics from "../diagnostics.js";
 import type * as fingerprint from "../fingerprint.js";
 import type * as imports from "../imports.js";
+import type * as log from "../log.js";
 import type * as maintenance from "../maintenance.js";
 import type * as migrations from "../migrations.js";
 import type * as operations from "../operations.js";
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   diagnostics: typeof diagnostics;
   fingerprint: typeof fingerprint;
   imports: typeof imports;
+  log: typeof log;
   maintenance: typeof maintenance;
   migrations: typeof migrations;
   operations: typeof operations;

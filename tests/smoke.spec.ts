@@ -24,6 +24,10 @@ test.describe('authenticated smoke test', () => {
 
     await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible()
 
+    await page.goto('/ascent-form')
+    await expect(page).toHaveURL(/\/log$/)
+    await expect(page.getByRole('heading', { name: 'Log your climbing 📋' })).toBeVisible()
+
     await page.goto('/settings')
 
     await expect(page.getByRole('heading', { name: 'Import your data' })).toBeVisible()
