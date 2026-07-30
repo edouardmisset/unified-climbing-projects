@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
@@ -22,7 +22,7 @@ const AXIS_LABELS = {
 }
 
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
-  const gradeFrequency = useMemo(() => getGradeFrequencyAndColors(ascents), [ascents])
+  const gradeFrequency = getGradeFrequencyAndColors(ascents)
 
   if (gradeFrequency.length === 0) return
 

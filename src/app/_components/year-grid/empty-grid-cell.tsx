@@ -1,4 +1,4 @@
-import { memo, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import styles from './year-grid.module.css'
 
@@ -20,4 +20,4 @@ function EmptyGridCellComponent(props: EmptyGridCellProps) {
   )
 }
 
-export const EmptyGridCell = memo(EmptyGridCellComponent)
+export const EmptyGridCell = EmptyGridCellComponent

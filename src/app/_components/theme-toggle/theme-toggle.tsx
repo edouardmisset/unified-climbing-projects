@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+
 import styles from './theme-toggle.module.css'
 
 export function ThemeToggle({
@@ -8,12 +8,9 @@ export function ThemeToggle({
   checked: boolean
   onChange: (checked: boolean) => void
 }) {
-  const handleThemeChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       onChange(event.target.checked)
-    },
-    [onChange],
-  )
+    }
 
   return (
     <label className={styles.switch}>

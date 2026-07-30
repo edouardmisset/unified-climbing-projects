@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styles from './barcode.module.css'
 
 type BarcodeProps = {
@@ -13,4 +13,4 @@ function BarcodeComponent(props: BarcodeProps) {
   return <div className={styles.barcode}>{children}</div>
 }
 
-export const Barcode = memo(BarcodeComponent)
+export const Barcode = BarcodeComponent

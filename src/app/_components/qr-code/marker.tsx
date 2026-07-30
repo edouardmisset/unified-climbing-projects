@@ -1,4 +1,4 @@
-import { memo } from 'react'
+
 import { GridItem } from './grid-item'
 
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'
@@ -10,7 +10,7 @@ const squareIndices = Array.from({ length: numberOfSquareInMarker }, (_, index) 
 const leftRegEx = /left/i
 const topRegEx = /top/i
 
-export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
+export const Marker = ({ placement }: { placement: MarkerPlacement }) => {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1
   const startingRow = topRegEx.test(placement) ? 1 : -1
 
@@ -29,4 +29,4 @@ export const Marker = memo(({ placement }: { placement: MarkerPlacement }) => {
       })}
     </>
   )
-})
+}

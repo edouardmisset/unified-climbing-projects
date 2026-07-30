@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -48,7 +48,7 @@ const STEP_LABELS = {
 export default function LogWizard({ areas, latestAscent, locations }: LogWizardProps) {
   'use no memo'
   const router = useRouter()
-  const initialDraft = useMemo(() => createInitialLogDraft(latestAscent), [latestAscent])
+  const initialDraft = createInitialLogDraft(latestAscent)
   const [step, setStep] = useQueryState(
     'step',
     parseAsStringLiteral(LOG_STEP_VALUES).withDefault('common').withOptions({ history: 'push' }),

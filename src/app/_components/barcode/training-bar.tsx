@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { getWeekNumber } from '~/helpers/date'
 import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
 import { formatNumber } from '~/helpers/number-formatter'
@@ -19,45 +19,38 @@ const TrainingPopoverDescription = lazy(async () =>
   })),
 )
 
-export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
+export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
   const numberOfTraining = weeklyTraining.length
   const isSingleWeekTraining = numberOfTraining <= 1
 
-  const filteredSortedWeeklyTraining = useMemo(
-    () =>
-      weeklyTraining
+  const filteredSortedWeeklyTraining = weeklyTraining
         .filter(Boolean)
         .sort(({ type: aType }, { type: bType }) =>
           aType === undefined || bType === undefined
             ? 0
             : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
-        ),
-    [weeklyTraining],
-  )
+        )
 
   const [firstTraining] = filteredSortedWeeklyTraining
 
-  const buttonStyle = useMemo(
-    () => ({
+  const buttonStyle = ({
       background: isSingleWeekTraining
         ? undefined
         : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
             .map(({ type }) => fromSessionTypeToBackgroundColor(type))
             .join(', ')})`,
       inlineSize: `${numberOfTraining / 2}%`,
-    }),
-    [filteredSortedWeeklyTraining, numberOfTraining, isSingleWeekTraining],
-  )
+    })
 
   // LAZY LOADING: Create description component only when needed
-  const lazyDescription = useMemo(() => {
+  const lazyDescription = (() => {
     if (filteredSortedWeeklyTraining.length === 0) return ''
     return (
       <Suspense fallback='Loading...'>
         <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
       </Suspense>
     )
-  }, [filteredSortedWeeklyTraining])
+  })()
 
   if (firstTraining === undefined) return <span />
 
@@ -75,7 +68,7 @@ export const TrainingBar = memo(({ weeklyTraining }: TrainingBarsProps) => {
       {lazyDescription}
     </Popover>
   )
-})
+}
 
 function getTrainingSessionSummary(trainingSessionInWeek: TrainingSession[]) {
   const [firstSession] = trainingSessionInWeek

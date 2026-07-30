@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Marker } from './marker'
 import climberImagePath from './person-climbing.png'
 import styles from './qr-code.module.css'
@@ -31,4 +31,4 @@ function QRCodeComponent(props: QRCodeProps) {
   )
 }
 
-export const QRCode = memo(QRCodeComponent)
+export const QRCode = QRCodeComponent

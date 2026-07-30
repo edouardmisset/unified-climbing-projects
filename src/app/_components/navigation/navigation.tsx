@@ -1,7 +1,7 @@
 'use client'
 import { Drawer } from '@base-ui/react/drawer'
 import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
-import { memo, useCallback, useState } from 'react'
+import { useState } from 'react'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem } from './_components/navigation-item'
 import { NavigationUserSection } from './_components/navigation-user-section'
@@ -17,18 +17,14 @@ type NavigationProps = {
   onToggleTheme: () => void
 }
 
-export const Navigation = memo(
-  ({ desktopExpanded, onDesktopExpandedChange, isDark, onToggleTheme }: NavigationProps) => {
+export const Navigation = ({ desktopExpanded, onDesktopExpandedChange, isDark, onToggleTheme }: NavigationProps) => {
     const [mobileOpen, setMobileOpen] = useState(false)
 
     const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
 
-    const handleDesktopToggle = useCallback(
-      () => onDesktopExpandedChange(!desktopExpanded),
-      [desktopExpanded, onDesktopExpandedChange],
-    )
+    const handleDesktopToggle = () => onDesktopExpandedChange(!desktopExpanded)
 
-    const handleMobileNavigate = useCallback(() => setMobileOpen(false), [])
+    const handleMobileNavigate = () => setMobileOpen(false)
 
     const desktopToggleLabel = desktopExpanded
       ? 'Collapse navigation drawer'
@@ -99,7 +95,6 @@ export const Navigation = memo(
         </div>
       </nav>
     )
-  },
-)
+  }
 
 Navigation.displayName = 'Navigation'

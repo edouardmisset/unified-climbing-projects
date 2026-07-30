@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styles from './timeline.module.css'
 
 type EventProps = {
@@ -24,4 +24,4 @@ function EventComponent(props: EventProps) {
   )
 }
 
-export const Event = memo(EventComponent)
+export const Event = EventComponent

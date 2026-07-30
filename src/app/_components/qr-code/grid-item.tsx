@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+
 
 type GridItemProps = {
   gridArea: string
@@ -8,15 +8,12 @@ type GridItemProps = {
 function GridItemComponent(props: GridItemProps) {
   const { gridArea, index } = props
 
-  const backgroundStyle = useMemo(
-    () => ({
+  const backgroundStyle = ({
       backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
       gridArea,
-    }),
-    [index, gridArea],
-  )
+    })
 
   return <span style={backgroundStyle} />
 }
 
-export const GridItem = memo(GridItemComponent)
+export const GridItem = GridItemComponent

@@ -1,5 +1,5 @@
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
-import { memo } from 'react'
+
 import type { ValueAndLabel } from '~/types/generic'
 
 function OptionComponent(props: ValueAndLabel) {
@@ -13,4 +13,4 @@ function OptionComponent(props: ValueAndLabel) {
   )
 }
 
-export const Option = memo(OptionComponent)
+export const Option = OptionComponent

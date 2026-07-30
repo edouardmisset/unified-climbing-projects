@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import {
   Bar,
   CartesianGrid,
@@ -46,7 +46,7 @@ const AXIS_LABELS = {
 const DOT_STYLE = { r: 4 }
 
 export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
-  const data = useMemo(() => getTopTenEvolution(ascents), [ascents])
+  const data = getTopTenEvolution(ascents)
 
   if (data.length === 0) return
 

@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from 'react'
+import { useSyncExternalStore } from 'react'
 
 const THEMES = ['light', 'dark'] as const
 type ThemeMode = (typeof THEMES)[number]
@@ -54,7 +54,7 @@ function subscribeToThemeChanges(onStoreChange: () => void) {
 export function useTheme() {
   const theme = useSyncExternalStore(subscribeToThemeChanges, getThemeSnapshot, () => 'light')
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
 
     try {
@@ -63,7 +63,7 @@ export function useTheme() {
     } catch (error) {
       console.warn('Failed to save theme preference:', error)
     }
-  }, [theme])
+  }
 
   return { theme, toggleTheme }
 }

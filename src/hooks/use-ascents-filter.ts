@@ -1,6 +1,6 @@
 import { isValidNumber } from '@edouardmisset/math'
 import { stringIncludes } from '@edouardmisset/text'
-import { useDeferredValue, useMemo } from 'react'
+import { useDeferredValue } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -35,7 +35,7 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const deferredSelectedStyle = useDeferredValue(selectedStyle)
   const deferredSelectedYear = useDeferredValue(selectedYear)
 
-  const filteredAscents = useMemo(() => {
+  const filteredAscents = (() => {
     const selectedYearNumber = Number(deferredSelectedYear)
 
     return filterAscents(ascents, {
@@ -50,22 +50,9 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
           : undefined,
       period: normalizeFilterValue(deferredSelectedPeriod),
     })
-  }, [
-    ascents,
-    deferredSelectedArea,
-    deferredSelectedCrag,
-    deferredSelectedDiscipline,
-    deferredSelectedGrade,
-    deferredSelectedPeriod,
-    deferredSelectedStyle,
-    deferredSelectedYear,
-  ])
+  })()
 
-  return useMemo(
-    () =>
-      deferredSelectedRoute === ''
+  return deferredSelectedRoute === ''
         ? filteredAscents
-        : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute)),
-    [deferredSelectedRoute, filteredAscents],
-  )
+        : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute))
 }

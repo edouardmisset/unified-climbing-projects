@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
@@ -14,13 +14,9 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
     continuous: false,
   }).map(String)
 
-  const locationList = useMemo(
-    () =>
-      [
+  const locationList = [
         ...new Set(trainingSessions.map(({ location }) => location?.trim()).filter(Boolean)),
-      ].toSorted(compareStringsAscending),
-    [trainingSessions],
-  )
+      ].toSorted(compareStringsAscending)
 
   const {
     selectedLoad,
@@ -35,9 +31,7 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
     setYear,
   } = useTrainingSessionsQueryState()
 
-  const filters = useMemo<FilterConfig[]>(
-    () =>
-      [
+  const filters = [
         {
           setValue: createValueSetter(setSessionType),
           name: 'Session Type',
@@ -73,22 +67,7 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
           selectedValue: selectedPeriod,
           title: 'Period',
         },
-      ] as const satisfies FilterConfig[],
-    [
-      locationList,
-      selectedLoad,
-      selectedLocation,
-      selectedPeriod,
-      selectedSessionType,
-      selectedYear,
-      setLoad,
-      setLocation,
-      setPeriod,
-      setSessionType,
-      setYear,
-      yearList,
-    ],
-  )
+      ] as const satisfies FilterConfig[]
 
   return <StickyFilterBar filters={filters} showSearch={false} />
 }

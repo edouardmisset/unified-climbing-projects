@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { memo } from 'react'
+
 import { LINKS } from '~/constants/links'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
 import styles from '../dashboard/dashboard.module.css'
@@ -54,4 +54,4 @@ function DashboardStatsComponent(props: TrainingSessionListProps) {
   )
 }
 
-export const DashboardStats = memo(DashboardStatsComponent)
+export const DashboardStats = DashboardStatsComponent

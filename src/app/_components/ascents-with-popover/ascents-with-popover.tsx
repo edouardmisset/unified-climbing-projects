@@ -1,5 +1,5 @@
 import { capitalize } from '@edouardmisset/text'
-import { useMemo } from 'react'
+
 import { formatNumber } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { AscentListProps } from '~/schema/ascent'
@@ -8,9 +8,9 @@ import { AscentList } from './ascent-list'
 import styles from './ascents-with-popover.module.css'
 
 export function AscentsWithPopover({ ascents }: AscentListProps) {
-  const ascentsDisciplineText = useMemo(() => writeAscentsDisciplineText(ascents), [ascents])
+  const ascentsDisciplineText = writeAscentsDisciplineText(ascents)
 
-  const title = useMemo(() => capitalize(ascentsDisciplineText), [ascentsDisciplineText])
+  const title = capitalize(ascentsDisciplineText)
 
   return (
     <Popover

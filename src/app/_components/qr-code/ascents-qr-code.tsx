@@ -1,6 +1,5 @@
 'use client'
 
-import { memo } from 'react'
 import type { Ascent } from '~/schema/ascent.ts'
 import { AscentsQRDot } from './ascents-qr-dot.tsx'
 import { QRCode } from './qr-code-base'
@@ -22,4 +21,4 @@ function AscentsQRCodeComponent(props: AscentsQRCodeProps) {
   )
 }
 
-export const AscentsQRCode = memo(AscentsQRCodeComponent)
+export const AscentsQRCode = AscentsQRCodeComponent

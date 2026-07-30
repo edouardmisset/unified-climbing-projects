@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
@@ -22,7 +22,7 @@ const AXIS_LABELS = {
 }
 
 export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
-  const ascentsPerYearByGrade = useMemo(() => getAscentsPerYearByGrade(ascents), [ascents])
+  const ascentsPerYearByGrade = getAscentsPerYearByGrade(ascents)
 
   const uniqueYearsCount = new Set(ascentsPerYearByGrade.map(({ year }) => year)).size
 

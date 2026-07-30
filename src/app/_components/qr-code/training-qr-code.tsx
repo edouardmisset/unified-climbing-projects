@@ -1,6 +1,5 @@
 'use client'
 
-import { memo } from 'react'
 import type { TrainingSession } from '~/schema/training.ts'
 import { QRCode } from './qr-code-base'
 import { TrainingsQRDot } from './trainings-qr-dot.tsx'
@@ -22,4 +21,4 @@ function TrainingQRCodeComponent(props: TrainingQRCodeProps) {
   )
 }
 
-export const TrainingQRCode = memo(TrainingQRCodeComponent)
+export const TrainingQRCode = TrainingQRCodeComponent

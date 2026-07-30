@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import type { UseFormReset, UseFormSubscribe } from 'react-hook-form'
 import { LOG_DRAFT_VERSION, type LogDraft, logDraftSchema, persistedLogDraftSchema } from '../draft'
 
@@ -47,7 +47,7 @@ export function usePersistedLogDraft({
   const { isLoaded, user } = useUser()
   const saveTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
   const pendingDraft = useRef<LogDraft>(undefined)
-  const initialDraftJson = useMemo(() => JSON.stringify(initialDraft), [initialDraft])
+  const initialDraftJson = JSON.stringify(initialDraft)
   const storageKey =
     isLoaded && user ? `${DRAFT_STORAGE_PREFIX}:v${LOG_DRAFT_VERSION}:${user.id}` : undefined
 
@@ -99,12 +99,12 @@ export function usePersistedLogDraft({
     }
   }, [initialDraftJson, reset, storageKey, subscribe])
 
-  const resetDraft = useCallback(() => {
+  const resetDraft = () => {
     if (saveTimeout.current !== undefined) clearTimeout(saveTimeout.current)
     pendingDraft.current = undefined
     if (storageKey !== undefined) removeStoredDraft(storageKey)
     reset(initialDraft)
-  }, [initialDraft, reset, storageKey])
+  }
 
   return { resetDraft }
 }

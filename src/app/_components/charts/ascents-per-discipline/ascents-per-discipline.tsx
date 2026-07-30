@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+
 import {
   createRadialChart,
   Pie,
@@ -25,18 +25,12 @@ const Chart = createRadialChart<AscentsPerDisciplineDatum, string, string | numb
 })
 
 export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
-  const routesVsBoulders = useMemo(() => getAscentsPerDiscipline(ascents), [ascents])
+  const routesVsBoulders = getAscentsPerDiscipline(ascents)
 
-  const labelRenderer = useCallback(
-    (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length }),
-    [ascents.length],
-  )
-  const shapeRenderer = useCallback(
-    (props: PieSectorShapeProps) => (
+  const labelRenderer = (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length })
+  const shapeRenderer = (props: PieSectorShapeProps) => (
       <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
-    ),
-    [routesVsBoulders],
-  )
+    )
 
   if (routesVsBoulders.length <= 1) return
 

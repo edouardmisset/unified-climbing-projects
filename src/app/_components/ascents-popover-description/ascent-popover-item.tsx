@@ -1,4 +1,4 @@
-import { memo } from 'react'
+
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
@@ -23,4 +23,4 @@ function AscentPopoverItemComponent(props: AscentPopoverItemProps) {
   )
 }
 
-export const AscentPopoverItem = memo(AscentPopoverItemComponent)
+export const AscentPopoverItem = AscentPopoverItemComponent

@@ -1,5 +1,5 @@
 // oxlint-disable react/no-multi-comp
-import { useMemo } from 'react'
+
 import {
   Tooltip,
   XAxis,
@@ -40,10 +40,10 @@ export function ChartXAxis(props: XAxisProps) {
     width,
   } = props
 
-  const label = useMemo<LabelProps | undefined>(() => {
+  const label = (() => {
     if (!labelText) return undefined
     return { ...AXIS_LABEL_STYLE, value: labelText, offset, position }
-  }, [labelText, offset, position])
+  })()
 
   return (
     <XAxis
@@ -66,10 +66,10 @@ type YAxisProps = {
 export function ChartYAxis(props: YAxisProps) {
   const { labelText, domain, tickFormatter } = props
 
-  const label = useMemo<LabelProps | undefined>(() => {
+  const label = (() => {
     if (!labelText) return undefined
     return { ...AXIS_LABEL_STYLE, value: labelText, angle: -90, position: 'insideLeft' }
-  }, [labelText])
+  })()
 
   return (
     <YAxis label={label} domain={domain} tick={AXIS_TICK_STYLE} tickFormatter={tickFormatter} />
