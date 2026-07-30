@@ -12,7 +12,6 @@
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
   color: var(--text-1);
 
   background-color: var(--surface-1);
