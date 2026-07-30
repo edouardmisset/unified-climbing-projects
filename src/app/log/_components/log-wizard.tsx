@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -68,11 +69,30 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
   const { append, fields, remove, replace } = useFieldArray({ control, name: 'ascents' })
   const { resetDraft } = usePersistedLogDraft({ initialDraft, reset, subscribe })
 
+  const goToStep = (next: LogStep, options?: Parameters<typeof setStep>[1]) => {
+    const update = () => setStep(next, options)
+    if (typeof document !== 'undefined' && 'startViewTransition' in document)
+      document.startViewTransition(() => flushSync(update))
+    else void update()
+  }
+
+  const goToAscents = () => {
+    if (fields.length === 0) append(createAscentDraft(getValues('discipline'), latestAscent))
+    goToStep('ascents')
+  }
+
   const showAscents = (includeTraining: boolean) => {
-    const discipline = getValues('discipline')
     setValue('includeTraining', includeTraining)
-    if (fields.length === 0) append(createAscentDraft(discipline, latestAscent))
-    void setStep('ascents')
+    goToAscents()
+  }
+
+  const navigateToStep = (target: LogStep) => {
+    if (target === 'ascents') {
+      goToAscents()
+      return
+    }
+    if (target === 'training') setValue('includeTraining', true)
+    goToStep(target)
   }
 
   const submit = handleSubmit(async draft => {
@@ -87,7 +107,7 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
 
     resetDraft()
     replace([])
-    void setStep('common', { history: 'replace' })
+    goToStep('common', { history: 'replace' })
     router.refresh()
   })
 
@@ -95,32 +115,32 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
     setSubmissionError('')
     resetDraft()
     replace([])
-    void setStep('common', { history: 'replace' })
+    goToStep('common', { history: 'replace' })
   }
 
   return (
     <form
       aria-describedby='form-description'
       autoComplete='off'
-      className={formStyles.form}
+      className={`${formStyles.form} ${styles.formPanel}`}
       name='climbing-log-form'
       onSubmit={submit}
       spellCheck={false}
     >
       <ol aria-label='Logging progress' className={styles.progress}>
         {LOG_STEP_VALUES.map((stepValue, index) => (
-          <li
-            aria-current={stepValue === step ? 'step' : undefined}
-            className={`${styles.progressItem} ${stepValue === step ? styles.activeStep : ''}`}
-            key={stepValue}
-          >
-            {index + 1}. {STEP_LABELS[stepValue]}
+          <li className={styles.progressItem} key={stepValue}>
+            <button
+              aria-current={stepValue === step ? 'step' : undefined}
+              className={`${styles.stepButton} ${stepValue === step ? styles.activeStep : ''}`}
+              onClick={() => navigateToStep(stepValue)}
+              type='button'
+            >
+              {index + 1}. {STEP_LABELS[stepValue]}
+            </button>
           </li>
         ))}
       </ol>
-      <div className={styles.actions}>
-        <KeycapButton label='Reset' onClick={handleReset} />
-      </div>
       {submissionError && (
         <p aria-live='polite' className={styles.error}>
           {submissionError}
@@ -172,15 +192,18 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
               ))}
             </datalist>
           </Field>
+          <div aria-hidden='true' className={styles.divider} />
           <div className={styles.actions}>
-            <KeycapButton
-              label='Log training'
-              onClick={() => {
-                setValue('includeTraining', true)
-                void setStep('training')
-              }}
-            />
-            <KeycapButton label='Skip to ascents' onClick={() => showAscents(false)} />
+            <button
+              className={styles.button}
+              onClick={() => navigateToStep('training')}
+              type='button'
+            >
+              Training
+            </button>
+            <button className={styles.button} onClick={() => showAscents(false)} type='button'>
+              Skip
+            </button>
           </div>
         </>
       )}
@@ -265,15 +288,19 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
               id='training-comments'
             />
           </Field>
+          <div aria-hidden='true' className={styles.divider} />
           <div className={styles.actions}>
+            <button className={styles.button} onClick={() => goToStep('common')} type='button'>
+              Back
+            </button>
+            <button className={styles.button} onClick={() => showAscents(true)} type='button'>
+              Continue
+            </button>
             <KeycapButton
-              label='Back'
-              onClick={() => {
-                void setStep('common')
-              }}
+              disabled={isSubmitting}
+              label={isSubmitting ? 'Submitting...' : 'Submit'}
+              type='submit'
             />
-            <KeycapButton label='Finish training' type='submit' />
-            <KeycapButton label='Continue to ascents' onClick={() => showAscents(true)} />
           </div>
         </>
       )}
@@ -454,27 +481,38 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
               </section>
             )
           })}
+          <div aria-hidden='true' className={styles.divider} />
           <div className={styles.actions}>
-            <KeycapButton
-              label='Add another ascent'
+            <button
+              className={styles.button}
               onClick={() => append(createAscentDraft(getValues('discipline'), latestAscent))}
-            />
+              type='button'
+            >
+              Add ascent
+            </button>
           </div>
           <div className={styles.actions}>
-            <KeycapButton
-              label='Back'
-              onClick={() => {
-                void setStep(getValues('includeTraining') ? 'training' : 'common')
-              }}
-            />
+            <button
+              className={styles.button}
+              onClick={() => goToStep(getValues('includeTraining') ? 'training' : 'common')}
+              type='button'
+            >
+              Back
+            </button>
             <KeycapButton
               disabled={isSubmitting}
-              label={isSubmitting ? 'Saving...' : 'Finish 📮'}
+              label={isSubmitting ? 'Sending...' : 'Send'}
               type='submit'
             />
           </div>
         </>
       )}
+
+      <div className={styles.actions}>
+        <button className={styles.button} onClick={handleReset} type='button'>
+          Reset
+        </button>
+      </div>
     </form>
   )
 }

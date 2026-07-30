@@ -53,11 +53,11 @@ describe('log wizard', () => {
     renderWizard(event => queryStrings.push(event.queryString))
 
     await user.type(screen.getByLabelText('Location'), 'Céüse')
-    await user.click(screen.getByRole('button', { name: 'Skip to ascents' }))
+    await user.click(screen.getByRole('button', { name: 'Skip' }))
 
     expect(screen.getByRole('heading', { name: 'Ascent 1' })).toBeInTheDocument()
     expect(queryStrings).toContain('?step=ascents')
-    await user.click(screen.getByRole('button', { name: 'Add another ascent' }))
+    await user.click(screen.getByRole('button', { name: 'Add ascent' }))
     expect(screen.getByRole('heading', { name: 'Ascent 2' })).toBeInTheDocument()
   })
 
@@ -67,9 +67,9 @@ describe('log wizard', () => {
     renderWizard()
 
     await user.type(screen.getByLabelText('Location'), 'Céüse')
-    await user.click(screen.getByRole('button', { name: 'Skip to ascents' }))
+    await user.click(screen.getByRole('button', { name: 'Skip' }))
     await user.type(screen.getByLabelText('Name'), 'Berlin')
-    await user.click(screen.getByRole('button', { name: 'Finish 📮' }))
+    await user.click(screen.getByRole('button', { name: 'Send' }))
 
     expect(mocks.submitClimbingLog).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -85,10 +85,10 @@ describe('log wizard', () => {
     const user = userEvent.setup()
     renderWizard()
 
-    await user.click(screen.getByRole('button', { name: 'Log training' }))
+    await user.click(screen.getByRole('button', { name: 'Training' }))
 
-    expect(screen.getByRole('button', { name: 'Finish training' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Continue to ascents' }))
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
     expect(screen.getByRole('heading', { name: 'Ascent 1' })).toBeInTheDocument()
   })
 
