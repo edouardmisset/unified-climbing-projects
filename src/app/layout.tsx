@@ -63,6 +63,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         lang={APP_LANGUAGE}
         suppressHydrationWarning
       >
+        <head>
+          {/* Inline blocking script to apply the stored/system theme before first paint,
+              preventing a flash of the default light theme when the user prefers dark. */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var s=localStorage.getItem('theme');var t=s==='dark'||s==='light'?s:window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-color-scheme',t);}catch(e){}})()`,
+            }}
+          />
+        </head>
         <body className={styles.body}>
           <a className={styles.skipLink} href='#main-content'>
             Skip to content
