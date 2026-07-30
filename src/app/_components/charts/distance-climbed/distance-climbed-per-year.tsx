@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
@@ -25,7 +25,7 @@ const formattedDistance = (value: unknown) =>
   typeof value === 'number' ? formatNumber(value) : String(value)
 
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
-  const data = useMemo(() => getDistanceClimbedPerYear(ascents), [ascents])
+  const data = getDistanceClimbedPerYear(ascents)
 
   if (data.length === 0) return
 

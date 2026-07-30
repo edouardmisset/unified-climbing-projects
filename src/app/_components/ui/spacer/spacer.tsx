@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+
 
 /**
  *
@@ -6,13 +6,10 @@ import { memo, useMemo } from 'react'
  */
 // oxlint-disable-next-line no-magic-numbers
 function SpacerComponent({ size = 3 }: { size?: number }) {
-  const blockSize = useMemo(
-    () => ({
+  const blockSize = ({
       blockSize: `var(--size-${size})`,
-    }),
-    [size],
-  )
+    })
   return <div style={blockSize} />
 }
 
-export const Spacer = memo(SpacerComponent)
+export const Spacer = SpacerComponent

@@ -1,5 +1,5 @@
 import { wrapInParentheses } from '@edouardmisset/text'
-import { type CSSProperties, useMemo } from 'react'
+import { type CSSProperties } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
@@ -36,14 +36,14 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
     tries,
   } = ascent
 
-  const stylesDependingOnComments = useMemo<CommentDirectionStyle>(() => {
+  const stylesDependingOnComments = (() => {
     const maxCommentLength = 120
     const isLongComment = comments && comments.length > maxCommentLength
 
     return { '--direction': isLongComment ? 'row' : 'column' }
-  }, [comments])
+  })()
 
-  const formattedGrade = useMemo(() => formatGrade({ discipline, grade }), [discipline, grade])
+  const formattedGrade = formatGrade({ discipline, grade })
 
   return (
     <div className={styles.card}>

@@ -1,5 +1,5 @@
 import { capitalize } from '@edouardmisset/text'
-import { memo } from 'react'
+
 import type { TooltipContentProps } from 'recharts'
 import styles from './tries-by-grades.module.css'
 
@@ -21,4 +21,4 @@ function TriesByGradeTooltipComponent({ active, label, payload }: TooltipContent
   )
 }
 
-export const TriesByGradeTooltip = memo(TriesByGradeTooltipComponent)
+export const TriesByGradeTooltip = TriesByGradeTooltipComponent

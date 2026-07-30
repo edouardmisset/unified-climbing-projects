@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, type ReactNode, useMemo } from 'react'
+import { type ReactNode } from 'react'
 import { DAYS_IN_WEEK, NOON_HOUR, WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import type { Ascent } from '~/schema/ascent'
@@ -16,8 +16,7 @@ const MONDAY_INDEX = 1
 const WEEK_53_START_INDEX = 4
 const PREVIOUS_MONDAY_OFFSET = 6
 
-export const YearGrid = memo(
-  ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
+export const YearGrid = ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
     const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
     const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
     const firstDayIndex = firstDayOfYear.getUTCDay()
@@ -25,41 +24,28 @@ export const YearGrid = memo(
 
     const numberOfColumns = 1 + displayedNumberOfWeeks + (prependWeek53 ? 1 : 0)
 
-    const columns = useMemo(
-      () => [
+    const columns = [
         0,
         ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
         ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
-      ],
-      [displayedNumberOfWeeks, prependWeek53],
-    )
+      ]
 
     const numberOfDaysFromPreviousMondayTo1stJanuary =
       firstDayIndex === SUNDAY_INDEX ? PREVIOUS_MONDAY_OFFSET : firstDayIndex - MONDAY_INDEX
 
-    const emptyDays = useMemo(
-      () =>
-        Array.from(
+    const emptyDays = Array.from(
           { length: numberOfDaysFromPreviousMondayTo1stJanuary },
           (_, index): DayDescriptor => ({
             date: '',
             shortText: index.toString(),
             title: '',
           }),
-        ),
-      [numberOfDaysFromPreviousMondayTo1stJanuary],
-    )
+        )
 
-    const allDayCollection = useMemo(
-      () => [...emptyDays, ...dayCollection],
-      [emptyDays, dayCollection],
-    )
-    const gridTemplateStyle = useMemo(
-      () => ({
+    const allDayCollection = [...emptyDays, ...dayCollection]
+    const gridTemplateStyle = ({
         gridTemplateColumns: `repeat(${numberOfColumns},1fr)`,
-      }),
-      [numberOfColumns],
-    )
+      })
 
     return (
       <div className={styles.yearGrid} style={gridTemplateStyle}>
@@ -95,8 +81,7 @@ export const YearGrid = memo(
         )}
       </div>
     )
-  },
-)
+  }
 
 export type DayDescriptor = {
   backgroundColor?: string

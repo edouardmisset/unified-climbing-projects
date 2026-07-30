@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styles from './page-layout.module.css'
 
 type HeaderProps = {
@@ -17,4 +17,4 @@ function HeaderComponent(props: HeaderProps) {
   )
 }
 
-export const Header = memo(HeaderComponent)
+export const Header = HeaderComponent

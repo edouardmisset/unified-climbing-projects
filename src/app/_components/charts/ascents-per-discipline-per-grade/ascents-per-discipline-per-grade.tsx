@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
@@ -24,7 +24,7 @@ const AXIS_LABELS = {
 }
 
 export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] }) {
-  const data = useMemo(() => getAscentsPerDisciplinePerGrade(ascents), [ascents])
+  const data = getAscentsPerDisciplinePerGrade(ascents)
 
   const isSingleDiscipline =
     data.every(({ Bouldering }) => !Bouldering) || data.every(({ Sport }) => !Sport)

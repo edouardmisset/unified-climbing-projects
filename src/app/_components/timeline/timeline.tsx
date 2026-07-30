@@ -1,4 +1,4 @@
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styles from './timeline.module.css'
 
 function TimelineComponent({ children }: { children: ReactNode }) {
@@ -8,4 +8,4 @@ function TimelineComponent({ children }: { children: ReactNode }) {
     </div>
   )
 }
-export const Timeline = memo(TimelineComponent)
+export const Timeline = TimelineComponent

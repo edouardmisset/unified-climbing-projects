@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import {
   Bar,
   BarChart,
@@ -33,10 +33,7 @@ const Chart = createVerticalChart<AscentsByGradesPerCragDatum>()({
 })
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
-  const ascentsByGradesPerCrag = useMemo(
-    () => getAscentsByGradesPerCrag(ascents).reverse(),
-    [ascents],
-  )
+  const ascentsByGradesPerCrag = getAscentsByGradesPerCrag(ascents).reverse()
 
   if (ascentsByGradesPerCrag.length === 0) return
 

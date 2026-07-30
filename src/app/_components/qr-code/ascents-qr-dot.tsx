@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getHardestAscent } from '~/helpers/filter-ascents'
 import { prettyLongDate } from '~/helpers/formatters'
@@ -12,32 +12,25 @@ const AscentsPopoverDescription = lazy(async () =>
   })),
 )
 
-export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
+export const AscentsQRDot = ({ ascents }: { ascents?: Ascent[] }) => {
   const [firstAscent] = ascents ?? []
-  const hardestAscent = useMemo(
-    () => (ascents === undefined ? undefined : getHardestAscent(ascents)),
-    [ascents],
-  )
+  const hardestAscent = (ascents === undefined ? undefined : getHardestAscent(ascents))
 
-  const gradeClassName = useMemo(() => fromGradeToClassName(hardestAscent?.grade), [hardestAscent])
+  const gradeClassName = fromGradeToClassName(hardestAscent?.grade)
 
-  const dateAndCrag = useMemo(
-    () =>
-      firstAscent?.date === undefined
+  const dateAndCrag = firstAscent?.date === undefined
         ? ''
-        : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`,
-    [firstAscent],
-  )
+        : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`
 
   // LAZY LOADING: Create description component only when needed
-  const lazyDescription = useMemo(() => {
+  const lazyDescription = (() => {
     if (!ascents || ascents.length === 0) return ''
     return (
       <Suspense fallback='Loading...'>
         <AscentsPopoverDescription ascents={ascents} />
       </Suspense>
     )
-  }, [ascents])
+  })()
 
   if (ascents === undefined || firstAscent === undefined) return <span />
 
@@ -51,4 +44,4 @@ export const AscentsQRDot = memo(({ ascents }: { ascents?: Ascent[] }) => {
       {lazyDescription}
     </Popover>
   )
-})
+}

@@ -1,9 +1,8 @@
-import { memo } from 'react'
+
 import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
-const WeekCell = memo(
-  ({
+const WeekCell = ({
     columnNumber,
     index,
     columns,
@@ -32,10 +31,9 @@ const WeekCell = memo(
         {columnNumber}
       </span>
     )
-  },
-)
+  }
 
-export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
+export const WeeksRow = ({ columns }: { columns: number[] }) =>
   columns.map((columnNumber, index) => (
     <WeekCell
       columnNumber={columnNumber}
@@ -44,5 +42,4 @@ export const WeeksRow = memo(({ columns }: { columns: number[] }) =>
       // oxlint-disable-next-line react/no-array-index-key
       key={`W${columnNumber}-${index}column`}
     />
-  )),
-)
+  ))

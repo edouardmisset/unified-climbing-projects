@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import {
   CartesianGrid,
   createHorizontalChart,
@@ -49,8 +49,8 @@ const DOT_RADIUS = 4
 const LINE_STROKE_WIDTH = 2
 
 export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
-  const series = useMemo(() => getTriesByGrade(ascents), [ascents])
-  const chartData = useMemo<TriesByGradeChartDatum[]>(() => {
+  const series = getTriesByGrade(ascents)
+  const chartData = (() => {
     if (series.length === 0) return []
 
     const grades = series[0]?.data.map(point => point.x) ?? []
@@ -73,20 +73,20 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
 
       return datum
     })
-  }, [series])
+  })()
 
-  const seriesColors = useMemo(() => {
+  const seriesColors = (() => {
     const colors = new Map<TriesByGradeSeries['id'], string>()
 
     for (const serie of series) colors.set(serie.id, serie.color)
 
     return colors
-  }, [series])
+  })()
 
   const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
 
-  const dotStyle = useMemo(() => ({ r: DOT_RADIUS }), [])
-  const yAxisDomain = useMemo(() => [0, 'dataMax'] as const, [])
+  const dotStyle = ({ r: DOT_RADIUS })
+  const yAxisDomain = [0, 'dataMax'] as const
 
   if (series.length === 0 || isFirstTry) return
 

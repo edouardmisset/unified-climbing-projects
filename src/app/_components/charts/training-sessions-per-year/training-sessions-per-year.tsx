@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react'
+
 import {
   Area,
   AreaChart,
@@ -26,12 +26,9 @@ export function TrainingSessionsPerYear({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const data = useMemo(() => getSessionsPerYear(trainingSessions), [trainingSessions])
+  const data = getSessionsPerYear(trainingSessions)
 
-  const percentFormatter = useCallback(
-    (value: unknown) => (typeof value === 'number' ? formatRatioAsPercent(value) : ''),
-    [],
-  )
+  const percentFormatter = (value: unknown) => (typeof value === 'number' ? formatRatioAsPercent(value) : '')
 
   if (data.length === 0) return
 

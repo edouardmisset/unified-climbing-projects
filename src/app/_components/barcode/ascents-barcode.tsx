@@ -1,6 +1,5 @@
 'use client'
 
-import { memo } from 'react'
 import type { Ascent } from '~/schema/ascent'
 import { Barcode } from './barcode-base'
 import { AscentsBar } from './ascents-bar'
@@ -24,4 +23,4 @@ function AscentsBarcodeComponent(props: AscentsBarcodeProps) {
   )
 }
 
-export const AscentsBarcode = memo(AscentsBarcodeComponent)
+export const AscentsBarcode = AscentsBarcodeComponent

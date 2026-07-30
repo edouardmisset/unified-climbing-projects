@@ -1,4 +1,4 @@
-import { memo } from 'react'
+
 import NotFound from '~/app/not-found'
 import { calculateLoad } from '~/helpers/calculate-load'
 import { prettyLongDate, prettyShortDate } from '~/helpers/formatters'
@@ -6,7 +6,7 @@ import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
 import type { TrainingSessionListProps } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
-export const TrainingSessionList = memo(({ trainingSessions }: TrainingSessionListProps) => {
+export const TrainingSessionList = ({ trainingSessions }: TrainingSessionListProps) => {
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
@@ -62,4 +62,4 @@ export const TrainingSessionList = memo(({ trainingSessions }: TrainingSessionLi
       </tfoot>
     </table>
   )
-})
+}

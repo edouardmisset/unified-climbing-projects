@@ -2,11 +2,10 @@
 
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
-import { memo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styles from './link.module.css'
 
-export const Link = memo(
-  ({
+export const Link = ({
     href,
     children,
     className,
@@ -26,5 +25,4 @@ export const Link = memo(
         {children}
       </NextLink>
     )
-  },
-)
+  }

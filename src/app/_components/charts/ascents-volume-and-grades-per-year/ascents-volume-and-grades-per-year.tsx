@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import {
   Bar,
   CartesianGrid,
@@ -102,19 +102,15 @@ function formatGradeTick(value: unknown): string {
 }
 
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
-  const data = useMemo(
-    () =>
-      getAscentsVolumeAndGradesPerYear(ascents).map(datum => ({
+  const data = getAscentsVolumeAndGradesPerYear(ascents).map(datum => ({
         ...datum,
         avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
         avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
         maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
         maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
-      })),
-    [ascents],
-  )
+      }))
 
-  const gradeDomain = useMemo<[number, number]>(() => {
+  const gradeDomain = (() => {
     const grades = data.flatMap(datum => [
       datum.avgBoulderGrade,
       datum.avgRouteGrade,
@@ -136,12 +132,12 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
     const lowerBound = getLowerBoundForHalfAxisStart(minGrade, upperBound)
 
     return [lowerBound, upperBound]
-  }, [data])
+  })()
 
-  const gradeTicks = useMemo(() => {
+  const gradeTicks = (() => {
     const [minDomain, maxDomain] = gradeDomain
     return GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
-  }, [gradeDomain])
+  })()
 
   const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
   const hasDisciplineData = data.some(({ Bouldering, Sport }) => Bouldering > 0 || Sport > 0)

@@ -1,5 +1,5 @@
 import { sum } from '@edouardmisset/math/sum.ts'
-import { type CSSProperties, lazy, memo, Suspense, useCallback, useMemo, useState } from 'react'
+import { type CSSProperties, lazy, Suspense, useState } from 'react'
 import NotFound from '~/app/not-found'
 import { MAX_COLUMNS_THRESHOLD } from '~/constants/generic'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
@@ -35,22 +35,21 @@ type TableStyle = CSSProperties & {
   '--max-width': string
 }
 
-export const AscentList = memo(
-  ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
+export const AscentList = ({ ascents, showDetails = true, showPoints = false }: AscentListProps) => {
     const [selectedAscent, setSelectedAscent] = useState<Ascent | undefined>(undefined)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const handleRowClick = useCallback((ascent: Ascent) => {
+    const handleRowClick = (ascent: Ascent) => {
       setSelectedAscent(ascent)
       setIsDialogOpen(true)
-    }, [])
+    }
 
-    const handleDialogClose = useCallback((isOpen: boolean) => {
+    const handleDialogClose = (isOpen: boolean) => {
       setIsDialogOpen(isOpen)
       if (!isOpen) setSelectedAscent(undefined)
-    }, [])
+    }
 
-    const totalAscentPoints = useMemo(() => sum(ascents.map(fromAscentToPoints)), [ascents])
+    const totalAscentPoints = sum(ascents.map(fromAscentToPoints))
 
     const columns =
       BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)
@@ -257,8 +256,7 @@ export const AscentList = memo(
         )}
       </>
     )
-  },
-)
+  }
 
 type AscentListProps = {
   ascents: Ascent[]

@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { memo } from 'react'
+
 import { LINKS } from '~/constants/links'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import styles from './dashboard.module.css'
@@ -95,4 +95,4 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
   )
 }
 
-export const DashboardStatistics = memo(DashboardStatisticsComponent)
+export const DashboardStatistics = DashboardStatisticsComponent

@@ -1,5 +1,5 @@
 import { isDateInYear } from '@edouardmisset/date'
-import { type CSSProperties, lazy, memo, type ReactNode, Suspense, useMemo } from 'react'
+import { type CSSProperties, lazy, type ReactNode, Suspense } from 'react'
 import { SATURDAY_DAY_NUMBER } from '~/constants/generic'
 import { Popover } from '../ui/popover/popover'
 import { EmptyGridCell } from './empty-grid-cell'
@@ -20,7 +20,7 @@ const TrainingPopoverDescription = lazy(async () =>
   ),
 )
 
-export const YearGridCell = memo((props: YearGridCellProps) => {
+export const YearGridCell = (props: YearGridCellProps) => {
   const {
     date,
     backgroundColor,
@@ -33,20 +33,17 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
     trainingSessions,
   } = props
 
-  const cellStyle: CSSProperties = useMemo(
-    () => ({
+  const cellStyle: CSSProperties = ({
       '--color': backgroundColor,
       backgroundColor: getAdjustedBackgroundColor({
         backgroundColor,
         date,
       }),
       outline: getOutlineForToday(date),
-    }),
-    [backgroundColor, date],
-  )
+    })
 
   // LAZY LOADING: Create description component only when we have data
-  const lazyDescription = useMemo(() => {
+  const lazyDescription = (() => {
     const hasAscents = ascents && ascents.length > 0
     const hasTrainingSessions = trainingSessions && trainingSessions.length > 0
 
@@ -80,7 +77,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       )
 
     return ''
-  }, [ascents, trainingSessions])
+  })()
 
   if (date === '' || !isDateInYear(date, year))
     return <EmptyGridCell cellStyle={cellStyle} date={date} />
@@ -98,7 +95,7 @@ export const YearGridCell = memo((props: YearGridCellProps) => {
       {lazyDescription}
     </Popover>
   )
-})
+}
 
 const getAdjustedBackgroundColor = ({
   backgroundColor,

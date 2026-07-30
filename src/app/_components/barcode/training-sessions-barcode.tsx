@@ -1,6 +1,5 @@
 'use client'
 
-import { memo } from 'react'
 import type { TrainingSession } from '~/schema/training'
 import { Barcode } from './barcode-base'
 import { TrainingBar } from './training-bar'
@@ -24,4 +23,4 @@ function TrainingSessionsBarcodeComponent(props: TrainingSessionsBarcodeProps) {
   )
 }
 
-export const TrainingSessionsBarcode = memo(TrainingSessionsBarcodeComponent)
+export const TrainingSessionsBarcode = TrainingSessionsBarcodeComponent

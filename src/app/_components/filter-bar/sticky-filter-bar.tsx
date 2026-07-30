@@ -1,5 +1,5 @@
 import { CircleX } from 'lucide-react'
-import { memo, useCallback, useMemo, useState, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { CustomInput } from '../ui/custom-input/custom-input'
 import { CustomSelect } from '../custom-select/custom-select'
 import { ALL_VALUE } from '../dashboard/constants'
@@ -9,14 +9,8 @@ import styles from './sticky-filter-bar.module.css'
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const [isPending, startTransition] = useTransition()
 
-  const selectedValueByName = useMemo(
-    () =>
-      Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<
-        string,
+  const selectedValueByName = Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<
         string
-      >,
-    [filters],
-  )
 
   const [localSelectedValueByName, setLocalSelectedValueByName] =
     useState<Record<string, string>>(selectedValueByName)
@@ -25,8 +19,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
   const displayedSelectedValueByName = isPending ? localSelectedValueByName : selectedValueByName
   const displayedSearch = isPending ? localSearch : (search ?? '')
 
-  const applyFilterValue = useCallback(
-    (filterName: string, value: string) => {
+  const applyFilterValue = (filterName: string, value: string) => {
       const matchingFilter = filters.find(({ name }) => name === filterName)
       if (matchingFilter === undefined) return
 
@@ -38,12 +31,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       startTransition(() => {
         matchingFilter.setValue(value)
       })
-    },
-    [filters, startTransition],
-  )
+    }
 
-  const handleSearchChange = useCallback(
-    (value: string) => {
+  const handleSearchChange = (value: string) => {
       setLocalSearch(value)
 
       if (setSearch === undefined) return
@@ -51,11 +41,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       startTransition(() => {
         setSearch(value)
       })
-    },
-    [setSearch, startTransition],
-  )
+    }
 
-  const clearFilters = useCallback(() => {
+  const clearFilters = () => {
     setLocalSelectedValueByName(Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])))
     setLocalSearch('')
 
@@ -64,25 +52,17 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
       if (setSearch !== undefined) setSearch('')
     })
-  }, [filters, setSearch, startTransition])
+  }
 
-  const isOneFilterActive = useMemo(
-    () =>
-      filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
-      displayedSearch !== '',
-    [displayedSearch, displayedSelectedValueByName, filters],
-  )
+  const isOneFilterActive = filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
+      displayedSearch !== ''
 
-  const renderedFilters = useMemo(
-    () =>
-      filters.map(filter => ({
+  const renderedFilters = filters.map(filter => ({
         ...filter,
         handleChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
           applyFilterValue(filter.name, event.target.value),
         selectedValue: displayedSelectedValueByName[filter.name] ?? filter.selectedValue,
-      })),
-    [applyFilterValue, displayedSelectedValueByName, filters],
-  )
+      }))
 
   return (
     <search aria-busy={isPending} className={styles.container}>
@@ -119,7 +99,7 @@ type RenderedFilter = BaseFilterBarProps['filters'][number] & {
   selectedValue: string
 }
 
-const FilterSelectList = memo(({ filters }: { filters: RenderedFilter[] }) =>
+const FilterSelectList = ({ filters }: { filters: RenderedFilter[] }) =>
   filters.map(({ handleChange, name, options, selectedValue, title }) =>
     options.length === 0 ? undefined : (
       <CustomSelect
@@ -131,5 +111,4 @@ const FilterSelectList = memo(({ filters }: { filters: RenderedFilter[] }) =>
         title={title}
       />
     ),
-  ),
-)
+  )

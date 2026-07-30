@@ -1,5 +1,5 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { useDeferredValue, useMemo } from 'react'
+import { useDeferredValue } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -25,7 +25,7 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
   const deferredSelectedSessionType = useDeferredValue(selectedSessionType)
   const deferredSelectedYear = useDeferredValue(selectedYear)
 
-  const filteredTrainingSessions = useMemo(() => {
+  const filteredTrainingSessions = (() => {
     const selectedYearNumber = Number(deferredSelectedYear)
 
     return filterTrainingSessions(trainingSessions, {
@@ -40,16 +40,7 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
           ? selectedYearNumber
           : undefined,
     })
-  }, [
-    deferredSelectedDiscipline,
-    deferredSelectedLoad,
-    deferredSelectedLocation,
-    deferredSelectedLocationType,
-    deferredSelectedPeriod,
-    deferredSelectedSessionType,
-    deferredSelectedYear,
-    trainingSessions,
-  ])
+  })()
 
   return filteredTrainingSessions
 }

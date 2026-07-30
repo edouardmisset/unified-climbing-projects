@@ -1,5 +1,5 @@
 import { sum } from '@edouardmisset/math'
-import { useMemo } from 'react'
+
 import { fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
@@ -17,10 +17,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
   const isMultipleYears =
     new Set(ascents.map(ascent => new Date(ascent.date).getFullYear())).size > 1
 
-  const topTenAscents = useMemo(
-    () => ascentsWithPoints.toSorted((a, b) => b.points - a.points).slice(0, 10),
-    [ascentsWithPoints],
-  )
+  const topTenAscents = ascentsWithPoints.toSorted((a, b) => b.points - a.points).slice(0, 10)
 
   if (ascents.length === 0 || ascentsWithPoints.length === 0) return
 

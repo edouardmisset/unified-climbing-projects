@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { fromGradeToBackgroundColor, fromGradeToClassName } from '~/helpers/ascent-converter'
 import { getWeekNumber } from '~/helpers/date'
 import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
@@ -16,36 +16,30 @@ const AscentsPopoverDescription = lazy(async () =>
   })),
 )
 
-export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
+export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
   const numberOfAscents = weeklyAscents.length
   const isSingleAscent = numberOfAscents <= 1
 
-  const weeklyAscentsByDescendingGrade = useMemo(
-    () => weeklyAscents.filter(Boolean).sort(sortByGrade),
-    [weeklyAscents],
-  )
+  const weeklyAscentsByDescendingGrade = weeklyAscents.filter(Boolean).sort(sortByGrade)
 
-  const buttonStyle = useMemo(
-    () => ({
+  const buttonStyle = ({
       background: isSingleAscent
         ? undefined
         : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
             .map(({ grade }) => fromGradeToBackgroundColor(grade))
             .join(', ')})`,
       inlineSize: `${numberOfAscents / 2}%`,
-    }),
-    [isSingleAscent, weeklyAscentsByDescendingGrade, numberOfAscents],
-  )
+    })
 
   // LAZY LOADING: Create description component only when needed
-  const lazyDescription = useMemo(() => {
+  const lazyDescription = (() => {
     if (weeklyAscentsByDescendingGrade.length === 0) return ''
     return (
       <Suspense fallback='Loading...'>
         <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
       </Suspense>
     )
-  }, [weeklyAscentsByDescendingGrade])
+  })()
 
   if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
 
@@ -64,7 +58,7 @@ export const AscentsBar = memo(({ weeklyAscents }: AscentsBarsProps) => {
       {lazyDescription}
     </Popover>
   )
-})
+}
 
 type AscentsBarsProps = {
   weeklyAscents: ((StringDate & Ascent) | undefined)[]

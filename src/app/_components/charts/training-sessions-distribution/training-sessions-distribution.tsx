@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+
 import {
   Bar,
   BarChart,
@@ -42,15 +42,9 @@ export function TrainingSessionsDistribution({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const { data, colors } = useMemo(
-    () => getSessionsDistributionData(trainingSessions),
-    [trainingSessions],
-  )
+  const { data, colors } = getSessionsDistributionData(trainingSessions)
 
-  const { chartData, barConfigs } = useMemo<{
-    chartData: ChartDatum[]
-    barConfigs: BarConfig[]
-  }>(() => {
+  const { chartData, barConfigs } = (() => {
     const transformedData: ChartDatum[] = []
     const bars: BarConfig[] = []
     const seenKeys = new Set<string>()
@@ -77,12 +71,9 @@ export function TrainingSessionsDistribution({
     }
 
     return { barConfigs: bars, chartData: transformedData }
-  }, [data, colors])
+  })()
 
-  const xAxisLabel = useMemo<LabelProps>(
-    () => ({ ...AXIS_LABEL_STYLE, value: 'Number of Sessions', offset: 20, position: 'bottom' }),
-    [],
-  )
+  const xAxisLabel = ({ ...AXIS_LABEL_STYLE, value: 'Number of Sessions', offset: 20, position: 'bottom' })
 
   if (chartData.length === 0) return
   return (

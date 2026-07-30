@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math'
-import { useMemo } from 'react'
+
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
@@ -26,7 +26,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setLocationType,
   } = useTrainingSessionsQueryState()
 
-  const yearList = useMemo(() => {
+  const yearList = (() => {
     const filteredForYear = filterTrainingSessions(trainingSessions, {
       discipline: normalizeFilterValue(selectedDiscipline),
       locationType: normalizeFilterValue(selectedLocationType),
@@ -36,16 +36,16 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       descending: true,
       continuous: false,
     }).map(String)
-  }, [trainingSessions, selectedDiscipline, selectedLocationType, selectedPeriod])
+  })()
 
   const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
 
-  const selectedYearNumber = useMemo(() => {
+  const selectedYearNumber = (() => {
     const n = Number(effectiveSelectedYear)
     return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  }, [effectiveSelectedYear])
+  })()
 
-  const disciplineList = useMemo(() => {
+  const disciplineList = (() => {
     const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
       locationType: normalizeFilterValue(selectedLocationType),
@@ -54,13 +54,13 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
       filteredForDiscipline.some(session => session.discipline === discipline),
     )
-  }, [trainingSessions, selectedYearNumber, selectedLocationType, selectedPeriod])
+  })()
 
   const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
     ? selectedDiscipline
     : ALL_VALUE
 
-  const locationTypeList = useMemo(() => {
+  const locationTypeList = (() => {
     const filteredForLocationType = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -71,13 +71,13 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     return LOCATION_TYPES.filter(locationType =>
       locationType === 'Indoor' ? hasIndoor : hasOutdoor,
     )
-  }, [trainingSessions, selectedYearNumber, effectiveSelectedDiscipline, selectedPeriod])
+  })()
 
   const effectiveSelectedLocationType = locationTypeList.includes(selectedLocationType)
     ? selectedLocationType
     : ALL_VALUE
 
-  const periodList = useMemo(() => {
+  const periodList = (() => {
     const filteredForPeriod = filterTrainingSessions(trainingSessions, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -88,18 +88,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),
     )
-  }, [
-    trainingSessions,
-    selectedYearNumber,
-    effectiveSelectedDiscipline,
-    effectiveSelectedLocationType,
-  ])
+  })()
 
   const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
-  const filters = useMemo<FilterConfig[]>(
-    () =>
-      [
+  const filters = [
         {
           setValue: createValueSetter(setYear),
           name: 'Year',
@@ -128,22 +121,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
           selectedValue: effectiveSelectedPeriod,
           title: 'Period',
         },
-      ] as const satisfies FilterConfig[],
-    [
-      disciplineList,
-      effectiveSelectedDiscipline,
-      effectiveSelectedLocationType,
-      effectiveSelectedPeriod,
-      effectiveSelectedYear,
-      locationTypeList,
-      periodList,
-      setDiscipline,
-      setLocationType,
-      setPeriod,
-      setYear,
-      yearList,
-    ],
-  )
+      ] as const satisfies FilterConfig[]
 
   return <StickyFilterBar filters={filters} showSearch={false} />
 }

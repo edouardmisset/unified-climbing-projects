@@ -1,4 +1,4 @@
-import { memo } from 'react'
+
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentListItem } from './ascent-list-item'
 import styles from './ascents-with-popover.module.css'
@@ -15,4 +15,4 @@ function AscentListComponent(props: AscentListProps) {
   )
 }
 
-export const AscentList = memo(AscentListComponent)
+export const AscentList = AscentListComponent

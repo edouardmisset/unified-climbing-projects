@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { isValidNumber } from '@edouardmisset/math'
-import { useMemo } from 'react'
+
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
 import { filterAscents } from '~/helpers/filter-ascents'
@@ -37,7 +37,7 @@ export default function AscentsFilterBar({
     setRoute,
   } = useAscentsQueryState()
 
-  const yearList = useMemo(() => {
+  const yearList = (() => {
     const filteredForYear = filterAscents(allAscents, {
       discipline: normalizeFilterValue(selectedDiscipline),
       style: normalizeFilterValue(selectedStyle),
@@ -49,16 +49,16 @@ export default function AscentsFilterBar({
       descending: true,
       continuous: false,
     }).map(String)
-  }, [allAscents, selectedDiscipline, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
+  })()
 
   const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
 
-  const selectedYearNumber = useMemo(() => {
+  const selectedYearNumber = (() => {
     const n = Number(effectiveSelectedYear)
     return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  }, [effectiveSelectedYear])
+  })()
 
-  const disciplineList = useMemo(() => {
+  const disciplineList = (() => {
     const filteredForDiscipline = filterAscents(allAscents, {
       year: selectedYearNumber,
       style: normalizeFilterValue(selectedStyle),
@@ -69,13 +69,13 @@ export default function AscentsFilterBar({
     return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
       filteredForDiscipline.some(ascent => ascent.discipline === discipline),
     )
-  }, [allAscents, selectedYearNumber, selectedStyle, selectedPeriod, selectedCrag, selectedArea])
+  })()
 
   const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
     ? selectedDiscipline
     : ALL_VALUE
 
-  const styleList = useMemo(() => {
+  const styleList = (() => {
     const filteredForStyle = filterAscents(allAscents, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -84,18 +84,11 @@ export default function AscentsFilterBar({
       area: normalizeFilterValue(selectedArea),
     })
     return ASCENT_STYLE.filter(style => filteredForStyle.some(ascent => ascent.style === style))
-  }, [
-    allAscents,
-    selectedYearNumber,
-    effectiveSelectedDiscipline,
-    selectedPeriod,
-    selectedCrag,
-    selectedArea,
-  ])
+  })()
 
   const effectiveSelectedStyle = styleList.includes(selectedStyle) ? selectedStyle : ALL_VALUE
 
-  const cragList = useMemo(() => {
+  const cragList = (() => {
     const filteredForCrag = filterAscents(allAscents, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -106,18 +99,11 @@ export default function AscentsFilterBar({
     return [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
       .filter(Boolean)
       .toSorted(compareStringsAscending)
-  }, [
-    allAscents,
-    selectedYearNumber,
-    effectiveSelectedDiscipline,
-    effectiveSelectedStyle,
-    selectedPeriod,
-    selectedArea,
-  ])
+  })()
 
   const effectiveSelectedCrag = cragList.includes(selectedCrag) ? selectedCrag : ALL_VALUE
 
-  const areaList = useMemo(() => {
+  const areaList = (() => {
     const filteredForArea = filterAscents(allAscents, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -132,18 +118,11 @@ export default function AscentsFilterBar({
           .filter((area): area is string => Boolean(area)),
       ),
     ].toSorted(compareStringsAscending)
-  }, [
-    allAscents,
-    selectedYearNumber,
-    effectiveSelectedDiscipline,
-    effectiveSelectedStyle,
-    selectedPeriod,
-    effectiveSelectedCrag,
-  ])
+  })()
 
   const effectiveSelectedArea = areaList.includes(selectedArea) ? selectedArea : ALL_VALUE
 
-  const periodList = useMemo(() => {
+  const periodList = (() => {
     const filteredForPeriod = filterAscents(allAscents, {
       year: selectedYearNumber,
       discipline: normalizeFilterValue(effectiveSelectedDiscipline),
@@ -156,20 +135,11 @@ export default function AscentsFilterBar({
         isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
       ),
     )
-  }, [
-    allAscents,
-    selectedYearNumber,
-    effectiveSelectedDiscipline,
-    effectiveSelectedStyle,
-    effectiveSelectedCrag,
-    effectiveSelectedArea,
-  ])
+  })()
 
   const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
-  const filters = useMemo<FilterConfig[]>(
-    () =>
-      [
+  const filters = [
         {
           setValue: createValueSetter(setDiscipline),
           name: 'Discipline',
@@ -212,28 +182,7 @@ export default function AscentsFilterBar({
           selectedValue: effectiveSelectedPeriod,
           title: 'Period',
         },
-      ] as const satisfies FilterConfig[],
-    [
-      areaList,
-      cragList,
-      disciplineList,
-      effectiveSelectedArea,
-      effectiveSelectedCrag,
-      effectiveSelectedDiscipline,
-      effectiveSelectedPeriod,
-      effectiveSelectedStyle,
-      effectiveSelectedYear,
-      periodList,
-      setArea,
-      setCrag,
-      setDiscipline,
-      setPeriod,
-      setStyle,
-      setYear,
-      styleList,
-      yearList,
-    ],
-  )
+      ] as const satisfies FilterConfig[]
 
   return (
     <StickyFilterBar

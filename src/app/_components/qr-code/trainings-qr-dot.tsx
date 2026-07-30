@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useMemo } from 'react'
+import { lazy, Suspense } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import type { TrainingSession } from '~/schema/training'
@@ -11,8 +11,7 @@ const TrainingPopoverDescription = lazy(async () =>
   })),
 )
 
-export const TrainingsQRDot = memo(
-  ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
+export const TrainingsQRDot = ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
     const [firstSession] = trainingSessions
 
     const sessionClassName =
@@ -20,14 +19,14 @@ export const TrainingsQRDot = memo(
     const formattedDate = firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)
 
     // LAZY LOADING: Create description component only when needed
-    const lazyDescription = useMemo(() => {
+    const lazyDescription = (() => {
       if (trainingSessions.length === 0) return ''
       return (
         <Suspense fallback='Loading...'>
           <TrainingPopoverDescription trainingSessions={trainingSessions} />
         </Suspense>
       )
-    }, [trainingSessions])
+    })()
 
     if (trainingSessions.length === 0 || firstSession === undefined) return <span />
 
@@ -36,5 +35,4 @@ export const TrainingsQRDot = memo(
         {lazyDescription}
       </Popover>
     )
-  },
-)
+  }
