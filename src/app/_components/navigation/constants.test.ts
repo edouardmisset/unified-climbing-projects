@@ -10,6 +10,9 @@ describe('navigation items', () => {
     })
 
     expect(hrefs).toContain('/settings')
+    expect(hrefs).toContain('/log')
+    expect(hrefs).not.toContain('/ascent-form')
+    expect(hrefs).not.toContain('/training-session-form')
     expect(hrefs).not.toContain('/import')
   })
 })

@@ -74,7 +74,7 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
       <div className=' flexColumn gap w100 padding'>
         <h2>Nothing there...</h2>
         <p>
-          Try adjusting your filters or <Link href={LINKS.ascentForm}>logging new ascents</Link>.
+          Try adjusting your filters or <Link href={LINKS.log}>logging new ascents</Link>.
         </p>
       </div>
     )

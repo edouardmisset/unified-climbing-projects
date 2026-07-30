@@ -83,3 +83,17 @@ export async function addTrainingSession(
   const token = await getConvexAuthToken()
   await fetchMutation(api.training.post, normalizeTrainingInput(session), { token })
 }
+
+export type ClimbingLogInput = {
+  ascents: AscentPublicInput[]
+  training?: TrainingSessionPublicInput
+}
+
+export async function addClimbingLog(input: ClimbingLogInput): Promise<void> {
+  const token = await getConvexAuthToken()
+  const args =
+    input.training === undefined
+      ? { ascents: input.ascents }
+      : { ascents: input.ascents, training: input.training }
+  await fetchMutation(api.log.post, args, { token })
+}

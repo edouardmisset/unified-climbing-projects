@@ -1,0 +1,151 @@
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--size-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.progressItem {
+  padding-inline-start: 0;
+}
+
+.stepButton {
+  padding-block: 0.25em;
+  padding-inline: 0.75em;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-block-end: 2px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+
+  &:hover {
+    color: var(--text-1);
+  }
+}
+
+.activeStep {
+  color: var(--text-1);
+  border-color: var(--patagonia-color-4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--size-2);
+  padding-block-start: var(--size-2);
+
+  & > * {
+    flex: 1 1 12rem;
+  }
+}
+
+.button {
+  padding-block: 0.5em;
+  padding-inline: 1.25em;
+  color: var(--text-1);
+  background: var(--control-bg);
+  border: 1px solid var(--control-border-hover);
+  border-radius: var(--radius-2);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    scale 0.1s;
+
+  &:hover {
+    background: var(--control-bg-focus);
+    border-color: var(--control-border-focus);
+  }
+
+  &:active {
+    scale: 0.97;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.formPanel {
+  view-transition-name: log-wizard-step;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(root),
+  ::view-transition-group(log-wizard-step) {
+    animation: none;
+  }
+
+  ::view-transition-old(log-wizard-step) {
+    animation: step-fade-out 0.15s linear both;
+  }
+
+  ::view-transition-new(log-wizard-step) {
+    animation: step-fade-in 0.15s linear both;
+  }
+}
+
+@keyframes step-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes step-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.divider {
+  block-size: 2px;
+  margin-block: var(--size-2) 0;
+  background: linear-gradient(to right, transparent, var(--patagonia-color-4) 50%, transparent);
+  opacity: 0.7;
+}
+
+.ascentCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--size-2) var(--size-3);
+  padding: var(--size-3);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-2);
+
+  & > * {
+    grid-column: 1 / -1;
+  }
+
+  @media (width <= 40rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-2);
+}
+
+.removeButton {
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+}
+
+.error {
+  color: var(--red-6);
+  text-align: center;
+}

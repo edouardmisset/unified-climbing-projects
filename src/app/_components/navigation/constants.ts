@@ -2,8 +2,7 @@ import { LINKS } from '~/constants/links'
 
 export const NAVIGATION_ITEMS = [
   { type: 'link', href: LINKS.wrapUp, label: '🏠 Wrap-up' },
-  { type: 'link', href: LINKS.ascentForm, label: '📋 Log Ascent' },
-  { type: 'link', href: LINKS.trainingSessionForm, label: '📋 Log Training' },
+  { type: 'link', href: LINKS.log, label: '📋 Log' },
   { type: 'separator' },
   {
     type: 'group',
