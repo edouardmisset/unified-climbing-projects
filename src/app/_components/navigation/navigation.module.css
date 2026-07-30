@@ -55,6 +55,9 @@
   margin: 0;
   padding-inline: var(--size-1);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   list-style: none;
 }
 
@@ -291,6 +294,11 @@
 @media (width <= 40rem) {
   .nav {
     block-size: auto;
+  }
+
+  .drawerBackdrop,
+  .drawerPopup {
+    backdrop-filter: none;
   }
 
   .desktopRail {
