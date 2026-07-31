@@ -21,10 +21,10 @@ const INVALID_DATE_REGEX = /Invalid date/
 const INVALID_ISO_DATE_STRING_REGEX = /Invalid ISO date string/
 
 describe('getWeekNumber', () => {
-  it('should return the correct week number for a given date', () => {
+  it('should return the correct ISO week number for a given date', () => {
     const date = new Date(2_024, 0, 20)
     const result = getWeekNumber(date)
-    expect(result).toBe(4)
+    expect(result).toBe(3)
   })
 })
 

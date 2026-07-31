@@ -1,48 +1,62 @@
 import { capitalize } from '@edouardmisset/text'
 import { isValidDate } from '@edouardmisset/date'
-import {
-  DAYS_IN_COMMON_YEAR,
-  DAYS_IN_LEAP_YEAR,
-  DAYS_IN_WEEK,
-  FRIDAY_DAY_NUMBER,
-  LEAP_YEAR_DAY_CHECK,
-  NOON_HOUR,
-  SATURDAY_DAY_NUMBER,
-  THURSDAY_DAY_NUMBER,
-  US_LOCALE,
-} from '~/constants/generic'
+import 'temporal-polyfill/global'
+import 'temporal-spec/global'
+import { DAYS_IN_WEEK, NOON_HOUR, US_LOCALE } from '~/constants/generic'
 import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
-const MILLISECONDS_IN_DAY = 1_000 * 60 * 60 * 24
-const MILLISECONDS_IN_WEEK = DAYS_IN_WEEK * MILLISECONDS_IN_DAY
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
-const REFERENCE_WEEKDAY_YEAR = 2_024
-const REFERENCE_WEEKDAY_MONTH_INDEX = 0
-const FIRST_DAY_OF_MONTH = 1
+// A known Monday, used as the base for generating weekday labels
+const REFERENCE_MONDAY = Temporal.PlainDate.from('2024-01-01')
 
 const englishRelativeDayFormatter = new Intl.RelativeTimeFormat(US_LOCALE, { numeric: 'auto' })
-const ENGLISH_WEEKDAY_FORMATTERS = {
-  long: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'long' }),
-  short: new Intl.DateTimeFormat(US_LOCALE, { timeZone: 'UTC', weekday: 'short' }),
-} as const
-const WEEKDAY_LABEL_REFERENCE_DATES = Array.from(
-  { length: DAYS_IN_WEEK },
-  (_, index) =>
-    new Date(
-      Date.UTC(REFERENCE_WEEKDAY_YEAR, REFERENCE_WEEKDAY_MONTH_INDEX, index + FIRST_DAY_OF_MONTH),
-    ),
-)
 
-type WeekdayLabelStyle = keyof typeof ENGLISH_WEEKDAY_FORMATTERS
+type WeekdayLabelStyle = 'long' | 'short'
+
+/** Builds a calendar-only PlainDate from a Date's local year/month/day */
+function toPlainDate(date: Date): Temporal.PlainDate {
+  return Temporal.PlainDate.from({
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  })
+}
+
+/** Converts a PlainDate to a Date set at noon, in the system's local time zone */
+function plainDateToNoonDate(plainDate: Temporal.PlainDate): Date {
+  const zonedDateTime = plainDate.toZonedDateTime({
+    timeZone: Temporal.Now.timeZoneId(),
+    plainTime: Temporal.PlainTime.from({ hour: NOON_HOUR }),
+  })
+  return new Date(zonedDateTime.epochMilliseconds)
+}
+
+/** Parses each unique `date` string into a PlainDate, dropping invalid entries, sorted ascending */
+function toValidPlainDates(data: StringDate[]): Temporal.PlainDate[] {
+  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
+
+  return uniqueDatesAsStrings
+    .map(dateString => {
+      try {
+        return Temporal.PlainDate.from(dateString)
+      } catch {
+        return undefined
+      }
+    })
+    .filter(date => date !== undefined)
+    .toSorted((a, b) => Temporal.PlainDate.compare(a, b))
+}
 
 export function formatEnglishWeekdayLabel(date: Date, style: WeekdayLabelStyle = 'short'): string {
-  return ENGLISH_WEEKDAY_FORMATTERS[style].format(date)
+  return toPlainDate(date).toLocaleString(US_LOCALE, { weekday: style })
 }
 
 export function getEnglishWeekdayLabels(style: WeekdayLabelStyle = 'short'): string[] {
-  return WEEKDAY_LABEL_REFERENCE_DATES.map(date => formatEnglishWeekdayLabel(date, style))
+  return Array.from({ length: DAYS_IN_WEEK }, (_, index) =>
+    REFERENCE_MONDAY.add({ days: index }).toLocaleString(US_LOCALE, { weekday: style }),
+  )
 }
 
 export function createRecentDateOptions(): ValueAndLabel[] {
@@ -66,37 +80,24 @@ export function createRecentDateOptions(): ValueAndLabel[] {
 }
 
 export const getWeekNumber = (date: Date): number => {
-  const firstDayOfWeek = 1 // Monday as the first day (0 = Sunday)
-  const startOfYear = new Date(date.getFullYear(), 0, 1)
-  startOfYear.setDate(
-    startOfYear.getDate() + (firstDayOfWeek - (startOfYear.getDay() % DAYS_IN_WEEK)),
-  )
-  return Math.round((date.getTime() - startOfYear.getTime()) / MILLISECONDS_IN_WEEK) + 1
+  const { weekOfYear } = toPlainDate(date)
+  if (weekOfYear === undefined) throw new Error('Unable to compute week of year')
+  return weekOfYear
 }
 
 /**
- * Returns the number of weeks in the specified year.
+ * Returns the number of ISO weeks in the specified year.
  *
- * This function calculates the difference in weeks between the
- * first Monday of the given year and the first Monday of the next year.
+ * December 28th always falls in the last ISO week of the year, so its week
+ * number is the total number of weeks in that year.
  *
  * @param {number} year - The year to evaluate
  * @returns {number} The number of weeks in the specified year
  */
 export const getWeeksInYear = (year: number): number => {
-  const firstMondayThisYear = new Date(
-    year,
-    0,
-    FRIDAY_DAY_NUMBER - (new Date(year, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
-  )
-
-  const firstMondayNextYear = new Date(
-    year + 1,
-    0,
-    FRIDAY_DAY_NUMBER - (new Date(year + 1, 0, THURSDAY_DAY_NUMBER).getDay() || DAYS_IN_WEEK),
-  )
-
-  return (firstMondayNextYear.getTime() - firstMondayThisYear.getTime()) / MILLISECONDS_IN_WEEK
+  const { weekOfYear } = Temporal.PlainDate.from({ year, month: 12, day: 28 })
+  if (weekOfYear === undefined) throw new Error('Unable to compute weeks in year')
+  return weekOfYear
 }
 
 /**
@@ -105,10 +106,8 @@ export const getWeeksInYear = (year: number): number => {
  * @param {number} year - The year to evaluate
  * @returns {number} The number of days in the specified year
  */
-export const getDaysInYear = (year: number): number => {
-  const isLeap = new Date(year, 1, LEAP_YEAR_DAY_CHECK).getMonth() === 1
-  return isLeap ? DAYS_IN_LEAP_YEAR : DAYS_IN_COMMON_YEAR
-}
+export const getDaysInYear = (year: number): number =>
+  Temporal.PlainYearMonth.from({ year, month: 1 }).daysInYear
 
 /**
  * Returns the day of the year (1-based index) for the specified date.
@@ -116,13 +115,7 @@ export const getDaysInYear = (year: number): number => {
  * @param {Date} date - The date to evaluate
  * @returns {number} The day of the year
  */
-export const getDayOfYear = (date: Date): number => {
-  const newDate = new Date(date)
-  // Use UTC-based timestamps so DST transitions in the local timezone don't skew the day count
-  const startOfYearUTC = Date.UTC(newDate.getFullYear(), 0, 0)
-  const dateUTC = Date.UTC(newDate.getFullYear(), newDate.getMonth(), newDate.getDate())
-  return Math.round((dateUTC - startOfYearUTC) / MILLISECONDS_IN_DAY)
-}
+export const getDayOfYear = (date: Date): number => toPlainDate(date).dayOfYear
 
 /**
  * Returns the most frequent date from an array of objects containing a date field.
@@ -142,10 +135,7 @@ export function getMostFrequentDate(data: StringDate[]): [string, number] {
 
   const [date, count] = firstEntry
 
-  // Ensure count is a number
-  if (typeof count !== 'number') return ['', 0]
-
-  return [date, count]
+  return typeof count === 'number' ? [date, count] : ['', 0]
 }
 
 /**
@@ -154,9 +144,7 @@ export function getMostFrequentDate(data: StringDate[]): [string, number] {
  * @returns {Date} The normalized date at noon
  */
 export function getDateAtNoon(date: Date): Date {
-  const normalized = new Date(date)
-  normalized.setHours(NOON_HOUR, 0, 0, 0)
-  return normalized
+  return plainDateToNoonDate(toPlainDate(date))
 }
 
 /**
@@ -164,10 +152,7 @@ export function getDateAtNoon(date: Date): Date {
  * @returns {Date} Yesterday's date at noon
  */
 export function getYesterday(): Date {
-  const now = new Date()
-  const yesterday = new Date(now)
-  yesterday.setDate(now.getDate() - 1)
-  return getDateAtNoon(yesterday)
+  return plainDateToNoonDate(Temporal.Now.plainDateISO().subtract({ days: 1 }))
 }
 
 /**
@@ -176,13 +161,10 @@ export function getYesterday(): Date {
  * @returns {Date} Last Saturday at noon
  */
 export function getLastSaturday(): Date {
-  const now = new Date()
-  const dayOfWeek = now.getDay() // 0 = Sunday, 6 = Saturday
-  // If today is Saturday (6), go back 7 days; else, go back to last Saturday
-  const daysSinceSaturday = dayOfWeek === SATURDAY_DAY_NUMBER ? DAYS_IN_WEEK : dayOfWeek + 1
-  const lastSaturday = new Date(now)
-  lastSaturday.setDate(now.getDate() - daysSinceSaturday)
-  return getDateAtNoon(lastSaturday)
+  const today = Temporal.Now.plainDateISO()
+  // dayOfWeek is ISO (Monday=1..Sunday=7); shift so Saturday itself maps to 7
+  const daysSinceSaturday = (today.dayOfWeek % DAYS_IN_WEEK) + 1
+  return plainDateToNoonDate(today.subtract({ days: daysSinceSaturday }))
 }
 
 /**
@@ -191,13 +173,9 @@ export function getLastSaturday(): Date {
  * @returns {Date} Last Sunday at noon
  */
 export function getLastSunday(): Date {
-  const now = new Date()
-  const dayOfWeek = now.getDay() // 0 = Sunday
-  // If today is Sunday (0), go back 7 days; else, go back to last Sunday
-  const daysSinceSunday = dayOfWeek === 0 ? DAYS_IN_WEEK : dayOfWeek
-  const lastSunday = new Date(now)
-  lastSunday.setDate(now.getDate() - daysSinceSunday)
-  return getDateAtNoon(lastSunday)
+  const today = Temporal.Now.plainDateISO()
+  // dayOfWeek is ISO (Monday=1..Sunday=7), which already equals days-since-last-Sunday
+  return plainDateToNoonDate(today.subtract({ days: today.dayOfWeek }))
 }
 
 /**
@@ -210,8 +188,10 @@ export function getLastSunday(): Date {
 export function fromDateToStringDate(date: Date): string {
   if (!isValidDate(date)) throw new Error('Invalid date')
 
-  const isoDateString = date.toISOString()
-  return extractDateFromISODateString(isoDateString)
+  return Temporal.Instant.fromEpochMilliseconds(date.getTime())
+    .toZonedDateTimeISO('UTC')
+    .toPlainDate()
+    .toString()
 }
 
 /**
@@ -227,7 +207,11 @@ export function extractDateFromISODateString(isoDate: string): string {
   const datePart = isoDate.slice(0, 10)
   if (!ISO_DATE_REGEX.test(datePart)) throw new Error('Invalid ISO date string')
 
-  return datePart
+  try {
+    return Temporal.PlainDate.from(datePart).toString()
+  } catch {
+    throw new Error('Invalid ISO date string')
+  }
 }
 
 /**
@@ -254,11 +238,7 @@ export function extractDateFromISODateString(isoDate: string): string {
 export function findLongestStreak(data: StringDate[]): number {
   if (data.length === 0) return 0
 
-  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
-  const sortedDates = uniqueDatesAsStrings
-    .map(dateString => new Date(dateString))
-    .filter(date => isValidDate(date))
-    .toSorted((a, b) => a.getTime() - b.getTime())
+  const sortedDates = toValidPlainDates(data)
 
   if (sortedDates.length === 0) return 0
   if (sortedDates.length === 1) return 1
@@ -272,8 +252,7 @@ export function findLongestStreak(data: StringDate[]): number {
 
     if (currentDate === undefined || previousDate === undefined) continue
 
-    const timeDifference = currentDate.getTime() - previousDate.getTime()
-    const isConsecutive = timeDifference === MILLISECONDS_IN_DAY
+    const isConsecutive = previousDate.until(currentDate, { largestUnit: 'days' }).days === 1
 
     if (isConsecutive) {
       currentStreak++
@@ -312,11 +291,7 @@ export function findLongestStreak(data: StringDate[]): number {
 export function findLongestGap(data: StringDate[]): number {
   if (data.length <= 1) return 0
 
-  const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
-  const sortedDates = uniqueDatesAsStrings
-    .map(dateString => new Date(dateString))
-    .filter(date => isValidDate(date))
-    .toSorted((a, b) => a.getTime() - b.getTime())
+  const sortedDates = toValidPlainDates(data)
 
   if (sortedDates.length <= 1) return 0
 
@@ -328,8 +303,7 @@ export function findLongestGap(data: StringDate[]): number {
 
     if (currentDate === undefined || previousDate === undefined) continue
 
-    const timeDifference = currentDate.getTime() - previousDate.getTime()
-    const gapInDays = Math.floor(timeDifference / MILLISECONDS_IN_DAY) - 1
+    const gapInDays = previousDate.until(currentDate, { largestUnit: 'days' }).days - 1
 
     if (gapInDays > 0) maxGap = Math.max(maxGap, gapInDays)
   }
