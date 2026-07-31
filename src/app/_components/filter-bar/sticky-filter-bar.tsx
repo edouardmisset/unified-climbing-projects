@@ -9,8 +9,7 @@ import styles from './sticky-filter-bar.module.css'
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const [isPending, startTransition] = useTransition()
 
-  const selectedValueByName = Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<
-        string
+  const selectedValueByName = Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<string, string>
 
   const [localSelectedValueByName, setLocalSelectedValueByName] =
     useState<Record<string, string>>(selectedValueByName)
