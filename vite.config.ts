@@ -1,9 +1,16 @@
 // oxlint-disable import/no-nodejs-modules
 import path from 'node:path'
 import react from '@vitejs/plugin-react'
+import { playwright } from 'vite-plus/test/browser-playwright'
 import { defineConfig } from 'vite-plus'
 
 const compileTarget = 'esnext'
+
+// Charts (recharts' ResponsiveContainer needs real layout/ResizeObserver) and
+// other highly visual components (QR codes, barcodes, calendars) are
+// exercised in a real browser instead of happy-dom, so they're carved out of
+// the "frontend" project below and run under "components" instead.
+const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
 
 export default defineConfig({
   plugins: [react()],
@@ -34,6 +41,7 @@ export default defineConfig({
         test: {
           name: 'frontend',
           include: ['src/**/*.test.{ts,tsx}'],
+          exclude: [BROWSER_TEST_GLOB],
         },
       },
       {
@@ -43,6 +51,27 @@ export default defineConfig({
           include: ['convex/**/*.test.ts'],
           name: 'convex',
           setupFiles: [],
+        },
+      },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            // See src/testing/next-image-stub.tsx for why.
+            'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
+          },
+        },
+        test: {
+          name: 'components',
+          include: [BROWSER_TEST_GLOB],
+          environment: 'node',
+          setupFiles: [],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+          },
         },
       },
     ],
