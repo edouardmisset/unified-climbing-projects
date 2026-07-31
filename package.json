@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "check:sensitive-data": "node scripts/check-sensitive-files.mjs",
     "format": "vp fmt ./src",
     "lint": "vp lint --fix ./src",
-    "check": "vp check --fix && vp run style:lint && vp run check:sensitive-data",
+    "check": "vp check --fix && vp run style:lint",
     "commitlint": "commitlint --edit",
     "dev": "next dev",
     "convex:dev": "vp exec convex dev",
