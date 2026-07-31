@@ -9,12 +9,7 @@ export const DAYS_IN_WEEK = 7
 export const WEEKS_IN_YEAR = 53
 
 // Date-related constants
-export const DAYS_IN_LEAP_YEAR = 366
-export const DAYS_IN_COMMON_YEAR = 365
-export const LEAP_YEAR_DAY_CHECK = 29
 export const NOON_HOUR = 12
-export const THURSDAY_DAY_NUMBER = 4
-export const FRIDAY_DAY_NUMBER = 5
 export const SATURDAY_DAY_NUMBER = 6
 
 // UI/Chart constants
