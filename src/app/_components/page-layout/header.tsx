@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import styles from './page-layout.module.css'
 
 type HeaderProps = {

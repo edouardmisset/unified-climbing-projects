@@ -13,7 +13,7 @@ export function getAscentsPerDiscipline(ascents: Ascent[]): AscentsPerDiscipline
   if (ascents.length === 0) return []
 
   const initialValue: AscentsPerDiscipline = ASCENT_DISCIPLINES.map(discipline => ({
-    color: CLIMBING_DISCIPLINE_TO_COLOR[discipline] ?? 'var(--gray-5)',
+    color: CLIMBING_DISCIPLINE_TO_COLOR[discipline],
     id: discipline,
     label: discipline,
     value: 0,

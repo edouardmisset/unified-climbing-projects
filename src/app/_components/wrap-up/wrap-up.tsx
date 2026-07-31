@@ -43,10 +43,7 @@ export default async function WrapUp({ year }: { year?: number }) {
       <Layout title={<WrapUpHeader year={year} />}>
         <Card>
           <h2>No Data</h2>
-          <p>
-            You have not logged any data yet. {isAscentsEmpty ? 'Go climb some routes! ' : ''}{' '}
-            {isTrainingEmpty ? 'Go train!' : ''}
-          </p>
+          <p>You have not logged any data yet. Go train and climb some routes!</p>
         </Card>
       </Layout>
     )

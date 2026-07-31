@@ -1,4 +1,3 @@
-
 import styles from './theme-toggle.module.css'
 
 export function ThemeToggle({
@@ -9,8 +8,8 @@ export function ThemeToggle({
   onChange: (checked: boolean) => void
 }) {
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(event.target.checked)
-    }
+    onChange(event.target.checked)
+  }
 
   return (
     <label className={styles.switch}>

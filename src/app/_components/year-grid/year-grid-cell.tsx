@@ -33,14 +33,14 @@ export const YearGridCell = (props: YearGridCellProps) => {
     trainingSessions,
   } = props
 
-  const cellStyle: CSSProperties = ({
-      '--color': backgroundColor,
-      backgroundColor: getAdjustedBackgroundColor({
-        backgroundColor,
-        date,
-      }),
-      outline: getOutlineForToday(date),
-    })
+  const cellStyle: CSSProperties & { '--color'?: string } = {
+    '--color': backgroundColor,
+    backgroundColor: getAdjustedBackgroundColor({
+      backgroundColor,
+      date,
+    }),
+    outline: getOutlineForToday(date),
+  }
 
   // LAZY LOADING: Create description component only when we have data
   const lazyDescription = (() => {

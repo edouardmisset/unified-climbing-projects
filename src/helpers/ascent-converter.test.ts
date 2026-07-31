@@ -11,7 +11,7 @@ import {
 
 describe('fromGradeToBackgroundColor', () => {
   it('should return black when grade is undefined', () => {
-    const result = fromGradeToBackgroundColor(undefined)
+    const result = fromGradeToBackgroundColor()
     expect(result).toBe('black')
   })
 
@@ -23,7 +23,7 @@ describe('fromGradeToBackgroundColor', () => {
 
 describe('fromGradeToClassName', () => {
   it('should return undefined when grade is undefined', () => {
-    const result = fromGradeToClassName(undefined)
+    const result = fromGradeToClassName()
     expect(result).toBeUndefined()
   })
 

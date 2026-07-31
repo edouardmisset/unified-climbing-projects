@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { WEEKEND_START_DAY_INDEX } from '~/constants/generic'
 import { getEnglishWeekdayLabels } from '~/helpers/date'
 import styles from './year-grid.module.css'
@@ -6,7 +6,8 @@ import styles from './year-grid.module.css'
 const weekDays = ['', ...getEnglishWeekdayLabels()]
 
 const DayCell = ({ day, index }: { day: string; index: number }) => {
-  const backgroundStyle: CSSProperties | undefined = (index >= WEEKEND_START_DAY_INDEX ? { backgroundColor: 'var(--surface-3)' } : undefined)
+  const backgroundStyle: CSSProperties | undefined =
+    index >= WEEKEND_START_DAY_INDEX ? { backgroundColor: 'var(--surface-3)' } : undefined
 
   if (index === 0) return <span className={`${styles.yearGridCell} ${styles.firstCell}`} />
 

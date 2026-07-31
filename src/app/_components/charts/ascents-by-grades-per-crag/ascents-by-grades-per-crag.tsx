@@ -1,4 +1,3 @@
-
 import {
   Bar,
   BarChart,
@@ -33,7 +32,7 @@ const Chart = createVerticalChart<AscentsByGradesPerCragDatum>()({
 })
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
-  const ascentsByGradesPerCrag = getAscentsByGradesPerCrag(ascents).reverse()
+  const ascentsByGradesPerCrag = getAscentsByGradesPerCrag(ascents).toReversed()
 
   if (ascentsByGradesPerCrag.length === 0) return
 

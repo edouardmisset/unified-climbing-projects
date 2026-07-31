@@ -1,5 +1,5 @@
 import { wrapInParentheses } from '@edouardmisset/text'
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
@@ -38,7 +38,9 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
 
   const maxCommentLength = 120
   const isLongComment = comments && comments.length > maxCommentLength
-  const stylesDependingOnComments = { '--direction': isLongComment ? 'row' : 'column' }
+  const stylesDependingOnComments: CommentDirectionStyle = {
+    '--direction': isLongComment ? 'row' : 'column',
+  }
 
   const formattedGrade = formatGrade({ discipline, grade })
 

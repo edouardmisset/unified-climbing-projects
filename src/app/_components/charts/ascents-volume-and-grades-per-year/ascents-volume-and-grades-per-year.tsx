@@ -1,4 +1,3 @@
-
 import {
   Bar,
   CartesianGrid,
@@ -103,12 +102,12 @@ function formatGradeTick(value: unknown): string {
 
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = getAscentsVolumeAndGradesPerYear(ascents).map(datum => ({
-        ...datum,
-        avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
-        avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
-        maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
-        maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
-      }))
+    ...datum,
+    avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
+    avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
+    maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
+    maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
+  }))
 
   const gradeDomain = (() => {
     const grades = data.flatMap(datum => [
@@ -134,10 +133,8 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
     return [lowerBound, upperBound]
   })()
 
-  const gradeTicks = (() => {
-    const [minDomain, maxDomain] = gradeDomain
-    return GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
-  })()
+  const [minDomain = Number.NEGATIVE_INFINITY, maxDomain = Number.POSITIVE_INFINITY] = gradeDomain
+  const gradeTicks = GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
 
   const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
   const hasDisciplineData = data.some(({ Bouldering, Sport }) => Bouldering > 0 || Sport > 0)
@@ -183,12 +180,12 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           <ChartTooltip
             formatter={(value, name) => {
               if (typeof value !== 'number') return [value, name]
-              if (!name?.toString()?.includes('Grade')) return [value, name]
+              if (!name?.toString().includes('Grade')) return [value, name]
 
               return [fromNumberToGrade(clampGrade(Math.round(value))), name]
             }}
           />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend iconType='circle' layout='horizontal' position='top' />
 
           <Chart.Bar
             dataKey='Bouldering'

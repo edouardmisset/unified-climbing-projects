@@ -24,23 +24,22 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
   const isSingleWeekTraining = numberOfTraining <= 1
 
   const filteredSortedWeeklyTraining = weeklyTraining
-        .filter(Boolean)
-        .sort(({ type: aType }, { type: bType }) =>
-          aType === undefined || bType === undefined
-            ? 0
-            : fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
-        )
+    .filter(Boolean)
+    .toSorted(
+      ({ type: aType }, { type: bType }) =>
+        fromSessionTypeToSortOrder(bType) - fromSessionTypeToSortOrder(aType),
+    )
 
   const [firstTraining] = filteredSortedWeeklyTraining
 
-  const buttonStyle = ({
-      background: isSingleWeekTraining
-        ? undefined
-        : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
-            .map(({ type }) => fromSessionTypeToBackgroundColor(type))
-            .join(', ')})`,
-      inlineSize: `${numberOfTraining / 2}%`,
-    })
+  const buttonStyle = {
+    background: isSingleWeekTraining
+      ? undefined
+      : `linear-gradient(to bottom in oklch, ${filteredSortedWeeklyTraining
+          .map(({ type }) => fromSessionTypeToBackgroundColor(type))
+          .join(', ')})`,
+    inlineSize: `${numberOfTraining / 2}%`,
+  }
 
   // LAZY LOADING: Create description component only when needed
   const lazyDescription = (() => {
@@ -55,7 +54,7 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
   if (firstTraining === undefined) return <span />
 
   const trainingBarClassName = `${
-    isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining?.type) : ''
+    isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining.type) : ''
   } ${styles.bar}`
 
   return (

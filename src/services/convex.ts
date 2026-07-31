@@ -29,7 +29,7 @@ export async function getConvexAuthToken(): Promise<string> {
   if (!isAuthenticated) throw new Error('Unauthenticated')
 
   const token =
-    sessionClaims?.aud === 'convex' ? await getToken() : await getToken({ template: 'convex' })
+    sessionClaims.aud === 'convex' ? await getToken() : await getToken({ template: 'convex' })
   if (!token) throw new Error('Unable to create a Convex authentication token')
   return token
 }

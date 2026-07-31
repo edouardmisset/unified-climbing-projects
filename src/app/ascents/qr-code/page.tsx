@@ -17,7 +17,7 @@ const AscentsQRCode = lazy(async () =>
 export default async function AscentsQRCodePage() {
   const allAscents = await getAllAscents()
 
-  if (!allAscents) return <NotFound />
+  if (allAscents.length === 0) return <NotFound />
 
   const groupedAscentsDaily = groupDataDaysByYear(allAscents)
 
@@ -26,8 +26,6 @@ export default async function AscentsQRCodePage() {
       {Object.entries(groupedAscentsDaily)
         .toSorted(([a], [b]) => Number(b) - Number(a))
         .map(([year, yearlyAscents]) => {
-          if (yearlyAscents === undefined)
-            return <span key='unexpected-error'>Unexpected error</span>
           const sortedAscents = yearlyAscents.map(ascents =>
             ascents.toSorted((a, b) => sortByGrade(a, b)),
           )

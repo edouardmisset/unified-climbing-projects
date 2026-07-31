@@ -1,4 +1,3 @@
-
 import { fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'

@@ -1,4 +1,3 @@
-
 import {
   Area,
   AreaChart,
@@ -21,14 +20,15 @@ const Chart = createHorizontalChart<SessionsPerYearDatum>()({
   Area,
 })
 
+const percentFormatter = (value: unknown) =>
+  typeof value === 'number' ? formatRatioAsPercent(value) : ''
+
 export function TrainingSessionsPerYear({
   trainingSessions,
 }: {
   trainingSessions: TrainingSession[]
 }) {
   const data = getSessionsPerYear(trainingSessions)
-
-  const percentFormatter = (value: unknown) => (typeof value === 'number' ? formatRatioAsPercent(value) : '')
 
   if (data.length === 0) return
 
@@ -40,7 +40,7 @@ export function TrainingSessionsPerYear({
           <ChartXAxis dataKey='year' tickFormatter={formatYearTick} labelText='Years' />
           <ChartYAxis tickFormatter={formatPercentageTick} />
           <ChartTooltip formatter={percentFormatter} />
-          <Legend align='center' verticalAlign='top' />
+          <Legend position='top' />
           <Chart.Area
             type='monotone'
             dataKey='indoorRoute'

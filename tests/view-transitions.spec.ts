@@ -21,7 +21,7 @@ test.describe('view transitions', () => {
 
     await expect(page).toHaveURL(/\/terms$/)
     await expect
-      .poll(() =>
+      .poll(async () =>
         page.evaluate(() => globalThis.sessionStorage.getItem('view-transition-argument')),
       )
       .toBe('object')
@@ -29,7 +29,7 @@ test.describe('view transitions', () => {
 
   test('navigates when view transitions are unsupported', async ({ page }) => {
     await page.addInitScript(() => {
-      Object.defineProperty(Document.prototype, 'startViewTransition', {
+      Object.defineProperty(globalThis.Document.prototype, 'startViewTransition', {
         configurable: true,
         value: undefined,
       })

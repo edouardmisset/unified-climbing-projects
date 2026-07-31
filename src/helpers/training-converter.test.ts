@@ -7,7 +7,7 @@ import {
 
 describe('fromSessionTypeToBackgroundColor', () => {
   it('should return a default surface color when type is undefined', () => {
-    const result = fromSessionTypeToBackgroundColor(undefined)
+    const result = fromSessionTypeToBackgroundColor()
     expect(result).toBe('var(--surface-1)')
   })
 
@@ -19,7 +19,7 @@ describe('fromSessionTypeToBackgroundColor', () => {
 
 describe('fromSessionTypeToClassName', () => {
   it('should return undefined when type is undefined', () => {
-    const result = fromSessionTypeToClassName(undefined)
+    const result = fromSessionTypeToClassName()
     expect(result).toBeUndefined()
   })
 

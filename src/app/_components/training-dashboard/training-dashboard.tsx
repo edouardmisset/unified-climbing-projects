@@ -9,7 +9,7 @@ import { TrainingDashboardFilterBar } from '../filter-bar/_components/training-d
 import { Loader } from '../ui/loader/loader.tsx'
 
 export function TrainingDashboard({ trainingSessions }: TrainingSessionListProps) {
-  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions ?? [])
+  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions)
 
   if (trainingSessions.length === 0) return <NotFound />
 

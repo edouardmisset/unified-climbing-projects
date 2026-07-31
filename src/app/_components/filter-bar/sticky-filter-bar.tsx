@@ -9,7 +9,9 @@ import styles from './sticky-filter-bar.module.css'
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const [isPending, startTransition] = useTransition()
 
-  const selectedValueByName = Object.fromEntries(filters.map(({ name, selectedValue }) => [name, selectedValue])) as Record<string, string>
+  const selectedValueByName = Object.fromEntries(
+    filters.map(({ name, selectedValue }) => [name, selectedValue]),
+  ) as Record<string, string>
 
   const [localSelectedValueByName, setLocalSelectedValueByName] =
     useState<Record<string, string>>(selectedValueByName)
@@ -19,28 +21,28 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
   const displayedSearch = isPending ? localSearch : (search ?? '')
 
   const applyFilterValue = (filterName: string, value: string) => {
-      const matchingFilter = filters.find(({ name }) => name === filterName)
-      if (matchingFilter === undefined) return
+    const matchingFilter = filters.find(({ name }) => name === filterName)
+    if (matchingFilter === undefined) return
 
-      setLocalSelectedValueByName(previousValues => ({
-        ...previousValues,
-        [filterName]: value,
-      }))
+    setLocalSelectedValueByName(previousValues => ({
+      ...previousValues,
+      [filterName]: value,
+    }))
 
-      startTransition(() => {
-        matchingFilter.setValue(value)
-      })
-    }
+    startTransition(() => {
+      matchingFilter.setValue(value)
+    })
+  }
 
   const handleSearchChange = (value: string) => {
-      setLocalSearch(value)
+    setLocalSearch(value)
 
-      if (setSearch === undefined) return
+    if (setSearch === undefined) return
 
-      startTransition(() => {
-        setSearch(value)
-      })
-    }
+    startTransition(() => {
+      setSearch(value)
+    })
+  }
 
   const clearFilters = () => {
     setLocalSelectedValueByName(Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])))
@@ -53,15 +55,17 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
     })
   }
 
-  const isOneFilterActive = filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
-      displayedSearch !== ''
+  const isOneFilterActive =
+    filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
+    displayedSearch !== ''
 
   const renderedFilters = filters.map(filter => ({
-        ...filter,
-        handleChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
-          applyFilterValue(filter.name, event.target.value),
-        selectedValue: displayedSelectedValueByName[filter.name] ?? filter.selectedValue,
-      }))
+    ...filter,
+    handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => {
+      applyFilterValue(filter.name, event.target.value)
+    },
+    selectedValue: displayedSelectedValueByName[filter.name] ?? filter.selectedValue,
+  }))
 
   return (
     <search aria-busy={isPending} className={styles.container}>
@@ -71,7 +75,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <CustomInput
             name='search route'
-            onChange={event => handleSearchChange(event.target.value)}
+            onChange={event => {
+              handleSearchChange(event.target.value)
+            }}
             placeholder='Biographie'
             type='search'
             value={displayedSearch}

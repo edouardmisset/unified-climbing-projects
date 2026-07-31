@@ -39,7 +39,7 @@ export const post = mutation({
     assertWritesEnabled()
     const { subject } = await requireIdentity(ctx)
     const contentFingerprint = await createContentFingerprint(createAscentFingerprintInput(args))
-    return await ctx.db.insert('ascents', {
+    return ctx.db.insert('ascents', {
       ...args,
       contentFingerprint,
       ownerId: subject,

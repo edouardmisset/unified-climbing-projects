@@ -8,7 +8,7 @@
     "check:sensitive-data": "node scripts/check-sensitive-files.mjs",
     "format": "vp fmt ./src",
     "lint": "vp lint --fix ./src",
-    "check": "vp check && vp run style:lint && vp run check:sensitive-data",
+    "check": "vp check --fix && vp run style:lint && vp run check:sensitive-data",
     "commitlint": "commitlint --edit",
     "dev": "next dev",
     "convex:dev": "vp exec convex dev",

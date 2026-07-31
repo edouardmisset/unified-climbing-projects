@@ -11,10 +11,10 @@ const THEME_STORAGE_KEY = 'theme'
 const THEME_CHANGE_EVENT = 'themechange'
 
 function getStoredTheme(): ThemeMode | undefined {
-  if (typeof globalThis.window === 'undefined') return undefined
+  if (globalThis.window === undefined) return undefined
 
   try {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY)
+    const stored = globalThis.localStorage.getItem(THEME_STORAGE_KEY)
     return stored && isThemeMode(stored) ? stored : undefined
   } catch {
     return undefined
@@ -22,7 +22,7 @@ function getStoredTheme(): ThemeMode | undefined {
 }
 
 function getSystemTheme(): ThemeMode {
-  if (typeof globalThis.window === 'undefined') return 'light'
+  if (globalThis.window === undefined) return 'light'
 
   return globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -32,10 +32,12 @@ function getThemeSnapshot(): ThemeMode {
 }
 
 function subscribeToThemeChanges(onStoreChange: () => void) {
-  if (typeof globalThis.window === 'undefined') return () => {}
+  if (globalThis.window === undefined) return () => {}
 
   const mediaQuery = globalThis.window.matchMedia('(prefers-color-scheme: dark)')
-  const handleThemeChange = () => onStoreChange()
+  const handleThemeChange = () => {
+    onStoreChange()
+  }
   const handleStorage = (event: StorageEvent) => {
     if (event.key === THEME_STORAGE_KEY) onStoreChange()
   }
@@ -58,10 +60,10 @@ export function useTheme() {
     const next = theme === 'dark' ? 'light' : 'dark'
 
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, next)
+      globalThis.localStorage.setItem(THEME_STORAGE_KEY, next)
       globalThis.window.dispatchEvent(new Event(THEME_CHANGE_EVENT))
     } catch (error) {
-      console.warn('Failed to save theme preference:', error)
+      globalThis.console.warn('Failed to save theme preference:', error)
     }
   }
 

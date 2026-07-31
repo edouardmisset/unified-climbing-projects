@@ -1,4 +1,3 @@
-
 import type { Ascent } from '~/schema/ascent'
 import { DisplayGrade } from '../climbing/display-grade/display-grade'
 import styles from './ascents-with-popover.module.css'

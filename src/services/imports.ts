@@ -97,9 +97,7 @@ export async function runCanonicalImport(
     return { inserted, jobId, skipped }
   } catch (error) {
     // Preserve the original import failure if recording the terminal status also fails.
-    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token }).catch(
-      () => undefined,
-    )
+    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token }).catch(() => {})
     throw error
   }
 }
@@ -124,5 +122,5 @@ export async function undoCanonicalImport(jobId: string) {
 
 export async function getRecentImportJobs() {
   const token = await getConvexAuthToken()
-  return await fetchQuery(api.imports.listJobs, {}, { token })
+  return fetchQuery(api.imports.listJobs, {}, { token })
 }

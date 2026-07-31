@@ -158,7 +158,9 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
           <label className={styles.checkbox}>
             <input
               checked={allowDuplicates}
-              onChange={event => setAllowDuplicates(event.target.checked)}
+              onChange={event => {
+                setAllowDuplicates(event.target.checked)
+              }}
               type='checkbox'
             />
             Import exact duplicates anyway
@@ -186,7 +188,7 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
               </span>
               {['running', 'undoing', 'completed', 'failed'].includes(job.status) &&
               job.inserted > 0 ? (
-                <button disabled={isWorking} onClick={() => undo(job._id)} type='button'>
+                <button disabled={isWorking} onClick={async () => undo(job._id)} type='button'>
                   Undo
                 </button>
               ) : undefined}

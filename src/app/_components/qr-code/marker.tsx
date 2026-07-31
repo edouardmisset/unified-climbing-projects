@@ -1,4 +1,3 @@
-
 import { GridItem } from './grid-item'
 
 type MarkerPlacement = 'TopLeft' | 'BottomLeft' | 'TopRight'

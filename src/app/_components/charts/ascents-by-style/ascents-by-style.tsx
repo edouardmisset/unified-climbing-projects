@@ -1,4 +1,3 @@
-
 import {
   createRadialChart,
   Pie,
@@ -27,8 +26,11 @@ const Chart = createRadialChart<AscentsByStyleDatum, string, string | number>()(
 export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   const data = getAscentsByStyle(ascents)
 
-  const labelRenderer = (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length })
-  const shapeRenderer = (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.color} />
+  const labelRenderer = (props: PieLabelRenderProps) =>
+    renderPieArcLabel({ props, total: ascents.length })
+  const shapeRenderer = (props: PieSectorShapeProps) => (
+    <Sector {...props} fill={data[props.index]?.color} />
+  )
 
   if (data.length <= 1) return
 

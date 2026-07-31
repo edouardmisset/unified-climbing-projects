@@ -53,6 +53,6 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   })()
 
   return deferredSelectedRoute === ''
-        ? filteredAscents
-        : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute))
+    ? filteredAscents
+    : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute))
 }

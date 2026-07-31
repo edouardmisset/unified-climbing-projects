@@ -1,4 +1,3 @@
-
 import { ThemeToggle } from '~/app/_components/theme-toggle/theme-toggle'
 import navigationStyles from '../navigation.module.css'
 import { UserStatus } from './user-status'
@@ -10,7 +9,9 @@ type NavigationUserSectionProps = {
 }
 
 export const NavigationUserSection = ({ isDark, onToggleTheme }: NavigationUserSectionProps) => {
-  const handleThemeChange = (_checked: boolean) => onToggleTheme()
+  const handleThemeChange = (_checked: boolean) => {
+    onToggleTheme()
+  }
 
   return (
     <li className={styles.user}>

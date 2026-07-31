@@ -1,4 +1,3 @@
-
 import {
   Bar,
   BarChart,
@@ -18,6 +17,13 @@ import type { TrainingSession } from '~/schema/training'
 import { getSessionsDistributionData } from './get-sessions-distribution-data'
 
 const BAR_CATEGORY_GAP = '20%'
+
+const X_AXIS_LABEL = {
+  ...AXIS_LABEL_STYLE,
+  value: 'Number of Sessions',
+  offset: 20,
+  position: 'bottom',
+} as const satisfies LabelProps
 
 type ChartDatum = {
   category: string
@@ -73,8 +79,6 @@ export function TrainingSessionsDistribution({
     return { barConfigs: bars, chartData: transformedData }
   })()
 
-  const xAxisLabel = ({ ...AXIS_LABEL_STYLE, value: 'Number of Sessions', offset: 20, position: 'bottom' })
-
   if (chartData.length === 0) return
   return (
     <ChartContainer caption='Session Distribution'>
@@ -84,10 +88,10 @@ export function TrainingSessionsDistribution({
           barCategoryGap={BAR_CATEGORY_GAP}
           data={chartData}
         >
-          <Chart.XAxis label={xAxisLabel} tick={AXIS_TICK_STYLE} type='number' />
+          <Chart.XAxis label={X_AXIS_LABEL} tick={AXIS_TICK_STYLE} type='number' />
           <Chart.YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
           <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
-          <Legend align='center' verticalAlign='top' />
+          <Legend position='top' />
           {barConfigs.map(config => (
             <Chart.Bar
               key={config.dataKey}

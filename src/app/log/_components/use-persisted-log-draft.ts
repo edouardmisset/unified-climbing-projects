@@ -45,7 +45,7 @@ export function usePersistedLogDraft({
   subscribe,
 }: UsePersistedLogDraftOptions): { resetDraft: () => void } {
   const { isLoaded, user } = useUser()
-  const saveTimeout = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const saveTimeout = useRef<ReturnType<typeof globalThis.setTimeout>>(undefined)
   const pendingDraft = useRef<LogDraft>(undefined)
   const initialDraftJson = JSON.stringify(initialDraft)
   const storageKey =
@@ -74,7 +74,7 @@ export function usePersistedLogDraft({
         const parsedValues = logDraftSchema.safeParse(values)
         if (!parsedValues.success) return
 
-        if (saveTimeout.current !== undefined) clearTimeout(saveTimeout.current)
+        if (saveTimeout.current !== undefined) globalThis.clearTimeout(saveTimeout.current)
         pendingDraft.current = undefined
 
         if (JSON.stringify(parsedValues.data) === initialDraftJson) {
@@ -83,7 +83,7 @@ export function usePersistedLogDraft({
         }
 
         pendingDraft.current = parsedValues.data
-        saveTimeout.current = setTimeout(() => {
+        saveTimeout.current = globalThis.setTimeout(() => {
           saveStoredDraft(storageKey, parsedValues.data)
           pendingDraft.current = undefined
         }, DRAFT_SAVE_DELAY_MS)
@@ -93,14 +93,14 @@ export function usePersistedLogDraft({
 
     return () => {
       unsubscribe()
-      if (saveTimeout.current !== undefined) clearTimeout(saveTimeout.current)
+      if (saveTimeout.current !== undefined) globalThis.clearTimeout(saveTimeout.current)
       if (pendingDraft.current !== undefined) saveStoredDraft(storageKey, pendingDraft.current)
       pendingDraft.current = undefined
     }
   }, [initialDraftJson, reset, storageKey, subscribe])
 
   const resetDraft = () => {
-    if (saveTimeout.current !== undefined) clearTimeout(saveTimeout.current)
+    if (saveTimeout.current !== undefined) globalThis.clearTimeout(saveTimeout.current)
     pendingDraft.current = undefined
     if (storageKey !== undefined) removeStoredDraft(storageKey)
     reset(initialDraft)
