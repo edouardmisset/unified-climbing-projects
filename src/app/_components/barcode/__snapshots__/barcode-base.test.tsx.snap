@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`barcode > renders its children 1`] = `"<div class="_barcode_1p8h5_1"><span>bar</span></div>"`;

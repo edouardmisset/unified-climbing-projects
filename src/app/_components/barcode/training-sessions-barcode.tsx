@@ -11,7 +11,7 @@ type TrainingSessionsBarcodeProps = {
 function TrainingSessionsBarcodeComponent(props: TrainingSessionsBarcodeProps) {
   const { yearlyTraining } = props
 
-  if (yearlyTraining.length === 0 || yearlyTraining[0]?.length === 0) return
+  if (yearlyTraining.every(sessions => sessions.length === 0)) return
 
   return (
     <Barcode>
