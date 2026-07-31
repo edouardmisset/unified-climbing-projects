@@ -41,7 +41,7 @@ export function ChartXAxis(props: XAxisProps) {
   } = props
 
   const label = (() => {
-    if (!labelText) return undefined
+    if (!labelText) return
     return { ...AXIS_LABEL_STYLE, value: labelText, offset, position }
   })()
 
@@ -66,10 +66,9 @@ type YAxisProps = {
 export function ChartYAxis(props: YAxisProps) {
   const { labelText, domain, tickFormatter } = props
 
-  const label = (() => {
-    if (!labelText) return undefined
-    return { ...AXIS_LABEL_STYLE, value: labelText, angle: -90, position: 'insideLeft' }
-  })()
+  const label: LabelProps | undefined = labelText
+    ? { ...AXIS_LABEL_STYLE, value: labelText, angle: -90, position: 'insideLeft' }
+    : undefined
 
   return (
     <YAxis label={label} domain={domain} tick={AXIS_TICK_STYLE} tickFormatter={tickFormatter} />

@@ -91,9 +91,7 @@ export function fromPointToGrade(
   const listOfPoints = Object.values(GRADE_TO_POINTS)
 
   const adjustedPoints =
-    points -
-    (STYLE_TO_POINTS[style] ?? 0) -
-    (discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0)
+    points - STYLE_TO_POINTS[style] - (discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0)
 
   if (!listOfPoints.includes(adjustedPoints)) {
     globalThis.console.log(

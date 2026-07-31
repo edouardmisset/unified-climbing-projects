@@ -14,9 +14,9 @@ export function TableAndSelect({ ascents }: AscentListProps) {
   const deferredTimeframe = useDeferredValue(timeframe)
 
   const topTenAscents = getTopTenAscents({
-        ascents: ascents ?? [],
-        timeframe: deferredTimeframe,
-      })
+    ascents,
+    timeframe: deferredTimeframe,
+  })
 
   if (ascents.length === 0) return <NotFound />
 

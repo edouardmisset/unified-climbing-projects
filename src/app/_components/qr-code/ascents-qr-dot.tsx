@@ -14,13 +14,14 @@ const AscentsPopoverDescription = lazy(async () =>
 
 export const AscentsQRDot = ({ ascents }: { ascents?: Ascent[] }) => {
   const [firstAscent] = ascents ?? []
-  const hardestAscent = (ascents === undefined ? undefined : getHardestAscent(ascents))
+  const hardestAscent = ascents === undefined ? undefined : getHardestAscent(ascents)
 
   const gradeClassName = fromGradeToClassName(hardestAscent?.grade)
 
-  const dateAndCrag = firstAscent?.date === undefined
-        ? ''
-        : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`
+  const dateAndCrag =
+    firstAscent?.date === undefined
+      ? ''
+      : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`
 
   // LAZY LOADING: Create description component only when needed
   const lazyDescription = (() => {

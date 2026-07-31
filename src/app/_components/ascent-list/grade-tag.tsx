@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
 import { gradeToClassName } from '~/helpers/formatters'
 import type { Ascent } from '~/schema/ascent'

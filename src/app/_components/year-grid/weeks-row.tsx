@@ -1,37 +1,36 @@
-
 import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
 const WeekCell = ({
-    columnNumber,
-    index,
-    columns,
-  }: {
-    columnNumber: number
-    columns: number[]
-    index: number
-  }) => {
-    const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
+  columnNumber,
+  index,
+  columns,
+}: {
+  columnNumber: number
+  columns: number[]
+  index: number
+}) => {
+  const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
 
-    // Adjust the grid column based on the presence of an extra column and the current index
-    const adjustedGridColumn =
-      hasExtraColumn && index === 1 ? 2 : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
+  // Adjust the grid column based on the presence of an extra column and the current index
+  const adjustedGridColumn =
+    hasExtraColumn && index === 1 ? 2 : columnNumber + 1 + (hasExtraColumn ? 1 : 0)
 
-    const gridColumnStyle = {
-      gridColumn: adjustedGridColumn,
-    }
-
-    if (columnNumber === 0) return <span className={`superCenter ${styles.firstCell}`} />
-
-    return (
-      <span
-        className={`superCenter ${styles.yearGridCell} ${styles.gridHeader}`}
-        style={gridColumnStyle}
-      >
-        {columnNumber}
-      </span>
-    )
+  const gridColumnStyle = {
+    gridColumn: adjustedGridColumn,
   }
+
+  if (columnNumber === 0) return <span className={`superCenter ${styles.firstCell}`} />
+
+  return (
+    <span
+      className={`superCenter ${styles.yearGridCell} ${styles.gridHeader}`}
+      style={gridColumnStyle}
+    >
+      {columnNumber}
+    </span>
+  )
+}
 
 export const WeeksRow = ({ columns }: { columns: number[] }) =>
   columns.map((columnNumber, index) => (

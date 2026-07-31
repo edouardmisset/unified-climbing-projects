@@ -12,27 +12,27 @@ const TrainingPopoverDescription = lazy(async () =>
 )
 
 export const TrainingsQRDot = ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
-    const [firstSession] = trainingSessions
+  const [firstSession] = trainingSessions
 
-    const sessionClassName =
-      firstSession?.type === undefined ? '' : fromSessionTypeToClassName(firstSession.type)
-    const formattedDate = firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)
+  const sessionClassName =
+    firstSession?.type === undefined ? '' : fromSessionTypeToClassName(firstSession.type)
+  const formattedDate = firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)
 
-    // LAZY LOADING: Create description component only when needed
-    const lazyDescription = (() => {
-      if (trainingSessions.length === 0) return ''
-      return (
-        <Suspense fallback='Loading...'>
-          <TrainingPopoverDescription trainingSessions={trainingSessions} />
-        </Suspense>
-      )
-    })()
-
-    if (trainingSessions.length === 0 || firstSession === undefined) return <span />
-
+  // LAZY LOADING: Create description component only when needed
+  const lazyDescription = (() => {
+    if (trainingSessions.length === 0) return ''
     return (
-      <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>
-        {lazyDescription}
-      </Popover>
+      <Suspense fallback='Loading...'>
+        <TrainingPopoverDescription trainingSessions={trainingSessions} />
+      </Suspense>
     )
-  }
+  })()
+
+  if (trainingSessions.length === 0 || firstSession === undefined) return <span />
+
+  return (
+    <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>
+      {lazyDescription}
+    </Popover>
+  )
+}

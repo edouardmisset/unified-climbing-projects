@@ -262,7 +262,7 @@ function serializeCsvCell(value: string): string {
   const needsFormulaGuard = FORMULA_TRIGGER_PATTERN.test(value)
   const guardedValue = needsFormulaGuard ? `'${value}` : value
   const requiresQuotes =
-    needsFormulaGuard || guardedValue === '' || /[^\x20-\x7E]|[",]/u.test(guardedValue)
+    needsFormulaGuard || guardedValue === '' || /[^\u0020-\u007E]|[",]/u.test(guardedValue)
   return requiresQuotes ? `"${guardedValue.replaceAll('"', '""')}"` : guardedValue
 }
 

@@ -6,7 +6,7 @@ import styles from './tries-by-grades.module.css'
 type PayloadEntry = NonNullable<TooltipContentProps['payload']>[number]
 
 function TriesByGradeTooltipComponent({ active, label, payload }: TooltipContentProps) {
-  if (!active || !payload?.length) return
+  if (!active || payload.length === 0) return
 
   return (
     <div className={styles.tooltip}>

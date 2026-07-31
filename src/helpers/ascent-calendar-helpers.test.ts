@@ -5,7 +5,7 @@ import { fromAscentsToCalendarEntries } from './ascent-calendar-helpers'
 describe('fromAscentsToCalendarEntries', () => {
   it('should return an empty array when ascentsArray is undefined', () => {
     const year = 2_024
-    const result = fromAscentsToCalendarEntries(year, undefined)
+    const result = fromAscentsToCalendarEntries(year)
     expect(result).toStrictEqual([])
   })
 

@@ -20,16 +20,16 @@ export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
   const numberOfAscents = weeklyAscents.length
   const isSingleAscent = numberOfAscents <= 1
 
-  const weeklyAscentsByDescendingGrade = weeklyAscents.filter(Boolean).sort(sortByGrade)
+  const weeklyAscentsByDescendingGrade = weeklyAscents.filter(Boolean).toSorted(sortByGrade)
 
-  const buttonStyle = ({
-      background: isSingleAscent
-        ? undefined
-        : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
-            .map(({ grade }) => fromGradeToBackgroundColor(grade))
-            .join(', ')})`,
-      inlineSize: `${numberOfAscents / 2}%`,
-    })
+  const buttonStyle = {
+    background: isSingleAscent
+      ? undefined
+      : `linear-gradient(to bottom in oklch, ${weeklyAscentsByDescendingGrade
+          .map(({ grade }) => fromGradeToBackgroundColor(grade))
+          .join(', ')})`,
+    inlineSize: `${numberOfAscents / 2}%`,
+  }
 
   // LAZY LOADING: Create description component only when needed
   const lazyDescription = (() => {

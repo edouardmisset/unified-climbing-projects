@@ -16,7 +16,7 @@ const TrainingSessionsBarcode = lazy(async () =>
 export default async function TrainingSessionsBarcodePage() {
   const trainingSessions = await getAllTrainingSessions()
 
-  if (!trainingSessions) return <NotFound />
+  if (trainingSessions.length === 0) return <NotFound />
 
   const groupedTrainingWeekly = groupDataWeeksByYear(trainingSessions)
 

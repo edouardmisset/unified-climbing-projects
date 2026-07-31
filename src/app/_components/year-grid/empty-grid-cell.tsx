@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { prettyLongDate } from '~/helpers/formatters'
 import styles from './year-grid.module.css'
 

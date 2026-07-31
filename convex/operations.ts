@@ -42,7 +42,11 @@ export const deleteOwnerBatch = internalMutation({
       .query(args.table)
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', args.ownerId))
       .take(batchSize)
-    await Promise.all(records.map(async record => await ctx.db.delete(record._id)))
+    await Promise.all(
+      records.map(async record => {
+        await ctx.db.delete(record._id)
+      }),
+    )
     return records.length
   },
 })

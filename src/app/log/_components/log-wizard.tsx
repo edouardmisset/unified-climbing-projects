@@ -70,9 +70,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
   const { resetDraft } = usePersistedLogDraft({ initialDraft, reset, subscribe })
 
   const goToStep = (next: LogStep, options?: Parameters<typeof setStep>[1]) => {
-    const update = () => setStep(next, options)
+    const update = async () => setStep(next, options)
     if (typeof document !== 'undefined' && 'startViewTransition' in document)
-      document.startViewTransition(() => flushSync(update))
+      document.startViewTransition(async () => flushSync(update))
     else void update()
   }
 
@@ -133,7 +133,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
             <button
               aria-current={stepValue === step ? 'step' : undefined}
               className={`${styles.stepButton} ${stepValue === step ? styles.activeStep : ''}`}
-              onClick={() => navigateToStep(stepValue)}
+              onClick={() => {
+                navigateToStep(stepValue)
+              }}
               type='button'
             >
               {index + 1}. {STEP_LABELS[stepValue]}
@@ -196,12 +198,20 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
           <div className={styles.actions}>
             <button
               className={styles.button}
-              onClick={() => navigateToStep('training')}
+              onClick={() => {
+                navigateToStep('training')
+              }}
               type='button'
             >
               Training
             </button>
-            <button className={styles.button} onClick={() => showAscents(false)} type='button'>
+            <button
+              className={styles.button}
+              onClick={() => {
+                showAscents(false)
+              }}
+              type='button'
+            >
               Skip
             </button>
           </div>
@@ -290,10 +300,22 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
           </Field>
           <div aria-hidden='true' className={styles.divider} />
           <div className={styles.actions}>
-            <button className={styles.button} onClick={() => goToStep('common')} type='button'>
+            <button
+              className={styles.button}
+              onClick={() => {
+                goToStep('common')
+              }}
+              type='button'
+            >
               Back
             </button>
-            <button className={styles.button} onClick={() => showAscents(true)} type='button'>
+            <button
+              className={styles.button}
+              onClick={() => {
+                showAscents(true)
+              }}
+              type='button'
+            >
               Continue
             </button>
             <KeycapButton
@@ -326,7 +348,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
                   {fields.length > 1 && (
                     <button
                       className={styles.removeButton}
-                      onClick={() => remove(index)}
+                      onClick={() => {
+                        remove(index)
+                      }}
                       type='button'
                     >
                       Remove
@@ -485,7 +509,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
           <div className={styles.actions}>
             <button
               className={styles.button}
-              onClick={() => append(createAscentDraft(getValues('discipline'), latestAscent))}
+              onClick={() => {
+                append(createAscentDraft(getValues('discipline'), latestAscent))
+              }}
               type='button'
             >
               Add ascent
@@ -494,7 +520,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
           <div className={styles.actions}>
             <button
               className={styles.button}
-              onClick={() => goToStep(getValues('includeTraining') ? 'training' : 'common')}
+              onClick={() => {
+                goToStep(getValues('includeTraining') ? 'training' : 'common')
+              }}
               type='button'
             >
               Back

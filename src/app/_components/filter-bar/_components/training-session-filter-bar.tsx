@@ -1,4 +1,3 @@
-
 import { createYearList } from '~/data/helpers.ts'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
@@ -15,8 +14,8 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
   }).map(String)
 
   const locationList = [
-        ...new Set(trainingSessions.map(({ location }) => location?.trim()).filter(Boolean)),
-      ].toSorted(compareStringsAscending)
+    ...new Set(trainingSessions.map(({ location }) => location?.trim()).filter(Boolean)),
+  ].toSorted(compareStringsAscending)
 
   const {
     selectedLoad,
@@ -32,42 +31,42 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
   } = useTrainingSessionsQueryState()
 
   const filters = [
-        {
-          setValue: createValueSetter(setSessionType),
-          name: 'Session Type',
-          options: SESSION_TYPES,
-          selectedValue: selectedSessionType,
-          title: 'Session Type',
-        },
-        {
-          setValue: createValueSetter(setLoad),
-          name: 'Load',
-          options: LOAD_CATEGORIES,
-          selectedValue: selectedLoad,
-          title: 'Load',
-        },
-        {
-          setValue: createValueSetter(setYear),
-          name: 'Year',
-          options: yearList,
-          selectedValue: selectedYear,
-          title: 'Year',
-        },
-        {
-          setValue: createValueSetter(setLocation),
-          name: 'Location',
-          options: locationList,
-          selectedValue: selectedLocation,
-          title: 'Location',
-        },
-        {
-          setValue: createValueSetter(setPeriod),
-          name: 'Period',
-          options: PERIOD,
-          selectedValue: selectedPeriod,
-          title: 'Period',
-        },
-      ] as const satisfies FilterConfig[]
+    {
+      setValue: createValueSetter(setSessionType),
+      name: 'Session Type',
+      options: SESSION_TYPES,
+      selectedValue: selectedSessionType,
+      title: 'Session Type',
+    },
+    {
+      setValue: createValueSetter(setLoad),
+      name: 'Load',
+      options: LOAD_CATEGORIES,
+      selectedValue: selectedLoad,
+      title: 'Load',
+    },
+    {
+      setValue: createValueSetter(setYear),
+      name: 'Year',
+      options: yearList,
+      selectedValue: selectedYear,
+      title: 'Year',
+    },
+    {
+      setValue: createValueSetter(setLocation),
+      name: 'Location',
+      options: locationList,
+      selectedValue: selectedLocation,
+      title: 'Location',
+    },
+    {
+      setValue: createValueSetter(setPeriod),
+      name: 'Period',
+      options: PERIOD,
+      selectedValue: selectedPeriod,
+      title: 'Period',
+    },
+  ] as const satisfies FilterConfig[]
 
   return <StickyFilterBar filters={filters} showSearch={false} />
 }

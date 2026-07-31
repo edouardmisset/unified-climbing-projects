@@ -1,7 +1,3 @@
-'use client'
-
-import { ClerkProvider } from '@clerk/nextjs'
-import { dark } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google'
@@ -11,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import { Header } from '~/app/_components/header/header.tsx'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { APP_LANGUAGE } from '~/constants/generic'
-import { useTheme } from '~/hooks/use-theme'
+import { ClerkThemeProvider } from './_components/clerk-theme-provider/clerk-theme-provider'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -39,26 +35,10 @@ const font = atkinson_Hyperlegible({
 })
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const { theme } = useTheme()
-  const clerkAppearance = {
-    baseTheme: theme === 'dark' ? dark : undefined,
-    variables: {
-      borderRadius: 'var(--radius-2)',
-      colorBackground: 'var(--surface-2)',
-      colorInputBackground: 'var(--control-bg)',
-      colorInputText: 'var(--text-1)',
-      colorPrimary: 'var(--accent)',
-      colorText: 'var(--text-1)',
-      colorTextSecondary: 'var(--text-2)',
-      fontFamily: 'var(--font-atkinson)',
-    },
-  }
-
   return (
-    <ClerkProvider appearance={clerkAppearance}>
+    <ClerkThemeProvider>
       <html
         className={font.className}
-        data-color-scheme={theme}
         data-scroll-behavior='smooth'
         lang={APP_LANGUAGE}
         suppressHydrationWarning
@@ -96,6 +76,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Analytics />
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkThemeProvider>
   )
 }

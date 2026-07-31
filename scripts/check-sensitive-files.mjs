@@ -17,7 +17,7 @@ const violations = trackedFiles.filter(
 )
 
 if (violations.length > 0) {
-  console.error('Sensitive backup/export files are tracked:')
-  for (const violation of violations) console.error(`- ${violation}`)
-  process.exitCode = 1
+  globalThis.console.error('Sensitive backup/export files are tracked:')
+  for (const violation of violations) globalThis.console.error(`- ${violation}`)
+  globalThis.process.exitCode = 1
 }

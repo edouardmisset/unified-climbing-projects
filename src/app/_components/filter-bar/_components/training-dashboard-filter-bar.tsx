@@ -93,35 +93,35 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
   const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
   const filters = [
-        {
-          setValue: createValueSetter(setYear),
-          name: 'Year',
-          options: yearList,
-          selectedValue: effectiveSelectedYear,
-          title: 'Year',
-        },
-        {
-          setValue: createValueSetter(setLocationType),
-          name: 'Location Type',
-          options: locationTypeList,
-          selectedValue: effectiveSelectedLocationType,
-          title: 'Indoor / Outdoor',
-        },
-        {
-          setValue: createValueSetter(setDiscipline),
-          name: 'Discipline',
-          options: disciplineList,
-          selectedValue: effectiveSelectedDiscipline,
-          title: 'Climbing Discipline',
-        },
-        {
-          setValue: createValueSetter(setPeriod),
-          name: 'Period',
-          options: periodList,
-          selectedValue: effectiveSelectedPeriod,
-          title: 'Period',
-        },
-      ] as const satisfies FilterConfig[]
+    {
+      setValue: createValueSetter(setYear),
+      name: 'Year',
+      options: yearList,
+      selectedValue: effectiveSelectedYear,
+      title: 'Year',
+    },
+    {
+      setValue: createValueSetter(setLocationType),
+      name: 'Location Type',
+      options: locationTypeList,
+      selectedValue: effectiveSelectedLocationType,
+      title: 'Indoor / Outdoor',
+    },
+    {
+      setValue: createValueSetter(setDiscipline),
+      name: 'Discipline',
+      options: disciplineList,
+      selectedValue: effectiveSelectedDiscipline,
+      title: 'Climbing Discipline',
+    },
+    {
+      setValue: createValueSetter(setPeriod),
+      name: 'Period',
+      options: periodList,
+      selectedValue: effectiveSelectedPeriod,
+      title: 'Period',
+    },
+  ] as const satisfies FilterConfig[]
 
   return <StickyFilterBar filters={filters} showSearch={false} />
 }

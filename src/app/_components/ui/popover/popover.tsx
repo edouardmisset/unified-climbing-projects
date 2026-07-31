@@ -1,7 +1,7 @@
 'use client'
 
 import { Popover as BasePopover } from '@base-ui/react/popover'
-import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Arrow } from '../../svg/arrow/arrow'
 import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './popover.module.css'

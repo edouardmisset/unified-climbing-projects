@@ -16,7 +16,7 @@ const AscentsBarcode = lazy(async () =>
 export default async function AscentBarcodePage() {
   const allAscents = await getAllAscents()
 
-  if (!allAscents) return <NotFound />
+  if (allAscents.length === 0) return <NotFound />
 
   const groupedAscentsWeekly = groupDataWeeksByYear(allAscents)
 

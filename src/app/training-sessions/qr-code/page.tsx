@@ -16,7 +16,7 @@ const TrainingQRCode = lazy(async () =>
 export default async function TrainingSessionsQRCodePage() {
   const trainingSessions = await getAllTrainingSessions()
 
-  if (!trainingSessions) return <NotFound />
+  if (trainingSessions.length === 0) return <NotFound />
 
   const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
 

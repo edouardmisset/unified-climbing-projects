@@ -112,7 +112,7 @@ describe('calculateScore', () => {
     )
 
     const hardestGradeValue =
-      hardestGradeValues[0] !== undefined ? hardestGradeValues[0] : fromGradeToNumber(DEFAULT_GRADE)
+      hardestGradeValues[0] === undefined ? fromGradeToNumber(DEFAULT_GRADE) : hardestGradeValues[0]
 
     const topTenScore =
       calculateTopTenScore(currentYearAscents) * hardestGradeValue * COEFFICIENT_TOP_TEN

@@ -30,12 +30,12 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
     <Card>
       <h2>Vertical Milestone</h2>
       <p>
-        {routes.length !== 0 && (
+        {routes.length > 0 && (
           <span className='block'>
             You climbed <AscentsWithPopover ascents={routes} />
           </span>
         )}
-        {boulders.length !== 0 && (
+        {boulders.length > 0 && (
           <span className='block'>
             You climbed <AscentsWithPopover ascents={boulders} />
           </span>

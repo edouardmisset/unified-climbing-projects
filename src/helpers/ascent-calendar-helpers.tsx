@@ -14,7 +14,7 @@ export function fromAscentsToCalendarEntries(
     ascentsArray?.map((ascents, index): DayDescriptor => {
       const [firstAscent] = ascents
 
-      if (firstAscent === undefined || ascents === undefined) {
+      if (firstAscent === undefined) {
         const emptyDate = new Date(year, 0, index + 1, NOON_HOUR).toISOString()
         return {
           date: emptyDate,

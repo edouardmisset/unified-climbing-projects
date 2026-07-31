@@ -1,4 +1,3 @@
-
 import {
   createRadialChart,
   Pie,
@@ -27,10 +26,11 @@ const Chart = createRadialChart<AscentsPerDisciplineDatum, string, string | numb
 export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   const routesVsBoulders = getAscentsPerDiscipline(ascents)
 
-  const labelRenderer = (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: ascents.length })
+  const labelRenderer = (props: PieLabelRenderProps) =>
+    renderPieArcLabel({ props, total: ascents.length })
   const shapeRenderer = (props: PieSectorShapeProps) => (
-      <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
-    )
+    <Sector {...props} fill={routesVsBoulders[props.index]?.color} />
+  )
 
   if (routesVsBoulders.length <= 1) return
 

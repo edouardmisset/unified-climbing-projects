@@ -42,14 +42,14 @@ export function filterTrainingSessions(
     locationType,
   } = filters ?? {}
 
-  if (!trainingSessions || trainingSessions.length === 0) return []
+  if (trainingSessions.length === 0) return []
 
   return trainingSessions.filter(trainingSession => {
     const trainingSessionDate = new Date(trainingSession.date)
 
     return (
       (location === undefined ||
-        stringEqualsCaseInsensitive(trainingSession?.location ?? '', location)) &&
+        stringEqualsCaseInsensitive(trainingSession.location ?? '', location)) &&
       (discipline === undefined || trainingSession.discipline === discipline) &&
       (year === undefined || isDateInYear(trainingSessionDate, year)) &&
       (anatomicalRegion === undefined || trainingSession.anatomicalRegion === anatomicalRegion) &&
@@ -82,7 +82,5 @@ function isLoadInLoadCategory(load: number | undefined, loadCategory: LoadCatego
   if (loadCategory === 'Medium')
     return lowCategoryUpperBound <= load && load < highCategoryLowerBound
 
-  if (loadCategory === 'High') return highCategoryLowerBound <= load
-
-  return false
+  return highCategoryLowerBound <= load
 }

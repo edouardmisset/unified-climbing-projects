@@ -8,12 +8,12 @@ import type { AscentListProps } from '~/schema/ascent.ts'
 import { DashboardStatistics } from './dashboard-statistics'
 import { Loader } from '../ui/loader/loader.tsx'
 
-const AscentList = lazy(() =>
+const AscentList = lazy(async () =>
   import('../ascent-list/ascent-list').then(module => ({ default: module.AscentList })),
 )
 
 export function Dashboard({ ascents }: AscentListProps) {
-  const filteredAscents = useAscentsFilter(ascents ?? [])
+  const filteredAscents = useAscentsFilter(ascents)
 
   if (ascents.length === 0) return <NotFound />
 

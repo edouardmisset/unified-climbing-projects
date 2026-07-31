@@ -1,4 +1,3 @@
-
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentListItem } from './ascent-list-item'
 import styles from './ascents-with-popover.module.css'

@@ -9,7 +9,7 @@ export function AscentsPopoverDescription({
   ascents?: Ascent[]
   showCrag?: boolean
 }) {
-  if (ascents === undefined || ascents[0] === undefined) return ''
+  if (ascents?.[0] === undefined) return ''
 
   return (
     <ul className={styles.list}>

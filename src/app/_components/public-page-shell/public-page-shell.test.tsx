@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vite-plus/test'
 import type { SignedIn, SignedOut } from '@clerk/nextjs'
 import { PublicPageShell } from './public-page-shell'

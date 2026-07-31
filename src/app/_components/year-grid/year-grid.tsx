@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { DAYS_IN_WEEK, NOON_HOUR, WEEKS_IN_YEAR } from '~/constants/generic.ts'
 import { prettyLongDate } from '~/helpers/formatters.ts'
 import type { Ascent } from '~/schema/ascent'
@@ -16,72 +16,78 @@ const MONDAY_INDEX = 1
 const WEEK_53_START_INDEX = 4
 const PREVIOUS_MONDAY_OFFSET = 6
 
-export const YearGrid = ({ dayCollection, year }: { year: number; dayCollection: DayDescriptor[] }) => {
-    const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
-    const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
-    const firstDayIndex = firstDayOfYear.getUTCDay()
-    const prependWeek53 = firstDayIndex >= WEEK_53_START_INDEX || firstDayIndex === SUNDAY_INDEX
+export const YearGrid = ({
+  dayCollection,
+  year,
+}: {
+  year: number
+  dayCollection: DayDescriptor[]
+}) => {
+  const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
+  const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
+  const firstDayIndex = firstDayOfYear.getUTCDay()
+  const prependWeek53 = firstDayIndex >= WEEK_53_START_INDEX || firstDayIndex === SUNDAY_INDEX
 
-    const numberOfColumns = 1 + displayedNumberOfWeeks + (prependWeek53 ? 1 : 0)
+  const numberOfColumns = 1 + displayedNumberOfWeeks + (prependWeek53 ? 1 : 0)
 
-    const columns = [
-        0,
-        ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
-        ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
-      ]
+  const columns = [
+    0,
+    ...(prependWeek53 ? [WEEKS_IN_YEAR] : []),
+    ...Array.from({ length: displayedNumberOfWeeks }, (_, index) => index + 1),
+  ]
 
-    const numberOfDaysFromPreviousMondayTo1stJanuary =
-      firstDayIndex === SUNDAY_INDEX ? PREVIOUS_MONDAY_OFFSET : firstDayIndex - MONDAY_INDEX
+  const numberOfDaysFromPreviousMondayTo1stJanuary =
+    firstDayIndex === SUNDAY_INDEX ? PREVIOUS_MONDAY_OFFSET : firstDayIndex - MONDAY_INDEX
 
-    const emptyDays = Array.from(
-          { length: numberOfDaysFromPreviousMondayTo1stJanuary },
-          (_, index): DayDescriptor => ({
-            date: '',
-            shortText: index.toString(),
-            title: '',
-          }),
-        )
+  const emptyDays = Array.from(
+    { length: numberOfDaysFromPreviousMondayTo1stJanuary },
+    (_, index): DayDescriptor => ({
+      date: '',
+      shortText: index.toString(),
+      title: '',
+    }),
+  )
 
-    const allDayCollection = [...emptyDays, ...dayCollection]
-    const gridTemplateStyle = ({
-        gridTemplateColumns: `repeat(${numberOfColumns},1fr)`,
-      })
-
-    return (
-      <div className={styles.yearGrid} style={gridTemplateStyle}>
-        <DaysColumn />
-        <WeeksRow columns={columns} />
-        {allDayCollection.map(
-          (
-            {
-              date,
-              backgroundColor,
-              shortText = '',
-              title,
-              isSpecialCase = false,
-              ascents,
-              trainingSessions,
-            },
-            index,
-          ) => (
-            <YearGridCell
-              ascents={ascents}
-              backgroundColor={backgroundColor}
-              date={date}
-              formattedDate={date === '' ? '' : prettyLongDate(date)}
-              isSpecialCase={isSpecialCase}
-              // oxlint-disable-next-line react/no-array-index-key -- stable day index for empty dates
-              key={(date || index).toString()}
-              shortText={shortText}
-              title={title}
-              trainingSessions={trainingSessions}
-              year={year}
-            />
-          ),
-        )}
-      </div>
-    )
+  const allDayCollection = [...emptyDays, ...dayCollection]
+  const gridTemplateStyle = {
+    gridTemplateColumns: `repeat(${numberOfColumns},1fr)`,
   }
+
+  return (
+    <div className={styles.yearGrid} style={gridTemplateStyle}>
+      <DaysColumn />
+      <WeeksRow columns={columns} />
+      {allDayCollection.map(
+        (
+          {
+            date,
+            backgroundColor,
+            shortText = '',
+            title,
+            isSpecialCase = false,
+            ascents,
+            trainingSessions,
+          },
+          index,
+        ) => (
+          <YearGridCell
+            ascents={ascents}
+            backgroundColor={backgroundColor}
+            date={date}
+            formattedDate={date === '' ? '' : prettyLongDate(date)}
+            isSpecialCase={isSpecialCase}
+            // oxlint-disable-next-line react/no-array-index-key -- stable day index for empty dates
+            key={(date || index).toString()}
+            shortText={shortText}
+            title={title}
+            trainingSessions={trainingSessions}
+            year={year}
+          />
+        ),
+      )}
+    </div>
+  )
+}
 
 export type DayDescriptor = {
   backgroundColor?: string

@@ -1,4 +1,3 @@
-
 import {
   Bar,
   CartesianGrid,
@@ -89,7 +88,7 @@ export function TopTenEvolution({ ascents }: { ascents: Ascent[] }) {
               return [value, name]
             }}
           />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend iconType='circle' layout='horizontal' position='top' />
           <Chart.Bar
             dataKey='Bouldering'
             fill={CLIMBING_DISCIPLINE_TO_COLOR.Bouldering}

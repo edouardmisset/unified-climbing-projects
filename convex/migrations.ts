@@ -94,9 +94,9 @@ export const migrateBatch = internalMutation({
 
     if (!args.dryRun && errors.length === 0)
       await Promise.all(
-        replacements.map(
-          async replacement => await ctx.db.replace(replacement.id, replacement.value as never),
-        ),
+        replacements.map(async replacement => {
+          await ctx.db.replace(replacement.id, replacement.value as never)
+        }),
       )
 
     return {
