@@ -6,61 +6,62 @@ import type { AscentListProps } from '~/schema/ascent.ts'
 import styles from './dashboard.module.css'
 
 const AscentsByGradesPerCrag = dynamic(
-  () =>
+  async () =>
     import('../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx').then(
       m => m.AscentsByGradesPerCrag,
     ),
   { ssr: false },
 )
 const AscentsByStyle = dynamic(
-  () => import('../charts/ascents-by-style/ascents-by-style.tsx').then(m => m.AscentsByStyle),
+  async () => import('../charts/ascents-by-style/ascents-by-style.tsx').then(m => m.AscentsByStyle),
   { ssr: false },
 )
 const AscentsPerDiscipline = dynamic(
-  () =>
+  async () =>
     import('../charts/ascents-per-discipline/ascents-per-discipline.tsx').then(
       m => m.AscentsPerDiscipline,
     ),
   { ssr: false },
 )
 const AscentsPerDisciplinePerGrade = dynamic(
-  () =>
+  async () =>
     import('../charts/ascents-per-discipline-per-grade/ascents-per-discipline-per-grade.tsx').then(
       m => m.AscentsPerDisciplinePerGrade,
     ),
   { ssr: false },
 )
 const AscentsVolumeAndGradesPerYear = dynamic(
-  () =>
+  async () =>
     import('../charts/ascents-volume-and-grades-per-year/ascents-volume-and-grades-per-year.tsx').then(
       m => m.AscentsVolumeAndGradesPerYear,
     ),
   { ssr: false },
 )
 const AscentsPerYearByGrade = dynamic(
-  () =>
+  async () =>
     import('../charts/ascents-per-year-by-grade/ascents-per-year-by-grade.tsx').then(
       m => m.AscentsPerYearByGrade,
     ),
   { ssr: false },
 )
 const AscentPyramid = dynamic(
-  () => import('../charts/ascents-pyramid/ascent-pyramid.tsx').then(m => m.AscentPyramid),
+  async () => import('../charts/ascents-pyramid/ascent-pyramid.tsx').then(m => m.AscentPyramid),
   { ssr: false },
 )
 const DistanceClimbedPerYear = dynamic(
-  () =>
+  async () =>
     import('../charts/distance-climbed/distance-climbed-per-year.tsx').then(
       m => m.DistanceClimbedPerYear,
     ),
   { ssr: false },
 )
 const TopTenEvolution = dynamic(
-  () => import('../charts/top-ten-evolution/top-ten-evolution.tsx').then(m => m.TopTenEvolution),
+  async () =>
+    import('../charts/top-ten-evolution/top-ten-evolution.tsx').then(m => m.TopTenEvolution),
   { ssr: false },
 )
 const TriesByGrade = dynamic(
-  () => import('../charts/tries-by-grade/tries-by-grade.tsx').then(m => m.TriesByGrade),
+  async () => import('../charts/tries-by-grade/tries-by-grade.tsx').then(m => m.TriesByGrade),
   { ssr: false },
 )
 

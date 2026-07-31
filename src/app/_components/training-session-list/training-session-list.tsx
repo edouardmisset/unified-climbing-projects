@@ -1,4 +1,3 @@
-
 import NotFound from '~/app/not-found'
 import { calculateLoad } from '~/helpers/calculate-load'
 import { prettyLongDate, prettyShortDate } from '~/helpers/formatters'

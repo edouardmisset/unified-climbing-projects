@@ -1,5 +1,3 @@
-
-
 type GridItemProps = {
   gridArea: string
   index: number
@@ -8,10 +6,10 @@ type GridItemProps = {
 function GridItemComponent(props: GridItemProps) {
   const { gridArea, index } = props
 
-  const backgroundStyle = ({
-      backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
-      gridArea,
-    })
+  const backgroundStyle = {
+    backgroundColor: index % 2 === 0 ? 'var(--bg-color)' : 'var(--gray-7)',
+    gridArea,
+  }
 
   return <span style={backgroundStyle} />
 }

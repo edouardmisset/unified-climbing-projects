@@ -41,7 +41,7 @@ export const post = mutation({
     const contentFingerprint = await createContentFingerprint(
       createTrainingSessionFingerprintInput(args),
     )
-    return await ctx.db.insert('training', {
+    return ctx.db.insert('training', {
       ...args,
       contentFingerprint,
       ownerId: subject,

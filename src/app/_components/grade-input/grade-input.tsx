@@ -32,7 +32,7 @@ export function GradeInput(
 
   if (value === null || value === undefined || !onValueChange) {
     console.error('This should be a controlled component')
-    return undefined
+    return
   }
 
   return (

@@ -25,7 +25,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     ascent => ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
   )
 
-  const topTenScore = sum(topTenAscents.map(({ points }) => points ?? 0))
+  const topTenScore = sum(topTenAscents.map(({ points }) => points))
 
   const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
   const displayHowToImprove =

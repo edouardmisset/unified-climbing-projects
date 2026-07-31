@@ -20,7 +20,7 @@ export async function getAllCrags(): Promise<string[]> {
     ...new Set(
       ascents
         .toSorted((a, b) => sortByDate(a, b, true))
-        .map(({ crag }) => crag?.trim())
+        .map(({ crag }) => crag.trim())
         .filter(Boolean),
     ),
   ]

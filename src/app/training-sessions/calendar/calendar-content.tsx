@@ -13,7 +13,7 @@ export async function CalendarContent() {
     getAllAscents(),
   ])
 
-  if (!trainingSessions) return <NotFound />
+  if (trainingSessions.length === 0 || allAscents.length === 0) return <NotFound />
 
   const trainingYears = createYearList(trainingSessions, { continuous: false })
 
@@ -26,7 +26,7 @@ export async function CalendarContent() {
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear<TrainingSession>}
             fromDataToCalendarEntries={(calendarYear, sessions) =>
-              fromTrainingSessionsToCalendarEntries(calendarYear, sessions, allAscents ?? [])
+              fromTrainingSessionsToCalendarEntries(calendarYear, sessions, allAscents)
             }
             year={year}
           />

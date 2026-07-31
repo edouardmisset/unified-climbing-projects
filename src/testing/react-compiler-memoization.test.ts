@@ -16,7 +16,9 @@ const getSourceFiles = (directory: string): string[] =>
 describe('react compiler memoization', () => {
   it('should not use manual memoization APIs in source files', () => {
     const blockedPatterns = [/\bmemo\s*\(/, /\buseMemo\b/, /\buseCallback\b/]
-    const files = getSourceFiles(SOURCE_ROOT).filter(file => !file.endsWith('.test.tsx') && !file.endsWith('.test.ts'))
+    const files = getSourceFiles(SOURCE_ROOT).filter(
+      file => !file.endsWith('.test.tsx') && !file.endsWith('.test.ts'),
+    )
     const offenders: string[] = []
 
     for (const file of files) {

@@ -182,7 +182,7 @@ describe('deSlugify', () => {
     })
 
     it('should handle undefined options', () => {
-      const result = deSlugify('hello-world', undefined)
+      const result = deSlugify('hello-world')
       expect(result).toBe('Hello world')
     })
   })

@@ -9,7 +9,7 @@ export function ClerkThemeProvider({ children }: { children: ReactNode }) {
   const { theme } = useTheme()
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-color-scheme', theme)
+    document.documentElement.dataset.colorScheme = theme
   }, [theme])
 
   const appearance = {

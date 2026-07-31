@@ -16,9 +16,7 @@ import type { TrainingSession } from '~/schema/training'
  * @param {TrainingSession['type']} type - The type of the training session.
  * @returns {string} The background color as a string.
  */
-export function fromSessionTypeToBackgroundColor(
-  type: TrainingSession['type'] | undefined,
-): string {
+export function fromSessionTypeToBackgroundColor(type?: TrainingSession['type']): string {
   return type === undefined ? 'var(--surface-1)' : TRAINING_SESSION_TYPE_TO_BACKGROUND_COLOR[type]
 }
 
@@ -34,9 +32,7 @@ export function fromSessionTypeToBackgroundColor(
  * @returns {string | undefined} The corresponding class name if type is
  * defined; otherwise, undefined.
  */
-export function fromSessionTypeToClassName(
-  type: TrainingSession['type'] | undefined,
-): string | undefined {
+export function fromSessionTypeToClassName(type?: TrainingSession['type']): string | undefined {
   return type === undefined ? undefined : TRAINING_SESSION_TYPE_TO_CLASS_NAME[type]
 }
 
@@ -51,7 +47,7 @@ export function fromSessionTypeToClassName(
  * @returns {string | undefined} The corresponding string value if type
  * is defined, or undefined.
  */
-function fromSessionTypeToString(type: TrainingSession['type'] | undefined): string | undefined {
+export function fromSessionTypeToString(type?: TrainingSession['type']): string | undefined {
   return type === undefined ? undefined : TRAINING_SESSION_TYPE_TO_STRING[type]
 }
 
@@ -70,7 +66,7 @@ export function getSessionTypeColors({
   intensityPercent = DEFAULT_INTENSITY_PERCENT,
   volumePercent = DEFAULT_VOLUME_PERCENT,
 }: {
-  type: TrainingSession['type'] | undefined
+  type?: TrainingSession['type']
   intensityPercent?: number
   volumePercent?: number
 }): string {

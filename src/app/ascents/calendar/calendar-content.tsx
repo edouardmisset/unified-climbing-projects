@@ -7,7 +7,7 @@ import { AscentCalendar } from './calendar'
 export async function CalendarContent() {
   const allAscents = await getAllAscents()
 
-  if (!allAscents) return <NotFound />
+  if (allAscents.length === 0) return <NotFound />
 
   const ascentYearsData = createYearList(allAscents, {
     continuous: false,

@@ -37,7 +37,7 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
               ) : (
                 <span title={discipline}>{fromClimbingDisciplineToEmoji(discipline)}</span>
               )}{' '}
-              {location} {type ? <span title={type}>{wrapInParentheses(type)}</span> : ''}{' '}
+              {location} <span title={type}>{wrapInParentheses(type)}</span>{' '}
               {volume === undefined ? '' : `Volume: ${formatWholePercent(volume)}`}{' '}
               {intensity === undefined ? '' : `Intensity: ${formatWholePercent(intensity)}`}{' '}
               {load === undefined ? '' : `Load: ${formatWholePercent(roundToTen(load))}`}{' '}

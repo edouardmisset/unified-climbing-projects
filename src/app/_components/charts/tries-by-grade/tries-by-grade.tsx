@@ -1,4 +1,3 @@
-
 import {
   CartesianGrid,
   createHorizontalChart,
@@ -85,7 +84,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
 
   const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
 
-  const dotStyle = ({ r: DOT_RADIUS })
+  const dotStyle = { r: DOT_RADIUS }
   const yAxisDomain = [0, 'dataMax'] as const
 
   if (series.length === 0 || isFirstTry) return
@@ -98,7 +97,7 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
           <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
           <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
           <ChartTooltip content={TriesByGradeTooltip} />
-          <Legend align='center' iconType='circle' layout='horizontal' verticalAlign='top' />
+          <Legend iconType='circle' layout='horizontal' position='top' />
           <Chart.Line
             dataKey='min'
             dot={dotStyle}

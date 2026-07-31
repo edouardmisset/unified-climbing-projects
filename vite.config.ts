@@ -92,7 +92,10 @@ export default defineConfig({
     categories: {
       correctness: 'error',
       suspicious: 'warn',
+      // nursery: 'warn',
+      // pedantic: 'warn',
       perf: 'warn',
+      // restriction: 'warn',
       style: 'warn',
     },
     rules: {
@@ -203,6 +206,7 @@ export default defineConfig({
         files: ['src/**/*.test.*', 'src/**/*.spec.*'],
         plugins: ['vitest'],
         rules: {
+          'import/no-nodejs-modules': 'off',
           'no-magic-numbers': 'off',
           'typescript/no-unsafe-type-assertion': 'off',
           'vitest/prefer-to-be-truthy': 'off',

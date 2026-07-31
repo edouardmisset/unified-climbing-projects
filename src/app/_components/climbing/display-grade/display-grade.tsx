@@ -1,4 +1,4 @@
-import { type ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
 import type { Ascent, Grade } from '~/schema/ascent'
 import styles from './display-grade.module.css'

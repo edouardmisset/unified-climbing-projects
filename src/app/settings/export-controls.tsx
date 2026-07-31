@@ -17,18 +17,20 @@ type ExportControlsProps = {
 }
 
 function downloadBlob(blob: Blob, fileName: string): void {
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
+  const url = globalThis.URL.createObjectURL(blob)
+  const link = globalThis.document.createElement('a')
   link.href = url
   link.download = fileName
-  document.body.append(link)
+  globalThis.document.body.append(link)
   link.click()
   link.remove()
-  globalThis.setTimeout(() => URL.revokeObjectURL(url), 0)
+  globalThis.setTimeout(() => {
+    globalThis.URL.revokeObjectURL(url)
+  }, 0)
 }
 
 function downloadText(text: string, fileName: string): void {
-  downloadBlob(new Blob([text], { type: 'text/csv;charset=utf-8' }), fileName)
+  downloadBlob(new globalThis.Blob([text], { type: 'text/csv;charset=utf-8' }), fileName)
 }
 
 export function ExportControls({ ascents, trainingSessions }: ExportControlsProps) {
@@ -40,7 +42,10 @@ export function ExportControls({ ascents, trainingSessions }: ExportControlsProp
       },
       { level: 6 },
     )
-    downloadBlob(new Blob([archive], { type: 'application/zip' }), 'climbing-log-export.zip')
+    downloadBlob(
+      new globalThis.Blob([archive], { type: 'application/zip' }),
+      'climbing-log-export.zip',
+    )
   }
 
   return (
@@ -49,15 +54,17 @@ export function ExportControls({ ascents, trainingSessions }: ExportControlsProp
         Download ZIP ({ascents.length + trainingSessions.length} records)
       </button>
       <button
-        onClick={() => downloadText(ASCENT_CSV_TEMPLATE, 'ascents-template.csv')}
+        onClick={() => {
+          downloadText(ASCENT_CSV_TEMPLATE, 'ascents-template.csv')
+        }}
         type='button'
       >
         Ascent template
       </button>
       <button
-        onClick={() =>
+        onClick={() => {
           downloadText(TRAINING_SESSION_CSV_TEMPLATE, 'training-sessions-template.csv')
-        }
+        }}
         type='button'
       >
         Training template

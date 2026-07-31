@@ -9,7 +9,7 @@ import { Loader } from '../ui/loader/loader'
 import { TrainingSessionList } from '../training-session-list/training-session-list'
 
 export function FilteredTrainingSessionList({ trainingSessions }: TrainingSessionListProps) {
-  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions ?? [])
+  const filteredTrainingSessions = useTrainingSessionsFilter(trainingSessions)
 
   if (trainingSessions.length === 0) return <NotFound />
 

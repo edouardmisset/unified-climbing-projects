@@ -1,4 +1,3 @@
-
 import type { StringDate } from '~/types/generic'
 import { type DayDescriptor, YearGrid } from '../year-grid/year-grid'
 import styles from './data-calendar.module.css'

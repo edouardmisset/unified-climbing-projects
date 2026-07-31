@@ -140,49 +140,49 @@ export default function AscentsFilterBar({
   const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 
   const filters = [
-        {
-          setValue: createValueSetter(setDiscipline),
-          name: 'Discipline',
-          options: disciplineList,
-          selectedValue: effectiveSelectedDiscipline,
-          title: 'Climbing Discipline',
-        },
-        {
-          setValue: createValueSetter(setYear),
-          name: 'Year',
-          options: yearList,
-          selectedValue: effectiveSelectedYear,
-          title: 'Year',
-        },
-        {
-          setValue: createValueSetter(setCrag),
-          name: 'Crag',
-          options: cragList,
-          selectedValue: effectiveSelectedCrag,
-          title: 'Crag',
-        },
-        {
-          setValue: createValueSetter(setArea),
-          name: 'Area',
-          options: areaList,
-          selectedValue: effectiveSelectedArea,
-          title: 'Area',
-        },
-        {
-          setValue: createValueSetter(setStyle),
-          name: 'Style',
-          options: styleList,
-          selectedValue: effectiveSelectedStyle,
-          title: 'Ascent Style',
-        },
-        {
-          setValue: createValueSetter(setPeriod),
-          name: 'Period',
-          options: periodList,
-          selectedValue: effectiveSelectedPeriod,
-          title: 'Period',
-        },
-      ] as const satisfies FilterConfig[]
+    {
+      setValue: createValueSetter(setDiscipline),
+      name: 'Discipline',
+      options: disciplineList,
+      selectedValue: effectiveSelectedDiscipline,
+      title: 'Climbing Discipline',
+    },
+    {
+      setValue: createValueSetter(setYear),
+      name: 'Year',
+      options: yearList,
+      selectedValue: effectiveSelectedYear,
+      title: 'Year',
+    },
+    {
+      setValue: createValueSetter(setCrag),
+      name: 'Crag',
+      options: cragList,
+      selectedValue: effectiveSelectedCrag,
+      title: 'Crag',
+    },
+    {
+      setValue: createValueSetter(setArea),
+      name: 'Area',
+      options: areaList,
+      selectedValue: effectiveSelectedArea,
+      title: 'Area',
+    },
+    {
+      setValue: createValueSetter(setStyle),
+      name: 'Style',
+      options: styleList,
+      selectedValue: effectiveSelectedStyle,
+      title: 'Ascent Style',
+    },
+    {
+      setValue: createValueSetter(setPeriod),
+      name: 'Period',
+      options: periodList,
+      selectedValue: effectiveSelectedPeriod,
+      title: 'Period',
+    },
+  ] as const satisfies FilterConfig[]
 
   return (
     <StickyFilterBar

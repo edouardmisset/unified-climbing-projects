@@ -23,10 +23,10 @@ export const env = createEnv({
    */
   runtimeEnv: {
     // Client-side env
-    NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
-    NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
+    NEXT_PUBLIC_ENV: globalThis.process.env.NEXT_PUBLIC_ENV,
+    NEXT_PUBLIC_CONVEX_URL: globalThis.process.env.NEXT_PUBLIC_CONVEX_URL,
     // Server-side env
-    NODE_ENV: process.env.NODE_ENV,
+    NODE_ENV: globalThis.process.env.NODE_ENV,
   },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
@@ -39,5 +39,5 @@ export const env = createEnv({
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
    * useful for Docker builds.
    */
-  skipValidation: Boolean(process.env.SKIP_ENV_VALIDATION),
+  skipValidation: Boolean(globalThis.process.env.SKIP_ENV_VALIDATION),
 })

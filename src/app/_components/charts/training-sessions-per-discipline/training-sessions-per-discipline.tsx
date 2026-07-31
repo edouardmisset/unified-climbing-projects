@@ -1,4 +1,3 @@
-
 import {
   createRadialChart,
   Legend,
@@ -34,8 +33,11 @@ export function TrainingSessionsPerDiscipline({
 
   const totalSessions = data.reduce((sum, item) => sum + item.value, 0)
 
-  const labelRenderer = (props: PieLabelRenderProps) => renderPieArcLabel({ props, total: totalSessions })
-  const shapeRenderer = (props: PieSectorShapeProps) => <Sector {...props} fill={data[props.index]?.fill} />
+  const labelRenderer = (props: PieLabelRenderProps) =>
+    renderPieArcLabel({ props, total: totalSessions })
+  const shapeRenderer = (props: PieSectorShapeProps) => (
+    <Sector {...props} fill={data[props.index]?.fill} />
+  )
 
   if (data.length <= 1) return
 
@@ -44,7 +46,7 @@ export function TrainingSessionsPerDiscipline({
       <ResponsiveContainer height='100%' width='100%'>
         <Chart.PieChart accessibilityLayer={false}>
           <ChartTooltip />
-          <Legend align='center' verticalAlign='top' />
+          <Legend position='top' />
           <Chart.Pie
             {...DEFAULT_PIE_PROPS}
             data={data}
