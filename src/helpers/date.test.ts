@@ -54,7 +54,7 @@ describe('getDayOfYear', () => {
   it('should return the correct day of the year for a given date', () => {
     const date = new Date(2_024, 5, 20)
     const result = getDayOfYear(date)
-    expect(result).toBe(171)
+    expect(result).toBe(172)
   })
 })
 

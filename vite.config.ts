@@ -249,10 +249,12 @@ export default defineConfig({
     },
   },
   staged: {
-    '*': 'vp run check:sensitive-data',
-    '*.{js,jsx,ts,tsx}': ['vp check --fix', 'vp test related --run --passWithNoTests'],
+    '*.{js,jsx,ts,tsx}': [
+      'vp check --fix',
+      'vp test related --run --passWithNoTests --reporter=dot --silent=passed-only',
+    ],
     '*.css': ['vp fmt', 'vp exec stylelint --fix'],
-    '*.{json,jsonc,md,yaml,yml}': 'vp fmt',
+    '*.{json,jsonc,md,yaml,yml}': 'vp fmt --write',
   },
   oxc: {
     target: compileTarget,

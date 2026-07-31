@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Format Lint Typecheck Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # skip pushes that are just a merged/squashed PR already validated on the pull_request event
+    if: |
+      github.event_name != 'push' ||
+      (!startsWith(github.event.head_commit.message, 'Merge pull request') &&
+       !contains(github.event.head_commit.message, '(#'))
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/setup@v1
+        with:
+          cache: true
+          install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check format, lint, and type safety
+        run: pnpm run check
+
+      - name: Run unit tests
+        run: pnpm run test:unit:silent
