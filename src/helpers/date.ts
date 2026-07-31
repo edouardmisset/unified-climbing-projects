@@ -118,9 +118,10 @@ export const getDaysInYear = (year: number): number => {
  */
 export const getDayOfYear = (date: Date): number => {
   const newDate = new Date(date)
-  return Math.floor(
-    (newDate.getTime() - new Date(newDate.getFullYear(), 0, 0).getTime()) / MILLISECONDS_IN_DAY,
-  )
+  // Use UTC-based timestamps so DST transitions in the local timezone don't skew the day count
+  const startOfYearUTC = Date.UTC(newDate.getFullYear(), 0, 0)
+  const dateUTC = Date.UTC(newDate.getFullYear(), newDate.getMonth(), newDate.getDate())
+  return Math.round((dateUTC - startOfYearUTC) / MILLISECONDS_IN_DAY)
 }
 
 /**
