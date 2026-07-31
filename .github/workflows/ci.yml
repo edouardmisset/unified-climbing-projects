@@ -41,4 +41,4 @@ jobs:
         run: pnpm run check
 
       - name: Run unit tests
-        run: pnpm run test:unit
+        run: pnpm run test:unit:silent
