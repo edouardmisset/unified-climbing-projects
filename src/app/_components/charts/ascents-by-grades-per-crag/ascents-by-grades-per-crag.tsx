@@ -46,6 +46,7 @@ export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={ascentsByGradesPerCrag}
+          layout='vertical'
         >
           <CartesianGrid stroke={GRID_STROKE} vertical horizontal={false} />
           <Chart.XAxis tick={AXIS_TICK_STYLE} type='number' />

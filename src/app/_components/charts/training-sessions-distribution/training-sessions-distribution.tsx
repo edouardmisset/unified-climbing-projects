@@ -62,6 +62,7 @@ export function TrainingSessionsDistribution({
           accessibilityLayer={false}
           barCategoryGap={BAR_CATEGORY_GAP}
           data={chartData}
+          layout='vertical'
         >
           <Chart.XAxis label={X_AXIS_LABEL} tick={AXIS_TICK_STYLE} type='number' />
           <Chart.YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
