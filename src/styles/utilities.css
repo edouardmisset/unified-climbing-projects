@@ -50,6 +50,16 @@
   padding: var(--size-fluid-1);
 }
 
+.glassPanel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-3);
+  box-shadow:
+    0 8px 32px var(--panel-shadow-outer),
+    inset 0 1px 0 var(--panel-shadow-inner);
+}
+
 .sectionHeader {
   max-inline-size: 100%;
   padding-block-end: var(--size-fluid-1);

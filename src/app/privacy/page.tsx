@@ -5,7 +5,7 @@ import styles from '../legal.module.css'
 export default function PrivacyPage() {
   return (
     <PublicPageShell layout='prose'>
-      <article className={styles.article}>
+      <article className={`${styles.article} glassPanel`}>
         <h1>Privacy</h1>
         <p>
           Climbing Log is a restricted beta. Account authentication is provided by Clerk and app

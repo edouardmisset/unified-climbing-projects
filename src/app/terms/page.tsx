@@ -5,7 +5,7 @@ import styles from '../legal.module.css'
 export default function TermsPage() {
   return (
     <PublicPageShell layout='prose'>
-      <article className={styles.article}>
+      <article className={`${styles.article} glassPanel`}>
         <h1>Beta terms</h1>
         <p>
           This service is an invitation-only beta and may change or be unavailable. Keep your own
