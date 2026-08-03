@@ -1,10 +1,9 @@
 // oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
-import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
-import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { LocationType } from '~/app/_components/filter-bar/types'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { calculateLoad } from '~/helpers/calculate-load'
+import { matchesText, matchesValue, matchesYear } from '~/helpers/filter-matchers'
 import { PERIOD_TO_DATES, type Period } from '~/schema/generic'
 import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
 
@@ -61,18 +60,6 @@ export function filterTrainingSessions(
       matchesLocationType(trainingSession, locationType)
     )
   })
-}
-
-function matchesValue<T>(actual: T | undefined, expected: T | undefined): boolean {
-  return expected === undefined || actual === expected
-}
-
-function matchesText(actual: string, expected: string | undefined): boolean {
-  return expected === undefined || stringEqualsCaseInsensitive(actual, expected)
-}
-
-function matchesYear(date: Date, year: number | undefined): boolean {
-  return year === undefined || isDateInYear(date, year)
 }
 
 function matchesPeriod(date: Date, period: Period | undefined): boolean {

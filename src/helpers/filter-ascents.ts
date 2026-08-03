@@ -1,11 +1,11 @@
 // oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
-import { isDateInYear } from '@edouardmisset/date/is-date-in-year.ts'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { z } from '~/helpers/zod'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'
 import type { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
+import { matchesText, matchesValue, matchesYear } from './filter-matchers.ts'
 import { fromGradeToNumber } from './grade-converter.ts'
 
 type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
@@ -57,21 +57,9 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
   })
 }
 
-function matchesValue<T>(actual: T | undefined, expected: T | undefined): boolean {
-  return expected === undefined || actual === expected
-}
-
-function matchesText(actual: string, expected: string | undefined): boolean {
-  return expected === undefined || stringEqualsCaseInsensitive(actual, expected)
-}
-
 function matchesOptionalText(actual: string | undefined, expected: string | undefined): boolean {
   if (expected === undefined) return true
   return actual !== undefined && stringEqualsCaseInsensitive(actual, expected)
-}
-
-function matchesYear(date: Date, year: number | undefined): boolean {
-  return year === undefined || isDateInYear(date, year)
 }
 
 function matchesPeriod(date: Date, period: NonNullable<OptionalAscentFilter>['period']): boolean {
