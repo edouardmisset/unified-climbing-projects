@@ -109,29 +109,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
     maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
   }))
 
-  const gradeDomain = (() => {
-    const grades = data.flatMap(datum => [
-      datum.avgBoulderGrade,
-      datum.avgRouteGrade,
-      datum.maxBoulderGrade,
-      datum.maxRouteGrade,
-    ])
-
-    const minGrade = grades.reduce<number>(
-      (min, value) => (typeof value === 'number' ? Math.min(min, value) : min),
-      MAX_GRADE_NUMBER,
-    )
-
-    const maxGrade = grades.reduce<number>(
-      (max, value) => (typeof value === 'number' ? Math.max(max, value) : max),
-      MIN_GRADE_NUMBER,
-    )
-
-    const upperBound = maxGrade + GRADE_AXIS_HEADROOM
-    const lowerBound = getLowerBoundForHalfAxisStart(minGrade, upperBound)
-
-    return [lowerBound, upperBound]
-  })()
+  const gradeDomain = getGradeDomain(data)
 
   const [minDomain = Number.NEGATIVE_INFINITY, maxDomain = Number.POSITIVE_INFINITY] = gradeDomain
   const gradeTicks = GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
@@ -242,4 +220,25 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
       </ResponsiveContainer>
     </ChartContainer>
   )
+}
+
+function getGradeDomain(data: ReturnType<typeof getAscentsVolumeAndGradesPerYear>) {
+  const grades = data.flatMap(datum => [
+    datum.avgBoulderGrade,
+    datum.avgRouteGrade,
+    datum.maxBoulderGrade,
+    datum.maxRouteGrade,
+  ])
+
+  const minGrade = grades.reduce<number>(
+    (min, value) => (typeof value === 'number' ? Math.min(min, value) : min),
+    MAX_GRADE_NUMBER,
+  )
+  const maxGrade = grades.reduce<number>(
+    (max, value) => (typeof value === 'number' ? Math.max(max, value) : max),
+    MIN_GRADE_NUMBER,
+  )
+  const upperBound = maxGrade + GRADE_AXIS_HEADROOM
+
+  return [getLowerBoundForHalfAxisStart(minGrade, upperBound), upperBound]
 }

@@ -36,6 +36,8 @@ type BarConfig = {
   color: string
 }
 
+type SessionDistributionData = ReturnType<typeof getSessionsDistributionData>['data']
+
 const Chart = createVerticalChart<ChartDatum>()({
   BarChart,
   Bar,
@@ -50,34 +52,7 @@ export function TrainingSessionsDistribution({
 }) {
   const { data, colors } = getSessionsDistributionData(trainingSessions)
 
-  const { chartData, barConfigs } = (() => {
-    const transformedData: ChartDatum[] = []
-    const bars: BarConfig[] = []
-    const seenKeys = new Set<string>()
-
-    for (const category of data) {
-      const datum: ChartDatum = {
-        category: category.id,
-      }
-
-      for (const point of category.data) {
-        datum[point.x] = point.y
-
-        if (!seenKeys.has(point.x)) {
-          seenKeys.add(point.x)
-          bars.push({
-            color: colors[point.x] ?? 'var(--gray-5)',
-            dataKey: point.x,
-            name: point.x,
-          })
-        }
-      }
-
-      transformedData.push(datum)
-    }
-
-    return { barConfigs: bars, chartData: transformedData }
-  })()
+  const { chartData, barConfigs } = getChartDataAndBarConfigs(data, colors)
 
   if (chartData.length === 0) return
   return (
@@ -105,4 +80,31 @@ export function TrainingSessionsDistribution({
       </ResponsiveContainer>
     </ChartContainer>
   )
+}
+
+function getChartDataAndBarConfigs(data: SessionDistributionData, colors: Record<string, string>) {
+  const chartData: ChartDatum[] = []
+  const barConfigs: BarConfig[] = []
+  const seenKeys = new Set<string>()
+
+  for (const category of data) {
+    const datum: ChartDatum = { category: category.id }
+
+    for (const point of category.data) {
+      datum[point.x] = point.y
+
+      if (!seenKeys.has(point.x)) {
+        seenKeys.add(point.x)
+        barConfigs.push({
+          color: colors[point.x] ?? 'var(--gray-5)',
+          dataKey: point.x,
+          name: point.x,
+        })
+      }
+    }
+
+    chartData.push(datum)
+  }
+
+  return { barConfigs, chartData }
 }

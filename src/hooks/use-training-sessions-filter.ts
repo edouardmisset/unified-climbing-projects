@@ -25,22 +25,19 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
   const deferredSelectedSessionType = useDeferredValue(selectedSessionType)
   const deferredSelectedYear = useDeferredValue(selectedYear)
 
-  const filteredTrainingSessions = (() => {
-    const selectedYearNumber = Number(deferredSelectedYear)
-
-    return filterTrainingSessions(trainingSessions, {
-      discipline: normalizeFilterValue(deferredSelectedDiscipline),
-      location: normalizeFilterValue(deferredSelectedLocation),
-      load: normalizeFilterValue(deferredSelectedLoad),
-      locationType: normalizeFilterValue(deferredSelectedLocationType),
-      period: normalizeFilterValue(deferredSelectedPeriod),
-      type: normalizeFilterValue(deferredSelectedSessionType),
-      year:
-        deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-          ? selectedYearNumber
-          : undefined,
-    })
-  })()
+  const selectedYearNumber = Number(deferredSelectedYear)
+  const filteredTrainingSessions = filterTrainingSessions(trainingSessions, {
+    discipline: normalizeFilterValue(deferredSelectedDiscipline),
+    location: normalizeFilterValue(deferredSelectedLocation),
+    load: normalizeFilterValue(deferredSelectedLoad),
+    locationType: normalizeFilterValue(deferredSelectedLocationType),
+    period: normalizeFilterValue(deferredSelectedPeriod),
+    type: normalizeFilterValue(deferredSelectedSessionType),
+    year:
+      deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+        ? selectedYearNumber
+        : undefined,
+  })
 
   return filteredTrainingSessions
 }

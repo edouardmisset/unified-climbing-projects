@@ -28,69 +28,61 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setLocationType,
   } = useTrainingSessionsQueryState()
 
-  const yearList = (() => {
-    const filteredForYear = filterTrainingSessions(trainingSessions, {
-      discipline: normalizeFilterValue(selectedDiscipline),
-      locationType: normalizeFilterValue(selectedLocationType),
-      period: normalizeFilterValue(selectedPeriod),
-    })
-    return createYearList(filteredForYear, {
-      descending: true,
-      continuous: false,
-    }).map(String)
-  })()
+  const filteredForYear = filterTrainingSessions(trainingSessions, {
+    discipline: normalizeFilterValue(selectedDiscipline),
+    locationType: normalizeFilterValue(selectedLocationType),
+    period: normalizeFilterValue(selectedPeriod),
+  })
+  const yearList = createYearList(filteredForYear, { descending: true, continuous: false }).map(
+    String,
+  )
 
   const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
 
-  const selectedYearNumber = (() => {
-    const n = Number(effectiveSelectedYear)
-    return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  })()
+  const parsedSelectedYear = Number(effectiveSelectedYear)
+  const selectedYearNumber =
+    effectiveSelectedYear !== ALL_VALUE && isValidNumber(parsedSelectedYear)
+      ? parsedSelectedYear
+      : undefined
 
-  const disciplineList = (() => {
-    const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
-      year: selectedYearNumber,
-      locationType: normalizeFilterValue(selectedLocationType),
-      period: normalizeFilterValue(selectedPeriod),
-    })
-    return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
-      filteredForDiscipline.some(session => session.discipline === discipline),
-    )
-  })()
+  const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
+    year: selectedYearNumber,
+    locationType: normalizeFilterValue(selectedLocationType),
+    period: normalizeFilterValue(selectedPeriod),
+  })
+  const disciplineList = AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
+    filteredForDiscipline.some(session => session.discipline === discipline),
+  )
 
   const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
     ? selectedDiscipline
     : ALL_VALUE
 
-  const locationTypeList = (() => {
-    const filteredForLocationType = filterTrainingSessions(trainingSessions, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      period: normalizeFilterValue(selectedPeriod),
-    })
-    const hasIndoor = filteredForLocationType.some(({ type }) => isIndoorSession({ type }))
-    const hasOutdoor = filteredForLocationType.some(({ type }) => type === 'Outdoor')
-    return LOCATION_TYPES.filter(locationType =>
-      locationType === 'Indoor' ? hasIndoor : hasOutdoor,
-    )
-  })()
+  const filteredForLocationType = filterTrainingSessions(trainingSessions, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    period: normalizeFilterValue(selectedPeriod),
+  })
+  const hasIndoor = filteredForLocationType.some(({ type }) => isIndoorSession({ type }))
+  const hasOutdoor = filteredForLocationType.some(({ type }) => type === 'Outdoor')
+  const locationTypeList = LOCATION_TYPES.filter(locationType =>
+    locationType === 'Indoor' ? hasIndoor : hasOutdoor,
+  )
 
   const effectiveSelectedLocationType = locationTypeList.includes(selectedLocationType)
     ? selectedLocationType
     : ALL_VALUE
 
-  const periodList = (() => {
-    const filteredForPeriod = filterTrainingSessions(trainingSessions, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      locationType: normalizeFilterValue(effectiveSelectedLocationType),
-    })
-    return PERIOD.filter(period =>
-      filteredForPeriod.some(({ date }) =>
-        isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
-      ),
-    )
-  })()
+  const filteredForPeriod = filterTrainingSessions(trainingSessions, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    locationType: normalizeFilterValue(effectiveSelectedLocationType),
+  })
+  const periodList = PERIOD.filter(period =>
+    filteredForPeriod.some(({ date }) =>
+      isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
+    ),
+  )
 
   const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
 

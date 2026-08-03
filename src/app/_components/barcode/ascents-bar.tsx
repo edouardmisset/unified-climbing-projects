@@ -22,6 +22,8 @@ export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
 
   const weeklyAscentsByDescendingGrade = weeklyAscents.filter(Boolean).toSorted(sortByGrade)
 
+  if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
+
   const buttonStyle = {
     background: isSingleAscent
       ? undefined
@@ -31,17 +33,11 @@ export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
     inlineSize: `${numberOfAscents / 2}%`,
   }
 
-  // LAZY LOADING: Create description component only when needed
-  const lazyDescription = (() => {
-    if (weeklyAscentsByDescendingGrade.length === 0) return ''
-    return (
-      <Suspense fallback='Loading...'>
-        <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
-      </Suspense>
-    )
-  })()
-
-  if (weeklyAscentsByDescendingGrade[0] === undefined) return <span />
+  const lazyDescription = (
+    <Suspense fallback='Loading...'>
+      <AscentsPopoverDescription ascents={weeklyAscentsByDescendingGrade} showCrag />
+    </Suspense>
+  )
 
   const title = `${formatCountWithEnglishNoun(weeklyAscentsByDescendingGrade.length, {
     one: 'ascent',
