@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import formStyles from '~/app/_components/forms/form.module.css'
 import { KeycapButton } from '~/app/_components/ui/keycap-button/keycap-button'
+import { GradeInput } from '~/app/_components/grade-input/grade-input'
 import {
   ASCENT_DISCIPLINES,
-  ASCENT_GRADES,
   ASCENT_HOLDS,
   ASCENT_PROFILES,
   ASCENT_STYLES,
@@ -21,6 +21,7 @@ import {
   ENERGY_SYSTEMS,
   TRAINING_SESSION_TYPES,
 } from '~/domain/canonical/training-session'
+import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/grade-converter'
 import { submitClimbingLog } from '../actions'
 import {
   createAscentDraft,
@@ -377,7 +378,7 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
                     />
                   </Field>
                 </div>
-                <div className={formStyles.row}>
+                <div className={styles.gradeFields}>
                   <Field htmlFor={`${prefix}.discipline`} label='Discipline'>
                     <select
                       {...register(`${prefix}.discipline`)}
@@ -391,19 +392,48 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
                       ))}
                     </select>
                   </Field>
-                  <Field htmlFor={`${prefix}.grade`} label='Grade'>
-                    <select
-                      {...register(`${prefix}.grade`)}
-                      className={formStyles.input}
-                      id={`${prefix}.grade`}
-                    >
-                      {ASCENT_GRADES.map(grade => (
-                        <option key={grade} value={grade}>
-                          {grade}
-                        </option>
-                      ))}
-                    </select>
-                  </Field>
+                  <Controller
+                    control={control}
+                    name={`${prefix}.grade`}
+                    render={({ field: gradeField }) => (
+                      <GradeInput
+                        className={formStyles.field}
+                        label='Grade'
+                        onValueChange={value => {
+                          if (value === null) return
+
+                          const grade = fromNumberToGrade(value)
+                          gradeField.onChange(grade)
+                          setValue(`${prefix}.personalGrade`, grade, {
+                            shouldDirty: true,
+                            shouldTouch: true,
+                          })
+                        }}
+                        value={fromGradeToNumber(gradeField.value)}
+                      />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    name={`${prefix}.personalGrade`}
+                    render={({ field: personalGradeField }) => (
+                      <GradeInput
+                        className={formStyles.field}
+                        gradeType='Personal'
+                        label='Personal grade'
+                        onValueChange={value => {
+                          personalGradeField.onChange(
+                            value === null ? '' : fromNumberToGrade(value),
+                          )
+                        }}
+                        value={
+                          personalGradeField.value === ''
+                            ? undefined
+                            : fromGradeToNumber(personalGradeField.value)
+                        }
+                      />
+                    )}
+                  />
                 </div>
                 <div className={formStyles.row}>
                   <Field htmlFor={`${prefix}.tries`} label='Tries'>
@@ -428,31 +458,6 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
                         </option>
                       ))}
                     </select>
-                  </Field>
-                </div>
-                <div className={formStyles.row}>
-                  <Field htmlFor={`${prefix}.personalGrade`} label='Personal grade'>
-                    <select
-                      {...register(`${prefix}.personalGrade`)}
-                      className={formStyles.input}
-                      id={`${prefix}.personalGrade`}
-                    >
-                      <option value=''>—</option>
-                      {ASCENT_GRADES.map(grade => (
-                        <option key={grade} value={grade}>
-                          {grade}
-                        </option>
-                      ))}
-                    </select>
-                  </Field>
-                  <Field htmlFor={`${prefix}.height`} label='Height (m)'>
-                    <input
-                      {...register(`${prefix}.height`)}
-                      className={formStyles.input}
-                      id={`${prefix}.height`}
-                      min={0}
-                      type='number'
-                    />
                   </Field>
                 </div>
                 <div className={formStyles.row}>
@@ -485,16 +490,27 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
                     </select>
                   </Field>
                 </div>
-                <Field htmlFor={`${prefix}.rating`} label='Rating'>
-                  <input
-                    {...register(`${prefix}.rating`)}
-                    className={formStyles.input}
-                    id={`${prefix}.rating`}
-                    max={5}
-                    min={0}
-                    type='number'
-                  />
-                </Field>
+                <div className={formStyles.row}>
+                  <Field htmlFor={`${prefix}.height`} label='Height (m)'>
+                    <input
+                      {...register(`${prefix}.height`)}
+                      className={formStyles.input}
+                      id={`${prefix}.height`}
+                      min={0}
+                      type='number'
+                    />
+                  </Field>
+                  <Field htmlFor={`${prefix}.rating`} label='Rating'>
+                    <input
+                      {...register(`${prefix}.rating`)}
+                      className={formStyles.input}
+                      id={`${prefix}.rating`}
+                      max={5}
+                      min={0}
+                      type='number'
+                    />
+                  </Field>
+                </div>
                 <Field htmlFor={`${prefix}.comments`} label='Comments'>
                   <textarea
                     {...register(`${prefix}.comments`)}
