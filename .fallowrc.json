@@ -6,6 +6,7 @@
   },
   "ignoreDependencies": [
     "@shopify/eslint-plugin",
+    "eslint-plugin-compat",
     "eslint-plugin-react-you-might-not-need-an-effect"
   ],
   "duplicates": {
