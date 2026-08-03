@@ -22,8 +22,10 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.{ts,tsx}', 'convex/**/*.ts'],
       exclude: [
         'node_modules/',
+        'convex/_generated/',
         'src/backup/',
         'src/scripts/',
         '**/*.test.ts',

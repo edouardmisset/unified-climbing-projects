@@ -15,8 +15,6 @@ import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import { type FilterConfig, LOCATION_TYPES } from '../types'
 
-// Each branch derives one dependent option list; extraction would separate the dependency chain.
-// fallow-ignore-next-line complexity
 export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSessionListProps) {
   const {
     selectedYear,

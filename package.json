@@ -24,7 +24,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:all": "vp run test:unit:silent && vp run test:e2e",
-    "fallow": "fallow",
+    "test:coverage": "vp test --coverage --reporter=dot --silent=passed-only",
+    "fallow": "vp run test:coverage && fallow",
     "validate": "vp run check && vp run test:all && vp run build",
     "prepare": "vp config"
   },

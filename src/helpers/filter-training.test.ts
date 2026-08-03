@@ -10,6 +10,7 @@ describe('filterTrainingSessions', () => {
       comments: 'Good session',
       date: '2023-01-01',
       energySystem: 'Anaerobic Alactic',
+      intensity: 100,
       location: 'Gym 1',
       _id: '1',
       type: 'Contact Strength',
@@ -21,6 +22,7 @@ describe('filterTrainingSessions', () => {
       comments: 'Hard session',
       date: '2023-02-01',
       energySystem: 'Anaerobic Lactic',
+      intensity: 80,
       location: 'Crag 1',
       _id: '2',
       type: 'Power Endurance',
@@ -32,6 +34,7 @@ describe('filterTrainingSessions', () => {
       comments: 'Easy session',
       date: '2024-01-01',
       energySystem: 'Aerobic',
+      intensity: 20,
       location: 'Gym 1',
       _id: '3',
       type: 'Max Strength',
@@ -98,5 +101,15 @@ describe('filterTrainingSessions', () => {
     expect(result).toHaveLength(1)
     expect(result[0]?.type).toBe('Contact Strength')
     expect(result[0]?.location).toBe('Gym 1')
+  })
+
+  it.each([
+    ['High', '1'],
+    ['Medium', '2'],
+    ['Low', '3'],
+  ] as const)('filters %s load sessions', (load, expectedId) => {
+    const result = filterTrainingSessions(trainingSessions, { load })
+
+    expect(result.map(({ _id }) => _id)).toStrictEqual([expectedId])
   })
 })

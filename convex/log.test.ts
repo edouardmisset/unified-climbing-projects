@@ -4,8 +4,6 @@ import type { AscentPublicInput } from '../src/domain/ascent'
 import type { TrainingSessionPublicInput } from '../src/domain/training-session'
 import { api } from './_generated/api'
 import schema from './schema'
-// The runtime glob excludes tests; Fallow does not model its negative patterns.
-// fallow-ignore-next-line circular-dependency
 import { modules } from './test.setup'
 
 const USER_A = 'synthetic-clerk-user-a'

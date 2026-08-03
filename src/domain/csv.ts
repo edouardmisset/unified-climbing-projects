@@ -51,8 +51,6 @@ type ParsedCsvRecord = {
 const BYTE_ORDER_MARK = '\uFEFF'
 const CSV_RECORD_SEPARATOR = '\r\n'
 
-// A CSV tokenizer is an explicit state machine; splitting the branches obscures its transitions.
-// fallow-ignore-next-line complexity
 function parseCsvRecords(input: string): ParsedCsvRecord[] {
   const text = input.startsWith(BYTE_ORDER_MARK) ? input.slice(1) : input
   if (text.length === 0) throw new CanonicalCsvError('EMPTY_FILE', 'CSV file is empty')

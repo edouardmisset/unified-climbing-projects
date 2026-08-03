@@ -44,8 +44,13 @@ export function prettyShortDate(date: string): string {
   return `📅 ${formatShortDate(date)}`
 }
 
-// Formatting branches encode the compact and detailed output variants in one place.
-// fallow-ignore-next-line complexity
+function formatTries(tries: Ascent['tries'], showDetails: boolean): string {
+  if (tries <= 1) return ''
+  return showDetails
+    ? `(${formatCountWithEnglishNoun(tries, { one: 'try', other: 'tries' })})`
+    : `(${formatOrdinals(tries)})`
+}
+
 export function formatStyleAndTriers({
   style,
   tries,
@@ -59,12 +64,7 @@ export function formatStyleAndTriers({
 
   const styleEmoji = fromAscentStyleToEmoji(style)
   const styleText = showDetails ? style : ''
-
-  let triesText = ''
-  if (tries > 1)
-    triesText = showDetails
-      ? `(${formatCountWithEnglishNoun(tries, { one: 'try', other: 'tries' })})`
-      : `(${formatOrdinals(tries)})`
+  const triesText = formatTries(tries, showDetails)
 
   return [styleEmoji, styleText, triesText].filter(string => string !== '').join(' ')
 }

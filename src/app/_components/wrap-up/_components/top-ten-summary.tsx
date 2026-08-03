@@ -8,8 +8,6 @@ import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 import { SCORE_INCREMENT } from '../constants'
 
-// Conditional branches directly represent the optional improvement guidance.
-// fallow-ignore-next-line complexity
 export function TopTenSummary({ ascents }: AscentListProps) {
   const ascentsWithPoints = ascents.map(ascent => ({
     ...ascent,

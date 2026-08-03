@@ -7,8 +7,6 @@ import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
 
-// Conditional branches directly represent optional summary sentences.
-// fallow-ignore-next-line complexity
 export function AscentSummary({ ascents }: AscentListProps) {
   const [mostRecentAscent] = ascents.toSorted((a, b) => sortByDate(a, b))
 

@@ -7,8 +7,6 @@ import type { AscentListProps } from '~/schema/ascent'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
 
-// Conditional branches directly represent optional summary sentences.
-// fallow-ignore-next-line complexity
 export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   const boulders = filterAscents(ascents, { discipline: 'Bouldering' })
   const routes = filterAscents(ascents, { discipline: 'Sport' })

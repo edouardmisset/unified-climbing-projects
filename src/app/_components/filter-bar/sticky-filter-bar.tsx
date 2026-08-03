@@ -6,8 +6,6 @@ import { ALL_VALUE } from '../dashboard/constants'
 import type { BaseFilterBarProps } from './types'
 import styles from './sticky-filter-bar.module.css'
 
-// Branches coordinate optimistic UI state and optional search controls in one form.
-// fallow-ignore-next-line complexity
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const [isPending, startTransition] = useTransition()
 

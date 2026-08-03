@@ -10,17 +10,17 @@ function isThemeMode(value: string): value is ThemeMode {
 const THEME_STORAGE_KEY = 'theme'
 const THEME_CHANGE_EVENT = 'themechange'
 
-// Browser availability and storage failure are independent platform boundaries.
-// fallow-ignore-next-line complexity
-function getStoredTheme(): ThemeMode | undefined {
-  if (globalThis.window === undefined) return undefined
-
+function readStoredTheme(): ThemeMode | undefined {
   try {
     const stored = globalThis.localStorage.getItem(THEME_STORAGE_KEY)
     return stored && isThemeMode(stored) ? stored : undefined
   } catch {
     return undefined
   }
+}
+
+function getStoredTheme(): ThemeMode | undefined {
+  return globalThis.window === undefined ? undefined : readStoredTheme()
 }
 
 function getSystemTheme(): ThemeMode {
