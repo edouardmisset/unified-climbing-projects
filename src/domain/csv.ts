@@ -1,4 +1,3 @@
-// oxlint-disable complexity
 export type CanonicalCsvErrorCode =
   | 'BLANK_HEADER'
   | 'COLUMN_COUNT_MISMATCH'
@@ -51,124 +50,168 @@ type ParsedCsvRecord = {
 const BYTE_ORDER_MARK = '\uFEFF'
 const CSV_RECORD_SEPARATOR = '\r\n'
 
+type CsvParserMode = 'quoted' | 'unquoted'
+
+type CsvParserState = {
+  records: ParsedCsvRecord[]
+  row: string[]
+  field: string
+  line: number
+  rowStartLine: number
+  mode: CsvParserMode
+  justClosedQuote: boolean
+  fieldWasQuoted: boolean
+  recordStarted: boolean
+}
+
+function createCsvParserState(): CsvParserState {
+  return {
+    records: [],
+    row: [],
+    field: '',
+    line: 1,
+    rowStartLine: 1,
+    mode: 'unquoted',
+    justClosedQuote: false,
+    fieldWasQuoted: false,
+    recordStarted: false,
+  }
+}
+
+function pushField(state: CsvParserState): void {
+  state.row.push(state.field)
+  state.field = ''
+  state.justClosedQuote = false
+  state.fieldWasQuoted = false
+}
+
+function pushRow(state: CsvParserState): void {
+  state.records.push({ cells: state.row, line: state.rowStartLine })
+  state.row = []
+  state.recordStarted = false
+  state.rowStartLine = state.line + 1
+}
+
+function isLineBreak(character: string | undefined): boolean {
+  return character === '\r' || character === '\n'
+}
+
+// A `\r\n` pair counts as a single line break; returns how many characters it spans.
+function lineBreakWidth(text: string, index: number): number {
+  return text[index] === '\r' && text[index + 1] === '\n' ? 2 : 1
+}
+
+function csvUnexpectedQuoteError(state: CsvParserState, message: string): CanonicalCsvError {
+  return new CanonicalCsvError('UNEXPECTED_QUOTE', message, {
+    column: state.row.length + 1,
+    row: state.line,
+  })
+}
+
+// Consumes one character while inside a quoted field; returns the (possibly advanced) index.
+function handleQuotedFieldChar(state: CsvParserState, text: string, index: number): number {
+  const character = text[index]
+
+  if (character === '"') {
+    if (text[index + 1] === '"') {
+      state.field += '"'
+      return index + 1
+    }
+
+    state.mode = 'unquoted'
+    state.justClosedQuote = true
+    return index
+  }
+
+  state.field += character
+  if (isLineBreak(character)) {
+    const width = lineBreakWidth(text, index)
+    if (width === 2) state.field += '\n'
+    index += width - 1
+    state.line++
+  }
+
+  return index
+}
+
+// Consumes one character outside a quoted field; returns the (possibly advanced) index.
+function handleUnquotedFieldChar(state: CsvParserState, text: string, index: number): number {
+  const character = text[index]
+
+  if (state.justClosedQuote && character !== ',' && !isLineBreak(character))
+    throw csvUnexpectedQuoteError(
+      state,
+      `Unexpected character after a closing quote on line ${state.line}`,
+    )
+
+  if (character === '"') {
+    if (state.field.length > 0 || state.fieldWasQuoted)
+      throw csvUnexpectedQuoteError(
+        state,
+        `Unexpected quote in an unquoted field on line ${state.line}`,
+      )
+
+    state.mode = 'quoted'
+    state.fieldWasQuoted = true
+    state.recordStarted = true
+    return index
+  }
+
+  if (character === ',') {
+    pushField(state)
+    state.recordStarted = true
+    return index
+  }
+
+  if (isLineBreak(character)) {
+    pushField(state)
+    pushRow(state)
+
+    index += lineBreakWidth(text, index) - 1
+    state.line++
+    state.rowStartLine = state.line
+    return index
+  }
+
+  state.field += character
+  state.recordStarted = true
+  return index
+}
+
+function finalizeCsvRecords(state: CsvParserState): void {
+  if (state.mode === 'quoted')
+    throw new CanonicalCsvError(
+      'UNTERMINATED_QUOTED_FIELD',
+      `Unterminated quoted field starting on line ${state.rowStartLine}`,
+      { column: state.row.length + 1, row: state.rowStartLine },
+    )
+
+  if (
+    state.recordStarted ||
+    state.row.length > 0 ||
+    state.field.length > 0 ||
+    state.fieldWasQuoted
+  ) {
+    pushField(state)
+    pushRow(state)
+  }
+}
+
 function parseCsvRecords(input: string): ParsedCsvRecord[] {
   const text = input.startsWith(BYTE_ORDER_MARK) ? input.slice(1) : input
   if (text.length === 0) throw new CanonicalCsvError('EMPTY_FILE', 'CSV file is empty')
 
-  const records: ParsedCsvRecord[] = []
-  let row: string[] = []
-  let field = ''
-  let line = 1
-  let rowStartLine = 1
-  let inQuotedField = false
-  let afterQuotedField = false
-  let fieldWasQuoted = false
-  let recordStarted = false
+  const state = createCsvParserState()
 
-  const pushField = () => {
-    row.push(field)
-    field = ''
-    afterQuotedField = false
-    fieldWasQuoted = false
-  }
+  for (let index = 0; index < text.length; index++)
+    index =
+      state.mode === 'quoted'
+        ? handleQuotedFieldChar(state, text, index)
+        : handleUnquotedFieldChar(state, text, index)
 
-  const pushRow = () => {
-    records.push({ cells: row, line: rowStartLine })
-    row = []
-    recordStarted = false
-    rowStartLine = line + 1
-  }
+  finalizeCsvRecords(state)
 
-  for (let index = 0; index < text.length; index++) {
-    const character = text[index]
-
-    if (inQuotedField) {
-      if (character === '"') {
-        if (text[index + 1] === '"') {
-          field += '"'
-          index++
-          continue
-        }
-
-        inQuotedField = false
-        afterQuotedField = true
-        continue
-      }
-
-      field += character
-      if (character === '\r') {
-        if (text[index + 1] === '\n') {
-          field += '\n'
-          index++
-        }
-        line++
-      } else if (character === '\n') line++
-
-      continue
-    }
-
-    if (afterQuotedField) {
-      if (character === ',') {
-        pushField()
-        recordStarted = true
-        continue
-      }
-
-      if (character !== '\r' && character !== '\n')
-        throw new CanonicalCsvError(
-          'UNEXPECTED_QUOTE',
-          `Unexpected character after a closing quote on line ${line}`,
-          { column: row.length + 1, row: line },
-        )
-    }
-
-    if (character === '"') {
-      if (field.length > 0 || fieldWasQuoted)
-        throw new CanonicalCsvError(
-          'UNEXPECTED_QUOTE',
-          `Unexpected quote in an unquoted field on line ${line}`,
-          { column: row.length + 1, row: line },
-        )
-
-      inQuotedField = true
-      fieldWasQuoted = true
-      recordStarted = true
-      continue
-    }
-
-    if (character === ',') {
-      pushField()
-      recordStarted = true
-      continue
-    }
-
-    if (character === '\r' || character === '\n') {
-      pushField()
-      pushRow()
-
-      if (character === '\r' && text[index + 1] === '\n') index++
-      line++
-      rowStartLine = line
-      continue
-    }
-
-    field += character
-    recordStarted = true
-  }
-
-  if (inQuotedField)
-    throw new CanonicalCsvError(
-      'UNTERMINATED_QUOTED_FIELD',
-      `Unterminated quoted field starting on line ${rowStartLine}`,
-      { column: row.length + 1, row: rowStartLine },
-    )
-
-  if (recordStarted || row.length > 0 || field.length > 0 || fieldWasQuoted) {
-    pushField()
-    pushRow()
-  }
-
-  return records
+  return state.records
 }
 
 function assertValidContract<T>(contract: CanonicalCsvContract<T>): void {
