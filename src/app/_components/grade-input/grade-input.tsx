@@ -39,7 +39,9 @@ export function GradeInput(
   return (
     <NumberField.Root
       {...rest}
-      className={`${styles.Field} ${typeof className === 'string' ? className : ''}`}
+      className={state =>
+        `${styles.Field} ${typeof className === 'function' ? (className(state) ?? '') : className}`
+      }
       id={id}
       max={max}
       min={min}

@@ -6,7 +6,11 @@ import { previewCanonicalImport, runCanonicalImport, undoCanonicalImport } from 
 
 const MAX_IMPORT_ROWS = 10_000
 
-function assertImportRequest(rows: AscentImportRow[] | TrainingSessionImportRow[]): void {
+function assertImportRequest(
+  kind: 'ascents' | 'training',
+  rows: AscentImportRow[] | TrainingSessionImportRow[],
+): void {
+  if (kind !== 'ascents' && kind !== 'training') throw new Error('Invalid import kind')
   if (!Array.isArray(rows)) throw new Error('Invalid import request')
   if (rows.length === 0 || rows.length > MAX_IMPORT_ROWS)
     throw new Error('Import must contain between 1 and 10,000 rows')
@@ -16,7 +20,7 @@ export async function previewImport(
   kind: 'ascents' | 'training',
   rows: AscentImportRow[] | TrainingSessionImportRow[],
 ) {
-  assertImportRequest(rows)
+  assertImportRequest(kind, rows)
   return previewCanonicalImport(kind, rows)
 }
 
@@ -25,7 +29,7 @@ export async function runImport(
   rows: AscentImportRow[] | TrainingSessionImportRow[],
   allowDuplicates: boolean,
 ) {
-  assertImportRequest(rows)
+  assertImportRequest(kind, rows)
   if (typeof allowDuplicates !== 'boolean') throw new Error('Invalid duplicate policy')
   return runCanonicalImport(kind, rows, allowDuplicates)
 }

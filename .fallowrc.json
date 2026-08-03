@@ -6,9 +6,7 @@
     "**/__snapshots__/**",
     "**/fixtures/**",
     "**/*.fixture.*",
-    "**/*-fixture.*",
-    "**/*.test.*",
-    "**/*.spec.*"
+    "**/*-fixture.*"
   ],
   "workspaces": {
     "patterns": ["."]
@@ -24,6 +22,7 @@
   },
   "health": {
     "coverage": "coverage/coverage-final.json",
+    "ignore": ["**/*.test.*", "**/*.spec.*"],
     "thresholdOverrides": [
       {
         "files": ["src/domain/csv.ts"],
