@@ -32,6 +32,8 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
 
   const [firstTraining] = filteredSortedWeeklyTraining
 
+  if (firstTraining === undefined) return <span />
+
   const buttonStyle = {
     background: isSingleWeekTraining
       ? undefined
@@ -41,17 +43,11 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
     inlineSize: `${numberOfTraining / 2}%`,
   }
 
-  // LAZY LOADING: Create description component only when needed
-  const lazyDescription = (() => {
-    if (filteredSortedWeeklyTraining.length === 0) return ''
-    return (
-      <Suspense fallback='Loading...'>
-        <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
-      </Suspense>
-    )
-  })()
-
-  if (firstTraining === undefined) return <span />
+  const lazyDescription = (
+    <Suspense fallback='Loading...'>
+      <TrainingPopoverDescription trainingSessions={filteredSortedWeeklyTraining} />
+    </Suspense>
+  )
 
   const trainingBarClassName = `${
     isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining.type) : ''

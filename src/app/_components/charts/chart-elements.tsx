@@ -40,10 +40,7 @@ export function ChartXAxis(props: XAxisProps) {
     width,
   } = props
 
-  const label = (() => {
-    if (!labelText) return
-    return { ...AXIS_LABEL_STYLE, value: labelText, offset, position }
-  })()
+  const label = labelText ? { ...AXIS_LABEL_STYLE, value: labelText, offset, position } : undefined
 
   return (
     <XAxis

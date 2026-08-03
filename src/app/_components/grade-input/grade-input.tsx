@@ -20,6 +20,7 @@ export function GradeInput(
   },
 ) {
   const {
+    className = '',
     label,
     onValueChange,
     value,
@@ -30,7 +31,7 @@ export function GradeInput(
   } = props
   const id = useId()
 
-  if (value === null || value === undefined || !onValueChange) {
+  if (value === undefined || !onValueChange) {
     console.error('This should be a controlled component')
     return
   }
@@ -38,7 +39,9 @@ export function GradeInput(
   return (
     <NumberField.Root
       {...rest}
-      className={styles.Field}
+      className={state =>
+        `${styles.Field} ${typeof className === 'function' ? (className(state) ?? '') : className}`
+      }
       id={id}
       max={max}
       min={min}
@@ -66,7 +69,9 @@ export function GradeInput(
         <NumberField.Input
           className={styles.Input}
           inputMode='text'
-          render={renderProps => <input {...renderProps} value={fromNumberToGrade(value)} />}
+          render={renderProps => (
+            <input {...renderProps} value={value === null ? '' : fromNumberToGrade(value)} />
+          )}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />
         <NumberField.Increment

@@ -49,38 +49,8 @@ const LINE_STROKE_WIDTH = 2
 
 export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
   const series = getTriesByGrade(ascents)
-  const chartData = (() => {
-    if (series.length === 0) return []
-
-    const grades = series[0]?.data.map(point => point.x) ?? []
-
-    return grades.map((grade, index) => {
-      const datum: TriesByGradeChartDatum = {
-        average: 0,
-        grade,
-        max: 0,
-        min: 0,
-      }
-
-      for (const serie of series) {
-        const value = serie.data[index]?.y ?? 0
-
-        if (serie.id === 'min') datum.min = value
-        if (serie.id === 'average') datum.average = value
-        if (serie.id === 'max') datum.max = value
-      }
-
-      return datum
-    })
-  })()
-
-  const seriesColors = (() => {
-    const colors = new Map<TriesByGradeSeries['id'], string>()
-
-    for (const serie of series) colors.set(serie.id, serie.color)
-
-    return colors
-  })()
+  const chartData = getChartData(series)
+  const seriesColors = new Map(series.map(serie => [serie.id, serie.color]))
 
   const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
 
@@ -126,4 +96,21 @@ export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
       </ResponsiveContainer>
     </ChartContainer>
   )
+}
+
+function getChartData(series: TriesByGradeSeries[]): TriesByGradeChartDatum[] {
+  const grades = series[0]?.data.map(point => point.x) ?? []
+
+  return grades.map((grade, index) => {
+    const datum: TriesByGradeChartDatum = { average: 0, grade, max: 0, min: 0 }
+
+    for (const serie of series) {
+      const value = serie.data[index]?.y ?? 0
+      if (serie.id === 'min') datum.min = value
+      if (serie.id === 'average') datum.average = value
+      if (serie.id === 'max') datum.max = value
+    }
+
+    return datum
+  })
 }

@@ -18,17 +18,13 @@ export const TrainingsQRDot = ({ trainingSessions }: { trainingSessions: Trainin
     firstSession?.type === undefined ? '' : fromSessionTypeToClassName(firstSession.type)
   const formattedDate = firstSession?.date === undefined ? '' : prettyLongDate(firstSession.date)
 
-  // LAZY LOADING: Create description component only when needed
-  const lazyDescription = (() => {
-    if (trainingSessions.length === 0) return ''
-    return (
-      <Suspense fallback='Loading...'>
-        <TrainingPopoverDescription trainingSessions={trainingSessions} />
-      </Suspense>
-    )
-  })()
-
   if (trainingSessions.length === 0 || firstSession === undefined) return <span />
+
+  const lazyDescription = (
+    <Suspense fallback='Loading...'>
+      <TrainingPopoverDescription trainingSessions={trainingSessions} />
+    </Suspense>
+  )
 
   return (
     <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>

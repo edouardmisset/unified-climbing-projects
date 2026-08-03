@@ -1,7 +1,7 @@
 import { type UseQueryStateReturn, useQueryState } from 'nuqs'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
-import { ascentDisciplineSchema } from '~/domain/canonical/ascent'
+import { ascentDisciplineSchema } from '~/domain/ascent'
 import type { Ascent } from '~/schema/ascent'
 
 export const useDisciplineQueryState = (): UseQueryStateReturn<

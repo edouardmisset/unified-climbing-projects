@@ -1,8 +1,9 @@
 import { createYearList } from '~/data/helpers.ts'
+import { TRAINING_SESSION_TYPES } from '~/domain/training-session'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
 import { PERIOD } from '~/schema/generic'
-import { LOAD_CATEGORIES, SESSION_TYPES, type TrainingSessionListProps } from '~/schema/training.ts'
+import { LOAD_CATEGORIES, type TrainingSessionListProps } from '~/schema/training.ts'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
@@ -34,7 +35,7 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
     {
       setValue: createValueSetter(setSessionType),
       name: 'Session Type',
-      options: SESSION_TYPES,
+      options: TRAINING_SESSION_TYPES,
       selectedValue: selectedSessionType,
       title: 'Session Type',
     },

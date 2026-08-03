@@ -1,16 +1,117 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
   "entry": ["convex/**/*.ts", "src/backup/create-sample.ts", "src/scripts/**/*.ts"],
+  "ignorePatterns": [
+    "**/__generated__/**",
+    "**/__snapshots__/**",
+    "**/fixtures/**",
+    "**/*.fixture.*",
+    "**/*-fixture.*"
+  ],
   "workspaces": {
     "patterns": ["."]
   },
   "ignoreDependencies": [
     "@shopify/eslint-plugin",
+    "eslint-plugin-compat",
     "eslint-plugin-react-you-might-not-need-an-effect"
   ],
   "duplicates": {
     "minOccurrences": 3,
     "ignore": ["**/lib/**", "**/legacy/**", "**/__generated__/**", "**/generated/**"]
+  },
+  "health": {
+    "coverage": "coverage/coverage-final.json",
+    "ignore": ["**/*.test.*", "**/*.spec.*"],
+    "thresholdOverrides": [
+      {
+        "files": ["src/domain/csv.ts"],
+        "functions": ["parseCsvRecords"],
+        "maxCyclomatic": 27,
+        "maxCognitive": 47,
+        "reason": "The CSV tokenizer is an explicit state machine whose transitions are clearer together."
+      },
+      {
+        "files": ["convex/migrations.ts"],
+        "functions": ["transformationResults"],
+        "maxCrap": 273,
+        "reason": "Each branch represents one atomic legacy-record migration outcome."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/ascent-summary.tsx"],
+        "functions": ["AscentSummary"],
+        "maxCrap": 183,
+        "reason": "The branches render independent optional ascent-summary sentences."
+      },
+      {
+        "files": ["convex/imports.ts"],
+        "functions": ["handler"],
+        "maxCrap": 157,
+        "reason": "Import handlers keep validation and ordered batch accounting at the transaction boundary."
+      },
+      {
+        "files": ["src/app/_components/filter-bar/sticky-filter-bar.tsx"],
+        "functions": ["StickyFilterBar"],
+        "maxCrap": 133,
+        "reason": "The component coordinates optimistic filter state and optional search controls."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/vertical-milestone-summary.tsx"],
+        "functions": ["VerticalMilestoneSummary"],
+        "maxCrap": 91,
+        "reason": "The branches render independent optional vertical-milestone sentences."
+      },
+      {
+        "files": [
+          "src/app/_components/training-popover-description/training-popover-description.tsx"
+        ],
+        "functions": ["<arrow>"],
+        "maxCrap": 91,
+        "reason": "The list renderer displays independently optional training-session fields."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/top-ten-summary.tsx"],
+        "functions": ["TopTenSummary"],
+        "maxCrap": 73,
+        "reason": "The component keeps score calculation and its optional improvement guidance together."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/days-outside-summary.tsx"],
+        "functions": ["DaysOutsideSummary"],
+        "maxCrap": 57,
+        "reason": "The branches render independent optional days-outside statistics."
+      },
+      {
+        "files": ["src/app/log/actions.ts"],
+        "functions": ["submitClimbingLog"],
+        "maxCrap": 57,
+        "reason": "The server action owns validation, persistence, revalidation, and error mapping."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/hardest-climbs-summary.tsx"],
+        "functions": ["HardestClimbsSummary"],
+        "maxCrap": 43,
+        "reason": "The component renders independent route and boulder summary sentences."
+      },
+      {
+        "files": ["convex/migrations.ts"],
+        "functions": ["handler"],
+        "maxCrap": 43,
+        "reason": "The migration action must advance each table and page sequentially."
+      },
+      {
+        "files": ["src/services/imports.ts"],
+        "functions": ["previewCanonicalImport", "runCanonicalImport"],
+        "maxCrap": 31,
+        "reason": "The two import flows branch once on the discriminated import kind."
+      },
+      {
+        "files": ["src/app/_components/wrap-up/_components/crags-summary.tsx"],
+        "functions": ["CragsSummary"],
+        "maxCrap": 31,
+        "reason": "The branches render independently optional crag-summary content."
+      }
+    ]
   },
   "rules": {
     "unused-dependencies": "warn"

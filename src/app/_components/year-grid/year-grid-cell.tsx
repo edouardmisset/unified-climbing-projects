@@ -42,42 +42,7 @@ export const YearGridCell = (props: YearGridCellProps) => {
     outline: getOutlineForToday(date),
   }
 
-  // LAZY LOADING: Create description component only when we have data
-  const lazyDescription = (() => {
-    const hasAscents = ascents && ascents.length > 0
-    const hasTrainingSessions = trainingSessions && trainingSessions.length > 0
-
-    if (hasTrainingSessions && hasAscents)
-      return (
-        <>
-          <Suspense fallback='Loading...'>
-            <TrainingPopoverDescription trainingSessions={trainingSessions} />
-          </Suspense>
-          <br />
-          <hr />
-          <br />
-          <Suspense fallback='Loading...'>
-            <AscentsPopoverDescription ascents={ascents} />
-          </Suspense>
-        </>
-      )
-
-    if (hasAscents)
-      return (
-        <Suspense fallback='Loading...'>
-          <AscentsPopoverDescription ascents={ascents} />
-        </Suspense>
-      )
-
-    if (hasTrainingSessions)
-      return (
-        <Suspense fallback='Loading...'>
-          <TrainingPopoverDescription trainingSessions={trainingSessions} />
-        </Suspense>
-      )
-
-    return ''
-  })()
+  const lazyDescription = getLazyDescription(ascents, trainingSessions)
 
   if (date === '' || !isDateInYear(date, year))
     return <EmptyGridCell cellStyle={cellStyle} date={date} />
@@ -95,6 +60,45 @@ export const YearGridCell = (props: YearGridCellProps) => {
       {lazyDescription}
     </Popover>
   )
+}
+
+function getLazyDescription(
+  ascents: YearGridCellProps['ascents'],
+  trainingSessions: YearGridCellProps['trainingSessions'],
+): ReactNode {
+  const hasAscents = ascents !== undefined && ascents.length > 0
+  const hasTrainingSessions = trainingSessions !== undefined && trainingSessions.length > 0
+
+  if (hasTrainingSessions && hasAscents)
+    return (
+      <>
+        <Suspense fallback='Loading...'>
+          <TrainingPopoverDescription trainingSessions={trainingSessions} />
+        </Suspense>
+        <br />
+        <hr />
+        <br />
+        <Suspense fallback='Loading...'>
+          <AscentsPopoverDescription ascents={ascents} />
+        </Suspense>
+      </>
+    )
+
+  if (hasAscents)
+    return (
+      <Suspense fallback='Loading...'>
+        <AscentsPopoverDescription ascents={ascents} />
+      </Suspense>
+    )
+
+  if (hasTrainingSessions)
+    return (
+      <Suspense fallback='Loading...'>
+        <TrainingPopoverDescription trainingSessions={trainingSessions} />
+      </Suspense>
+    )
+
+  return ''
 }
 
 const getAdjustedBackgroundColor = ({

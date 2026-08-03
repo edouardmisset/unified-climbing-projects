@@ -1,13 +1,9 @@
-import {
-  type AscentPublicInput,
-  ascentDisciplineSchema,
-  ascentFormSchema,
-} from '~/domain/canonical/ascent'
-import { calendarDateSchema, optionalFormStringSchema } from '~/domain/canonical/common'
+import { type AscentPublicInput, ascentDisciplineSchema, ascentFormSchema } from '~/domain/ascent'
+import { calendarDateSchema, optionalFormStringSchema } from '~/domain/common'
 import {
   type TrainingSessionPublicInput,
   trainingSessionFormSchema,
-} from '~/domain/canonical/training-session'
+} from '~/domain/training-session'
 import { z } from '~/helpers/zod'
 
 const ascentDetailsSchema = ascentFormSchema.omit({ crag: true, date: true })

@@ -35,22 +35,19 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const deferredSelectedStyle = useDeferredValue(selectedStyle)
   const deferredSelectedYear = useDeferredValue(selectedYear)
 
-  const filteredAscents = (() => {
-    const selectedYearNumber = Number(deferredSelectedYear)
-
-    return filterAscents(ascents, {
-      area: normalizeFilterValue(deferredSelectedArea),
-      discipline: normalizeFilterValue(deferredSelectedDiscipline),
-      crag: normalizeFilterValue(deferredSelectedCrag),
-      grade: normalizeFilterValue(deferredSelectedGrade),
-      style: normalizeFilterValue(deferredSelectedStyle),
-      year:
-        deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-          ? selectedYearNumber
-          : undefined,
-      period: normalizeFilterValue(deferredSelectedPeriod),
-    })
-  })()
+  const selectedYearNumber = Number(deferredSelectedYear)
+  const filteredAscents = filterAscents(ascents, {
+    area: normalizeFilterValue(deferredSelectedArea),
+    discipline: normalizeFilterValue(deferredSelectedDiscipline),
+    crag: normalizeFilterValue(deferredSelectedCrag),
+    grade: normalizeFilterValue(deferredSelectedGrade),
+    style: normalizeFilterValue(deferredSelectedStyle),
+    year:
+      deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+        ? selectedYearNumber
+        : undefined,
+    period: normalizeFilterValue(deferredSelectedPeriod),
+  })
 
   return deferredSelectedRoute === ''
     ? filteredAscents

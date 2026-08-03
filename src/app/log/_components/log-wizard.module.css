@@ -127,6 +127,16 @@
   }
 }
 
+.gradeFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--size-3);
+
+  @media (width <= 40rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
 .cardHeader {
   display: flex;
   align-items: center;

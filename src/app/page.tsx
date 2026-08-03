@@ -33,15 +33,15 @@ export default function LandingPage() {
           <a href='mailto:edouardmisset@gmail.com'>Request beta access</a>
         </div>
         <ul className={styles.features}>
-          <li>
+          <li className='glassPanel'>
             <strong>Private by default</strong>
             <span>Every database operation is scoped to your signed-in identity.</span>
           </li>
-          <li>
+          <li className='glassPanel'>
             <strong>Portable data</strong>
             <span>Canonical CSV imports and a browser-generated two-file ZIP export.</span>
           </li>
-          <li>
+          <li className='glassPanel'>
             <strong>Built for reflection</strong>
             <span>Dashboards, calendars, indicators, and yearly climbing wrap-ups.</span>
           </li>

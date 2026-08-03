@@ -6,19 +6,13 @@ import {
   type AscentRecord,
   ascentPublicInputSchema,
   ascentPublicOutputSchema,
-} from '~/domain/canonical/ascent'
-import {
-  transformLegacyAscent,
-  transformLegacyTrainingSession,
-} from '~/domain/canonical/legacy-transformers'
+} from '~/domain/ascent'
 import {
   type TrainingSessionPublicInput,
   type TrainingSessionRecord,
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
-} from '~/domain/canonical/training-session'
-import type { LegacyAscent } from '~/schema/ascent'
-import type { LegacyTrainingSession } from '~/schema/training'
+} from '~/domain/training-session'
 
 const compareDates = (a: { date: string }, b: { date: string }): number =>
   new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -34,22 +28,12 @@ export async function getConvexAuthToken(): Promise<string> {
   return token
 }
 
-function normalizeAscentInput(
-  input: AscentPublicInput | Omit<LegacyAscent, '_id'>,
-): AscentPublicInput {
-  const canonical = ascentPublicInputSchema.safeParse(input)
-  return canonical.success
-    ? canonical.data
-    : transformLegacyAscent({ ...input, _id: 'pending-ascent' }).value
+function normalizeAscentInput(input: AscentPublicInput): AscentPublicInput {
+  return ascentPublicInputSchema.parse(input)
 }
 
-function normalizeTrainingInput(
-  input: TrainingSessionPublicInput | Omit<LegacyTrainingSession, '_id'>,
-): TrainingSessionPublicInput {
-  const canonical = trainingSessionPublicInputSchema.safeParse(input)
-  return canonical.success
-    ? canonical.data
-    : transformLegacyTrainingSession({ ...input, _id: 'pending-training-session' }).value
+function normalizeTrainingInput(input: TrainingSessionPublicInput): TrainingSessionPublicInput {
+  return trainingSessionPublicInputSchema.parse(input)
 }
 
 export async function getAllAscents(): Promise<AscentRecord[]> {
@@ -64,9 +48,7 @@ export async function getAscentById(_id: string): Promise<AscentRecord | undefin
   return record ? ascentPublicOutputSchema.parse(record) : undefined
 }
 
-export async function addAscent(
-  ascent: AscentPublicInput | Omit<LegacyAscent, '_id'>,
-): Promise<void> {
+export async function addAscent(ascent: AscentPublicInput): Promise<void> {
   const token = await getConvexAuthToken()
   await fetchMutation(api.ascents.post, normalizeAscentInput(ascent), { token })
 }
@@ -77,9 +59,7 @@ export async function getAllTrainingSessions(): Promise<TrainingSessionRecord[]>
   return trainingSessionPublicOutputSchema.array().parse(records).toSorted(compareDates)
 }
 
-export async function addTrainingSession(
-  session: TrainingSessionPublicInput | Omit<LegacyTrainingSession, '_id'>,
-): Promise<void> {
+export async function addTrainingSession(session: TrainingSessionPublicInput): Promise<void> {
   const token = await getConvexAuthToken()
   await fetchMutation(api.training.post, normalizeTrainingInput(session), { token })
 }

@@ -3,11 +3,13 @@ import { isValidNumber } from '@edouardmisset/math'
 
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
+import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import { filterAscents } from '~/helpers/filter-ascents'
+import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import { ASCENT_STYLE, AVAILABLE_CLIMBING_DISCIPLINE, type Ascent } from '~/schema/ascent'
+import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
@@ -37,107 +39,95 @@ export default function AscentsFilterBar({
     setRoute,
   } = useAscentsQueryState()
 
-  const yearList = (() => {
-    const filteredForYear = filterAscents(allAscents, {
-      discipline: normalizeFilterValue(selectedDiscipline),
-      style: normalizeFilterValue(selectedStyle),
-      period: normalizeFilterValue(selectedPeriod),
-      crag: normalizeFilterValue(selectedCrag),
-      area: normalizeFilterValue(selectedArea),
-    })
-    return createYearList(filteredForYear, {
-      descending: true,
-      continuous: false,
-    }).map(String)
-  })()
+  const filteredForYear = filterAscents(allAscents, {
+    discipline: normalizeFilterValue(selectedDiscipline),
+    style: normalizeFilterValue(selectedStyle),
+    period: normalizeFilterValue(selectedPeriod),
+    crag: normalizeFilterValue(selectedCrag),
+    area: normalizeFilterValue(selectedArea),
+  })
+  const yearList = createYearList(filteredForYear, { descending: true, continuous: false }).map(
+    String,
+  )
 
-  const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
+  const effectiveSelectedYear = getEffectiveFilterValue(yearList, selectedYear)
 
-  const selectedYearNumber = (() => {
-    const n = Number(effectiveSelectedYear)
-    return effectiveSelectedYear !== ALL_VALUE && isValidNumber(n) ? n : undefined
-  })()
+  const parsedSelectedYear = Number(effectiveSelectedYear)
+  const selectedYearNumber =
+    effectiveSelectedYear !== ALL_VALUE && isValidNumber(parsedSelectedYear)
+      ? parsedSelectedYear
+      : undefined
 
-  const disciplineList = (() => {
-    const filteredForDiscipline = filterAscents(allAscents, {
-      year: selectedYearNumber,
-      style: normalizeFilterValue(selectedStyle),
-      period: normalizeFilterValue(selectedPeriod),
-      crag: normalizeFilterValue(selectedCrag),
-      area: normalizeFilterValue(selectedArea),
-    })
-    return AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
-      filteredForDiscipline.some(ascent => ascent.discipline === discipline),
-    )
-  })()
+  const filteredForDiscipline = filterAscents(allAscents, {
+    year: selectedYearNumber,
+    style: normalizeFilterValue(selectedStyle),
+    period: normalizeFilterValue(selectedPeriod),
+    crag: normalizeFilterValue(selectedCrag),
+    area: normalizeFilterValue(selectedArea),
+  })
+  const disciplineList = ASCENT_DISCIPLINES.filter(discipline =>
+    filteredForDiscipline.some(ascent => ascent.discipline === discipline),
+  )
 
-  const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
-    ? selectedDiscipline
-    : ALL_VALUE
+  const effectiveSelectedDiscipline = getEffectiveFilterValue(disciplineList, selectedDiscipline)
 
-  const styleList = (() => {
-    const filteredForStyle = filterAscents(allAscents, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      period: normalizeFilterValue(selectedPeriod),
-      crag: normalizeFilterValue(selectedCrag),
-      area: normalizeFilterValue(selectedArea),
-    })
-    return ASCENT_STYLE.filter(style => filteredForStyle.some(ascent => ascent.style === style))
-  })()
+  const filteredForStyle = filterAscents(allAscents, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    period: normalizeFilterValue(selectedPeriod),
+    crag: normalizeFilterValue(selectedCrag),
+    area: normalizeFilterValue(selectedArea),
+  })
+  const styleList = ASCENT_STYLE.filter(style =>
+    filteredForStyle.some(ascent => ascent.style === style),
+  )
 
-  const effectiveSelectedStyle = styleList.includes(selectedStyle) ? selectedStyle : ALL_VALUE
+  const effectiveSelectedStyle = getEffectiveFilterValue(styleList, selectedStyle)
 
-  const cragList = (() => {
-    const filteredForCrag = filterAscents(allAscents, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      style: normalizeFilterValue(effectiveSelectedStyle),
-      period: normalizeFilterValue(selectedPeriod),
-      area: normalizeFilterValue(selectedArea),
-    })
-    return [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
-      .filter(Boolean)
-      .toSorted(compareStringsAscending)
-  })()
+  const filteredForCrag = filterAscents(allAscents, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    style: normalizeFilterValue(effectiveSelectedStyle),
+    period: normalizeFilterValue(selectedPeriod),
+    area: normalizeFilterValue(selectedArea),
+  })
+  const cragList = [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
+    .filter(Boolean)
+    .toSorted(compareStringsAscending)
 
-  const effectiveSelectedCrag = cragList.includes(selectedCrag) ? selectedCrag : ALL_VALUE
+  const effectiveSelectedCrag = getEffectiveFilterValue(cragList, selectedCrag)
 
-  const areaList = (() => {
-    const filteredForArea = filterAscents(allAscents, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      style: normalizeFilterValue(effectiveSelectedStyle),
-      period: normalizeFilterValue(selectedPeriod),
-      crag: normalizeFilterValue(effectiveSelectedCrag),
-    })
-    return [
-      ...new Set(
-        filteredForArea
-          .map(({ area }) => area?.trim())
-          .filter((area): area is string => Boolean(area)),
-      ),
-    ].toSorted(compareStringsAscending)
-  })()
+  const filteredForArea = filterAscents(allAscents, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    style: normalizeFilterValue(effectiveSelectedStyle),
+    period: normalizeFilterValue(selectedPeriod),
+    crag: normalizeFilterValue(effectiveSelectedCrag),
+  })
+  const areaList = [
+    ...new Set(
+      filteredForArea
+        .map(({ area }) => area?.trim())
+        .filter((area): area is string => Boolean(area)),
+    ),
+  ].toSorted(compareStringsAscending)
 
-  const effectiveSelectedArea = areaList.includes(selectedArea) ? selectedArea : ALL_VALUE
+  const effectiveSelectedArea = getEffectiveFilterValue(areaList, selectedArea)
 
-  const periodList = (() => {
-    const filteredForPeriod = filterAscents(allAscents, {
-      year: selectedYearNumber,
-      discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-      style: normalizeFilterValue(effectiveSelectedStyle),
-      crag: normalizeFilterValue(effectiveSelectedCrag),
-      area: normalizeFilterValue(effectiveSelectedArea),
-    })
-    return PERIOD.filter(period =>
-      filteredForPeriod.some(({ date }) =>
-        isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
-      ),
-    )
-  })()
+  const filteredForPeriod = filterAscents(allAscents, {
+    year: selectedYearNumber,
+    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
+    style: normalizeFilterValue(effectiveSelectedStyle),
+    crag: normalizeFilterValue(effectiveSelectedCrag),
+    area: normalizeFilterValue(effectiveSelectedArea),
+  })
+  const periodList = PERIOD.filter(period =>
+    filteredForPeriod.some(({ date }) =>
+      isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
+    ),
+  )
 
-  const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
+  const effectiveSelectedPeriod = getEffectiveFilterValue(periodList, selectedPeriod)
 
   const filters = [
     {

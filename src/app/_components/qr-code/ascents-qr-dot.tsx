@@ -23,17 +23,13 @@ export const AscentsQRDot = ({ ascents }: { ascents?: Ascent[] }) => {
       ? ''
       : `${prettyLongDate(firstAscent.date)} - ${firstAscent.crag}`
 
-  // LAZY LOADING: Create description component only when needed
-  const lazyDescription = (() => {
-    if (!ascents || ascents.length === 0) return ''
-    return (
-      <Suspense fallback='Loading...'>
-        <AscentsPopoverDescription ascents={ascents} />
-      </Suspense>
-    )
-  })()
-
   if (ascents === undefined || firstAscent === undefined) return <span />
+
+  const lazyDescription = (
+    <Suspense fallback='Loading...'>
+      <AscentsPopoverDescription ascents={ascents} />
+    </Suspense>
+  )
 
   return (
     <Popover

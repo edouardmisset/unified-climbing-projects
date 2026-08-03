@@ -35,13 +35,6 @@
   gap: var(--size-3);
   padding: var(--size-3) var(--size-fluid-2);
   overflow: hidden;
-  background: var(--panel-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: var(--border-size-1) solid var(--panel-border);
-  border-radius: var(--radius-3);
-  box-shadow:
-    0 8px 32px var(--panel-shadow-outer),
-    inset 0 1px 0 var(--panel-shadow-inner);
 
   &::before {
     position: absolute;

@@ -3,6 +3,11 @@ import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from 'lucide-react'
 import Link from 'next/link'
 import styles from './year-navigation-button.module.css'
 
+const DIRECTION = {
+  next: { Icon: ArrowRightCircleIcon, label: 'Next', offset: 1, style: styles.right },
+  previous: { Icon: ArrowLeftCircleIcon, label: 'Previous', offset: -1, style: styles.left },
+} as const
+
 export function YearNavigationButton({
   selectedYear,
   nextOrPrevious,
@@ -16,17 +21,16 @@ export function YearNavigationButton({
 }) {
   if (!(enabled && isValidNumber(selectedYear))) return <span />
 
-  const targetYear = nextOrPrevious === 'next' ? selectedYear + 1 : selectedYear - 1
+  const { Icon, label, offset, style } = DIRECTION[nextOrPrevious]
+  const targetYear = selectedYear + offset
   return (
     <Link
-      className={`${styles.button} ${nextOrPrevious === 'next' ? styles.right : styles.left}`}
+      className={`${styles.button} ${style}`}
       href={`.${path}/${targetYear}`}
       prefetch
-      title={
-        nextOrPrevious === 'next' ? `Next year: ${targetYear}` : `Previous year: ${targetYear}`
-      }
+      title={`${label} year: ${targetYear}`}
     >
-      {nextOrPrevious === 'next' ? <ArrowRightCircleIcon /> : <ArrowLeftCircleIcon />}
+      <Icon />
     </Link>
   )
 }

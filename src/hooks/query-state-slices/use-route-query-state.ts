@@ -1,5 +1,5 @@
 import { type UseQueryStateReturn, useQueryState } from 'nuqs'
-import { ascentDomainSchema } from '~/domain/canonical/ascent'
+import { ascentDomainSchema } from '~/domain/ascent'
 import type { Ascent } from '~/schema/ascent'
 
 export const useRouteQueryState = (): UseQueryStateReturn<Ascent['name'], ''> =>

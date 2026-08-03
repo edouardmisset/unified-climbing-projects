@@ -1,4 +1,4 @@
-import { ANATOMICAL_REGIONS, ENERGY_SYSTEMS } from '~/domain/canonical/training-session'
+import { ANATOMICAL_REGIONS, ENERGY_SYSTEMS } from '~/domain/training-session'
 import type { TrainingSession } from '~/schema/training'
 
 type AnatomicalRegion = NonNullable<TrainingSession['anatomicalRegion']>
@@ -11,6 +11,13 @@ type RadialBarData = {
     y: number
   }[]
 }[]
+
+type DistributionKey = AnatomicalRegion | EnergySystem
+
+type DistributionPalette<T extends DistributionKey> = {
+  colors: Record<T, string>
+  labels: Record<T, string>
+}
 
 const ENERGY_SYSTEM_COLORS = {
   'Anaerobic Alactic': 'var(--energySystemAA)',
@@ -44,50 +51,34 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
 } {
   if (sessions.length === 0) return { colors: {}, data: [], legendData: [], totals: {} }
 
-  const sessionsWithEnergySystem = sessions.filter(session => session.energySystem !== undefined)
-
-  const sessionsWithRegion = sessions.filter(session => session.anatomicalRegion !== undefined)
-
-  const energySystemCounts = new Map<EnergySystem, number>()
-  const regionCounts = new Map<AnatomicalRegion, number>()
-
-  for (const { energySystem } of sessionsWithEnergySystem) {
-    if (!energySystem) continue
-    energySystemCounts.set(energySystem, (energySystemCounts.get(energySystem) ?? 0) + 1)
-  }
-
-  for (const { anatomicalRegion } of sessionsWithRegion) {
-    if (!anatomicalRegion) continue
-    regionCounts.set(anatomicalRegion, (regionCounts.get(anatomicalRegion) ?? 0) + 1)
-  }
+  const energySystemCounts = countDefinedValues(sessions.map(({ energySystem }) => energySystem))
+  const regionCounts = countDefinedValues(sessions.map(({ anatomicalRegion }) => anatomicalRegion))
 
   const colors: Record<string, string> = {}
 
   // Build Energy System ring data
-  const energySystemData = ENERGY_SYSTEMS.map(key => ({
-    x: ENERGY_SYSTEM_LABELS[key],
-    y: energySystemCounts.get(key) ?? 0,
-  }))
-    .filter(item => item.y > 0)
-    .toSorted((a, b) => b.y - a.y)
-
-  for (const key of ENERGY_SYSTEMS) {
-    const label = ENERGY_SYSTEM_LABELS[key]
-    if ((energySystemCounts.get(key) ?? 0) > 0) colors[label] = ENERGY_SYSTEM_COLORS[key]
-  }
+  const energySystemData = buildRingData(ENERGY_SYSTEMS, energySystemCounts, ENERGY_SYSTEM_LABELS)
+  Object.assign(
+    colors,
+    buildColors(ENERGY_SYSTEMS, energySystemCounts, {
+      colors: ENERGY_SYSTEM_COLORS,
+      labels: ENERGY_SYSTEM_LABELS,
+    }),
+  )
 
   // Build Anatomical Region ring data
-  const anatomicalRegionData = ANATOMICAL_REGIONS.map(key => ({
-    x: ANATOMICAL_REGION_LABELS[key],
-    y: regionCounts.get(key) ?? 0,
-  }))
-    .filter(item => item.y > 0)
-    .toSorted((a, b) => b.y - a.y)
-
-  for (const key of ANATOMICAL_REGIONS) {
-    const label = ANATOMICAL_REGION_LABELS[key]
-    if ((regionCounts.get(key) ?? 0) > 0) colors[label] = ANATOMICAL_REGION_COLORS[key]
-  }
+  const anatomicalRegionData = buildRingData(
+    ANATOMICAL_REGIONS,
+    regionCounts,
+    ANATOMICAL_REGION_LABELS,
+  )
+  Object.assign(
+    colors,
+    buildColors(ANATOMICAL_REGIONS, regionCounts, {
+      colors: ANATOMICAL_REGION_COLORS,
+      labels: ANATOMICAL_REGION_LABELS,
+    }),
+  )
 
   const data: RadialBarData = [
     {
@@ -139,4 +130,35 @@ export function getSessionsDistributionData(sessions: TrainingSession[]): {
   ]
 
   return { colors, data, legendData, totals }
+}
+
+function countDefinedValues<T extends DistributionKey>(values: (T | undefined)[]): Map<T, number> {
+  const counts = new Map<T, number>()
+  for (const value of values)
+    if (value !== undefined) counts.set(value, (counts.get(value) ?? 0) + 1)
+
+  return counts
+}
+
+function buildRingData<T extends DistributionKey>(
+  keys: readonly T[],
+  counts: Map<T, number>,
+  labels: Record<T, string>,
+) {
+  return keys
+    .map(key => ({ x: labels[key], y: counts.get(key) ?? 0 }))
+    .filter(item => item.y > 0)
+    .toSorted((a, b) => b.y - a.y)
+}
+
+function buildColors<T extends DistributionKey>(
+  keys: readonly T[],
+  counts: Map<T, number>,
+  palette: DistributionPalette<T>,
+): Record<string, string> {
+  return Object.fromEntries(
+    keys
+      .filter(key => (counts.get(key) ?? 0) > 0)
+      .map(key => [palette.labels[key], palette.colors[key]]),
+  )
 }

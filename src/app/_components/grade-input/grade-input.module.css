@@ -21,11 +21,14 @@
 
 .Group {
   display: flex;
+  inline-size: 100%;
+  max-inline-size: calc(75ch / 2 - var(--size-3) - var(--size-fluid-2));
 }
 
 .Input {
   box-sizing: border-box;
-  inline-size: 6rem;
+  flex: 1;
+  min-inline-size: 0;
   block-size: 2.5rem;
   padding: 0;
   margin: 0;

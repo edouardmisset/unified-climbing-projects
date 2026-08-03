@@ -1,5 +1,5 @@
-import { ascentImportRowSchema } from '~/domain/canonical/ascent'
-import { trainingSessionImportRowSchema } from '~/domain/canonical/training-session'
+import { ascentImportRowSchema } from '~/domain/ascent'
+import { trainingSessionImportRowSchema } from '~/domain/training-session'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import ascentsData from '../../tests/fixtures/ascents.json'

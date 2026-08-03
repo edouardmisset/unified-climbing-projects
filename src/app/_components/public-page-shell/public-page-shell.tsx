@@ -11,7 +11,7 @@ type PublicPageShellProps = {
 export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellProps) {
   return (
     <div className={styles.shell}>
-      <header className={styles.header}>
+      <header className={`${styles.header} glassPanel`}>
         <Link className={styles.brand} href='/'>
           <span>Climbing Log</span>
           <span className={styles.beta}>Beta</span>

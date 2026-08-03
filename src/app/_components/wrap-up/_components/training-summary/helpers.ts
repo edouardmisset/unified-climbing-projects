@@ -57,37 +57,13 @@ type SessionRatioData = {
 }
 
 export function categorizeSessions(sessions: TrainingSession[]): CategorizedSessionsOutput {
-  const indoor: TrainingSession[] = []
-  const outdoor: TrainingSession[] = []
-  const indoorRoute: TrainingSession[] = []
-  const indoorBoulder: TrainingSession[] = []
-  const outdoorRoute: TrainingSession[] = []
-  const outdoorBoulder: TrainingSession[] = []
+  const categorized = createEmptyCategories()
 
-  for (const session of sessions) {
-    const { type, discipline } = session
-    const isIndoor = isIndoorSession({ type })
-    const isOutdoor = type === 'Outdoor'
+  for (const session of sessions)
+    if (isIndoorSession({ type: session.type })) addSession(categorized, session, 'indoor')
+    else if (session.type === 'Outdoor') addSession(categorized, session, 'outdoor')
 
-    if (isIndoor) {
-      indoor.push(session)
-      if (discipline === 'Sport') indoorRoute.push(session)
-      if (discipline === 'Bouldering') indoorBoulder.push(session)
-    } else if (isOutdoor) {
-      outdoor.push(session)
-      if (discipline === 'Sport') outdoorRoute.push(session)
-      if (discipline === 'Bouldering') outdoorBoulder.push(session)
-    }
-  }
-
-  return {
-    indoor,
-    outdoor,
-    indoorRoute,
-    indoorBoulder,
-    outdoorRoute,
-    outdoorBoulder,
-  }
+  return categorized
 }
 
 type CategorizedSessionsOutput = {
@@ -97,6 +73,27 @@ type CategorizedSessionsOutput = {
   indoorBoulder: TrainingSession[]
   outdoorRoute: TrainingSession[]
   outdoorBoulder: TrainingSession[]
+}
+
+function createEmptyCategories(): CategorizedSessionsOutput {
+  return {
+    indoor: [],
+    outdoor: [],
+    indoorRoute: [],
+    indoorBoulder: [],
+    outdoorRoute: [],
+    outdoorBoulder: [],
+  }
+}
+
+function addSession(
+  categorized: CategorizedSessionsOutput,
+  session: TrainingSession,
+  location: 'indoor' | 'outdoor',
+): void {
+  categorized[location].push(session)
+  if (session.discipline === 'Sport') categorized[`${location}Route`].push(session)
+  if (session.discipline === 'Bouldering') categorized[`${location}Boulder`].push(session)
 }
 
 export function isIndoorSession({ type }: { type?: TrainingSession['type'] }): boolean {
