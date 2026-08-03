@@ -15,12 +15,12 @@ import {
   ASCENT_PROFILES,
   ASCENT_STYLES,
   type AscentRecord,
-} from '~/domain/canonical/ascent'
+} from '~/domain/ascent'
 import {
   ANATOMICAL_REGIONS,
   ENERGY_SYSTEMS,
   TRAINING_SESSION_TYPES,
-} from '~/domain/canonical/training-session'
+} from '~/domain/training-session'
 import { fromGradeToNumber, fromNumberToGrade } from '~/helpers/grade-converter'
 import { submitClimbingLog } from '../actions'
 import {

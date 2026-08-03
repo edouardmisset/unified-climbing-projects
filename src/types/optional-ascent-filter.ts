@@ -6,7 +6,7 @@ import {
   ascentHoldsSchema,
   ascentProfileSchema,
   ascentStyleSchema,
-} from '~/domain/canonical/ascent'
+} from '~/domain/ascent'
 import { optionalAscentYear, periodSchema } from '~/schema/generic'
 
 export const optionalAscentFilterSchema = z

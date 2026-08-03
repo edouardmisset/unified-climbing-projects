@@ -1,7 +1,7 @@
 import { convexTest } from 'convex-test'
 import { describe, expect, test } from 'vitest'
-import type { AscentPublicInput } from '../src/domain/canonical/ascent'
-import type { TrainingSessionPublicInput } from '../src/domain/canonical/training-session'
+import type { AscentPublicInput } from '../src/domain/ascent'
+import type { TrainingSessionPublicInput } from '../src/domain/training-session'
 import { api } from './_generated/api'
 import schema from './schema'
 // The runtime glob excludes tests; Fallow does not model its negative patterns.

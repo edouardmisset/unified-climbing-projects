@@ -2,9 +2,9 @@ import {
   ascentPublicInputSchema,
   ascentPublicOutputSchema,
   ascentStoredDocumentSchema,
-} from '~/domain/canonical/ascent'
-import { omitServerControlledFields } from '~/domain/canonical/common'
-import { createAscentFingerprintInput } from '~/domain/canonical/fingerprint-input'
+} from '~/domain/ascent'
+import { omitServerControlledFields } from '~/domain/common'
+import { createAscentFingerprintInput } from '~/domain/fingerprint-input'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'

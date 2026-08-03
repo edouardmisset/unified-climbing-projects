@@ -4,10 +4,11 @@ import { isValidNumber } from '@edouardmisset/math'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
+import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import { filterTrainingSessions } from '~/helpers/filter-training'
+import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
-import { AVAILABLE_CLIMBING_DISCIPLINE } from '~/schema/ascent'
 import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
 import { createValueSetter } from '../helpers'
@@ -37,7 +38,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     String,
   )
 
-  const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
+  const effectiveSelectedYear = getEffectiveFilterValue(yearList, selectedYear)
 
   const parsedSelectedYear = Number(effectiveSelectedYear)
   const selectedYearNumber =
@@ -50,13 +51,11 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     locationType: normalizeFilterValue(selectedLocationType),
     period: normalizeFilterValue(selectedPeriod),
   })
-  const disciplineList = AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
+  const disciplineList = ASCENT_DISCIPLINES.filter(discipline =>
     filteredForDiscipline.some(session => session.discipline === discipline),
   )
 
-  const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
-    ? selectedDiscipline
-    : ALL_VALUE
+  const effectiveSelectedDiscipline = getEffectiveFilterValue(disciplineList, selectedDiscipline)
 
   const filteredForLocationType = filterTrainingSessions(trainingSessions, {
     year: selectedYearNumber,
@@ -69,9 +68,10 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     locationType === 'Indoor' ? hasIndoor : hasOutdoor,
   )
 
-  const effectiveSelectedLocationType = locationTypeList.includes(selectedLocationType)
-    ? selectedLocationType
-    : ALL_VALUE
+  const effectiveSelectedLocationType = getEffectiveFilterValue(
+    locationTypeList,
+    selectedLocationType,
+  )
 
   const filteredForPeriod = filterTrainingSessions(trainingSessions, {
     year: selectedYearNumber,
@@ -84,7 +84,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     ),
   )
 
-  const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
+  const effectiveSelectedPeriod = getEffectiveFilterValue(periodList, selectedPeriod)
 
   const filters = [
     {

@@ -3,12 +3,12 @@ import 'server-only'
 import { fetchMutation, fetchQuery } from 'convex/nextjs'
 import { api } from '~/../convex/_generated/api'
 import type { Id } from '~/../convex/_generated/dataModel'
-import type { AscentImportRow } from '~/domain/canonical/ascent'
+import type { AscentImportRow } from '~/domain/ascent'
 import {
   createAscentFingerprintInput,
   createTrainingSessionFingerprintInput,
-} from '~/domain/canonical/fingerprint-input'
-import type { TrainingSessionImportRow } from '~/domain/canonical/training-session'
+} from '~/domain/fingerprint-input'
+import type { TrainingSessionImportRow } from '~/domain/training-session'
 import { getConvexAuthToken } from './convex'
 
 const IMPORT_BATCH_SIZE = 100

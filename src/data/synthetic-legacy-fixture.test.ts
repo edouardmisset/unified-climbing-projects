@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   toCanonicalAscentRecord,
   toCanonicalTrainingSessionRecord,
-} from '~/domain/canonical/legacy-transformers'
+} from '~/domain/legacy-transformers'
 import {
   SYNTHETIC_LEGACY_EXPECTATIONS,
   SYNTHETIC_ASCENT_FIXTURES,

@@ -1,8 +1,8 @@
 import { defineSchema, defineTable } from 'convex/server'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
-import { ascentStoredFieldsSchema } from '~/domain/canonical/ascent'
-import { trainingSessionStoredFieldsSchema } from '~/domain/canonical/training-session'
+import { ascentStoredFieldsSchema } from '~/domain/ascent'
+import { trainingSessionStoredFieldsSchema } from '~/domain/training-session'
 
 export const canonicalAscentValidator = zodToConvex(ascentStoredFieldsSchema)
 export const canonicalTrainingSessionValidator = zodToConvex(trainingSessionStoredFieldsSchema)

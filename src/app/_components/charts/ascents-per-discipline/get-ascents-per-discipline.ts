@@ -1,5 +1,5 @@
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
-import { ASCENT_DISCIPLINES } from '~/domain/canonical/ascent'
+import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import type { Ascent } from '~/schema/ascent'
 
 type AscentsPerDiscipline = {

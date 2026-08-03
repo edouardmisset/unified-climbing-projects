@@ -1,6 +1,5 @@
 import { z } from '~/helpers/zod'
-import type { AscentRecord } from '~/domain/canonical/ascent'
-import { positiveInteger } from './generic'
+import type { AscentRecord } from '~/domain/ascent'
 
 export const GRADES = [
   '1a',
@@ -182,13 +181,6 @@ export const gradeSchema = z.enum(GRADES)
 export type Grade = z.infer<typeof gradeSchema>
 
 export const ASCENT_STYLE = ['Onsight', 'Flash', 'Redpoint'] as const
-export const CLIMBING_DISCIPLINE = ['Route', 'Boulder', 'Multi-Pitch'] as const
-const UNAVAILABLE_CLIMBING_DISCIPLINE = new Set<LegacyAscent['climbingDiscipline']>(['Multi-Pitch'])
-export const AVAILABLE_CLIMBING_DISCIPLINE = CLIMBING_DISCIPLINE.filter(
-  d => !UNAVAILABLE_CLIMBING_DISCIPLINE.has(d),
-)
-
-export const climbingDisciplineSchema = z.enum(CLIMBING_DISCIPLINE)
 
 export const HOLDS = ['Crimp', 'Jug', 'Pocket', 'Sloper', 'Pinch', 'Crack', 'Undercling'] as const
 
@@ -205,34 +197,7 @@ export const PROFILES = [
 export const ascentStyleSchema = z.enum(ASCENT_STYLE)
 export const profileSchema = z.enum(PROFILES)
 export const holdsSchema = z.enum(HOLDS)
-const optionalStringSchema = z.string().optional()
 
-const MAX_RATING = 5
-
-export const ascentSchema = z.object({
-  area: z.string().trim().optional(),
-  climber: z
-    .string()
-    .transform(() => 'Edouard Misset')
-    .optional(),
-  climbingDiscipline: climbingDisciplineSchema,
-  comments: optionalStringSchema,
-  crag: z.string().trim().min(1),
-  date: z.string(), // ISO 8601 date format
-  height: positiveInteger.optional(),
-  holds: holdsSchema.optional(),
-  _id: z.string(),
-  personalGrade: gradeSchema.optional(),
-  points: positiveInteger.optional(),
-  profile: profileSchema.optional(),
-  rating: z.number().int().min(0).max(MAX_RATING).optional(),
-  region: optionalStringSchema,
-  routeName: z.string().trim().min(1).default('No Name'),
-  style: ascentStyleSchema,
-  topoGrade: gradeSchema,
-  tries: z.number().int().min(1),
-})
-export type LegacyAscent = z.infer<typeof ascentSchema>
 export type Ascent = AscentRecord
 
 export type AscentListProps = {

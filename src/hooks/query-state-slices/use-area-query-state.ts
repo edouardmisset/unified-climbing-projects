@@ -1,7 +1,7 @@
 import { type UseQueryStateReturn, useQueryState } from 'nuqs'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import type { OrAll } from '~/app/_components/dashboard/types'
-import { ascentSchema } from '~/schema/ascent'
+import { ascentDomainSchema } from '~/domain/ascent'
 
 export const useAreaQueryState = (): UseQueryStateReturn<OrAll<string>, typeof ALL_VALUE> =>
   useQueryState<OrAll<string>>('area', {
@@ -10,7 +10,7 @@ export const useAreaQueryState = (): UseQueryStateReturn<OrAll<string>, typeof A
       if (value === ALL_VALUE) return ALL_VALUE
       if (value.trim() === '') return null
 
-      const result = ascentSchema.required({ area: true }).shape.area.safeParse(value)
-      return result.success ? result.data : null
+      const result = ascentDomainSchema.shape.area.safeParse(value)
+      return result.success && result.data ? result.data : null
     },
   })

@@ -1,4 +1,4 @@
-import { ANATOMICAL_REGIONS, ENERGY_SYSTEMS } from '~/domain/canonical/training-session'
+import { ANATOMICAL_REGIONS, ENERGY_SYSTEMS } from '~/domain/training-session'
 import type { TrainingSession } from '~/schema/training'
 
 type AnatomicalRegion = NonNullable<TrainingSession['anatomicalRegion']>

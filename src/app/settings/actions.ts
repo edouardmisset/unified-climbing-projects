@@ -1,7 +1,7 @@
 'use server'
 
-import type { AscentImportRow } from '~/domain/canonical/ascent'
-import type { TrainingSessionImportRow } from '~/domain/canonical/training-session'
+import type { AscentImportRow } from '~/domain/ascent'
+import type { TrainingSessionImportRow } from '~/domain/training-session'
 import { previewCanonicalImport, runCanonicalImport, undoCanonicalImport } from '~/services/imports'
 
 const MAX_IMPORT_ROWS = 10_000

@@ -1,5 +1,5 @@
 /* oxlint-disable no-magic-numbers */
-import type { AscentRecord } from '~/domain/canonical/ascent'
+import type { AscentRecord } from '~/domain/ascent'
 
 type GradePlan = {
   grade: AscentRecord['grade']

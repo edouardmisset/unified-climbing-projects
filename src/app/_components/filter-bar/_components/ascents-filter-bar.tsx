@@ -3,18 +3,18 @@ import { isValidNumber } from '@edouardmisset/math'
 
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { createYearList } from '~/data/helpers.ts'
+import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import { filterAscents } from '~/helpers/filter-ascents'
+import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import { ASCENT_STYLE, AVAILABLE_CLIMBING_DISCIPLINE, type Ascent } from '~/schema/ascent'
+import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
 import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
-// Each branch derives one dependent option list; extraction would separate the dependency chain.
-// fallow-ignore-next-line complexity
 export default function AscentsFilterBar({
   allAscents,
   showSearch,
@@ -50,7 +50,7 @@ export default function AscentsFilterBar({
     String,
   )
 
-  const effectiveSelectedYear = yearList.includes(selectedYear) ? selectedYear : ALL_VALUE
+  const effectiveSelectedYear = getEffectiveFilterValue(yearList, selectedYear)
 
   const parsedSelectedYear = Number(effectiveSelectedYear)
   const selectedYearNumber =
@@ -65,13 +65,11 @@ export default function AscentsFilterBar({
     crag: normalizeFilterValue(selectedCrag),
     area: normalizeFilterValue(selectedArea),
   })
-  const disciplineList = AVAILABLE_CLIMBING_DISCIPLINE.filter(discipline =>
+  const disciplineList = ASCENT_DISCIPLINES.filter(discipline =>
     filteredForDiscipline.some(ascent => ascent.discipline === discipline),
   )
 
-  const effectiveSelectedDiscipline = disciplineList.includes(selectedDiscipline)
-    ? selectedDiscipline
-    : ALL_VALUE
+  const effectiveSelectedDiscipline = getEffectiveFilterValue(disciplineList, selectedDiscipline)
 
   const filteredForStyle = filterAscents(allAscents, {
     year: selectedYearNumber,
@@ -84,7 +82,7 @@ export default function AscentsFilterBar({
     filteredForStyle.some(ascent => ascent.style === style),
   )
 
-  const effectiveSelectedStyle = styleList.includes(selectedStyle) ? selectedStyle : ALL_VALUE
+  const effectiveSelectedStyle = getEffectiveFilterValue(styleList, selectedStyle)
 
   const filteredForCrag = filterAscents(allAscents, {
     year: selectedYearNumber,
@@ -97,7 +95,7 @@ export default function AscentsFilterBar({
     .filter(Boolean)
     .toSorted(compareStringsAscending)
 
-  const effectiveSelectedCrag = cragList.includes(selectedCrag) ? selectedCrag : ALL_VALUE
+  const effectiveSelectedCrag = getEffectiveFilterValue(cragList, selectedCrag)
 
   const filteredForArea = filterAscents(allAscents, {
     year: selectedYearNumber,
@@ -114,7 +112,7 @@ export default function AscentsFilterBar({
     ),
   ].toSorted(compareStringsAscending)
 
-  const effectiveSelectedArea = areaList.includes(selectedArea) ? selectedArea : ALL_VALUE
+  const effectiveSelectedArea = getEffectiveFilterValue(areaList, selectedArea)
 
   const filteredForPeriod = filterAscents(allAscents, {
     year: selectedYearNumber,
@@ -129,7 +127,7 @@ export default function AscentsFilterBar({
     ),
   )
 
-  const effectiveSelectedPeriod = periodList.includes(selectedPeriod) ? selectedPeriod : ALL_VALUE
+  const effectiveSelectedPeriod = getEffectiveFilterValue(periodList, selectedPeriod)
 
   const filters = [
     {

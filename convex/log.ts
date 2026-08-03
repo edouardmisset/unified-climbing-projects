@@ -1,9 +1,9 @@
-import { ascentPublicInputSchema } from '~/domain/canonical/ascent'
+import { ascentPublicInputSchema } from '~/domain/ascent'
 import {
   createAscentFingerprintInput,
   createTrainingSessionFingerprintInput,
-} from '~/domain/canonical/fingerprint-input'
-import { trainingSessionPublicInputSchema } from '~/domain/canonical/training-session'
+} from '~/domain/fingerprint-input'
+import { trainingSessionPublicInputSchema } from '~/domain/training-session'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'

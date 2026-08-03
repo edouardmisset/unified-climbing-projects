@@ -6,12 +6,12 @@ import {
   ascentProfileSchema,
   ascentStyleSchema,
   type AscentRecord,
-} from '~/domain/canonical/ascent'
+} from '~/domain/ascent'
 import {
   anatomicalRegionSchema,
   energySystemSchema,
   trainingSessionTypeSchema,
-} from '~/domain/canonical/training-session'
+} from '~/domain/training-session'
 import { z } from '~/helpers/zod'
 
 export const LOG_DRAFT_VERSION = 1

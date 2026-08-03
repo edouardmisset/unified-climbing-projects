@@ -1,11 +1,8 @@
-import {
-  transformLegacyAscent,
-  transformLegacyTrainingSession,
-} from '~/domain/canonical/legacy-transformers'
+import { transformLegacyAscent, transformLegacyTrainingSession } from '~/domain/legacy-transformers'
 import {
   createAscentFingerprintInput,
   createTrainingSessionFingerprintInput,
-} from '~/domain/canonical/fingerprint-input'
+} from '~/domain/fingerprint-input'
 import { v } from 'convex/values'
 import { internal } from './_generated/api'
 import { internalAction, internalMutation } from './_generated/server'

@@ -1,10 +1,10 @@
-import { createTrainingSessionFingerprintInput } from '~/domain/canonical/fingerprint-input'
+import { createTrainingSessionFingerprintInput } from '~/domain/fingerprint-input'
 import {
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
   trainingSessionStoredDocumentSchema,
-} from '~/domain/canonical/training-session'
-import { omitServerControlledFields } from '~/domain/canonical/common'
+} from '~/domain/training-session'
+import { omitServerControlledFields } from '~/domain/common'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'

@@ -1,14 +1,14 @@
 'use client'
 
 import { strToU8, zipSync } from 'fflate'
-import type { AscentRecord } from '~/domain/canonical/ascent'
+import type { AscentRecord } from '~/domain/ascent'
 import {
   ASCENT_CSV_TEMPLATE,
   TRAINING_SESSION_CSV_TEMPLATE,
   serializeAscentsCsv,
   serializeTrainingSessionsCsv,
-} from '~/domain/canonical/csv-contract'
-import type { TrainingSessionRecord } from '~/domain/canonical/training-session'
+} from '~/domain/csv-contract'
+import type { TrainingSessionRecord } from '~/domain/training-session'
 import styles from './settings.module.css'
 
 type ExportControlsProps = {
