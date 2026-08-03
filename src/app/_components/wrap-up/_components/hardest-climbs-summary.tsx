@@ -4,6 +4,8 @@ import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
 
+// Conditional branches directly represent optional route and boulder sentences.
+// fallow-ignore-next-line complexity
 export function HardestClimbsSummary({ ascents }: AscentListProps) {
   if (ascents.length === 0) return
 

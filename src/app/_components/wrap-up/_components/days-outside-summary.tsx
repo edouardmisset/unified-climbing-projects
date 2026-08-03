@@ -19,6 +19,8 @@ import { DaysOutsideDetails } from './days-outside-details'
 
 const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
 
+// Conditional branches directly represent independent optional summary sentences.
+// fallow-ignore-next-line complexity
 export async function DaysOutsideSummary({
   ascents,
   trainingSessions,

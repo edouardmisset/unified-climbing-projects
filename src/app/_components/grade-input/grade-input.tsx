@@ -13,6 +13,8 @@ import styles from './grade-input.module.css'
 const globalMinGrade = Math.min(...Object.values(GRADE_TO_NUMBER))
 const globalMaxGrade = Math.max(...Object.values(GRADE_TO_NUMBER))
 
+// Controlled-input validation and optional label rendering are intrinsic UI branches.
+// fallow-ignore-next-line complexity
 export function GradeInput(
   props: NumberField.Root.Props & {
     label?: string

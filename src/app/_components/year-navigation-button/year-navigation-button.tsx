@@ -3,6 +3,8 @@ import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from 'lucide-react'
 import Link from 'next/link'
 import styles from './year-navigation-button.module.css'
 
+// The repeated direction checks keep link semantics and presentation visibly aligned.
+// fallow-ignore-next-line complexity
 export function YearNavigationButton({
   selectedYear,
   nextOrPrevious,

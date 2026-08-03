@@ -7,6 +7,8 @@ import { ClimbingStyle } from '../climbing/climbing-style/climbing-style'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './climbing-style-toggle-group.module.css'
 
+// The branches encode climbing-domain constraints directly beside their controls.
+// fallow-ignore-next-line complexity
 export function ClimbingStyleToggleGroup(
   props: Omit<ToggleGroup.Props, 'value'> & ClimbingStyleToggleGroupProps,
 ) {

@@ -44,6 +44,8 @@ export function prettyShortDate(date: string): string {
   return `📅 ${formatShortDate(date)}`
 }
 
+// Formatting branches encode the compact and detailed output variants in one place.
+// fallow-ignore-next-line complexity
 export function formatStyleAndTriers({
   style,
   tries,

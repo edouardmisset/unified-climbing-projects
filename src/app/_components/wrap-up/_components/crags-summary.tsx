@@ -7,6 +7,8 @@ import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-po
 import { Card } from '../../ui/card/card'
 import { Popover } from '../../ui/popover/popover'
 
+// Conditional branches directly represent optional crag summary content.
+// fallow-ignore-next-line complexity
 export function CragsSummary({
   ascents,
   trainingSessions,

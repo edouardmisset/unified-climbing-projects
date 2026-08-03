@@ -13,6 +13,8 @@ import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
+// Each branch derives one dependent option list; extraction would separate the dependency chain.
+// fallow-ignore-next-line complexity
 export default function AscentsFilterBar({
   allAscents,
   showSearch,

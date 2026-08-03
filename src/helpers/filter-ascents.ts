@@ -41,22 +41,44 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
   return ascents.filter(ascent => {
     const ascentDate = new Date(ascent.date)
     return (
-      (grade === undefined || stringEqualsCaseInsensitive(ascent.grade, grade)) &&
-      (discipline === undefined || ascent.discipline === discipline) &&
-      (year === undefined || isDateInYear(ascentDate, year)) &&
-      (style === undefined || ascent.style === style) &&
-      (profile === undefined || ascent.profile === profile) &&
-      (rating === undefined || ascent.rating === rating) &&
-      (height === undefined || ascent.height === height) &&
-      (holds === undefined || ascent.holds === holds) &&
-      (tries === undefined || ascent.tries === tries) &&
-      (crag === undefined || stringEqualsCaseInsensitive(ascent.crag, crag)) &&
-      (area === undefined ||
-        (ascent.area !== undefined && stringEqualsCaseInsensitive(ascent.area, area))) &&
-      (period === undefined ||
-        (period in PERIOD_TO_DATES && isDateInRange(ascentDate, { ...PERIOD_TO_DATES[period] })))
+      matchesText(ascent.grade, grade) &&
+      matchesValue(ascent.discipline, discipline) &&
+      matchesYear(ascentDate, year) &&
+      matchesValue(ascent.style, style) &&
+      matchesValue(ascent.profile, profile) &&
+      matchesValue(ascent.rating, rating) &&
+      matchesValue(ascent.height, height) &&
+      matchesValue(ascent.holds, holds) &&
+      matchesValue(ascent.tries, tries) &&
+      matchesText(ascent.crag, crag) &&
+      matchesOptionalText(ascent.area, area) &&
+      matchesPeriod(ascentDate, period)
     )
   })
+}
+
+function matchesValue<T>(actual: T | undefined, expected: T | undefined): boolean {
+  return expected === undefined || actual === expected
+}
+
+function matchesText(actual: string, expected: string | undefined): boolean {
+  return expected === undefined || stringEqualsCaseInsensitive(actual, expected)
+}
+
+function matchesOptionalText(actual: string | undefined, expected: string | undefined): boolean {
+  if (expected === undefined) return true
+  return actual !== undefined && stringEqualsCaseInsensitive(actual, expected)
+}
+
+function matchesYear(date: Date, year: number | undefined): boolean {
+  return year === undefined || isDateInYear(date, year)
+}
+
+function matchesPeriod(date: Date, period: NonNullable<OptionalAscentFilter>['period']): boolean {
+  return (
+    period === undefined ||
+    (period in PERIOD_TO_DATES && isDateInRange(date, { ...PERIOD_TO_DATES[period] }))
+  )
 }
 
 export function getHardestAscent(ascents: Ascent[]): Ascent | undefined {
