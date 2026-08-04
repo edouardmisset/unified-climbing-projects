@@ -1,4 +1,3 @@
-// oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { z } from '~/helpers/zod'

@@ -31,6 +31,6 @@ export function getAscentsPerYearByGrade(ascents: Ascent[]): {
       frequency[grade] += 1
     }
 
-    return { year, ...frequency }
+    return Object.assign({ year }, frequency)
   })
 }

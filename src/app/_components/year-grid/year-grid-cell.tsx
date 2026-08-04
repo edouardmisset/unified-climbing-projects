@@ -108,19 +108,22 @@ const getAdjustedBackgroundColor = ({
   backgroundColor?: string
   date: string
 }): CSSProperties['backgroundColor'] => {
-  if (backgroundColor !== undefined && backgroundColor !== '') return backgroundColor
+  if (backgroundColor === undefined || backgroundColor === '') {
+    if (date === '') return 'transparent'
 
-  const day = new Date(date).getDay()
-  const isWeekend = day === 0 || day === SATURDAY_DAY_NUMBER
+    const day = new Date(date).getDay()
+    const isWeekend = day === 0 || day === SATURDAY_DAY_NUMBER
 
-  if (date === '') return 'transparent'
-  if (isWeekend) return 'var(--surface-3)'
+    if (isWeekend) return 'var(--surface-3)'
+  }
+
+  return backgroundColor
 }
 
 const getOutlineForToday = (date: string): CSSProperties['outline'] => {
-  if (date === '') return
+  if (date === '' || !datesEqual(new Date(date), new Date())) return
 
-  if (datesEqual(new Date(date), new Date())) return '2px solid var(--text-1)'
+  return '2px solid var(--text-1)'
 }
 
 type YearGridCellProps = Omit<DayDescriptor, 'shortText' | 'title'> & {

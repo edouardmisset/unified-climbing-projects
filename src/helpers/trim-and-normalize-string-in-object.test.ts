@@ -93,7 +93,6 @@ describe('trimAndNormalizeStringsInObject', () => {
     }
     const result = trimAndNormalizeStringsInObject(input)
 
-    // oxlint-disable-next-line unicorn/no-null
     expect(result.nullValue).toBeNull()
     expect(result.undefinedValue).toBeUndefined()
   })

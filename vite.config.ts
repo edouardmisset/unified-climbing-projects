@@ -208,6 +208,8 @@ export default defineConfig({
   },
   lint: {
     options: {
+      denyWarnings: true,
+      reportUnusedDisableDirectives: 'error',
       typeAware: true,
       typeCheck: true,
     },
@@ -216,7 +218,7 @@ export default defineConfig({
       'eslint-plugin-react-you-might-not-need-an-effect',
       'eslint-plugin-compat',
     ],
-    plugins: ['react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
+    plugins: ['oxc', 'react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
     categories: {
       correctness: 'error',
       suspicious: 'warn',
@@ -240,6 +242,7 @@ export default defineConfig({
       'eslint/no-implicit-coercion': 'error',
       'eslint/no-inline-comments': 'off',
       'eslint/no-plusplus': 'off',
+      'eslint/prefer-object-spread': 'off',
       'eslint/no-return-assign': 'error',
       'eslint/no-undefined': 'off',
       'eslint/no-use-before-define': 'off',
@@ -263,6 +266,10 @@ export default defineConfig({
       'no-ternary': 'off',
       'no-unassigned-import': 'off',
       'operator-assignment': 'error',
+      // Modern syntax is part of the repository's supported Node and browser targets.
+      'oxc/no-async-await': 'off',
+      'oxc/no-optional-chaining': 'off',
+      'oxc/no-rest-spread-properties': 'off',
       'prefer-const': 'error',
       'prefer-destructuring': 'warn',
       'prefer-exponentiation-operator': 'warn',
@@ -272,6 +279,7 @@ export default defineConfig({
       'promise/prefer-await-to-then': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'error',
+      'react/react-compiler': 'error',
       'react-you-might-not-need-an-effect/no-adjust-state-on-prop-change': 'warn',
       'react-you-might-not-need-an-effect/no-chain-state-updates': 'warn',
       'react-you-might-not-need-an-effect/no-derived-state': 'warn',
@@ -298,7 +306,7 @@ export default defineConfig({
       'typescript/explicit-function-return-type': 'off',
       'typescript/explicit-member-accessibility': 'off',
       'typescript/explicit-module-boundary-types': 'off',
-      'typescript/no-explicit-any': 'off',
+      'typescript/no-explicit-any': 'error',
       'typescript/no-non-null-assertion': 'warn',
       'typescript/no-unsafe-type-assertion': 'off',
       'typescript/prefer-readonly-parameter-types': 'off',

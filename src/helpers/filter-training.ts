@@ -1,4 +1,3 @@
-// oxlint-disable complexity
 import { isDateInRange } from '@edouardmisset/date'
 import type { LocationType } from '~/app/_components/filter-bar/types'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'

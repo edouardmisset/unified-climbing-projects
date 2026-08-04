@@ -101,13 +101,14 @@ function formatGradeTick(value: unknown): string {
 }
 
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
-  const data = getAscentsVolumeAndGradesPerYear(ascents).map(datum => ({
-    ...datum,
-    avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
-    avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
-    maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
-    maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
-  }))
+  const data = getAscentsVolumeAndGradesPerYear(ascents).map(datum =>
+    Object.assign({}, datum, {
+      avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
+      avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
+      maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
+      maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
+    }),
+  )
 
   const gradeDomain = getGradeDomain(data)
 

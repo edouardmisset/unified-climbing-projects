@@ -16,7 +16,6 @@ function TrainingSessionsBarcodeComponent(props: TrainingSessionsBarcodeProps) {
   return (
     <Barcode>
       {yearlyTraining.map((sessions, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
         <TrainingBar key={sessions[0]?.date ?? `week-${index}`} weeklyTraining={sessions} />
       ))}
     </Barcode>

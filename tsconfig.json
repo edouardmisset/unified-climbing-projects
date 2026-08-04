@@ -9,10 +9,20 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    // "exactOptionalPropertyTypes": true, // maybe enable it later
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "checkJs": true,
     /* Bundled projects */
     "lib": ["dom", "ES2025"],
