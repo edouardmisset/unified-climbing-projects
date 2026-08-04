@@ -24,6 +24,7 @@
     "test:visual": "vp test --project=visual --reporter=dot",
     "test:visual:update": "vp test run --project=visual -u --reporter=dot",
     "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test smoke.spec.ts view-transitions.spec.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:all": "vp run test:unit:silent && vp run test:visual && vp run test:e2e",
     "test:coverage": "vp test --project=frontend --project=convex --project=components --coverage --reporter=dot --silent=passed-only",
