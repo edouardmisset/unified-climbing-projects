@@ -68,8 +68,8 @@ test.describe('authenticated smoke test', () => {
     await expectPageHeading(page, '/ascents/top-ten', 'Top Ten')
     await expectPageHeading(page, '/ascents/dashboard', 'Dashboard')
     await expectPageHeading(page, '/ascents/calendar', 'Ascents Calendar')
-    await expectPageHeading(page, '/ascents/barcode', /^(?:Ascents Barcode|Not Found)$/u)
-    await expectPageHeading(page, '/ascents/qr-code', /^(?:Ascents QR|Not Found)$/u)
+    await expectPageHeading(page, '/ascents/barcode', 'Ascents Barcode')
+    await expectPageHeading(page, '/ascents/qr-code', 'Ascents QR')
 
     await page.goto('/ascents/e2e-missing-ascent')
     await expect(page).toHaveURL(/\/ascents\/e2e-missing-ascent$/u)
@@ -78,8 +78,8 @@ test.describe('authenticated smoke test', () => {
     await expectPageHeading(page, '/training-sessions', 'Training')
     await expectPageHeading(page, '/training-sessions/dashboard', 'Training Dashboard')
     await expectPageHeading(page, '/training-sessions/calendar', 'Training Calendar')
-    await expectPageHeading(page, '/training-sessions/barcode', /^(?:Training Barcode|Not Found)$/u)
-    await expectPageHeading(page, '/training-sessions/qr-code', /^(?:Training QR|Not Found)$/u)
+    await expectPageHeading(page, '/training-sessions/barcode', 'Training Barcode')
+    await expectPageHeading(page, '/training-sessions/qr-code', 'Training QR')
 
     await page.goto('/ascent-form')
     await expect(page).toHaveURL(/\/log$/u)
