@@ -17,10 +17,10 @@ permissions:
   contents: read
 
 jobs:
-  check:
-    name: Format Lint Typecheck Test
+  ci:
+    name: Format Lint Typecheck Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     # skip pushes that are just a merged/squashed PR already validated on the pull_request event
     if: |
       github.event_name != 'push' ||
@@ -37,8 +37,34 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Check format, lint, and type safety
         run: pnpm run check
 
-      - name: Run unit tests
-        run: pnpm run test:unit:silent
+      - name: Run tests with coverage gates
+        run: pnpm exec vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only
+
+      - name: Run integration tests
+        run: pnpm run test:integration
+
+      - name: Generate Linux baselines for review
+        if: failure()
+        run: pnpm exec vp test run --project=integration-visual -u --reporter=dot
+
+      - name: Upload Linux baselines
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-linux-baselines-${{ github.run_id }}
+          path: src/**/__screenshots__/**/*-linux.png
+
+      - name: Run read-only smoke tests
+        run: pnpm run test:e2e:ci -- smoke.spec.ts view-transitions.spec.ts
+        env:
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          E2E_CLERK_USER_EMAIL: ${{ secrets.E2E_CLERK_USER_EMAIL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+          NEXT_PUBLIC_ENV: test

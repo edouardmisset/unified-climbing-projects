@@ -62,7 +62,8 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /.vitest-attachments/
-**/__screenshots__/
+**/__screenshots__-actual/
+**/__screenshots__-diff/
 
 # Convex
 /convex/_generated/

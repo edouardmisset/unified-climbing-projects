@@ -47,8 +47,14 @@ deployment environment.
 
 ## Testing
 
-- Unit tests: `vp run test:unit`
+- Unit tests: `vp run test`
+- Integration tests: `vp run test:integration`
+- Update visual baselines: `vp run test:integration --run -u`
+- Read-only E2E smoke: `vp run test:e2e -- smoke.spec.ts view-transitions.spec.ts`
 - All tests: `vp run test:all`
+
+The suite boundaries, fixture policy, visual review workflow, and CI requirements are documented in
+[`docs/testing.md`](docs/testing.md).
 
 The owner-isolation contract is documented in
 [`docs/acceptance-and-isolation.md`](docs/acceptance-and-isolation.md).

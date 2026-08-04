@@ -6,13 +6,37 @@ import { defineConfig } from 'vite-plus'
 
 const compileTarget = 'esnext'
 
-// Charts (recharts' ResponsiveContainer needs real layout/ResizeObserver) and
-// other highly visual components (QR codes, barcodes, calendars) are
-// exercised in a real browser instead of happy-dom, so they're carved out of
-// the "frontend" project below and run under "components" instead.
+// React behavior belongs to the integration suite. Charts (recharts'
+// ResponsiveContainer needs real layout/ResizeObserver) and other highly
+// visual components are exercised in a real browser instead of happy-dom.
 const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
+const VISUAL_TEST_GLOB =
+  'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.visual.test.tsx'
+const DOM_INTEGRATION_TEST_GLOB = 'src/**/*.test.tsx'
 
 export default defineConfig({
+  run: {
+    cache: {
+      scripts: true,
+    },
+    tasks: {
+      'build:next': {
+        command: 'next build',
+        // Next reads its previous build state before replacing it. Source and
+        // configuration inputs remain auto-tracked; generated state does not.
+        input: [{ auto: true }, '!.next/**'],
+        output: ['.next/**'],
+      },
+      'test:e2e': {
+        command: 'playwright test',
+        // Playwright replaces its previous report and results, while Next's dev
+        // server updates .next. None of that generated state is an e2e input.
+        input: [{ auto: true }, '!.next/**', '!playwright-report/**', '!test-results/**'],
+        // A successful cached test run does not need generated reports restored.
+        output: [],
+      },
+    },
+  },
   plugins: [react()],
   test: {
     globals: false,
@@ -33,6 +57,26 @@ export default defineConfig({
         '**/*.config.*',
         '**/types.ts',
       ],
+      thresholds: {
+        statements: 70,
+        functions: 65,
+        branches: 65,
+        'convex/imports.ts': {
+          statements: 90,
+          functions: 85,
+          branches: 80,
+        },
+        'src/services/imports.ts': {
+          statements: 95,
+          functions: 90,
+          branches: 85,
+        },
+        'src/app/settings/{actions,export-controls,import-workspace}.{ts,tsx}': {
+          statements: 85,
+          functions: 80,
+          branches: 75,
+        },
+      },
     },
     // Convex functions run in a runtime closer to Vercel's Edge Runtime than
     // to Node/happy-dom, and their tests must not load the DOM-testing setup
@@ -40,10 +84,15 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        resolve: {
+          alias: {
+            'server-only': path.join(import.meta.dirname, './src/testing/server-only-stub.ts'),
+          },
+        },
         test: {
-          name: 'frontend',
-          include: ['src/**/*.test.{ts,tsx}'],
-          exclude: [BROWSER_TEST_GLOB],
+          name: 'unit',
+          include: ['src/**/*.test.ts'],
+          exclude: ['src/services/**/*.test.ts', 'src/app/**/actions.test.ts'],
         },
       },
       {
@@ -51,8 +100,25 @@ export default defineConfig({
         test: {
           environment: 'edge-runtime',
           include: ['convex/**/*.test.ts'],
-          name: 'convex',
+          name: 'integration-convex',
           setupFiles: [],
+        },
+      },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            'server-only': path.join(import.meta.dirname, './src/testing/server-only-stub.ts'),
+          },
+        },
+        test: {
+          name: 'integration-dom',
+          include: [
+            DOM_INTEGRATION_TEST_GLOB,
+            'src/services/**/*.test.ts',
+            'src/app/**/actions.test.ts',
+          ],
+          exclude: [BROWSER_TEST_GLOB],
         },
       },
       {
@@ -64,8 +130,9 @@ export default defineConfig({
           },
         },
         test: {
-          name: 'components',
+          name: 'integration-browser',
           include: [BROWSER_TEST_GLOB],
+          exclude: [VISUAL_TEST_GLOB],
           environment: 'node',
           setupFiles: [],
           browser: {
@@ -76,16 +143,46 @@ export default defineConfig({
           },
         },
       },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
+          },
+        },
+        test: {
+          name: 'integration-visual',
+          include: [VISUAL_TEST_GLOB],
+          environment: 'node',
+          setupFiles: ['./vitest.visual.setup.ts'],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            viewport: { height: 720, width: 1_280 },
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: 'pixelmatch',
+                comparatorOptions: { allowedMismatchedPixelRatio: 0.005 },
+                resolveScreenshotPath: ({ arg, ext, root, testFileDirectory, testFileName }) =>
+                  path.join(
+                    root,
+                    testFileDirectory,
+                    '__screenshots__',
+                    testFileName,
+                    `${arg}-${process.platform}${ext}`,
+                  ),
+              },
+            },
+          },
+        },
+      },
     ],
   },
   resolve: {
     alias: {
       '~': path.join(import.meta.dirname, './src'),
-    },
-  },
-  run: {
-    cache: {
-      scripts: true,
     },
   },
   fmt: {
