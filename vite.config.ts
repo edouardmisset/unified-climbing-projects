@@ -35,6 +35,26 @@ export default defineConfig({
         '**/*.config.*',
         '**/types.ts',
       ],
+      thresholds: {
+        statements: 70,
+        functions: 65,
+        branches: 65,
+        'convex/imports.ts': {
+          statements: 90,
+          functions: 85,
+          branches: 80,
+        },
+        'src/services/imports.ts': {
+          statements: 95,
+          functions: 90,
+          branches: 85,
+        },
+        'src/app/settings/{actions,export-controls,import-workspace}.{ts,tsx}': {
+          statements: 85,
+          functions: 80,
+          branches: 75,
+        },
+      },
     },
     // Convex functions run in a runtime closer to Vercel's Edge Runtime than
     // to Node/happy-dom, and their tests must not load the DOM-testing setup

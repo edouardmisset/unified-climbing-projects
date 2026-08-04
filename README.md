@@ -48,7 +48,14 @@ deployment environment.
 ## Testing
 
 - Unit tests: `vp run test:unit`
+- Coverage gates: `vp run test:coverage`
+- Visual regression: `vp run test:visual`
+- Update visual baselines: `vp run test:visual:update`
+- Read-only E2E smoke: `vp run test:e2e:smoke`
 - All tests: `vp run test:all`
+
+The suite boundaries, fixture policy, visual review workflow, and CI requirements are documented in
+[`docs/testing.md`](docs/testing.md).
 
 The owner-isolation contract is documented in
 [`docs/acceptance-and-isolation.md`](docs/acceptance-and-isolation.md).
