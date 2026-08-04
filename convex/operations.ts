@@ -59,17 +59,18 @@ export const deleteOwnerData = internalAction({
   handler: async (ctx, args) => {
     const deleted = { ascents: 0, importJobs: 0, training: 0 }
     for (const table of ['ascents', 'training', 'importJobs'] as const) {
-      let batchCount = 0
-      do {
+      let hasMoreRecords = true
+      while (hasMoreRecords) {
         // Deletion is intentionally sequential so each mutation remains bounded.
         // eslint-disable-next-line no-await-in-loop
-        batchCount = await ctx.runMutation(internal.operations.deleteOwnerBatch, {
+        const batchCount = await ctx.runMutation(internal.operations.deleteOwnerBatch, {
           batchSize: args.batchSize,
           ownerId: args.ownerId,
           table,
         })
         deleted[table] += batchCount
-      } while (batchCount > 0)
+        hasMoreRecords = batchCount > 0
+      }
     }
     return deleted
   },
