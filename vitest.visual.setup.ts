@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react'
 import { afterEach, beforeEach } from 'vite-plus/test'
-import '@fontsource/roboto/400.css'
+import '@fontsource/atkinson-hyperlegible/400.css'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -27,12 +27,12 @@ beforeEach(() => {
       transition: none !important;
     }
     :root {
-      --font-system-ui: 'Roboto';
-      --font-humanist: 'Roboto';
-      --font-monospace-code: 'Roboto';
-      --font-handwritten: 'Roboto';
+      --font-system-ui: 'Atkinson Hyperlegible';
+      --font-humanist: 'Atkinson Hyperlegible';
+      --font-monospace-code: 'Atkinson Hyperlegible';
+      --font-handwritten: 'Atkinson Hyperlegible';
     }
-    body { background: white; font-family: 'Roboto'; }
+    body { background: white; font-family: 'Atkinson Hyperlegible'; }
   `
   globalThis.document.head.append(style)
 })

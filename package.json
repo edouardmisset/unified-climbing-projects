@@ -65,7 +65,7 @@
     "@clerk/testing": "^2.2.15",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
-    "@fontsource/roboto": "^5.3.0",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
     "@next/env": "^16.2.12",
     "@playwright/test": "1.62.0",
     "@shopify/eslint-plugin": "^50.0.0",
