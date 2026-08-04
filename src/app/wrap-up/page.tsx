@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import WrapUp from '~/app/_components/wrap-up/wrap-up'
 
-export default async function Page() {
+export default function Page() {
   return <WrapUp />
 }
 

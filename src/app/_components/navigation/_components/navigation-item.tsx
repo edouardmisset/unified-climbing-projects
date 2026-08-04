@@ -8,7 +8,7 @@ type NavigationItemProps = {
 }
 
 function splitNavigationLabel(label: string) {
-  const [icon = label, ...labelParts] = label.trim().split(/\s+/)
+  const [icon = label, ...labelParts] = label.trim().split(/\s+/u)
   return {
     icon,
     text: labelParts.join(' ') || label,

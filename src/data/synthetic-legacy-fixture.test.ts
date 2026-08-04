@@ -21,7 +21,7 @@ describe('synthetic legacy fixture', () => {
   })
 
   it('matches the canonical ascent acceptance expectations', () => {
-    const ascents = SYNTHETIC_ASCENT_FIXTURES.map(toCanonicalAscentRecord)
+    const ascents = SYNTHETIC_ASCENT_FIXTURES.map(ascent => toCanonicalAscentRecord(ascent))
     const latestAscent = ascents.find(
       ({ _id }) => _id === SYNTHETIC_LEGACY_EXPECTATIONS.latestAscent.id,
     )
@@ -38,14 +38,16 @@ describe('synthetic legacy fixture', () => {
   })
 
   it('matches the canonical training-session acceptance expectations', () => {
-    const sessions = SYNTHETIC_TRAINING_SESSION_FIXTURES.map(toCanonicalTrainingSessionRecord)
+    const sessions = SYNTHETIC_TRAINING_SESSION_FIXTURES.map(session =>
+      toCanonicalTrainingSessionRecord(session),
+    )
 
     expect(sessions).toHaveLength(SYNTHETIC_LEGACY_EXPECTATIONS.trainingSessionCount)
     expect(sessions.map(({ type }) => type)).toStrictEqual(
       SYNTHETIC_LEGACY_EXPECTATIONS.trainingSessionTypes,
     )
-    expect(
-      sessions.flatMap(({ location }) => (location === undefined ? [] : location)),
-    ).toStrictEqual(SYNTHETIC_LEGACY_EXPECTATIONS.trainingSessionLocations)
+    expect(sessions.flatMap(({ location }) => location ?? [])).toStrictEqual(
+      SYNTHETIC_LEGACY_EXPECTATIONS.trainingSessionLocations,
+    )
   })
 })

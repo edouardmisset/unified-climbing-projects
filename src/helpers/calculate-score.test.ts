@@ -107,12 +107,11 @@ describe('calculateScore', () => {
     const averageGradeValue = fromGradeToNumber('7a')
     const volumeScore = averageGradeValue * currentYearAscents.length * COEFFICIENT_VOLUME
 
-    const hardestGradeValues = [...createHardestGradeMap(currentYearAscents).values()].map(
-      fromGradeToNumber,
+    const hardestGradeValues = [...createHardestGradeMap(currentYearAscents).values()].map(grade =>
+      fromGradeToNumber(grade),
     )
 
-    const hardestGradeValue =
-      hardestGradeValues[0] === undefined ? fromGradeToNumber(DEFAULT_GRADE) : hardestGradeValues[0]
+    const hardestGradeValue = hardestGradeValues[0] ?? fromGradeToNumber(DEFAULT_GRADE)
 
     const topTenScore =
       calculateTopTenScore(currentYearAscents) * hardestGradeValue * COEFFICIENT_TOP_TEN

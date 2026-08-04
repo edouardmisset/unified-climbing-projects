@@ -29,14 +29,30 @@ export const useAscentsQueryState = (): UseAscentsQueryStateReturn => {
     selectedRoute,
     selectedStyle,
     selectedYear,
-    setArea,
-    setCrag,
-    setDiscipline,
-    setGrade,
-    setPeriod,
-    setRoute,
-    setStyle,
-    setYear,
+    setArea: area => {
+      void setArea(area)
+    },
+    setCrag: crag => {
+      void setCrag(crag)
+    },
+    setDiscipline: discipline => {
+      void setDiscipline(discipline)
+    },
+    setGrade: grade => {
+      void setGrade(grade)
+    },
+    setPeriod: period => {
+      void setPeriod(period)
+    },
+    setRoute: route => {
+      void setRoute(route)
+    },
+    setStyle: style => {
+      void setStyle(style)
+    },
+    setYear: year => {
+      void setYear(year)
+    },
   }
 }
 

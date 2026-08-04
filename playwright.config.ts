@@ -18,7 +18,7 @@ export default defineConfig({
   },
   webServer: {
     command: 'next dev',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: process.env.CI === undefined,
     timeout: 120_000,
     url: 'http://127.0.0.1:3000',
   },

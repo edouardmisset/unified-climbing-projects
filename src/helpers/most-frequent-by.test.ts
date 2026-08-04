@@ -3,7 +3,7 @@ import { mostFrequentBy } from './most-frequent-by'
 
 describe('mostFrequentBy', () => {
   it('should return undefined for an empty array', () => {
-    const result = mostFrequentBy([], 'property')
+    const result = mostFrequentBy<{ property?: string }, 'property'>([], 'property')
     expect(result).toBeUndefined()
   })
 
@@ -57,7 +57,7 @@ describe('mostFrequentBy', () => {
   })
 
   it('should return undefined if all property values are undefined', () => {
-    const records = [{ property: undefined }, { property: undefined }]
+    const records: { property?: string }[] = [{ property: undefined }, { property: undefined }]
     const result = mostFrequentBy(records, 'property')
     expect(result).toBeUndefined()
   })

@@ -34,12 +34,11 @@ async function findMissingOutdoorSessions(): Promise<string[]> {
   return missingDays
 }
 
-findMissingOutdoorSessions()
-  .then(missingDays => {
-    globalThis.console.log(
-      `Missing outdoor sessions on the following days: ${missingDays.join(', ')}`,
-    )
-  })
-  .catch(error => {
-    globalThis.console.error('Error:', error)
-  })
+try {
+  const missingDays = await findMissingOutdoorSessions()
+  globalThis.console.log(
+    `Missing outdoor sessions on the following days: ${missingDays.join(', ')}`,
+  )
+} catch (error) {
+  globalThis.console.error('Error:', error)
+}

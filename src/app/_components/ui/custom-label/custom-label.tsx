@@ -13,8 +13,8 @@ type FormControlProps = {
 export function CustomLabel(props: FormControlProps) {
   const { id, label, title, children, className, labelClassName } = props
 
-  const controlClassName = `${styles.control}${className ? ` ${className}` : ''}`
-  const textClassName = `${styles.labelText}${labelClassName ? ` ${labelClassName}` : ''}`
+  const controlClassName = `${styles.control}${className === undefined || className === '' ? '' : ` ${className}`}`
+  const textClassName = `${styles.labelText}${labelClassName === undefined || labelClassName === '' ? '' : ` ${labelClassName}`}`
 
   return (
     <label className={controlClassName} htmlFor={id} title={title}>

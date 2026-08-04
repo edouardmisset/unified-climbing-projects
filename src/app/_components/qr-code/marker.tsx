@@ -6,8 +6,8 @@ const markerSize = 8
 const numberOfSquareInMarker = 4
 const squareIndices = Array.from({ length: numberOfSquareInMarker }, (_, index) => index)
 
-const leftRegEx = /left/i
-const topRegEx = /top/i
+const leftRegEx = /left/iu
+const topRegEx = /top/iu
 
 export const Marker = ({ placement }: { placement: MarkerPlacement }) => {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1

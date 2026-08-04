@@ -17,8 +17,8 @@ import {
   getYesterday,
 } from './date'
 
-const INVALID_DATE_REGEX = /Invalid date/
-const INVALID_ISO_DATE_STRING_REGEX = /Invalid ISO date string/
+const INVALID_DATE_REGEX = /Invalid date/u
+const INVALID_ISO_DATE_STRING_REGEX = /Invalid ISO date string/u
 
 describe('getWeekNumber', () => {
   it('should return the correct ISO week number for a given date', () => {

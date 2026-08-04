@@ -315,7 +315,7 @@ export function serializeCanonicalCsv(rows: readonly object[], columns: readonly
       'CSV serialization columns must be non-empty and unique',
     )
 
-  const records = [columns.map(serializeCsvCell).join(',')]
+  const records = [columns.map(column => serializeCsvCell(column)).join(',')]
 
   for (const [rowIndex, row] of rows.entries()) {
     const values = columns.map((column, columnIndex) => {

@@ -28,7 +28,7 @@ export const get = query({
       .query('ascents')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(toPublicAscent)
+    return records.map(record => toPublicAscent(record))
   },
 })
 

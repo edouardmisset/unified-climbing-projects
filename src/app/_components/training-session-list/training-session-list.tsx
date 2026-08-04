@@ -36,7 +36,7 @@ export const TrainingSessionList = ({ trainingSessions }: TrainingSessionListPro
                 {prettyShortDate(date)}
               </td>
               <td className={styles.cell} title={location}>
-                {location || '—'}
+                {location === undefined || location === '' ? '—' : location}
               </td>
               <td className={styles.cell} title={type}>
                 {type}

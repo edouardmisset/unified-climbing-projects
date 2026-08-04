@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { TopTenContent } from './top-ten-content'
 
-export default async function Page() {
+export default function Page() {
   return (
     <Layout title='Top Ten'>
       <Suspense fallback={<Loader />}>

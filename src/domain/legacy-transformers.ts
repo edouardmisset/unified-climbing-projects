@@ -176,7 +176,8 @@ function removeUndefinedValues(value: Record<string, unknown>): Record<string, u
 }
 
 function normalizeOptionalText(value: string | undefined): string | undefined {
-  return value?.trim() ? value : undefined
+  const trimmedValue = value?.trim()
+  return trimmedValue === undefined || trimmedValue === '' ? undefined : value
 }
 
 function selectCanonicalAscent(record: AscentDomain): AscentDomain {

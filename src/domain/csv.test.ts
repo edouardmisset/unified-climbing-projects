@@ -19,7 +19,7 @@ const exampleContract = {
   rowSchema: {
     parse(input: unknown): ExampleRow {
       const row = input as Record<string, string>
-      if (!row.name) throw new Error('name is required')
+      if (row.name === undefined || row.name === '') throw new Error('name is required')
       return row as ExampleRow
     },
   },

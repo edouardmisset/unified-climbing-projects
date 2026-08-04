@@ -16,7 +16,7 @@ export function Header() {
     route => pathname === route || pathname.startsWith(`${route}/`),
   )
 
-  if (isPublicPage) return <></>
+  if (isPublicPage) return
 
   return (
     <header className={styles.header} data-desktop-expanded={desktopNavExpanded}>

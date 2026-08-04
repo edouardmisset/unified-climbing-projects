@@ -8,7 +8,7 @@ const password = process.env.E2E_CLERK_USER_PASSWORD
 
 test.describe('authenticated smoke test', () => {
   test.skip(
-    !email || !password,
+    email === undefined || email === '' || password === undefined || password === '',
     'Set E2E_CLERK_USER_EMAIL and E2E_CLERK_USER_PASSWORD (a dedicated Clerk test-mode user) to run this test.',
   )
 
@@ -25,7 +25,7 @@ test.describe('authenticated smoke test', () => {
     await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible()
 
     await page.goto('/ascent-form')
-    await expect(page).toHaveURL(/\/log$/)
+    await expect(page).toHaveURL(/\/log$/u)
     await expect(page.getByRole('heading', { name: 'Log 📋' })).toBeVisible()
 
     await page.goto('/settings')

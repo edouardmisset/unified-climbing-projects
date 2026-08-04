@@ -21,8 +21,7 @@ const isColorGrade = (g: Grade): g is ColorGrade => g in ASCENT_GRADE_TO_COLOR
  * @returns {string} The background color for the given grade.
  */
 export function fromGradeToBackgroundColor(grade?: Grade): string {
-  const isValidColorGrade = grade && grade in ASCENT_GRADE_TO_COLOR && isColorGrade(grade)
-  if (isValidColorGrade) return ASCENT_GRADE_TO_COLOR[grade]
+  if (grade !== undefined && isColorGrade(grade)) return ASCENT_GRADE_TO_COLOR[grade]
 
   return 'black'
 }
@@ -108,7 +107,7 @@ export function fromPointToGrade(
   )
   const matchingGrade = matchingEntry?.[0]
 
-  if (!matchingGrade || !isPointsGrade(matchingGrade)) {
+  if (matchingGrade === undefined || !isPointsGrade(matchingGrade)) {
     globalThis.console.log(
       `Error: No matching grade found for the given points (${adjustedPoints}).`,
     )

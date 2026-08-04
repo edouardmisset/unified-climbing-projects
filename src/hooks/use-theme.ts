@@ -13,7 +13,7 @@ const THEME_CHANGE_EVENT = 'themechange'
 function readStoredTheme(): ThemeMode | undefined {
   try {
     const stored = globalThis.localStorage.getItem(THEME_STORAGE_KEY)
-    return stored && isThemeMode(stored) ? stored : undefined
+    return stored !== null && stored !== '' && isThemeMode(stored) ? stored : undefined
   } catch {
     return undefined
   }

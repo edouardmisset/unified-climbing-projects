@@ -45,7 +45,9 @@ export function usePersistedLogDraft({
   subscribe,
 }: UsePersistedLogDraftOptions): { resetDraft: () => void } {
   const { isLoaded, user } = useUser()
+  // oxlint-disable-next-line unicorn/no-useless-undefined -- React 19 requires an initial ref value.
   const saveTimeout = useRef<ReturnType<typeof globalThis.setTimeout>>(undefined)
+  // oxlint-disable-next-line unicorn/no-useless-undefined -- React 19 requires an initial ref value.
   const pendingDraft = useRef<LogDraft>(undefined)
   const initialDraftJson = JSON.stringify(initialDraft)
   const storageKey =

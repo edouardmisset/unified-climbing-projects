@@ -37,7 +37,7 @@ export function AscentCard({ ascent }: { ascent: Ascent }) {
   } = ascent
 
   const maxCommentLength = 120
-  const isLongComment = comments && comments.length > maxCommentLength
+  const isLongComment = comments !== undefined && comments.length > maxCommentLength
   const stylesDependingOnComments: CommentDirectionStyle = {
     '--direction': isLongComment ? 'row' : 'column',
   }

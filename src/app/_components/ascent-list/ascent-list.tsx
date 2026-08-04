@@ -53,7 +53,7 @@ export const AscentList = ({
     if (!isOpen) setSelectedAscent(undefined)
   }
 
-  const totalAscentPoints = sum(ascents.map(fromAscentToPoints))
+  const totalAscentPoints = sum(ascents.map(ascent => fromAscentToPoints(ascent)))
 
   const columns =
     BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)

@@ -49,7 +49,7 @@ export function GradeInput(
       value={value}
     >
       <NumberField.ScrubArea className={styles.ScrubArea}>
-        {label ? (
+        {label !== undefined && label !== '' ? (
           <label className={`${customLabelStyles.labelText} ${styles.Label}`} htmlFor={id}>
             {label}
           </label>

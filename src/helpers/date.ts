@@ -7,7 +7,7 @@ import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
-const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/u
 // A known Monday, used as the base for generating weekday labels
 const REFERENCE_MONDAY = Temporal.PlainDate.from('2024-01-01')
 
@@ -38,14 +38,13 @@ function toValidPlainDates(data: StringDate[]): Temporal.PlainDate[] {
   const uniqueDatesAsStrings = [...new Set(data.map(({ date }) => date))]
 
   return uniqueDatesAsStrings
-    .map(dateString => {
+    .flatMap(dateString => {
       try {
-        return Temporal.PlainDate.from(dateString)
+        return [Temporal.PlainDate.from(dateString)]
       } catch {
-        return undefined
+        return []
       }
     })
-    .filter(date => date !== undefined)
     .toSorted((a, b) => Temporal.PlainDate.compare(a, b))
 }
 

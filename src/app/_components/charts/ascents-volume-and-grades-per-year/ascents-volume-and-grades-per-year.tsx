@@ -158,7 +158,7 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
           <ChartTooltip
             formatter={(value, name) => {
               if (typeof value !== 'number') return [value, name]
-              if (!name?.toString().includes('Grade')) return [value, name]
+              if (name?.toString().includes('Grade') !== true) return [value, name]
 
               return [fromNumberToGrade(clampGrade(Math.round(value))), name]
             }}

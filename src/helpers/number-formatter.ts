@@ -15,11 +15,11 @@ function buildCacheKey(options: Intl.NumberFormatOptions): string {
 }
 
 function getNumberFormatter(
-  options: Intl.NumberFormatOptions & { locale?: string } = { locale: FR_LOCALE },
+  options?: Intl.NumberFormatOptions & { locale?: string },
 ): Intl.NumberFormat {
   const normalizedOptions = {
     ...DEFAULT_NUMBER_FORMAT_OPTIONS,
-    locale: options.locale ?? FR_LOCALE,
+    locale: options?.locale ?? FR_LOCALE,
     ...options,
   } satisfies Intl.NumberFormatOptions
 

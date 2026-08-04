@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vite-plus/test'
 import { Card } from './card'
 
-const TEST_TITLE_REGEX = /test title/i
-const TEST_CONTENT_REGEX = /test content/i
-const CARD_CLASS_REGEX = /card/i
-const HEADER_REGEX = /header/i
-const SECTION_CONTENT_REGEX = /section content/i
-const ACTION_REGEX = /action/i
+const TEST_TITLE_REGEX = /test title/iu
+const TEST_CONTENT_REGEX = /test content/iu
+const CARD_CLASS_REGEX = /card/iu
+const HEADER_REGEX = /header/iu
+const SECTION_CONTENT_REGEX = /section content/iu
+const ACTION_REGEX = /action/iu
 
 describe('card Component', () => {
   it('renders children correctly', () => {

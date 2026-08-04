@@ -3,10 +3,10 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vite-plus/test'
 import { KeycapButton } from './keycap-button'
 
-const SUBMIT_REGEX = /submit/i
-const CLICK_ME_REGEX = /click me/i
-const DISABLED_REGEX = /disabled/i
-const KEYBOARD_TEST_REGEX = /keyboard test/i
+const SUBMIT_REGEX = /submit/iu
+const CLICK_ME_REGEX = /click me/iu
+const DISABLED_REGEX = /disabled/iu
+const KEYBOARD_TEST_REGEX = /keyboard test/iu
 
 describe('keycapButton Component', () => {
   it('renders button with label', () => {

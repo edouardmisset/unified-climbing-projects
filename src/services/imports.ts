@@ -27,8 +27,8 @@ export async function previewCanonicalImport(kind: ImportKind, rows: ImportRows)
   const token = await getConvexAuthToken()
   const duplicateInputs =
     kind === 'ascents'
-      ? (rows as AscentImportRow[]).map(createAscentFingerprintInput)
-      : (rows as TrainingSessionImportRow[]).map(createTrainingSessionFingerprintInput)
+      ? (rows as AscentImportRow[]).map(row => createAscentFingerprintInput(row))
+      : (rows as TrainingSessionImportRow[]).map(row => createTrainingSessionFingerprintInput(row))
   const duplicatesInFile = duplicateInputs.length - new Set(duplicateInputs).size
   const existingMatches: boolean[] = []
 

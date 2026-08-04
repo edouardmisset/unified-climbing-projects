@@ -27,13 +27,27 @@ export const useTrainingSessionsQueryState = (): UseTrainingSessionsQueryStateRe
     selectedYear,
     selectedDiscipline,
     selectedLocationType,
-    setLoad,
-    setLocation,
-    setPeriod,
-    setSessionType,
-    setYear,
-    setDiscipline,
-    setLocationType,
+    setLoad: load => {
+      void setLoad(load)
+    },
+    setLocation: location => {
+      void setLocation(location)
+    },
+    setPeriod: period => {
+      void setPeriod(period)
+    },
+    setSessionType: sessionType => {
+      void setSessionType(sessionType)
+    },
+    setYear: year => {
+      void setYear(year)
+    },
+    setDiscipline: discipline => {
+      void setDiscipline(discipline)
+    },
+    setLocationType: locationType => {
+      void setLocationType(locationType)
+    },
   }
 }
 

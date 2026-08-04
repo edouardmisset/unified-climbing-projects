@@ -32,7 +32,7 @@ export function calculateVersatilityPercentage(ascents: Ascent[]): number {
 
   for (const { holds, height, profile, style, crag } of ascents) {
     if (holds) uniqueHolds.add(holds)
-    if (height) uniqueHeights.add(height)
+    if (height !== undefined && height !== 0) uniqueHeights.add(height)
     if (profile) uniqueProfiles.add(profile)
     if (crag.trim() !== '') uniqueCrags.add(crag)
     uniqueStyles.add(style)
