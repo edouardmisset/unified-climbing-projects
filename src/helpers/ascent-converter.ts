@@ -56,7 +56,7 @@ export function fromGradeToClassName(grade?: Ascent['grade']): string | undefine
 export function fromAscentToPoints({ grade, style, discipline }: Ascent): number {
   // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
   const gradePoints = isPointsGrade(grade) ? GRADE_TO_POINTS[grade] : 0
-  const stylePoints = STYLE_TO_POINTS[style] ?? 0
+  const stylePoints = STYLE_TO_POINTS[style]
   const disciplineBonus = discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + disciplineBonus

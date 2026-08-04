@@ -10,8 +10,6 @@ function assertImportRequest(
   kind: 'ascents' | 'training',
   rows: AscentImportRow[] | TrainingSessionImportRow[],
 ): void {
-  if (kind !== 'ascents' && kind !== 'training') throw new Error('Invalid import kind')
-  if (!Array.isArray(rows)) throw new Error('Invalid import request')
   if (rows.length === 0 || rows.length > MAX_IMPORT_ROWS)
     throw new Error('Import must contain between 1 and 10,000 rows')
 }

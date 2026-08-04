@@ -7,12 +7,11 @@ export function frequencyBy<Object_ extends Record<string, string | number>>(
 ): Record<string, number> {
   const { ascending } = options ?? {}
 
-  const validItems = array.filter(item => item[key] !== undefined)
-  const distinctValues = [...new Set(validItems.map(item => item[key]))]
+  const distinctValues = [...new Set(array.map(item => item[key]))]
 
   const frequencyCount: Record<string, number> = {}
   for (const value of distinctValues) {
-    const count = validItems.filter(item => item[key] === value).length
+    const count = array.filter(item => item[key] === value).length
     frequencyCount[String(value)] = count
   }
 
