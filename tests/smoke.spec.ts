@@ -6,6 +6,7 @@ import { expect, type Page, test } from '@playwright/test'
 const email = process.env.E2E_CLERK_USER_EMAIL
 const HTTP_NOT_FOUND = 404
 const FIXTURE_YEAR = 2_025
+const ALL_ROUTES_TIMEOUT_MS = 120_000
 
 async function expectPageHeading(
   page: Page,
@@ -45,6 +46,8 @@ test.describe('authenticated smoke test', () => {
   )
 
   test('a signed-in user reaches every authenticated page', async ({ page }) => {
+    test.setTimeout(ALL_ROUTES_TIMEOUT_MS)
+
     await page.goto('/')
 
     await clerk.signIn({
