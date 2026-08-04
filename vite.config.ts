@@ -11,6 +11,8 @@ const compileTarget = 'esnext'
 // exercised in a real browser instead of happy-dom, so they're carved out of
 // the "frontend" project below and run under "components" instead.
 const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
+const VISUAL_TEST_GLOB =
+  'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.visual.test.tsx'
 
 export default defineConfig({
   plugins: [react()],
@@ -71,6 +73,7 @@ export default defineConfig({
         test: {
           name: 'components',
           include: [BROWSER_TEST_GLOB],
+          exclude: [VISUAL_TEST_GLOB],
           environment: 'node',
           setupFiles: [],
           browser: {
@@ -78,6 +81,41 @@ export default defineConfig({
             provider: playwright(),
             headless: true,
             instances: [{ browser: 'chromium' }],
+          },
+        },
+      },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
+          },
+        },
+        test: {
+          name: 'visual',
+          include: [VISUAL_TEST_GLOB],
+          environment: 'node',
+          setupFiles: ['./vitest.visual.setup.ts'],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            viewport: { height: 720, width: 1_280 },
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: 'pixelmatch',
+                comparatorOptions: { allowedMismatchedPixelRatio: 0.005 },
+                resolveScreenshotPath: ({ arg, ext, root, testFileDirectory, testFileName }) =>
+                  path.join(
+                    root,
+                    testFileDirectory,
+                    '__screenshots__',
+                    testFileName,
+                    `${arg}${ext}`,
+                  ),
+              },
+            },
           },
         },
       },
