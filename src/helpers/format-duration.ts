@@ -19,6 +19,12 @@ const DURATION_UNITS = [
   },
 ] as const
 
+const DURATION_FORMAT_KEYS = {
+  day: 'days',
+  month: 'months',
+  week: 'weeks',
+} as const
+
 type DurationPart = {
   value: number
   unit: (typeof DURATION_UNITS)[number]['unit']
@@ -50,22 +56,11 @@ function getDurationParts(totalDays: number): DurationPart[] {
 function fromDurationPartsToDurationFormatInput(
   durationParts: DurationPart[],
 ): DurationFormatInput {
-  return durationParts.reduce<DurationFormatInput>((formattedDuration, { unit, value }) => {
-    switch (unit) {
-      case 'month': {
-        return { ...formattedDuration, months: value }
-      }
-      case 'week': {
-        return { ...formattedDuration, weeks: value }
-      }
-      case 'day': {
-        return { ...formattedDuration, days: value }
-      }
-      default: {
-        return formattedDuration
-      }
-    }
-  }, {})
+  const formattedDuration: DurationFormatInput = {}
+
+  for (const { unit, value } of durationParts) formattedDuration[DURATION_FORMAT_KEYS[unit]] = value
+
+  return formattedDuration
 }
 
 export function formatFrenchDurationFromDays(totalDays: number): string {

@@ -11,12 +11,12 @@ import trainingSessionsData from '../../tests/fixtures/training-sessions.json'
  * so that component tests exercise realistic shapes and distributions instead
  * of hand-crafted fixtures.
  */
-export const sampleAscents: Ascent[] = ascentsData.map((row, index) => ({
-  ...ascentImportRowSchema.parse(row),
-  _id: `sample-ascent-${index}`,
-}))
+export const sampleAscents: Ascent[] = ascentsData.map((row, index) =>
+  Object.assign({}, ascentImportRowSchema.parse(row), { _id: `sample-ascent-${index}` }),
+)
 
-export const sampleTrainingSessions: TrainingSession[] = trainingSessionsData.map((row, index) => ({
-  ...trainingSessionImportRowSchema.parse(row),
-  _id: `sample-training-${index}`,
-}))
+export const sampleTrainingSessions: TrainingSession[] = trainingSessionsData.map((row, index) =>
+  Object.assign({}, trainingSessionImportRowSchema.parse(row), {
+    _id: `sample-training-${index}`,
+  }),
+)

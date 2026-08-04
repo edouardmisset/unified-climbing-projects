@@ -186,18 +186,20 @@ const createActorCases = (actor: IsolationOwner, otherOwner: IsolationOwner) =>
   ] as const satisfies readonly OwnerIsolationCase[]
 
 export const OWNER_ISOLATION_MATRIX = [
-  ...unauthenticatedCases.map(
-    (operation): OwnerIsolationCase => ({
+  ...unauthenticatedCases.map((operation): OwnerIsolationCase => {
+    const isolationCase: OwnerIsolationCase = {
       actor: 'unauthenticated',
       expectation: 'reject-unauthenticated',
       id: `unauthenticated-${operation}`,
       operation,
       phase: 'owner-migration',
-      ...((operation === 'read-ascent' || operation === 'read-training-session') && {
-        targetOwner: 'user-a',
-      }),
-    }),
-  ),
+    }
+
+    if (operation === 'read-ascent' || operation === 'read-training-session')
+      isolationCase.targetOwner = 'user-a'
+
+    return isolationCase
+  }),
   ...createActorCases('user-a', 'user-b'),
   ...createActorCases('user-b', 'user-a'),
 ] as const satisfies readonly OwnerIsolationCase[]

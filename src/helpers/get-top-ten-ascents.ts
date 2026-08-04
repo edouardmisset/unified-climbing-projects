@@ -20,7 +20,7 @@ export function getTopTenAscents(params: GetTopTenParams): Ascent[] {
       if (timeframe === 'year') return isDateInYear(date, year)
       return isDateInLast12Months(date).data === true
     })
-    .map(ascent => ({ ...ascent, points: fromAscentToPoints(ascent) }))
+    .map(ascent => Object.assign({}, ascent, { points: fromAscentToPoints(ascent) }))
     .toSorted((a, b) => b.points - a.points)
   return sortedAscentsWithPoints.slice(0, 10)
 }
