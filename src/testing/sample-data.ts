@@ -12,11 +12,9 @@ import trainingSessionsData from '../../tests/fixtures/training-sessions.json'
  * of hand-crafted fixtures.
  */
 export const sampleAscents: Ascent[] = ascentsData.map((row, index) =>
-  Object.assign({}, ascentImportRowSchema.parse(row), { _id: `sample-ascent-${index}` }),
+  Object.assign(ascentImportRowSchema.parse(row), { _id: `sample-ascent-${index}` }),
 )
 
 export const sampleTrainingSessions: TrainingSession[] = trainingSessionsData.map((row, index) =>
-  Object.assign({}, trainingSessionImportRowSchema.parse(row), {
-    _id: `sample-training-${index}`,
-  }),
+  Object.assign(trainingSessionImportRowSchema.parse(row), { _id: `sample-training-${index}` }),
 )

@@ -242,7 +242,6 @@ export default defineConfig({
       'eslint/no-implicit-coercion': 'error',
       'eslint/no-inline-comments': 'off',
       'eslint/no-plusplus': 'off',
-      // Oxc's retained map-spread rule recommends Object.assign to avoid mapped allocations.
       'eslint/prefer-object-spread': 'off',
       'eslint/no-return-assign': 'error',
       'eslint/no-undefined': 'off',
