@@ -126,7 +126,7 @@ export default defineConfig({
       nursery: 'warn',
       pedantic: 'warn',
       perf: 'warn',
-      // restriction: 'warn',
+      restriction: 'warn',
       style: 'warn',
     },
     rules: {
@@ -142,7 +142,12 @@ export default defineConfig({
       'eslint/no-else-return': 'warn',
       'eslint/no-implicit-coercion': 'error',
       'eslint/no-inline-comments': 'off',
+      'eslint/no-plusplus': 'off',
       'eslint/no-return-assign': 'error',
+      'eslint/no-undefined': 'off',
+      'eslint/no-use-before-define': 'off',
+      'eslint/no-console': ['warn', { allow: ['error'] }],
+      'eslint/no-void': ['warn', { allowAsStatement: true }],
       'eslint/require-await': 'off',
       'func-style': 'off',
       'id-length': 'off',
@@ -150,7 +155,9 @@ export default defineConfig({
       'import/exports-last': 'off',
       'import/group-exports': 'off',
       'import/max-dependencies': 'off',
+      'import/no-default-export': 'off',
       'import/no-named-export': 'off',
+      'import/no-relative-parent-imports': 'off',
       'import/prefer-default-export': 'off',
       'max-statements': 'off',
       'no-continue': 'off',
@@ -182,18 +189,27 @@ export default defineConfig({
       'react-perf/jsx-no-new-object-as-prop': 'warn',
       'react/exhaustive-deps': 'error',
       'react/jsx-max-depth': ['warn', { max: 8 }],
+      'react/forbid-component-props': 'off',
+      'react/jsx-filename-extension': 'off',
+      'react/jsx-no-literals': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/no-multi-comp': 'warn',
       'react/react-in-jsx-scope': 'off',
       'sort-imports': 'off',
       'sort-keys': 'off',
       'typescript/consistent-type-definitions': ['warn', 'type'],
+      'typescript/explicit-function-return-type': 'off',
+      'typescript/explicit-member-accessibility': 'off',
+      'typescript/explicit-module-boundary-types': 'off',
       'typescript/no-explicit-any': 'off',
       'typescript/no-non-null-assertion': 'warn',
       'typescript/no-unsafe-type-assertion': 'off',
       'typescript/prefer-readonly-parameter-types': 'off',
+      'typescript/promise-function-async': 'off',
       'typescript/prefer-reduce-type-parameter': 'error',
       'unicorn/no-nested-ternary': 'warn',
+      'unicorn/no-array-for-each': 'off',
+      'unicorn/no-array-reduce': 'off',
       'unicorn/no-unreadable-array-destructuring': 'warn',
       'unicorn/prefer-array-find': 'warn',
       'unicorn/prefer-array-flat-map': 'warn',
@@ -240,6 +256,34 @@ export default defineConfig({
     ],
     overrides: [
       {
+        files: ['src/app/layout.tsx'],
+        rules: {
+          // The blocking theme bootstrap is trusted static code, not user-provided HTML.
+          'react/no-danger': 'off',
+        },
+      },
+      {
+        files: ['src/app/_components/ui/keycap-button/keycap-button.tsx'],
+        rules: {
+          // The forwarded button type is defaulted to the valid `button` value.
+          'react/button-has-type': 'off',
+        },
+      },
+      {
+        files: ['src/style-imports.d.ts'],
+        rules: {
+          // An empty export marks wildcard declarations as an external module.
+          'unicorn/require-module-specifiers': 'off',
+        },
+      },
+      {
+        files: ['src/app/**/{page,layout,error,not-found,loading}.tsx'],
+        rules: {
+          // Next.js route modules intentionally export metadata alongside components.
+          'react/only-export-components': 'off',
+        },
+      },
+      {
         files: ['**/*.{ts,tsx}'],
         rules: {
           // Type-aware checking already reports undefined TypeScript names.
@@ -259,6 +303,7 @@ export default defineConfig({
           'vitest/no-importing-vitest-globals': 'off',
           'vitest/max-expects': 'off',
           'vitest/no-conditional-in-test': 'off',
+          'vitest/require-test-timeout': 'off',
           'vitest/prefer-each': 'off',
           'vitest/prefer-importing-vitest-globals': 'off',
           'vitest/prefer-called-times': 'off',
