@@ -55,9 +55,11 @@ excluding a threshold.
 CI runs coverage, visual regression, and read-only E2E as separate checks. The E2E job requires a
 dedicated non-production Clerk user and Convex deployment configured through:
 
-- repository variables: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CONVEX_URL`;
-- repository secrets: `CLERK_SECRET_KEY`, `E2E_CLERK_USER_EMAIL`,
-  `E2E_CLERK_USER_PASSWORD`.
+- repository secrets: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CONVEX_URL`,
+  `CLERK_SECRET_KEY`, `E2E_CLERK_USER_EMAIL`, `E2E_CLERK_USER_PASSWORD`.
+
+The workflow supplies `NEXT_PUBLIC_ENV=test`. CI runs coverage/unit, visual regression, and E2E
+smoke sequentially so each layer starts only after the previous layer passes.
 
 CI fails immediately when any required E2E value is absent. Local authenticated tests skip with an
 explicit message when the dedicated test-user credentials are not configured.

@@ -1,5 +1,6 @@
 import { cleanup } from '@testing-library/react'
 import { afterEach, beforeEach } from 'vite-plus/test'
+import '@fontsource/roboto/400.css'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -25,7 +26,13 @@ beforeEach(() => {
       caret-color: transparent !important;
       transition: none !important;
     }
-    body { background: white; font-family: Arial, sans-serif; }
+    :root {
+      --font-system-ui: 'Roboto';
+      --font-humanist: 'Roboto';
+      --font-monospace-code: 'Roboto';
+      --font-handwritten: 'Roboto';
+    }
+    body { background: white; font-family: 'Roboto'; }
   `
   globalThis.document.head.append(style)
 })

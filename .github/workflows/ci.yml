@@ -40,11 +40,15 @@ jobs:
       - name: Check format, lint, and type safety
         run: pnpm run check
 
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Run tests with coverage gates
         run: pnpm run test:coverage
 
   visual:
     name: Visual Regression
+    needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -66,14 +70,16 @@ jobs:
 
   e2e-smoke:
     name: Read-only E2E Smoke
+    needs: visual
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
       E2E_CLERK_USER_EMAIL: ${{ secrets.E2E_CLERK_USER_EMAIL }}
       E2E_CLERK_USER_PASSWORD: ${{ secrets.E2E_CLERK_USER_PASSWORD }}
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-      NEXT_PUBLIC_CONVEX_URL: ${{ vars.NEXT_PUBLIC_CONVEX_URL }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+      NEXT_PUBLIC_ENV: test
     steps:
       - uses: actions/checkout@v7
 
