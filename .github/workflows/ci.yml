@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   ci:
-    name: Format Lint Typecheck Test Integration E2E Smoke
+    name: Format Lint Typecheck Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # skip pushes that are just a merged/squashed PR already validated on the pull_request event
@@ -37,11 +37,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check format, lint, and type safety
-        run: pnpm run check
-
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
+
+      - name: Check format, lint, and type safety
+        run: pnpm run check
 
       - name: Run tests with coverage gates
         run: pnpm exec vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only
