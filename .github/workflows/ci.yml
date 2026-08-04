@@ -17,10 +17,10 @@ permissions:
   contents: read
 
 jobs:
-  check:
-    name: Format Lint Typecheck Test
+  ci:
+    name: Format Lint Typecheck Test Integration E2E Smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     # skip pushes that are just a merged/squashed PR already validated on the pull_request event
     if: |
       github.event_name != 'push' ||
@@ -46,25 +46,6 @@ jobs:
       - name: Run tests with coverage gates
         run: pnpm exec vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only
 
-  integration:
-    name: Integration
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: pnpm/setup@v1
-        with:
-          cache: true
-          install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Chromium
-        run: pnpm exec playwright install --with-deps chromium
-
       - name: Run integration tests
         run: pnpm run test:integration
 
@@ -79,30 +60,11 @@ jobs:
           name: visual-linux-baselines-${{ github.run_id }}
           path: src/**/__screenshots__/**/*-linux.png
 
-  e2e-smoke:
-    name: Read-only E2E Smoke
-    needs: integration
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-      E2E_CLERK_USER_EMAIL: ${{ secrets.E2E_CLERK_USER_EMAIL }}
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-      NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
-      NEXT_PUBLIC_ENV: test
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: pnpm/setup@v1
-        with:
-          cache: true
-          install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Chromium
-        run: pnpm exec playwright install --with-deps chromium
-
       - name: Run read-only smoke tests
         run: pnpm run test:e2e -- smoke.spec.ts view-transitions.spec.ts
+        env:
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          E2E_CLERK_USER_EMAIL: ${{ secrets.E2E_CLERK_USER_EMAIL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
+          NEXT_PUBLIC_ENV: test
