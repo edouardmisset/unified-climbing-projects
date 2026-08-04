@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vite-plus/test'
-import type * as ConvexNext from 'convex/nextjs'
+import type { fetchMutation, fetchQuery } from 'convex/nextjs'
 import type { AscentImportRow } from '~/domain/ascent'
 import type { TrainingSessionImportRow } from '~/domain/training-session'
 import {
@@ -23,7 +23,7 @@ vi.mock(
     ({
       fetchMutation: mocks.fetchMutation,
       fetchQuery: mocks.fetchQuery,
-    }) as unknown as typeof ConvexNext,
+    }) as unknown as { fetchMutation: typeof fetchMutation; fetchQuery: typeof fetchQuery },
 )
 vi.mock(import('./convex'), () => ({ getConvexAuthToken: mocks.getConvexAuthToken }))
 

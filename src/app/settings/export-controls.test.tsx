@@ -41,10 +41,14 @@ function setupDownloads() {
     createObjectURL: { configurable: true, value: createObjectURL },
     revokeObjectURL: { configurable: true, value: revokeObjectURL },
   })
-  const click = vi
-    .spyOn(globalThis.HTMLAnchorElement.prototype, 'click')
-    .mockImplementation(() => {})
+  const click = vi.spyOn(globalThis.HTMLAnchorElement.prototype, 'click').mockReturnValue()
   return { blobs, click, createObjectURL, revokeObjectURL }
+}
+
+function required<T>(value: T | undefined): T {
+  expect(value).toBeDefined()
+  if (value === undefined) throw new Error('Expected test value to be defined')
+  return value
 }
 
 describe('exportControls', () => {
@@ -56,14 +60,16 @@ describe('exportControls', () => {
     await user.click(screen.getByRole('button', { name: 'Download ZIP (2 records)' }))
 
     expect(downloads.click).toHaveBeenCalledOnce()
-    const archiveBlob = downloads.blobs[0]
+    const [archiveBlob] = downloads.blobs
     expect(archiveBlob?.type).toBe('application/zip')
-    const files = unzipSync(new Uint8Array(await archiveBlob!.arrayBuffer()))
+    const files = unzipSync(new Uint8Array(await required(archiveBlob).arrayBuffer()))
     expect(Object.keys(files).toSorted()).toStrictEqual(['ascents.csv', 'training-sessions.csv'])
-    expect(parseAscentCsv(strFromU8(files['ascents.csv']!))).toStrictEqual([
+    const ascentCsv = strFromU8(required(files['ascents.csv']))
+    const trainingCsv = strFromU8(required(files['training-sessions.csv']))
+    expect(parseAscentCsv(ascentCsv)).toStrictEqual([
       expect.objectContaining({ comments: ascent.comments, crag: ascent.crag, name: ascent.name }),
     ])
-    expect(parseTrainingSessionCsv(strFromU8(files['training-sessions.csv']!))).toStrictEqual([
+    expect(parseTrainingSessionCsv(trainingCsv)).toStrictEqual([
       expect.objectContaining({ comments: training.comments, location: training.location }),
     ])
   })
@@ -75,9 +81,11 @@ describe('exportControls', () => {
 
     await user.click(screen.getByRole('button', { name: 'Download ZIP (0 records)' }))
 
-    const files = unzipSync(new Uint8Array(await downloads.blobs[0]!.arrayBuffer()))
-    expect(parseAscentCsv(strFromU8(files['ascents.csv']!))).toStrictEqual([])
-    expect(parseTrainingSessionCsv(strFromU8(files['training-sessions.csv']!))).toStrictEqual([])
+    const files = unzipSync(new Uint8Array(await required(downloads.blobs[0]).arrayBuffer()))
+    const ascentCsv = strFromU8(required(files['ascents.csv']))
+    const trainingCsv = strFromU8(required(files['training-sessions.csv']))
+    expect(parseAscentCsv(ascentCsv)).toStrictEqual([])
+    expect(parseTrainingSessionCsv(trainingCsv)).toStrictEqual([])
   })
 
   it('downloads both published CSV templates', async () => {
@@ -89,7 +97,7 @@ describe('exportControls', () => {
     await user.click(screen.getByRole('button', { name: 'Training template' }))
 
     expect(downloads.blobs).toHaveLength(2)
-    expect(parseAscentCsv(await downloads.blobs[0]!.text())).toStrictEqual([])
-    expect(parseTrainingSessionCsv(await downloads.blobs[1]!.text())).toStrictEqual([])
+    expect(parseAscentCsv(await required(downloads.blobs[0]).text())).toStrictEqual([])
+    expect(parseTrainingSessionCsv(await required(downloads.blobs[1]).text())).toStrictEqual([])
   })
 })

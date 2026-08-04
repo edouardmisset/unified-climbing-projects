@@ -8,6 +8,9 @@ import { modules } from './test.setup'
 
 const USER_A = 'synthetic-clerk-user-a'
 const USER_B = 'synthetic-clerk-user-b'
+const FRACTIONAL_JOB_TOTAL = 1.5
+const EXCESSIVE_JOB_TOTAL = 10_001
+const INVALID_JOB_TOTALS = [0, FRACTIONAL_JOB_TOTAL, EXCESSIVE_JOB_TOTAL]
 
 function ascent(name = 'Test Route'): AscentPublicInput {
   return {
@@ -33,18 +36,19 @@ describe('import job lifecycle', () => {
     const asUserA = t.withIdentity({ subject: USER_A })
     const asUserB = t.withIdentity({ subject: USER_B })
 
-    for (const total of [0, 1.5, 10_001])
-      await expect(
-        asUserA.mutation(api.imports.createJob, { kind: 'ascents', total }),
-      ).rejects.toThrow('between 1 and 10,000')
+    await Promise.all(
+      INVALID_JOB_TOTALS.map(total =>
+        expect(asUserA.mutation(api.imports.createJob, { kind: 'ascents', total })).rejects.toThrow(
+          'between 1 and 10,000',
+        ),
+      ),
+    )
 
     const first = await asUserA.mutation(api.imports.createJob, { kind: 'ascents', total: 1 })
     const second = await asUserA.mutation(api.imports.createJob, { kind: 'training', total: 1 })
 
-    expect((await asUserA.query(api.imports.listJobs, {})).map(job => job._id)).toEqual([
-      second,
-      first,
-    ])
+    const jobs = await asUserA.query(api.imports.listJobs, {})
+    expect(jobs.map(job => job._id)).toEqual([second, first])
     expect(await asUserB.query(api.imports.listJobs, {})).toEqual([])
   })
 

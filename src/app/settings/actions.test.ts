@@ -22,9 +22,8 @@ const ascentRows = [
   },
 ] satisfies AscentImportRow[]
 
-const trainingRows = [
-  { date: '2026-08-01', type: 'Endurance' },
-] satisfies TrainingSessionImportRow[]
+const trainingRow = { date: '2026-08-01', type: 'Endurance' } satisfies TrainingSessionImportRow
+const trainingRows = [trainingRow]
 
 describe('settings import actions', () => {
   it('validates row counts before preview and import', async () => {
@@ -32,7 +31,7 @@ describe('settings import actions', () => {
     await expect(
       runImport(
         'training',
-        Array.from({ length: 10_001 }, () => trainingRows[0]!),
+        Array.from({ length: 10_001 }, () => trainingRow),
         false,
       ),
     ).rejects.toThrow('between 1 and 10000')

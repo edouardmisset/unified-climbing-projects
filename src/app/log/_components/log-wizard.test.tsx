@@ -125,14 +125,12 @@ describe('log wizard', () => {
     await user.type(screen.getByLabelText('Name'), 'Combined Route')
     await user.click(screen.getByRole('button', { name: 'Send' }))
 
-    expect(mocks.submitClimbingLog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ascents: [expect.objectContaining({ name: 'Combined Route' })],
-        includeTraining: true,
-        location: 'Céüse',
-        training: expect.objectContaining({ type: 'Outdoor' }),
-      }),
-    )
+    expect(mocks.submitClimbingLog.mock.calls[0]?.[0]).toMatchObject({
+      ascents: [{ name: 'Combined Route' }],
+      includeTraining: true,
+      location: 'Céüse',
+      training: { type: 'Outdoor' },
+    })
     await waitFor(() => {
       expect(mocks.refresh).toHaveBeenCalledWith()
     })
