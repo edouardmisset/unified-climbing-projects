@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vite-plus/test'
 import type { useRouter } from 'next/navigation'
+import { SANITIZED_8A_NU_FIXTURE } from '~/domain/fixtures/8a-nu.fixture'
 import type { previewImport, runImport, undoImport } from './actions'
 import { ImportWorkspace } from './import-workspace'
 
@@ -24,6 +25,7 @@ vi.mock(import('./actions'), () => ({
 
 const ascentCsv =
   'discipline,name,grade,crag,date,style,tries\nSport,Example Route,7a,Example Crag,2024-02-29,Onsight,1\n'
+const trainingCsv = 'date,type\n2026-08-01,Endurance\n'
 
 const recentJobs = [
   {
@@ -94,5 +96,103 @@ describe('importWorkspace', () => {
       screen.findByText('Removed 2 records from that import.'),
     ).resolves.toBeInTheDocument()
     expect(mocks.refresh).toHaveBeenCalledWith()
+  })
+
+  it('previews canonical training rows with the training endpoint', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    render(<ImportWorkspace recentJobs={[]} />)
+
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'File type' }),
+      'canonical-training',
+    )
+    await user.upload(
+      screen.getByLabelText('CSV file'),
+      new File([trainingCsv], 'training-sessions.csv', { type: 'text/csv' }),
+    )
+
+    await expect(screen.findByText('Valid rows')).resolves.toBeInTheDocument()
+    expect(mocks.previewImport).toHaveBeenCalledWith(
+      'training',
+      expect.arrayContaining([expect.objectContaining({ type: 'Endurance' })]),
+    )
+  })
+
+  it('adapts an 8a.nu export before previewing it', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    render(<ImportWorkspace recentJobs={[]} />)
+
+    await user.selectOptions(screen.getByRole('combobox', { name: 'File type' }), '8a-nu')
+    await user.upload(
+      screen.getByLabelText('CSV file'),
+      new File([SANITIZED_8A_NU_FIXTURE], '8a.csv', { type: 'text/csv' }),
+    )
+
+    await expect(screen.findByText('Valid rows')).resolves.toBeInTheDocument()
+    expect(mocks.previewImport).toHaveBeenCalledWith(
+      'ascents',
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'Synthetic Redpoint' }),
+        expect.objectContaining({ name: 'Synthetic Flash' }),
+      ]),
+    )
+  })
+
+  it('reports empty, malformed, and oversized files without starting a preview', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    render(<ImportWorkspace recentJobs={[]} />)
+    const input = screen.getByLabelText('CSV file')
+
+    await user.upload(
+      input,
+      new File(['discipline,name,grade,crag,date,style,tries\n'], 'empty.csv', {
+        type: 'text/csv',
+      }),
+    )
+    await expect(
+      screen.findByText('The file has headers but no data rows.'),
+    ).resolves.toBeInTheDocument()
+
+    await user.upload(input, new File(['not,csv\n'], 'malformed.csv', { type: 'text/csv' }))
+    await expect(screen.findByText(/Unknown CSV header/u)).resolves.toBeInTheDocument()
+
+    await user.upload(
+      input,
+      new File([new Uint8Array(5 * 1_024 * 1_024 + 1)], 'oversized.csv', { type: 'text/csv' }),
+    )
+    await expect(screen.findByText(/exceeds the 5 MB limit/u)).resolves.toBeInTheDocument()
+    expect(mocks.previewImport).not.toHaveBeenCalled()
+  })
+
+  it('shows preview, import, and undo failures at the workflow boundary', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    const { rerender } = render(<ImportWorkspace recentJobs={recentJobs} />)
+    mocks.previewImport.mockRejectedValueOnce(new Error('Preview unavailable'))
+
+    await user.upload(
+      screen.getByLabelText('CSV file'),
+      new File([ascentCsv], 'ascents.csv', { type: 'text/csv' }),
+    )
+    await expect(screen.findByText('Preview unavailable')).resolves.toBeInTheDocument()
+
+    mocks.previewImport.mockResolvedValueOnce({ duplicatesInFile: 0, existingMatches: 0, total: 1 })
+    mocks.runImport.mockRejectedValueOnce(new Error('Batch unavailable'))
+    await user.upload(
+      screen.getByLabelText('CSV file'),
+      new File([ascentCsv], 'ascents.csv', { type: 'text/csv' }),
+    )
+    await user.click(await screen.findByRole('button', { name: 'Import 1 valid rows' }))
+    await expect(
+      screen.findByText(/Batch unavailable.*Retry by selecting/u),
+    ).resolves.toBeInTheDocument()
+
+    mocks.undoImport.mockRejectedValueOnce(new Error('Undo unavailable'))
+    rerender(<ImportWorkspace recentJobs={recentJobs} />)
+    await user.click(screen.getByRole('button', { name: 'Undo' }))
+    await expect(screen.findByText('Undo unavailable')).resolves.toBeInTheDocument()
   })
 })

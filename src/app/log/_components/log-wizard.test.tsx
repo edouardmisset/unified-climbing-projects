@@ -112,4 +112,57 @@ describe('log wizard', () => {
     expect(screen.getByLabelText('Location')).toHaveValue('')
     expect(globalThis.localStorage.getItem('climbing-log-draft:v1:test-user')).toBeNull()
   })
+
+  it('submits a combined training and ascent draft', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    mocks.submitClimbingLog.mockResolvedValue({ ascentCount: 1, hasTraining: true, success: true })
+    renderWizard()
+
+    await user.type(screen.getByLabelText('Location'), 'Céüse')
+    await user.click(screen.getByRole('button', { name: 'Training' }))
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+    await user.type(screen.getByLabelText('Name'), 'Combined Route')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(mocks.submitClimbingLog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ascents: [expect.objectContaining({ name: 'Combined Route' })],
+        includeTraining: true,
+        location: 'Céüse',
+        training: expect.objectContaining({ type: 'Outdoor' }),
+      }),
+    )
+    await waitFor(() => {
+      expect(mocks.refresh).toHaveBeenCalledWith()
+    })
+    expect(screen.getByText('Common details')).toBeInTheDocument()
+  })
+
+  it('keeps the draft visible and reports a rejected server result', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    mocks.submitClimbingLog.mockResolvedValue({ error: 'Backend unavailable', success: false })
+    renderWizard()
+
+    await user.type(screen.getByLabelText('Location'), 'Céüse')
+    await user.click(screen.getByRole('button', { name: 'Skip' }))
+    await user.type(screen.getByLabelText('Name'), 'Keep Me')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    await expect(screen.findByText('Backend unavailable')).resolves.toBeInTheDocument()
+    expect(screen.getByLabelText('Name')).toHaveValue('Keep Me')
+    expect(mocks.refresh).not.toHaveBeenCalled()
+  })
+
+  it('does not submit an incomplete ascent', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard()
+
+    await user.click(screen.getByRole('button', { name: 'Skip' }))
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(mocks.submitClimbingLog).not.toHaveBeenCalled()
+  })
 })
