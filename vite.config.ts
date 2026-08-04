@@ -123,7 +123,7 @@ export default defineConfig({
     categories: {
       correctness: 'error',
       suspicious: 'warn',
-      // nursery: 'warn',
+      nursery: 'warn',
       // pedantic: 'warn',
       perf: 'warn',
       // restriction: 'warn',
@@ -233,6 +233,13 @@ export default defineConfig({
       'convex/_generated/**',
     ],
     overrides: [
+      {
+        files: ['**/*.{ts,tsx}'],
+        rules: {
+          // Type-aware checking already reports undefined TypeScript names.
+          'eslint/no-undef': 'off',
+        },
+      },
       {
         files: ['src/**/*.test.*', 'src/**/*.spec.*'],
         plugins: ['vitest'],
