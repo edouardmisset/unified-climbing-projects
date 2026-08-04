@@ -15,6 +15,28 @@ const VISUAL_TEST_GLOB =
 const DOM_INTEGRATION_TEST_GLOB = 'src/**/*.test.tsx'
 
 export default defineConfig({
+  run: {
+    cache: {
+      scripts: true,
+    },
+    tasks: {
+      'build:next': {
+        command: 'next build',
+        // Next reads its previous build state before replacing it. Source and
+        // configuration inputs remain auto-tracked; generated state does not.
+        input: [{ auto: true }, '!.next/**'],
+        output: ['.next/**'],
+      },
+      'test:e2e': {
+        command: 'playwright test',
+        // Playwright replaces its previous report and results, while Next's dev
+        // server updates .next. None of that generated state is an e2e input.
+        input: [{ auto: true }, '!.next/**', '!playwright-report/**', '!test-results/**'],
+        // A successful cached test run does not need generated reports restored.
+        output: [],
+      },
+    },
+  },
   plugins: [react()],
   test: {
     globals: false,
@@ -161,11 +183,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': path.join(import.meta.dirname, './src'),
-    },
-  },
-  run: {
-    cache: {
-      scripts: true,
     },
   },
   fmt: {
