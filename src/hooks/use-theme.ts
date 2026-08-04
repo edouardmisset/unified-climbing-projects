@@ -34,7 +34,10 @@ function getThemeSnapshot(): ThemeMode {
 }
 
 function subscribeToThemeChanges(onStoreChange: () => void) {
-  if (!Reflect.has(globalThis, 'window')) return () => {}
+  if (!Reflect.has(globalThis, 'window'))
+    return () => {
+      // There is no browser subscription to clean up during server rendering.
+    }
 
   const mediaQuery = globalThis.window.matchMedia('(prefers-color-scheme: dark)')
   const handleThemeChange = () => {

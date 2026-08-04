@@ -1,13 +1,13 @@
 import { readdirSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import path from 'node:path'
 import { describe, expect, it } from 'vite-plus/test'
 
-const SOURCE_ROOT = join(process.cwd(), 'src')
-const logWizardPath = join(SOURCE_ROOT, 'app/log/_components/log-wizard.tsx')
+const SOURCE_ROOT = path.join(process.cwd(), 'src')
+const logWizardPath = path.join(SOURCE_ROOT, 'app/log/_components/log-wizard.tsx')
 
 const getSourceFiles = (directory: string): string[] =>
   readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
-    const fullPath = join(directory, entry.name)
+    const fullPath = path.join(directory, entry.name)
     if (entry.isDirectory()) return getSourceFiles(fullPath)
     if (fullPath.endsWith('.ts') || fullPath.endsWith('.tsx')) return [fullPath]
     return []

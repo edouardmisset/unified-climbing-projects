@@ -61,6 +61,9 @@ function fromDurationPartsToDurationFormatInput(
       case 'day': {
         return { ...formattedDuration, days: value }
       }
+      default: {
+        return formattedDuration
+      }
     }
   }, {})
 }

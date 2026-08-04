@@ -30,9 +30,9 @@ export const serverControlledFields = {
 export function omitServerControlledFields<T extends Record<string, unknown>>(
   record: T,
 ): Omit<T, keyof typeof serverControlledFields> {
-  const publicRecord: Record<string, unknown> = { ...record }
-  for (const field of Object.keys(serverControlledFields)) delete publicRecord[field]
-  return publicRecord as Omit<T, keyof typeof serverControlledFields>
+  return Object.fromEntries(
+    Object.entries(record).filter(([field]) => !(field in serverControlledFields)),
+  ) as Omit<T, keyof typeof serverControlledFields>
 }
 
 export function emptyStringToUndefined(value: unknown): unknown {
