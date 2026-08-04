@@ -57,7 +57,7 @@ CI runs coverage, visual regression, and read-only E2E as separate checks. The E
 dedicated non-production Clerk user and Convex deployment configured through:
 
 - repository secrets: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CONVEX_URL`,
-  `CLERK_SECRET_KEY`, `E2E_CLERK_USER_EMAIL`, `E2E_CLERK_USER_PASSWORD`.
+  `CLERK_SECRET_KEY`, `E2E_CLERK_USER_EMAIL`.
 
 The workflow supplies `NEXT_PUBLIC_ENV=test`. CI runs coverage/unit, visual regression, and E2E
 smoke sequentially so each layer starts only after the previous layer passes.

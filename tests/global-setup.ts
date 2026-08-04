@@ -10,9 +10,11 @@ export default async function globalSetup(): Promise<void> {
     'CLERK_SECRET_KEY',
     'NEXT_PUBLIC_CONVEX_URL',
     'E2E_CLERK_USER_EMAIL',
-    'E2E_CLERK_USER_PASSWORD',
   ] as const
-  const missingEnvironment = requiredEnvironment.filter(name => !globalThis.process.env[name])
+  const missingEnvironment = requiredEnvironment.filter(name => {
+    const value = globalThis.process.env[name]
+    return value === undefined || value === ''
+  })
   if (globalThis.process.env.CI !== undefined && missingEnvironment.length > 0)
     throw new Error(`Missing required E2E environment: ${missingEnvironment.join(', ')}`)
 
