@@ -9,7 +9,6 @@ export const useYearQueryState = (): UseQueryStateReturn<OrAll<string>, typeof A
     parse: value => {
       if (value === ALL_VALUE) return ALL_VALUE
       if (isValidNumber(Number(value))) return value
-      // oxlint-disable-next-line unicorn/no-null
       return null
     },
   })

@@ -76,7 +76,6 @@ export const YearGrid = ({
             date={date}
             formattedDate={date === '' ? '' : prettyLongDate(date)}
             isSpecialCase={isSpecialCase}
-            // oxlint-disable-next-line react/no-array-index-key -- stable day index for empty dates
             key={(date || index).toString()}
             shortText={shortText}
             title={title}

@@ -208,6 +208,8 @@ export default defineConfig({
   },
   lint: {
     options: {
+      denyWarnings: true,
+      reportUnusedDisableDirectives: 'error',
       typeAware: true,
       typeCheck: true,
     },

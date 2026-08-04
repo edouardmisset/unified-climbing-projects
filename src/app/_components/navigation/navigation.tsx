@@ -62,7 +62,6 @@ export const Navigation = ({
           {NAVIGATION_ITEMS.map((item, index) => (
             <NavigationItem
               item={item}
-              // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
               key={`desktop-${createNavigationElementKey(item, index)}`}
             />
           ))}
@@ -92,7 +91,6 @@ export const Navigation = ({
                   <NavigationItem
                     item={item}
                     onNavigate={handleMobileNavigate}
-                    // oxlint-disable-next-line react/no-array-index-key -- NAVIGATION_ITEMS is a static constant
                     key={`mobile-${createNavigationElementKey(item, index)}`}
                   />
                 ))}

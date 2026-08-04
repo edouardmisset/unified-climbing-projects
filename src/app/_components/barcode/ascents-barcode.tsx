@@ -16,7 +16,6 @@ function AscentsBarcodeComponent(props: AscentsBarcodeProps) {
   return (
     <Barcode>
       {yearlyAscents.map((ascents, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
         <AscentsBar key={ascents[0]?.date ?? `week-${index}`} weeklyAscents={ascents} />
       ))}
     </Barcode>

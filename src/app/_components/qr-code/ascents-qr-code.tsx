@@ -14,7 +14,6 @@ function AscentsQRCodeComponent(props: AscentsQRCodeProps) {
   return (
     <QRCode>
       {yearlyAscents.map((ascents, index) => (
-        // oxlint-disable-next-line react/no-array-index-key -- fallback index for weeks without data
         <AscentsQRDot ascents={ascents} key={ascents[0]?.date ?? `week-${index}`} />
       ))}
     </QRCode>
