@@ -68,6 +68,17 @@ jobs:
       - name: Compare visual baselines
         run: pnpm run test:visual
 
+      - name: Generate Linux baselines for review
+        if: failure()
+        run: pnpm run test:visual:update
+
+      - name: Upload Linux baselines
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-linux-baselines-${{ github.run_id }}
+          path: src/**/__screenshots__/**/*-linux.png
+
   e2e-smoke:
     name: Read-only E2E Smoke
     needs: visual

@@ -28,8 +28,9 @@ workflows, visual snapshots for rendering, and a deliberately small E2E smoke su
 ## Visual baseline workflow
 
 Visual tests run in a dedicated headless Chromium project at 1280×720 with a fixed light theme,
-disabled motion, and a 0.5% anti-aliasing tolerance. Expected images under `__screenshots__/` are
-committed; actual and diff artifacts are ignored.
+disabled motion, and a 0.5% anti-aliasing tolerance. Platform-specific expected images under
+`__screenshots__/` are committed, including the reviewed Linux/Chromium set used by CI; actual and
+diff artifacts are ignored. Failed CI visual runs upload regenerated Linux baselines for review.
 
 For an intentional visual change:
 

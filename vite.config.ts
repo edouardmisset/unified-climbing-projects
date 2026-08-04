@@ -132,7 +132,7 @@ export default defineConfig({
                     testFileDirectory,
                     '__screenshots__',
                     testFileName,
-                    `${arg}${ext}`,
+                    `${arg}-${process.platform}${ext}`,
                   ),
               },
             },
