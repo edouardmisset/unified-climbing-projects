@@ -16,7 +16,7 @@ import '~/styles/climbing-colors.css'
 import '~/styles/reset.css'
 import '~/styles/utilities.css'
 
-beforeEach(() => {
+beforeEach(async () => {
   globalThis.document.documentElement.dataset.colorScheme = 'light'
   const style = globalThis.document.createElement('style')
   style.dataset.visualTest = 'true'
@@ -35,6 +35,7 @@ beforeEach(() => {
     body { background: white; font-family: 'Atkinson Hyperlegible'; }
   `
   globalThis.document.head.append(style)
+  await globalThis.document.fonts.load("16px 'Atkinson Hyperlegible'")
 })
 
 afterEach(() => {
