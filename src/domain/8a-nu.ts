@@ -48,12 +48,12 @@ const raw8aNuRowSchema = z
   })
   .strict()
 
-const disciplineBy8aNuKind = {
+const disciplineBy8aNuKind: Readonly<Partial<Record<string, 'Bouldering' | 'Sport'>>> = {
   BOULDER: 'Bouldering',
   ROUTE: 'Sport',
 } as const
 
-const styleBy8aNuType = {
+const styleBy8aNuType: Readonly<Partial<Record<string, 'Flash' | 'Onsight' | 'Redpoint'>>> = {
   f: 'Flash',
   os: 'Onsight',
   rp: 'Redpoint',
@@ -76,8 +76,8 @@ function optionalInteger(value: string): number | undefined {
 
 function parse8aNuRow(input: unknown): AscentImportRow {
   const row = raw8aNuRowSchema.parse(input)
-  const discipline = disciplineBy8aNuKind[row.route_boulder as keyof typeof disciplineBy8aNuKind]
-  const style = styleBy8aNuType[row.type as keyof typeof styleBy8aNuType]
+  const discipline = disciplineBy8aNuKind[row.route_boulder]
+  const style = styleBy8aNuType[row.type]
   if (!discipline) throw new Error(`Unsupported 8a.nu climb type "${row.route_boulder}"`)
   if (!style) throw new Error(`Unsupported 8a.nu ascent type "${row.type}"`)
 

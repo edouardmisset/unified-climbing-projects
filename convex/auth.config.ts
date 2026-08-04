@@ -1,7 +1,8 @@
 import type { AuthConfig } from 'convex/server'
 
 const clerkIssuerDomain = globalThis.process.env.CLERK_JWT_ISSUER_DOMAIN
-if (!clerkIssuerDomain) throw new Error('CLERK_JWT_ISSUER_DOMAIN is required')
+if (clerkIssuerDomain === undefined || clerkIssuerDomain === '')
+  throw new Error('CLERK_JWT_ISSUER_DOMAIN is required')
 
 export default {
   providers: [

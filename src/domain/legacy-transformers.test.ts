@@ -201,7 +201,7 @@ describe('transformLegacyTrainingSession', () => {
   it('rejects a legacy session without a type', () => {
     const { sessionType: _sessionType, ...withoutType } = legacyTrainingSession
 
-    expect(() => transformLegacyTrainingSession(withoutType)).toThrow(/Required/)
+    expect(() => transformLegacyTrainingSession(withoutType)).toThrow(/Required/u)
   })
 
   it('is idempotent for a canonical stored document', () => {

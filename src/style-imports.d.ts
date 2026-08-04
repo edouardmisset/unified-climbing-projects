@@ -5,6 +5,8 @@ declare module '*.module.css' {
 
 declare module '*.css'
 
+export {}
+
 declare module '*.png' {
   const src: string
   export default src

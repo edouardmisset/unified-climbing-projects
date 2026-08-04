@@ -46,10 +46,10 @@ describe('createAscentFingerprintInput', () => {
 
   it('rejects IDs and server metadata', () => {
     expect(() => createAscentFingerprintInput({ ...ascent, ownerId: 'owner' })).toThrow(
-      /Unrecognized key/,
+      /Unrecognized key/u,
     )
     expect(() => createAscentFingerprintInput({ ...ascent, _id: 'ascent-id' })).toThrow(
-      /Unrecognized key/,
+      /Unrecognized key/u,
     )
   })
 })
@@ -79,7 +79,7 @@ describe('createTrainingSessionFingerprintInput', () => {
 
   it('does not include derived load', () => {
     expect(() => createTrainingSessionFingerprintInput({ ...trainingSession, load: 48 })).toThrow(
-      /Unrecognized key/,
+      /Unrecognized key/u,
     )
   })
 

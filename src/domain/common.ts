@@ -1,6 +1,6 @@
 import { z } from '~/helpers/zod'
 
-const CALENDAR_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+const CALENDAR_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/u
 
 export const calendarDateSchema = z
   .string()
@@ -30,9 +30,9 @@ export const serverControlledFields = {
 export function omitServerControlledFields<T extends Record<string, unknown>>(
   record: T,
 ): Omit<T, keyof typeof serverControlledFields> {
-  const publicRecord: Record<string, unknown> = { ...record }
-  for (const field of Object.keys(serverControlledFields)) delete publicRecord[field]
-  return publicRecord as Omit<T, keyof typeof serverControlledFields>
+  return Object.fromEntries(
+    Object.entries(record).filter(([field]) => !(field in serverControlledFields)),
+  ) as Omit<T, keyof typeof serverControlledFields>
 }
 
 export function emptyStringToUndefined(value: unknown): unknown {
@@ -49,14 +49,14 @@ export const optionalFormStringSchema = z.preprocess(
 export const integerCellSchema = z
   .string()
   .trim()
-  .regex(/^\d+$/, 'Expected a non-negative integer')
+  .regex(/^\d+$/u, 'Expected a non-negative integer')
   .transform(Number)
   .pipe(nonNegativeIntegerSchema)
 
 export const positiveIntegerCellSchema = z
   .string()
   .trim()
-  .regex(/^[1-9]\d*$/, 'Expected a positive integer')
+  .regex(/^[1-9]\d*$/u, 'Expected a positive integer')
   .transform(Number)
   .pipe(positiveIntegerSchema)
 
@@ -73,11 +73,11 @@ export const optionalPercentCellSchema = z.preprocess(
 )
 
 export const emptyOrNonEmptyStringSchema = z.union([z.literal(''), nonEmptyStringSchema])
-export const emptyOrIntegerCellSchema = z.union([z.literal(''), z.string().regex(/^\d+$/)])
+export const emptyOrIntegerCellSchema = z.union([z.literal(''), z.string().regex(/^\d+$/u)])
 export const emptyOrPercentCellSchema = z.union([
   z.literal(''),
   z
     .string()
-    .regex(/^\d+$/)
+    .regex(/^\d+$/u)
     .refine(value => Number(value) <= 100, 'Expected a percentage from 0 to 100'),
 ])

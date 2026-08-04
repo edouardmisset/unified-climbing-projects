@@ -5,11 +5,13 @@ import { formatCountWithEnglishNoun, formatOrdinals } from './format-plurals'
 import { formatUnit } from './number-formatter'
 
 export function formatComments(comments: Ascent['comments']): string {
-  return comments ? `💬 “${comments}”` : ''
+  return comments === undefined || comments === '' ? '' : `💬 “${comments}”`
 }
 
 export function formatHeight(height: Ascent['height']): string {
-  return height ? `📏 ${formatUnit(height, 'meter', { unitDisplay: 'short' })}` : ''
+  return height === undefined || height === 0
+    ? ''
+    : `📏 ${formatUnit(height, 'meter', { unitDisplay: 'short' })}`
 }
 
 export function formatHolds(holds: Ascent['holds']): string {
@@ -23,7 +25,7 @@ export function formatCragAndArea(
 ): string {
   const { showDetails = true } = options ?? {}
 
-  return `📍 ${crag}${showDetails && area ? ` ▸ ${area}` : ''}`
+  return `📍 ${crag}${showDetails && area !== undefined && area !== '' ? ` ▸ ${area}` : ''}`
 }
 
 export function formatRating(rating: Ascent['rating']): string {

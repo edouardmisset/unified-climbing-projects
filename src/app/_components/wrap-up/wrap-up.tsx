@@ -24,10 +24,9 @@ async function getAscentsAndTraining(
     getAllTrainingSessions(),
   ])
 
-  const ascents = year ? filterAscents(allAscents, { year }) : allAscents
-  const trainingSessions = year
-    ? filterTrainingSessions(allTrainingSessions, { year })
-    : allTrainingSessions
+  const ascents = year === undefined ? allAscents : filterAscents(allAscents, { year })
+  const trainingSessions =
+    year === undefined ? allTrainingSessions : filterTrainingSessions(allTrainingSessions, { year })
 
   return { ascents, trainingSessions }
 }

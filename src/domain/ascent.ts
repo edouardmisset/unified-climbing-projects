@@ -224,14 +224,14 @@ export const ascentExportRowSchema = z
     crag: nonEmptyStringSchema,
     date: calendarDateSchema,
     style: ascentStyleSchema,
-    tries: z.string().regex(/^[1-9]\d*$/),
+    tries: z.string().regex(/^[1-9]\d*$/u),
     area: emptyOrNonEmptyStringSchema,
     comments: emptyOrNonEmptyStringSchema,
     height: emptyOrIntegerCellSchema,
     holds: z.union([z.literal(''), ascentHoldsSchema]),
     personalGrade: z.union([z.literal(''), ascentGradeSchema]),
     profile: z.union([z.literal(''), ascentProfileSchema]),
-    rating: z.union([z.literal(''), z.string().regex(/^[0-5]$/)]),
+    rating: z.union([z.literal(''), z.string().regex(/^[0-5]$/u)]),
   })
   .strict()
 

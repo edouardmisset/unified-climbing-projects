@@ -13,18 +13,18 @@ const THEME_CHANGE_EVENT = 'themechange'
 function readStoredTheme(): ThemeMode | undefined {
   try {
     const stored = globalThis.localStorage.getItem(THEME_STORAGE_KEY)
-    return stored && isThemeMode(stored) ? stored : undefined
+    return stored !== null && stored !== '' && isThemeMode(stored) ? stored : undefined
   } catch {
     return undefined
   }
 }
 
 function getStoredTheme(): ThemeMode | undefined {
-  return globalThis.window === undefined ? undefined : readStoredTheme()
+  return Reflect.has(globalThis, 'window') ? readStoredTheme() : undefined
 }
 
 function getSystemTheme(): ThemeMode {
-  if (globalThis.window === undefined) return 'light'
+  if (!Reflect.has(globalThis, 'window')) return 'light'
 
   return globalThis.window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -34,7 +34,10 @@ function getThemeSnapshot(): ThemeMode {
 }
 
 function subscribeToThemeChanges(onStoreChange: () => void) {
-  if (globalThis.window === undefined) return () => {}
+  if (!Reflect.has(globalThis, 'window'))
+    return () => {
+      // There is no browser subscription to clean up during server rendering.
+    }
 
   const mediaQuery = globalThis.window.matchMedia('(prefers-color-scheme: dark)')
   const handleThemeChange = () => {

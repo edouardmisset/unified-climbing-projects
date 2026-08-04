@@ -50,7 +50,9 @@ describe('log wizard', () => {
     setupMocks()
     const user = userEvent.setup()
     const queryStrings: string[] = []
-    renderWizard(event => queryStrings.push(event.queryString))
+    renderWizard(event => {
+      queryStrings.push(event.queryString)
+    })
 
     await user.type(screen.getByLabelText('Location'), 'Céüse')
     await user.click(screen.getByRole('button', { name: 'Skip' }))

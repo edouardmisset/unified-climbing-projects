@@ -27,8 +27,8 @@ export async function previewCanonicalImport(kind: ImportKind, rows: ImportRows)
   const token = await getConvexAuthToken()
   const duplicateInputs =
     kind === 'ascents'
-      ? (rows as AscentImportRow[]).map(createAscentFingerprintInput)
-      : (rows as TrainingSessionImportRow[]).map(createTrainingSessionFingerprintInput)
+      ? (rows as AscentImportRow[]).map(row => createAscentFingerprintInput(row))
+      : (rows as TrainingSessionImportRow[]).map(row => createTrainingSessionFingerprintInput(row))
   const duplicatesInFile = duplicateInputs.length - new Set(duplicateInputs).size
   const existingMatches: boolean[] = []
 
@@ -97,7 +97,9 @@ export async function runCanonicalImport(
     return { inserted, jobId, skipped }
   } catch (error) {
     // Preserve the original import failure if recording the terminal status also fails.
-    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token }).catch(() => {})
+    await fetchMutation(api.imports.finishJob, { failed: true, jobId }, { token }).catch(() => {
+      // Preserve the original import failure when recording terminal status also fails.
+    })
     throw error
   }
 }

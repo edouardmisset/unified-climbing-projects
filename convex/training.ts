@@ -28,7 +28,7 @@ export const get = query({
       .query('training')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(toPublicTrainingSession)
+    return records.map(record => toPublicTrainingSession(record))
   },
 })
 

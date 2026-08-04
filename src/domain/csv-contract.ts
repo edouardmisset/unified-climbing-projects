@@ -88,12 +88,15 @@ function toTrainingSessionExportRow(session: TrainingSessionDomain): TrainingSes
 }
 
 export function serializeAscentsCsv(ascents: readonly AscentDomain[]): string {
-  return serializeCanonicalCsv(ascents.map(toAscentExportRow), ASCENT_CSV_COLUMNS)
+  return serializeCanonicalCsv(
+    ascents.map(ascent => toAscentExportRow(ascent)),
+    ASCENT_CSV_COLUMNS,
+  )
 }
 
 export function serializeTrainingSessionsCsv(sessions: readonly TrainingSessionDomain[]): string {
   return serializeCanonicalCsv(
-    sessions.map(toTrainingSessionExportRow),
+    sessions.map(session => toTrainingSessionExportRow(session)),
     TRAINING_SESSION_CSV_COLUMNS,
   )
 }

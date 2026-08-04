@@ -19,7 +19,7 @@ test.describe('view transitions', () => {
       .getByRole('link', { name: 'Terms' })
       .click()
 
-    await expect(page).toHaveURL(/\/terms$/)
+    await expect(page).toHaveURL(/\/terms$/u)
     await expect
       .poll(async () =>
         page.evaluate(() => globalThis.sessionStorage.getItem('view-transition-argument')),
@@ -41,7 +41,7 @@ test.describe('view transitions', () => {
       .getByRole('link', { name: 'Terms' })
       .click()
 
-    await expect(page).toHaveURL(/\/terms$/)
+    await expect(page).toHaveURL(/\/terms$/u)
     await expect(page.getByRole('heading', { name: 'Beta terms' })).toBeVisible()
   })
 })

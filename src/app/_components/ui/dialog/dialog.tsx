@@ -21,13 +21,13 @@ export function Dialog({
   open,
   onOpenChange,
 }: DialogProps) {
-  const triggerClass = `${styles.trigger}${triggerClassName ? ` ${triggerClassName}` : ''}`
+  const triggerClass = `${styles.trigger}${triggerClassName === undefined || triggerClassName === '' ? '' : ` ${triggerClassName}`}`
 
   return (
     <BaseDialog.Root onOpenChange={onOpenChange} open={open}>
-      {triggerText ? (
+      {triggerText === undefined ? undefined : (
         <BaseDialog.Trigger className={triggerClass}>{triggerText}</BaseDialog.Trigger>
-      ) : undefined}
+      )}
       <BaseDialog.Portal>
         <BaseDialog.Backdrop className={styles.backdrop} />
         <BaseDialog.Popup className={styles.popup}>

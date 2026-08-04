@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { CalendarContent } from './calendar-content'
 
-export default async function TrainingSessionsCalendarPage() {
+export default function TrainingSessionsCalendarPage() {
   return (
     <Layout layout='flexColumn' title='Training Calendar'>
       <Suspense fallback={<Loader />}>

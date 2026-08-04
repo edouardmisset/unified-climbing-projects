@@ -21,8 +21,7 @@ const isColorGrade = (g: Grade): g is ColorGrade => g in ASCENT_GRADE_TO_COLOR
  * @returns {string} The background color for the given grade.
  */
 export function fromGradeToBackgroundColor(grade?: Grade): string {
-  const isValidColorGrade = grade && grade in ASCENT_GRADE_TO_COLOR && isColorGrade(grade)
-  if (isValidColorGrade) return ASCENT_GRADE_TO_COLOR[grade]
+  if (grade !== undefined && isColorGrade(grade)) return ASCENT_GRADE_TO_COLOR[grade]
 
   return 'black'
 }
@@ -56,7 +55,7 @@ export function fromGradeToClassName(grade?: Ascent['grade']): string | undefine
 export function fromAscentToPoints({ grade, style, discipline }: Ascent): number {
   // GRADE_TO_POINTS is a partial mapping - not all grades have points assigned
   const gradePoints = isPointsGrade(grade) ? GRADE_TO_POINTS[grade] : 0
-  const stylePoints = STYLE_TO_POINTS[style] ?? 0
+  const stylePoints = STYLE_TO_POINTS[style]
   const disciplineBonus = discipline === 'Bouldering' ? BOULDERING_BONUS_POINTS : 0
 
   return gradePoints + stylePoints + disciplineBonus
@@ -108,7 +107,7 @@ export function fromPointToGrade(
   )
   const matchingGrade = matchingEntry?.[0]
 
-  if (!matchingGrade || !isPointsGrade(matchingGrade)) {
+  if (matchingGrade === undefined || !isPointsGrade(matchingGrade)) {
     globalThis.console.log(
       `Error: No matching grade found for the given points (${adjustedPoints}).`,
     )

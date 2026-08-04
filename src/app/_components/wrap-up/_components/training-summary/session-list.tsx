@@ -14,7 +14,7 @@ export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
             {disciplineIcon}
             {NON_BREAKING_SPACE}
             <span className='monospace'>{formatShortDate(date)}</span>
-            {location && ` - ${location}`}
+            {location === undefined || location === '' ? undefined : ` - ${location}`}
           </li>
         )
       })}

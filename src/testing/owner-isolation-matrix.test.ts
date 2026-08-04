@@ -24,7 +24,7 @@ function symmetricSignature(testCase: OwnerIsolationCase): string {
 describe('owner isolation acceptance matrix', () => {
   it('uses distinct synthetic identities and record identifiers', () => {
     const fixtureValues = Object.values(SYNTHETIC_ISOLATION_FIXTURE)
-    const identifiers = fixtureValues.flatMap(Object.values)
+    const identifiers = fixtureValues.flatMap(fixtureValue => Object.values(fixtureValue))
 
     expect(new Set(identifiers).size).toBe(identifiers.length)
     expect(identifiers.every(identifier => identifier.startsWith('synthetic-'))).toBe(true)
@@ -53,11 +53,11 @@ describe('owner isolation acceptance matrix', () => {
   it('keeps user A and user B coverage symmetrical', () => {
     const userACases = authenticatedCases
       .filter(({ actor }) => actor === 'user-a')
-      .map(symmetricSignature)
+      .map(testCase => symmetricSignature(testCase))
       .toSorted()
     const userBCases = authenticatedCases
       .filter(({ actor }) => actor === 'user-b')
-      .map(symmetricSignature)
+      .map(testCase => symmetricSignature(testCase))
       .toSorted()
 
     expect(userACases).toStrictEqual(userBCases)

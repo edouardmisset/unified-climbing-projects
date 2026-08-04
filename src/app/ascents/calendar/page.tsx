@@ -4,7 +4,7 @@ import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { CalendarContent } from './calendar-content'
 
-export default async function AscentsCalendarPage() {
+export default function AscentsCalendarPage() {
   return (
     <Layout layout='flexColumn' title='Ascents Calendar'>
       <Suspense fallback={<Loader />}>

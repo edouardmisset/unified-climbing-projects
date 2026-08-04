@@ -11,7 +11,9 @@ import styles from './timeframe-select.module.css'
 export function TimeframeSelect() {
   const [timeframe, setTimeframe] = useTimeframeQueryState()
 
-  const handleTimeframeChange = async (value: Timeframe | null) => setTimeframe(value)
+  const handleTimeframeChange = (value: Timeframe | null) => {
+    void setTimeframe(value)
+  }
 
   return (
     <Select.Root onValueChange={handleTimeframeChange} value={timeframe}>

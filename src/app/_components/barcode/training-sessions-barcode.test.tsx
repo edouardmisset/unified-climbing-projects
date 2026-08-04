@@ -37,7 +37,9 @@ describe('trainingSessionsBarcode', () => {
               .join(', ')})`
 
       expect(button?.style.inlineSize).toBe(expectedWidth)
-      expect(button?.style.background || undefined).toBe(expectedBackground)
+      expect(button?.style.background === '' ? undefined : button?.style.background).toBe(
+        expectedBackground,
+      )
     })
   })
 })

@@ -89,10 +89,10 @@ function groupDataByYear<T extends StringDate = Ascent | TrainingSession>(
     const year = date.getFullYear()
     const index = getIndex(date)
 
-    if (groupedItemByYear[year] === undefined || groupedItemByYear[year][index] === undefined)
-      continue
+    const itemsForDay = groupedItemByYear[year]?.[index]
+    if (itemsForDay === undefined) continue
 
-    groupedItemByYear[year][index].push(item)
+    itemsForDay.push(item)
   }
 
   return groupedItemByYear

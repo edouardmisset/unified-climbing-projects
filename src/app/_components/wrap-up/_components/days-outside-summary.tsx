@@ -19,7 +19,7 @@ import { DaysOutsideDetails } from './days-outside-details'
 
 const MIN_GAP_THRESHOLD = 5 // days, below this threshold, we don't count as a gap
 
-export async function DaysOutsideSummary({
+export function DaysOutsideSummary({
   ascents,
   trainingSessions,
 }: {

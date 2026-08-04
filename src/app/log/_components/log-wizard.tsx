@@ -71,10 +71,14 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
   const { resetDraft } = usePersistedLogDraft({ initialDraft, reset, subscribe })
 
   const goToStep = (next: LogStep, options?: Parameters<typeof setStep>[1]) => {
-    const update = async () => setStep(next, options)
+    const update = () => {
+      void setStep(next, options)
+    }
     if (typeof document !== 'undefined' && 'startViewTransition' in document)
-      document.startViewTransition(async () => flushSync(update))
-    else void update()
+      document.startViewTransition(() => {
+        flushSync(update)
+      })
+    else update()
   }
 
   const goToAscents = () => {
@@ -125,7 +129,9 @@ export default function LogWizard({ areas, latestAscent, locations }: LogWizardP
       autoComplete='off'
       className={`${formStyles.form} ${styles.formPanel}`}
       name='climbing-log-form'
-      onSubmit={submit}
+      onSubmit={event => {
+        void submit(event)
+      }}
       spellCheck={false}
     >
       <ol aria-label='Logging progress' className={styles.progress}>

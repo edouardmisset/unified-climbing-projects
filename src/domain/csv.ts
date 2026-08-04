@@ -127,8 +127,8 @@ function handleQuotedFieldChar(state: CsvParserState, text: string, index: numbe
   if (isLineBreak(character)) {
     const width = lineBreakWidth(text, index)
     if (width === 2) state.field += '\n'
-    index += width - 1
     state.line++
+    return index + width - 1
   }
 
   return index
@@ -167,10 +167,10 @@ function handleUnquotedFieldChar(state: CsvParserState, text: string, index: num
     pushField(state)
     pushRow(state)
 
-    index += lineBreakWidth(text, index) - 1
+    const nextIndex = index + lineBreakWidth(text, index) - 1
     state.line++
     state.rowStartLine = state.line
-    return index
+    return nextIndex
   }
 
   state.field += character
@@ -315,7 +315,7 @@ export function serializeCanonicalCsv(rows: readonly object[], columns: readonly
       'CSV serialization columns must be non-empty and unique',
     )
 
-  const records = [columns.map(serializeCsvCell).join(',')]
+  const records = [columns.map(column => serializeCsvCell(column)).join(',')]
 
   for (const [rowIndex, row] of rows.entries()) {
     const values = columns.map((column, columnIndex) => {

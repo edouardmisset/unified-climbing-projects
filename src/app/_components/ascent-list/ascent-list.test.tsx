@@ -21,11 +21,11 @@ describe('ascentList', () => {
     render(<AscentList ascents={[ascent]} />)
 
     const row = screen.getByRole('button')
-    expect(screen.queryByLabelText(/close dialog/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/close dialog/iu)).not.toBeInTheDocument()
 
     await userEvent.dblClick(row)
 
-    await expect(screen.findByLabelText(/close dialog/i)).resolves.toBeInTheDocument()
+    await expect(screen.findByLabelText(/close dialog/iu)).resolves.toBeInTheDocument()
   })
 
   it('does not open the ascent dialog on single click', async () => {
@@ -33,6 +33,6 @@ describe('ascentList', () => {
 
     await userEvent.click(screen.getByRole('button'))
 
-    expect(screen.queryByLabelText(/close dialog/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/close dialog/iu)).not.toBeInTheDocument()
   })
 })

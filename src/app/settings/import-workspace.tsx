@@ -133,7 +133,14 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
         </label>
         <label className={styles.field}>
           <span>CSV file</span>
-          <input accept='.csv,text/csv' disabled={isWorking} onChange={selectFile} type='file' />
+          <input
+            accept='.csv,text/csv'
+            disabled={isWorking}
+            onChange={event => {
+              void selectFile(event)
+            }}
+            type='file'
+          />
         </label>
       </div>
       <p className={styles.limit}>Limits: UTF-8 CSV, 5 MB, 10,000 rows.</p>
@@ -165,7 +172,13 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
             />
             Import exact duplicates anyway
           </label>
-          <button disabled={isWorking} onClick={confirmImport} type='button'>
+          <button
+            disabled={isWorking}
+            onClick={() => {
+              void confirmImport()
+            }}
+            type='button'
+          >
             {isWorking ? 'Importing…' : `Import ${preview.total} valid rows`}
           </button>
         </div>
@@ -188,7 +201,13 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
               </span>
               {['running', 'undoing', 'completed', 'failed'].includes(job.status) &&
               job.inserted > 0 ? (
-                <button disabled={isWorking} onClick={async () => undo(job._id)} type='button'>
+                <button
+                  disabled={isWorking}
+                  onClick={() => {
+                    void undo(job._id)
+                  }}
+                  type='button'
+                >
                   Undo
                 </button>
               ) : undefined}

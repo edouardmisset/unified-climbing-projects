@@ -21,7 +21,7 @@ export function getAscentsByGradesPerCrag(ascents: Ascent[]): Record<string, str
 
   for (const ascent of ascents) {
     const { crag } = ascent
-    if (!cragMap[crag]) cragMap[crag] = []
+    cragMap[crag] ??= []
 
     cragMap[crag].push(ascent)
   }
