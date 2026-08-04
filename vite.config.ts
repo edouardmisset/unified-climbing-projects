@@ -6,13 +6,13 @@ import { defineConfig } from 'vite-plus'
 
 const compileTarget = 'esnext'
 
-// Charts (recharts' ResponsiveContainer needs real layout/ResizeObserver) and
-// other highly visual components (QR codes, barcodes, calendars) are
-// exercised in a real browser instead of happy-dom, so they're carved out of
-// the "frontend" project below and run under "components" instead.
+// React behavior belongs to the integration suite. Charts (recharts'
+// ResponsiveContainer needs real layout/ResizeObserver) and other highly
+// visual components are exercised in a real browser instead of happy-dom.
 const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
 const VISUAL_TEST_GLOB =
   'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.visual.test.tsx'
+const DOM_INTEGRATION_TEST_GLOB = 'src/**/*.test.tsx'
 
 export default defineConfig({
   plugins: [react()],
@@ -68,9 +68,9 @@ export default defineConfig({
           },
         },
         test: {
-          name: 'frontend',
-          include: ['src/**/*.test.{ts,tsx}'],
-          exclude: [BROWSER_TEST_GLOB],
+          name: 'unit',
+          include: ['src/**/*.test.ts'],
+          exclude: ['src/services/**/*.test.ts', 'src/app/**/actions.test.ts'],
         },
       },
       {
@@ -78,8 +78,25 @@ export default defineConfig({
         test: {
           environment: 'edge-runtime',
           include: ['convex/**/*.test.ts'],
-          name: 'convex',
+          name: 'integration-convex',
           setupFiles: [],
+        },
+      },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            'server-only': path.join(import.meta.dirname, './src/testing/server-only-stub.ts'),
+          },
+        },
+        test: {
+          name: 'integration-dom',
+          include: [
+            DOM_INTEGRATION_TEST_GLOB,
+            'src/services/**/*.test.ts',
+            'src/app/**/actions.test.ts',
+          ],
+          exclude: [BROWSER_TEST_GLOB],
         },
       },
       {
@@ -91,7 +108,7 @@ export default defineConfig({
           },
         },
         test: {
-          name: 'components',
+          name: 'integration-browser',
           include: [BROWSER_TEST_GLOB],
           exclude: [VISUAL_TEST_GLOB],
           environment: 'node',
@@ -112,7 +129,7 @@ export default defineConfig({
           },
         },
         test: {
-          name: 'visual',
+          name: 'integration-visual',
           include: [VISUAL_TEST_GLOB],
           environment: 'node',
           setupFiles: ['./vitest.visual.setup.ts'],

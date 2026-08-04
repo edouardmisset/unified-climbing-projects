@@ -1,19 +1,18 @@
 # Testing strategy
 
-The test suite protects critical behavior at four layers. Prefer the lowest layer that exercises the
-real contract: unit tests for pure transformations, component or in-memory integration tests for
-workflows, visual snapshots for rendering, and a deliberately small E2E smoke suite.
+The test suite protects critical behavior at three layers. Prefer the lowest layer that exercises
+the real contract: unit tests for pure transformations, integration tests for framework and runtime
+boundaries, and a deliberately small E2E smoke suite.
 
 ## Commands
 
-| Suite                | Command                     | Purpose                                                        |
-| -------------------- | --------------------------- | -------------------------------------------------------------- |
-| Unit and integration | `vp run test:unit`          | Frontend, Convex, and real-browser component behavior          |
-| Coverage             | `vp run test:coverage`      | The same functional suites with global and critical-path gates |
-| Visual regression    | `vp run test:visual`        | Compare deterministic Chromium screenshots                     |
-| Update visuals       | `vp run test:visual:update` | Regenerate expected screenshots for intentional UI changes     |
-| Read-only E2E        | `vp run test:e2e:smoke`     | Public navigation and authenticated route availability         |
-| Everything           | `vp run test:all`           | Functional, visual, and E2E suites                             |
+| Suite             | Command                                                     | Purpose                                                          |
+| ----------------- | ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| Unit tests        | `vp run test`                                               | Pure domain, helper, and transformation behavior                 |
+| Integration tests | `vp run test:integration`                                   | Convex, React, browser component, and visual regression behavior |
+| Update visuals    | `vp run test:integration --run -u`                          | Regenerate expected screenshots for intentional UI changes       |
+| Read-only E2E     | `vp run test:e2e -- smoke.spec.ts view-transitions.spec.ts` | Public navigation and authenticated route availability           |
+| Everything        | `vp run test:all`                                           | Unit, integration, and E2E suites                                |
 
 ## Fixtures and isolation
 
@@ -34,9 +33,9 @@ diff artifacts are ignored. Failed CI visual runs upload regenerated Linux basel
 
 For an intentional visual change:
 
-1. Run `vp run test:visual:update`.
+1. Run `vp run test:integration --run -u`.
 2. Inspect every changed PNG, not only the test result.
-3. Run `vp run test:visual` to verify the new baseline.
+3. Run `vp run test:integration` to verify the new baseline.
 4. Commit test code and reviewed baselines together in an isolated commit.
 
 ## Coverage gates
@@ -53,13 +52,13 @@ excluding a threshold.
 
 ## CI environment
 
-CI runs coverage, visual regression, and read-only E2E as separate checks. The E2E job requires a
+CI runs coverage, integration, and read-only E2E as separate checks. The E2E job requires a
 dedicated non-production Clerk user and Convex deployment configured through:
 
 - repository secrets: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CONVEX_URL`,
   `CLERK_SECRET_KEY`, `E2E_CLERK_USER_EMAIL`.
 
-The workflow supplies `NEXT_PUBLIC_ENV=test`. CI runs coverage/unit, visual regression, and E2E
+The workflow supplies `NEXT_PUBLIC_ENV=test`. CI runs coverage/unit, integration, and E2E
 smoke sequentially so each layer starts only after the previous layer passes.
 
 CI fails immediately when any required E2E value is absent. Local authenticated tests skip with an

@@ -44,10 +44,10 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run tests with coverage gates
-        run: pnpm run test:coverage
+        run: pnpm exec vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only
 
-  visual:
-    name: Visual Regression
+  integration:
+    name: Integration
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -65,12 +65,12 @@ jobs:
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Compare visual baselines
-        run: pnpm run test:visual
+      - name: Run integration tests
+        run: pnpm run test:integration
 
       - name: Generate Linux baselines for review
         if: failure()
-        run: pnpm run test:visual:update
+        run: pnpm exec vp test run --project=integration-visual -u --reporter=dot
 
       - name: Upload Linux baselines
         if: failure()
@@ -81,7 +81,7 @@ jobs:
 
   e2e-smoke:
     name: Read-only E2E Smoke
-    needs: visual
+    needs: integration
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -105,4 +105,4 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run read-only smoke tests
-        run: pnpm run test:e2e:smoke
+        run: pnpm run test:e2e -- smoke.spec.ts view-transitions.spec.ts
