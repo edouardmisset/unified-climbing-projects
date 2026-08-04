@@ -1,4 +1,4 @@
-import { SignUp } from '@clerk/nextjs'
+import { SignUp } from '~/app/_components/sign-up/sign-up'
 import { PublicPageShell } from '~/app/_components/public-page-shell/public-page-shell'
 
 export default function SignUpPage() {
