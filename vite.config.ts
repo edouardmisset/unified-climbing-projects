@@ -40,6 +40,11 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        resolve: {
+          alias: {
+            'server-only': path.join(import.meta.dirname, './src/testing/server-only-stub.ts'),
+          },
+        },
         test: {
           name: 'frontend',
           include: ['src/**/*.test.{ts,tsx}'],
