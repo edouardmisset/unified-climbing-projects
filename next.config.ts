@@ -24,13 +24,12 @@ const config: NextConfig = {
   },
   reactCompiler: { compilationMode: 'infer' },
   allowedDevOrigins: ['127.0.0.1'],
+  cacheComponents: true,
   experimental: {
     serverActions: {
       // A 5 MiB CSV can more than double as escaped JSON with repeated field names.
       bodySizeLimit: '12mb',
     },
-    useCache: true,
-    viewTransition: true,
   },
 }
 
