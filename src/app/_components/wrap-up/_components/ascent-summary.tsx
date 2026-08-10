@@ -1,11 +1,11 @@
 import { getAverageGrade } from '~/helpers/get-average-grade'
-import { sortByDate } from '~/helpers/sort-by-date'
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentComponent } from '../../ascent-component/ascent-component'
 import { AscentsWithPopover } from '../../ascents-with-popover/ascents-with-popover'
 import { Card } from '../../ui/card/card'
 import { ClimbingStyle } from '../../climbing/climbing-style/climbing-style'
 import { DisplayGrade } from '../../climbing/display-grade/display-grade'
+import { sortByDate } from '@edouardmisset/date'
 
 export function AscentSummary({ ascents }: AscentListProps) {
   const [mostRecentAscent] = ascents.toSorted((a, b) => sortByDate(a, b))
