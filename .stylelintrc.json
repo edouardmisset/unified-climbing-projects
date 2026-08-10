@@ -2,7 +2,14 @@
   "extends": ["stylelint-config-standard"],
   "plugins": ["stylelint-no-unsupported-browser-features"],
   "rules": {
-    "plugin/no-unsupported-browser-features": [true, { "severity": "warning" }],
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "warning",
+        "ignorePartialSupport": true,
+        "ignore": ["css-hanging-punctuation"]
+      }
+    ],
     "custom-property-pattern": null,
     "selector-class-pattern": null,
     "declaration-empty-line-before": null,
