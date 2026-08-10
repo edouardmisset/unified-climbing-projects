@@ -1,3 +1,5 @@
+'use client'
+
 import { isValidNumber } from '@edouardmisset/math'
 import { YearNavigationButton } from '../../year-navigation-button/year-navigation-button'
 import { ALL_TIME, YEAR_OF_FIRST_ASCENT } from '../constants'
