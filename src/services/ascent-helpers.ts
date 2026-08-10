@@ -1,7 +1,7 @@
 import { minMaxGrades } from '~/helpers/min-max-grades'
-import { sortByDate } from '~/helpers/sort-by-date'
 import type { Ascent, Grade } from '~/schema/ascent'
 import { getAllAscents } from './ascents'
+import { sortByDate } from '@edouardmisset/date'
 
 /**
  * Get min and max grades from all ascents
@@ -19,7 +19,7 @@ export async function getAllCrags(): Promise<string[]> {
   return [
     ...new Set(
       ascents
-        .toSorted((a, b) => sortByDate(a, b, true))
+        .toSorted((a, b) => sortByDate(a, b, { descending: true }))
         .map(({ crag }) => crag.trim())
         .filter(Boolean),
     ),
@@ -34,7 +34,7 @@ export async function getAllAreas(): Promise<string[]> {
   return [
     ...new Set(
       ascents
-        .toSorted((a, b) => sortByDate(a, b, true))
+        .toSorted((a, b) => sortByDate(a, b, { descending: true }))
         .map(({ area }) => area?.trim())
         .filter(Boolean),
     ),
@@ -47,5 +47,5 @@ export async function getAllAreas(): Promise<string[]> {
 export async function getLatestAscent(): Promise<Ascent | undefined> {
   const ascents = await getAllAscents()
   if (ascents.length === 0) return
-  return ascents.toSorted((a, b) => sortByDate(a, b, true)).at(0)
+  return ascents.toSorted((a, b) => sortByDate(a, b, { descending: true })).at(0)
 }
