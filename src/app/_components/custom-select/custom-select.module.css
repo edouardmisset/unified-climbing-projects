@@ -1,3 +1,3 @@
 .select {
-  inline-size: 10ch;
+  min-inline-size: 10ch;
 }
