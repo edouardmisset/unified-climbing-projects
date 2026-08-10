@@ -1,8 +1,10 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { stringIncludes } from '@edouardmisset/text'
 import { useDeferredValue } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
-import { filterAscents } from '~/helpers/filter-ascents'
+import {
+  deriveAscentFilterModel,
+  type AscentFilterFacets,
+} from '~/helpers/derive-ascent-filter-model'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
 import type { Ascent } from '~/schema/ascent'
 import { useAscentsQueryState } from './use-ascents-query-state'
@@ -14,7 +16,10 @@ import { useAscentsQueryState } from './use-ascents-query-state'
  * @param {Ascent[]} ascents - The array of ascents to filter.
  * @returns {Ascent[]} The filtered ascents.
  */
-export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
+export function useAscentsFilterModel(ascents: Ascent[]): {
+  ascents: Ascent[]
+  facets: AscentFilterFacets
+} {
   const {
     selectedYear,
     selectedArea,
@@ -36,20 +41,21 @@ export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
   const deferredSelectedYear = useDeferredValue(selectedYear)
 
   const selectedYearNumber = Number(deferredSelectedYear)
-  const filteredAscents = filterAscents(ascents, {
+  return deriveAscentFilterModel(ascents, {
     area: normalizeFilterValue(deferredSelectedArea),
-    discipline: normalizeFilterValue(deferredSelectedDiscipline),
     crag: normalizeFilterValue(deferredSelectedCrag),
+    discipline: normalizeFilterValue(deferredSelectedDiscipline),
     grade: normalizeFilterValue(deferredSelectedGrade),
+    period: normalizeFilterValue(deferredSelectedPeriod),
+    route: deferredSelectedRoute,
     style: normalizeFilterValue(deferredSelectedStyle),
     year:
       deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
         ? selectedYearNumber
         : undefined,
-    period: normalizeFilterValue(deferredSelectedPeriod),
   })
+}
 
-  return deferredSelectedRoute === ''
-    ? filteredAscents
-    : filteredAscents.filter(({ name }) => stringIncludes(name, deferredSelectedRoute))
+export function useAscentsFilter(ascents: Ascent[]): Ascent[] {
+  return useAscentsFilterModel(ascents).ascents
 }

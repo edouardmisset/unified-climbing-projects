@@ -1,25 +1,15 @@
-import { isDateInRange } from '@edouardmisset/date'
-import { isValidNumber } from '@edouardmisset/math'
-
-import { ALL_VALUE } from '~/app/_components/dashboard/constants'
-import { createYearList } from '~/data/helpers.ts'
-import { ASCENT_DISCIPLINES } from '~/domain/ascent'
-import { filterAscents } from '~/helpers/filter-ascents'
+import type { AscentFilterFacets } from '~/helpers/derive-ascent-filter-model'
 import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
-import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
-import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
-import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
-import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
 import type { FilterConfig } from '../types'
 
 export default function AscentsFilterBar({
-  allAscents,
+  facets,
   showSearch,
 }: {
-  allAscents: Ascent[]
+  facets: AscentFilterFacets
   showSearch: boolean
 }) {
   const {
@@ -39,136 +29,56 @@ export default function AscentsFilterBar({
     setRoute,
   } = useAscentsQueryState()
 
-  const filteredForYear = filterAscents(allAscents, {
-    discipline: normalizeFilterValue(selectedDiscipline),
-    style: normalizeFilterValue(selectedStyle),
-    period: normalizeFilterValue(selectedPeriod),
-    crag: normalizeFilterValue(selectedCrag),
-    area: normalizeFilterValue(selectedArea),
-  })
-  const yearList = createYearList(filteredForYear, { descending: true, continuous: false }).map(
-    String,
+  const effectiveSelectedYear = getEffectiveFilterValue(facets.years, selectedYear)
+  const effectiveSelectedDiscipline = getEffectiveFilterValue(
+    facets.disciplines,
+    selectedDiscipline,
   )
-
-  const effectiveSelectedYear = getEffectiveFilterValue(yearList, selectedYear)
-
-  const parsedSelectedYear = Number(effectiveSelectedYear)
-  const selectedYearNumber =
-    effectiveSelectedYear !== ALL_VALUE && isValidNumber(parsedSelectedYear)
-      ? parsedSelectedYear
-      : undefined
-
-  const filteredForDiscipline = filterAscents(allAscents, {
-    year: selectedYearNumber,
-    style: normalizeFilterValue(selectedStyle),
-    period: normalizeFilterValue(selectedPeriod),
-    crag: normalizeFilterValue(selectedCrag),
-    area: normalizeFilterValue(selectedArea),
-  })
-  const disciplineList = ASCENT_DISCIPLINES.filter(discipline =>
-    filteredForDiscipline.some(ascent => ascent.discipline === discipline),
-  )
-
-  const effectiveSelectedDiscipline = getEffectiveFilterValue(disciplineList, selectedDiscipline)
-
-  const filteredForStyle = filterAscents(allAscents, {
-    year: selectedYearNumber,
-    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    period: normalizeFilterValue(selectedPeriod),
-    crag: normalizeFilterValue(selectedCrag),
-    area: normalizeFilterValue(selectedArea),
-  })
-  const styleList = ASCENT_STYLE.filter(style =>
-    filteredForStyle.some(ascent => ascent.style === style),
-  )
-
-  const effectiveSelectedStyle = getEffectiveFilterValue(styleList, selectedStyle)
-
-  const filteredForCrag = filterAscents(allAscents, {
-    year: selectedYearNumber,
-    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    style: normalizeFilterValue(effectiveSelectedStyle),
-    period: normalizeFilterValue(selectedPeriod),
-    area: normalizeFilterValue(selectedArea),
-  })
-  const cragList = [...new Set(filteredForCrag.map(({ crag }) => crag.trim()))]
-    .filter(Boolean)
-    .toSorted(compareStringsAscending)
-
-  const effectiveSelectedCrag = getEffectiveFilterValue(cragList, selectedCrag)
-
-  const filteredForArea = filterAscents(allAscents, {
-    year: selectedYearNumber,
-    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    style: normalizeFilterValue(effectiveSelectedStyle),
-    period: normalizeFilterValue(selectedPeriod),
-    crag: normalizeFilterValue(effectiveSelectedCrag),
-  })
-  const areaList = [
-    ...new Set(
-      filteredForArea
-        .map(({ area }) => area?.trim())
-        .filter((area): area is string => Boolean(area)),
-    ),
-  ].toSorted(compareStringsAscending)
-
-  const effectiveSelectedArea = getEffectiveFilterValue(areaList, selectedArea)
-
-  const filteredForPeriod = filterAscents(allAscents, {
-    year: selectedYearNumber,
-    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    style: normalizeFilterValue(effectiveSelectedStyle),
-    crag: normalizeFilterValue(effectiveSelectedCrag),
-    area: normalizeFilterValue(effectiveSelectedArea),
-  })
-  const periodList = PERIOD.filter(period =>
-    filteredForPeriod.some(({ date }) =>
-      isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
-    ),
-  )
-
-  const effectiveSelectedPeriod = getEffectiveFilterValue(periodList, selectedPeriod)
+  const effectiveSelectedStyle = getEffectiveFilterValue(facets.styles, selectedStyle)
+  const effectiveSelectedCrag = getEffectiveFilterValue(facets.crags, selectedCrag)
+  const effectiveSelectedArea = getEffectiveFilterValue(facets.areas, selectedArea)
+  const effectiveSelectedPeriod = getEffectiveFilterValue(facets.periods, selectedPeriod)
 
   const filters = [
     {
       setValue: createValueSetter(setDiscipline),
       name: 'Discipline',
-      options: disciplineList,
+      options: facets.disciplines,
       selectedValue: effectiveSelectedDiscipline,
       title: 'Climbing Discipline',
     },
     {
       setValue: createValueSetter(setYear),
       name: 'Year',
-      options: yearList,
+      options: facets.years,
       selectedValue: effectiveSelectedYear,
       title: 'Year',
     },
     {
       setValue: createValueSetter(setCrag),
       name: 'Crag',
-      options: cragList,
+      options: facets.crags,
       selectedValue: effectiveSelectedCrag,
       title: 'Crag',
     },
     {
       setValue: createValueSetter(setArea),
       name: 'Area',
-      options: areaList,
+      options: facets.areas,
       selectedValue: effectiveSelectedArea,
       title: 'Area',
     },
     {
       setValue: createValueSetter(setStyle),
       name: 'Style',
-      options: styleList,
+      options: facets.styles,
       selectedValue: effectiveSelectedStyle,
       title: 'Ascent Style',
     },
     {
       setValue: createValueSetter(setPeriod),
       name: 'Period',
-      options: periodList,
+      options: facets.periods,
       selectedValue: effectiveSelectedPeriod,
       title: 'Period',
     },

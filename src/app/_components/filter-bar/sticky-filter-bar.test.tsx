@@ -1,10 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vite-plus/test'
 import { StickyFilterBar } from './sticky-filter-bar'
 
 describe('stickyFilterBar', () => {
-  it('applies select and search changes through their public setters', async () => {
+  it('applies select changes through its public setter', async () => {
     const setYear = vi.fn<(value: string) => void>()
     const setSearch = vi.fn<(value: string) => void>()
     const user = userEvent.setup()
@@ -26,12 +26,25 @@ describe('stickyFilterBar', () => {
     )
 
     await user.selectOptions(screen.getByLabelText('Year'), '2026')
+    expect(setYear).toHaveBeenCalledWith('2026')
+    expect(setSearch).not.toHaveBeenCalled()
+  })
+
+  it('debounces search changes before calling its public setter', async () => {
+    vi.useFakeTimers()
+    const setSearch = vi.fn<(value: string) => void>()
+    render(<StickyFilterBar filters={[]} search='' setSearch={setSearch} showSearch />)
+
     fireEvent.change(screen.getByRole('searchbox', { name: 'Search route' }), {
       target: { value: 'Berlin' },
     })
 
-    expect(setYear).toHaveBeenCalledWith('2026')
-    expect(setSearch).toHaveBeenLastCalledWith('Berlin')
+    expect(setSearch).not.toHaveBeenCalled()
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(200)
+    })
+    expect(setSearch).toHaveBeenCalledWith('Berlin')
+    vi.useRealTimers()
   })
 
   it('clears every active filter and the search query', async () => {

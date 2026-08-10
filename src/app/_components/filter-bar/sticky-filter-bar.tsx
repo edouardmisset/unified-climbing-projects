@@ -1,8 +1,8 @@
 import { CircleX } from 'lucide-react'
 import { useState, useTransition } from 'react'
-import { CustomInput } from '../ui/custom-input/custom-input'
 import { CustomSelect } from '../custom-select/custom-select'
 import { ALL_VALUE } from '../dashboard/constants'
+import { SearchInput } from './search-input'
 import type { BaseFilterBarProps } from './types'
 import styles from './sticky-filter-bar.module.css'
 
@@ -15,10 +15,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
   const [localSelectedValueByName, setLocalSelectedValueByName] =
     useState<Record<string, string>>(selectedValueByName)
-  const [localSearch, setLocalSearch] = useState(search ?? '')
+  const [hasDraftSearch, setHasDraftSearch] = useState(false)
 
   const displayedSelectedValueByName = isPending ? localSelectedValueByName : selectedValueByName
-  const displayedSearch = isPending ? localSearch : (search ?? '')
 
   const applyFilterValue = (filterName: string, value: string) => {
     const matchingFilter = filters.find(({ name }) => name === filterName)
@@ -34,19 +33,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
     })
   }
 
-  const handleSearchChange = (value: string) => {
-    setLocalSearch(value)
-
-    if (setSearch === undefined) return
-
-    startTransition(() => {
-      setSearch(value)
-    })
-  }
-
   const clearFilters = () => {
     setLocalSelectedValueByName(Object.fromEntries(filters.map(({ name }) => [name, ALL_VALUE])))
-    setLocalSearch('')
+    setHasDraftSearch(false)
 
     startTransition(() => {
       for (const filter of filters) filter.setValue(ALL_VALUE)
@@ -57,7 +46,8 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
 
   const isOneFilterActive =
     filters.some(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE) ||
-    displayedSearch !== ''
+    (search !== undefined && search !== '') ||
+    hasDraftSearch
 
   const renderedFilters = filters.map(filter => ({
     ...filter,
@@ -73,14 +63,12 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       <div className={styles.edge} />
       <div className={`${styles.filters} ${isPending ? styles.filtersPending : ''}`}>
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
-          <CustomInput
-            name='search route'
-            onChange={event => {
-              handleSearchChange(event.target.value)
-            }}
-            placeholder='Biographie'
-            type='search'
-            value={displayedSearch}
+          <SearchInput
+            key={search}
+            search={search}
+            setSearch={setSearch}
+            startTransition={startTransition}
+            onDraftChange={setHasDraftSearch}
           />
         )}
         <FilterSelectList filters={renderedFilters} />
