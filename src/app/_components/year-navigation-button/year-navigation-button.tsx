@@ -12,12 +12,10 @@ export function YearNavigationButton({
   selectedYear,
   nextOrPrevious,
   enabled,
-  path = '',
 }: {
   selectedYear: number
   nextOrPrevious: 'next' | 'previous'
   enabled: boolean
-  path?: string
 }) {
   if (!(enabled && isValidNumber(selectedYear))) return <span />
 
@@ -26,7 +24,7 @@ export function YearNavigationButton({
   return (
     <Link
       className={`${styles.button} ${style}`}
-      href={`.${path}/${targetYear}`}
+      href={`/wrap-up/${targetYear}`}
       prefetch
       title={`${label} year: ${targetYear}`}
     >

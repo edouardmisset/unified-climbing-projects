@@ -1,16 +1,12 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { Loader } from '~/app/_components/ui/loader/loader'
-import { AscentDetail } from './ascent-detail'
+import { AscentPage } from './ascent-page'
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const awaitedParams = await params
-  const ascentId = awaitedParams.id
-  if (ascentId.length === 0) return <h2>Invalid ascent ID</h2>
-
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
   return (
     <Suspense fallback={<Loader />}>
-      <AscentDetail ascentId={ascentId} />
+      <AscentPage params={params} />
     </Suspense>
   )
 }

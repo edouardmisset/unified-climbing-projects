@@ -1,4 +1,5 @@
 import { fetchMutation, fetchQuery } from 'convex/nextjs'
+import { io } from 'next/cache'
 import { api } from '~/../convex/_generated/api'
 import { EMPTY_OBJECT } from '~/constants/generic'
 import {
@@ -18,6 +19,7 @@ const compareDates = (a: { date: string }, b: { date: string }): number =>
   new Date(b.date).getTime() - new Date(a.date).getTime()
 
 export async function getConvexAuthToken(): Promise<string> {
+  await io()
   const { auth } = await import('@clerk/nextjs/server')
   const { getToken, isAuthenticated, sessionClaims } = await auth()
   if (!isAuthenticated) throw new Error('Unauthenticated')

@@ -1,17 +1,14 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { Dashboard } from '~/app/_components/dashboard/dashboard'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import { getAllAscents } from '~/services/ascents'
+import { DashboardContent } from './dashboard-content'
 
-export default async function Page() {
-  const ascents = await getAllAscents()
-
+export default function Page() {
   return (
     <Layout title='Dashboard'>
       <Suspense fallback={<Loader />}>
-        <Dashboard ascents={ascents} />
+        <DashboardContent />
       </Suspense>
     </Layout>
   )

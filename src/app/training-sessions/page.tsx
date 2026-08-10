@@ -1,17 +1,14 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { getAllTrainingSessions } from '~/services/training'
-import { FilteredTrainingSessionList } from '../_components/filtered-training-sessions-list/filtered-training-sessions-list'
 import { Loader } from '../_components/ui/loader/loader'
 import Layout from '../_components/page-layout/page-layout'
+import { TrainingSessionList } from './training-sessions-content'
 
-export default async function TrainingSessionsPage() {
-  const trainingSessions = await getAllTrainingSessions()
-
+export default function TrainingSessionsPage() {
   return (
     <Layout title='Training'>
       <Suspense fallback={<Loader />}>
-        <FilteredTrainingSessionList trainingSessions={trainingSessions} />
+        <TrainingSessionList />
       </Suspense>
     </Layout>
   )

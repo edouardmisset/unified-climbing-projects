@@ -22,10 +22,14 @@ vi.mock(import('~/services/imports'), () => ({
   getRecentImportJobs: vi.fn<typeof getRecentImportJobs>().mockResolvedValue([]),
 }))
 
+vi.mock(import('./import-data'), () => ({ ImportData: () => <span hidden /> }) as never)
+
+vi.mock(import('./export-data'), () => ({ ExportData: () => <span hidden /> }) as never)
+
 describe('settingsPage', () => {
-  it('contains the Import, Export, and Account sections', async () => {
+  it('contains the Import, Export, and Account sections', () => {
     // eslint-disable-next-line new-cap
-    render(await SettingsPage())
+    render(SettingsPage())
 
     expect(screen.getByRole('heading', { name: 'Settings' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Import your data' })).toBeInTheDocument()

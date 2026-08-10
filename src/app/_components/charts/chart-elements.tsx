@@ -82,7 +82,9 @@ type ChartTooltipProps = {
   content?: TooltipProps['content']
 }
 
-export function ChartTooltip({ formatter, showCursor = true, content }: ChartTooltipProps) {
+export function ChartTooltip(props: ChartTooltipProps) {
+  const { formatter, showCursor = true, content } = props
+
   return (
     <Tooltip
       trigger='click'

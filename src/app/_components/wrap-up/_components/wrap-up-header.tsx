@@ -18,7 +18,6 @@ export function WrapUpHeader({ year }: { year?: number }) {
     <YearNavigationButton
       enabled
       nextOrPrevious='previous'
-      path='/wrap-up'
       selectedYear={new Date().getFullYear() + 1}
     />
   )

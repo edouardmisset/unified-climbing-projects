@@ -20,7 +20,6 @@ export const Link = ({
       {...props}
       className={`${styles.link} ${isActive ? styles.active : ''} ${className ?? ''}`}
       data-active={isActive}
-      prefetch
     >
       {children}
     </NextLink>

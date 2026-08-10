@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { PublicPageShell } from './_components/public-page-shell/public-page-shell'
 import styles from './landing.module.css'
 
@@ -20,16 +21,18 @@ export default function LandingPage() {
           climbing into useful charts and yearly wrap-ups.
         </p>
         <div className={styles.actions}>
-          <SignedOut>
-            <Link className={styles.primaryAction} href='/sign-in'>
-              Sign in
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link className={styles.primaryAction} href='/wrap-up'>
-              Open your log
-            </Link>
-          </SignedIn>
+          <Suspense fallback={<span className={styles.primaryAction}>Loading</span>}>
+            <SignedOut>
+              <Link className={styles.primaryAction} href='/sign-in'>
+                Sign in
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <Link className={styles.primaryAction} href='/wrap-up'>
+                Open your log
+              </Link>
+            </SignedIn>
+          </Suspense>
           <a href='mailto:edouardmisset@gmail.com'>Request beta access</a>
         </div>
         <ul className={styles.features}>

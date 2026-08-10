@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import { Suspense, type ReactNode } from 'react'
 import styles from './public-page-shell.module.css'
 
 type PublicPageShellProps = {
@@ -19,16 +19,18 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
         <nav aria-label='Public navigation' className={styles.navigation}>
           <Link href='/privacy'>Privacy</Link>
           <Link href='/terms'>Terms</Link>
-          <SignedOut>
-            <Link className={styles.primaryLink} href='/sign-in'>
-              Sign in
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link className={styles.primaryLink} href='/wrap-up'>
-              Open app
-            </Link>
-          </SignedIn>
+          <Suspense fallback={<span className={styles.primaryLink}>Loading</span>}>
+            <SignedOut>
+              <Link className={styles.primaryLink} href='/sign-in'>
+                Sign in
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <Link className={styles.primaryLink} href='/wrap-up'>
+                Open app
+              </Link>
+            </SignedIn>
+          </Suspense>
         </nav>
       </header>
 

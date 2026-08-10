@@ -1,37 +1,15 @@
 import type { Metadata } from 'next'
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import NotFound from '~/app/not-found'
-import { groupDataWeeksByYear } from '~/data/helpers'
-import { getAllAscents } from '~/services/ascents'
+import { BarcodeContent } from './barcode-content'
 
-// LAZY LOADING: Load barcode component only when needed
-const AscentsBarcode = lazy(async () =>
-  import('~/app/_components/barcode/barcode').then(module => ({
-    default: module.AscentsBarcode,
-  })),
-)
-
-export default async function AscentBarcodePage() {
-  const allAscents = await getAllAscents()
-
-  if (allAscents.length === 0) return <NotFound />
-
-  const groupedAscentsWeekly = groupDataWeeksByYear(allAscents)
-
+export default function AscentBarcodePage() {
   return (
     <Layout title='Ascents Barcode'>
-      {Object.entries(groupedAscentsWeekly)
-        .toSorted(([a], [b]) => Number(b) - Number(a))
-        .map(([year, yearAscents]) => (
-          <div className='flexColumn w100' key={year}>
-            <h2 className='centerText'>{year}</h2>
-            <Suspense fallback={<Loader />}>
-              <AscentsBarcode yearlyAscents={yearAscents} />
-            </Suspense>
-          </div>
-        ))}
+      <Suspense fallback={<Loader />}>
+        <BarcodeContent />
+      </Suspense>
     </Layout>
   )
 }

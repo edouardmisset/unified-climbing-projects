@@ -1,12 +1,16 @@
-import { validNumberWithFallback } from '@edouardmisset/math'
 import type { Metadata } from 'next'
-import WrapUp from '~/app/_components/wrap-up/wrap-up'
+import { Suspense } from 'react'
+import { Loader } from '~/app/_components/ui/loader/loader'
+import { YearWrapUp } from './year-wrap-up'
 
-export default async function Page(props: { params: Promise<{ year: string }> }) {
-  const awaitedParams = await props.params
-  const year = validNumberWithFallback(awaitedParams.year, new Date().getFullYear())
-
-  return <WrapUp year={year} />
+// Runtime-prefetch review: assess with the user whether URL data should resolve before click.
+// See: https://nextjs.org/docs/app/guides/runtime-prefetching
+export default function Page({ params }: { params: Promise<{ year: string }> }) {
+  return (
+    <Suspense fallback={<Loader />}>
+      <YearWrapUp params={params} />
+    </Suspense>
+  )
 }
 
 export async function generateMetadata({

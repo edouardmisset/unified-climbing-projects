@@ -1,43 +1,15 @@
 import type { Metadata } from 'next'
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import NotFound from '~/app/not-found'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { sortByGrade } from '~/helpers/sorter'
-import { getAllAscents } from '~/services/ascents'
+import { QRCodeContent } from './qr-code-content'
 
-// LAZY LOADING: Load QR code component only when needed
-const AscentsQRCode = lazy(async () =>
-  import('~/app/_components/qr-code/qr-code').then(module => ({
-    default: module.AscentsQRCode,
-  })),
-)
-
-export default async function AscentsQRCodePage() {
-  const allAscents = await getAllAscents()
-
-  if (allAscents.length === 0) return <NotFound />
-
-  const groupedAscentsDaily = groupDataDaysByYear(allAscents)
-
+export default function AscentsQRCodePage() {
   return (
     <Layout title='Ascents QR'>
-      {Object.entries(groupedAscentsDaily)
-        .toSorted(([a], [b]) => Number(b) - Number(a))
-        .map(([year, yearlyAscents]) => {
-          const sortedAscents = yearlyAscents.map(ascents =>
-            ascents.toSorted((a, b) => sortByGrade(a, b)),
-          )
-          return (
-            <div className='flexColumn alignCenter' key={year}>
-              <h2 className='centerText'>{year}</h2>
-              <Suspense fallback={<Loader />}>
-                <AscentsQRCode yearlyAscents={sortedAscents} />
-              </Suspense>
-            </div>
-          )
-        })}
+      <Suspense fallback={<Loader />}>
+        <QRCodeContent />
+      </Suspense>
     </Layout>
   )
 }

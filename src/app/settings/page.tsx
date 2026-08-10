@@ -1,20 +1,13 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import Layout from '~/app/_components/page-layout/page-layout'
 import { Card } from '~/app/_components/ui/card/card'
-import { getAllAscents } from '~/services/ascents'
-import { getRecentImportJobs } from '~/services/imports'
-import { getAllTrainingSessions } from '~/services/training'
-import { ExportControls } from './export-controls'
-import { ImportWorkspace } from './import-workspace'
+import { Loader } from '~/app/_components/ui/loader/loader'
+import { ExportData } from './export-data'
+import { ImportData } from './import-data'
 import styles from './settings.module.css'
 
-export default async function SettingsPage() {
-  const [ascents, trainingSessions, recentJobs] = await Promise.all([
-    getAllAscents(),
-    getAllTrainingSessions(),
-    getRecentImportJobs(),
-  ])
-
+export default function SettingsPage() {
   return (
     <Layout gridClassName={styles.settings} layout='flexColumn' title='Settings'>
       <section className={styles.section} id='import'>
@@ -32,7 +25,9 @@ export default async function SettingsPage() {
               sector, date, and comments are converted to the canonical format.
             </p>
           </div>
-          <ImportWorkspace recentJobs={recentJobs} />
+          <Suspense fallback={<Loader />}>
+            <ImportData />
+          </Suspense>
         </Card>
       </section>
 
@@ -43,7 +38,9 @@ export default async function SettingsPage() {
             The export is generated in this browser and contains exactly <code>ascents.csv</code>{' '}
             and <code>training-sessions.csv</code>.
           </p>
-          <ExportControls ascents={ascents} trainingSessions={trainingSessions} />
+          <Suspense fallback={<Loader />}>
+            <ExportData />
+          </Suspense>
         </Card>
       </section>
 

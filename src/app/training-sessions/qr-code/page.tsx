@@ -1,37 +1,15 @@
 import type { Metadata } from 'next'
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import Layout from '~/app/_components/page-layout/page-layout'
-import NotFound from '~/app/not-found'
-import { groupDataDaysByYear } from '~/data/helpers'
-import { getAllTrainingSessions } from '~/services/training'
+import { QRCodeContent } from './qr-code-content'
 
-// LAZY LOADING: Load QR code component only when needed
-const TrainingQRCode = lazy(async () =>
-  import('~/app/_components/qr-code/qr-code').then(module => ({
-    default: module.TrainingQRCode,
-  })),
-)
-
-export default async function TrainingSessionsQRCodePage() {
-  const trainingSessions = await getAllTrainingSessions()
-
-  if (trainingSessions.length === 0) return <NotFound />
-
-  const groupedTrainingDaily = groupDataDaysByYear(trainingSessions)
-
+export default function TrainingSessionsQRCodePage() {
   return (
     <Layout title='Training QR'>
-      {Object.entries(groupedTrainingDaily)
-        .toSorted(([a], [b]) => Number(b) - Number(a))
-        .map(([year, yearlyTraining]) => (
-          <div className='flexColumn alignCenter' key={year}>
-            <h2 className='centerText'>{year}</h2>
-            <Suspense fallback={<Loader />}>
-              <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
-            </Suspense>
-          </div>
-        ))}
+      <Suspense fallback={<Loader />}>
+        <QRCodeContent />
+      </Suspense>
     </Layout>
   )
 }
