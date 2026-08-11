@@ -9,6 +9,7 @@ import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { APP_LANGUAGE } from '~/constants/generic'
 import { ClerkThemeProvider } from './_components/clerk-theme-provider/clerk-theme-provider'
+import { OfflineBanner } from './_components/offline-banner/offline-banner'
 
 import '~/styles/sizes.css'
 import '~/styles/colors.css'
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <a className={styles.skipLink} href='#main-content'>
               Skip to content
             </a>
+            <OfflineBanner />
             <Header />
             <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>

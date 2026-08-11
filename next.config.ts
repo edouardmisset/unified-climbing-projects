@@ -27,6 +27,7 @@ const config: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {
+    useOffline: true,
     serverActions: {
       // A 5 MiB CSV can more than double as escaped JSON with repeated field names.
       bodySizeLimit: '12mb',

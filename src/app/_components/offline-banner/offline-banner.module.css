@@ -1,0 +1,34 @@
+.banner {
+  position: fixed;
+  inset-block-start: var(--size-3);
+  inset-inline-start: 50%;
+  z-index: var(--layer-5);
+
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  max-inline-size: calc(100vw - 2 * var(--size-3));
+  padding-block: var(--size-2);
+  padding-inline: var(--size-3);
+  border: var(--border-size-1) solid var(--yellow-7);
+  border-radius: var(--radius-2);
+
+  background-color: var(--yellow-1);
+  color: var(--yellow-12);
+  box-shadow: var(--shadow-3);
+
+  font-weight: 700;
+  text-align: center;
+  text-wrap: balance;
+  transform: translateX(-50%);
+}
+
+.banner svg {
+  flex: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .banner {
+    animation: var(--animation-fade-in);
+  }
+}
