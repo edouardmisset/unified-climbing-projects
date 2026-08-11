@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { groupDataWeeksByYear } from '~/data/helpers'
 import { fromSessionTypeToSortOrder } from '~/helpers/sorter'
 import { fromSessionTypeToBackgroundColor } from '~/helpers/training-converter'
@@ -14,7 +15,12 @@ describe('trainingSessionsBarcode', () => {
     const yearlyTraining = groupDataWeeksByYear(sampleTrainingSessions)[year] ?? []
     const populatedWeeks = yearlyTraining.filter(week => week.length > 0)
 
-    const { container } = await render(<TrainingSessionsBarcode yearlyTraining={yearlyTraining} />)
+    const { container } = await render(
+      <TrainingSessionsBarcode yearlyTraining={yearlyTraining} />,
+      {
+        wrapper: QueryProvider,
+      },
+    )
 
     expect(populatedWeeks.length).toBeGreaterThan(0)
     await expect.poll(() => container.querySelectorAll('button').length).toBe(populatedWeeks.length)

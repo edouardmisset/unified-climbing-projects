@@ -9,7 +9,8 @@ const compileTarget = 'esnext'
 // React behavior belongs to the integration suite. Charts (recharts'
 // ResponsiveContainer needs real layout/ResizeObserver) and other highly
 // visual components are exercised in a real browser instead of happy-dom.
-const BROWSER_TEST_GLOB = 'src/app/_components/{barcode,charts,data-calendar,qr-code}/**/*.test.tsx'
+const BROWSER_TEST_GLOB =
+  'src/app/_components/{barcode,charts,data-calendar,qr-code,ui/popover}/**/*.test.tsx'
 const FILTER_BAR_VISUAL_TEST_GLOB = 'src/app/_components/filter-bar/**/*.visual.test.tsx'
 const VISUAL_TEST_GLOB =
   'src/app/_components/{barcode,charts,data-calendar,qr-code}/**/*.visual.test.tsx'
@@ -128,6 +129,7 @@ export default defineConfig({
         resolve: {
           alias: {
             // See src/testing/next-image-stub.tsx for why.
+            'next/cache': path.join(import.meta.dirname, './src/testing/next-cache-stub.ts'),
             'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
           },
         },
@@ -149,6 +151,7 @@ export default defineConfig({
         extends: true,
         resolve: {
           alias: {
+            'next/cache': path.join(import.meta.dirname, './src/testing/next-cache-stub.ts'),
             'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
           },
         },

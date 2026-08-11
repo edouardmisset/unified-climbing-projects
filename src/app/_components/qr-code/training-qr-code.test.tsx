@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import { sampleTrainingSessions } from '~/testing/sample-data'
@@ -13,6 +14,7 @@ describe('trainingQrCode', () => {
 
     const { container } = await render(
       <TrainingQRCode yearlyTrainingSessions={yearlyTrainingSessions} />,
+      { wrapper: QueryProvider },
     )
 
     expect(populatedDays.length).toBeGreaterThan(0)

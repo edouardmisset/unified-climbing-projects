@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
 import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
@@ -37,6 +38,7 @@ describe('calendar visual regression', () => {
           year={YEAR}
         />
       </div>,
+      { wrapper: QueryProvider },
     )
 
     await expect.element(screen.getByTestId('visual')).toMatchScreenshot('training-calendar.png')

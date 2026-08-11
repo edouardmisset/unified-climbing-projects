@@ -14,17 +14,40 @@
 }
 
 .popup {
+  position: fixed;
+  position-area: block-end span-inline-end;
+  position-try-fallbacks: flip-block;
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
+  inset: auto;
+  margin: var(--size-2) 0 0;
   padding-block: var(--size-3);
   padding-inline: var(--size-5);
 
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.9);
   border-radius: var(--size-2);
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: all 150ms;
+    transition:
+      opacity 150ms,
+      transform 150ms,
+      display 150ms allow-discrete,
+      overlay 150ms allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.9);
+    }
   }
+}
+
+.popup:popover-open {
+  pointer-events: auto;
+  opacity: 1;
+  transform: scale(1);
 }
 
 .title {
