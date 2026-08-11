@@ -9,7 +9,7 @@ const pointerFallbackStyles = `
     container-type: anchored;
   }
 
-  @container popover anchored(fallback: --popover-above) {
+  @container popover anchored(fallback: flip-block) {
     [data-popover-arrow] {
       inset-block-start: auto;
       inset-block-end: -8px;

@@ -18,7 +18,7 @@
   container-name: popover;
   position: fixed;
   position-anchor: var(--popover-anchor);
-  position-try-fallbacks: --popover-above;
+  position-try-fallbacks: flip-block;
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
@@ -46,11 +46,6 @@
       transform: scale(0.9);
     }
   }
-}
-
-@position-try --popover-above {
-  inset: auto auto anchor(top) anchor(center);
-  margin: 0 0 var(--size-2);
 }
 
 .popup:popover-open {
