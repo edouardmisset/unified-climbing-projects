@@ -36,6 +36,7 @@ export const AscentsQRDot = ({ ascents }: { ascents?: Ascent[] }) => {
       aria-label={`Ascent on ${dateAndCrag}`}
       className={gradeClassName}
       popoverTitle={dateAndCrag}
+      showOnInterest
       trigger=''
     >
       {lazyDescription}

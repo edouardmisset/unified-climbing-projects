@@ -57,6 +57,7 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
     <Popover
       className={trainingBarClassName}
       popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
+      showOnInterest
       style={buttonStyle}
       trigger=''
     >

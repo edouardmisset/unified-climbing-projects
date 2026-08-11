@@ -16,6 +16,7 @@
     "declaration-block-no-redundant-longhand-properties": null,
     "block-no-empty": true,
     "color-no-invalid-hex": true,
+    "selector-pseudo-class-no-unknown": [true, { "ignorePseudoClasses": ["interest-source"] }],
     "unit-no-unknown": true,
     "color-no-hex": true,
     "color-function-notation": ["modern", { "ignore": ["with-var-inside"] }]

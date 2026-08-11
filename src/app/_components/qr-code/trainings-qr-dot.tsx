@@ -27,7 +27,7 @@ export const TrainingsQRDot = ({ trainingSessions }: { trainingSessions: Trainin
   )
 
   return (
-    <Popover className={sessionClassName} popoverTitle={formattedDate} trigger=''>
+    <Popover className={sessionClassName} popoverTitle={formattedDate} showOnInterest trigger=''>
       {lazyDescription}
     </Popover>
   )

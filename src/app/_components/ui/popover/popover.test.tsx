@@ -28,4 +28,15 @@ describe('popover', () => {
 
     await expect.element(content).not.toBeVisible()
   })
+
+  it('adds a native hint popover when interest enhancement is enabled', async () => {
+    const { container } = await render(
+      <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
+        Popover content
+      </Popover>,
+    )
+
+    expect(container.innerHTML).toContain('interestfor=')
+    expect(container.innerHTML).toContain('popover="hint"')
+  })
 })

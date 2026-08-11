@@ -48,6 +48,21 @@
   transform: scale(1);
 }
 
+.hint {
+  pointer-events: none;
+}
+
+button[interestfor] {
+  transition: transform 150ms;
+}
+
+button[interestfor]:interest-source {
+  z-index: 1;
+  outline: 2px solid currentcolor;
+  outline-offset: 1px;
+  transform: scale(1.1);
+}
+
 .arrow {
   position: absolute;
   inset-block-start: calc(var(--size-2) * -1);
