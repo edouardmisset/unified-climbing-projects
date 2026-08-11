@@ -9,7 +9,8 @@ const compileTarget = 'esnext'
 // React behavior belongs to the integration suite. Charts (recharts'
 // ResponsiveContainer needs real layout/ResizeObserver) and other highly
 // visual components are exercised in a real browser instead of happy-dom.
-const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
+const BROWSER_TEST_GLOB =
+  'src/app/_components/{charts,data-calendar,qr-code,barcode,ui/popover}/**/*.test.tsx'
 const VISUAL_TEST_GLOB =
   'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.visual.test.tsx'
 const DOM_INTEGRATION_TEST_GLOB = 'src/**/*.test.tsx'
