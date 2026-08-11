@@ -29,14 +29,46 @@ describe('popover', () => {
     await expect.element(content).not.toBeVisible()
   })
 
-  it('adds a native hint popover when interest enhancement is enabled', async () => {
-    const { container } = await render(
+  it('shows a native hint popover while its trigger is hovered', async () => {
+    const screen = await render(
       <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
         Popover content
       </Popover>,
     )
 
-    expect(container.innerHTML).toContain('interestfor=')
-    expect(container.innerHTML).toContain('popover="hint"')
+    const trigger = screen.getByRole('button', { name: 'Open details' })
+    const hint = screen.container.querySelector<HTMLElement>('[popover="hint"]')
+
+    if (!hint) throw new Error('Expected a hint popover')
+
+    await trigger.hover()
+
+    await expect.element(hint).toBeVisible()
+  })
+
+  it('only shows the hint for the most recently hovered trigger', async () => {
+    const screen = await render(
+      <>
+        <Popover popoverTitle='First details' showOnInterest trigger='First'>
+          First content
+        </Popover>
+        <Popover popoverTitle='Second details' showOnInterest trigger='Second'>
+          Second content
+        </Popover>
+      </>,
+    )
+
+    const [firstHint, secondHint] =
+      screen.container.querySelectorAll<HTMLElement>('[popover="hint"]')
+
+    if (!firstHint || !secondHint) throw new Error('Expected two hint popovers')
+
+    await screen.getByRole('button', { name: 'First' }).hover()
+    await expect.element(firstHint).toBeVisible()
+
+    await screen.getByRole('button', { name: 'Second' }).hover()
+
+    await expect.element(firstHint).not.toBeVisible()
+    await expect.element(secondHint).toBeVisible()
   })
 })
