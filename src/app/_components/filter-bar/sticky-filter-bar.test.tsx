@@ -47,6 +47,20 @@ describe('stickyFilterBar', () => {
     vi.useRealTimers()
   })
 
+  it('keeps the search input focused when the query value updates', () => {
+    const setSearch = vi.fn<(value: string) => void>()
+    const { rerender } = render(
+      <StickyFilterBar filters={[]} search='' setSearch={setSearch} showSearch />,
+    )
+    const searchInput = screen.getByRole('searchbox', { name: 'Search route' })
+    searchInput.focus()
+
+    rerender(<StickyFilterBar filters={[]} search='Berlin' setSearch={setSearch} showSearch />)
+
+    expect(searchInput).toHaveFocus()
+    expect(screen.getByRole('searchbox', { name: 'Search route' })).toBe(searchInput)
+  })
+
   it('clears every active filter and the search query', async () => {
     const setYear = vi.fn<(value: string) => void>()
     const setStyle = vi.fn<(value: string) => void>()

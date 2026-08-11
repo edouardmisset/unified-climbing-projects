@@ -66,15 +66,9 @@
 }
 
 .mobileControls {
+  position: relative;
+  z-index: 1;
   display: none;
-}
-
-.filtersPending {
-  opacity: 0.7;
-
-  @media (prefers-reduced-motion: no-preference) {
-    transition: opacity 100ms var(--ease-out-2);
-  }
 }
 
 .reset {
@@ -131,6 +125,7 @@
     inset: 0;
     z-index: var(--layer-3);
     background: oklch(from var(--surface-1) l c h / 45%);
+    view-transition-name: filter-sheet-backdrop;
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -164,6 +159,15 @@
     position: fixed;
     inset: 0;
     z-index: var(--layer-4);
+    view-transition-name: filter-sheet;
+  }
+
+  ::view-transition-group(filter-sheet-backdrop) {
+    z-index: var(--layer-4);
+  }
+
+  ::view-transition-group(filter-sheet) {
+    z-index: var(--layer-5);
   }
 
   .sheetContent {
@@ -191,5 +195,6 @@
     display: grid;
     gap: var(--size-2);
     overflow-y: auto;
+    padding-inline-start: var(--size-fluid-0);
   }
 }

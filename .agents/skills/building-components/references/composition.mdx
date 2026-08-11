@@ -18,30 +18,29 @@ Instead of cramming all functionality into a single component with dozens of pro
 
 Fernando gave a great talk about this at React Universe Conf 2025, where he shared his approach to rebuilding Slack's Message Composer as a composable component.
 
-
 ## Making a component composable
 
 To make a component composable, you need to break it down into smaller, more focused components. For example, let's take this Accordion component:
 
 ```tsx title="accordion.tsx"
-import { Accordion } from "@/components/ui/accordion";
+import { Accordion } from '@/components/ui/accordion'
 
 const data = [
   {
-    title: "Accordion 1",
-    content: "Accordion 1 content",
+    title: 'Accordion 1',
+    content: 'Accordion 1 content',
   },
   {
-    title: "Accordion 2",
-    content: "Accordion 2 content",
+    title: 'Accordion 2',
+    content: 'Accordion 2 content',
   },
   {
-    title: "Accordion 3",
-    content: "Accordion 3 content",
+    title: 'Accordion 3',
+    content: 'Accordion 3 content',
   },
-];
+]
 
-return <Accordion data={data} />;
+return <Accordion data={data} />
 ```
 
 While this Accordion component might seem simple, it's handling too many responsibilities. It's responsible for rendering the container, trigger and content; as well as handling the accordion state and data.
@@ -61,31 +60,26 @@ Finally, to allow for modification of the `div` element, we'll extend the defaul
 We'll call this component the "Root" component.
 
 ```tsx title="@/components/ui/accordion.tsx"
-type AccordionProps = React.ComponentProps<"div"> & {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-};
+type AccordionProps = React.ComponentProps<'div'> & {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
 
 const AccordionContext = createContext<AccordionProps>({
   open: false,
   setOpen: () => {},
-});
+})
 
-export type AccordionRootProps = React.ComponentProps<"div"> & {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-};
+export type AccordionRootProps = React.ComponentProps<'div'> & {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
 
-export const Root = ({
-  children,
-  open,
-  setOpen,
-  ...props
-}: AccordionRootProps) => (
+export const Root = ({ children, open, setOpen, ...props }: AccordionRootProps) => (
   <AccordionContext.Provider value={{ open, setOpen }}>
     <div {...props}>{children}</div>
   </AccordionContext.Provider>
-);
+)
 ```
 
 ### 2. Item Component
@@ -93,9 +87,9 @@ export const Root = ({
 The Item component is the element that contains the accordion item. It is simply a wrapper for each item in the accordion.
 
 ```tsx title="@/components/ui/accordion.tsx"
-export type AccordionItemProps = React.ComponentProps<"div">;
+export type AccordionItemProps = React.ComponentProps<'div'>
 
-export const Item = (props: AccordionItemProps) => <div {...props} />;
+export const Item = (props: AccordionItemProps) => <div {...props} />
 ```
 
 ### 3. Trigger Component
@@ -110,17 +104,15 @@ The Trigger component is the element that opens the accordion when activated. It
 Let's add this component to our Accordion component.
 
 ```tsx title="@/components/ui/accordion.tsx"
-export type AccordionTriggerProps = React.ComponentProps<"button"> & {
-  asChild?: boolean;
-};
+export type AccordionTriggerProps = React.ComponentProps<'button'> & {
+  asChild?: boolean
+}
 
 export const Trigger = ({ asChild, ...props }: AccordionTriggerProps) => (
   <AccordionContext.Consumer>
-    {({ open, setOpen }) => (
-      <button onClick={() => setOpen(!open)} {...props} />
-    )}
+    {({ open, setOpen }) => <button onClick={() => setOpen(!open)} {...props} />}
   </AccordionContext.Consumer>
-);
+)
 ```
 
 ### 4. Content Component
@@ -133,15 +125,13 @@ The Content component is the element that contains the accordion content. It is 
 Let's add this component to our Accordion component.
 
 ```tsx title="@/components/ui/accordion.tsx"
-export type AccordionContentProps = React.ComponentProps<"div"> & {
-  asChild?: boolean;
-};
+export type AccordionContentProps = React.ComponentProps<'div'> & {
+  asChild?: boolean
+}
 
 export const Content = ({ asChild, ...props }: AccordionContentProps) => (
-  <AccordionContext.Consumer>
-    {({ open }) => <div {...props} />}
-  </AccordionContext.Consumer>
-);
+  <AccordionContext.Consumer>{({ open }) => <div {...props} />}</AccordionContext.Consumer>
+)
 ```
 
 ### 5. Putting it all together
@@ -149,33 +139,33 @@ export const Content = ({ asChild, ...props }: AccordionContentProps) => (
 Now that we have all the components, we can put them together in our original file.
 
 ```tsx title="accordion.tsx"
-import * as Accordion from "@/components/ui/accordion";
+import * as Accordion from '@/components/ui/accordion'
 
 const data = [
   {
-    title: "Accordion 1",
-    content: "Accordion 1 content",
+    title: 'Accordion 1',
+    content: 'Accordion 1 content',
   },
   {
-    title: "Accordion 2",
-    content: "Accordion 2 content",
+    title: 'Accordion 2',
+    content: 'Accordion 2 content',
   },
   {
-    title: "Accordion 3",
-    content: "Accordion 3 content",
+    title: 'Accordion 3',
+    content: 'Accordion 3 content',
   },
-];
+]
 
 return (
   <Accordion.Root open={false} setOpen={() => {}}>
-    {data.map((item) => (
+    {data.map(item => (
       <Accordion.Item key={item.title}>
         <Accordion.Trigger>{item.title}</Accordion.Trigger>
         <Accordion.Content>{item.content}</Accordion.Content>
       </Accordion.Item>
     ))}
   </Accordion.Root>
-);
+)
 ```
 
 ## Naming Conventions
