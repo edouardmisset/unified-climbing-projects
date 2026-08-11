@@ -1,5 +1,5 @@
 import { z } from '~/helpers/zod'
-import type { AscentRecord } from '~/domain/ascent'
+import type { AscentListRecord } from '~/domain/ascent'
 
 export const GRADES = [
   '1a',
@@ -198,7 +198,7 @@ export const ascentStyleSchema = z.enum(ASCENT_STYLE)
 export const profileSchema = z.enum(PROFILES)
 export const holdsSchema = z.enum(HOLDS)
 
-export type Ascent = AscentRecord
+export type Ascent = AscentListRecord
 
 export type AscentListProps = {
   ascents: Ascent[]

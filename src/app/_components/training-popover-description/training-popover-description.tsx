@@ -1,6 +1,5 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import {
-  formatComments,
   fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
@@ -10,6 +9,7 @@ import { roundToTen } from '~/helpers/math'
 import { formatWholePercent } from '~/helpers/number-formatter'
 import type { TrainingSessionListProps } from '~/schema/training'
 import styles from './training-popover-description.module.css'
+import { TrainingSessionComment } from './training-session-comment'
 
 export function TrainingPopoverDescription({ trainingSessions }: TrainingSessionListProps) {
   if (trainingSessions.length === 0 || trainingSessions[0] === undefined) return
@@ -20,7 +20,6 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
         ({
           anatomicalRegion,
           discipline,
-          comments,
           energySystem,
           location,
           intensity,
@@ -45,11 +44,7 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
                 ? ''
                 : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
               {energySystem === undefined ? '' : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
-              {comments === undefined || trainingSessions.length > 1 ? (
-                ''
-              ) : (
-                <div title={comments}>{formatComments(comments)}</div>
-              )}
+              {trainingSessions.length === 1 ? <TrainingSessionComment id={_id} /> : ''}
             </li>
           )
         },
