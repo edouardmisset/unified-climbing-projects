@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { useId, useState, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './popover.module.css'
 
@@ -20,6 +20,7 @@ export function Popover(props: PopoverProps) {
     showOnInterest = false,
     ...triggerProps
   } = props
+  const [hasOpened, setHasOpened] = useState(false)
   const id = useId().replaceAll(':', '')
   const popupId = `popover-${id}`
   const titleId = `${popupId}-title`
@@ -45,22 +46,28 @@ export function Popover(props: PopoverProps) {
         aria-labelledby={titleId}
         className={`${baseUiStyles.popupSurface} ${styles.popup}`}
         id={popupId}
+        onBeforeToggle={() => {
+          setHasOpened(true)
+        }}
         popover='auto'
       >
         <h2 className={styles.title} id={titleId}>
           {popoverTitle}
         </h2>
-        <div className={styles.description}>{children}</div>
+        <div className={styles.description}>{hasOpened ? children : undefined}</div>
       </div>
       {showOnInterest && (
         <div
           aria-hidden='true'
           className={`${baseUiStyles.popupSurface} ${styles.popup} ${styles.hint}`}
           id={hintId}
+          onBeforeToggle={() => {
+            setHasOpened(true)
+          }}
           popover='hint'
         >
           <h2 className={styles.title}>{popoverTitle}</h2>
-          <div className={styles.description}>{children}</div>
+          <div className={styles.description}>{hasOpened ? children : undefined}</div>
         </div>
       )}
     </>

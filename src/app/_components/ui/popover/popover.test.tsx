@@ -1,6 +1,13 @@
-import { describe, expect, it } from 'vite-plus/test'
+import { useEffect } from 'react'
+import { describe, expect, it, vi } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
 import { Popover } from './popover'
+
+function MountObserver({ onMount }: { onMount: () => void }) {
+  useEffect(onMount, [onMount])
+
+  return 'Deferred content'
+}
 
 describe('popover', () => {
   it('opens from its native trigger and supports light dismissal', async () => {
@@ -66,6 +73,21 @@ describe('popover', () => {
     await trigger.click()
 
     expect(popup.matches(':popover-open')).toBe(true)
+  })
+
+  it('defers mounting its content until it opens', async () => {
+    const onMount = vi.fn<() => void>()
+    const screen = await render(
+      <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
+        <MountObserver onMount={onMount} />
+      </Popover>,
+    )
+
+    expect(onMount).not.toHaveBeenCalled()
+
+    await screen.getByRole('button', { name: 'Open details' }).hover()
+
+    await expect.poll(() => onMount).toHaveBeenCalled()
   })
 
   it('shows only the hint for the most recently hovered trigger', async () => {
