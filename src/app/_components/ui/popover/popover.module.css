@@ -50,6 +50,21 @@
   transform: scale(1);
 }
 
+.hint:popover-open {
+  pointer-events: none;
+}
+
+.iconButton[interestfor] {
+  transition: transform 150ms;
+}
+
+.iconButton[interestfor]:is(:hover, :focus-visible) {
+  z-index: 1;
+  outline: 2px solid currentcolor;
+  outline-offset: 1px;
+  transform: scale(1.1);
+}
+
 .title {
   margin: 0;
   font-size: 1.25rem;

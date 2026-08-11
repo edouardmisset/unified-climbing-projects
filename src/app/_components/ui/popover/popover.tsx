@@ -8,13 +8,23 @@ type PopoverProps = {
   trigger: ReactNode
   popoverTitle: ReactNode
   children: ReactNode
+  showOnInterest?: boolean
 } & Omit<ComponentPropsWithoutRef<'button'>, 'children' | 'type'>
 
 export function Popover(props: PopoverProps) {
-  const { trigger, popoverTitle, children, className = '', ...triggerProps } = props
+  const {
+    trigger,
+    popoverTitle,
+    children,
+    className = '',
+    showOnInterest = false,
+    ...triggerProps
+  } = props
   const id = useId().replaceAll(':', '')
   const popupId = `popover-${id}`
   const titleId = `${popupId}-title`
+  const hintId = `${popupId}-hint`
+  const interestProps = showOnInterest ? { interestfor: hintId } : {}
 
   if (trigger === undefined || popoverTitle === undefined || children === undefined) return
 
@@ -22,7 +32,13 @@ export function Popover(props: PopoverProps) {
 
   return (
     <>
-      <button {...triggerProps} className={triggerClass} popoverTarget={popupId} type='button'>
+      <button
+        {...triggerProps}
+        {...interestProps}
+        className={triggerClass}
+        popoverTarget={popupId}
+        type='button'
+      >
         {trigger}
       </button>
       <div
@@ -36,6 +52,17 @@ export function Popover(props: PopoverProps) {
         </h2>
         <div className={styles.description}>{children}</div>
       </div>
+      {showOnInterest && (
+        <div
+          aria-hidden='true'
+          className={`${baseUiStyles.popupSurface} ${styles.popup} ${styles.hint}`}
+          id={hintId}
+          popover='hint'
+        >
+          <h2 className={styles.title}>{popoverTitle}</h2>
+          <div className={styles.description}>{children}</div>
+        </div>
+      )}
     </>
   )
 }

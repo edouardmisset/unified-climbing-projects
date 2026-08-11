@@ -36,4 +36,78 @@ describe('popover', () => {
 
     expect(popup.matches(':popover-open')).toBe(false)
   })
+
+  it('promotes a hovered hint to a persistent popover when its trigger is clicked', async () => {
+    const screen = await render(
+      <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
+        Popover content
+      </Popover>,
+    )
+
+    const trigger = screen.getByRole('button', { name: 'Open details' })
+    const popup = screen.container.querySelector<HTMLElement>('[popover="auto"]')
+    const hint = screen.container.querySelector<HTMLElement>('[popover="hint"]')
+
+    if (!popup || !hint) throw new Error('Expected automatic and hint popovers')
+
+    await trigger.hover()
+
+    await expect.poll(() => hint.matches(':popover-open')).toBe(true)
+    expect(getComputedStyle(hint).pointerEvents).toBe('none')
+
+    await trigger.click()
+
+    expect(popup.matches(':popover-open')).toBe(true)
+  })
+
+  it('shows only the hint for the most recently hovered trigger', async () => {
+    const screen = await render(
+      <>
+        <Popover popoverTitle='First details' showOnInterest trigger='First'>
+          First content
+        </Popover>
+        <Popover popoverTitle='Second details' showOnInterest trigger='Second'>
+          Second content
+        </Popover>
+      </>,
+    )
+
+    const [firstHint, secondHint] =
+      screen.container.querySelectorAll<HTMLElement>('[popover="hint"]')
+
+    if (!firstHint || !secondHint) throw new Error('Expected two hint popovers')
+
+    await screen.getByRole('button', { name: 'First' }).hover()
+    await expect.poll(() => firstHint.matches(':popover-open')).toBe(true)
+
+    await screen.getByRole('button', { name: 'Second' }).hover()
+
+    await expect
+      .poll(() => !firstHint.matches(':popover-open') && secondHint.matches(':popover-open'))
+      .toBe(true)
+  })
+
+  it('outlines and scales the active interest trigger without changing its color', async () => {
+    const screen = await render(
+      <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
+        Popover content
+      </Popover>,
+    )
+
+    const trigger = screen.getByRole('button', { name: 'Open details' })
+    const hint = screen.container.querySelector<HTMLElement>('[popover="hint"]')
+
+    if (!hint) throw new Error('Expected a hint popover')
+
+    const { color } = getComputedStyle(trigger.element())
+
+    await trigger.hover()
+    await expect.poll(() => hint.matches(':popover-open')).toBe(true)
+
+    const activeStyle = getComputedStyle(trigger.element())
+
+    expect(activeStyle.color).toBe(color)
+    expect(activeStyle.outlineStyle).toBe('solid')
+    expect(activeStyle.transform).not.toBe('none')
+  })
 })

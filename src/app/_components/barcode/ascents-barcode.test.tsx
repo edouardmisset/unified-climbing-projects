@@ -22,6 +22,7 @@ describe('ascentsBarcode', () => {
     const buttons = [...container.querySelectorAll('button')]
     populatedWeeks.forEach((week, index) => {
       const button = buttons[index]
+      const hintId = button?.getAttribute('interestfor')
       const sortedByGrade = week.filter(Boolean).toSorted(sortByGrade)
       const expectedWidth = `${week.length / HALF}%`
       const expectedBackground =
@@ -35,6 +36,8 @@ describe('ascentsBarcode', () => {
       expect(button?.style.background === '' ? undefined : button?.style.background).toBe(
         expectedBackground,
       )
+      if (hintId === null || hintId === undefined) throw new Error('Expected a native hint target')
+      expect(container.querySelector(`[id="${hintId}"][popover="hint"]`)).not.toBeNull()
     })
   })
 })

@@ -23,9 +23,12 @@ describe('trainingQrCode', () => {
     const buttons = [...container.querySelectorAll('button')]
     populatedDays.forEach((day, index) => {
       const button = buttons[index]
+      const hintId = button?.getAttribute('interestfor')
       const sessionClass = fromSessionTypeToClassName(day[0]?.type)
 
       expect(sessionClass === undefined || button?.className.includes(sessionClass)).toBe(true)
+      if (hintId === null || hintId === undefined) throw new Error('Expected a native hint target')
+      expect(container.querySelector(`[id="${hintId}"][popover="hint"]`)).not.toBeNull()
     })
   })
 })
