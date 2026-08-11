@@ -23,6 +23,7 @@ describe('ascentsBarcode', () => {
     populatedWeeks.forEach((week, index) => {
       const button = buttons[index]
       const hintId = button?.getAttribute('interestfor')
+      const popupId = button?.getAttribute('popovertarget')
       const sortedByGrade = week.filter(Boolean).toSorted(sortByGrade)
       const expectedWidth = `${week.length / HALF}%`
       const expectedBackground =
@@ -38,6 +39,11 @@ describe('ascentsBarcode', () => {
       )
       if (hintId === null || hintId === undefined) throw new Error('Expected a native hint target')
       expect(container.querySelector(`[id="${hintId}"][popover="hint"]`)).not.toBeNull()
+      if (popupId === null || popupId === undefined)
+        throw new Error('Expected a native popover target')
+      expect(button?.getAttribute('aria-label')).toBe(
+        container.querySelector(`#${popupId} h2`)?.textContent,
+      )
     })
   })
 })

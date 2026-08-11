@@ -51,6 +51,7 @@ export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
 
   return (
     <Popover
+      aria-label={title}
       className={triggerClassName}
       popoverTitle={title}
       showOnInterest
