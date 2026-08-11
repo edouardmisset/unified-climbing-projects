@@ -1,7 +1,10 @@
 import { convexTest } from 'convex-test'
 import { describe, expect, test } from 'vitest'
-import type { AscentPublicInput } from '../src/domain/ascent'
-import type { TrainingSessionPublicInput } from '../src/domain/training-session'
+import { ascentListOutputSchema, type AscentPublicInput } from '../src/domain/ascent'
+import {
+  trainingSessionListOutputSchema,
+  type TrainingSessionPublicInput,
+} from '../src/domain/training-session'
 import { api } from './_generated/api'
 import schema from './schema'
 import { modules } from './test.setup'
@@ -53,6 +56,33 @@ describe('owner isolation: unauthenticated access', () => {
 })
 
 describe('owner isolation: ascents and training sessions', () => {
+  test('collection reads omit comments while detail reads retain them', async () => {
+    const t = convexTest(schema, modules)
+    const asUserA = t.withIdentity({ subject: USER_A })
+
+    const ascentId = await asUserA.mutation(
+      api.ascents.post,
+      minimalAscent({ comments: 'Private ascent comment' }),
+    )
+    const trainingId = await asUserA.mutation(
+      api.training.post,
+      minimalTraining({ comments: 'Private training comment' }),
+    )
+    const ascents = await asUserA.query(api.ascents.get, {})
+    const trainingSessions = await asUserA.query(api.training.get, {})
+
+    expect(ascents[0]).not.toHaveProperty('comments')
+    expect(trainingSessions[0]).not.toHaveProperty('comments')
+    expect(ascentListOutputSchema.array().safeParse(ascents).success).toBe(true)
+    expect(trainingSessionListOutputSchema.array().safeParse(trainingSessions).success).toBe(true)
+    expect(await asUserA.query(api.ascents.getById, { id: ascentId })).toMatchObject({
+      comments: 'Private ascent comment',
+    })
+    expect(await asUserA.query(api.training.getById, { id: trainingId })).toMatchObject({
+      comments: 'Private training comment',
+    })
+  })
+
   test('created records are stamped with the acting owner and hidden from other owners', async () => {
     const t = convexTest(schema, modules)
     const asUserA = t.withIdentity({ subject: USER_A })

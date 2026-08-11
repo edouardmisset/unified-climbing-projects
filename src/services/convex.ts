@@ -4,13 +4,17 @@ import { api } from '~/../convex/_generated/api'
 import { EMPTY_OBJECT } from '~/constants/generic'
 import {
   type AscentPublicInput,
+  type AscentListRecord,
   type AscentRecord,
   ascentPublicInputSchema,
+  ascentListOutputSchema,
   ascentPublicOutputSchema,
 } from '~/domain/ascent'
 import {
   type TrainingSessionPublicInput,
+  type TrainingSessionListRecord,
   type TrainingSessionRecord,
+  trainingSessionListOutputSchema,
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
 } from '~/domain/training-session'
@@ -39,10 +43,10 @@ function normalizeTrainingInput(input: TrainingSessionPublicInput): TrainingSess
   return trainingSessionPublicInputSchema.parse(input)
 }
 
-export async function getAllAscents(): Promise<AscentRecord[]> {
+export async function getAllAscents(): Promise<AscentListRecord[]> {
   const token = await getConvexAuthToken()
   const records = await fetchQuery(api.ascents.get, EMPTY_OBJECT, { token })
-  return ascentPublicOutputSchema.array().parse(records).toSorted(compareDates)
+  return ascentListOutputSchema.array().parse(records).toSorted(compareDates)
 }
 
 export async function getAscentById(_id: string): Promise<AscentRecord | undefined> {
@@ -56,10 +60,18 @@ export async function addAscent(ascent: AscentPublicInput): Promise<void> {
   await fetchMutation(api.ascents.post, normalizeAscentInput(ascent), { token })
 }
 
-export async function getAllTrainingSessions(): Promise<TrainingSessionRecord[]> {
+export async function getAllTrainingSessions(): Promise<TrainingSessionListRecord[]> {
   const token = await getConvexAuthToken()
   const records = await fetchQuery(api.training.get, EMPTY_OBJECT, { token })
-  return trainingSessionPublicOutputSchema.array().parse(records).toSorted(compareDates)
+  return trainingSessionListOutputSchema.array().parse(records).toSorted(compareDates)
+}
+
+export async function getTrainingSessionById(
+  _id: string,
+): Promise<TrainingSessionRecord | undefined> {
+  const token = await getConvexAuthToken()
+  const record = await fetchQuery(api.training.getById, { id: _id }, { token })
+  return record ? trainingSessionPublicOutputSchema.parse(record) : undefined
 }
 
 export async function addTrainingSession(session: TrainingSessionPublicInput): Promise<void> {

@@ -1,5 +1,6 @@
 import { createTrainingSessionFingerprintInput } from '~/domain/fingerprint-input'
 import {
+  trainingSessionListOutputSchema,
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
   trainingSessionStoredDocumentSchema,
@@ -20,15 +21,21 @@ function toPublicTrainingSession(record: unknown) {
   )
 }
 
+function toPublicTrainingSessionListItem(record: unknown) {
+  const { comments: _comments, ...session } = toPublicTrainingSession(record)
+  return session
+}
+
 export const get = query({
   args: {},
+  returns: v.array(zodToConvex(trainingSessionListOutputSchema)),
   handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const records = await ctx.db
       .query('training')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicTrainingSession(record))
+    return records.map(record => toPublicTrainingSessionListItem(record))
   },
 })
 

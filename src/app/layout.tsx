@@ -5,6 +5,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type ReactNode, Suspense, ViewTransition } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Header } from '~/app/_components/header/header.tsx'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { APP_LANGUAGE } from '~/constants/generic'
 import { ClerkThemeProvider } from './_components/clerk-theme-provider/clerk-theme-provider'
@@ -61,7 +62,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>
                 <ViewTransition>
-                  <NuqsAdapter>{children}</NuqsAdapter>
+                  <QueryProvider>
+                    <NuqsAdapter>{children}</NuqsAdapter>
+                  </QueryProvider>
                 </ViewTransition>
               </Suspense>
             </main>

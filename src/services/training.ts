@@ -1,6 +1,6 @@
 import { compareStringsAscending } from '~/helpers/sort-strings'
 
-export { addTrainingSession, getAllTrainingSessions } from './convex'
+export { addTrainingSession, getAllTrainingSessions, getTrainingSessionById } from './convex'
 
 /**
  * Get all unique training locations sorted alphabetically

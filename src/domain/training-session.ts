@@ -87,6 +87,10 @@ export const trainingSessionPublicOutputSchema = z
   })
   .strict()
 
+export const trainingSessionListOutputSchema = trainingSessionPublicOutputSchema.omit({
+  comments: true,
+})
+
 const optionalFormPercentSchema = z.preprocess(
   emptyStringToUndefined,
   z.coerce.number().int().min(0).max(100).optional(),
@@ -139,6 +143,7 @@ export const trainingSessionExportRowSchema = z
 
 export type TrainingSessionDomain = z.infer<typeof trainingSessionDomainSchema>
 export type TrainingSessionRecord = TrainingSessionDomain & { _id: string }
+export type TrainingSessionListRecord = z.infer<typeof trainingSessionListOutputSchema>
 export type TrainingSessionStoredFields = z.infer<typeof trainingSessionStoredFieldsSchema>
 export type TrainingSessionStoredDocument = z.infer<typeof trainingSessionStoredDocumentSchema>
 export type TrainingSessionPublicInput = z.infer<typeof trainingSessionPublicInputSchema>

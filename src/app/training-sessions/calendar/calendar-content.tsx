@@ -2,8 +2,8 @@ import { Fragment } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
 import NotFound from '~/app/not-found'
 import { createYearList, groupDataDaysByYear } from '~/data/helpers'
+import type { TrainingSessionListRecord } from '~/domain/training-session'
 import { fromTrainingSessionsToCalendarEntries } from '~/helpers/training-calendar-helpers'
-import type { TrainingSession } from '~/schema/training'
 import { getAllAscents } from '~/services/ascents'
 import { getAllTrainingSessions } from '~/services/training'
 
@@ -24,7 +24,7 @@ export async function CalendarContent() {
           <h2 className='superCenter'>{year}</h2>
           <DataCalendar
             data={trainingSessions}
-            dataTransformationFunction={groupDataDaysByYear<TrainingSession>}
+            dataTransformationFunction={groupDataDaysByYear<TrainingSessionListRecord>}
             fromDataToCalendarEntries={(calendarYear, sessions) =>
               fromTrainingSessionsToCalendarEntries(calendarYear, sessions, allAscents)
             }

@@ -7,7 +7,7 @@
       {
         "severity": "warning",
         "ignorePartialSupport": true,
-        "ignore": ["css-hanging-punctuation"]
+        "ignore": ["css-hanging-punctuation", "text-size-adjust"]
       }
     ],
     "custom-property-pattern": null,

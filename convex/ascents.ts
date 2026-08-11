@@ -1,4 +1,5 @@
 import {
+  ascentListOutputSchema,
   ascentPublicInputSchema,
   ascentPublicOutputSchema,
   ascentStoredDocumentSchema,
@@ -20,15 +21,21 @@ function toPublicAscent(record: unknown) {
   )
 }
 
+function toPublicAscentListItem(record: unknown) {
+  const { comments: _comments, ...ascent } = toPublicAscent(record)
+  return ascent
+}
+
 export const get = query({
   args: {},
+  returns: v.array(zodToConvex(ascentListOutputSchema)),
   handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const records = await ctx.db
       .query('ascents')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicAscent(record))
+    return records.map(record => toPublicAscentListItem(record))
   },
 })
 

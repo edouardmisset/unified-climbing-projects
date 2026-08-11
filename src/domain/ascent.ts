@@ -165,6 +165,8 @@ export const ascentPublicOutputSchema = z
   })
   .strict()
 
+export const ascentListOutputSchema = ascentPublicOutputSchema.omit({ comments: true })
+
 const optionalFormIntegerSchema = z.preprocess(
   emptyStringToUndefined,
   z.coerce.number().int().min(0).optional(),
@@ -237,6 +239,7 @@ export const ascentExportRowSchema = z
 
 export type AscentDomain = z.infer<typeof ascentDomainSchema>
 export type AscentRecord = AscentDomain & { _id: string }
+export type AscentListRecord = z.infer<typeof ascentListOutputSchema>
 export type AscentStoredFields = z.infer<typeof ascentStoredFieldsSchema>
 export type AscentStoredDocument = z.infer<typeof ascentStoredDocumentSchema>
 export type AscentPublicInput = z.infer<typeof ascentPublicInputSchema>

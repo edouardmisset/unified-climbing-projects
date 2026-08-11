@@ -1,5 +1,6 @@
 import { wrapInParentheses } from '@edouardmisset/text'
 import type { CSSProperties } from 'react'
+import type { AscentRecord } from '~/domain/ascent'
 import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
@@ -12,14 +13,13 @@ import {
   fromClimbingDisciplineToEmoji,
   prettyLongDate,
 } from '~/helpers/formatters'
-import type { Ascent } from '~/schema/ascent'
 import styles from './ascent-card.module.css'
 
 type CommentDirectionStyle = CSSProperties & {
   '--direction': 'row' | 'column'
 }
 
-export function AscentCard({ ascent }: { ascent: Ascent }) {
+export function AscentCard({ ascent }: { ascent: AscentRecord }) {
   const {
     area,
     discipline,
