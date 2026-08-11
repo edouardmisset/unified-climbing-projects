@@ -2,6 +2,7 @@
 import { Dialog as BaseDialog } from '@base-ui/react/dialog'
 import { XIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './dialog.module.css'
 
 type DialogProps = {
@@ -21,19 +22,21 @@ export function Dialog({
   open,
   onOpenChange,
 }: DialogProps) {
-  const triggerClass = `${styles.trigger}${triggerClassName === undefined || triggerClassName === '' ? '' : ` ${triggerClassName}`}`
-
   return (
     <BaseDialog.Root onOpenChange={onOpenChange} open={open}>
       {triggerText === undefined ? undefined : (
-        <BaseDialog.Trigger className={triggerClass}>{triggerText}</BaseDialog.Trigger>
+        <BaseDialog.Trigger className={triggerClassName}>{triggerText}</BaseDialog.Trigger>
       )}
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className={styles.backdrop} />
+        <BaseDialog.Backdrop className={`${baseUiStyles.overlayBackdrop} ${styles.backdrop}`} />
         <BaseDialog.Popup className={styles.popup}>
           <BaseDialog.Title className={styles.title}>{title}</BaseDialog.Title>
           <BaseDialog.Description render={<div>{content}</div>} />
-          <BaseDialog.Close className={styles.button} data-close='true' aria-label='Close dialog'>
+          <BaseDialog.Close
+            aria-label='Close dialog'
+            className={`${baseUiStyles.interactiveControl} ${styles.button}`}
+            data-close='true'
+          >
             <XIcon />
           </BaseDialog.Close>
         </BaseDialog.Popup>

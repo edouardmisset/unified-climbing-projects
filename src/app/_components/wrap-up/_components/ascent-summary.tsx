@@ -29,29 +29,29 @@ export function AscentSummary({ ascents }: AscentListProps) {
     <Card>
       <h2>Ascents</h2>
 
-      <p>
+      <div>
         <span className='block'>
           Your last {mostRecentAscent.discipline.toLowerCase()} was{' '}
           <AscentComponent ascent={mostRecentAscent} />
         </span>
 
         {onsightAscents.length === 0 ? undefined : (
-          <span className='block'>
+          <div>
             You <ClimbingStyle climbingStyle='onsighted' />{' '}
             <AscentsWithPopover ascents={onsightAscents} />
-          </span>
+          </div>
         )}
         {flashAscents.length === 0 ? undefined : (
-          <span className='block'>
+          <div>
             You <ClimbingStyle climbingStyle='flashed' />{' '}
             <AscentsWithPopover ascents={flashAscents} />
-          </span>
+          </div>
         )}
         {redpointAscents.length === 0 ? undefined : (
-          <span className='block'>
+          <div>
             You <ClimbingStyle climbingStyle='redpointed' />{' '}
             <AscentsWithPopover ascents={redpointAscents} />
-          </span>
+          </div>
         )}
 
         {averageRouteGrade === 'N/A' ? undefined : (
@@ -66,7 +66,7 @@ export function AscentSummary({ ascents }: AscentListProps) {
             <DisplayGrade discipline='Bouldering' grade={averageBoulderGrade} />
           </span>
         )}
-      </p>
+      </div>
     </Card>
   )
 }

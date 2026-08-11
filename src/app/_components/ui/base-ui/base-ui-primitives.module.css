@@ -9,10 +9,26 @@
   }
 }
 
+.centeredControl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .neutralControlSurface {
   color: light-dark(var(--gray-9), var(--gray-1));
   background-color: light-dark(var(--gray-0), var(--gray-10));
   border: 1px solid light-dark(var(--gray-2), var(--gray-8));
+}
+
+.overlayBackdrop {
+  position: fixed;
+  inset: 0;
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+  }
 }
 
 .popupSurface {

@@ -11,7 +11,7 @@ export function MobileNavigationTrigger({ open }: MobileNavigationTriggerProps) 
     <Drawer.Trigger
       aria-expanded={open}
       aria-label='Open navigation drawer'
-      className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.mobileTrigger}`}
+      className={`${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${baseUiStyles.neutralControlSurface} ${styles.mobileTrigger}`}
     >
       <span aria-hidden className={`${styles.mobileTriggerBar} ${styles.mobileTriggerBarTop}`} />
       <span

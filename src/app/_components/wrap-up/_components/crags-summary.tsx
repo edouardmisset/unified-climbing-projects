@@ -29,7 +29,7 @@ export function CragsSummary({
   return (
     <Card>
       <h2>Crags</h2>
-      <p>
+      <div>
         You visited{' '}
         <Popover
           className={ascentsWithPopoverStyles.popover}
@@ -72,7 +72,7 @@ export function CragsSummary({
             </Popover>
           </>
         )}
-      </p>
+      </div>
     </Card>
   )
 }

@@ -22,7 +22,7 @@ export function HardestClimbsSummary({ ascents }: AscentListProps) {
   return (
     <Card>
       <h2>Hardest Sends</h2>
-      <p>
+      <div>
         {hardestRoute === undefined ? undefined : (
           <span className='block'>
             Your hardest route was <AscentComponent ascent={hardestRoute} />
@@ -33,12 +33,12 @@ export function HardestClimbsSummary({ ascents }: AscentListProps) {
             Your hardest boulder was <AscentComponent ascent={hardestBoulder} />
           </span>
         )}
-        <span className='block'>
+        <div>
           You climbed <AscentsWithPopover ascents={ascentsInTheHardestDegree} /> in the{' '}
           <strong>{highestDegree}</strong>
           <sup>th</sup> degree
-        </span>
-      </p>
+        </div>
+      </div>
     </Card>
   )
 }

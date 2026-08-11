@@ -2,6 +2,7 @@ import { Drawer } from '@base-ui/react/drawer'
 import { XIcon } from 'lucide-react'
 import type { ChangeEventHandler, ReactNode } from 'react'
 import { CustomSelect } from '../custom-select/custom-select'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import type { BaseFilterBarProps } from './types'
 import styles from './sticky-filter-bar.module.css'
 
@@ -23,7 +24,10 @@ export function MobileFilterSheet({
         <Drawer.Content className={styles.sheetContent}>
           <div className={styles.sheetHeader}>
             <Drawer.Title className={styles.sheetTitle}>Filters</Drawer.Title>
-            <Drawer.Close aria-label='Close filters' className={styles.sheetClose}>
+            <Drawer.Close
+              aria-label='Close filters'
+              className={`${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${baseUiStyles.neutralControlSurface} ${styles.sheetClose}`}
+            >
               <XIcon aria-hidden size={18} />
             </Drawer.Close>
           </div>

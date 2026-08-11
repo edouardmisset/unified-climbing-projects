@@ -74,13 +74,15 @@ export const Navigation = ({
           <MobileNavigationTrigger open={mobileOpen} />
           <Drawer.SwipeArea className={styles.drawerSwipeArea} />
           <Drawer.Portal>
-            <Drawer.Backdrop className={styles.drawerBackdrop} />
+            <Drawer.Backdrop
+              className={`${baseUiStyles.overlayBackdrop} ${styles.drawerBackdrop}`}
+            />
             <Drawer.Popup className={`${styles.drawerPopup} ${styles.drawerContent}`}>
               <div className={styles.drawerHeader}>
                 <Drawer.Title className={styles.drawerTitle}>Navigation</Drawer.Title>
                 <Drawer.Close
                   aria-label='Close navigation drawer'
-                  className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.drawerClose}`}
+                  className={`${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${baseUiStyles.neutralControlSurface} ${styles.drawerClose}`}
                 >
                   <XIcon size={18} />
                 </Drawer.Close>

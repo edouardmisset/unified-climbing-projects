@@ -72,11 +72,11 @@ export function DaysOutsideSummary({
           />
         </Suspense>
         {mostAscentDate === '' || ascentsInMostAscentDay[0] === undefined ? undefined : (
-          <span className='block'>
+          <div>
             Your best day was <strong>{formatLongDate(mostAscentDate)}</strong> where you climbed{' '}
             <AscentsWithPopover ascents={ascentsInMostAscentDay} /> in{' '}
             <strong>{ascentsInMostAscentDay[0].crag}</strong>
-          </span>
+          </div>
         )}
         {consecutiveClimbingDays === 0 ? undefined : (
           <span className='block'>

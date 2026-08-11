@@ -29,16 +29,16 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
   return (
     <Card>
       <h2>Vertical Milestone</h2>
-      <p>
+      <div>
         {routes.length > 0 && (
-          <span className='block'>
+          <div>
             You climbed <AscentsWithPopover ascents={routes} />
-          </span>
+          </div>
         )}
         {boulders.length > 0 && (
-          <span className='block'>
+          <div>
             You climbed <AscentsWithPopover ascents={boulders} />
-          </span>
+          </div>
         )}
         {totalHeight !== 0 && (
           <span className='block'>
@@ -50,7 +50,7 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
             Your average route height is <strong>{formattedAverageHeight}</strong>
           </span>
         )}
-      </p>
+      </div>
     </Card>
   )
 }

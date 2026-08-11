@@ -2,6 +2,7 @@ import { Drawer } from '@base-ui/react/drawer'
 import { CircleX, ListFilter } from 'lucide-react'
 import { useState } from 'react'
 import { ALL_VALUE } from '../dashboard/constants'
+import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import { FilterSelectList, MobileFilterSheet } from './mobile-filter-sheet'
 import { SearchInput } from './search-input'
 import type { BaseFilterBarProps } from './types'
@@ -79,13 +80,16 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
           open={isFilterSheetOpen}
           swipeDirection='down'
         >
-          <Drawer.Trigger aria-label='Open filters' className={styles.mobileTrigger}>
+          <Drawer.Trigger
+            aria-label='Open filters'
+            className={`${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${baseUiStyles.neutralControlSurface} ${styles.mobileTrigger}`}
+          >
             <ListFilter aria-hidden size={18} />
             <span>{`Filters · ${activeFilterCount}`}</span>
           </Drawer.Trigger>
           <button
             aria-label='Clear filters'
-            className={styles.mobileReset}
+            className={`${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${baseUiStyles.neutralControlSurface} ${styles.mobileReset}`}
             disabled={!isOneFilterActive}
             onClick={clearFilters}
             type='reset'
@@ -93,7 +97,9 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
             <CircleX aria-hidden opacity={isOneFilterActive ? 1 : 1 / 2} size={18} />
           </button>
           <Drawer.Portal>
-            <Drawer.Backdrop className={styles.sheetBackdrop} />
+            <Drawer.Backdrop
+              className={`${baseUiStyles.overlayBackdrop} ${styles.sheetBackdrop}`}
+            />
             <MobileFilterSheet
               filters={renderedFilters}
               searchInput={

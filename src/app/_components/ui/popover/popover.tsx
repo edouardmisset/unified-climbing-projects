@@ -28,7 +28,7 @@ export function Popover(props: PopoverProps) {
 
   if (trigger === undefined || popoverTitle === undefined || children === undefined) return
 
-  const triggerClass = `${baseUiStyles.interactiveControl} ${styles.iconButton}${typeof className === 'string' ? ` ${className}` : ''}`
+  const triggerClass = `${baseUiStyles.interactiveControl} ${baseUiStyles.centeredControl} ${styles.iconButton}${typeof className === 'string' ? ` ${className}` : ''}`
 
   return (
     <>

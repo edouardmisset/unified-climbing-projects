@@ -100,14 +100,7 @@
   .mobileTrigger,
   .mobileReset,
   .sheetClose {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     min-block-size: 2.5rem;
-    color: var(--text-1);
-    background: var(--control-bg);
-    border: 1px solid var(--panel-border);
-    border-radius: var(--radius-2);
   }
 
   .mobileTrigger {
@@ -121,16 +114,9 @@
   }
 
   .sheetBackdrop {
-    position: fixed;
-    inset: 0;
     z-index: var(--layer-3);
     background: oklch(from var(--surface-1) l c h / 45%);
     view-transition-name: filter-sheet-backdrop;
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      opacity: 0;
-    }
   }
 
   .sheetPopup {
