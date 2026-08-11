@@ -1,4 +1,5 @@
 import {
+  ascentListOutputSchema,
   ascentPublicInputSchema,
   ascentPublicOutputSchema,
   ascentStoredDocumentSchema,
@@ -27,6 +28,7 @@ function toPublicAscentListItem(record: unknown) {
 
 export const get = query({
   args: {},
+  returns: v.array(zodToConvex(ascentListOutputSchema)),
   handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const records = await ctx.db

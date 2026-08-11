@@ -10,7 +10,7 @@ export async function AscentComponent({ ascent }: { ascent: Ascent }) {
   const formattedRouteName = `${name} (${formatGrade({ discipline, grade })})`
   const ascentWithComments = await getAscentById(_id)
 
-  if (!ascentWithComments) return null
+  if (!ascentWithComments) return
 
   return (
     <Dialog

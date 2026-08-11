@@ -1,5 +1,6 @@
 import { createTrainingSessionFingerprintInput } from '~/domain/fingerprint-input'
 import {
+  trainingSessionListOutputSchema,
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
   trainingSessionStoredDocumentSchema,
@@ -27,6 +28,7 @@ function toPublicTrainingSessionListItem(record: unknown) {
 
 export const get = query({
   args: {},
+  returns: v.array(zodToConvex(trainingSessionListOutputSchema)),
   handler: async ctx => {
     const { subject } = await requireIdentity(ctx)
     const records = await ctx.db

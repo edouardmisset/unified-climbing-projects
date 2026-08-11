@@ -1,7 +1,10 @@
 import { convexTest } from 'convex-test'
 import { describe, expect, test } from 'vitest'
-import type { AscentPublicInput } from '../src/domain/ascent'
-import type { TrainingSessionPublicInput } from '../src/domain/training-session'
+import { ascentListOutputSchema, type AscentPublicInput } from '../src/domain/ascent'
+import {
+  trainingSessionListOutputSchema,
+  type TrainingSessionPublicInput,
+} from '../src/domain/training-session'
 import { api } from './_generated/api'
 import schema from './schema'
 import { modules } from './test.setup'
@@ -65,9 +68,13 @@ describe('owner isolation: ascents and training sessions', () => {
       api.training.post,
       minimalTraining({ comments: 'Private training comment' }),
     )
+    const ascents = await asUserA.query(api.ascents.get, {})
+    const trainingSessions = await asUserA.query(api.training.get, {})
 
-    expect((await asUserA.query(api.ascents.get, {}))[0]).not.toHaveProperty('comments')
-    expect((await asUserA.query(api.training.get, {}))[0]).not.toHaveProperty('comments')
+    expect(ascents[0]).not.toHaveProperty('comments')
+    expect(trainingSessions[0]).not.toHaveProperty('comments')
+    expect(ascentListOutputSchema.array().safeParse(ascents).success).toBe(true)
+    expect(trainingSessionListOutputSchema.array().safeParse(trainingSessions).success).toBe(true)
     expect(await asUserA.query(api.ascents.getById, { id: ascentId })).toMatchObject({
       comments: 'Private ascent comment',
     })
