@@ -1,5 +1,4 @@
 .iconButton {
-  anchor-name: var(--popover-anchor);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -15,24 +14,21 @@
 }
 
 .popup {
-  container-name: popover;
   position: fixed;
-  position-anchor: var(--popover-anchor);
-  position-try-fallbacks: flip-block;
+  position-area: block-end;
+  position-try-fallbacks: flip-block flip-inline;
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
-  inset: anchor(bottom) auto auto anchor(center);
-  margin: var(--size-2) 0 0;
+  inset: auto;
+  margin: var(--size-2);
   padding-block: var(--size-3);
   padding-inline: var(--size-5);
-  overflow: visible;
 
   pointer-events: none;
   opacity: 0;
   transform: scale(0.9);
   border-radius: var(--size-2);
-  translate: -50% 0;
 
   @media (prefers-reduced-motion: no-preference) {
     transition:
@@ -67,18 +63,6 @@
   outline: 2px solid currentcolor;
   outline-offset: 1px;
   transform: scale(1.1);
-}
-
-.arrow {
-  position: absolute;
-  inset-block-start: -8px;
-  inset-inline-start: 50%;
-  inline-size: 16px;
-  block-size: 8px;
-  background: canvas;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  filter: drop-shadow(0 -1px light-dark(var(--gray-2), var(--gray-7)));
-  translate: -50% 0;
 }
 
 .title {
