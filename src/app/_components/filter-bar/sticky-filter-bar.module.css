@@ -65,6 +65,10 @@
   isolation: isolate;
 }
 
+.mobileControls {
+  display: none;
+}
+
 .filtersPending {
   opacity: 0.7;
 
@@ -81,5 +85,111 @@
     & > svg {
       transition: opacity 2s var(--ease-elastic-in-1);
     }
+  }
+}
+
+@media (width <= 40rem) {
+  .container {
+    padding: var(--size-1);
+  }
+
+  .filters {
+    display: none;
+  }
+
+  .mobileControls {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-2);
+  }
+
+  .mobileTrigger,
+  .mobileReset,
+  .sheetClose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.5rem;
+    color: var(--text-1);
+    background: var(--control-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-2);
+  }
+
+  .mobileTrigger {
+    gap: var(--size-1);
+    padding-inline: var(--size-3);
+  }
+
+  .mobileReset,
+  .sheetClose {
+    inline-size: 2.5rem;
+  }
+
+  .sheetBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--layer-3);
+    background: oklch(from var(--surface-1) l c h / 45%);
+
+    &[data-starting-style],
+    &[data-ending-style] {
+      opacity: 0;
+    }
+  }
+
+  .sheetPopup {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: var(--layer-4);
+    max-block-size: min(80dvh, 38rem);
+    background: var(--panel-bg);
+    border-block-start: 1px solid var(--panel-border);
+    border-radius: var(--radius-3) var(--radius-3) 0 0;
+    box-shadow:
+      0 -8px 32px var(--panel-shadow-outer),
+      inset 0 1px 0 var(--panel-shadow-inner);
+
+    &[data-starting-style],
+    &[data-ending-style] {
+      transform: translateY(100%);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.25s var(--ease-out-3);
+    }
+  }
+
+  .sheetViewport {
+    position: fixed;
+    inset: 0;
+    z-index: var(--layer-4);
+  }
+
+  .sheetContent {
+    display: flex;
+    flex-direction: column;
+    max-block-size: inherit;
+    padding: var(--size-3);
+  }
+
+  .sheetHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-2);
+    padding-block-end: var(--size-2);
+  }
+
+  .sheetTitle {
+    margin: 0;
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-7);
+  }
+
+  .sheetFilters {
+    display: grid;
+    gap: var(--size-2);
+    overflow-y: auto;
   }
 }

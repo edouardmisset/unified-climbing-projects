@@ -1,13 +1,15 @@
-import { CircleX } from 'lucide-react'
+import { Drawer } from '@base-ui/react/drawer'
+import { CircleX, ListFilter } from 'lucide-react'
 import { useState, useTransition } from 'react'
-import { CustomSelect } from '../custom-select/custom-select'
 import { ALL_VALUE } from '../dashboard/constants'
+import { FilterSelectList, MobileFilterSheet } from './mobile-filter-sheet'
 import { SearchInput } from './search-input'
 import type { BaseFilterBarProps } from './types'
 import styles from './sticky-filter-bar.module.css'
 
 export function StickyFilterBar({ filters, search, setSearch, showSearch }: BaseFilterBarProps) {
   const [isPending, startTransition] = useTransition()
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false)
 
   const selectedValueByName = Object.fromEntries(
     filters.map(({ name, selectedValue }) => [name, selectedValue]),
@@ -49,6 +51,10 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
     (search !== undefined && search !== '') ||
     hasDraftSearch
 
+  const activeFilterCount =
+    filters.filter(filter => displayedSelectedValueByName[filter.name] !== ALL_VALUE).length +
+    Number(search !== undefined && search !== '')
+
   const renderedFilters = filters.map(filter => ({
     ...filter,
     handleChange: (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -64,6 +70,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
       <div className={`${styles.filters} ${isPending ? styles.filtersPending : ''}`}>
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <SearchInput
+            id='filter-bar-search-route'
             key={search}
             search={search}
             setSearch={setSearch}
@@ -71,7 +78,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
             onDraftChange={setHasDraftSearch}
           />
         )}
-        <FilterSelectList filters={renderedFilters} />
+        <FilterSelectList filters={renderedFilters} idPrefix='filter-bar-' />
         <button
           className={styles.reset}
           disabled={!isOneFilterActive}
@@ -83,25 +90,45 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
           <span className='visuallyHidden'>Clear filters</span>
         </button>
       </div>
+      <div className={styles.mobileControls}>
+        <Drawer.Root
+          onOpenChange={setIsFilterSheetOpen}
+          open={isFilterSheetOpen}
+          swipeDirection='down'
+        >
+          <Drawer.Trigger aria-label='Open filters' className={styles.mobileTrigger}>
+            <ListFilter aria-hidden size={18} />
+            <span>{`Filters · ${activeFilterCount}`}</span>
+          </Drawer.Trigger>
+          <button
+            aria-label='Clear filters'
+            className={styles.mobileReset}
+            disabled={!isOneFilterActive}
+            onClick={clearFilters}
+            type='reset'
+          >
+            <CircleX aria-hidden opacity={isOneFilterActive ? 1 : 1 / 2} size={18} />
+          </button>
+          <Drawer.Portal>
+            <Drawer.Backdrop className={styles.sheetBackdrop} />
+            <MobileFilterSheet
+              filters={renderedFilters}
+              searchInput={
+                setSearch === undefined || search === undefined || !showSearch ? undefined : (
+                  <SearchInput
+                    id='filter-sheet-search-route'
+                    key={search}
+                    search={search}
+                    setSearch={setSearch}
+                    startTransition={startTransition}
+                    onDraftChange={setHasDraftSearch}
+                  />
+                )
+              }
+            />
+          </Drawer.Portal>
+        </Drawer.Root>
+      </div>
     </search>
   )
 }
-
-type RenderedFilter = BaseFilterBarProps['filters'][number] & {
-  handleChange: React.ChangeEventHandler<HTMLSelectElement>
-  selectedValue: string
-}
-
-const FilterSelectList = ({ filters }: { filters: RenderedFilter[] }) =>
-  filters.map(({ handleChange, name, options, selectedValue, title }) =>
-    options.length === 0 ? undefined : (
-      <CustomSelect
-        handleChange={handleChange}
-        key={name}
-        name={name}
-        options={options}
-        selectedOption={selectedValue}
-        title={title}
-      />
-    ),
-  )

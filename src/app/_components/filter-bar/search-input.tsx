@@ -8,6 +8,7 @@ type SearchInputProps = {
   setSearch: (value: string) => void
   startTransition: React.TransitionStartFunction
   onDraftChange: (hasDraft: boolean) => void
+  id?: string
 }
 
 export function SearchInput({
@@ -15,6 +16,7 @@ export function SearchInput({
   setSearch,
   startTransition,
   onDraftChange,
+  id,
 }: SearchInputProps) {
   const [localSearch, setLocalSearch] = useState(search)
 
@@ -35,6 +37,7 @@ export function SearchInput({
   return (
     <CustomInput
       name='search route'
+      id={id}
       onChange={({ target: { value } }) => {
         setLocalSearch(value)
         onDraftChange(value !== search)

@@ -10,17 +10,18 @@ type CustomSelectProps = {
   selectedOption: string
   options: string[] | number[] | readonly string[]
   name: string
+  id?: string
   title?: string
 }
 
 export function CustomSelect(props: CustomSelectProps) {
-  const { handleChange, selectedOption, options, name, title = capitalize(name) } = props
+  const { handleChange, selectedOption, options, name, id = name, title = capitalize(name) } = props
 
   return (
-    <CustomLabel id={name} label={capitalize(name)} title={title}>
+    <CustomLabel id={id} label={capitalize(name)} title={title}>
       <select
         className={styles.select}
-        id={name}
+        id={id}
         onChange={handleChange}
         title={selectedOption === ALL_VALUE ? title : selectedOption}
         value={selectedOption}
