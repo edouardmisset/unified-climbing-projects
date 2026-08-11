@@ -15,8 +15,9 @@
 
 .popup {
   position: fixed;
-  position-area: block-end span-inline-end;
+  position-area: block-end;
   position-try-fallbacks: flip-block;
+  justify-self: anchor-center;
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
@@ -63,6 +64,14 @@
   outline: 2px solid currentcolor;
   outline-offset: 1px;
   transform: scale(1.1);
+}
+
+.arrow {
+  position: absolute;
+  inset-block-start: -10px;
+  inset-inline-start: 50%;
+  display: flex;
+  translate: -50% 0;
 }
 
 .title {

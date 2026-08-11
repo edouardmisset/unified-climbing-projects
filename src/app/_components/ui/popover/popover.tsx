@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { Arrow } from '../../svg/arrow/arrow'
 import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './popover.module.css'
 
@@ -47,6 +48,9 @@ export function Popover(props: PopoverProps) {
         id={popupId}
         popover='auto'
       >
+        <div aria-hidden='true' className={styles.arrow}>
+          <Arrow />
+        </div>
         <h2 className={styles.title} id={titleId}>
           {popoverTitle}
         </h2>
@@ -59,6 +63,9 @@ export function Popover(props: PopoverProps) {
           id={hintId}
           popover='hint'
         >
+          <div aria-hidden='true' className={styles.arrow}>
+            <Arrow />
+          </div>
           <h2 className={styles.title}>{popoverTitle}</h2>
           <div className={styles.description}>{children}</div>
         </div>
