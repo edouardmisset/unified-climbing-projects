@@ -1,20 +1,22 @@
+'use client'
+
+import { useState } from 'react'
 import { formatGrade } from '~/helpers/format-grade'
-import { getAscentById } from '~/services/ascents'
 import type { Ascent } from '~/schema/ascent'
-import { AscentCard } from '../ascent-card/ascent-card'
+import { AscentCardLoader } from '../ascent-card/ascent-card-loader'
 import { Dialog } from '../ui/dialog/dialog'
 import styles from './ascent-component.module.css'
 
-export async function AscentComponent({ ascent }: { ascent: Ascent }) {
+export function AscentComponent({ ascent }: { ascent: Ascent }) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { grade, discipline, name, _id } = ascent
   const formattedRouteName = `${name} (${formatGrade({ discipline, grade })})`
-  const ascentWithComments = await getAscentById(_id)
-
-  if (!ascentWithComments) return
 
   return (
     <Dialog
-      content={<AscentCard ascent={ascentWithComments} />}
+      content={<AscentCardLoader enabled={isDialogOpen} id={_id} />}
+      onOpenChange={setIsDialogOpen}
+      open={isDialogOpen}
       triggerClassName={styles.trigger}
       triggerText={formattedRouteName}
     />

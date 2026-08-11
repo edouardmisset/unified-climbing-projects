@@ -1,5 +1,5 @@
 import { sum } from '@edouardmisset/math/sum.ts'
-import { type CSSProperties, lazy, Suspense, useState } from 'react'
+import { type CSSProperties, useState } from 'react'
 import NotFound from '~/app/not-found'
 import { MAX_COLUMNS_THRESHOLD } from '~/constants/generic'
 import { fromAscentToPoints } from '~/helpers/ascent-converter'
@@ -18,16 +18,10 @@ import {
 import { formatNumber, formatUnit, frenchNumberFormatter } from '~/helpers/number-formatter'
 import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-text'
 import type { Ascent } from '~/schema/ascent'
+import { AscentCardLoader } from '../ascent-card/ascent-card-loader'
 import { GradeTag } from './grade-tag'
 import { Dialog } from '../ui/dialog/dialog'
-import { Loader } from '../ui/loader/loader'
 import styles from './ascent-list.module.css'
-
-const AscentCardLoader = lazy(async () =>
-  import('../ascent-card/ascent-card-loader').then(module => ({
-    default: module.AscentCardLoader,
-  })),
-)
 
 const BASE_COLUMNS_COUNT = 6
 const DETAIL_COLUMNS_COUNT = 4
@@ -253,11 +247,7 @@ export const AscentList = ({
 
       {selectedAscent !== undefined && (
         <Dialog
-          content={
-            <Suspense fallback={<Loader />}>
-              <AscentCardLoader id={selectedAscent._id} />
-            </Suspense>
-          }
+          content={<AscentCardLoader enabled={isDialogOpen} id={selectedAscent._id} />}
           onOpenChange={handleDialogClose}
           open={isDialogOpen}
         />
