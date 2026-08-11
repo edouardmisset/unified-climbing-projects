@@ -20,6 +20,11 @@ function toPublicTrainingSession(record: unknown) {
   )
 }
 
+function toPublicTrainingSessionListItem(record: unknown) {
+  const { comments: _comments, ...session } = toPublicTrainingSession(record)
+  return session
+}
+
 export const get = query({
   args: {},
   handler: async ctx => {
@@ -28,7 +33,7 @@ export const get = query({
       .query('training')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicTrainingSession(record))
+    return records.map(record => toPublicTrainingSessionListItem(record))
   },
 })
 

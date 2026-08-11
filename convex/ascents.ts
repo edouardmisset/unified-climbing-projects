@@ -20,6 +20,11 @@ function toPublicAscent(record: unknown) {
   )
 }
 
+function toPublicAscentListItem(record: unknown) {
+  const { comments: _comments, ...ascent } = toPublicAscent(record)
+  return ascent
+}
+
 export const get = query({
   args: {},
   handler: async ctx => {
@@ -28,7 +33,7 @@ export const get = query({
       .query('ascents')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicAscent(record))
+    return records.map(record => toPublicAscentListItem(record))
   },
 })
 
