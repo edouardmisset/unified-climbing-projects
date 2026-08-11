@@ -1,4 +1,5 @@
 .iconButton {
+  anchor-name: var(--popover-anchor);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -16,13 +17,12 @@
 .popup {
   container-name: popover;
   position: fixed;
-  position-area: block-end;
-  position-try-fallbacks: flip-block flip-inline;
-  justify-self: anchor-center;
+  position-anchor: var(--popover-anchor);
+  position-try-fallbacks: --popover-above;
   display: flex;
   flex-direction: column;
   gap: var(--size-fluid-1);
-  inset: auto;
+  inset: anchor(bottom) auto auto anchor(center);
   margin: var(--size-2) 0 0;
   padding-block: var(--size-3);
   padding-inline: var(--size-5);
@@ -32,6 +32,7 @@
   opacity: 0;
   transform: scale(0.9);
   border-radius: var(--size-2);
+  translate: -50% 0;
 
   @media (prefers-reduced-motion: no-preference) {
     transition:
@@ -45,6 +46,11 @@
       transform: scale(0.9);
     }
   }
+}
+
+@position-try --popover-above {
+  inset: auto auto anchor(top) anchor(center);
+  margin: 0 0 var(--size-2);
 }
 
 .popup:popover-open {
