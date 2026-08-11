@@ -1,9 +1,6 @@
-'use client'
-
 import { wrapInParentheses } from '@edouardmisset/text'
-import { type CSSProperties, useEffect, useState } from 'react'
-import { getAscentComments } from '~/app/ascents/actions'
-import type { AscentListRecord, AscentRecord } from '~/domain/ascent'
+import type { CSSProperties } from 'react'
+import type { AscentRecord } from '~/domain/ascent'
 import { formatGrade } from '~/helpers/format-grade'
 import {
   formatComments,
@@ -22,7 +19,7 @@ type CommentDirectionStyle = CSSProperties & {
   '--direction': 'row' | 'column'
 }
 
-export function AscentCard({ ascent }: { ascent: AscentListRecord | AscentRecord }) {
+export function AscentCard({ ascent }: { ascent: AscentRecord }) {
   const {
     area,
     discipline,
@@ -38,16 +35,9 @@ export function AscentCard({ ascent }: { ascent: AscentListRecord | AscentRecord
     grade,
     tries,
   } = ascent
-  const [loadedComments, setLoadedComments] = useState(comments)
-
-  useEffect(() => {
-    if (comments !== undefined) return
-
-    void getAscentComments(ascent._id).then(setLoadedComments)
-  }, [ascent._id, comments])
 
   const maxCommentLength = 120
-  const isLongComment = loadedComments !== undefined && loadedComments.length > maxCommentLength
+  const isLongComment = comments !== undefined && comments.length > maxCommentLength
   const stylesDependingOnComments: CommentDirectionStyle = {
     '--direction': isLongComment ? 'row' : 'column',
   }
@@ -84,7 +74,7 @@ export function AscentCard({ ascent }: { ascent: AscentListRecord | AscentRecord
               </span>
             ))}
         </div>
-        <span className='block'>{formatComments(loadedComments)}</span>
+        <span className='block'>{formatComments(comments)}</span>
       </div>
     </div>
   )

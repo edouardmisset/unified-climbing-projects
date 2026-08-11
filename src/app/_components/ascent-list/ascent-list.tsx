@@ -23,8 +23,10 @@ import { Dialog } from '../ui/dialog/dialog'
 import { Loader } from '../ui/loader/loader'
 import styles from './ascent-list.module.css'
 
-const AscentCard = lazy(async () =>
-  import('../ascent-card/ascent-card').then(module => ({ default: module.AscentCard })),
+const AscentCardLoader = lazy(async () =>
+  import('../ascent-card/ascent-card-loader').then(module => ({
+    default: module.AscentCardLoader,
+  })),
 )
 
 const BASE_COLUMNS_COUNT = 6
@@ -253,7 +255,7 @@ export const AscentList = ({
         <Dialog
           content={
             <Suspense fallback={<Loader />}>
-              <AscentCard ascent={selectedAscent} />
+              <AscentCardLoader id={selectedAscent._id} />
             </Suspense>
           }
           onOpenChange={handleDialogClose}

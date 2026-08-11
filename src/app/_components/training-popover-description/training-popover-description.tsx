@@ -1,18 +1,24 @@
 import { wrapInParentheses } from '@edouardmisset/text'
+import { getTrainingSessionComments } from '~/app/training-sessions/actions'
+import { calculateLoad } from '~/helpers/calculate-load'
 import {
+  formatComments,
   fromAnatomicalRegionToEmoji,
   fromClimbingDisciplineToEmoji,
   fromEnergySystemToEmoji,
 } from '~/helpers/formatters'
-import { calculateLoad } from '~/helpers/calculate-load'
 import { roundToTen } from '~/helpers/math'
 import { formatWholePercent } from '~/helpers/number-formatter'
 import type { TrainingSessionListProps } from '~/schema/training'
 import styles from './training-popover-description.module.css'
-import { TrainingSessionComment } from './training-session-comment'
 
-export function TrainingPopoverDescription({ trainingSessions }: TrainingSessionListProps) {
+export async function TrainingPopoverDescription({ trainingSessions }: TrainingSessionListProps) {
   if (trainingSessions.length === 0 || trainingSessions[0] === undefined) return
+
+  const isSingleSession = trainingSessions.length === 1
+  const singleSessionComments = isSingleSession
+    ? await getTrainingSessionComments(trainingSessions[0]._id)
+    : undefined
 
   return (
     <ul className={styles.list}>
@@ -44,7 +50,11 @@ export function TrainingPopoverDescription({ trainingSessions }: TrainingSession
                 ? ''
                 : `| ${fromAnatomicalRegionToEmoji(anatomicalRegion)}`}{' '}
               {energySystem === undefined ? '' : `| ${fromEnergySystemToEmoji(energySystem)}`}{' '}
-              {trainingSessions.length === 1 ? <TrainingSessionComment id={_id} /> : ''}
+              {isSingleSession && singleSessionComments !== undefined ? (
+                <div title={singleSessionComments}>{formatComments(singleSessionComments)}</div>
+              ) : (
+                ''
+              )}
             </li>
           )
         },
