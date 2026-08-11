@@ -8,7 +8,7 @@ type AscentsQRCodeProps = {
   yearlyAscents: Ascent[][]
 }
 
-function AscentsQRCodeComponent(props: AscentsQRCodeProps) {
+export function AscentsQRCode(props: AscentsQRCodeProps) {
   const { yearlyAscents } = props
 
   return (
@@ -19,5 +19,3 @@ function AscentsQRCodeComponent(props: AscentsQRCodeProps) {
     </QRCode>
   )
 }
-
-export const AscentsQRCode = AscentsQRCodeComponent
