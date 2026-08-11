@@ -1,45 +1,72 @@
-@property --sun-angle {
-  syntax: '<angle>';
+@property --sun-position {
+  syntax: '<percentage>';
   inherits: false;
-  initial-value: 20deg;
+  initial-value: 110%;
+}
+
+@property --sun-radius {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 90%;
+}
+
+@property --sun-blur {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 2rem;
+}
+
+@property --sun-opacity {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --sun-core-stop {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 
 @keyframes rising-sun {
-  from {
-    --sun-angle: 20deg;
+  0% {
+    --sun-position: 110%;
+    --sun-radius: 90%;
+    --sun-blur: 2rem;
+    --sun-opacity: 0.08;
+    --sun-core-stop: 0%;
   }
 
-  to {
-    --sun-angle: 60deg;
+  60% {
+    --sun-position: 65%;
+    --sun-radius: 58%;
+    --sun-blur: 1.2rem;
+    --sun-opacity: 0.4;
+    --sun-core-stop: 20%;
+  }
+
+  100% {
+    --sun-position: 30%;
+    --sun-radius: 42%;
+    --sun-blur: 0.8rem;
+    --sun-opacity: 0.2;
+    --sun-core-stop: 35%;
   }
 }
 
 .card {
-  --sun-angle: 20deg;
-  --first-angle: 20deg;
-  --second-angle: 35deg;
-  --fourth-angle: 45deg;
   --border-width: calc(var(--size-fluid-0) / 3);
-  --glow-intensity: 0.2;
-  --glow-size: 0.7rem;
-  --conic-gradient: conic-gradient(
+  --sun-spread: 0.7rem;
+  --border-gradient: conic-gradient(
     from 180deg,
     var(--patagonia-color-5),
-    var(--sun-angle),
     var(--patagonia-color-4),
-    calc(var(--sun-angle) + var(--first-angle)),
     var(--patagonia-color-3),
-    calc(var(--sun-angle) + var(--second-angle)),
     var(--patagonia-color-2),
-    calc(var(--sun-angle) + var(--fourth-angle)),
     var(--patagonia-color-1),
-    calc(360deg - var(--sun-angle) - var(--fourth-angle)),
     var(--patagonia-color-2),
-    calc(360deg - var(--sun-angle) - var(--second-angle)),
     var(--patagonia-color-3),
-    calc(360deg - var(--sun-angle) - var(--first-angle)),
     var(--patagonia-color-4),
-    calc(360deg - var(--sun-angle)),
     var(--patagonia-color-5)
   );
 
@@ -49,7 +76,7 @@
   text-overflow: clip;
   background:
     linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-    var(--conic-gradient) border-box;
+    var(--border-gradient) border-box;
   border: var(--border-width) solid transparent;
   border-radius: var(--border-size-4);
   isolation: isolate;
@@ -66,32 +93,35 @@
     position: absolute;
     content: '';
     border-radius: inherit;
-    filter: blur(var(--glow-size));
-    transition: inherit;
+    transition: opacity 0.4s ease-in-out;
   }
 
   &::before {
-    inset: calc(1 * var(--glow-size));
+    inset: var(--sun-spread);
     z-index: -1;
     background: var(--surface-2);
   }
 
   &::after {
-    inset: calc(-1 * 2 * var(--glow-size));
+    inset: calc(-2 * var(--sun-spread));
     z-index: -2;
-    opacity: 0;
+    background: radial-gradient(
+      circle var(--sun-radius) at 50% var(--sun-position),
+      var(--patagonia-color-5) var(--sun-core-stop),
+      var(--patagonia-color-4) calc(var(--sun-core-stop) + 20%),
+      transparent calc(var(--sun-core-stop) + 50%)
+    );
+    filter: blur(var(--sun-blur));
+    opacity: var(--sun-opacity);
   }
 
   @media (hover: hover) {
     &:hover,
     &:focus-within {
       @media (prefers-reduced-motion: no-preference) {
-        animation: rising-sun 3s ease-in-out forwards;
-      }
-
-      &::after {
-        background: var(--conic-gradient);
-        opacity: var(--glow-intensity);
+        &::after {
+          animation: rising-sun 3s ease-in-out forwards;
+        }
       }
     }
   }
