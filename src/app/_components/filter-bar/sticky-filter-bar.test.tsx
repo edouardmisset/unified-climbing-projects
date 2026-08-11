@@ -102,4 +102,27 @@ describe('stickyFilterBar', () => {
     expect(screen.queryByLabelText('Area')).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Clear filters' })).toBeDisabled()
   })
+
+  it('opens the mobile filter sheet from the compact filter control', async () => {
+    const user = userEvent.setup()
+    render(
+      <StickyFilterBar
+        filters={[
+          {
+            name: 'Year',
+            options: ['2026'],
+            selectedValue: 'all',
+            setValue: vi.fn<(value: string) => void>(),
+            title: 'Year',
+          },
+        ]}
+        showSearch={false}
+      />,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open filters' }))
+
+    expect(screen.getByRole('dialog', { name: 'Filters' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Filters' })).toHaveTextContent('Year')
+  })
 })
