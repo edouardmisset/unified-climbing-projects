@@ -1,9 +1,19 @@
 'use client'
 
 import { useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
-import { Arrow } from '../../svg/arrow/arrow'
 import baseUiStyles from '../base-ui/base-ui-primitives.module.css'
 import styles from './popover.module.css'
+
+const pointerFallbackStyles = `
+  @container popover anchored(fallback: flip-block flip-inline) {
+    [data-popover-arrow] {
+      inset-block-start: auto;
+      inset-block-end: -8px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 1px light-dark(var(--gray-2), var(--gray-7)));
+    }
+  }
+`
 
 type PopoverProps = {
   trigger: ReactNode
@@ -33,6 +43,7 @@ export function Popover(props: PopoverProps) {
 
   return (
     <>
+      <style>{pointerFallbackStyles}</style>
       <button
         {...triggerProps}
         {...interestProps}
@@ -48,9 +59,7 @@ export function Popover(props: PopoverProps) {
         id={popupId}
         popover='auto'
       >
-        <div aria-hidden='true' className={styles.arrow}>
-          <Arrow />
-        </div>
+        <span aria-hidden='true' className={styles.arrow} data-popover-arrow />
         <h2 className={styles.title} id={titleId}>
           {popoverTitle}
         </h2>
@@ -63,9 +72,7 @@ export function Popover(props: PopoverProps) {
           id={hintId}
           popover='hint'
         >
-          <div aria-hidden='true' className={styles.arrow}>
-            <Arrow />
-          </div>
+          <span aria-hidden='true' className={styles.arrow} data-popover-arrow />
           <h2 className={styles.title}>{popoverTitle}</h2>
           <div className={styles.description}>{children}</div>
         </div>

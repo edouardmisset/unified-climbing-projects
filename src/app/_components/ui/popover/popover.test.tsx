@@ -27,13 +27,14 @@ describe('popover', () => {
     await expect.element(screen.getByRole('heading', { name: 'Details' })).toBeVisible()
     await expect.element(screen.getByText('Popover content')).toBeVisible()
 
-    const arrow = popup.querySelector<SVGElement>('svg')
+    const arrow = popup.querySelector<HTMLElement>('[data-popover-arrow]')
     if (!arrow) throw new Error('Expected a popover pointer')
 
     const triggerRect = trigger.element().getBoundingClientRect()
     const popupRect = popup.getBoundingClientRect()
     const arrowRect = arrow.getBoundingClientRect()
 
+    expect(getComputedStyle(popup).overflow).toBe('visible')
     expect(popupRect.left + popupRect.width / 2).toBeCloseTo(
       triggerRect.left + triggerRect.width / 2,
       0,

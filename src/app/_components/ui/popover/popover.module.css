@@ -14,9 +14,10 @@
 }
 
 .popup {
+  container-name: popover;
   position: fixed;
   position-area: block-end;
-  position-try-fallbacks: flip-block;
+  position-try-fallbacks: flip-block flip-inline;
   justify-self: anchor-center;
   display: flex;
   flex-direction: column;
@@ -25,6 +26,7 @@
   margin: var(--size-2) 0 0;
   padding-block: var(--size-3);
   padding-inline: var(--size-5);
+  overflow: visible;
 
   pointer-events: none;
   opacity: 0;
@@ -68,9 +70,13 @@
 
 .arrow {
   position: absolute;
-  inset-block-start: -10px;
+  inset-block-start: -8px;
   inset-inline-start: 50%;
-  display: flex;
+  inline-size: 16px;
+  block-size: 8px;
+  background: canvas;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 -1px light-dark(var(--gray-2), var(--gray-7)));
   translate: -50% 0;
 }
 
