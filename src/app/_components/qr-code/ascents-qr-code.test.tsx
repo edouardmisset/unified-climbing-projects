@@ -21,6 +21,7 @@ describe('ascentsQrCode', () => {
     const buttons = [...container.querySelectorAll('button')]
     populatedDays.forEach((day, index) => {
       const button = buttons[index]
+      const hintId = button?.getAttribute('interestfor')
       const hardestGradeClass = fromGradeToClassName(getHardestAscent(day)?.grade)
       const expectedLabel = `Ascent on ${prettyLongDate(day[0]?.date ?? '')} - ${day[0]?.crag}`
 
@@ -28,6 +29,8 @@ describe('ascentsQrCode', () => {
       expect(hardestGradeClass === undefined || button?.className.includes(hardestGradeClass)).toBe(
         true,
       )
+      if (hintId === null || hintId === undefined) throw new Error('Expected a native hint target')
+      expect(container.querySelector(`[id="${hintId}"][popover="hint"]`)).not.toBeNull()
     })
   })
 })

@@ -8,7 +8,7 @@ type TrainingQRCodeProps = {
   yearlyTrainingSessions: TrainingSession[][]
 }
 
-function TrainingQRCodeComponent(props: TrainingQRCodeProps) {
+export function TrainingQRCode(props: TrainingQRCodeProps) {
   const { yearlyTrainingSessions } = props
 
   return (
@@ -19,5 +19,3 @@ function TrainingQRCodeComponent(props: TrainingQRCodeProps) {
     </QRCode>
   )
 }
-
-export const TrainingQRCode = TrainingQRCodeComponent

@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { groupDataDaysByYear } from '~/data/helpers'
+import { prettyLongDate } from '~/helpers/formatters'
 import { fromSessionTypeToClassName } from '~/helpers/training-converter'
 import { sampleTrainingSessions } from '~/testing/sample-data'
 import { TrainingQRCode } from './training-qr-code'
@@ -13,6 +15,7 @@ describe('trainingQrCode', () => {
 
     const { container } = await render(
       <TrainingQRCode yearlyTrainingSessions={yearlyTrainingSessions} />,
+      { wrapper: QueryProvider },
     )
 
     expect(populatedDays.length).toBeGreaterThan(0)
@@ -21,9 +24,14 @@ describe('trainingQrCode', () => {
     const buttons = [...container.querySelectorAll('button')]
     populatedDays.forEach((day, index) => {
       const button = buttons[index]
+      const hintId = button?.getAttribute('interestfor')
       const sessionClass = fromSessionTypeToClassName(day[0]?.type)
+      const expectedLabel = `Training on ${prettyLongDate(day[0]?.date ?? '')}`
 
       expect(sessionClass === undefined || button?.className.includes(sessionClass)).toBe(true)
+      expect(button?.getAttribute('aria-label')).toBe(expectedLabel)
+      if (hintId === null || hintId === undefined) throw new Error('Expected a native hint target')
+      expect(container.querySelector(`[id="${hintId}"][popover="hint"]`)).not.toBeNull()
     })
   })
 })

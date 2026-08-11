@@ -50,7 +50,14 @@ export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
   } ${styles.bar}`
 
   return (
-    <Popover className={triggerClassName} popoverTitle={title} style={buttonStyle} trigger=''>
+    <Popover
+      aria-label={title}
+      className={triggerClassName}
+      popoverTitle={title}
+      showOnInterest
+      style={buttonStyle}
+      trigger=''
+    >
       {lazyDescription}
     </Popover>
   )

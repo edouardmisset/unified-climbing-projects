@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
+import { QueryProvider } from '~/app/_components/query-provider/query-provider'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { sampleAscents, sampleTrainingSessions } from '~/testing/sample-data'
 import { AscentsQRCode } from './ascents-qr-code'
@@ -25,6 +26,7 @@ describe('qR code visual regression', () => {
       <div data-testid='visual'>
         <TrainingQRCode yearlyTrainingSessions={yearlyTraining} />
       </div>,
+      { wrapper: QueryProvider },
     )
 
     await expect.element(screen.getByTestId('visual')).toMatchScreenshot('training-qr-code.png')

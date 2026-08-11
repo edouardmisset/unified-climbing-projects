@@ -8,9 +8,9 @@ Baldha
 Barcodes
 Biographie
 blocco
-BOULDERING
 bouldering
 Bouldering
+BOULDERING
 Buoux
 Ceüse
 choco
@@ -34,6 +34,7 @@ Hautes
 Hérault
 Hyperlegible
 integrale
+interestfor
 Jagdgründe
 Keycap
 Léger

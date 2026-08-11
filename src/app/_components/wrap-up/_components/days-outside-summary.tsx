@@ -57,7 +57,7 @@ export function DaysOutsideSummary({
   return (
     <Card>
       <h2>Days outside</h2>
-      <p>
+      <div>
         <Suspense
           fallback={
             <p>
@@ -96,7 +96,7 @@ export function DaysOutsideSummary({
             <strong>{formatFrenchDurationFromDays(longestGap)}</strong>.
           </span>
         )}
-      </p>
+      </div>
     </Card>
   )
 }

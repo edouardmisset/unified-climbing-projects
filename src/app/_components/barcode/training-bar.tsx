@@ -52,11 +52,14 @@ export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
   const trainingBarClassName = `${
     isSingleWeekTraining ? fromSessionTypeToClassName(firstTraining.type) : ''
   } ${styles.bar}`
+  const title = getTrainingSessionSummary(filteredSortedWeeklyTraining)
 
   return (
     <Popover
+      aria-label={title}
       className={trainingBarClassName}
-      popoverTitle={getTrainingSessionSummary(filteredSortedWeeklyTraining)}
+      popoverTitle={title}
+      showOnInterest
       style={buttonStyle}
       trigger=''
     >
