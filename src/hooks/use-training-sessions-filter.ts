@@ -1,5 +1,4 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { useDeferredValue } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
@@ -17,24 +16,16 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
     selectedLocationType,
   } = useTrainingSessionsQueryState()
 
-  const deferredSelectedDiscipline = useDeferredValue(selectedDiscipline)
-  const deferredSelectedLoad = useDeferredValue(selectedLoad)
-  const deferredSelectedLocation = useDeferredValue(selectedLocation)
-  const deferredSelectedLocationType = useDeferredValue(selectedLocationType)
-  const deferredSelectedPeriod = useDeferredValue(selectedPeriod)
-  const deferredSelectedSessionType = useDeferredValue(selectedSessionType)
-  const deferredSelectedYear = useDeferredValue(selectedYear)
-
-  const selectedYearNumber = Number(deferredSelectedYear)
+  const selectedYearNumber = Number(selectedYear)
   const filteredTrainingSessions = filterTrainingSessions(trainingSessions, {
-    discipline: normalizeFilterValue(deferredSelectedDiscipline),
-    location: normalizeFilterValue(deferredSelectedLocation),
-    load: normalizeFilterValue(deferredSelectedLoad),
-    locationType: normalizeFilterValue(deferredSelectedLocationType),
-    period: normalizeFilterValue(deferredSelectedPeriod),
-    type: normalizeFilterValue(deferredSelectedSessionType),
+    discipline: normalizeFilterValue(selectedDiscipline),
+    location: normalizeFilterValue(selectedLocation),
+    load: normalizeFilterValue(selectedLoad),
+    locationType: normalizeFilterValue(selectedLocationType),
+    period: normalizeFilterValue(selectedPeriod),
+    type: normalizeFilterValue(selectedSessionType),
     year:
-      deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+      selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
         ? selectedYearNumber
         : undefined,
   })

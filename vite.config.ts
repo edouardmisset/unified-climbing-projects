@@ -9,9 +9,10 @@ const compileTarget = 'esnext'
 // React behavior belongs to the integration suite. Charts (recharts'
 // ResponsiveContainer needs real layout/ResizeObserver) and other highly
 // visual components are exercised in a real browser instead of happy-dom.
-const BROWSER_TEST_GLOB = 'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.test.tsx'
+const BROWSER_TEST_GLOB = 'src/app/_components/{barcode,charts,data-calendar,qr-code}/**/*.test.tsx'
+const FILTER_BAR_VISUAL_TEST_GLOB = 'src/app/_components/filter-bar/**/*.visual.test.tsx'
 const VISUAL_TEST_GLOB =
-  'src/app/_components/{charts,data-calendar,qr-code,barcode}/**/*.visual.test.tsx'
+  'src/app/_components/{barcode,charts,data-calendar,qr-code}/**/*.visual.test.tsx'
 const DOM_INTEGRATION_TEST_GLOB = 'src/**/*.test.tsx'
 
 export default defineConfig({
@@ -119,7 +120,7 @@ export default defineConfig({
             'src/services/**/*.test.ts',
             'src/app/**/actions.test.ts',
           ],
-          exclude: [BROWSER_TEST_GLOB],
+          exclude: [BROWSER_TEST_GLOB, FILTER_BAR_VISUAL_TEST_GLOB],
         },
       },
       {
@@ -162,6 +163,41 @@ export default defineConfig({
             headless: true,
             instances: [{ browser: 'chromium' }],
             viewport: { height: 720, width: 1_280 },
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: 'pixelmatch',
+                comparatorOptions: { allowedMismatchedPixelRatio: 0.005 },
+                resolveScreenshotPath: ({ arg, ext, root, testFileDirectory, testFileName }) =>
+                  path.join(
+                    root,
+                    testFileDirectory,
+                    '__screenshots__',
+                    testFileName,
+                    `${arg}-${process.platform}${ext}`,
+                  ),
+              },
+            },
+          },
+        },
+      },
+      {
+        extends: true,
+        resolve: {
+          alias: {
+            'next/image': path.join(import.meta.dirname, './src/testing/next-image-stub.tsx'),
+          },
+        },
+        test: {
+          name: 'integration-visual-mobile',
+          include: [FILTER_BAR_VISUAL_TEST_GLOB],
+          environment: 'node',
+          setupFiles: ['./vitest.visual.setup.ts'],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            viewport: { height: 844, width: 390 },
             expect: {
               toMatchScreenshot: {
                 comparatorName: 'pixelmatch',

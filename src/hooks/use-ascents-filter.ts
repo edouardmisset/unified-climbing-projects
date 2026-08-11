@@ -1,5 +1,4 @@
 import { isValidNumber } from '@edouardmisset/math'
-import { useDeferredValue } from 'react'
 import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import {
   deriveAscentFilterModel,
@@ -31,26 +30,17 @@ export function useAscentsFilterModel(ascents: Ascent[]): {
     selectedStyle,
   } = useAscentsQueryState()
 
-  const deferredSelectedArea = useDeferredValue(selectedArea)
-  const deferredSelectedCrag = useDeferredValue(selectedCrag)
-  const deferredSelectedDiscipline = useDeferredValue(selectedDiscipline)
-  const deferredSelectedGrade = useDeferredValue(selectedGrade)
-  const deferredSelectedPeriod = useDeferredValue(selectedPeriod)
-  const deferredSelectedRoute = useDeferredValue(selectedRoute)
-  const deferredSelectedStyle = useDeferredValue(selectedStyle)
-  const deferredSelectedYear = useDeferredValue(selectedYear)
-
-  const selectedYearNumber = Number(deferredSelectedYear)
+  const selectedYearNumber = Number(selectedYear)
   return deriveAscentFilterModel(ascents, {
-    area: normalizeFilterValue(deferredSelectedArea),
-    crag: normalizeFilterValue(deferredSelectedCrag),
-    discipline: normalizeFilterValue(deferredSelectedDiscipline),
-    grade: normalizeFilterValue(deferredSelectedGrade),
-    period: normalizeFilterValue(deferredSelectedPeriod),
-    route: deferredSelectedRoute,
-    style: normalizeFilterValue(deferredSelectedStyle),
+    area: normalizeFilterValue(selectedArea),
+    crag: normalizeFilterValue(selectedCrag),
+    discipline: normalizeFilterValue(selectedDiscipline),
+    grade: normalizeFilterValue(selectedGrade),
+    period: normalizeFilterValue(selectedPeriod),
+    route: selectedRoute,
+    style: normalizeFilterValue(selectedStyle),
     year:
-      deferredSelectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
+      selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
         ? selectedYearNumber
         : undefined,
   })

@@ -6,37 +6,32 @@ const SEARCH_DEBOUNCE_MS = 200
 type SearchInputProps = {
   search: string
   setSearch: (value: string) => void
-  startTransition: React.TransitionStartFunction
   onDraftChange: (hasDraft: boolean) => void
+  id?: string
 }
 
-export function SearchInput({
-  search,
-  setSearch,
-  startTransition,
-  onDraftChange,
-}: SearchInputProps) {
-  const [localSearch, setLocalSearch] = useState(search)
+export function SearchInput({ search, setSearch, onDraftChange, id }: SearchInputProps) {
+  const [draft, setDraft] = useState({ source: search, value: search })
+  const localSearch = draft.source === search ? draft.value : search
 
   useEffect(() => {
     if (localSearch === search) return
 
     const timeoutId = globalThis.setTimeout(() => {
-      startTransition(() => {
-        setSearch(localSearch)
-      })
+      setSearch(localSearch)
     }, SEARCH_DEBOUNCE_MS)
 
     return () => {
       globalThis.clearTimeout(timeoutId)
     }
-  }, [localSearch, search, setSearch, startTransition])
+  }, [localSearch, search, setSearch])
 
   return (
     <CustomInput
       name='search route'
+      id={id}
       onChange={({ target: { value } }) => {
-        setLocalSearch(value)
+        setDraft({ source: search, value })
         onDraftChange(value !== search)
       }}
       placeholder='Biographie'
