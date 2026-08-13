@@ -13,7 +13,9 @@ describe('ascentsPerYearByGrade', () => {
     // Data-level assertions
     expect(data.length).toBeGreaterThan(0)
     expect(data.every(datum => typeof datum.year === 'number')).toBe(true)
-    const grades = Object.keys(data[0] ?? {}).filter(key => key !== 'year' && !key.includes('Color'))
+    const grades = Object.keys(data[0] ?? {}).filter(
+      key => key !== 'year' && !key.includes('Color'),
+    )
     expect(grades.length).toBeGreaterThan(0)
 
     await expect.element(screen.getByText('Ascents Per Year By Grade')).toBeInTheDocument()
