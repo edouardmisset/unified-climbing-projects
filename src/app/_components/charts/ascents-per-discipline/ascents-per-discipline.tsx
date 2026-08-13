@@ -8,7 +8,7 @@ export function AscentsPerDiscipline({ ascents }: { ascents: Ascent[] }) {
   if (data.length <= 1) return
   return (
     <ChartContainer caption='Ascents per Discipline'>
-      <TanStackDonutChart ariaLabel='Ascents per Discipline' data={data} />
+      <TanStackDonutChart ariaLabel='Ascents per Discipline' data={data} legend />
     </ChartContainer>
   )
 }

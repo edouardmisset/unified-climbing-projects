@@ -106,7 +106,7 @@ export function TanStackBarChart<TDatum>(
         ? {
             use: tooltip,
             anchor: 'group-center' as const,
-            content: (points, context) => {
+            content: (points: any, context: any) => {
               if (points.length === 0) return { rows: [] }
               const [first] = points
               if (!first) return { rows: [] }
@@ -115,14 +115,14 @@ export function TanStackBarChart<TDatum>(
               const category = orientation === 'horizontal' ? first.yValue : first.xValue
               const getValue = (point: { xValue: ChartValue; yValue: ChartValue }) =>
                 orientation === 'horizontal' ? point.xValue : point.yValue
-              const total = points.reduce((sum, point) => {
+              const total = points.reduce((sum: number, point: any) => {
                 const value = getValue(point)
                 return sum + (typeof value === 'number' ? value : 0)
               }, 0)
               return {
                 title: formatCategory(category),
                 rows: [
-                  ...points.map(point => {
+                  ...points.map((point: any) => {
                     const value = getValue(point)
                     return {
                       color: point.color,

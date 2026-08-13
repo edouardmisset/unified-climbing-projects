@@ -13,7 +13,12 @@ describe('trainingSessionsDistribution', () => {
     )
     const { container } = screen
 
+    // Data-level assertions
+    expect(data.length).toBeGreaterThan(0)
+    expect(data.every(category => typeof category.id === 'string')).toBe(true)
+    expect(data.every(category => Array.isArray(category.data))).toBe(true)
     expect(uniqueCategories.size).toBeGreaterThan(0)
+
     await expect.element(screen.getByText('Session Distribution')).toBeInTheDocument()
     await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(1)
   })

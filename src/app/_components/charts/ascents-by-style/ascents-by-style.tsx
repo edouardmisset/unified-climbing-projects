@@ -8,7 +8,7 @@ export function AscentsByStyle({ ascents }: { ascents: Ascent[] }) {
   if (data.length <= 1) return
   return (
     <ChartContainer caption='Ascent By Style'>
-      <TanStackDonutChart ariaLabel='Ascent By Style' data={data} />
+      <TanStackDonutChart ariaLabel='Ascent By Style' data={data} legend />
     </ChartContainer>
   )
 }
