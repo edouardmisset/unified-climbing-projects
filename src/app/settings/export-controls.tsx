@@ -1,6 +1,5 @@
 'use client'
 
-import { strToU8, zipSync } from 'fflate'
 import type { AscentRecord } from '~/domain/ascent'
 import {
   ASCENT_CSV_TEMPLATE,
@@ -33,42 +32,80 @@ function downloadText(text: string, fileName: string): void {
   downloadBlob(new globalThis.Blob([text], { type: 'text/csv;charset=utf-8' }), fileName)
 }
 
-export function ExportControls({ ascents, trainingSessions }: ExportControlsProps) {
-  const downloadExport = () => {
-    const archive = zipSync(
-      {
-        'ascents.csv': strToU8(serializeAscentsCsv(ascents)),
-        'training-sessions.csv': strToU8(serializeTrainingSessionsCsv(trainingSessions)),
-      },
-      { level: 6 },
-    )
-    downloadBlob(
-      new globalThis.Blob([archive], { type: 'application/zip' }),
-      'climbing-log-export.zip',
-    )
-  }
+function downloadJson(records: { _id: string }[], fileName: string): void {
+  const exportRecords = records.map(({ _id: _, ...record }) => record)
+  downloadBlob(
+    new globalThis.Blob([JSON.stringify(exportRecords, undefined, 2)], {
+      type: 'application/json;charset=utf-8',
+    }),
+    fileName,
+  )
+}
 
+export function ExportControls({ ascents, trainingSessions }: ExportControlsProps) {
   return (
-    <div className={styles.controls}>
-      <button className={styles.primaryAction} onClick={downloadExport} type='button'>
-        Download ZIP ({ascents.length + trainingSessions.length} records)
-      </button>
-      <button
-        onClick={() => {
-          downloadText(ASCENT_CSV_TEMPLATE, 'ascents-template.csv')
-        }}
-        type='button'
-      >
-        Ascent template
-      </button>
-      <button
-        onClick={() => {
-          downloadText(TRAINING_SESSION_CSV_TEMPLATE, 'training-sessions-template.csv')
-        }}
-        type='button'
-      >
-        Training template
-      </button>
+    <div className={styles.exportGroups}>
+      <section aria-labelledby='ascents-export-title' className={styles.exportGroup}>
+        <h3 id='ascents-export-title'>Ascents ({ascents.length})</h3>
+        <div className={styles.controls}>
+          <button
+            className={styles.primaryAction}
+            onClick={() => {
+              downloadText(serializeAscentsCsv(ascents), 'ascents.csv')
+            }}
+            type='button'
+          >
+            Download CSV
+          </button>
+          <button
+            onClick={() => {
+              downloadJson(ascents, 'ascents.json')
+            }}
+            type='button'
+          >
+            Download JSON
+          </button>
+          <button
+            onClick={() => {
+              downloadText(ASCENT_CSV_TEMPLATE, 'ascents-template.csv')
+            }}
+            type='button'
+          >
+            CSV template
+          </button>
+        </div>
+      </section>
+
+      <section aria-labelledby='training-sessions-export-title' className={styles.exportGroup}>
+        <h3 id='training-sessions-export-title'>Training sessions ({trainingSessions.length})</h3>
+        <div className={styles.controls}>
+          <button
+            className={styles.primaryAction}
+            onClick={() => {
+              downloadText(serializeTrainingSessionsCsv(trainingSessions), 'training-sessions.csv')
+            }}
+            type='button'
+          >
+            Download CSV
+          </button>
+          <button
+            onClick={() => {
+              downloadJson(trainingSessions, 'training-sessions.json')
+            }}
+            type='button'
+          >
+            Download JSON
+          </button>
+          <button
+            onClick={() => {
+              downloadText(TRAINING_SESSION_CSV_TEMPLATE, 'training-sessions-template.csv')
+            }}
+            type='button'
+          >
+            CSV template
+          </button>
+        </div>
+      </section>
     </div>
   )
 }
