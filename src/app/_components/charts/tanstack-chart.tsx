@@ -100,9 +100,47 @@ export function TanStackBarChart<TDatum>(
     const rows = flattenData(data, getCategory, series)
     const layout = mode === 'group' ? group() : stack()
     const colors = colorOptions(series, legend)
+    const focus = mode === 'stack' ? (orientation === 'horizontal' ? 'group-y' : 'group-x') : false
+    const stackTooltip =
+      mode === 'stack'
+        ? {
+            use: tooltip,
+            anchor: 'group-center' as const,
+            content: (points, context) => {
+              if (points.length === 0) return { rows: [] }
+              const [first] = points
+              if (!first) return { rows: [] }
+              const formatCategory = orientation === 'horizontal' ? context.formatY : context.formatX
+              const formatValue = orientation === 'horizontal' ? context.formatX : context.formatY
+              const category = orientation === 'horizontal' ? first.yValue : first.xValue
+              const getValue = (point: { xValue: ChartValue; yValue: ChartValue }) =>
+                orientation === 'horizontal' ? point.xValue : point.yValue
+              const total = points.reduce((sum, point) => {
+                const value = getValue(point)
+                return sum + (typeof value === 'number' ? value : 0)
+              }, 0)
+              return {
+                title: formatCategory(category),
+                rows: [
+                  ...points.map(point => {
+                    const value = getValue(point)
+                    return {
+                      color: point.color,
+                      label: point.groupLabel ?? String(point.groupValue),
+                      value: formatValue(value),
+                    }
+                  }),
+                  { label: 'Total', value: formatValue(total) },
+                ],
+              }
+            },
+            sort: 'color-domain' as const,
+          }
+        : tooltip
 
     if (orientation === 'horizontal')
       return defineChart({
+        focus,
         marks: [
           barX(rows, { x: 'value', y: 'category', z: 'series', color: 'series', layout, inset: 2 }),
         ],
@@ -116,10 +154,11 @@ export function TanStackBarChart<TDatum>(
           axis: { label: y?.label, ticks: { format: y?.tickFormat } },
         },
         color: colors,
-        tooltip,
+        tooltip: stackTooltip,
       })
 
     return defineChart({
+      focus,
       marks: [
         barY(rows, { x: 'category', y: 'value', z: 'series', color: 'series', layout, inset: 2 }),
       ],
@@ -134,7 +173,7 @@ export function TanStackBarChart<TDatum>(
         axis: { label: y?.label, ticks: { format: y?.tickFormat } },
       },
       color: colors,
-      tooltip,
+      tooltip: stackTooltip,
     })
   }, [data, getCategory, legend, mode, orientation, series, x, y])
 
@@ -239,6 +278,7 @@ export function TanStackDonutChart({
 }) {
   const definition = useMemo(() => {
     const slices = pie(data, { value: 'value' })
+    const total = data.reduce((sum, datum) => sum + datum.value, 0)
     return defineChart({
       marks: [
         polar({
@@ -261,7 +301,28 @@ export function TanStackDonutChart({
         range: data.map(item => item.color),
         legend: legend ? colorLegend() : undefined,
       },
-      tooltip,
+      tooltip: {
+        use: tooltip,
+        content: points => {
+          const [point] = points
+          if (!point) return { rows: [] }
+          const datum = point.datum as DonutDatum
+          const percentage = total === 0 ? 0 : datum.value / total
+          return {
+            title: datum.label,
+            rows: [
+              {
+                label: 'Share',
+                value: new Intl.NumberFormat(undefined, {
+                  style: 'percent',
+                  maximumFractionDigits: 1,
+                }).format(percentage),
+              },
+              { label: 'Value', value: datum.value.toLocaleString() },
+            ],
+          }
+        },
+      },
     })
   }, [data, legend])
 
