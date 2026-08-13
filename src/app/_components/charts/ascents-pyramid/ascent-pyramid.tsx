@@ -20,6 +20,7 @@ export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
         ariaLabel='Ascent Pyramid'
         data={data}
         getCategory={getCategory}
+        legend
         series={SERIES}
         y={{ label: '# Ascents' }}
       />
