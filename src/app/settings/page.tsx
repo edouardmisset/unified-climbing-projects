@@ -35,8 +35,8 @@ export default function SettingsPage() {
         <Card>
           <h2 className={styles.sectionTitle}>Export your data</h2>
           <p>
-            The export is generated in this browser and contains exactly <code>ascents.csv</code>{' '}
-            and <code>training-sessions.csv</code>.
+            Choose a CSV or JSON download for each dataset. Exports are generated in this browser
+            and include your records, not internal database identifiers.
           </p>
           <Suspense fallback={<Loader />}>
             <ExportData />

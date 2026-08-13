@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { strFromU8, unzipSync } from 'fflate'
 import { describe, expect, it, vi } from 'vite-plus/test'
 import { parseAscentCsv, parseTrainingSessionCsv } from '~/domain/csv-contract'
 import type { AscentRecord } from '~/domain/ascent'
@@ -52,40 +51,75 @@ function required<T>(value: T | undefined): T {
 }
 
 describe('exportControls', () => {
-  it('downloads a two-file ZIP whose canonical CSVs round-trip', async () => {
+  it('downloads each dataset as canonical CSV or portable JSON', async () => {
     const downloads = setupDownloads()
     const user = userEvent.setup()
     render(<ExportControls ascents={[ascent]} trainingSessions={[training]} />)
 
-    await user.click(screen.getByRole('button', { name: 'Download ZIP (2 records)' }))
+    const [ascentsCsvButton, trainingCsvButton] = screen.getAllByRole('button', {
+      name: 'Download CSV',
+    })
+    const [ascentsJsonButton, trainingJsonButton] = screen.getAllByRole('button', {
+      name: 'Download JSON',
+    })
 
-    expect(downloads.click).toHaveBeenCalledOnce()
-    const [archiveBlob] = downloads.blobs
-    expect(archiveBlob?.type).toBe('application/zip')
-    const files = unzipSync(new Uint8Array(await required(archiveBlob).arrayBuffer()))
-    expect(Object.keys(files).toSorted()).toStrictEqual(['ascents.csv', 'training-sessions.csv'])
-    const ascentCsv = strFromU8(required(files['ascents.csv']))
-    const trainingCsv = strFromU8(required(files['training-sessions.csv']))
-    expect(parseAscentCsv(ascentCsv)).toStrictEqual([
+    await user.click(required(ascentsCsvButton))
+    await user.click(required(trainingCsvButton))
+    await user.click(required(ascentsJsonButton))
+    await user.click(required(trainingJsonButton))
+
+    expect(downloads.click).toHaveBeenCalledTimes(4)
+    const [ascentsCsv, trainingCsv, ascentsJson, trainingJson] = downloads.blobs
+    expect(required(ascentsCsv).type).toBe('text/csv;charset=utf-8')
+    expect(required(trainingCsv).type).toBe('text/csv;charset=utf-8')
+    expect(required(ascentsJson).type).toBe('application/json;charset=utf-8')
+    expect(required(trainingJson).type).toBe('application/json;charset=utf-8')
+    expect(parseAscentCsv(await required(ascentsCsv).text())).toStrictEqual([
       expect.objectContaining({ comments: ascent.comments, crag: ascent.crag, name: ascent.name }),
     ])
-    expect(parseTrainingSessionCsv(trainingCsv)).toStrictEqual([
+    expect(parseTrainingSessionCsv(await required(trainingCsv).text())).toStrictEqual([
       expect.objectContaining({ comments: training.comments, location: training.location }),
     ])
+    expect(JSON.parse(await required(ascentsJson).text())).toStrictEqual([
+      expect.objectContaining({ comments: ascent.comments, crag: ascent.crag, name: ascent.name }),
+    ])
+    expect(JSON.parse(await required(trainingJson).text())).toStrictEqual([
+      expect.objectContaining({ comments: training.comments, location: training.location }),
+    ])
+    const exportedAscents = JSON.parse(await required(ascentsJson).text()) as Record<
+      string,
+      unknown
+    >[]
+    const exportedTrainingSessions = JSON.parse(await required(trainingJson).text()) as Record<
+      string,
+      unknown
+    >[]
+    expect(exportedAscents.every(record => !('_id' in record))).toBe(true)
+    expect(exportedTrainingSessions.every(record => !('_id' in record))).toBe(true)
   })
 
-  it('exports valid header-only CSVs for empty datasets', async () => {
+  it('exports empty datasets as header-only CSVs and empty JSON arrays', async () => {
     const downloads = setupDownloads()
     const user = userEvent.setup()
     render(<ExportControls ascents={[]} trainingSessions={[]} />)
 
-    await user.click(screen.getByRole('button', { name: 'Download ZIP (0 records)' }))
+    const [ascentsCsvButton, trainingCsvButton] = screen.getAllByRole('button', {
+      name: 'Download CSV',
+    })
+    const [ascentsJsonButton, trainingJsonButton] = screen.getAllByRole('button', {
+      name: 'Download JSON',
+    })
 
-    const files = unzipSync(new Uint8Array(await required(downloads.blobs[0]).arrayBuffer()))
-    const ascentCsv = strFromU8(required(files['ascents.csv']))
-    const trainingCsv = strFromU8(required(files['training-sessions.csv']))
-    expect(parseAscentCsv(ascentCsv)).toStrictEqual([])
-    expect(parseTrainingSessionCsv(trainingCsv)).toStrictEqual([])
+    await user.click(required(ascentsCsvButton))
+    await user.click(required(trainingCsvButton))
+    await user.click(required(ascentsJsonButton))
+    await user.click(required(trainingJsonButton))
+
+    const [ascentsCsv, trainingCsv, ascentsJson, trainingJson] = downloads.blobs
+    expect(parseAscentCsv(await required(ascentsCsv).text())).toStrictEqual([])
+    expect(parseTrainingSessionCsv(await required(trainingCsv).text())).toStrictEqual([])
+    expect(JSON.parse(await required(ascentsJson).text())).toStrictEqual([])
+    expect(JSON.parse(await required(trainingJson).text())).toStrictEqual([])
   })
 
   it('downloads both published CSV templates', async () => {
@@ -93,8 +127,11 @@ describe('exportControls', () => {
     const user = userEvent.setup()
     render(<ExportControls ascents={[]} trainingSessions={[]} />)
 
-    await user.click(screen.getByRole('button', { name: 'Ascent template' }))
-    await user.click(screen.getByRole('button', { name: 'Training template' }))
+    const [ascentTemplateButton, trainingTemplateButton] = screen.getAllByRole('button', {
+      name: 'CSV template',
+    })
+    await user.click(required(ascentTemplateButton))
+    await user.click(required(trainingTemplateButton))
 
     expect(downloads.blobs).toHaveLength(2)
     expect(parseAscentCsv(await required(downloads.blobs[0]).text())).toStrictEqual([])
