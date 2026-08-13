@@ -1,116 +1,43 @@
-import {
-  CartesianGrid,
-  createHorizontalChart,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-} from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { ChartTooltip, ChartXAxis, ChartYAxis } from '../chart-elements'
-import { GRID_STROKE } from '../constants'
-
-import { getTriesByGrade } from './get-tries-by-grade'
-import { TriesByGradeTooltip } from './tries-by-grade-tooltip'
-
+import { TanStackLineChart, type ChartSeries } from '../tanstack-chart'
 import type { Ascent } from '~/schema/ascent'
+import { getTriesByGrade } from './get-tries-by-grade'
 
-export type TriesByGradePoint = {
-  x: string
-  y: number
-}
-
+export type TriesByGradePoint = { x: string; y: number }
 export type TriesByGradeSeries = {
   color: string
   data: TriesByGradePoint[]
   id: 'min' | 'average' | 'max'
 }
-
-type TriesByGradeChartDatum = {
-  average: number
-  grade: string
-  max: number
-  min: number
-}
-
-const Chart = createHorizontalChart<TriesByGradeChartDatum>()({
-  LineChart,
-  Line,
-})
-
-const AXIS_LABELS = {
-  grades: 'Grades',
-  numberOfTries: '# Tries',
-}
-
-const DOT_RADIUS = 4
-const LINE_STROKE_WIDTH = 2
+type Datum = { average: number; grade: string; max: number; min: number }
+const getCategory = (datum: Datum) => datum.grade
 
 export function TriesByGrade({ ascents }: { ascents: Ascent[] }) {
-  const series = getTriesByGrade(ascents)
-  const chartData = getChartData(series)
-  const seriesColors = new Map(series.map(serie => [serie.id, serie.color]))
-
-  const isFirstTry = series.every(item => item.data.every(point => point.y === 1))
-
-  const dotStyle = { r: DOT_RADIUS }
-  const yAxisDomain = [0, 'dataMax'] as const
-
-  if (series.length === 0 || isFirstTry) return
-
+  const source = getTriesByGrade(ascents)
+  if (source.every(item => item.data.every(point => point.y === 1))) return
+  const grades = source[0]?.data.map(point => point.x) ?? []
+  const data = grades.map(
+    (grade, index) =>
+      Object.fromEntries([
+        ['grade', grade],
+        ...source.map(series => [series.id, series.data[index]?.y ?? 0]),
+      ]) as Datum,
+  )
+  const series = source.map(item => ({
+    key: item.id,
+    label: item.id[0]?.toUpperCase() + item.id.slice(1),
+    color: item.color,
+  })) satisfies ChartSeries[]
   return (
     <ChartContainer caption='Tries by Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.LineChart accessibilityLayer={false} data={chartData}>
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
-          <ChartYAxis domain={yAxisDomain} labelText={AXIS_LABELS.numberOfTries} />
-          <ChartTooltip content={TriesByGradeTooltip} />
-          <Legend iconType='circle' layout='horizontal' position='top' />
-          <Chart.Line
-            dataKey='min'
-            dot={dotStyle}
-            name='Min'
-            stroke={seriesColors.get('min') ?? 'var(--minTries)'}
-            strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
-          />
-          <Chart.Line
-            dataKey='average'
-            dot={dotStyle}
-            name='Average'
-            stroke={seriesColors.get('average') ?? 'var(--averageTries)'}
-            strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
-          />
-          <Chart.Line
-            dataKey='max'
-            dot={dotStyle}
-            name='Max'
-            stroke={seriesColors.get('max') ?? 'var(--maxTries)'}
-            strokeWidth={LINE_STROKE_WIDTH}
-            type='natural'
-          />
-        </Chart.LineChart>
-      </ResponsiveContainer>
+      <TanStackLineChart
+        ariaLabel='Tries by Grade'
+        data={data}
+        getCategory={getCategory}
+        series={series}
+        x={{ label: 'Grades' }}
+        y={{ label: '# Tries' }}
+      />
     </ChartContainer>
   )
-}
-
-function getChartData(series: TriesByGradeSeries[]): TriesByGradeChartDatum[] {
-  const grades = series[0]?.data.map(point => point.x) ?? []
-
-  return grades.map((grade, index) => {
-    const datum: TriesByGradeChartDatum = { average: 0, grade, max: 0, min: 0 }
-
-    for (const serie of series) {
-      const value = serie.data[index]?.y ?? 0
-      if (serie.id === 'min') datum.min = value
-      if (serie.id === 'average') datum.average = value
-      if (serie.id === 'max') datum.max = value
-    }
-
-    return datum
-  })
 }

@@ -1,67 +1,29 @@
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  createVerticalChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import {
-  AXIS_TICK_STYLE,
-  BAR_CATEGORY_GAP,
-  CURSOR_STYLE,
-  GRID_STROKE,
-  TOOLTIP_STYLE,
-} from '../constants'
-
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsByGradesPerCrag } from './get-ascents-by-grades-per-crag'
 
-type AscentsByGradesPerCragDatum = ReturnType<typeof getAscentsByGradesPerCrag>[number]
-
-const Chart = createVerticalChart<AscentsByGradesPerCragDatum>()({
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-})
+type Datum = ReturnType<typeof getAscentsByGradesPerCrag>[number]
+const SERIES = GRADES.map(key => ({
+  key,
+  color: fromGradeToBackgroundColor(key),
+})) satisfies ChartSeries[]
+const getCategory = (datum: Datum) => datum.crag ?? 'Unknown crag'
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
-  const ascentsByGradesPerCrag = getAscentsByGradesPerCrag(ascents).toReversed()
-
-  if (ascentsByGradesPerCrag.length === 0) return
-
-  const uniqueCragsCount = new Set(ascentsByGradesPerCrag.map(({ crag }) => crag)).size
-  if (uniqueCragsCount <= 1) return
-
+  const data = getAscentsByGradesPerCrag(ascents).toReversed()
+  if (data.length === 0 || new Set(data.map(({ crag }) => crag)).size <= 1) return
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart
-          accessibilityLayer={false}
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={ascentsByGradesPerCrag}
-          layout='vertical'
-        >
-          <CartesianGrid stroke={GRID_STROKE} vertical horizontal={false} />
-          <Chart.XAxis tick={AXIS_TICK_STYLE} type='number' />
-          <Chart.YAxis reversed dataKey='crag' tick={AXIS_TICK_STYLE} type='category' width={200} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
-          {GRADES.map(key => (
-            <Chart.Bar
-              key={key}
-              dataKey={key}
-              fill={fromGradeToBackgroundColor(key)}
-              stackId='grades'
-            />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Ascents By Grades Per Crag'
+        data={data}
+        getCategory={getCategory}
+        orientation='horizontal'
+        series={SERIES}
+        x={{ label: '# Ascents' }}
+      />
     </ChartContainer>
   )
 }

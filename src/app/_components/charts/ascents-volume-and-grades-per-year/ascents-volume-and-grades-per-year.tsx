@@ -1,245 +1,77 @@
-import {
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  createHorizontalChart,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  YAxis,
-} from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { ChartTooltip, ChartXAxis } from '../chart-elements'
-import {
-  AXIS_LABEL_STYLE,
-  AXIS_TICK_STYLE,
-  BAR_CATEGORY_GAP,
-  formatYearTick,
-  GRID_STROKE,
-} from '../constants'
-
+import { formatYearTick } from '../constants'
+import { TanStackBarChart, TanStackLineChart, type ChartSeries } from '../tanstack-chart'
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER, type Ascent } from '~/schema/ascent'
 import { getAscentsVolumeAndGradesPerYear } from './get-ascents-volume-and-grades-per-year'
 
-type AscentsVolumeAndGradesPerYearDatum = ReturnType<
-  typeof getAscentsVolumeAndGradesPerYear
->[number]
-
-const Chart = createHorizontalChart<
-  AscentsVolumeAndGradesPerYearDatum,
-  string,
-  number | undefined
->()({
-  ComposedChart,
-  Bar,
-  Line,
-  YAxis,
-})
-
-const AXIS_LABELS = {
-  ascents: '# Ascents',
-  grades: 'Grades',
-  years: 'Years',
-}
-
-const CHART_LABELS = {
-  avgBoulderGrade: 'Average Bouldering Grade',
-  avgRouteGrade: 'Average Route Grade',
-  boulderAscents: 'Boulders',
-  maxBoulderGrade: 'Max Bouldering Grade',
-  maxRouteGrade: 'Max Route Grade',
-  routeAscents: 'Routes',
-}
-
-const DISCIPLINE_SHADED_COLORS = {
-  Bouldering: {
-    average: 'color-mix(in oklch, var(--boulder) 65%, white)',
-    max: 'color-mix(in oklch, var(--boulder) 70%, black)',
-  },
-  Sport: {
-    average: 'color-mix(in oklch, var(--route) 65%, white)',
-    max: 'color-mix(in oklch, var(--route) 70%, black)',
-  },
-} as const
-
+type Datum = ReturnType<typeof getAscentsVolumeAndGradesPerYear>[number]
 const GRADE_VALUES = Object.values(GRADE_TO_NUMBER)
-const MIN_GRADE_NUMBER = Math.min(...GRADE_VALUES)
-const MAX_GRADE_NUMBER = Math.max(...GRADE_VALUES)
-const GRADE_AXIS_HEADROOM = 1
-const HALF_AXIS_POSITION_NUMERATOR = 1
-const HALF_AXIS_POSITION_DENOMINATOR = 2
-const HALF_AXIS_POSITION = HALF_AXIS_POSITION_NUMERATOR / HALF_AXIS_POSITION_DENOMINATOR
-
-function clampGrade(grade: number): number {
-  return Math.min(MAX_GRADE_NUMBER, Math.max(MIN_GRADE_NUMBER, grade))
-}
-
-function clampOptionalGrade(grade: number | undefined): number | undefined {
-  if (grade === undefined) return undefined
-  return clampGrade(grade)
-}
-
-function getLowerBoundForHalfAxisStart(minGrade: number, upperBound: number): number {
-  return (minGrade - HALF_AXIS_POSITION * upperBound) / (1 - HALF_AXIS_POSITION)
-}
-
-const GRADE_TICKS = GRADE_VALUES
-
-const DOTTED_LINE_STROKE = '6 6'
-const ASCENTS_AXIS_STEP = 100
-
-function roundUpToStep(value: number, step: number): number {
-  return Math.ceil(value / step) * step
-}
-
-function formatGradeTick(value: unknown): string {
-  if (typeof value !== 'number') return String(value)
-  return fromNumberToGrade(clampGrade(Math.round(value)))
-}
+const MIN_GRADE = Math.min(...GRADE_VALUES)
+const MAX_GRADE = Math.max(...GRADE_VALUES)
+const getCategory = (datum: Datum) => datum.year
+const clampGrade = (grade: number) => Math.min(MAX_GRADE, Math.max(MIN_GRADE, grade))
+const formatGrade = (value: string | number | Date) =>
+  typeof value === 'number' ? fromNumberToGrade(clampGrade(Math.round(value))) : String(value)
+const VOLUME_SERIES = [
+  { key: 'Bouldering', label: 'Boulders', color: CLIMBING_DISCIPLINE_TO_COLOR.Bouldering },
+  { key: 'Sport', label: 'Routes', color: CLIMBING_DISCIPLINE_TO_COLOR.Sport },
+] satisfies ChartSeries[]
+const GRADE_SERIES = [
+  {
+    key: 'maxBoulderGrade',
+    label: 'Max Bouldering Grade',
+    color: 'color-mix(in oklch, var(--boulder) 70%, black)',
+  },
+  {
+    key: 'maxRouteGrade',
+    label: 'Max Route Grade',
+    color: 'color-mix(in oklch, var(--route) 70%, black)',
+  },
+  {
+    key: 'avgBoulderGrade',
+    label: 'Average Bouldering Grade',
+    color: 'color-mix(in oklch, var(--boulder) 65%, white)',
+  },
+  {
+    key: 'avgRouteGrade',
+    label: 'Average Route Grade',
+    color: 'color-mix(in oklch, var(--route) 65%, white)',
+  },
+] satisfies ChartSeries[]
 
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
-  const data = getAscentsVolumeAndGradesPerYear(ascents).map(datum =>
-    Object.assign({}, datum, {
-      avgBoulderGrade: clampOptionalGrade(datum.avgBoulderGrade),
-      avgRouteGrade: clampOptionalGrade(datum.avgRouteGrade),
-      maxBoulderGrade: clampOptionalGrade(datum.maxBoulderGrade),
-      maxRouteGrade: clampOptionalGrade(datum.maxRouteGrade),
-    }),
+  const data = getAscentsVolumeAndGradesPerYear(ascents)
+  if (
+    data.length === 0 ||
+    new Set(data.map(({ year }) => year)).size <= 1 ||
+    !data.some(({ Bouldering, Sport }) => Bouldering > 0 || Sport > 0)
   )
-
-  const gradeDomain = getGradeDomain(data)
-
-  const [minDomain = Number.NEGATIVE_INFINITY, maxDomain = Number.POSITIVE_INFINITY] = gradeDomain
-  const gradeTicks = GRADE_TICKS.filter(tick => tick >= minDomain && tick <= maxDomain)
-
-  const uniqueYearsCount = new Set(data.map(({ year }) => year)).size
-  const hasDisciplineData = data.some(({ Bouldering, Sport }) => Bouldering > 0 || Sport > 0)
-
-  if (data.length === 0) return
-  if (uniqueYearsCount <= 1) return
-  if (!hasDisciplineData) return
-
+    return
+  const x = { label: 'Years', tickFormat: formatYearTick }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.ComposedChart
-          accessibilityLayer={false}
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={data}
-        >
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <Chart.YAxis
-            yAxisId='left'
-            domain={gradeDomain}
-            ticks={gradeTicks}
-            label={{
-              ...AXIS_LABEL_STYLE,
-              angle: -90,
-              value: AXIS_LABELS.grades,
-            }}
-            tick={AXIS_TICK_STYLE}
-            tickFormatter={formatGradeTick}
-          />
-          <Chart.YAxis
-            yAxisId='right'
-            allowDecimals={false}
-            domain={[0, dataMax => roundUpToStep(dataMax, ASCENTS_AXIS_STEP)]}
-            label={{
-              ...AXIS_LABEL_STYLE,
-              angle: -90,
-              value: AXIS_LABELS.ascents,
-            }}
-            orientation='right'
-            tick={AXIS_TICK_STYLE}
-          />
-          <ChartTooltip
-            formatter={(value, name) => {
-              if (typeof value !== 'number') return [value, name]
-              if (name?.toString().includes('Grade') !== true) return [value, name]
-
-              return [fromNumberToGrade(clampGrade(Math.round(value))), name]
-            }}
-          />
-          <Legend iconType='circle' layout='horizontal' position='top' />
-
-          <Chart.Bar
-            dataKey='Bouldering'
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Bouldering}
-            name={CHART_LABELS.boulderAscents}
-            yAxisId='right'
-          />
-          <Chart.Bar
-            dataKey='Sport'
-            fill={CLIMBING_DISCIPLINE_TO_COLOR.Sport}
-            name={CHART_LABELS.routeAscents}
-            yAxisId='right'
-          />
-
-          <Chart.Line
-            dataKey='maxBoulderGrade'
-            dot={false}
-            name={CHART_LABELS.maxBoulderGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Bouldering.max}
-            strokeWidth={2}
-            type='natural'
-            yAxisId='left'
-          />
-          <Chart.Line
-            dataKey='maxRouteGrade'
-            dot={false}
-            name={CHART_LABELS.maxRouteGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Sport.max}
-            strokeWidth={2}
-            type='natural'
-            yAxisId='left'
-          />
-          <Chart.Line
-            dataKey='avgBoulderGrade'
-            dot={false}
-            name={CHART_LABELS.avgBoulderGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Bouldering.average}
-            strokeDasharray={DOTTED_LINE_STROKE}
-            strokeWidth={2}
-            type='natural'
-            yAxisId='left'
-          />
-          <Chart.Line
-            dataKey='avgRouteGrade'
-            dot={false}
-            name={CHART_LABELS.avgRouteGrade}
-            stroke={DISCIPLINE_SHADED_COLORS.Sport.average}
-            strokeDasharray={DOTTED_LINE_STROKE}
-            strokeWidth={2}
-            type='natural'
-            yAxisId='left'
-          />
-        </Chart.ComposedChart>
-      </ResponsiveContainer>
+      <TanStackLineChart
+        ariaLabel='Maximum and average grade evolution'
+        data={data}
+        getCategory={getCategory}
+        height={230}
+        series={GRADE_SERIES}
+        x={x}
+        y={{ label: 'Grades', tickFormat: formatGrade }}
+      />
+      <TanStackBarChart
+        ariaLabel='Ascent volume per year'
+        data={data}
+        getCategory={getCategory}
+        height={190}
+        legend
+        mode='group'
+        series={VOLUME_SERIES}
+        x={x}
+        y={{ label: '# Ascents' }}
+      />
     </ChartContainer>
   )
-}
-
-function getGradeDomain(data: ReturnType<typeof getAscentsVolumeAndGradesPerYear>) {
-  const grades = data.flatMap(datum => [
-    datum.avgBoulderGrade,
-    datum.avgRouteGrade,
-    datum.maxBoulderGrade,
-    datum.maxRouteGrade,
-  ])
-
-  const minGrade = grades.reduce<number>(
-    (min, value) => (typeof value === 'number' ? Math.min(min, value) : min),
-    MAX_GRADE_NUMBER,
-  )
-  const maxGrade = grades.reduce<number>(
-    (max, value) => (typeof value === 'number' ? Math.max(max, value) : max),
-    MIN_GRADE_NUMBER,
-  )
-  const upperBound = maxGrade + GRADE_AXIS_HEADROOM
-
-  return [getLowerBoundForHalfAxisStart(minGrade, upperBound), upperBound]
 }

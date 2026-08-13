@@ -9,7 +9,7 @@ to try new libraries and patterns.
 ## Stack
 
 - Next.js (App Router) + TypeScript, Vite+, CSS Modules
-- UI: Base UI components; Charts: Recharts; Auth: Clerk
+- UI: Base UI components; Charts: TanStack Charts; Auth: Clerk
 - Data & validation: Convex database, Zod schemas
 - User-specific server reads are deliberately uncached
 - Testing: vitest (unit), Playwright (e2e smoke test, see `.env.example` for

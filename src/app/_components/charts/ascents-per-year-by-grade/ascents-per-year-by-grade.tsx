@@ -1,54 +1,30 @@
-import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { BAR_CATEGORY_GAP, formatYearTick, GRID_STROKE } from '../constants'
-import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
-
+import { formatYearTick } from '../constants'
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
 import { GRADES, type Ascent } from '~/schema/ascent'
 import { getAscentsPerYearByGrade } from './get-ascents-per-year-by-grade'
 
-type AscentsPerYearByGradeDatum = ReturnType<typeof getAscentsPerYearByGrade>[number]
-
-const Chart = createHorizontalChart<AscentsPerYearByGradeDatum>()({
-  BarChart,
-  Bar,
-})
-
-const AXIS_LABELS = {
-  numberOfAscents: '# Ascents',
-  years: 'Years',
-}
+type Datum = ReturnType<typeof getAscentsPerYearByGrade>[number]
+const SERIES = GRADES.map(key => ({
+  key,
+  color: fromGradeToBackgroundColor(key),
+})) satisfies ChartSeries[]
+const getCategory = (datum: Datum) => datum.year
 
 export function AscentsPerYearByGrade({ ascents }: { ascents: Ascent[] }) {
-  const ascentsPerYearByGrade = getAscentsPerYearByGrade(ascents)
-
-  const uniqueYearsCount = new Set(ascentsPerYearByGrade.map(({ year }) => year)).size
-
-  if (uniqueYearsCount <= 1 || ascentsPerYearByGrade.length === 0) return
-
+  const data = getAscentsPerYearByGrade(ascents)
+  if (new Set(data.map(({ year }) => year)).size <= 1 || data.length === 0) return
   return (
     <ChartContainer caption='Ascents Per Year By Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart
-          accessibilityLayer={false}
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={ascentsPerYearByGrade}
-        >
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
-          <ChartTooltip />
-          {GRADES.map(key => (
-            <Chart.Bar
-              key={key}
-              dataKey={key}
-              fill={fromGradeToBackgroundColor(key)}
-              stackId='grades'
-            />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Ascents Per Year By Grade'
+        data={data}
+        getCategory={getCategory}
+        series={SERIES}
+        x={{ label: 'Years', tickFormat: formatYearTick }}
+        y={{ label: '# Ascents' }}
+      />
     </ChartContainer>
   )
 }

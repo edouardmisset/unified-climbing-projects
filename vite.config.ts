@@ -6,7 +6,7 @@ import { defineConfig } from 'vite-plus'
 
 const compileTarget = 'esnext'
 
-// React behavior belongs to the integration suite. Charts (recharts'
+// React behavior belongs to the integration suite. Charts (TanStack Charts'
 // ResponsiveContainer needs real layout/ResizeObserver) and other highly
 // visual components are exercised in a real browser instead of happy-dom.
 const BROWSER_TEST_GLOB =

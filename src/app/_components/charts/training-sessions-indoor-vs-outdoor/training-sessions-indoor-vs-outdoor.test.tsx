@@ -5,7 +5,7 @@ import { TrainingSessionsIndoorVsOutdoor } from './training-sessions-indoor-vs-o
 import { getSessionsIndoorVsOutdoor } from './get-sessions-indoor-vs-outdoor'
 
 describe('trainingSessionsIndoorVsOutdoor', () => {
-  it('renders one pie slice per real indoor/outdoor category', async () => {
+  it('renders the indoor/outdoor donut mark', async () => {
     const data = getSessionsIndoorVsOutdoor(sampleTrainingSessions)
     const screen = await render(
       <TrainingSessionsIndoorVsOutdoor trainingSessions={sampleTrainingSessions} />,
@@ -13,8 +13,7 @@ describe('trainingSessionsIndoorVsOutdoor', () => {
     const { container } = screen
 
     await expect.element(screen.getByText('Indoor vs Outdoor')).toBeInTheDocument()
-    await expect
-      .poll(() => container.querySelectorAll('.recharts-pie-sector').length)
-      .toBe(data.length)
+    expect(data.length).toBeGreaterThan(1)
+    await expect.poll(() => container.querySelectorAll('.ts-chart__arc').length).toBe(1)
   })
 })

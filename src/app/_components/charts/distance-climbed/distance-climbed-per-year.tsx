@@ -1,44 +1,29 @@
-import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { formatYearTick, GRID_STROKE } from '../constants'
-import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
-
+import { formatYearTick } from '../constants'
+import { TanStackBarChart } from '../tanstack-chart'
+import { formatNumber } from '~/helpers/number-formatter'
 import type { Ascent } from '~/schema/ascent'
 import { getDistanceClimbedPerYear } from './get-distance-climbed-per-year'
-import { formatNumber } from '~/helpers/number-formatter'
 
-type DistanceClimbedDatum = ReturnType<typeof getDistanceClimbedPerYear>[number]
-
-const Chart = createHorizontalChart<DistanceClimbedDatum>()({
-  BarChart,
-  Bar,
-})
-
-const AXIS_LABELS = {
-  height: 'Height',
-  years: 'Years',
-}
-
-const formattedDistance = (value: unknown) =>
+type Datum = ReturnType<typeof getDistanceClimbedPerYear>[number]
+const SERIES = [{ key: 'distance', color: 'var(--blue-3)' }]
+const getCategory = (datum: Datum) => datum.year
+const formatDistance = (value: string | number | Date) =>
   typeof value === 'number' ? formatNumber(value) : String(value)
 
 export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = getDistanceClimbedPerYear(ascents)
-
   if (data.length === 0) return
-
   return (
     <ChartContainer caption='Distance climbed per Year'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart accessibilityLayer={false} barCategoryGap={0} data={data}>
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='year' labelText={AXIS_LABELS.years} tickFormatter={formatYearTick} />
-          <ChartYAxis labelText={AXIS_LABELS.height} tickFormatter={formattedDistance} />
-          <ChartTooltip />
-          <Chart.Bar dataKey='distance' fill='var(--blue-3)' />
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Distance climbed per Year'
+        data={data}
+        getCategory={getCategory}
+        series={SERIES}
+        x={{ label: 'Years', tickFormat: formatYearTick }}
+        y={{ label: 'Height', tickFormat: formatDistance }}
+      />
     </ChartContainer>
   )
 }

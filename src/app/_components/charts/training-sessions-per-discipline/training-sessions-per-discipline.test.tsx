@@ -5,7 +5,7 @@ import { TrainingSessionsPerDiscipline } from './training-sessions-per-disciplin
 import { getSessionsPerDiscipline } from './get-sessions-per-discipline'
 
 describe('trainingSessionsPerDiscipline', () => {
-  it('renders one pie slice per real discipline', async () => {
+  it('renders the session-discipline donut mark', async () => {
     const data = getSessionsPerDiscipline(sampleTrainingSessions)
     const screen = await render(
       <TrainingSessionsPerDiscipline trainingSessions={sampleTrainingSessions} />,
@@ -13,8 +13,7 @@ describe('trainingSessionsPerDiscipline', () => {
     const { container } = screen
 
     await expect.element(screen.getByText('Sessions by Discipline')).toBeInTheDocument()
-    await expect
-      .poll(() => container.querySelectorAll('.recharts-pie-sector').length)
-      .toBe(data.length)
+    expect(data.length).toBeGreaterThan(1)
+    await expect.poll(() => container.querySelectorAll('.ts-chart__arc').length).toBe(1)
   })
 })

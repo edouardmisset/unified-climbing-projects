@@ -12,6 +12,6 @@ describe('distanceClimbedPerYear', () => {
 
     expect(data.length).toBeGreaterThan(0)
     await expect.element(screen.getByText('Distance climbed per Year')).toBeInTheDocument()
-    await expect.poll(() => container.querySelectorAll('.recharts-bar-rectangles').length).toBe(1)
+    await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(1)
   })
 })

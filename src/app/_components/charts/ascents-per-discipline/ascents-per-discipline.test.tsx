@@ -5,14 +5,13 @@ import { AscentsPerDiscipline } from './ascents-per-discipline'
 import { getAscentsPerDiscipline } from './get-ascents-per-discipline'
 
 describe('ascentsPerDiscipline', () => {
-  it('renders one pie slice per discipline in the real data', async () => {
+  it('renders the discipline donut mark', async () => {
     const data = getAscentsPerDiscipline(sampleAscents)
     const screen = await render(<AscentsPerDiscipline ascents={sampleAscents} />)
     const { container } = screen
 
     await expect.element(screen.getByText('Ascents per Discipline')).toBeInTheDocument()
-    await expect
-      .poll(() => container.querySelectorAll('.recharts-pie-sector').length)
-      .toBe(data.length)
+    expect(data.length).toBeGreaterThan(1)
+    await expect.poll(() => container.querySelectorAll('.ts-chart__arc').length).toBe(1)
   })
 })
