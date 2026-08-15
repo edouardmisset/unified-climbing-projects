@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Atkinson_Hyperlegible as atkinson_Hyperlegible } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-import { type ReactNode, Suspense } from 'react'
+import { type ReactNode, Suspense, ViewTransition } from 'react'
 import { ToastContainer } from 'react-toastify'
 import { Header } from '~/app/_components/header/header.tsx'
 import { QueryProvider } from '~/app/_components/query-provider/query-provider'
@@ -63,9 +63,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Header />
             <main className={styles.main} id='main-content' tabIndex={-1}>
               <Suspense fallback={<Loader />}>
-                <QueryProvider>
-                  <NuqsAdapter>{children}</NuqsAdapter>
-                </QueryProvider>
+                <ViewTransition>
+                  <QueryProvider>
+                    <NuqsAdapter>{children}</NuqsAdapter>
+                  </QueryProvider>
+                </ViewTransition>
               </Suspense>
             </main>
 
