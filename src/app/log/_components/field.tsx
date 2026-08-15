@@ -5,14 +5,18 @@ export function Field({
   children,
   label,
   htmlFor,
+  required = false,
 }: {
   children: ReactNode
   htmlFor: string
   label: string
+  required?: boolean
 }) {
   return (
     <div className={formStyles.field}>
-      <label htmlFor={htmlFor}>{label}</label>
+      <label className={required ? formStyles.requiredLabel : undefined} htmlFor={htmlFor}>
+        {label}
+      </label>
       {children}
     </div>
   )

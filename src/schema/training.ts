@@ -1,5 +1,5 @@
 import type { TrainingSessionRecord } from '~/domain/training-session'
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
 
 export const LOAD_CATEGORIES = ['High', 'Medium', 'Low'] as const
 export const loadCategorySchema = z.enum(LOAD_CATEGORIES)

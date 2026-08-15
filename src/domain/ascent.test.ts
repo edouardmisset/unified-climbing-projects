@@ -2,9 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   ASCENT_CSV_COLUMNS,
   type AscentPublicInput,
-  ascentExportRowSchema,
+  ascentCsvRowCodec,
   ascentFormSchema,
-  ascentImportRowSchema,
   ascentPublicInputSchema,
   ascentPublicOutputSchema,
   ascentStoredDocumentSchema,
@@ -124,11 +123,12 @@ describe('ascent public boundaries', () => {
 
 describe('ascent form and CSV boundaries', () => {
   it('normalizes form numbers and empty optional values', () => {
-    const result = ascentFormSchema.parse({
+    const result = ascentFormSchema.decode({
       ...ascent,
       area: '   ',
       height: '',
       rating: '5',
+      style: 'Redpoint',
       tries: '2',
     })
 
@@ -138,12 +138,20 @@ describe('ascent form and CSV boundaries', () => {
     expect(result.tries).toBe(2)
   })
 
+  it('encodes a canonical ascent back into form values', () => {
+    const formValues = ascentFormSchema.encode(ascent)
+
+    expect(formValues).toMatchObject({ height: '25', rating: '4', tries: '1' })
+    expect(ascentFormSchema.decode(formValues)).toStrictEqual(ascent)
+  })
+
   it('normalizes an import row to canonical domain values', () => {
-    const result = ascentImportRowSchema.parse({
+    const result = ascentCsvRowCodec.decode({
       ...ascent,
       area: '',
       height: '25',
       rating: '4',
+      style: 'Redpoint',
       tries: '3',
     })
 
@@ -153,24 +161,20 @@ describe('ascent form and CSV boundaries', () => {
     expect(result.tries).toBe(3)
   })
 
-  it('requires export rows to contain every CSV column in fixed order', () => {
-    const result = ascentExportRowSchema.parse({
-      discipline: 'Sport',
-      name: 'Example Route',
-      grade: '7a',
-      crag: 'Example Crag',
-      date: '2024-02-29',
-      style: 'Onsight',
-      tries: '1',
-      area: '',
-      comments: '',
-      height: '',
-      holds: '',
-      personalGrade: '',
-      profile: '',
-      rating: '',
-    })
+  it('encodes every domain field as a CSV cell in fixed order', () => {
+    const result = ascentCsvRowCodec.encode(ascent)
 
     expect(Object.keys(result)).toStrictEqual(ASCENT_CSV_COLUMNS)
+    expect(result).toMatchObject({ height: '25', rating: '4', tries: '1' })
+  })
+
+  it('requires Redpoint style for ascents with more than 1 try', () => {
+    const ascentFormValues = ascentFormSchema.encode(ascent)
+    const ascentCsvRow = ascentCsvRowCodec.encode(ascent)
+
+    expect(ascentPublicInputSchema.safeParse({ ...ascent, tries: 2 }).success).toBe(false)
+    expect(ascentFormSchema.safeDecode({ ...ascentFormValues, tries: '2' }).success).toBe(false)
+    expect(ascentCsvRowCodec.safeDecode({ ...ascentCsvRow, tries: '2' }).success).toBe(false)
+    expect(ascentCsvRowCodec.safeEncode({ ...ascent, tries: 2 }).success).toBe(false)
   })
 })

@@ -1,5 +1,5 @@
 import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod/v3'
+import { z } from 'zod'
 
 createEnv({
   /**
@@ -8,7 +8,7 @@ createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_CONVEX_URL: z.string().url(),
+    NEXT_PUBLIC_CONVEX_URL: z.url(),
     NEXT_PUBLIC_ENV: z.string(),
   },
   /**

@@ -1,4 +1,4 @@
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
 import {
   ascentDisciplineSchema,
   ascentDomainSchema,

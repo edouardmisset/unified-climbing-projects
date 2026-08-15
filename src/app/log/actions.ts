@@ -6,15 +6,18 @@ import { climbingLogFormSchema } from './schema'
 
 export type SubmitClimbingLogResult =
   | { success: true; ascentCount: number; hasTraining: boolean }
-  | { success: false; error: string }
+  | { success: false; error: string; field?: string }
 
 export async function submitClimbingLog(input: unknown): Promise<SubmitClimbingLogResult> {
   const parsed = climbingLogFormSchema.safeParse(input)
-  if (!parsed.success)
+  if (!parsed.success) {
+    const issue = parsed.error.issues.at(0)
     return {
-      error: parsed.error.issues.at(0)?.message ?? 'Invalid climbing log',
+      error: issue?.message ?? 'Invalid climbing log',
+      ...(issue && issue.path.length > 0 ? { field: issue.path.map(String).join('.') } : {}),
       success: false,
     }
+  }
 
   try {
     await addClimbingLog(parsed.data)

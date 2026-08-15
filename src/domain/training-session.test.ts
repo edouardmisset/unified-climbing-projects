@@ -2,9 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   TRAINING_SESSION_CSV_COLUMNS,
   type TrainingSessionPublicInput,
-  trainingSessionExportRowSchema,
+  trainingSessionCsvRowCodec,
   trainingSessionFormSchema,
-  trainingSessionImportRowSchema,
   trainingSessionPublicInputSchema,
   trainingSessionPublicOutputSchema,
   trainingSessionStoredDocumentSchema,
@@ -124,7 +123,7 @@ describe('training session public boundaries', () => {
 
 describe('training session form and CSV boundaries', () => {
   it('normalizes form percentages and empty optional values', () => {
-    const result = trainingSessionFormSchema.parse({
+    const result = trainingSessionFormSchema.decode({
       ...trainingSession,
       comments: '   ',
       intensity: '90',
@@ -138,8 +137,15 @@ describe('training session form and CSV boundaries', () => {
     expect(result.volume).toBe(40)
   })
 
+  it('encodes a canonical training session back into form values', () => {
+    const formValues = trainingSessionFormSchema.encode(trainingSession)
+
+    expect(formValues).toMatchObject({ intensity: '80', volume: '60' })
+    expect(trainingSessionFormSchema.decode(formValues)).toStrictEqual(trainingSession)
+  })
+
   it('normalizes an import row to canonical domain values', () => {
-    const result = trainingSessionImportRowSchema.parse({
+    const result = trainingSessionCsvRowCodec.decode({
       ...trainingSession,
       comments: '',
       intensity: '80',
@@ -153,19 +159,10 @@ describe('training session form and CSV boundaries', () => {
     expect(result.volume).toBe(60)
   })
 
-  it('requires export rows to contain every CSV column in fixed order', () => {
-    const result = trainingSessionExportRowSchema.parse({
-      date: '2024-02-29',
-      type: 'Finger Board',
-      discipline: '',
-      location: '',
-      anatomicalRegion: '',
-      energySystem: '',
-      comments: '',
-      intensity: '',
-      volume: '',
-    })
+  it('encodes every domain field as a CSV cell in fixed order', () => {
+    const result = trainingSessionCsvRowCodec.encode(trainingSession)
 
     expect(Object.keys(result)).toStrictEqual(TRAINING_SESSION_CSV_COLUMNS)
+    expect(result).toMatchObject({ intensity: '80', volume: '60' })
   })
 })
