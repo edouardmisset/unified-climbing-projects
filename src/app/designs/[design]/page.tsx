@@ -123,7 +123,7 @@ export default async function DesignPage({ params }: PageProps) {
           <div className={styles.featureGrid}>
             <article>
               <LockKeyhole aria-hidden='true' />
-              <span>01</span>
+<span aria-hidden='true'>01</span>
               <h3>Private by default</h3>
               <p>Every operation is scoped to your signed-in identity.</p>
             </article>
