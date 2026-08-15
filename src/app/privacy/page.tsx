@@ -12,9 +12,9 @@ export default function PrivacyPage() {
           <p className={styles.titleContinuation}>In plain language.</p>
           <p>Last updated August 2026 · How your climbing data is handled.</p>
         </header>
-        <section>
-          <span className={styles.number}>01</span>
-          <div>
+<section>
+  <span aria-hidden='true' className={styles.number}>01</span>
+  <div>
             <h2>Private by default</h2>
             <p>
               Climbing Log is a restricted beta. Account authentication is provided by Clerk and app
