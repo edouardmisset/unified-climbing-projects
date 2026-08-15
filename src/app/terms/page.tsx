@@ -12,9 +12,9 @@ export default function TermsPage() {
           <p className={styles.titleContinuation}>Without the fog.</p>
           <p>Last updated August 2026 · A short, plain-language agreement.</p>
         </header>
-        <section>
-          <span className={styles.number}>01</span>
-          <div>
+<section>
+  <span aria-hidden='true' className={styles.number}>01</span>
+  <div>
             <h2>Keep your exports</h2>
             <p>
               This service is an invitation-only beta and may change or be unavailable. Keep your
