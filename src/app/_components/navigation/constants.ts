@@ -1,72 +1,63 @@
 import { LINKS } from '~/constants/links'
 
-export const NAVIGATION_ITEMS = [
-  { type: 'link', href: LINKS.wrapUp, label: '🏠 Wrap-up' },
-  { type: 'link', href: LINKS.log, label: '📋 Log' },
-  { type: 'separator' },
-  {
-    type: 'group',
-    label: '🧗 Ascents 🧗',
-    links: [
-      {
-        type: 'link',
-        href: LINKS.ascentsList,
-        label: '📇 Ascents List',
-        shortLabel: '📇 List',
-      },
-      { type: 'link', href: LINKS.ascentsTopTen, label: '🔟 Top Ten' },
-      { type: 'link', href: LINKS.ascentsDashboard, label: '📊 Dashboard' },
-      { type: 'link', href: LINKS.ascentsCalendar, label: '📅 Calendar' },
-      {
-        type: 'link',
-        href: LINKS.ascentsBarcode,
-        label: '🏷️ Barcode',
-      },
-      {
-        type: 'link',
-        href: LINKS.ascentsQrCode,
-        label: '💠 QR Code',
-      },
-    ],
+export type NavigationContext = 'ascents' | 'training'
+
+const CONTEXT_LINKS = {
+  ascents: {
+    list: LINKS.ascentsList,
+    dashboard: LINKS.ascentsDashboard,
+    calendar: LINKS.ascentsCalendar,
+    barcode: LINKS.ascentsBarcode,
+    qrCode: LINKS.ascentsQrCode,
   },
-  { type: 'separator' },
-  { type: 'link', href: LINKS.indicators, label: '📈 Indicators' },
-  { type: 'separator' },
-  {
-    type: 'group',
-    label: '💪 Training 💪',
-    links: [
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsList,
-        label: '📇 Training List',
-        shortLabel: '📇 List',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsDashboard,
-        label: '📊 Dashboard',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsCalendar,
-        label: '📅 Calendar',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsBarcode,
-        label: '🏷️ Barcode',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsQrCode,
-        label: '💠 QR Code',
-      },
-    ],
+  training: {
+    list: LINKS.trainingSessionsList,
+    dashboard: LINKS.trainingSessionsDashboard,
+    calendar: LINKS.trainingSessionsCalendar,
+    barcode: LINKS.trainingSessionsBarcode,
+    qrCode: LINKS.trainingSessionsQrCode,
   },
-  { type: 'separator' },
-  { type: 'link', href: LINKS.settings, label: '⚙️ Settings' },
-] as const satisfies NavigationElement[]
+} as const
+
+export function getNavigationItems(context: NavigationContext): NavigationElement[] {
+  const contextLinks = CONTEXT_LINKS[context]
+
+  return [
+    { type: 'link', href: LINKS.wrapUp, label: '🏠 Wrap-up' },
+    { type: 'link', href: LINKS.log, label: '📋 Log' },
+    { type: 'link', href: contextLinks.calendar, label: '📅 Calendar' },
+    { type: 'separator' },
+    {
+      type: 'group',
+      label: context === 'ascents' ? '🧗 Ascents 🧗' : '💪 Training 💪',
+      links: [
+        {
+          type: 'link',
+          href: contextLinks.list,
+          label: context === 'ascents' ? '📇 Ascents List' : '📇 Training List',
+          shortLabel: '📇 List',
+        },
+        ...(context === 'ascents'
+          ? [{ type: 'link' as const, href: LINKS.ascentsTopTen, label: '🔟 Top Ten' }]
+          : []),
+        { type: 'link', href: contextLinks.dashboard, label: '📊 Dashboard' },
+      ],
+    },
+    { type: 'separator' },
+    { type: 'link', href: LINKS.indicators, label: '📈 Indicators' },
+    { type: 'separator' },
+    {
+      type: 'group',
+      label: '🎨 Visual routes',
+      links: [
+        { type: 'link', href: contextLinks.barcode, label: '🏷️ Barcode' },
+        { type: 'link', href: contextLinks.qrCode, label: '💠 QR Code' },
+      ],
+    },
+    { type: 'separator' },
+    { type: 'link', href: LINKS.settings, label: '⚙️ Settings' },
+  ]
+}
 
 type NavigationLink = {
   type: 'link'

@@ -61,6 +61,37 @@
   list-style: none;
 }
 
+.contextToggleItem {
+  padding-block-end: var(--size-1);
+}
+
+.contextToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--size-1);
+}
+
+.contextToggleButton {
+  min-block-size: 2.25rem;
+  padding: var(--size-1) var(--size-2);
+  color: var(--text-1);
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-2);
+
+  &[data-active='true'] {
+    color: var(--accent);
+    background: color-mix(in oklch, var(--control-bg-focus), transparent 20%);
+    border-color: var(--control-border-focus);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
+}
+
 .link {
   position: relative;
   display: inline-flex;

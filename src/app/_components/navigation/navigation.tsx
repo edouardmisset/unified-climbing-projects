@@ -1,11 +1,15 @@
 'use client'
 import { Drawer } from '@base-ui/react/drawer'
 import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem } from './_components/navigation-item'
 import { NavigationUserSection } from './_components/navigation-user-section'
-import { NAVIGATION_ITEMS } from './constants'
+import {
+  getNavigationItems,
+  type NavigationContext,
+} from './constants'
 import { createNavigationElementKey } from './helpers'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './navigation.module.css'
@@ -23,7 +27,25 @@ export const Navigation = ({
   isDark,
   onToggleTheme,
 }: NavigationProps) => {
+  const pathname = usePathname()
+  const initialContext: NavigationContext = pathname.startsWith('/training-sessions')
+    ? 'training'
+    : 'ascents'
+
+  const [context, setContext] = useState<NavigationContext>(initialContext)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const navigationItems = getNavigationItems(context)
+
+  useEffect(() => {
+    if (pathname.startsWith('/training-sessions')) {
+      setContext('training')
+      return
+    }
+
+    if (pathname.startsWith('/ascents')) {
+      setContext('ascents')
+    }
+  }, [pathname])
 
   const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
 
@@ -59,7 +81,30 @@ export const Navigation = ({
         </button>
 
         <ul className={styles.navList} data-mode={desktopMode}>
-          {NAVIGATION_ITEMS.map((item, index) => (
+          <li className={styles.contextToggleItem}>
+            <div aria-label='Navigation context' className={styles.contextToggle} role='group'>
+              <button
+                aria-pressed={context === 'ascents'}
+                className={styles.contextToggleButton}
+                data-active={context === 'ascents'}
+                onClick={() => setContext('ascents')}
+                type='button'
+              >
+                🧗 Ascents
+              </button>
+              <button
+                aria-pressed={context === 'training'}
+                className={styles.contextToggleButton}
+                data-active={context === 'training'}
+                onClick={() => setContext('training')}
+                type='button'
+              >
+                💪 Training
+              </button>
+            </div>
+          </li>
+
+          {navigationItems.map((item, index) => (
             <NavigationItem
               item={item}
               key={`desktop-${createNavigationElementKey(item, index)}`}
@@ -89,7 +134,30 @@ export const Navigation = ({
               </div>
 
               <ul className={styles.navList} data-mode='mobile'>
-                {NAVIGATION_ITEMS.map((item, index) => (
+                <li className={styles.contextToggleItem}>
+                  <div aria-label='Navigation context' className={styles.contextToggle} role='group'>
+                    <button
+                      aria-pressed={context === 'ascents'}
+                      className={styles.contextToggleButton}
+                      data-active={context === 'ascents'}
+                      onClick={() => setContext('ascents')}
+                      type='button'
+                    >
+                      🧗 Ascents
+                    </button>
+                    <button
+                      aria-pressed={context === 'training'}
+                      className={styles.contextToggleButton}
+                      data-active={context === 'training'}
+                      onClick={() => setContext('training')}
+                      type='button'
+                    >
+                      💪 Training
+                    </button>
+                  </div>
+                </li>
+
+                {navigationItems.map((item, index) => (
                   <NavigationItem
                     item={item}
                     onNavigate={handleMobileNavigate}
