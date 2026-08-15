@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { BarChart3, CloudDownload, LockKeyhole } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -14,39 +15,89 @@ export default function LandingPage() {
   return (
     <PublicPageShell>
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>Restricted beta · Invitation only</p>
-        <h1>Your climbing history, finally in one place.</h1>
-        <p className={styles.lede}>
-          Keep ascents and training sessions private, import existing records, and turn years of
-          climbing into useful charts and yearly wrap-ups.
-        </p>
-        <div className={styles.actions}>
-          <Suspense fallback={<span className={styles.primaryAction}>Loading</span>}>
-            <SignedOut>
-              <Link className={styles.primaryAction} href='/sign-in'>
-                Sign in
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <Link className={styles.primaryAction} href='/wrap-up'>
-                Open your log
-              </Link>
-            </SignedIn>
-          </Suspense>
-          <a href='mailto:edouardmisset@gmail.com'>Request beta access</a>
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>Private climbing journal · Invitation only</p>
+          <h1>Every climb tells a story. Keep yours.</h1>
+          <p className={styles.lede}>
+            One considered home for your ascents, training, and seasons outside—private by default,
+            portable forever, and designed for reflection.
+          </p>
+          <div className={styles.actions}>
+            <Suspense fallback={<span className={styles.primaryAction}>Loading</span>}>
+              <SignedOut>
+                <Link className={styles.primaryAction} href='/sign-in'>
+                  Open your log <span aria-hidden='true'>→</span>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <Link className={styles.primaryAction} href='/wrap-up'>
+                  Open your log <span aria-hidden='true'>→</span>
+                </Link>
+              </SignedIn>
+            </Suspense>
+            <a className={styles.secondaryAction} href='mailto:edouardmisset@gmail.com'>
+              Request beta access
+            </a>
+          </div>
+          <p className={styles.trust}>
+            <LockKeyhole aria-hidden='true' /> Your records remain yours.
+          </p>
+        </div>
+
+        <div aria-label='Example climbing season summary' className={styles.seasonCard}>
+          <div className={styles.cardMeta}>
+            <span>2026 season</span>
+            <span>Updated today</span>
+          </div>
+          <strong className={styles.ascentCount}>128</strong>
+          <span className={styles.ascentLabel}>ascents recorded</span>
+          <div aria-hidden='true' className={styles.chart}>
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <dl className={styles.metrics}>
+            <div>
+              <dt>Days out</dt>
+              <dd>42</dd>
+            </div>
+            <div>
+              <dt>Vertical</dt>
+              <dd>1.2 km</dd>
+            </div>
+            <div>
+              <dt>Top grade</dt>
+              <dd>7c+</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section className={styles.featureSection}>
+        <div className={styles.sectionHeading}>
+          <p className={styles.eyebrow}>Made for the long view</p>
+          <h2>Less admin. More perspective.</h2>
         </div>
         <ul className={styles.features}>
-          <li className='glassPanel'>
+          <li>
+            <LockKeyhole aria-hidden='true' />
+            <span aria-hidden='true'>01</span>
             <strong>Private by default</strong>
-            <span>Every database operation is scoped to your signed-in identity.</span>
+            <p>Every operation is scoped to your signed-in identity.</p>
           </li>
-          <li className='glassPanel'>
-            <strong>Portable data</strong>
-            <span>Canonical CSV imports and a browser-generated two-file ZIP export.</span>
+          <li>
+            <CloudDownload aria-hidden='true' />
+            <span aria-hidden='true'>02</span>
+            <strong>Always portable</strong>
+            <p>Import canonical CSV files and export clean copies at any time.</p>
           </li>
-          <li className='glassPanel'>
+          <li>
+            <BarChart3 aria-hidden='true' />
+            <span aria-hidden='true'>03</span>
             <strong>Built for reflection</strong>
-            <span>Dashboards, calendars, indicators, and yearly climbing wrap-ups.</span>
+            <p>See calendars, indicators, and yearly wrap-ups come to life.</p>
           </li>
         </ul>
       </section>
