@@ -56,6 +56,14 @@ const TYPE_GROUPS = [
 
 const GROUP_TYPES = new Set(TYPE_GROUPS.flatMap(group => group.types))
 const OTHER_TYPES = TRAINING_SESSION_TYPES.filter(type => !GROUP_TYPES.has(type))
+const GROUP_FILL_BY_ID: Record<GaugeGroupId, string> = {
+  Outdoor: 'var(--outdoor)',
+  Aerobic: 'var(--stamina)',
+  Endurance: 'var(--endurance)',
+  'Max strength': 'var(--strength)',
+  Chill: 'var(--tapered)',
+  Others: 'var(--otherTraining)',
+}
 
 export function getTrainingSessionsGaugeData(sessions: TrainingSession[]): {
   groupData: TrainingSessionsGaugeDatum[]
@@ -114,6 +122,6 @@ function toGroupedData(group: TypeGroup, counts: Map<TrainingSessionType, number
     label: group.label,
     total: types.reduce((sum, { value }) => sum + value, 0),
     types,
-    fill: types[0]?.fill ?? 'var(--surface-5)',
+    fill: GROUP_FILL_BY_ID[group.id],
   }
 }
