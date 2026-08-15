@@ -21,6 +21,41 @@ type NavigationProps = {
   onToggleTheme: () => void
 }
 
+type NavigationContextToggleProps = {
+  context: NavigationContext
+  onContextChange: (context: NavigationContext) => void
+}
+
+function NavigationContextToggle({
+  context,
+  onContextChange,
+}: NavigationContextToggleProps) {
+  return (
+    <li className={styles.contextToggleItem}>
+      <div aria-label='Navigation context' className={styles.contextToggle} role='group'>
+        <button
+          aria-pressed={context === 'ascents'}
+          className={styles.contextToggleButton}
+          data-active={context === 'ascents'}
+          onClick={() => onContextChange('ascents')}
+          type='button'
+        >
+          🧗 Ascents
+        </button>
+        <button
+          aria-pressed={context === 'training'}
+          className={styles.contextToggleButton}
+          data-active={context === 'training'}
+          onClick={() => onContextChange('training')}
+          type='button'
+        >
+          💪 Training
+        </button>
+      </div>
+    </li>
+  )
+}
+
 export const Navigation = ({
   desktopExpanded,
   onDesktopExpandedChange,
@@ -44,7 +79,10 @@ export const Navigation = ({
 
     if (pathname.startsWith('/ascents')) {
       setContext('ascents')
+      return
     }
+
+    setContext('ascents')
   }, [pathname])
 
   const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
@@ -81,28 +119,7 @@ export const Navigation = ({
         </button>
 
         <ul className={styles.navList} data-mode={desktopMode}>
-          <li className={styles.contextToggleItem}>
-            <div aria-label='Navigation context' className={styles.contextToggle} role='group'>
-              <button
-                aria-pressed={context === 'ascents'}
-                className={styles.contextToggleButton}
-                data-active={context === 'ascents'}
-                onClick={() => setContext('ascents')}
-                type='button'
-              >
-                🧗 Ascents
-              </button>
-              <button
-                aria-pressed={context === 'training'}
-                className={styles.contextToggleButton}
-                data-active={context === 'training'}
-                onClick={() => setContext('training')}
-                type='button'
-              >
-                💪 Training
-              </button>
-            </div>
-          </li>
+          <NavigationContextToggle context={context} onContextChange={setContext} />
 
           {navigationItems.map((item, index) => (
             <NavigationItem
@@ -134,28 +151,7 @@ export const Navigation = ({
               </div>
 
               <ul className={styles.navList} data-mode='mobile'>
-                <li className={styles.contextToggleItem}>
-                  <div aria-label='Navigation context' className={styles.contextToggle} role='group'>
-                    <button
-                      aria-pressed={context === 'ascents'}
-                      className={styles.contextToggleButton}
-                      data-active={context === 'ascents'}
-                      onClick={() => setContext('ascents')}
-                      type='button'
-                    >
-                      🧗 Ascents
-                    </button>
-                    <button
-                      aria-pressed={context === 'training'}
-                      className={styles.contextToggleButton}
-                      data-active={context === 'training'}
-                      onClick={() => setContext('training')}
-                      type='button'
-                    >
-                      💪 Training
-                    </button>
-                  </div>
-                </li>
+                <NavigationContextToggle context={context} onContextChange={setContext} />
 
                 {navigationItems.map((item, index) => (
                   <NavigationItem
