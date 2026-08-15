@@ -26,7 +26,7 @@ const designNames = {
 type Design = (typeof designs)[number]
 
 export function generateStaticParams() {
-  return designs.map((design) => ({ design }))
+  return designs.map(design => ({ design }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -57,7 +57,9 @@ export default async function DesignPage({ params }: PageProps) {
           <a href='#settings'>Settings</a>
           <a href='#terms'>Terms</a>
         </nav>
-        <Link className={styles.headerAction} href='/sign-in'>Sign in</Link>
+        <Link className={styles.headerAction} href='/sign-in'>
+          Sign in
+        </Link>
       </header>
 
       <main>
@@ -66,8 +68,8 @@ export default async function DesignPage({ params }: PageProps) {
             <p className={styles.eyebrow}>Private climbing journal · Invitation only</p>
             <h1>Every climb tells a story. Keep yours.</h1>
             <p className={styles.lede}>
-              One considered home for your ascents, training and seasons outside—private by
-              default, portable forever, and designed for reflection.
+              One considered home for your ascents, training and seasons outside—private by default,
+              portable forever, and designed for reflection.
             </p>
             <div className={styles.actions}>
               <Link className={styles.primaryAction} href='/sign-in'>
@@ -90,7 +92,11 @@ export default async function DesignPage({ params }: PageProps) {
             <strong className={styles.bigNumber}>128</strong>
             <span className={styles.bigNumberLabel}>ascents recorded</span>
             <div className={styles.mountainGraphic} aria-hidden='true'>
-              <span /><span /><span /><span /><span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
             <dl className={styles.metrics}>
               <div>
@@ -116,15 +122,21 @@ export default async function DesignPage({ params }: PageProps) {
           </div>
           <div className={styles.featureGrid}>
             <article>
-              <LockKeyhole aria-hidden='true' /><span>01</span><h3>Private by default</h3>
+              <LockKeyhole aria-hidden='true' />
+              <span>01</span>
+              <h3>Private by default</h3>
               <p>Every operation is scoped to your signed-in identity.</p>
             </article>
             <article>
-              <CloudDownload aria-hidden='true' /><span>02</span><h3>Always portable</h3>
+              <CloudDownload aria-hidden='true' />
+              <span>02</span>
+              <h3>Always portable</h3>
               <p>Import canonical CSV files and export clean copies at any time.</p>
             </article>
             <article>
-              <BarChart3 aria-hidden='true' /><span>03</span><h3>Built for reflection</h3>
+              <BarChart3 aria-hidden='true' />
+              <span>03</span>
+              <h3>Built for reflection</h3>
               <p>See calendars, indicators and yearly wrap-ups come to life.</p>
             </article>
           </div>
@@ -144,9 +156,13 @@ export default async function DesignPage({ params }: PageProps) {
               <div>
                 <p className={styles.kicker}>Bring your history</p>
                 <h3>Import climbing data</h3>
-                <p>Files are parsed in your browser. Preview every record before anything is saved.</p>
+                <p>
+                  Files are parsed in your browser. Preview every record before anything is saved.
+                </p>
               </div>
-              <button type='button'>Choose a file <ArrowRight aria-hidden='true' /></button>
+              <button type='button'>
+                Choose a file <ArrowRight aria-hidden='true' />
+              </button>
             </article>
             <article>
               <div className={styles.cardIcon}>
@@ -157,7 +173,9 @@ export default async function DesignPage({ params }: PageProps) {
                 <h3>Export your log</h3>
                 <p>Download complete, readable CSV or JSON files without internal identifiers.</p>
               </div>
-              <button type='button'>Export data <ArrowRight aria-hidden='true' /></button>
+              <button type='button'>
+                Export data <ArrowRight aria-hidden='true' />
+              </button>
             </article>
           </div>
         </section>
@@ -167,17 +185,38 @@ export default async function DesignPage({ params }: PageProps) {
             <FileText aria-hidden='true' />
             <p className={styles.eyebrow}>The essentials</p>
             <h2>
-              Beta terms,<br />without the fog.
+              Beta terms,
+              <br />
+              without the fog.
             </h2>
           </aside>
           <div className={styles.termsCopy}>
             <h3>What you should know</h3>
             <ul>
-              <li><Check aria-hidden='true' /><span><strong>Keep your exports.</strong> This is a beta and the service may change.</span></li>
-              <li><Check aria-hidden='true' /><span><strong>Only import your data.</strong> You remain responsible for the records you add.</span></li>
-              <li><Check aria-hidden='true' /><span><strong>Climb kindly.</strong> Abuse or attempts to access another account will remove access.</span></li>
+              <li>
+                <Check aria-hidden='true' />
+                <span>
+                  <strong>Keep your exports.</strong> This is a beta and the service may change.
+                </span>
+              </li>
+              <li>
+                <Check aria-hidden='true' />
+                <span>
+                  <strong>Only import your data.</strong> You remain responsible for the records you
+                  add.
+                </span>
+              </li>
+              <li>
+                <Check aria-hidden='true' />
+                <span>
+                  <strong>Climb kindly.</strong> Abuse or attempts to access another account will
+                  remove access.
+                </span>
+              </li>
             </ul>
-            <a href='mailto:edouardmisset@gmail.com'>Questions? Talk to a human <ArrowRight aria-hidden='true' /></a>
+            <a href='mailto:edouardmisset@gmail.com'>
+              Questions? Talk to a human <ArrowRight aria-hidden='true' />
+            </a>
           </div>
         </section>
       </main>
@@ -185,9 +224,14 @@ export default async function DesignPage({ params }: PageProps) {
       <footer className={styles.footer}>
         <span>Climbing Log · Restricted beta</span>
         <nav aria-label='Design previews'>
-          {designs.map((item) => (
-            <Link aria-current={item === activeDesign ? 'page' : undefined} href={`/designs/${item}`} key={item}>
-              <span>{item}</span><small>{designNames[item]}</small>
+          {designs.map(item => (
+            <Link
+              aria-current={item === activeDesign ? 'page' : undefined}
+              href={`/designs/${item}`}
+              key={item}
+            >
+              <span>{item}</span>
+              <small>{designNames[item]}</small>
             </Link>
           ))}
         </nav>

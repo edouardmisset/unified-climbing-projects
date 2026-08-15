@@ -1,4 +1,5 @@
 import { SignedIn, SignedOut } from '@clerk/nextjs'
+import { Mountain } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense, type ReactNode } from 'react'
 import styles from './public-page-shell.module.css'
@@ -13,6 +14,7 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
     <div className={styles.shell}>
       <header className={`${styles.header} glassPanel`}>
         <Link className={styles.brand} href='/'>
+          <Mountain aria-hidden='true' />
           <span>Climbing Log</span>
           <span className={styles.beta}>Beta</span>
         </Link>
@@ -39,7 +41,7 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
       </div>
 
       <footer className={styles.footer}>
-        <span>Climbing Log · Restricted beta</span>
+        <span>Climbing Log · Your climbs, kept with care.</span>
         <nav aria-label='Legal navigation'>
           <Link href='/privacy'>Privacy</Link>
           <Link href='/terms'>Terms</Link>

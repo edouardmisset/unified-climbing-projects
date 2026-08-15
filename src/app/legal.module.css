@@ -1,26 +1,108 @@
 .article {
   display: grid;
+  grid-template-columns: minmax(14rem, 0.72fr) minmax(0, 1.28fr);
+  column-gap: var(--size-fluid-5);
+  padding: var(--size-fluid-5) 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.articleHeader {
+  position: sticky;
+  inset-block-start: var(--size-fluid-3);
+  grid-row: 1 / span 5;
+  align-self: start;
+  display: grid;
   gap: var(--size-3);
+}
+
+.articleHeader h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.articleHeader .titleContinuation {
+  margin-block-start: calc(-1 * var(--size-3));
+  color: var(--text-1);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.articleHeader > p:last-child,
+.article section :where(p),
+.contact > p:last-child {
+  margin: 0;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-7);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.article section {
+  display: grid;
+  grid-template-columns: var(--size-8) 1fr;
+  gap: var(--size-3);
+  padding-block: var(--size-fluid-3);
+  border-block-start: var(--border-size-1) solid var(--panel-border);
+}
+
+.article section > div {
+  display: grid;
+  gap: var(--size-2);
+}
+
+.article section h2,
+.contact :where(h2) {
+  margin: 0;
+  font-size: var(--font-size-3);
+}
+
+.number {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-0);
+}
+
+.contact {
+  display: grid;
+  gap: var(--size-2);
   padding: var(--size-fluid-3);
+  margin-block: var(--size-fluid-3);
+  background: var(--surface-2);
+  border: var(--border-size-1) solid var(--panel-border);
+  border-radius: var(--radius-3);
+  box-shadow: var(--shadow-2);
 }
 
-.article h1 {
-  position: relative;
-  padding-block-end: var(--size-3);
-
-  &::after {
-    position: absolute;
-    inset-block-end: 0;
-    inset-inline-start: 0;
-    inline-size: min(100%, var(--size-14));
-    block-size: var(--border-size-2);
-    content: '';
-    background: linear-gradient(to right, var(--patagonia-color-4), transparent);
-  }
+.backLink {
+  justify-self: start;
+  color: var(--text-2);
+  text-decoration: none;
 }
 
-@media (width <= 40rem) {
+.backLink:hover {
+  color: var(--accent);
+}
+
+@media (width <= 48rem) {
   .article {
-    padding: var(--size-fluid-2);
+    grid-template-columns: 1fr;
+  }
+
+  .articleHeader {
+    position: static;
+    grid-row: auto;
+    margin-block-end: var(--size-fluid-4);
   }
 }

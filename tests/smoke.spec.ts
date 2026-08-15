@@ -20,7 +20,7 @@ async function expectPageHeading(
 
 test.describe('public smoke test', () => {
   test('every public page is reachable', async ({ page }) => {
-    await expectPageHeading(page, '/', 'Your climbing history, finally in one place.')
+    await expectPageHeading(page, '/', 'Every climb tells a story. Keep yours.')
     await expectPageHeading(page, '/privacy', 'Privacy')
     await expectPageHeading(page, '/terms', 'Beta terms')
 
