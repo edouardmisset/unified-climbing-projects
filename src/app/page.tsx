@@ -83,19 +83,19 @@ export default function LandingPage() {
         <ul className={styles.features}>
           <li>
             <LockKeyhole aria-hidden='true' />
-            <span>01</span>
+            <span aria-hidden='true'>01</span>
             <strong>Private by default</strong>
             <p>Every operation is scoped to your signed-in identity.</p>
           </li>
           <li>
             <CloudDownload aria-hidden='true' />
-            <span>02</span>
+            <span aria-hidden='true'>02</span>
             <strong>Always portable</strong>
             <p>Import canonical CSV files and export clean copies at any time.</p>
           </li>
           <li>
             <BarChart3 aria-hidden='true' />
-            <span>03</span>
+            <span aria-hidden='true'>03</span>
             <strong>Built for reflection</strong>
             <p>See calendars, indicators, and yearly wrap-ups come to life.</p>
           </li>

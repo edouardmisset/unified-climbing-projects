@@ -12,9 +12,11 @@ export default function PrivacyPage() {
           <p className={styles.titleContinuation}>In plain language.</p>
           <p>Last updated August 2026 · How your climbing data is handled.</p>
         </header>
-<section>
-  <span aria-hidden='true' className={styles.number}>01</span>
-  <div>
+        <section>
+          <span aria-hidden='true' className={styles.number}>
+            01
+          </span>
+          <div>
             <h2>Private by default</h2>
             <p>
               Climbing Log is a restricted beta. Account authentication is provided by Clerk and app
@@ -23,7 +25,9 @@ export default function PrivacyPage() {
           </div>
         </section>
         <section>
-          <span className={styles.number}>02</span>
+          <span aria-hidden='true' className={styles.number}>
+            02
+          </span>
           <div>
             <h2>Imports stay local</h2>
             <p>
@@ -35,7 +39,9 @@ export default function PrivacyPage() {
           </div>
         </section>
         <section>
-          <span className={styles.number}>03</span>
+          <span aria-hidden='true' className={styles.number}>
+            03
+          </span>
           <div>
             <h2>Essential services</h2>
             <p>
