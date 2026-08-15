@@ -63,11 +63,9 @@ export const Navigation = ({
   onToggleTheme,
 }: NavigationProps) => {
   const pathname = usePathname()
-  const initialContext: NavigationContext = pathname.startsWith('/training-sessions')
-    ? 'training'
-    : 'ascents'
-
-  const [context, setContext] = useState<NavigationContext>(initialContext)
+  const [context, setContext] = useState<NavigationContext>(() =>
+    pathname.startsWith('/training-sessions') ? 'training' : 'ascents',
+  )
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigationItems = getNavigationItems(context)
 
@@ -79,10 +77,7 @@ export const Navigation = ({
 
     if (pathname.startsWith('/ascents')) {
       setContext('ascents')
-      return
     }
-
-    setContext('ascents')
   }, [pathname])
 
   const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
