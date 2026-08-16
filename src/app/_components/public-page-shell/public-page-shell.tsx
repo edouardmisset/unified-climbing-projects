@@ -28,7 +28,7 @@ export function PublicPageShell({ children, layout = 'wide' }: PublicPageShellPr
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link className={styles.primaryLink} href='/wrap-up'>
+              <Link className={styles.primaryLink} href='/ascents/home'>
                 Open app
               </Link>
             </SignedIn>

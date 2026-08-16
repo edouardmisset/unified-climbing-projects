@@ -1,78 +1,39 @@
-import { LINKS } from '~/constants/links'
+import type { Domain } from '~/constants/domain'
+import { getDomainLinks } from '~/constants/links'
 
-export const NAVIGATION_ITEMS = [
-  { type: 'link', href: LINKS.wrapUp, label: '🏠 Wrap-up' },
-  { type: 'link', href: LINKS.log, label: '📋 Log' },
-  { type: 'separator' },
-  {
-    type: 'group',
-    label: '🧗 Ascents 🧗',
-    links: [
-      {
-        type: 'link',
-        href: LINKS.ascentsList,
-        label: '📇 Ascents List',
-        shortLabel: '📇 List',
-      },
-      { type: 'link', href: LINKS.ascentsTopTen, label: '🔟 Top Ten' },
-      { type: 'link', href: LINKS.ascentsDashboard, label: '📊 Dashboard' },
-      { type: 'link', href: LINKS.ascentsCalendar, label: '📅 Calendar' },
-      {
-        type: 'link',
-        href: LINKS.ascentsBarcode,
-        label: '🏷️ Barcode',
-      },
-      {
-        type: 'link',
-        href: LINKS.ascentsQrCode,
-        label: '💠 QR Code',
-      },
-    ],
-  },
-  { type: 'separator' },
-  { type: 'link', href: LINKS.indicators, label: '📈 Indicators' },
-  { type: 'separator' },
-  {
-    type: 'group',
-    label: '💪 Training 💪',
-    links: [
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsList,
-        label: '📇 Training List',
-        shortLabel: '📇 List',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsDashboard,
-        label: '📊 Dashboard',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsCalendar,
-        label: '📅 Calendar',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsBarcode,
-        label: '🏷️ Barcode',
-      },
-      {
-        type: 'link',
-        href: LINKS.trainingSessionsQrCode,
-        label: '💠 QR Code',
-      },
-    ],
-  },
-  { type: 'separator' },
-  { type: 'link', href: LINKS.settings, label: '⚙️ Settings' },
-] as const satisfies NavigationElement[]
+export function getNavigationItems(domain: Domain) {
+  const links = getDomainLinks(domain)
+
+  return [
+    { type: 'link', href: links.home, label: '🏠 Home' },
+    { type: 'link', href: links.log, label: '📋 Log' },
+    { type: 'separator' },
+    {
+      type: 'link',
+      href: links.records,
+      label: domain === 'ascents' ? '📇 Ascents' : '📇 Sessions',
+    },
+    { type: 'link', href: links.calendar, label: '📅 Calendar' },
+    { type: 'link', href: links.dashboard, label: '📊 Dashboard' },
+    { type: 'separator' },
+    {
+      type: 'disclosure',
+      label: '✨ Visuals',
+      links: [
+        { type: 'link', href: links.visualsQrCode, label: '💠 QR Code' },
+        { type: 'link', href: links.visualsBarcode, label: '🏷️ Barcode' },
+      ],
+    },
+    { type: 'separator' },
+    { type: 'link', href: links.indicators, label: '📈 Indicators' },
+    { type: 'link', href: links.settings, label: '⚙️ Settings' },
+  ] as const satisfies NavigationElement[]
+}
 
 type NavigationLink = {
   type: 'link'
-  href: (typeof LINKS)[keyof typeof LINKS]
+  href: string
   label: string
-  shortLabel?: string
 }
 
 type NavigationSeparator = {
@@ -85,4 +46,14 @@ type NavigationGroup = {
   links: NavigationLink[]
 }
 
-export type NavigationElement = NavigationLink | NavigationSeparator | NavigationGroup
+type NavigationDisclosure = {
+  type: 'disclosure'
+  label: string
+  links: NavigationLink[]
+}
+
+export type NavigationElement =
+  | NavigationLink
+  | NavigationSeparator
+  | NavigationGroup
+  | NavigationDisclosure

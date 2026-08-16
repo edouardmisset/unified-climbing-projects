@@ -2,10 +2,13 @@
 import { Drawer } from '@base-ui/react/drawer'
 import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { getDomainFromPathname } from '~/constants/domain'
+import { DomainModeToggle } from './_components/domain-mode-toggle'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem } from './_components/navigation-item'
 import { NavigationUserSection } from './_components/navigation-user-section'
-import { NAVIGATION_ITEMS } from './constants'
+import { getNavigationItems } from './constants'
 import { createNavigationElementKey } from './helpers'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
 import styles from './navigation.module.css'
@@ -24,6 +27,9 @@ export const Navigation = ({
   onToggleTheme,
 }: NavigationProps) => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const pathname = usePathname()
+  const domain = getDomainFromPathname(pathname) ?? 'ascents'
+  const navigationItems = getNavigationItems(domain)
 
   const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
 
@@ -59,7 +65,8 @@ export const Navigation = ({
         </button>
 
         <ul className={styles.navList} data-mode={desktopMode}>
-          {NAVIGATION_ITEMS.map((item, index) => (
+          <DomainModeToggle />
+          {navigationItems.map((item, index) => (
             <NavigationItem
               item={item}
               key={`desktop-${createNavigationElementKey(item, index)}`}
@@ -89,7 +96,8 @@ export const Navigation = ({
               </div>
 
               <ul className={styles.navList} data-mode='mobile'>
-                {NAVIGATION_ITEMS.map((item, index) => (
+                <DomainModeToggle onNavigate={handleMobileNavigate} />
+                {navigationItems.map((item, index) => (
                   <NavigationItem
                     item={item}
                     onNavigate={handleMobileNavigate}

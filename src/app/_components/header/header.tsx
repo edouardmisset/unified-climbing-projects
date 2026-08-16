@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Navigation } from '~/app/_components/navigation/navigation.tsx'
+import { getDomainFromPathname } from '~/constants/domain'
 import { useTheme } from '~/hooks/use-theme'
 import styles from './header.module.css'
 
@@ -12,6 +13,7 @@ export function Header() {
   const { theme, toggleTheme } = useTheme()
 
   const isDark = theme === 'dark'
+  const domain = getDomainFromPathname(pathname)
   const isPublicPage = ['/', '/privacy', '/terms', '/sign-in', '/sign-up'].some(
     route => pathname === route || pathname.startsWith(`${route}/`),
   )
@@ -19,7 +21,11 @@ export function Header() {
   if (isPublicPage) return
 
   return (
-    <header className={styles.header} data-desktop-expanded={desktopNavExpanded}>
+    <header
+      className={styles.header}
+      data-desktop-expanded={desktopNavExpanded}
+      data-domain={domain}
+    >
       <Navigation
         desktopExpanded={desktopNavExpanded}
         isDark={isDark}

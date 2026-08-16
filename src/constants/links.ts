@@ -1,4 +1,4 @@
-import type { Object_ } from '~/types/generic'
+import { type Domain, getDomainPath } from './domain'
 
 /*
  * TODO: One might want to improve upon this design by creating a function that
@@ -6,24 +6,40 @@ import type { Object_ } from '~/types/generic'
  * `/ascents/:id` or `/wrap-up/:year`).
  */
 export const LINKS = {
-  home: '/',
+  home: '/ascents/home',
+  landing: '/',
   privacy: '/privacy',
-  settings: '/settings',
   signIn: '/sign-in',
   signUp: '/sign-up',
   terms: '/terms',
-  log: '/log',
-  indicators: '/indicators',
-  wrapUp: '/wrap-up',
+  log: '/ascents/log',
+  indicators: '/ascents/indicators',
+  wrapUp: '/ascents/home',
   ascentsList: '/ascents',
-  ascentsTopTen: '/ascents/top-ten',
+  ascentsTopTen: '/ascents?view=top-ten',
   ascentsDashboard: '/ascents/dashboard',
   ascentsCalendar: '/ascents/calendar',
-  ascentsBarcode: '/ascents/barcode',
-  ascentsQrCode: '/ascents/qr-code',
-  trainingSessionsList: '/training-sessions',
-  trainingSessionsDashboard: '/training-sessions/dashboard',
-  trainingSessionsCalendar: '/training-sessions/calendar',
-  trainingSessionsBarcode: '/training-sessions/barcode',
-  trainingSessionsQrCode: '/training-sessions/qr-code',
-} as const satisfies Object_<string>
+  ascentsBarcode: '/ascents/visuals/barcode',
+  ascentsQrCode: '/ascents/visuals/qr-code',
+  trainingSessionsList: '/training',
+  trainingSessionsDashboard: '/training/dashboard',
+  trainingSessionsCalendar: '/training/calendar',
+  trainingSessionsBarcode: '/training/visuals/barcode',
+  trainingSessionsQrCode: '/training/visuals/qr-code',
+  settings: '/ascents/settings',
+} as const
+
+export function getDomainLinks(domain: Domain) {
+  return {
+    calendar: getDomainPath(domain, '/calendar'),
+    dashboard: getDomainPath(domain, '/dashboard'),
+    home: getDomainPath(domain, '/home'),
+    indicators: getDomainPath(domain, '/indicators'),
+    log: getDomainPath(domain, '/log'),
+    records: getDomainPath(domain),
+    settings: getDomainPath(domain, '/settings'),
+    visuals: getDomainPath(domain, '/visuals'),
+    visualsBarcode: getDomainPath(domain, '/visuals/barcode'),
+    visualsQrCode: getDomainPath(domain, '/visuals/qr-code'),
+  } as const
+}

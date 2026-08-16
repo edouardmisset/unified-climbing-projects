@@ -9,10 +9,12 @@ const DIRECTION = {
 } as const
 
 export function YearNavigationButton({
+  basePath,
   selectedYear,
   nextOrPrevious,
   enabled,
 }: {
+  basePath: string
   selectedYear: number
   nextOrPrevious: 'next' | 'previous'
   enabled: boolean
@@ -24,7 +26,7 @@ export function YearNavigationButton({
   return (
     <Link
       className={`${styles.button} ${style}`}
-      href={`/wrap-up/${targetYear}`}
+      href={`${basePath}/${targetYear}`}
       prefetch
       title={`${label} year: ${targetYear}`}
     >

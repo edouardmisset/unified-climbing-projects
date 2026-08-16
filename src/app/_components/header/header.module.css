@@ -7,12 +7,18 @@
   color: var(--text-1);
   background: var(--panel-bg);
   backdrop-filter: blur(20px) saturate(180%);
-  border-inline-end: 1px solid var(--panel-border);
-
   box-shadow:
     0 8px 32px var(--panel-shadow-outer),
     inset 0 1px 0 var(--panel-shadow-inner);
   isolation: isolate;
+
+  &[data-domain='ascents'] {
+    --accent: light-dark(var(--orange-8), var(--orange-4));
+  }
+
+  &[data-domain='training'] {
+    --accent: light-dark(var(--cyan-8), var(--cyan-4));
+  }
 
   @media (width > 40rem) {
     inline-size: var(--rail-collapsed-size);

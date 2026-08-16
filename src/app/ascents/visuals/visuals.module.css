@@ -1,0 +1,33 @@
+.visuals {
+  align-content: center;
+  justify-items: center;
+  gap: var(--size-4);
+  padding: var(--size-4);
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--size-3);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 12rem;
+    min-block-size: 7rem;
+    padding: var(--size-3);
+    color: var(--text-1);
+    background: color-mix(in oklch, var(--accent), transparent 90%);
+    border: 1px solid color-mix(in oklch, var(--accent), transparent 48%);
+    border-radius: var(--radius-3);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--accent);
+      background: color-mix(in oklch, var(--accent), transparent 82%);
+    }
+  }
+}
