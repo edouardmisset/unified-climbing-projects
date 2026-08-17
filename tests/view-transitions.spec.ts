@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 const appURL = process.env.APP_URL ?? ''
 
 test.describe('view transitions', () => {
-  test('uses a native view transition for client navigation', async ({ page }) => {
+  test('navigates without a native view transition', async ({ page }) => {
     await page.addInitScript(() => {
       const startViewTransition = document.startViewTransition.bind(document)
 
@@ -24,7 +24,7 @@ test.describe('view transitions', () => {
       .poll(async () =>
         page.evaluate(() => globalThis.sessionStorage.getItem('view-transition-argument')),
       )
-      .toBe('object')
+      .toBeNull()
   })
 
   test('navigates when view transitions are unsupported', async ({ page }) => {
