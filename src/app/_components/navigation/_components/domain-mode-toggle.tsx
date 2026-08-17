@@ -28,7 +28,6 @@ export function DomainModeToggle({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <li className={styles.domainMode}>
-      <p className={styles.domainModeLabel}>Current focus</p>
       <div aria-label='Current climbing focus' className={styles.domainModeControl}>
         {DOMAINS.map(domain => {
           const { icon, label } = DOMAIN_DETAILS[domain]

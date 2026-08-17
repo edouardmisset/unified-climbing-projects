@@ -164,7 +164,7 @@
   &[data-active='true'] {
     color: var(--accent);
     background: color-mix(in oklch, var(--control-bg-focus), transparent 15%);
-    border-color: var(--control-border-focus);
+    border-color: var(--accent);
 
     &::before {
       content: '';
