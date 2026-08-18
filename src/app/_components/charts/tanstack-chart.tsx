@@ -11,6 +11,7 @@ import {
   group,
   lineY,
   stack,
+  text,
   type ChartPoint,
   type ChartCurve,
   type ChartTooltipContent,
@@ -86,9 +87,27 @@ type WideChartProps<TDatum> = {
 
 type FlatDatum<TDatum> = {
   category: ChartValue
+  label?: string
   series: string
   source: TDatum
   value: number
+}
+
+function createStackLabels<TDatum>(rows: readonly FlatDatum<TDatum>[]): FlatDatum<TDatum>[] {
+  const totals = new Map<ChartValue, number>()
+  for (const row of rows) totals.set(row.category, (totals.get(row.category) ?? 0) + row.value)
+
+  const offsets = new Map<ChartValue, number>()
+  return rows.map(row => {
+    const total = totals.get(row.category) ?? 0
+    const offset = offsets.get(row.category) ?? 0
+    offsets.set(row.category, offset + row.value)
+    return {
+      ...row,
+      label: percentFormatter.format(total === 0 ? 0 : row.value / total),
+      value: offset + row.value / 2,
+    }
+  })
 }
 
 function flattenData<TDatum>(
@@ -152,6 +171,7 @@ export function TanStackBarChart<TDatum>(
   props: WideChartProps<TDatum> & {
     orientation?: 'horizontal' | 'vertical'
     mode?: 'group' | 'stack'
+    percentageLabels?: boolean
   },
 ) {
   const {
@@ -162,12 +182,14 @@ export function TanStackBarChart<TDatum>(
     legend = false,
     mode = 'stack',
     orientation = 'vertical',
+    percentageLabels = false,
     series,
     x,
     y,
   } = props
 
   const rows = flattenData(data, getCategory, series)
+  const stackLabels = percentageLabels ? createStackLabels(rows) : []
   const layout = mode === 'group' ? group() : stack()
   const colors = colorOptions(series, legend)
   const focus = orientation === 'horizontal' ? 'group-y' : 'group-x'
@@ -180,20 +202,21 @@ export function TanStackBarChart<TDatum>(
             points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
             context: ChartTooltipContentContext,
           ) => {
-            if (points.length === 0) return { rows: [] }
-            const [first] = points
+            const seriesPoints = points.filter(point => point.datum.label === undefined)
+            if (seriesPoints.length === 0) return { rows: [] }
+            const [first] = seriesPoints
             if (!first) return { rows: [] }
             const formatValue = orientation === 'horizontal' ? context.formatX : context.formatY
             const category = orientation === 'horizontal' ? first.yValue : first.xValue
             const getValue = (point: { xValue: ChartValue; yValue: ChartValue }) =>
               orientation === 'horizontal' ? point.xValue : point.yValue
-            const total = points.reduce((sum, point) => {
+            const total = seriesPoints.reduce((sum, point) => {
               const value = getValue(point)
               return sum + (typeof value === 'number' ? value : 0)
             }, 0)
             return {
               title: formatChartValue(category),
-              rows: points.toReversed().map(point => {
+              rows: seriesPoints.toReversed().map(point => {
                 const value = getValue(point)
                 const rawValue = typeof value === 'number' ? value : 0
                 const percentage = total === 0 ? 0 : rawValue / total
@@ -228,6 +251,14 @@ export function TanStackBarChart<TDatum>(
               color: 'series',
               layout,
               inset: 2,
+            }),
+            text(stackLabels, {
+              x: 'value',
+              y: 'category',
+              text: 'label',
+              fill: 'white',
+              fontSize: 12,
+              fontWeight: 700,
             }),
           ],
           x: {

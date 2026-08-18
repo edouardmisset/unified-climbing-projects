@@ -15,9 +15,9 @@ export function TrainingSessionsGauge({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const { typeData } = getTrainingSessionsGaugeData(trainingSessions)
+  const { groupData } = getTrainingSessionsGaugeData(trainingSessions)
   const chartData = [
-    typeData.reduce<GaugeChartDatum>(
+    groupData.reduce<GaugeChartDatum>(
       (datum, group) => {
         datum[group.id] = group.value
         return datum
@@ -25,13 +25,13 @@ export function TrainingSessionsGauge({
       { category: 'Sessions' },
     ),
   ]
-  const series = typeData.map(({ fill, id, label }) => ({
+  const series = groupData.map(({ fill, id, label }) => ({
     color: fill,
     key: id,
     label,
   })) satisfies ChartSeries[]
 
-  if (typeData.length === 0) return
+  if (groupData.length === 0) return
 
   return (
     <ChartContainer caption='Training Sessions Gauge'>
@@ -40,6 +40,7 @@ export function TrainingSessionsGauge({
         data={chartData}
         getCategory={getCategory}
         orientation='horizontal'
+        percentageLabels
         series={series}
         x={{ label: 'Number of Sessions' }}
         y={{ tickFormat: () => '' }}
