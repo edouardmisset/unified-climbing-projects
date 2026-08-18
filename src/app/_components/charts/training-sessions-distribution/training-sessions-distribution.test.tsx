@@ -21,5 +21,22 @@ describe('trainingSessionsDistribution', () => {
 
     await expect.element(screen.getByText('Session Distribution')).toBeInTheDocument()
     await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(1)
+
+    const bar = container.querySelector<SVGGraphicsElement>('.ts-chart__bar rect')
+    expect(bar).not.toBeNull()
+    const bounds = bar?.getBoundingClientRect()
+    bar?.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: (bounds?.left ?? 0) + (bounds?.width ?? 0) / 2,
+        clientY: (bounds?.top ?? 0) + (bounds?.height ?? 0) / 2,
+      }),
+    )
+    await expect
+      .poll(() => {
+        const rows = [...globalThis.document.querySelectorAll('.ts-chart-tooltip__row')]
+        return rows.length > 0 && rows.every(row => row.textContent.includes('% ('))
+      })
+      .toBe(true)
   })
 })

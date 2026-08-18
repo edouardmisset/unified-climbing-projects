@@ -32,6 +32,10 @@ const POINT_PADDING = 0.15
 const DONUT_INNER_RADIUS_RATIO = 0.5
 const MIN_DONUT_LABEL_FRACTION = 0.06
 const CURVE_TENSION_DENOMINATOR = 6
+const percentFormatter = new Intl.NumberFormat(undefined, {
+  style: 'percent',
+  maximumFractionDigits: 1,
+})
 
 function smoothLine(points: readonly (readonly [number, number])[]): string {
   const [first] = points
@@ -189,13 +193,16 @@ export function TanStackBarChart<TDatum>(
             }, 0)
             return {
               title: formatChartValue(category),
-              rows: [
-                ...points.toReversed().map(point => {
-                  const value = getValue(point)
-                  return { color: point.color, label: point.groupLabel, value: formatValue(value) }
-                }),
-                { label: 'Total', value: formatValue(total) },
-              ],
+              rows: points.toReversed().map(point => {
+                const value = getValue(point)
+                const rawValue = typeof value === 'number' ? value : 0
+                const percentage = total === 0 ? 0 : rawValue / total
+                return {
+                  color: point.color,
+                  label: point.groupLabel,
+                  value: `${percentFormatter.format(percentage)} (${formatValue(value)})`,
+                }
+              }),
             }
           },
           sort: 'color-domain' as const,
