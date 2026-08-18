@@ -1,7 +1,5 @@
-import { Bar, BarChart, createVerticalChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { ChartTooltip } from '../chart-elements'
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 
 import type { TrainingSession } from '~/schema/training'
 import { getTrainingSessionsGaugeData } from './get-training-sessions-gauge-data'
@@ -10,13 +8,7 @@ type GaugeChartDatum = {
   category: string
   [key: string]: string | number
 }
-
-const Chart = createVerticalChart<GaugeChartDatum>()({
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-})
+const getCategory = (datum: GaugeChartDatum) => datum.category
 
 export function TrainingSessionsGauge({
   trainingSessions,
@@ -33,21 +25,25 @@ export function TrainingSessionsGauge({
       { category: 'Sessions' },
     ),
   ]
+  const series = typeData.map(({ fill, id, label }) => ({
+    color: fill,
+    key: id,
+    label,
+  })) satisfies ChartSeries[]
 
   if (typeData.length === 0) return
 
   return (
     <ChartContainer caption='Training Sessions Gauge'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart accessibilityLayer={false} data={chartData} layout='vertical'>
-          <ChartTooltip />
-          <Chart.XAxis type='number' />
-          <Chart.YAxis dataKey='category' hide type='category' />
-          {typeData.map(({ fill, id, label }) => (
-            <Chart.Bar key={id} dataKey={id} fill={fill} name={label} stackId='sessions' />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Training Sessions Gauge'
+        data={chartData}
+        getCategory={getCategory}
+        orientation='horizontal'
+        series={series}
+        x={{ label: 'Number of Sessions' }}
+        y={{ tickFormat: () => '' }}
+      />
     </ChartContainer>
   )
 }

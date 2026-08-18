@@ -52,22 +52,18 @@ describe('getTrainingSessionsGaugeData', () => {
       'Chill',
     ])
 
-    expect(result.typeData.filter(type => type.groupId === 'Max strength').map(type => type.id)).toStrictEqual([
-      'Contact Strength',
-      'Max Strength',
-      'Power',
-    ])
+    expect(
+      result.typeData.filter(type => type.groupId === 'Max strength').map(type => type.id),
+    ).toStrictEqual(['Contact Strength', 'Max Strength', 'Power'])
 
-    expect(result.typeData.filter(type => type.groupId === 'Others').map(type => type.id)).toStrictEqual([
-      'Routine',
-    ])
+    expect(
+      result.typeData.filter(type => type.groupId === 'Others').map(type => type.id),
+    ).toStrictEqual(['Routine'])
 
-    expect(result.typeData.find(type => type.id === 'Contact Strength')?.fill).toStrictEqual(
+    expect(result.typeData.find(type => type.id === 'Contact Strength')?.fill).toBe(
       'var(--strength)',
     )
-    expect(result.typeData.find(type => type.id === 'Outdoor')?.fill).toStrictEqual('var(--outdoor)')
-    expect(result.typeData.find(type => type.id === 'Routine')?.fill).toStrictEqual(
-      'var(--otherTraining)',
-    )
+    expect(result.typeData.find(type => type.id === 'Outdoor')?.fill).toBe('var(--outdoor)')
+    expect(result.typeData.find(type => type.id === 'Routine')?.fill).toBe('var(--otherTraining)')
   })
 })
