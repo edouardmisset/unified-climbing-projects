@@ -31,7 +31,6 @@ const BAND_PADDING = 0.16
 const POINT_PADDING = 0.15
 const DONUT_INNER_RADIUS_RATIO = 0.5
 const MIN_DONUT_LABEL_FRACTION = 0.06
-const RIGHT_AXIS_TICK_COUNT = 5
 const CURVE_TENSION_DENOMINATOR = 6
 
 function smoothLine(points: readonly (readonly [number, number])[]): string {
@@ -63,10 +62,6 @@ export type ChartSeries = {
   color: string
   key: string
   label?: string
-}
-
-export type DualAxisSeries = ChartSeries & {
-  valueFormat?: (value: ChartValue) => string
 }
 
 type AxisOptions = {
@@ -370,125 +365,6 @@ export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
   return (
     <div className={styles.chartSurface}>
       <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
-    </div>
-  )
-}
-
-type DualAxisRow<TDatum> = FlatDatum<TDatum> & {
-  axis: 'left' | 'right'
-  rawValue: number
-}
-
-export function TanStackDualAxisChart<TDatum>({
-  ariaLabel,
-  barSeries,
-  data,
-  getCategory,
-  height = DEFAULT_CHART_HEIGHT,
-  left,
-  lineSeries,
-  right,
-  x,
-}: {
-  ariaLabel: string
-  barSeries: readonly DualAxisSeries[]
-  data: readonly TDatum[]
-  getCategory: (datum: TDatum) => ChartValue
-  height?: number
-  left: AxisOptions
-  lineSeries: readonly DualAxisSeries[]
-  right: AxisOptions & { domain?: readonly [number, number] }
-  x?: AxisOptions
-}) {
-  const leftRows = flattenData(data, getCategory, barSeries)
-  const rightRows = flattenData(data, getCategory, lineSeries)
-  const leftMaximum = Math.max(1, ...leftRows.map(row => row.value))
-  const rightValues = rightRows.map(row => row.value)
-  const rightMinimum = right.domain?.[0] ?? 0
-  const rightMaximum = right.domain?.[1] ?? Math.max(1, ...rightValues)
-  const rightRange = Math.max(1, rightMaximum - rightMinimum)
-  const rows: DualAxisRow<TDatum>[] = []
-  for (const row of leftRows) rows.push({ ...row, axis: 'left' as const, rawValue: row.value })
-  for (const row of rightRows)
-    rows.push({
-      ...row,
-      axis: 'right' as const,
-      rawValue: row.value,
-      value: ((row.value - rightMinimum) / rightRange) * leftMaximum,
-    })
-  const barRows = rows.filter(row => row.axis === 'left')
-  const lineRows = rows.filter(row => row.axis === 'right')
-  const series = [...barSeries, ...lineSeries]
-  const seriesByLabel = new Map(series.map(item => [item.label ?? item.key, item]))
-  const definition = defineChart({
-    focus: 'group-x',
-    marks: [
-      barY(barRows, {
-        x: 'category',
-        y: 'value',
-        z: 'series',
-        color: 'series',
-        layout: group(),
-        inset: 2,
-      }),
-      lineY(lineRows, {
-        x: 'category',
-        y: 'value',
-        z: 'series',
-        color: 'series',
-        points: true,
-        strokeWidth: 2,
-        curve: SMOOTH_CURVE,
-      }),
-    ],
-    x: {
-      scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
-      axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-    },
-    y: {
-      scale: () => scaleLinear().domain([0, leftMaximum]),
-      nice: true,
-      grid: true,
-      axis: { label: left.label, ticks: { format: left.tickFormat } },
-    },
-    color: colorOptions(series, true),
-    tooltip: {
-      use: tooltip,
-      anchor: 'group-center',
-      content: points => {
-        const [first] = points
-        if (!first) return { rows: [] }
-        return {
-          title: formatChartValue(first.xValue),
-          rows: points.toReversed().map(point => {
-            const row = point.datum
-            const config = seriesByLabel.get(row.series)
-            return {
-              color: point.color,
-              label: row.series,
-              value: config?.valueFormat?.(row.rawValue) ?? row.rawValue.toLocaleString(),
-            }
-          }),
-        }
-      },
-    },
-  })
-  const rightTicks = Array.from({ length: RIGHT_AXIS_TICK_COUNT }, (_, index) => {
-    const value = rightMaximum - (index / (RIGHT_AXIS_TICK_COUNT - 1)) * rightRange
-    return right.tickFormat?.(value) ?? value.toLocaleString()
-  })
-
-  return (
-    <div className={`${styles.chartSurface} ${styles.dualAxisChart}`}>
-      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
-      <div className={styles.rightAxis} aria-hidden='true'>
-        <span className={styles.rightAxisLabel}>{right.label}</span>
-        <div className={styles.rightAxisTicks}>
-          {rightTicks.map(tick => (
-            <span key={tick}>{tick}</span>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

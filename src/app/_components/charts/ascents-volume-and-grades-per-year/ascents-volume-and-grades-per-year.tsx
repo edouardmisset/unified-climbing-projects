@@ -1,6 +1,6 @@
 import { ChartContainer } from '../chart-container/chart-container'
 import { formatYearTick } from '../constants'
-import { TanStackDualAxisChart, type DualAxisSeries } from '../tanstack-chart'
+import { TanStackBarChart, TanStackLineChart, type ChartSeries } from '../tanstack-chart'
 import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER, type Ascent } from '~/schema/ascent'
@@ -17,33 +17,29 @@ const formatGrade = (value: string | number | Date) =>
 const VOLUME_SERIES = [
   { key: 'Bouldering', label: 'Boulders', color: CLIMBING_DISCIPLINE_TO_COLOR.Bouldering },
   { key: 'Sport', label: 'Routes', color: CLIMBING_DISCIPLINE_TO_COLOR.Sport },
-] satisfies DualAxisSeries[]
+] satisfies ChartSeries[]
 const GRADE_SERIES = [
   {
     key: 'maxBoulderGrade',
     label: 'Max Bouldering Grade',
     color: 'color-mix(in oklch, var(--boulder) 70%, black)',
-    valueFormat: formatGrade,
   },
   {
     key: 'maxRouteGrade',
     label: 'Max Route Grade',
     color: 'color-mix(in oklch, var(--route) 70%, black)',
-    valueFormat: formatGrade,
   },
   {
     key: 'avgBoulderGrade',
     label: 'Average Bouldering Grade',
     color: 'color-mix(in oklch, var(--boulder) 65%, white)',
-    valueFormat: formatGrade,
   },
   {
     key: 'avgRouteGrade',
     label: 'Average Route Grade',
     color: 'color-mix(in oklch, var(--route) 65%, white)',
-    valueFormat: formatGrade,
   },
-] satisfies DualAxisSeries[]
+] satisfies ChartSeries[]
 
 export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }) {
   const data = getAscentsVolumeAndGradesPerYear(ascents)
@@ -56,15 +52,25 @@ export function AscentsVolumeAndGradesPerYear({ ascents }: { ascents: Ascent[] }
   const x = { label: 'Years', tickFormat: formatYearTick }
   return (
     <ChartContainer caption='Ascents Volume and Max / Average Grade Evolution'>
-      <TanStackDualAxisChart
-        ariaLabel='Ascent volume and maximum and average grade evolution'
-        barSeries={VOLUME_SERIES}
+      <TanStackLineChart
+        ariaLabel='Maximum and average grade evolution'
         data={data}
         getCategory={getCategory}
-        left={{ label: '# Ascents' }}
-        lineSeries={GRADE_SERIES}
-        right={{ label: 'Grades', tickFormat: formatGrade, domain: [MIN_GRADE, MAX_GRADE] }}
+        height={230}
+        series={GRADE_SERIES}
         x={x}
+        y={{ label: 'Grades', tickFormat: formatGrade }}
+      />
+      <TanStackBarChart
+        ariaLabel='Ascent volume per year'
+        data={data}
+        getCategory={getCategory}
+        height={190}
+        legend
+        mode='group'
+        series={VOLUME_SERIES}
+        x={x}
+        y={{ label: '# Ascents' }}
       />
     </ChartContainer>
   )

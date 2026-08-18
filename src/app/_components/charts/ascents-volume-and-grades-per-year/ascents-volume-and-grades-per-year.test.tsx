@@ -17,5 +17,11 @@ describe('ascentsVolumeAndGradesPerYear', () => {
     await expect
       .poll(() => container.querySelectorAll('.ts-chart__line').length)
       .toBe(LINE_SERIES_COUNT)
+
+    const figure = container.querySelector('figure')
+    const chart = container.querySelector('.ts-chart-host')
+    expect(figure).not.toBeNull()
+    expect(chart).not.toBeNull()
+    expect(chart?.getBoundingClientRect().width).toBe(figure?.getBoundingClientRect().width)
   })
 })

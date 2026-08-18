@@ -1,30 +1,6 @@
-.dualAxisChart {
-  position: relative;
-}
-
-.rightAxis {
-  position: absolute;
-  top: 0.5rem;
-  right: 32%;
-  display: flex;
-  height: 16.5rem;
-  align-items: center;
-  pointer-events: none;
-}
-
-.rightAxisLabel {
-  font-size: 0.75rem;
-  writing-mode: vertical-rl;
-}
-
-.rightAxisTicks {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-inline-start: 0.25rem;
-  color: var(--text-2);
-  font-size: 0.7rem;
+.chartSurface {
+  inline-size: 100%;
+  min-inline-size: 0;
 }
 
 .chartSurface [class~='ts-chart__legend'] circle {
