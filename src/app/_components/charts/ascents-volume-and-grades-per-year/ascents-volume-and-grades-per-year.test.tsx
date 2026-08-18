@@ -23,5 +23,19 @@ describe('ascentsVolumeAndGradesPerYear', () => {
     expect(figure).not.toBeNull()
     expect(chart).not.toBeNull()
     expect(chart?.getBoundingClientRect().width).toBe(figure?.getBoundingClientRect().width)
+
+    const bar = container.querySelector<SVGGraphicsElement>('.ts-chart__bar rect')
+    expect(bar).not.toBeNull()
+    const bounds = bar?.getBoundingClientRect()
+    bar?.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: (bounds?.left ?? 0) + (bounds?.width ?? 0) / 2,
+        clientY: (bounds?.top ?? 0) + (bounds?.height ?? 0) / 2,
+      }),
+    )
+    await expect
+      .poll(() => globalThis.document.querySelectorAll('.ts-chart-tooltip__row').length)
+      .toBeGreaterThan(0)
   })
 })

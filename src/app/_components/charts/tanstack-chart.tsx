@@ -166,8 +166,7 @@ export function TanStackBarChart<TDatum>(
   const rows = flattenData(data, getCategory, series)
   const layout = mode === 'group' ? group() : stack()
   const colors = colorOptions(series, legend)
-  let focus: false | 'group-x' | 'group-y' = false
-  if (mode === 'stack') focus = orientation === 'horizontal' ? 'group-y' : 'group-x'
+  const focus = orientation === 'horizontal' ? 'group-y' : 'group-x'
   const stackTooltip =
     mode === 'stack'
       ? {
