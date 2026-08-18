@@ -13,5 +13,8 @@ describe('ascentsPerDiscipline', () => {
     await expect.element(screen.getByText('Ascents per Discipline')).toBeInTheDocument()
     expect(data.length).toBeGreaterThan(1)
     await expect.poll(() => container.querySelectorAll('.ts-chart__arc').length).toBe(1)
+    await expect
+      .poll(() => container.querySelectorAll('.ts-chart__radial-text').length)
+      .toBeGreaterThan(0)
   })
 })

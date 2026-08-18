@@ -12,14 +12,17 @@ import {
   lineY,
   stack,
   type ChartPoint,
+  type ChartCurve,
+  type ChartTooltipContent,
   type ChartTooltipContentContext,
 } from '@tanstack/charts'
-import { pie, polar, radialArc } from '@tanstack/charts/polar'
+import { pie, polar, radialArc, radialText } from '@tanstack/charts/polar'
 import { Chart } from '@tanstack/charts/react'
 import { scaleBand } from '@tanstack/charts/scales/band'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { scalePoint } from '@tanstack/charts/scales/point'
 import { tooltip } from '@tanstack/charts/tooltip'
+import styles from './tanstack-chart.module.css'
 
 type ChartValue = string | number | Date
 
@@ -27,11 +30,43 @@ const DEFAULT_CHART_HEIGHT = 440
 const BAND_PADDING = 0.16
 const POINT_PADDING = 0.15
 const DONUT_INNER_RADIUS_RATIO = 0.5
+const MIN_DONUT_LABEL_FRACTION = 0.06
+const RIGHT_AXIS_TICK_COUNT = 5
+const CURVE_TENSION_DENOMINATOR = 6
+
+function smoothLine(points: readonly (readonly [number, number])[]): string {
+  const [first] = points
+  if (!first) return ''
+  if (points.length === 1) return `M${first[0]},${first[1]}`
+
+  let path = `M${first[0]},${first[1]}`
+  for (let index = 0; index < points.length - 1; index++) {
+    const current = points[index] ?? first
+    const next = points[index + 1] ?? current
+    const previous = points[index - 1] ?? current
+    const afterNext = points[index + 2] ?? next
+    const control1X = current[0] + (next[0] - previous[0]) / CURVE_TENSION_DENOMINATOR
+    const control1Y = current[1] + (next[1] - previous[1]) / CURVE_TENSION_DENOMINATOR
+    const control2X = next[0] - (afterNext[0] - current[0]) / CURVE_TENSION_DENOMINATOR
+    const control2Y = next[1] - (afterNext[1] - current[1]) / CURVE_TENSION_DENOMINATOR
+    path += `C${control1X},${control1Y},${control2X},${control2Y},${next[0]},${next[1]}`
+  }
+  return path
+}
+
+const SMOOTH_CURVE: ChartCurve = {
+  line: smoothLine,
+  area: (top, bottom) => `${smoothLine(top)}${smoothLine(bottom.toReversed())}Z`,
+}
 
 export type ChartSeries = {
   color: string
   key: string
   label?: string
+}
+
+export type DualAxisSeries = ChartSeries & {
+  valueFormat?: (value: ChartValue) => string
 }
 
 type AxisOptions = {
@@ -83,7 +118,34 @@ function colorOptions(series: readonly ChartSeries[], legend: boolean) {
   return {
     domain: series.map(config => config.label ?? config.key),
     range: series.map(config => config.color),
-    legend: legend ? colorLegend() : undefined,
+    legend: legend ? colorLegend({ itemWidth: 150, placement: 'bottom' }) : undefined,
+  }
+}
+
+function formatChartValue(value: ChartValue): string {
+  if (value instanceof Date) return value.toLocaleDateString()
+  return String(value)
+}
+
+function seriesTooltip<TDatum>(
+  points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
+  context: ChartTooltipContentContext,
+  options: { reverse?: boolean; orientation?: 'horizontal' | 'vertical' } = {},
+): ChartTooltipContent {
+  const [first] = points
+  if (!first) return { rows: [] }
+  const horizontal = options.orientation === 'horizontal'
+  const orderedPoints = options.reverse === true ? points.toReversed() : points
+  return {
+    title: formatChartValue(horizontal ? first.yValue : first.xValue),
+    rows: orderedPoints.map(point => {
+      const value = horizontal ? point.xValue : point.yValue
+      return {
+        color: point.color,
+        label: point.groupLabel,
+        value: horizontal ? context.formatX(value) : context.formatY(value),
+      }
+    }),
   }
 }
 
@@ -123,7 +185,6 @@ export function TanStackBarChart<TDatum>(
             if (points.length === 0) return { rows: [] }
             const [first] = points
             if (!first) return { rows: [] }
-            const formatCategory = orientation === 'horizontal' ? context.formatY : context.formatX
             const formatValue = orientation === 'horizontal' ? context.formatX : context.formatY
             const category = orientation === 'horizontal' ? first.yValue : first.xValue
             const getValue = (point: { xValue: ChartValue; yValue: ChartValue }) =>
@@ -133,9 +194,9 @@ export function TanStackBarChart<TDatum>(
               return sum + (typeof value === 'number' ? value : 0)
             }, 0)
             return {
-              title: formatCategory(category),
+              title: formatChartValue(category),
               rows: [
-                ...points.map(point => {
+                ...points.toReversed().map(point => {
                   const value = getValue(point)
                   return { color: point.color, label: point.groupLabel, value: formatValue(value) }
                 }),
@@ -145,7 +206,14 @@ export function TanStackBarChart<TDatum>(
           },
           sort: 'color-domain' as const,
         }
-      : tooltip
+      : {
+          use: tooltip,
+          anchor: 'group-center' as const,
+          content: (
+            points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
+            context: ChartTooltipContentContext,
+          ) => seriesTooltip(points, context, { reverse: true, orientation }),
+        }
 
   const definition =
     orientation === 'horizontal'
@@ -199,7 +267,11 @@ export function TanStackBarChart<TDatum>(
           tooltip: stackTooltip,
         })
 
-  return <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+  return (
+    <div className={styles.chartSurface}>
+      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+    </div>
+  )
 }
 
 export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
@@ -216,6 +288,7 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
 
   const rows = flattenData(data, getCategory, series)
   const definition = defineChart({
+    focus: 'group-x',
     marks: [
       lineY(rows, {
         x: 'category',
@@ -224,6 +297,7 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
         color: 'series',
         points: true,
         strokeWidth: 2,
+        curve: SMOOTH_CURVE,
       }),
     ],
     x: {
@@ -237,10 +311,18 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
       axis: { label: y?.label, ticks: { format: y?.tickFormat } },
     },
     color: colorOptions(series, legend),
-    tooltip,
+    tooltip: {
+      use: tooltip,
+      anchor: 'group-center',
+      content: seriesTooltip,
+    },
   })
 
-  return <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+  return (
+    <div className={styles.chartSurface}>
+      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+    </div>
+  )
 }
 
 export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
@@ -257,6 +339,7 @@ export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
 
   const rows = flattenData(data, getCategory, series)
   const definition = defineChart({
+    focus: 'group-x',
     marks: [
       areaY(rows, {
         x: 'category',
@@ -277,10 +360,137 @@ export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
       axis: { label: y?.label, ticks: { format: y?.tickFormat } },
     },
     color: colorOptions(series, legend),
-    tooltip,
+    tooltip: {
+      use: tooltip,
+      anchor: 'group-center',
+      content: seriesTooltip,
+    },
   })
 
-  return <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+  return (
+    <div className={styles.chartSurface}>
+      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+    </div>
+  )
+}
+
+type DualAxisRow<TDatum> = FlatDatum<TDatum> & {
+  axis: 'left' | 'right'
+  rawValue: number
+}
+
+export function TanStackDualAxisChart<TDatum>({
+  ariaLabel,
+  barSeries,
+  data,
+  getCategory,
+  height = DEFAULT_CHART_HEIGHT,
+  left,
+  lineSeries,
+  right,
+  x,
+}: {
+  ariaLabel: string
+  barSeries: readonly DualAxisSeries[]
+  data: readonly TDatum[]
+  getCategory: (datum: TDatum) => ChartValue
+  height?: number
+  left: AxisOptions
+  lineSeries: readonly DualAxisSeries[]
+  right: AxisOptions & { domain?: readonly [number, number] }
+  x?: AxisOptions
+}) {
+  const leftRows = flattenData(data, getCategory, barSeries)
+  const rightRows = flattenData(data, getCategory, lineSeries)
+  const leftMaximum = Math.max(1, ...leftRows.map(row => row.value))
+  const rightValues = rightRows.map(row => row.value)
+  const rightMinimum = right.domain?.[0] ?? 0
+  const rightMaximum = right.domain?.[1] ?? Math.max(1, ...rightValues)
+  const rightRange = Math.max(1, rightMaximum - rightMinimum)
+  const rows: DualAxisRow<TDatum>[] = []
+  for (const row of leftRows) rows.push({ ...row, axis: 'left' as const, rawValue: row.value })
+  for (const row of rightRows)
+    rows.push({
+      ...row,
+      axis: 'right' as const,
+      rawValue: row.value,
+      value: ((row.value - rightMinimum) / rightRange) * leftMaximum,
+    })
+  const barRows = rows.filter(row => row.axis === 'left')
+  const lineRows = rows.filter(row => row.axis === 'right')
+  const series = [...barSeries, ...lineSeries]
+  const seriesByLabel = new Map(series.map(item => [item.label ?? item.key, item]))
+  const definition = defineChart({
+    focus: 'group-x',
+    marks: [
+      barY(barRows, {
+        x: 'category',
+        y: 'value',
+        z: 'series',
+        color: 'series',
+        layout: group(),
+        inset: 2,
+      }),
+      lineY(lineRows, {
+        x: 'category',
+        y: 'value',
+        z: 'series',
+        color: 'series',
+        points: true,
+        strokeWidth: 2,
+        curve: SMOOTH_CURVE,
+      }),
+    ],
+    x: {
+      scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
+      axis: { label: x?.label, ticks: { format: x?.tickFormat } },
+    },
+    y: {
+      scale: () => scaleLinear().domain([0, leftMaximum]),
+      nice: true,
+      grid: true,
+      axis: { label: left.label, ticks: { format: left.tickFormat } },
+    },
+    color: colorOptions(series, true),
+    tooltip: {
+      use: tooltip,
+      anchor: 'group-center',
+      content: points => {
+        const [first] = points
+        if (!first) return { rows: [] }
+        return {
+          title: formatChartValue(first.xValue),
+          rows: points.toReversed().map(point => {
+            const row = point.datum
+            const config = seriesByLabel.get(row.series)
+            return {
+              color: point.color,
+              label: row.series,
+              value: config?.valueFormat?.(row.rawValue) ?? row.rawValue.toLocaleString(),
+            }
+          }),
+        }
+      },
+    },
+  })
+  const rightTicks = Array.from({ length: RIGHT_AXIS_TICK_COUNT }, (_, index) => {
+    const value = rightMaximum - (index / (RIGHT_AXIS_TICK_COUNT - 1)) * rightRange
+    return right.tickFormat?.(value) ?? value.toLocaleString()
+  })
+
+  return (
+    <div className={`${styles.chartSurface} ${styles.dualAxisChart}`}>
+      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+      <div className={styles.rightAxis} aria-hidden='true'>
+        <span className={styles.rightAxisLabel}>{right.label}</span>
+        <div className={styles.rightAxisTicks}>
+          {rightTicks.map(tick => (
+            <span key={tick}>{tick}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 type DonutDatum = { color: string; label: string; value: number }
@@ -312,7 +522,24 @@ export function TanStackDonutChart({
             stroke: 'var(--surface-3)',
             strokeWidth: 1,
           }),
+          radialText(slices, {
+            angle: 'angle',
+            radius: 0.68,
+            text: slice =>
+              slice.fraction >= MIN_DONUT_LABEL_FRACTION
+                ? new Intl.NumberFormat(undefined, {
+                    style: 'percent',
+                    maximumFractionDigits: 0,
+                  }).format(slice.fraction)
+                : undefined,
+            fill: 'white',
+            fontSize: 12,
+            fontWeight: 700,
+            key: 'label',
+          }),
         ],
+        angle: { scale: scaleLinear().domain([0, Math.PI * 2]) },
+        radius: { scale: scaleLinear().domain([0, 1]) },
       }),
     ],
     color: {
@@ -331,18 +558,22 @@ export function TanStackDonutChart({
           title: datum.label,
           rows: [
             {
-              label: 'Share',
-              value: new Intl.NumberFormat(undefined, {
+              color: datum.color,
+              label: datum.label,
+              value: `${new Intl.NumberFormat(undefined, {
                 style: 'percent',
                 maximumFractionDigits: 1,
-              }).format(percentage),
+              }).format(percentage)} (${datum.value.toLocaleString()})`,
             },
-            { label: 'Value', value: datum.value.toLocaleString() },
           ],
         }
       },
     },
   })
 
-  return <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+  return (
+    <div className={styles.chartSurface}>
+      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
+    </div>
+  )
 }

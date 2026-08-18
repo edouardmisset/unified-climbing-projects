@@ -2,9 +2,9 @@ import { createYearList } from '~/data/helpers'
 import type { Ascent } from '~/schema/ascent'
 
 type DistanceClimbedPerYear = {
+  averageHeight: number
   distance: number
   year: number
-  // averageHeight?: number
 }
 
 export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPerYear[] => {
@@ -32,11 +32,9 @@ export const getDistanceClimbedPerYear = (ascents: Ascent[]): DistanceClimbedPer
     const totalDistance = yearAscents.reduce((acc, ascent) => acc + (ascent.height ?? 0), 0)
 
     return {
+      averageHeight: yearAscents.length > 0 ? Math.round(totalDistance / yearAscents.length) : 0,
       distance: totalDistance,
       year,
-      // averageHeight: yearAscents.length
-      //   ? Math.round(totalDistance / yearAscents.length)
-      //   : 0,
     }
   })
 }

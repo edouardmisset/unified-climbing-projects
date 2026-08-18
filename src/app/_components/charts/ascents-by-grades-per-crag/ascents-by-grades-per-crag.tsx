@@ -12,7 +12,7 @@ const SERIES = GRADES.map(key => ({
 const getCategory = (datum: Datum) => datum.crag ?? 'Unknown crag'
 
 export function AscentsByGradesPerCrag({ ascents }: { ascents: Ascent[] }) {
-  const data = getAscentsByGradesPerCrag(ascents).toReversed()
+  const data = getAscentsByGradesPerCrag(ascents)
   if (data.length === 0 || new Set(data.map(({ crag }) => crag)).size <= 1) return
   return (
     <ChartContainer caption='Ascents By Grades Per Crag'>
