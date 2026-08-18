@@ -58,7 +58,7 @@ export function usePersistedLogDraft({
 
     try {
       const storedValue = globalThis.localStorage.getItem(storageKey)
-      if (storedValue !== null) {
+      if (typeof storedValue === 'string') {
         const parsedDraft = persistedLogDraftSchema.safeParse(JSON.parse(storedValue))
         const isExpired =
           parsedDraft.success && Date.now() - parsedDraft.data.savedAt > DRAFT_TTL_MS

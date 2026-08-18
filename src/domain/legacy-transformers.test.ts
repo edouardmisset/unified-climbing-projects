@@ -200,8 +200,15 @@ describe('transformLegacyTrainingSession', () => {
 
   it('rejects a legacy session without a type', () => {
     const { sessionType: _sessionType, ...withoutType } = legacyTrainingSession
+    let validationError: unknown = 'No validation error was thrown'
 
-    expect(() => transformLegacyTrainingSession(withoutType)).toThrow(/Required/u)
+    try {
+      transformLegacyTrainingSession(withoutType)
+    } catch (error) {
+      validationError = error
+    }
+
+    expect(validationError).toMatchObject({ issues: [expect.objectContaining({ path: ['type'] })] })
   })
 
   it('is idempotent for a canonical stored document', () => {

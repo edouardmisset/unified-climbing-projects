@@ -1,14 +1,13 @@
 .shell {
   display: flex;
   flex-direction: column;
-  gap: var(--size-fluid-4);
   min-block-size: 100%;
-  padding: var(--size-fluid-2);
+  padding-inline: var(--size-fluid-2);
   background:
     radial-gradient(
-      circle at 90% 10%,
-      color-mix(in oklch, var(--patagonia-color-3) 18%, transparent),
-      transparent 34rem
+      circle at 85% 8%,
+      color-mix(in oklch, var(--patagonia-color-5) 12%, transparent),
+      transparent 28rem
     ),
     var(--surface-1);
 }
@@ -16,7 +15,7 @@
 .header,
 .footer,
 .content {
-  inline-size: min(100%, var(--size-xl));
+  inline-size: min(100%, 78rem);
   margin-inline: auto;
 }
 
@@ -30,20 +29,11 @@
 }
 
 .header {
-  position: relative;
   justify-content: space-between;
   gap: var(--size-3);
-  padding: var(--size-3) var(--size-fluid-2);
-  overflow: hidden;
-
-  &::before {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline: 0;
-    block-size: var(--border-size-3);
-    content: '';
-    background: var(--patagonia-gradient);
-  }
+  min-block-size: var(--size-10);
+  border-block-end: var(--border-size-1) solid var(--panel-border);
+  padding-inline: var(--size-fluid-2);
 }
 
 .brand {
@@ -53,49 +43,41 @@
   text-decoration: none;
 }
 
+.brand svg {
+  inline-size: var(--size-5);
+  color: var(--accent);
+}
+
 .beta {
-  padding-block: var(--size-1);
-  padding-inline: var(--size-2);
-  color: var(--text-1);
+  padding: var(--size-1) var(--size-2);
   font-size: var(--font-size-0);
-  background: color-mix(in oklch, var(--patagonia-color-4), transparent 65%);
-  border: var(--border-size-1) solid var(--patagonia-color-4);
+  background: color-mix(in oklch, var(--accent) 12%, var(--surface-1));
   border-radius: var(--radius-2);
 }
 
 .navigation,
 .footer nav {
-  gap: var(--size-3);
+  gap: var(--size-fluid-3);
 }
 
 .navigation a,
 .footer a {
-  color: var(--text-1);
+  color: var(--text-2);
   text-decoration: none;
 }
 
-.primaryLink {
-  padding-block: 0.75ch;
-  padding-inline: var(--size-relative-6);
-  font-weight: var(--font-weight-7);
-  background: var(--surface-3);
-  border: var(--border-size-2) solid var(--surface-3);
-  border-radius: var(--radius-2);
-  box-shadow: var(--shadow-2);
-
-  &:focus-visible {
-    outline: none;
-    border-color: var(--control-border-focus);
-    box-shadow: 0 0 0 3px var(--control-ring);
-  }
-}
-
+.navigation a:hover,
 .footer a:hover {
   color: var(--accent);
 }
 
-.navigation a:not(.primaryLink):hover {
-  color: var(--accent);
+.primaryLink {
+  padding: var(--size-2) var(--size-3);
+  color: var(--surface-1) !important;
+  font-weight: var(--font-weight-7);
+  background: var(--accent);
+  border: var(--border-size-1) solid var(--accent);
+  border-radius: var(--radius-2);
 }
 
 .content {
@@ -103,39 +85,26 @@
 }
 
 .content[data-layout='prose'] {
-  inline-size: min(100%, 75ch);
+  inline-size: min(100%, 72rem);
 }
 
 .content[data-layout='auth'] {
   display: grid;
   place-items: center;
   inline-size: min(100%, 36rem);
+  padding-block: var(--size-fluid-5);
 }
 
 .footer {
   justify-content: space-between;
   gap: var(--size-3);
-  padding-block-start: var(--size-fluid-2);
+  padding-block: var(--size-fluid-3);
   color: var(--text-2);
   font-size: var(--font-size-0);
   border-block-start: var(--border-size-1) solid var(--panel-border);
 }
 
 @media (width <= 40rem) {
-  .shell {
-    gap: var(--size-fluid-3);
-    padding: var(--size-3);
-  }
-
-  .header {
-    align-items: flex-start;
-  }
-
-  .navigation {
-    justify-content: flex-end;
-    flex-wrap: wrap;
-  }
-
   .navigation > a:not(.primaryLink) {
     display: none;
   }

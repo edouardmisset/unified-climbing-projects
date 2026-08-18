@@ -1,4 +1,4 @@
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
 
 const CALENDAR_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/u
 
@@ -35,49 +35,57 @@ export function omitServerControlledFields<T extends Record<string, unknown>>(
   ) as Omit<T, keyof typeof serverControlledFields>
 }
 
-export function emptyStringToUndefined(value: unknown): unknown {
-  return typeof value === 'string' && value.trim() === '' ? undefined : value
-}
-
 export const optionalNonEmptyStringSchema = nonEmptyStringSchema.optional()
 
-export const optionalFormStringSchema = z.preprocess(
-  emptyStringToUndefined,
-  optionalNonEmptyStringSchema,
-)
+export const optionalTextCodec = z.codec(z.string().optional(), optionalNonEmptyStringSchema, {
+  decode: value => (value === undefined || value.trim() === '' ? undefined : value),
+  encode: value => value ?? '',
+})
 
-export const integerCellSchema = z
-  .string()
-  .trim()
-  .regex(/^\d+$/u, 'Expected a non-negative integer')
-  .transform(Number)
-  .pipe(nonNegativeIntegerSchema)
+const integerStringSchema = z.string().trim().regex(/^\d+$/u, 'Expected a non-negative integer')
 
-export const positiveIntegerCellSchema = z
+const positiveIntegerStringSchema = z
   .string()
   .trim()
   .regex(/^[1-9]\d*$/u, 'Expected a positive integer')
-  .transform(Number)
-  .pipe(positiveIntegerSchema)
 
-export const percentCellSchema = integerCellSchema.pipe(percentSchema)
+export const integerCellCodec = z.codec(integerStringSchema, nonNegativeIntegerSchema, {
+  decode: Number,
+  encode: String,
+})
 
-export const optionalIntegerCellSchema = z.preprocess(
-  emptyStringToUndefined,
-  integerCellSchema.optional(),
+export const positiveIntegerCellCodec = z.codec(
+  positiveIntegerStringSchema,
+  positiveIntegerSchema,
+  {
+    decode: Number,
+    encode: String,
+  },
 )
 
-export const optionalPercentCellSchema = z.preprocess(
-  emptyStringToUndefined,
-  percentCellSchema.optional(),
-)
+export const percentCellCodec = z.codec(integerStringSchema, percentSchema, {
+  decode: Number,
+  encode: String,
+})
 
-export const emptyOrNonEmptyStringSchema = z.union([z.literal(''), nonEmptyStringSchema])
-export const emptyOrIntegerCellSchema = z.union([z.literal(''), z.string().regex(/^\d+$/u)])
-export const emptyOrPercentCellSchema = z.union([
-  z.literal(''),
-  z
-    .string()
-    .regex(/^\d+$/u)
-    .refine(value => Number(value) <= 100, 'Expected a percentage from 0 to 100'),
-])
+export function createOptionalIntegerCellCodec(outputSchema = nonNegativeIntegerSchema) {
+  return z.codec(
+    z.union([z.literal(''), integerStringSchema]).optional(),
+    outputSchema.optional(),
+    {
+      decode: value => (value === undefined || value === '' ? undefined : Number(value)),
+      encode: value => (value === undefined ? '' : String(value)),
+    },
+  )
+}
+
+export const optionalIntegerCellCodec = createOptionalIntegerCellCodec()
+export const optionalPercentCellCodec = createOptionalIntegerCellCodec(percentSchema)
+
+export function optionalEnumCodec<const T extends readonly string[]>(values: T) {
+  const enumSchema = z.enum(values)
+  return z.codec(z.union([z.literal(''), enumSchema]).optional(), enumSchema.optional(), {
+    decode: value => (value === undefined || value === '' ? undefined : value),
+    encode: value => value ?? '',
+  })
+}

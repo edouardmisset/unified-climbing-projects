@@ -1,14 +1,12 @@
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
 import { ASCENT_DISCIPLINES, ascentDisciplineSchema } from './ascent'
 import {
   calendarDateSchema,
   convexSystemFields,
-  emptyOrNonEmptyStringSchema,
-  emptyOrPercentCellSchema,
-  emptyStringToUndefined,
-  optionalFormStringSchema,
+  optionalEnumCodec,
   optionalNonEmptyStringSchema,
-  optionalPercentCellSchema,
+  optionalPercentCellCodec,
+  optionalTextCodec,
   percentSchema,
   serverControlledFields,
 } from './common'
@@ -91,55 +89,21 @@ export const trainingSessionListOutputSchema = trainingSessionPublicOutputSchema
   comments: true,
 })
 
-const optionalFormPercentSchema = z.preprocess(
-  emptyStringToUndefined,
-  z.coerce.number().int().min(0).max(100).optional(),
-)
+const trainingSessionFormFields = {
+  date: calendarDateSchema,
+  type: trainingSessionTypeSchema,
+  discipline: optionalEnumCodec(ASCENT_DISCIPLINES),
+  location: optionalTextCodec,
+  anatomicalRegion: optionalEnumCodec(ANATOMICAL_REGIONS),
+  energySystem: optionalEnumCodec(ENERGY_SYSTEMS),
+  comments: optionalTextCodec,
+  intensity: optionalPercentCellCodec,
+  volume: optionalPercentCellCodec,
+} as const
 
-const optionalFormEnum = <T extends z.EnumValues>(values: T) =>
-  z.preprocess(emptyStringToUndefined, z.enum(values).optional())
+export const trainingSessionFormSchema = z.object(trainingSessionFormFields).strict()
 
-export const trainingSessionFormSchema = z
-  .object({
-    anatomicalRegion: optionalFormEnum(ANATOMICAL_REGIONS),
-    comments: optionalFormStringSchema,
-    date: calendarDateSchema,
-    discipline: optionalFormEnum(ASCENT_DISCIPLINES),
-    energySystem: optionalFormEnum(ENERGY_SYSTEMS),
-    intensity: optionalFormPercentSchema,
-    location: optionalFormStringSchema,
-    type: trainingSessionTypeSchema,
-    volume: optionalFormPercentSchema,
-  })
-  .strict()
-
-export const trainingSessionImportRowSchema = z
-  .object({
-    anatomicalRegion: optionalFormEnum(ANATOMICAL_REGIONS),
-    comments: optionalFormStringSchema,
-    date: calendarDateSchema,
-    discipline: optionalFormEnum(ASCENT_DISCIPLINES),
-    energySystem: optionalFormEnum(ENERGY_SYSTEMS),
-    intensity: optionalPercentCellSchema,
-    location: optionalFormStringSchema,
-    type: trainingSessionTypeSchema,
-    volume: optionalPercentCellSchema,
-  })
-  .strict()
-
-export const trainingSessionExportRowSchema = z
-  .object({
-    date: calendarDateSchema,
-    type: trainingSessionTypeSchema,
-    discipline: z.union([z.literal(''), ascentDisciplineSchema]),
-    location: emptyOrNonEmptyStringSchema,
-    anatomicalRegion: z.union([z.literal(''), anatomicalRegionSchema]),
-    energySystem: z.union([z.literal(''), energySystemSchema]),
-    comments: emptyOrNonEmptyStringSchema,
-    intensity: emptyOrPercentCellSchema,
-    volume: emptyOrPercentCellSchema,
-  })
-  .strict()
+export const trainingSessionCsvRowCodec = z.object(trainingSessionFormFields)
 
 export type TrainingSessionDomain = z.infer<typeof trainingSessionDomainSchema>
 export type TrainingSessionRecord = TrainingSessionDomain & { _id: string }
@@ -150,6 +114,5 @@ export type TrainingSessionPublicInput = z.infer<typeof trainingSessionPublicInp
 export type TrainingSessionPublicOutput = z.infer<typeof trainingSessionPublicOutputSchema>
 export type TrainingSessionFormInput = z.input<typeof trainingSessionFormSchema>
 export type TrainingSessionFormValue = z.output<typeof trainingSessionFormSchema>
-export type TrainingSessionImportRowInput = z.input<typeof trainingSessionImportRowSchema>
-export type TrainingSessionImportRow = z.output<typeof trainingSessionImportRowSchema>
-export type TrainingSessionExportRow = z.infer<typeof trainingSessionExportRowSchema>
+export type TrainingSessionCsvRow = z.input<typeof trainingSessionCsvRowCodec>
+export type TrainingSessionImportRow = z.output<typeof trainingSessionCsvRowCodec>

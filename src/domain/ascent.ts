@@ -1,17 +1,15 @@
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
+import { isAscentStyleValidForTries } from './ascent-rules'
 import {
   calendarDateSchema,
   convexSystemFields,
-  emptyOrIntegerCellSchema,
-  emptyOrNonEmptyStringSchema,
-  emptyStringToUndefined,
-  integerCellSchema,
   nonEmptyStringSchema,
   nonNegativeIntegerSchema,
-  optionalFormStringSchema,
-  optionalIntegerCellSchema,
+  createOptionalIntegerCellCodec,
+  optionalEnumCodec,
   optionalNonEmptyStringSchema,
-  positiveIntegerCellSchema,
+  optionalTextCodec,
+  positiveIntegerCellCodec,
   positiveIntegerSchema,
   serverControlledFields,
 } from './common'
@@ -122,6 +120,19 @@ export const ascentProfileSchema = z.enum(ASCENT_PROFILES)
 const MAX_ASCENT_RATING = 5
 const ratingSchema = z.number().int().min(0).max(MAX_ASCENT_RATING)
 
+function validateRedpointStyleForTries(
+  ascent: { style: (typeof ASCENT_STYLES)[number]; tries: number | string },
+  context: z.RefinementCtx,
+) {
+  if (isAscentStyleValidForTries(ascent.style, ascent.tries)) return
+
+  context.addIssue({
+    code: 'custom',
+    message: 'Ascents with more than 1 try must use Redpoint style',
+    path: ['style'],
+  })
+}
+
 const ascentDomainFields = {
   area: optionalNonEmptyStringSchema,
   comments: optionalNonEmptyStringSchema,
@@ -139,7 +150,10 @@ const ascentDomainFields = {
   tries: positiveIntegerSchema,
 } as const
 
-export const ascentDomainSchema = z.object(ascentDomainFields).strict()
+export const ascentDomainSchema = z
+  .object(ascentDomainFields)
+  .strict()
+  .superRefine(validateRedpointStyleForTries)
 
 export const ascentStoredFieldsSchema = z
   .object({
@@ -156,86 +170,46 @@ export const ascentStoredDocumentSchema = z
   })
   .strict()
 
-export const ascentPublicInputSchema = z.object(ascentDomainFields).strict()
+export const ascentPublicInputSchema = z
+  .object(ascentDomainFields)
+  .strict()
+  .superRefine(validateRedpointStyleForTries)
 
-export const ascentPublicOutputSchema = z
+const ascentPublicOutputObjectSchema = z
   .object({
     ...ascentDomainFields,
     ...convexSystemFields,
   })
   .strict()
 
-export const ascentListOutputSchema = ascentPublicOutputSchema.omit({ comments: true })
+export const ascentPublicOutputSchema = ascentPublicOutputObjectSchema
 
-const optionalFormIntegerSchema = z.preprocess(
-  emptyStringToUndefined,
-  z.coerce.number().int().min(0).optional(),
-)
+export const ascentListOutputSchema = ascentPublicOutputObjectSchema.omit({ comments: true })
 
-const optionalFormRatingSchema = z.preprocess(
-  emptyStringToUndefined,
-  z.coerce.number().int().min(0).max(MAX_ASCENT_RATING).optional(),
-)
+const ascentFormFields = {
+  discipline: ascentDisciplineSchema,
+  name: nonEmptyStringSchema,
+  grade: ascentGradeSchema,
+  crag: nonEmptyStringSchema,
+  date: calendarDateSchema,
+  style: ascentStyleSchema,
+  tries: positiveIntegerCellCodec,
+  area: optionalTextCodec,
+  comments: optionalTextCodec,
+  height: createOptionalIntegerCellCodec(),
+  holds: optionalEnumCodec(ASCENT_HOLDS),
+  personalGrade: optionalEnumCodec(ASCENT_GRADES),
+  profile: optionalEnumCodec(ASCENT_PROFILES),
+  rating: createOptionalIntegerCellCodec(ratingSchema),
+} as const
 
-const optionalFormEnum = <T extends z.EnumValues>(values: T) =>
-  z.preprocess(emptyStringToUndefined, z.enum(values).optional())
+export const ascentFormObjectSchema = z.object(ascentFormFields).strict()
 
-export const ascentFormSchema = z
-  .object({
-    area: optionalFormStringSchema,
-    comments: optionalFormStringSchema,
-    crag: nonEmptyStringSchema,
-    date: calendarDateSchema,
-    discipline: ascentDisciplineSchema,
-    grade: ascentGradeSchema,
-    height: optionalFormIntegerSchema,
-    holds: optionalFormEnum(ASCENT_HOLDS),
-    name: nonEmptyStringSchema,
-    personalGrade: optionalFormEnum(ASCENT_GRADES),
-    profile: optionalFormEnum(ASCENT_PROFILES),
-    rating: optionalFormRatingSchema,
-    style: ascentStyleSchema,
-    tries: z.coerce.number().int().min(1),
-  })
-  .strict()
+export const ascentFormSchema = ascentFormObjectSchema.superRefine(validateRedpointStyleForTries)
 
-export const ascentImportRowSchema = z
-  .object({
-    area: optionalFormStringSchema,
-    comments: optionalFormStringSchema,
-    crag: nonEmptyStringSchema,
-    date: calendarDateSchema,
-    discipline: ascentDisciplineSchema,
-    grade: ascentGradeSchema,
-    height: optionalIntegerCellSchema,
-    holds: optionalFormEnum(ASCENT_HOLDS),
-    name: nonEmptyStringSchema,
-    personalGrade: optionalFormEnum(ASCENT_GRADES),
-    profile: optionalFormEnum(ASCENT_PROFILES),
-    rating: z.preprocess(emptyStringToUndefined, integerCellSchema.pipe(ratingSchema).optional()),
-    style: ascentStyleSchema,
-    tries: positiveIntegerCellSchema,
-  })
-  .strict()
-
-export const ascentExportRowSchema = z
-  .object({
-    discipline: ascentDisciplineSchema,
-    name: nonEmptyStringSchema,
-    grade: ascentGradeSchema,
-    crag: nonEmptyStringSchema,
-    date: calendarDateSchema,
-    style: ascentStyleSchema,
-    tries: z.string().regex(/^[1-9]\d*$/u),
-    area: emptyOrNonEmptyStringSchema,
-    comments: emptyOrNonEmptyStringSchema,
-    height: emptyOrIntegerCellSchema,
-    holds: z.union([z.literal(''), ascentHoldsSchema]),
-    personalGrade: z.union([z.literal(''), ascentGradeSchema]),
-    profile: z.union([z.literal(''), ascentProfileSchema]),
-    rating: z.union([z.literal(''), z.string().regex(/^[0-5]$/u)]),
-  })
-  .strict()
+export const ascentCsvRowCodec = z
+  .object(ascentFormFields)
+  .superRefine(validateRedpointStyleForTries)
 
 export type AscentDomain = z.infer<typeof ascentDomainSchema>
 export type AscentRecord = AscentDomain & { _id: string }
@@ -246,6 +220,5 @@ export type AscentPublicInput = z.infer<typeof ascentPublicInputSchema>
 export type AscentPublicOutput = z.infer<typeof ascentPublicOutputSchema>
 export type AscentFormInput = z.input<typeof ascentFormSchema>
 export type AscentFormValue = z.output<typeof ascentFormSchema>
-export type AscentImportRowInput = z.input<typeof ascentImportRowSchema>
-export type AscentImportRow = z.output<typeof ascentImportRowSchema>
-export type AscentExportRow = z.infer<typeof ascentExportRowSchema>
+export type AscentCsvRow = z.input<typeof ascentCsvRowCodec>
+export type AscentImportRow = z.output<typeof ascentCsvRowCodec>

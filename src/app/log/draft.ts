@@ -12,10 +12,11 @@ import {
   energySystemSchema,
   trainingSessionTypeSchema,
 } from '~/domain/training-session'
-import { z } from '~/helpers/zod'
+import { LOG_SCOPES } from '~/domain/climbing-log'
+import { z } from 'zod'
 
-export const LOG_DRAFT_VERSION = 1
-export const LOG_STEP_VALUES = ['common', 'training', 'ascents'] as const
+export const LOG_DRAFT_VERSION = 2
+export const LOG_STEP_VALUES = ['general', 'training', 'ascents'] as const
 
 const optionalDraftValue = <T extends z.ZodType>(schema: T) => z.union([z.literal(''), schema])
 
@@ -52,8 +53,8 @@ export const logDraftSchema = z
     ascents: ascentDraftSchema.array(),
     date: z.string(),
     discipline: ascentDisciplineSchema,
-    includeTraining: z.boolean(),
     location: z.string(),
+    scope: z.enum(LOG_SCOPES),
     training: trainingDraftSchema,
   })
   .strict()
@@ -70,19 +71,30 @@ export type AscentDraft = z.infer<typeof ascentDraftSchema>
 export type LogDraft = z.infer<typeof logDraftSchema>
 export type LogStep = (typeof LOG_STEP_VALUES)[number]
 
-export function createAscentDraft(
-  discipline: LogDraft['discipline'],
-  latestAscent?: AscentRecord,
-): AscentDraft {
+type AscentHistoryDefaults = Pick<AscentRecord, 'area' | 'crag' | 'discipline' | 'grade'>
+
+type CreateAscentDraftOptions = {
+  defaultGrade?: AscentDraft['grade']
+  discipline: LogDraft['discipline']
+  historyDefaults?: AscentHistoryDefaults
+}
+
+export function createAscentDraft({
+  defaultGrade,
+  discipline,
+  historyDefaults,
+}: CreateAscentDraftOptions): AscentDraft {
+  const grade = defaultGrade ?? historyDefaults?.grade ?? '6a'
+
   return {
-    area: latestAscent?.area ?? '',
+    area: historyDefaults?.area ?? '',
     comments: '',
     discipline,
-    grade: latestAscent?.grade ?? '6a',
+    grade,
     height: '',
     holds: '',
     name: '',
-    personalGrade: latestAscent?.personalGrade ?? latestAscent?.grade ?? '6a',
+    personalGrade: grade,
     profile: '',
     rating: '',
     style: discipline === 'Bouldering' ? 'Flash' : 'Onsight',
@@ -90,20 +102,34 @@ export function createAscentDraft(
   }
 }
 
-export function createInitialLogDraft(latestAscent?: AscentRecord): LogDraft {
-  const discipline = latestAscent?.discipline ?? 'Sport'
+type CreateInitialLogDraftOptions = {
+  defaultGrade?: AscentDraft['grade']
+  defaultScope?: LogDraft['scope']
+  defaultTrainingEnergySystem?: LogDraft['training']['energySystem']
+  defaultTrainingType?: LogDraft['training']['type']
+  historyDefaults?: AscentHistoryDefaults
+}
+
+export function createInitialLogDraft({
+  defaultGrade,
+  defaultScope = 'ascents',
+  defaultTrainingEnergySystem = '',
+  defaultTrainingType = 'Outdoor',
+  historyDefaults,
+}: CreateInitialLogDraftOptions = {}): LogDraft {
+  const discipline = historyDefaults?.discipline ?? 'Sport'
   return {
-    ascents: [],
+    ascents: [createAscentDraft({ defaultGrade, discipline, historyDefaults })],
     date: stringifyDate(new Date()).data ?? '',
     discipline,
-    includeTraining: false,
-    location: latestAscent?.crag ?? '',
+    location: historyDefaults?.crag ?? '',
+    scope: defaultScope,
     training: {
       anatomicalRegion: '',
       comments: '',
-      energySystem: '',
+      energySystem: defaultTrainingEnergySystem,
       intensity: '',
-      type: 'Outdoor',
+      type: defaultTrainingType,
       volume: '',
     },
   }

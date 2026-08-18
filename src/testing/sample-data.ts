@@ -1,5 +1,5 @@
-import { ascentImportRowSchema } from '~/domain/ascent'
-import { trainingSessionImportRowSchema } from '~/domain/training-session'
+import { ascentCsvRowCodec } from '~/domain/ascent'
+import { trainingSessionCsvRowCodec } from '~/domain/training-session'
 import type { Ascent } from '~/schema/ascent'
 import type { TrainingSession } from '~/schema/training'
 import ascentsData from '../../tests/fixtures/ascents.json'
@@ -12,9 +12,9 @@ import trainingSessionsData from '../../tests/fixtures/training-sessions.json'
  * of hand-crafted fixtures.
  */
 export const sampleAscents: Ascent[] = ascentsData.map((row, index) =>
-  Object.assign({}, ascentImportRowSchema.parse(row), { _id: `sample-ascent-${index}` }),
+  Object.assign({}, ascentCsvRowCodec.parse(row), { _id: `sample-ascent-${index}` }),
 )
 
 export const sampleTrainingSessions: TrainingSession[] = trainingSessionsData.map((row, index) =>
-  Object.assign({}, trainingSessionImportRowSchema.parse(row), { _id: `sample-training-${index}` }),
+  Object.assign({}, trainingSessionCsvRowCodec.parse(row), { _id: `sample-training-${index}` }),
 )

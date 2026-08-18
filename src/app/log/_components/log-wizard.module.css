@@ -1,3 +1,16 @@
+.wizardHeader {
+  position: sticky;
+  inset-block-start: var(--size-2);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+  padding-block: var(--size-1);
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
 .progress {
   display: flex;
   flex-wrap: wrap;
@@ -26,6 +39,12 @@
   &:hover {
     color: var(--text-1);
   }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
 }
 
 .activeStep {
@@ -33,47 +52,38 @@
   border-color: var(--patagonia-color-4);
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--size-2);
-  padding-block-start: var(--size-2);
-
-  & > * {
-    flex: 1 1 12rem;
-  }
-}
-
-.button {
-  padding-block: 0.5em;
-  padding-inline: 1.25em;
-  color: var(--text-1);
-  background: var(--control-bg);
-  border: 1px solid var(--control-border-hover);
+.resetButton {
+  flex: none;
+  padding: var(--size-1) var(--size-2);
+  color: var(--text-2);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-2);
-  transition:
-    background 0.2s,
-    border-color 0.2s,
-    scale 0.1s;
 
   &:hover {
-    background: var(--control-bg-focus);
+    color: var(--red-6);
+    border-color: var(--control-border-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
     border-color: var(--control-border-focus);
-  }
-
-  &:active {
-    scale: 0.97;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+    box-shadow: 0 0 0 3px var(--control-ring);
   }
 }
 
-.formPanel {
+.stepContent {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-content: start;
+  gap: var(--size-2);
+  min-block-size: clamp(30rem, 55vh, 42rem);
   view-transition-name: log-wizard-step;
+
+  & > * {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -103,18 +113,13 @@
   }
 }
 
-.divider {
-  block-size: 2px;
-  margin-block: var(--size-2) 0;
-  background: linear-gradient(to right, transparent, var(--patagonia-color-4) 50%, transparent);
-  opacity: 0.7;
-}
-
 .ascentCard {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--size-2) var(--size-3);
   padding: var(--size-3);
+  margin-block-end: var(--size-4);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-2);
 
@@ -128,6 +133,16 @@
 }
 
 .gradeFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-3);
+
+  @media (width <= 40rem) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ascentDetailsFields {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--size-3);
@@ -150,9 +165,107 @@
 }
 
 .removeButton {
+  display: grid;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  padding: 0;
   color: var(--text-2);
   background: transparent;
   border: 0;
+  border-radius: 50%;
+
+  &:hover {
+    color: var(--red-6);
+    background: var(--control-bg-focus);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
+}
+
+.addAscentButton {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 50%;
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  color: var(--text-1);
+  background: var(--control-bg);
+  border: 1px solid var(--control-border-hover);
+  border-radius: 50%;
+  box-shadow: var(--shadow-2);
+  transform: translate(-50%, 50%);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.1s;
+
+  &:hover {
+    background: var(--control-bg-focus);
+    border-color: var(--control-border-focus);
+  }
+
+  &:active {
+    transform: translate(-50%, 50%) scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--control-border-focus);
+    box-shadow: 0 0 0 3px var(--control-ring);
+  }
+}
+
+.submitAction {
+  display: flex;
+  justify-content: center;
+  padding-block-start: var(--size-2);
+}
+
+.emptyAddAscentButton {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: var(--size-1);
+  padding: var(--size-2) var(--size-3);
+  color: var(--text-1);
+  background: var(--control-bg);
+  border: 1px solid var(--control-border-hover);
+  border-radius: var(--radius-2);
+}
+
+.resetDialogContent {
+  display: grid;
+  gap: var(--size-3);
+  padding: var(--size-4);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-3);
+}
+
+.resetDialogActions {
+  display: flex;
+  justify-content: end;
+  gap: var(--size-2);
+
+  & > button {
+    padding: var(--size-1) var(--size-3);
+    color: var(--text-1);
+    background: var(--control-bg);
+    border: 1px solid var(--control-border);
+    border-radius: var(--radius-2);
+  }
+}
+
+.dangerButton {
+  color: white !important;
+  background: var(--red-6) !important;
 }
 
 .error {

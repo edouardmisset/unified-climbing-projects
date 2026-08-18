@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { calendarDateSchema, emptyStringToUndefined } from './common'
+import {
+  calendarDateSchema,
+  integerCellCodec,
+  optionalIntegerCellCodec,
+  optionalPercentCellCodec,
+  optionalTextCodec,
+} from './common'
 
 describe('calendarDateSchema', () => {
   it.each(['2024-02-29', '2025-01-01', '0000-01-01'])(
@@ -17,14 +23,27 @@ describe('calendarDateSchema', () => {
   )
 })
 
-describe('emptyStringToUndefined', () => {
-  it('normalizes empty and whitespace-only strings', () => {
-    expect(emptyStringToUndefined('')).toBeUndefined()
-    expect(emptyStringToUndefined('   ')).toBeUndefined()
+describe('form codecs', () => {
+  const missingValue: { value?: never } = {}
+
+  it('round-trips optional text through its canonical form representation', () => {
+    expect(optionalTextCodec.decode('   ')).toBeUndefined()
+    expect(optionalTextCodec.encode(missingValue.value)).toBe('')
+    expect(optionalTextCodec.decode(' value ')).toBe('value')
+    expect(optionalTextCodec.encode(' value ')).toBe('value')
   })
 
-  it('preserves non-empty strings and non-string values', () => {
-    expect(emptyStringToUndefined(' value ')).toBe(' value ')
-    expect(emptyStringToUndefined(0)).toBe(0)
+  it('round-trips required and optional integers', () => {
+    expect(integerCellCodec.decode('42')).toBe(42)
+    expect(integerCellCodec.encode(42)).toBe('42')
+    expect(optionalIntegerCellCodec.decode('')).toBeUndefined()
+    expect(optionalIntegerCellCodec.encode(missingValue.value)).toBe('')
+  })
+
+  it('validates percentages in both directions', () => {
+    expect(optionalPercentCellCodec.decode('75')).toBe(75)
+    expect(optionalPercentCellCodec.encode(75)).toBe('75')
+    expect(optionalPercentCellCodec.safeDecode('101').success).toBe(false)
+    expect(optionalPercentCellCodec.safeEncode(101).success).toBe(false)
   })
 })

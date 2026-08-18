@@ -11,7 +11,7 @@ export default function LogPage() {
     <Suspense fallback={<Loader />}>
       <SignedIn>
         <Layout gridClassName='padding' title='Log'>
-          <span aria-describedby='form-description' className='visuallyHidden'>
+          <span className='visuallyHidden' id='form-description'>
             Wizard to log a training session, one or more climbing ascents, or both
           </span>
           <Suspense fallback={<Loader />}>

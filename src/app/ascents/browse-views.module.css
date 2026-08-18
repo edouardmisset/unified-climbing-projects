@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.viewSwitch {
+  display: flex;
+  align-self: center;
+  gap: var(--size-1);
+  margin: var(--size-3) var(--size-3) 0;
+  padding: var(--size-1);
+  background: color-mix(in oklch, var(--control-bg), transparent 10%);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-2);
+
+  button {
+    min-block-size: 2.25rem;
+    padding-inline: var(--size-3);
+    color: var(--text-2);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-2);
+
+    &[data-selected='true'] {
+      color: var(--accent);
+      background: color-mix(in oklch, var(--accent), transparent 86%);
+      border-color: color-mix(in oklch, var(--accent), transparent 45%);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--control-border-focus);
+      box-shadow: 0 0 0 3px var(--control-ring);
+    }
+  }
+}

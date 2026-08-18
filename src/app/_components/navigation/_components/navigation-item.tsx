@@ -1,18 +1,12 @@
 import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
+import { splitNavigationLabel } from '../helpers'
+import { NavigationDisclosure } from './navigation-disclosure'
 import styles from '../navigation.module.css'
 
 type NavigationItemProps = {
   item: NavigationElement
   onNavigate?: () => void
-}
-
-function splitNavigationLabel(label: string) {
-  const [icon = label, ...labelParts] = label.trim().split(/\s+/u)
-  return {
-    icon,
-    text: labelParts.join(' ') || label,
-  }
 }
 
 export function NavigationItem({ item, onNavigate }: NavigationItemProps) {
@@ -46,6 +40,9 @@ export function NavigationItem({ item, onNavigate }: NavigationItemProps) {
     )
 
   const { icon, text } = splitNavigationLabel(item.label)
+
+  if (item.type === 'disclosure')
+    return <NavigationDisclosure icon={icon} item={item} onNavigate={onNavigate} text={text} />
 
   return (
     <li className={styles.group}>

@@ -6,23 +6,25 @@ import { useId } from 'react'
 import { fromNumberToGrade } from '~/helpers/grade-converter'
 import { GRADE_TO_NUMBER } from '~/schema/ascent'
 import baseUiStyles from '../ui/base-ui/base-ui-primitives.module.css'
-import customLabelStyles from '../ui/custom-label/custom-label.module.css'
 import { CursorGrowIcon } from '../svg/cursor-grow/cursor-grow'
 import styles from './grade-input.module.css'
 
 const globalMinGrade = Math.min(...Object.values(GRADE_TO_NUMBER))
 const globalMaxGrade = Math.max(...Object.values(GRADE_TO_NUMBER))
 
-export function GradeInput(
-  props: NumberField.Root.Props & {
-    label?: string
-    gradeType?: 'Personal' | 'Topo'
-  },
-) {
+type GradeInputProps = Omit<NumberField.Root.Props, 'onValueChange' | 'value'> & {
+  gradeType?: 'Personal' | 'Topo'
+  label?: string
+  onValueChange: NonNullable<NumberField.Root.Props['onValueChange']>
+  value: number | null
+}
+
+export function GradeInput(props: GradeInputProps) {
   const {
     className = '',
     label,
     onValueChange,
+    required,
     value,
     gradeType = 'Topo',
     min = globalMinGrade,
@@ -30,11 +32,6 @@ export function GradeInput(
     ...rest
   } = props
   const id = useId()
-
-  if (value === undefined || !onValueChange) {
-    console.error('This should be a controlled component')
-    return
-  }
 
   return (
     <NumberField.Root
@@ -46,11 +43,15 @@ export function GradeInput(
       max={max}
       min={min}
       onValueChange={onValueChange}
+      required={required}
       value={value}
     >
       <NumberField.ScrubArea className={styles.ScrubArea}>
         {label === undefined || label === '' ? undefined : (
-          <label className={`${customLabelStyles.labelText} ${styles.Label}`} htmlFor={id}>
+          <label
+            className={`${styles.Label} ${required === true ? styles.RequiredLabel : ''}`}
+            htmlFor={id}
+          >
             {label}
           </label>
         )}
@@ -70,7 +71,11 @@ export function GradeInput(
           className={styles.Input}
           inputMode='text'
           render={renderProps => (
-            <input {...renderProps} value={value === null ? '' : fromNumberToGrade(value)} />
+            <input
+              {...renderProps}
+              required={required}
+              value={value === null ? '' : fromNumberToGrade(value)}
+            />
           )}
           title={`The ${gradeType.toLocaleLowerCase()} grade of the ascent`}
         />

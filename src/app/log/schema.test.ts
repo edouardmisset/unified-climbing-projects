@@ -9,19 +9,19 @@ const ascent = {
   tries: '2',
 } as const
 
-const common = {
+const generalDetails = {
   date: '2026-07-30',
   discipline: 'Sport',
   location: 'Céüse',
+  scope: 'ascents',
   training: {},
 } as const
 
 describe('climbing log form schema', () => {
   it('creates a canonical ascent-only log', () => {
     const result = climbingLogFormSchema.parse({
-      ...common,
+      ...generalDetails,
       ascents: [ascent],
-      includeTraining: false,
     })
 
     expect(result).toStrictEqual({
@@ -42,9 +42,9 @@ describe('climbing log form schema', () => {
 
   it('creates a canonical training-only log', () => {
     const result = climbingLogFormSchema.parse({
-      ...common,
+      ...generalDetails,
       ascents: [],
-      includeTraining: true,
+      scope: 'training',
       training: {
         intensity: '80',
         type: 'Endurance',
@@ -67,9 +67,9 @@ describe('climbing log form schema', () => {
 
   it('supports a combined log with per-ascent discipline overrides', () => {
     const result = climbingLogFormSchema.parse({
-      ...common,
+      ...generalDetails,
       ascents: [ascent, { ...ascent, discipline: 'Bouldering', name: 'Big Boss' }],
-      includeTraining: true,
+      scope: 'both',
       training: { type: 'Outdoor' },
     })
 
@@ -83,16 +83,14 @@ describe('climbing log form schema', () => {
   it('rejects empty logs and ascents without a location', () => {
     expect(
       climbingLogFormSchema.safeParse({
-        ...common,
+        ...generalDetails,
         ascents: [],
-        includeTraining: false,
       }).success,
     ).toBe(false)
     expect(
       climbingLogFormSchema.safeParse({
-        ...common,
+        ...generalDetails,
         ascents: [ascent],
-        includeTraining: false,
         location: '',
       }).success,
     ).toBe(false)

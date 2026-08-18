@@ -1,4 +1,4 @@
-import { z } from '~/helpers/zod'
+import { z } from 'zod'
 
 export const TIMEFRAMES = ['year', 'last-12-months', 'all-time'] as const
 export const timeframeSchema = z.enum(TIMEFRAMES)

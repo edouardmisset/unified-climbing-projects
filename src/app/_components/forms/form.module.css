@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   gap: var(--size-1);
-  margin-block-end: var(--size-1);
+  margin-block: 0 var(--size-1);
   font-size: var(--font-size-0);
   font-weight: var(--font-weight-7);
   letter-spacing: 0.12em;
@@ -54,6 +54,12 @@
   }
 }
 
+.requiredLabel::after {
+  margin-inline-start: 0.15em;
+  color: var(--red-6);
+  content: '*';
+}
+
 .row {
   display: grid;
   grid-template-columns: subgrid;
@@ -74,9 +80,11 @@
 }
 
 .input {
-  max-inline-size: calc(75ch / 2 - var(--size-3) - var(--size-fluid-2));
-  padding-block: 0.5em;
-  padding-inline: 1em;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 2.75rem;
+  padding-block: 0.5rem;
+  padding-inline: var(--size-3);
 
   background: var(--control-bg);
   backdrop-filter: blur(8px);
@@ -87,11 +95,7 @@
     background 0.2s,
     box-shadow 0.2s;
 
-  &:is(select) {
-    min-block-size: var(--size-7);
-  }
-
-  &:focus {
+  &:focus-visible {
     outline: none;
     background: var(--control-bg-focus);
     border-color: var(--control-border-focus);
@@ -102,13 +106,15 @@
     text-align: end;
   }
 
-  &:hover:not(:focus) {
+  &:hover:not(:focus-visible) {
     border-color: var(--control-border-hover);
   }
 }
 
 .textarea {
-  max-inline-size: 100%;
+  block-size: auto;
+  min-block-size: 8rem;
+  resize: vertical;
 }
 
 .footer {

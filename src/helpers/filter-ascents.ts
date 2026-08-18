@@ -1,6 +1,6 @@
 import { isDateInRange } from '@edouardmisset/date'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
-import type { z } from '~/helpers/zod'
+import type { z } from 'zod'
 import type { Ascent } from '~/schema/ascent.ts'
 import { PERIOD_TO_DATES } from '~/schema/generic.ts'
 import type { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
