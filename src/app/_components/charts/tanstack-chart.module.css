@@ -2,11 +2,3 @@
   inline-size: 100%;
   min-inline-size: 0;
 }
-
-.chartSurface [class~='ts-chart__legend'] circle {
-  r: 6px;
-}
-
-.chartSurface [class~='ts-chart__legend'] text {
-  font-size: 13px;
-}

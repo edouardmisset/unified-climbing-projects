@@ -6,7 +6,6 @@ import {
   areaY,
   barX,
   barY,
-  colorLegend,
   defineChart,
   group,
   lineY,
@@ -14,8 +13,10 @@ import {
   text,
   type ChartPoint,
   type ChartCurve,
+  type ChartColorLegend,
   type ChartTooltipContent,
   type ChartTooltipContentContext,
+  type SceneNode,
 } from '@tanstack/charts'
 import { pie, polar, radialArc, radialText } from '@tanstack/charts/polar'
 import { Chart } from '@tanstack/charts/react'
@@ -33,10 +34,111 @@ const POINT_PADDING = 0.15
 const DONUT_INNER_RADIUS_RATIO = 0.5
 const MIN_DONUT_LABEL_FRACTION = 0.06
 const CURVE_TENSION_DENOMINATOR = 6
+const LEGEND_DOT_RADIUS = 6
+const LEGEND_FONT_SIZE = 13
+const LEGEND_ROW_HEIGHT = 26
+const LEGEND_ITEM_GAP = 24
+const LEGEND_DOT_LABEL_GAP = 9
+const LEGEND_MIN_ITEM_WIDTH = 96
+const LEGEND_CHARACTER_WIDTH = 7
 const percentFormatter = new Intl.NumberFormat(undefined, {
   style: 'percent',
   maximumFractionDigits: 1,
 })
+
+type LegendItem = { color: string; key: string; label: string; width: number }
+
+function layoutLegendRows(items: readonly LegendItem[], width: number): LegendItem[][] {
+  const rows: LegendItem[][] = []
+  let row: LegendItem[] = []
+  let rowWidth = 0
+  for (const item of items) {
+    const nextWidth = rowWidth + (row.length === 0 ? 0 : LEGEND_ITEM_GAP) + item.width
+    if (row.length > 0 && nextWidth > width) {
+      rows.push(row)
+      row = [item]
+      rowWidth = item.width
+    } else {
+      row.push(item)
+      rowWidth = nextWidth
+    }
+  }
+  if (row.length > 0) rows.push(row)
+  return rows
+}
+
+function legendItems(colors: Parameters<ChartColorLegend['render']>[0]['colors']): LegendItem[] {
+  return colors.domain.map(value => {
+    const label = String(value)
+    return {
+      // oxlint-disable-next-line unicorn/no-array-callback-reference -- This is a color-scale lookup, not Array.map.
+      color: colors.map(value),
+      key: label,
+      label,
+      width: Math.max(
+        LEGEND_MIN_ITEM_WIDTH,
+        LEGEND_DOT_RADIUS * 2 + LEGEND_DOT_LABEL_GAP + label.length * LEGEND_CHARACTER_WIDTH,
+      ),
+    }
+  })
+}
+
+const STANDARD_LEGEND: ChartColorLegend = {
+  placement: 'bottom',
+  height: (_itemCount, context) =>
+    Math.max(1, layoutLegendRows(legendItems(context.colors), context.bounds.width).length) *
+    LEGEND_ROW_HEIGHT,
+  render: context => {
+    const rows = layoutLegendRows(legendItems(context.colors), context.bounds.width)
+    const children: SceneNode[] = []
+    rows.forEach((row, rowIndex) => {
+      const rowWidth =
+        row.reduce((sum, item) => sum + item.width, 0) +
+        Math.max(0, row.length - 1) * LEGEND_ITEM_GAP
+      let x = context.bounds.x + (context.bounds.width - rowWidth) / 2
+      const y = context.bounds.y + LEGEND_ROW_HEIGHT * rowIndex + LEGEND_ROW_HEIGHT / 2
+      children.push({
+        kind: 'rect',
+        key: `legend-row-bounds:${rowIndex}`,
+        x,
+        y: y - LEGEND_ROW_HEIGHT / 2,
+        width: rowWidth,
+        height: LEGEND_ROW_HEIGHT,
+        style: { fill: 'transparent' },
+      })
+      row.forEach(item => {
+        children.push(
+          {
+            kind: 'dot',
+            key: `legend-dot:${item.key}`,
+            x: x + LEGEND_DOT_RADIUS,
+            y,
+            radius: LEGEND_DOT_RADIUS,
+            style: { fill: item.color },
+          },
+          {
+            kind: 'label',
+            key: `legend-label:${item.key}`,
+            x: x + LEGEND_DOT_RADIUS * 2 + LEGEND_DOT_LABEL_GAP,
+            y,
+            text: item.label,
+            baseline: 'middle',
+            fontSize: LEGEND_FONT_SIZE,
+            style: { fill: context.theme.foreground },
+          },
+        )
+        x += item.width + LEGEND_ITEM_GAP
+      })
+    })
+    return {
+      kind: 'group',
+      key: 'legend',
+      className: 'ts-chart__legend',
+      ariaHidden: true,
+      children,
+    }
+  },
+}
 
 function smoothLine(points: readonly (readonly [number, number])[]): string {
   const [first] = points
@@ -136,7 +238,7 @@ function colorOptions(series: readonly ChartSeries[], legend: boolean) {
   return {
     domain: series.map(config => config.label ?? config.key),
     range: series.map(config => config.color),
-    legend: legend ? colorLegend({ itemWidth: 150, placement: 'bottom' }) : undefined,
+    legend: legend ? STANDARD_LEGEND : undefined,
   }
 }
 
@@ -458,7 +560,7 @@ export function TanStackDonutChart({
     color: {
       domain: data.map(item => item.label),
       range: data.map(item => item.color),
-      legend: legend ? colorLegend() : undefined,
+      legend: legend ? STANDARD_LEGEND : undefined,
     },
     tooltip: {
       use: tooltip,
