@@ -5,7 +5,7 @@ import { TrainingSessionsDistribution } from './training-sessions-distribution'
 import { getSessionsDistributionData } from './get-sessions-distribution-data'
 
 describe('trainingSessionsDistribution', () => {
-  it('renders one bar series per real distinct category', async () => {
+  it('renders the session-distribution bar mark', async () => {
     const { data } = getSessionsDistributionData(sampleTrainingSessions)
     const uniqueCategories = new Set(data.flatMap(category => category.data.map(point => point.x)))
     const screen = await render(
@@ -13,10 +13,30 @@ describe('trainingSessionsDistribution', () => {
     )
     const { container } = screen
 
+    // Data-level assertions
+    expect(data.length).toBeGreaterThan(0)
+    expect(data.every(category => typeof category.id === 'string')).toBe(true)
+    expect(data.every(category => Array.isArray(category.data))).toBe(true)
     expect(uniqueCategories.size).toBeGreaterThan(0)
+
     await expect.element(screen.getByText('Session Distribution')).toBeInTheDocument()
+    await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(1)
+
+    const bar = container.querySelector<SVGGraphicsElement>('.ts-chart__bar rect')
+    expect(bar).not.toBeNull()
+    const bounds = bar?.getBoundingClientRect()
+    bar?.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        clientX: (bounds?.left ?? 0) + (bounds?.width ?? 0) / 2,
+        clientY: (bounds?.top ?? 0) + (bounds?.height ?? 0) / 2,
+      }),
+    )
     await expect
-      .poll(() => container.querySelectorAll('.recharts-bar-rectangles').length)
-      .toBe(uniqueCategories.size)
+      .poll(() => {
+        const rows = [...globalThis.document.querySelectorAll('.ts-chart-tooltip__row')]
+        return rows.length > 0 && rows.every(row => row.textContent.includes('% ('))
+      })
+      .toBe(true)
   })
 })

@@ -29,3 +29,5 @@ peerDependencyRules:
   allowedVersions:
     vite: '*'
     vitest: '*'
+minimumReleaseAgeExclude:
+  - '@tanstack/charts@0.12.0'

@@ -1,7 +1,7 @@
 import { capitalize } from '@edouardmisset/text'
 import { isValidDate } from '@edouardmisset/date'
 import 'temporal-polyfill/global'
-import 'temporal-spec/global'
+import 'temporal-polyfill/types/global'
 import { DAYS_IN_WEEK, NOON_HOUR, US_LOCALE } from '~/constants/generic'
 import type { StringDate, ValueAndLabel } from '~/types/generic'
 import { frequencyBy } from './frequency-by'

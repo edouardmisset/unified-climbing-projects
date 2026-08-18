@@ -5,15 +5,15 @@ import { getTrainingSessionsGaugeData } from './get-training-sessions-gauge-data
 import { TrainingSessionsGauge } from './training-sessions-gauge'
 
 describe('trainingSessionsGauge', () => {
-  it('renders one stacked horizontal bar with one segment per session type', async () => {
-    const { typeData } = getTrainingSessionsGaugeData(sampleTrainingSessions)
-
+  it('renders one stacked horizontal bar with a percentage label per session group', async () => {
+    const { groupData } = getTrainingSessionsGaugeData(sampleTrainingSessions)
     const screen = await render(<TrainingSessionsGauge trainingSessions={sampleTrainingSessions} />)
     const { container } = screen
 
     await expect.element(screen.getByText('Training Sessions Gauge')).toBeInTheDocument()
+    await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(1)
     await expect
-      .poll(() => container.querySelectorAll('.recharts-bar-rectangles').length)
-      .toBe(typeData.length)
+      .poll(() => container.querySelectorAll('.ts-chart__text text').length)
+      .toBe(groupData.length)
   })
 })

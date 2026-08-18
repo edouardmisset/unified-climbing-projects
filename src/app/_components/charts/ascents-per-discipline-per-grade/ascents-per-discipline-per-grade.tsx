@@ -1,49 +1,32 @@
-import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { BAR_CATEGORY_GAP, GRID_STROKE } from '../constants'
-import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
-
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
+import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 import type { Ascent } from '~/schema/ascent'
 import { getAscentsPerDisciplinePerGrade } from './get-ascents-per-discipline-per-grade'
-import { CLIMBING_DISCIPLINE_TO_COLOR } from '~/constants/ascents'
 
-type AscentsPerDisciplinePerGradeDatum = ReturnType<typeof getAscentsPerDisciplinePerGrade>[number]
-
-const Chart = createHorizontalChart<AscentsPerDisciplinePerGradeDatum>()({
-  BarChart,
-  Bar,
-})
-
-const ROUTE_AND_BOULDER = ['Bouldering', 'Sport'] as const satisfies Ascent['discipline'][]
-
-const AXIS_LABELS = {
-  grades: 'Grades',
-  numberOfAscents: '# Ascents',
-}
+type Datum = ReturnType<typeof getAscentsPerDisciplinePerGrade>[number]
+const SERIES = ['Bouldering', 'Sport'].map(key => ({
+  key,
+  color: CLIMBING_DISCIPLINE_TO_COLOR[key as 'Bouldering' | 'Sport'],
+})) satisfies ChartSeries[]
+const getCategory = (datum: Datum) => datum.grade
 
 export function AscentsPerDisciplinePerGrade({ ascents }: { ascents: Ascent[] }) {
   const data = getAscentsPerDisciplinePerGrade(ascents)
-
-  const isSingleDiscipline =
-    data.every(({ Bouldering }) => !Bouldering) || data.every(({ Sport }) => !Sport)
-
-  if (data.length === 0) return
-  if (isSingleDiscipline) return
-
+  const isSingle = data.every(({ Bouldering }) => !Bouldering) || data.every(({ Sport }) => !Sport)
+  if (data.length === 0 || isSingle) return
   return (
     <ChartContainer caption='Ascents per Discipline per Grade'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart accessibilityLayer={false} barCategoryGap={BAR_CATEGORY_GAP} data={data}>
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' labelText={AXIS_LABELS.grades} />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
-          <ChartTooltip />
-          {ROUTE_AND_BOULDER.map(key => (
-            <Chart.Bar key={key} dataKey={key} fill={CLIMBING_DISCIPLINE_TO_COLOR[key]} />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Ascents per Discipline per Grade'
+        data={data}
+        getCategory={getCategory}
+        legend
+        mode='group'
+        series={SERIES}
+        x={{ label: 'Grades' }}
+        y={{ label: '# Ascents' }}
+      />
     </ChartContainer>
   )
 }

@@ -1,49 +1,10 @@
-import {
-  Bar,
-  BarChart,
-  createVerticalChart,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-  type LabelProps,
-} from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { AXIS_LABEL_STYLE, AXIS_TICK_STYLE, CURSOR_STYLE, TOOLTIP_STYLE } from '../constants'
-
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 import type { TrainingSession } from '~/schema/training'
 import { getSessionsDistributionData } from './get-sessions-distribution-data'
 
-const BAR_CATEGORY_GAP = '20%'
-
-const X_AXIS_LABEL = {
-  ...AXIS_LABEL_STYLE,
-  value: 'Number of Sessions',
-  offset: 20,
-  position: 'bottom',
-} as const satisfies LabelProps
-
-type ChartDatum = {
-  category: string
-  [key: string]: string | number
-}
-
-type BarConfig = {
-  dataKey: string
-  name: string
-  color: string
-}
-
-type SessionDistributionData = ReturnType<typeof getSessionsDistributionData>['data']
-
-const Chart = createVerticalChart<ChartDatum>()({
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-})
+type ChartDatum = { category: string; [key: string]: string | number }
+const getCategory = (datum: ChartDatum) => datum.category
 
 export function TrainingSessionsDistribution({
   trainingSessions,
@@ -51,61 +12,31 @@ export function TrainingSessionsDistribution({
   trainingSessions: TrainingSession[]
 }) {
   const { data, colors } = getSessionsDistributionData(trainingSessions)
-
-  const { chartData, barConfigs } = getChartDataAndBarConfigs(data, colors)
-
+  const seen = new Set<string>()
+  const series: ChartSeries[] = []
+  const chartData = data.map(category => {
+    const datum: ChartDatum = { category: category.id }
+    for (const point of category.data) {
+      datum[point.x] = point.y
+      if (!seen.has(point.x)) {
+        seen.add(point.x)
+        series.push({ key: point.x, label: point.x, color: colors[point.x] ?? 'var(--gray-5)' })
+      }
+    }
+    return datum
+  })
   if (chartData.length === 0) return
   return (
     <ChartContainer caption='Session Distribution'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart
-          accessibilityLayer={false}
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={chartData}
-          layout='vertical'
-        >
-          <Chart.XAxis label={X_AXIS_LABEL} tick={AXIS_TICK_STYLE} type='number' />
-          <Chart.YAxis dataKey='category' tick={AXIS_TICK_STYLE} type='category' width={150} />
-          <Tooltip contentStyle={TOOLTIP_STYLE} cursor={CURSOR_STYLE} trigger='click' />
-          <Legend position='top' />
-          {barConfigs.map(config => (
-            <Chart.Bar
-              key={config.dataKey}
-              dataKey={config.dataKey}
-              fill={config.color}
-              name={config.name}
-              stackId='a'
-            />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Session Distribution'
+        data={chartData}
+        getCategory={getCategory}
+        legend
+        orientation='horizontal'
+        series={series}
+        x={{ label: 'Number of Sessions' }}
+      />
     </ChartContainer>
   )
-}
-
-function getChartDataAndBarConfigs(data: SessionDistributionData, colors: Record<string, string>) {
-  const chartData: ChartDatum[] = []
-  const barConfigs: BarConfig[] = []
-  const seenKeys = new Set<string>()
-
-  for (const category of data) {
-    const datum: ChartDatum = { category: category.id }
-
-    for (const point of category.data) {
-      datum[point.x] = point.y
-
-      if (!seenKeys.has(point.x)) {
-        seenKeys.add(point.x)
-        barConfigs.push({
-          color: colors[point.x] ?? 'var(--gray-5)',
-          dataKey: point.x,
-          name: point.x,
-        })
-      }
-    }
-
-    chartData.push(datum)
-  }
-
-  return { barConfigs, chartData }
 }

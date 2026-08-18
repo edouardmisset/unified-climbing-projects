@@ -1,52 +1,29 @@
-import { Bar, BarChart, CartesianGrid, createHorizontalChart, ResponsiveContainer } from 'recharts'
-
 import { ChartContainer } from '../chart-container/chart-container'
-import { BAR_CATEGORY_GAP, GRID_STROKE } from '../constants'
-import { ChartXAxis, ChartYAxis, ChartTooltip } from '../chart-elements'
-
-import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
-import { getGradeFrequencyAndColors } from '../ascents-pyramid/get-grade-frequency'
+import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 import { ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
+import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
+import { getGradeFrequencyAndColors } from './get-grade-frequency'
 
-type GradeFrequencyDatum = ReturnType<typeof getGradeFrequencyAndColors>[number]
-
-const Chart = createHorizontalChart<GradeFrequencyDatum>()({
-  BarChart,
-  Bar,
-})
-
-const AXIS_LABELS = {
-  grades: 'Grades',
-  numberOfAscents: '# Ascents',
-}
+type Datum = ReturnType<typeof getGradeFrequencyAndColors>[number]
+const SERIES = ASCENT_STYLE.map(key => ({
+  key,
+  color: ASCENT_STYLE_TO_COLOR[key],
+})) satisfies ChartSeries[]
+const getCategory = (datum: Datum) => datum.grade
 
 export function AscentPyramid({ ascents }: { ascents: Ascent[] }) {
-  const gradeFrequency = getGradeFrequencyAndColors(ascents)
-
-  if (gradeFrequency.length === 0) return
-
+  const data = getGradeFrequencyAndColors(ascents)
+  if (data.length === 0) return
   return (
     <ChartContainer caption='Ascent Pyramid'>
-      <ResponsiveContainer height='100%' width='100%'>
-        <Chart.BarChart
-          accessibilityLayer={false}
-          barCategoryGap={BAR_CATEGORY_GAP}
-          data={gradeFrequency}
-        >
-          <CartesianGrid stroke={GRID_STROKE} vertical={false} />
-          <ChartXAxis dataKey='grade' />
-          <ChartYAxis labelText={AXIS_LABELS.numberOfAscents} />
-          <ChartTooltip />
-          {ASCENT_STYLE.map(style => (
-            <Chart.Bar
-              key={style}
-              dataKey={style}
-              fill={ASCENT_STYLE_TO_COLOR[style]}
-              stackId='styles'
-            />
-          ))}
-        </Chart.BarChart>
-      </ResponsiveContainer>
+      <TanStackBarChart
+        ariaLabel='Ascent Pyramid'
+        data={data}
+        getCategory={getCategory}
+        legend
+        series={SERIES}
+        y={{ label: '# Ascents' }}
+      />
     </ChartContainer>
   )
 }

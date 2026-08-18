@@ -11,6 +11,6 @@ describe('triesByGrade', () => {
     const { container } = screen
 
     await expect.element(screen.getByText('Tries by Grade')).toBeInTheDocument()
-    await expect.poll(() => container.querySelectorAll('.recharts-line').length).toBe(SERIES_COUNT)
+    await expect.poll(() => container.querySelectorAll('.ts-chart__line').length).toBe(SERIES_COUNT)
   })
 })
