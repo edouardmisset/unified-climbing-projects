@@ -25,15 +25,6 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
   if (data.length === 0) return
   return (
     <ChartContainer caption='Distance climbed per Year'>
-      <TanStackBarChart
-        ariaLabel='Total distance climbed per Year'
-        data={data}
-        getCategory={getCategory}
-        height={260}
-        series={DISTANCE_SERIES}
-        x={{ label: 'Years', tickFormat: formatYearTick }}
-        y={{ label: 'Total height', tickFormat: formatDistance }}
-      />
       <TanStackLineChart
         ariaLabel='Average height climbed per Year'
         data={data}
@@ -42,6 +33,15 @@ export function DistanceClimbedPerYear({ ascents }: { ascents: Ascent[] }) {
         series={AVERAGE_SERIES}
         x={{ label: 'Years', tickFormat: formatYearTick }}
         y={{ label: 'Average height', tickFormat: formatDistance }}
+      />
+      <TanStackBarChart
+        ariaLabel='Total distance climbed per Year'
+        data={data}
+        getCategory={getCategory}
+        height={260}
+        series={DISTANCE_SERIES}
+        x={{ label: 'Years', tickFormat: formatYearTick }}
+        y={{ label: 'Total height', tickFormat: formatDistance }}
       />
     </ChartContainer>
   )
