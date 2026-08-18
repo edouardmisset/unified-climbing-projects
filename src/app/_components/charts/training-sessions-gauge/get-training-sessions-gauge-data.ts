@@ -87,7 +87,7 @@ export function getTrainingSessionsGaugeData(sessions: TrainingSession[]): {
     ),
   ]
     .filter(group => group.total > 0)
-    .sort((a, b) => b.total - a.total || a.label.localeCompare(b.label))
+    .toSorted((a, b) => b.total - a.total || a.label.localeCompare(b.label))
 
   const groupData: TrainingSessionsGaugeDatum[] = groupedData.map(({ fill, id, label, total }) => ({
     fill,
@@ -115,7 +115,7 @@ function toGroupedData(group: TypeGroup, counts: Map<TrainingSessionType, number
       }
     })
     .filter(({ value }) => value > 0)
-    .sort((a, b) => b.value - a.value || a.label.localeCompare(b.label))
+    .toSorted((a, b) => b.value - a.value || a.label.localeCompare(b.label))
 
   return {
     id: group.id,

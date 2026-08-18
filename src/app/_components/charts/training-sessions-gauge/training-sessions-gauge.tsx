@@ -1,17 +1,21 @@
-import { createRadialChart, Pie, PieChart, ResponsiveContainer } from 'recharts'
+import { Bar, BarChart, createVerticalChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 import { ChartContainer } from '../chart-container/chart-container'
 import { ChartTooltip } from '../chart-elements'
 
 import type { TrainingSession } from '~/schema/training'
-import {
-  getTrainingSessionsGaugeData,
-  type TrainingSessionsGaugeDatum,
-} from './get-training-sessions-gauge-data'
+import { getTrainingSessionsGaugeData } from './get-training-sessions-gauge-data'
 
-const Chart = createRadialChart<TrainingSessionsGaugeDatum, string, string | number>()({
-  PieChart,
-  Pie,
+type GaugeChartDatum = {
+  category: string
+  [key: string]: string | number
+}
+
+const Chart = createVerticalChart<GaugeChartDatum>()({
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
 })
 
 export function TrainingSessionsGauge({
@@ -19,32 +23,30 @@ export function TrainingSessionsGauge({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const { groupData, typeData } = getTrainingSessionsGaugeData(trainingSessions)
+  const { groupData } = getTrainingSessionsGaugeData(trainingSessions)
+  const chartData = [
+    groupData.reduce<GaugeChartDatum>(
+      (datum, group) => {
+        datum[group.id] = group.value
+        return datum
+      },
+      { category: 'Sessions' },
+    ),
+  ]
 
   if (groupData.length === 0) return
 
   return (
     <ChartContainer caption='Training Sessions Gauge'>
       <ResponsiveContainer height='100%' width='100%'>
-        <Chart.PieChart accessibilityLayer={false}>
+        <Chart.BarChart accessibilityLayer={false} data={chartData} layout='vertical'>
           <ChartTooltip />
-          <Chart.Pie
-            data={groupData}
-            dataKey='value'
-            innerRadius='22%'
-            nameKey='label'
-            outerRadius='48%'
-            stroke='var(--surface-3)'
-          />
-          <Chart.Pie
-            data={typeData}
-            dataKey='value'
-            innerRadius='54%'
-            nameKey='label'
-            outerRadius='80%'
-            stroke='var(--surface-3)'
-          />
-        </Chart.PieChart>
+          <Chart.XAxis type='number' />
+          <Chart.YAxis dataKey='category' hide type='category' />
+          {groupData.map(({ fill, id, label }) => (
+            <Chart.Bar key={id} dataKey={id} fill={fill} name={label} stackId='sessions' />
+          ))}
+        </Chart.BarChart>
       </ResponsiveContainer>
     </ChartContainer>
   )
