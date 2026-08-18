@@ -6,7 +6,7 @@ import { AscentList } from './ascents-content'
 
 export default function Page() {
   return (
-    <Layout title='Ascents'>
+    <Layout title='Browse ascents'>
       <Suspense fallback={<Loader />}>
         <AscentList />
       </Suspense>

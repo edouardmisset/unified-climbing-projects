@@ -1,7 +1,7 @@
-import { FilteredAscentList } from '~/app/_components/filtered-ascents-list/filtered-ascents-list'
 import { getAllAscents } from '~/services/ascents'
+import { BrowseViews } from './browse-views'
 
 export async function AscentList() {
   const ascents = await getAllAscents()
-  return <FilteredAscentList ascents={ascents} />
+  return <BrowseViews ascents={ascents} />
 }

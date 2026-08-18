@@ -30,7 +30,7 @@ export default function LandingPage() {
                 </Link>
               </SignedOut>
               <SignedIn>
-                <Link className={styles.primaryAction} href='/wrap-up'>
+                <Link className={styles.primaryAction} href='/ascents/home'>
                   Open your log <span aria-hidden='true'>→</span>
                 </Link>
               </SignedIn>

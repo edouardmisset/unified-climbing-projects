@@ -20,15 +20,17 @@ import { WizardHeader } from './wizard-header'
 
 type LogWizardProps = {
   bootstrap: LogWizardBootstrap
+  defaultScope?: LogDraft['scope']
 }
 
-export default function LogWizard({ bootstrap }: LogWizardProps) {
+export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
   'use no memo'
   const router = useRouter()
   const defaultDiscipline = bootstrap.latestAscent?.discipline ?? 'Sport'
   const defaultLocation = bootstrap.latestAscent?.crag ?? ''
   const initialDraft = createInitialLogDraft({
     defaultGrade: bootstrap.defaultGrade,
+    defaultScope,
     defaultTrainingEnergySystem: inferEnergySystem(defaultDiscipline),
     defaultTrainingType:
       inferSessionType(defaultLocation, bootstrap.crags, bootstrap.previousSessionTypes) ??

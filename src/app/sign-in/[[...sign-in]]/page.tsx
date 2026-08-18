@@ -4,7 +4,7 @@ import { PublicPageShell } from '~/app/_components/public-page-shell/public-page
 export default function SignInPage() {
   return (
     <PublicPageShell layout='auth'>
-      <SignIn fallbackRedirectUrl='/wrap-up' signUpUrl='/sign-up' />
+      <SignIn fallbackRedirectUrl='/ascents/home' signUpUrl='/sign-up' />
     </PublicPageShell>
   )
 }

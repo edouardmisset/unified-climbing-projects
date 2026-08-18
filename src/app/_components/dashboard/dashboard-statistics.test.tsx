@@ -14,7 +14,7 @@ describe('dashboardStatistics', () => {
     expect(screen.getByRole('heading', { name: 'Nothing there...' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'logging new ascents' })).toHaveAttribute(
       'href',
-      '/log',
+      '/ascents/log',
     )
   })
 

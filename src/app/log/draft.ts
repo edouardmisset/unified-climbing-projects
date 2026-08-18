@@ -104,6 +104,7 @@ export function createAscentDraft({
 
 type CreateInitialLogDraftOptions = {
   defaultGrade?: AscentDraft['grade']
+  defaultScope?: LogDraft['scope']
   defaultTrainingEnergySystem?: LogDraft['training']['energySystem']
   defaultTrainingType?: LogDraft['training']['type']
   historyDefaults?: AscentHistoryDefaults
@@ -111,6 +112,7 @@ type CreateInitialLogDraftOptions = {
 
 export function createInitialLogDraft({
   defaultGrade,
+  defaultScope = 'ascents',
   defaultTrainingEnergySystem = '',
   defaultTrainingType = 'Outdoor',
   historyDefaults,
@@ -121,7 +123,7 @@ export function createInitialLogDraft({
     date: stringifyDate(new Date()).data ?? '',
     discipline,
     location: historyDefaults?.crag ?? '',
-    scope: 'ascents',
+    scope: defaultScope,
     training: {
       anatomicalRegion: '',
       comments: '',
