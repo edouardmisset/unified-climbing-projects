@@ -23,9 +23,9 @@ export function TrainingSessionsGauge({
 }: {
   trainingSessions: TrainingSession[]
 }) {
-  const { groupData } = getTrainingSessionsGaugeData(trainingSessions)
+  const { typeData } = getTrainingSessionsGaugeData(trainingSessions)
   const chartData = [
-    groupData.reduce<GaugeChartDatum>(
+    typeData.reduce<GaugeChartDatum>(
       (datum, group) => {
         datum[group.id] = group.value
         return datum
@@ -34,7 +34,7 @@ export function TrainingSessionsGauge({
     ),
   ]
 
-  if (groupData.length === 0) return
+  if (typeData.length === 0) return
 
   return (
     <ChartContainer caption='Training Sessions Gauge'>
@@ -43,7 +43,7 @@ export function TrainingSessionsGauge({
           <ChartTooltip />
           <Chart.XAxis type='number' />
           <Chart.YAxis dataKey='category' hide type='category' />
-          {groupData.map(({ fill, id, label }) => (
+          {typeData.map(({ fill, id, label }) => (
             <Chart.Bar key={id} dataKey={id} fill={fill} name={label} stackId='sessions' />
           ))}
         </Chart.BarChart>
