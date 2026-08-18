@@ -33,6 +33,13 @@ const TrainingSessionsDistribution = dynamic(
     ),
   { ssr: false },
 )
+const TrainingSessionsGauge = dynamic(
+  async () =>
+    import('../charts/training-sessions-gauge/training-sessions-gauge.tsx').then(
+      m => m.TrainingSessionsGauge,
+    ),
+  { ssr: false },
+)
 
 function DashboardStatsComponent(props: TrainingSessionListProps) {
   const { trainingSessions } = props
@@ -50,6 +57,7 @@ function DashboardStatsComponent(props: TrainingSessionListProps) {
       <TrainingSessionsIndoorVsOutdoor trainingSessions={trainingSessions} />
       <TrainingSessionsPerYear trainingSessions={trainingSessions} />
       <TrainingSessionsDistribution trainingSessions={trainingSessions} />
+      <TrainingSessionsGauge trainingSessions={trainingSessions} />
     </div>
   )
 }
