@@ -24,19 +24,17 @@ function parameterAnnotation(parameter: Parameter): ESTree.TSTypeAnnotation | nu
   return parameter.typeAnnotation;
 }
 
-function parameterName(parameter: Parameter, sourceText: string): string {
+function parameterName(parameter: Parameter): string {
   if (parameter.type === "TSParameterProperty") {
-    return parameterName(parameter.parameter, sourceText);
+    return parameterName(parameter.parameter);
   }
   if (parameter.type === "AssignmentPattern") {
-    return parameterName(parameter.left, sourceText);
+    return parameterName(parameter.left);
   }
   if (parameter.type === "RestElement") {
-    return parameterName(parameter.argument, sourceText);
+    return parameterName(parameter.argument);
   }
-  return parameter.type === "Identifier"
-    ? parameter.name
-    : sourceText.replace(/\s*:\s*unknown\s*$/u, "");
+  return parameter.type === "Identifier" ? parameter.name : "destructured parameter";
 }
 
 /** Disallow unknown inputs except explicitly named error-cause enrichment. */
@@ -57,7 +55,7 @@ export const noUnknownParametersRule = defineRule({
       for (const parameter of node.params) {
         const annotation = parameterAnnotation(parameter);
         if (annotation?.typeAnnotation.type !== "TSUnknownKeyword") continue;
-        const name = parameterName(parameter, context.sourceCode.getText(parameter));
+        const name = parameterName(parameter);
         if (name === "cause") continue;
         context.report({
           node: annotation.typeAnnotation,
