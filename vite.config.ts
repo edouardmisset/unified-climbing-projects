@@ -227,6 +227,7 @@ export default defineConfig({
   },
   fmt: {
     ignorePatterns: [
+      '.agents/**',
       '.next/**',
       'node_modules/**',
       'out/**',
@@ -236,6 +237,7 @@ export default defineConfig({
       'playwright-report/**',
       'test-results/**',
       'convex/_generated/**',
+      'tools/oxlint/anti-slop/**',
     ],
     printWidth: 100,
     tabWidth: 2,
@@ -257,6 +259,7 @@ export default defineConfig({
       '@shopify/eslint-plugin',
       'eslint-plugin-react-you-might-not-need-an-effect',
       'eslint-plugin-compat',
+      { name: 'anti-slop', specifier: './tools/oxlint/anti-slop/index.ts' },
     ],
     plugins: ['oxc', 'react', 'jsx-a11y', 'nextjs', 'typescript', 'import', 'unicorn'],
     categories: {
@@ -270,6 +273,21 @@ export default defineConfig({
     },
     rules: {
       'eslint-plugin-compat/compat': 'error',
+      'anti-slop/no-chained-type-assertions': 'error',
+      'anti-slop/no-conditional-empty-object-spread': 'error',
+      'anti-slop/no-known-value-widening': 'error',
+      'anti-slop/no-module-mocking': 'error',
+      'anti-slop/no-object-parameters': 'error',
+      'anti-slop/no-reflect-apply': 'error',
+      'anti-slop/no-reflect-get': 'error',
+      'anti-slop/no-runtime-typeof': 'error',
+      'anti-slop/no-shape-in-symbol-names': 'error',
+      'anti-slop/no-unknown-parameters': 'error',
+      'anti-slop/no-unknown-returns': 'error',
+      'anti-slop/no-unknown-type-aliases': 'error',
+      'anti-slop/no-unsafe-dictionary-type': 'error',
+      'anti-slop/no-widen-then-assert': 'error',
+      'anti-slop/require-safety-comment-for-type-assertion': 'error',
       '@shopify/eslint-plugin/prefer-early-return': 'error',
       'capitalized-comments': 'off',
       'eslint/arrow-body-style': ['error', 'as-needed', { requireReturnForObjectLiteral: false }],
@@ -390,6 +408,7 @@ export default defineConfig({
       eqeqeq: ['error', 'always', { null: 'ignore' }],
     },
     ignorePatterns: [
+      '.agents/**',
       '.next/**',
       'node_modules/**',
       'out/**',
@@ -398,6 +417,7 @@ export default defineConfig({
       'coverage/**',
       'test-results/**',
       'convex/_generated/**',
+      'tools/oxlint/anti-slop/**',
     ],
     overrides: [
       {
