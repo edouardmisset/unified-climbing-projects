@@ -26,6 +26,17 @@ describe('animatedCragRace', () => {
     const { container } = screen
 
     await expect.poll(() => container.querySelectorAll('p[aria-live="polite"]').length).toBe(0)
+    await expect.poll(() => container.querySelectorAll('h2').length).toBe(0)
+    await expect
+      .poll(() => {
+        const figure = container.querySelector('figure')
+        const panel = figure?.querySelector<HTMLElement>('[class*="chartPanel"]')
+        if (figure === null || panel === undefined || panel === null) return 0
+        return Math.round(
+          (panel.getBoundingClientRect().width / figure.getBoundingClientRect().width) * 100,
+        )
+      })
+      .toBe(100)
     await expect.poll(() => container.querySelectorAll('.ts-chart__bar').length).toBe(2)
     await expect.poll(() => container.querySelectorAll('.ts-chart__legend').length).toBe(0)
     await expect

@@ -26,7 +26,6 @@ import {
 import styles from './animated-crag-race.module.css'
 
 const TIMELINE_DURATION_MS = 60_000
-const CHART_HEIGHT = 500
 const PYRAMID_SERIES = ASCENT_STYLE.map(key => ({
   key,
   color: ASCENT_STYLE_TO_COLOR[key],
@@ -287,7 +286,6 @@ function ChartPanel({
   date,
   frameCount,
   playback,
-  title,
   totalAscents,
 }: {
   chartLabel: string
@@ -295,7 +293,6 @@ function ChartPanel({
   date: string
   frameCount: number
   playback: Playback
-  title: string
   totalAscents: number
 }) {
   const [isTouchActive, setIsTouchActive] = useState(false)
@@ -304,7 +301,6 @@ function ChartPanel({
 
   return (
     <div className={styles.chartPanel}>
-      <h2 className={styles.chartTitle}>{title}</h2>
       <div
         className={styles.chartViewport}
         data-controls-active={isControlsActive ? 'true' : undefined}
@@ -362,7 +358,6 @@ export function AnimatedCragRace({ ascents }: { ascents: AnimatedAscent[] }) {
         date={currentFrame.date}
         frameCount={timeline.frames.length}
         playback={playback}
-        title='Ascents By Grades Per Crag'
         totalAscents={currentFrame.totalAscents}
       >
         <TanStackBarChart<CragRaceDatum>
@@ -370,7 +365,6 @@ export function AnimatedCragRace({ ascents }: { ascents: AnimatedAscent[] }) {
           ariaLabel='Ascents by grades per crag over time'
           data={currentFrame.data}
           getCategory={datum => datum.crag}
-          height={CHART_HEIGHT}
           orientation='horizontal'
           series={createGradeSeries(timeline.grades)}
           totalLabels
@@ -397,7 +391,6 @@ export function AnimatedAscentPyramid({ ascents }: { ascents: AnimatedAscent[] }
         date={currentPyramidFrame.date}
         frameCount={pyramidTimeline.frames.length}
         playback={playback}
-        title='Ascent Pyramid'
         totalAscents={currentPyramidFrame.totalAscents}
       >
         <TanStackBarChart<AnimatedPyramidDatum>
@@ -405,7 +398,6 @@ export function AnimatedAscentPyramid({ ascents }: { ascents: AnimatedAscent[] }
           ariaLabel='Ascent pyramid over time'
           data={currentPyramidFrame.data}
           getCategory={datum => datum.grade}
-          height={CHART_HEIGHT}
           series={PYRAMID_SERIES}
           totalLabels
           y={{ domain: [0, pyramidTimeline.maximumCount], label: '# Ascents' }}
