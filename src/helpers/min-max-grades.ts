@@ -9,7 +9,7 @@ import { fromGradeToNumber, fromNumberToGrade } from './grade-converter'
  * the list is empty, the lowest grade is 1 and the highest grade is the last
  * grade in the list of grades.
  */
-export function minMaxGrades(ascents: Ascent[]): [Grade, Grade] {
+export function minMaxGrades(ascents: readonly Pick<Ascent, 'grade'>[]): [Grade, Grade] {
   if (ascents.length === 0) return [fromNumberToGrade(1), fromNumberToGrade(GRADES.length)]
 
   const numberGrades = ascents.map(({ grade }) => fromGradeToNumber(grade))

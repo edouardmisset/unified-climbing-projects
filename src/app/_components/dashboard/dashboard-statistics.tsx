@@ -5,11 +5,16 @@ import { LINKS } from '~/constants/links'
 import type { AscentListProps } from '~/schema/ascent.ts'
 import styles from './dashboard.module.css'
 
-const AscentsByGradesPerCrag = dynamic(
+const AnimatedAscentPyramid = dynamic(
   async () =>
-    import('../charts/ascents-by-grades-per-crag/ascents-by-grades-per-crag.tsx').then(
-      m => m.AscentsByGradesPerCrag,
+    import('../charts/animated-crag-race/animated-crag-race.tsx').then(
+      m => m.AnimatedAscentPyramid,
     ),
+  { ssr: false },
+)
+const AnimatedCragRace = dynamic(
+  async () =>
+    import('../charts/animated-crag-race/animated-crag-race.tsx').then(m => m.AnimatedCragRace),
   { ssr: false },
 )
 const AscentsByStyle = dynamic(
@@ -44,10 +49,6 @@ const AscentsPerYearByGrade = dynamic(
     ),
   { ssr: false },
 )
-const AscentPyramid = dynamic(
-  async () => import('../charts/ascents-pyramid/ascent-pyramid.tsx').then(m => m.AscentPyramid),
-  { ssr: false },
-)
 const DistanceClimbedPerYear = dynamic(
   async () =>
     import('../charts/distance-climbed/distance-climbed-per-year.tsx').then(
@@ -69,6 +70,7 @@ type DashboardStatisticsProps = AscentListProps
 
 function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
   const { ascents } = props
+  const filteredAscentKey = ascents.map(({ _id }) => _id).join('|')
 
   if (ascents.length === 0)
     return (
@@ -82,7 +84,7 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
 
   return (
     <div className={styles.container}>
-      <AscentPyramid ascents={ascents} />
+      <AnimatedAscentPyramid ascents={ascents} key={`pyramid:${filteredAscentKey}`} />
       <AscentsPerYearByGrade ascents={ascents} />
       <AscentsByStyle ascents={ascents} />
       <AscentsPerDiscipline ascents={ascents} />
@@ -90,7 +92,7 @@ function DashboardStatisticsComponent(props: DashboardStatisticsProps) {
       <TriesByGrade ascents={ascents} />
       <AscentsPerDisciplinePerGrade ascents={ascents} />
       <DistanceClimbedPerYear ascents={ascents} />
-      <AscentsByGradesPerCrag ascents={ascents} />
+      <AnimatedCragRace ascents={ascents} key={`crag:${filteredAscentKey}`} />
       <TopTenEvolution ascents={ascents} />
     </div>
   )
