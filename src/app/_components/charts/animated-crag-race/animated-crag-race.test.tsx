@@ -61,6 +61,30 @@ describe('animatedCragRace', () => {
       .toBeInTheDocument()
   })
 
+  it('clears touch controls when the pointer interaction is cancelled', async () => {
+    const [sample] = sampleAscents
+    if (sample === undefined) throw new Error('Expected sample ascent')
+
+    const screen = await renderAnimatedCharts([
+      { ...sample, _id: 'a', crag: 'Alpha', date: '2024-01-01' },
+      { ...sample, _id: 'b', crag: 'Beta', date: '2024-01-02' },
+    ])
+    const viewport = screen.container.querySelector<HTMLElement>('[class*="chartViewport"]')
+    if (viewport === null) throw new Error('Expected chart viewport')
+
+    viewport.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch' }))
+    await expect
+      .poll(() => screen.container.querySelector('[data-controls-active="true"]'))
+      .not.toBeNull()
+
+    viewport.dispatchEvent(
+      new PointerEvent('pointercancel', { bubbles: true, pointerType: 'touch' }),
+    )
+    await expect
+      .poll(() => screen.container.querySelector('[data-controls-active="true"]'))
+      .toBeNull()
+  })
+
   it('keeps each chart total tied to its own timeline cursor', async () => {
     const [sample] = sampleAscents
     if (sample === undefined) throw new Error('Expected sample ascent')
@@ -88,6 +112,31 @@ describe('animatedCragRace', () => {
         () => charts[1]?.querySelector<HTMLParagraphElement>('p[aria-live="polite"]')?.textContent,
       )
       .toContain('3 total ascents')
+  })
+
+  it('updates crag bar geometry as playback advances', async () => {
+    const [sample] = sampleAscents
+    if (sample === undefined) throw new Error('Expected sample ascent')
+
+    const screen = await renderAnimatedCharts([
+      { ...sample, _id: 'a', crag: 'Alpha', date: '2024-01-01' },
+      { ...sample, _id: 'b', crag: 'Beta', date: '2024-01-01' },
+      { ...sample, _id: 'c', crag: 'Alpha', date: '2024-01-02' },
+    ])
+    await screen.getByRole('img', { name: 'Ascents by grades per crag over time' }).hover()
+    await screen.getByRole('button', { name: 'Restart: Crag race' }).click()
+
+    const [, raceChart] = screen.container.querySelectorAll('figure')
+    if (raceChart === undefined) throw new Error('Expected crag race chart')
+    const barWidths = () =>
+      [...raceChart.querySelectorAll<SVGRectElement>('.ts-chart__bar rect')].map(rect =>
+        rect.getAttribute('width'),
+      )
+    const initialWidths = barWidths()
+
+    await screen.getByRole('combobox', { name: 'Crag race playback speed' }).selectOptions('10')
+    await screen.getByRole('button', { name: 'Play: Crag race' }).click()
+    await expect.poll(() => barWidths(), { timeout: 4_000 }).not.toStrictEqual(initialWidths)
   })
 
   it('uses the selected speed while playing', async () => {

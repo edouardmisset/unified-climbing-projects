@@ -39,6 +39,7 @@ const ANIMATION = {
 const HALF_SPEED = 0.5
 const FIVE_X_SPEED = 5
 const TEN_X_SPEED = 10
+const TOUCH_CONTROLS_TIMEOUT_MS = 3_000
 const SPEEDS = [HALF_SPEED, 1, 2, FIVE_X_SPEED, TEN_X_SPEED] as const
 
 type Playback = ReturnType<typeof useTimelinePlayback>
@@ -297,7 +298,25 @@ function ChartPanel({
 }) {
   const [isTouchActive, setIsTouchActive] = useState(false)
   const [isPointerActive, setIsPointerActive] = useState(false)
+  const touchResetTimeout = useRef<{ id?: ReturnType<typeof setTimeout> }>({})
   const isControlsActive = isTouchActive || isPointerActive
+
+  useEffect(
+    () => () => {
+      const timeoutId = touchResetTimeout.current.id
+      if (timeoutId !== undefined) globalThis.clearTimeout(timeoutId)
+    },
+    [],
+  )
+
+  const clearTouchActive = () => {
+    const timeoutId = touchResetTimeout.current.id
+    if (timeoutId !== undefined) {
+      globalThis.clearTimeout(timeoutId)
+      delete touchResetTimeout.current.id
+    }
+    setIsTouchActive(false)
+  }
 
   return (
     <div className={styles.chartPanel}>
@@ -310,8 +329,16 @@ function ChartPanel({
         onPointerLeave={event => {
           if (event.pointerType === 'mouse') setIsPointerActive(false)
         }}
+        onPointerCancel={clearTouchActive}
         onPointerDown={event => {
-          if (event.pointerType !== 'mouse') setIsTouchActive(true)
+          if (event.pointerType === 'mouse') return
+          setIsTouchActive(true)
+          const timeoutId = touchResetTimeout.current.id
+          if (timeoutId !== undefined) globalThis.clearTimeout(timeoutId)
+          touchResetTimeout.current.id = globalThis.setTimeout(() => {
+            delete touchResetTimeout.current.id
+            setIsTouchActive(false)
+          }, TOUCH_CONTROLS_TIMEOUT_MS)
         }}
       >
         <div className={styles.controlsContainer}>

@@ -370,14 +370,18 @@ function createBarDefinition<TDatum>({
             layout,
             inset: 2,
           }),
-          text(stackLabels, {
-            x: 'value',
-            y: 'category',
-            text: 'label',
-            fill: 'white',
-            fontSize: 12,
-            fontWeight: 700,
-          }),
+          ...(stackLabels.length === 0
+            ? []
+            : [
+                text(stackLabels, {
+                  x: 'value',
+                  y: 'category',
+                  text: 'label',
+                  fill: 'white',
+                  fontSize: 12,
+                  fontWeight: 700,
+                }),
+              ]),
           text(totalLabels, {
             x: 'value',
             y: 'category',
@@ -415,6 +419,18 @@ function createBarDefinition<TDatum>({
             layout,
             inset: 2,
           }),
+          ...(stackLabels.length === 0
+            ? []
+            : [
+                text(stackLabels, {
+                  x: 'category',
+                  y: 'value',
+                  text: 'label',
+                  fill: 'white',
+                  fontSize: 12,
+                  fontWeight: 700,
+                }),
+              ]),
           text(totalLabels, {
             x: 'category',
             y: 'value',
