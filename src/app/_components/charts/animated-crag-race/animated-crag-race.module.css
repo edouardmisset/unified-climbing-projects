@@ -1,0 +1,185 @@
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--size-2);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.controlRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-2);
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-1);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.select,
+.range {
+  min-block-size: 2.25rem;
+}
+
+.select {
+  padding: 0.25rem 0.5rem;
+  color: var(--text-1);
+  background: var(--surface-1);
+  border: 1px solid var(--surface-4);
+  border-radius: var(--radius-2);
+  cursor: pointer;
+}
+
+.select:hover {
+  border-color: var(--accent);
+}
+
+.iconButton {
+  display: grid;
+  flex: 0 0 2.25rem;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  padding: 0;
+  color: var(--text-1);
+  background: var(--surface-1);
+  border: 1px solid var(--surface-4);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  border-color: var(--accent);
+}
+
+.iconButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.rangeGroup {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--size-1);
+  min-inline-size: 4rem;
+}
+
+.range {
+  accent-color: var(--accent);
+  inline-size: 100%;
+}
+
+.speedControl {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
+}
+
+.iconButton:focus-visible,
+.select:focus-visible,
+.range:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chartPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.chartViewport {
+  position: relative;
+  min-inline-size: 0;
+  isolation: isolate;
+}
+
+.controlsContainer {
+  --transparent-background: color-mix(in oklch, var(--surface-3) 10%, transparent);
+
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 2;
+  padding: var(--size-1) var(--size-fluid-0);
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.5rem);
+}
+
+.controlsBackground {
+  position: absolute;
+  inset: 0;
+  block-size: 200%;
+  pointer-events: none;
+  background: var(--transparent-background);
+  backdrop-filter: blur(var(--size-3));
+  mask-image: linear-gradient(to bottom, black 0, black 50%, transparent 50%);
+}
+
+.controlsEdge {
+  --thickness: var(--size-1);
+
+  position: absolute;
+  inset: 100% 0 auto;
+  block-size: 100%;
+  pointer-events: none;
+  background: var(--transparent-background);
+  backdrop-filter: blur(var(--size-2)) brightness(120%);
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black var(--thickness),
+    transparent var(--thickness)
+  );
+}
+
+.controlsContent {
+  position: relative;
+  z-index: 1;
+}
+
+.chartViewport:hover .controlsContainer,
+.chartViewport:focus-within .controlsContainer,
+.chartViewport[data-controls-active='true'] .controlsContainer {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .controlsContainer {
+    transition:
+      opacity 160ms var(--ease-out-3),
+      transform 160ms var(--ease-out-3);
+  }
+}

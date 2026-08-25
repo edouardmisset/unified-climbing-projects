@@ -11,6 +11,7 @@ import {
   lineY,
   stack,
   text,
+  type ChartAnimationOptions,
   type ChartPoint,
   type ChartCurve,
   type ChartColorLegend,
@@ -172,12 +173,14 @@ export type ChartSeries = {
 }
 
 type AxisOptions = {
+  domain?: readonly [number, number]
   label?: string
   tickFormat?: (value: ChartValue) => string
 }
 
 type WideChartProps<TDatum> = {
   ariaLabel: string
+  animation?: boolean | ChartAnimationOptions
   data: readonly TDatum[]
   getCategory: (datum: TDatum) => ChartValue
   height?: number
@@ -210,6 +213,19 @@ function createStackLabels<TDatum>(rows: readonly FlatDatum<TDatum>[]): FlatDatu
       value: offset + row.value / 2,
     }
   })
+}
+
+function createTotalLabels<TDatum>(rows: readonly FlatDatum<TDatum>[]): FlatDatum<TDatum>[] {
+  const totals = new Map<ChartValue, number>()
+  for (const row of rows) totals.set(row.category, (totals.get(row.category) ?? 0) + row.value)
+
+  return [...totals.entries()].map(([category, value]) => ({
+    category,
+    label: String(value),
+    series: 'total',
+    source: undefined as TDatum,
+    value,
+  }))
 }
 
 function flattenData<TDatum>(
@@ -269,32 +285,31 @@ function seriesTooltip<TDatum>(
   }
 }
 
-export function TanStackBarChart<TDatum>(
-  props: WideChartProps<TDatum> & {
-    orientation?: 'horizontal' | 'vertical'
-    mode?: 'group' | 'stack'
-    percentageLabels?: boolean
-  },
-) {
-  const {
-    ariaLabel,
-    data,
-    getCategory,
-    height = DEFAULT_CHART_HEIGHT,
-    legend = false,
-    mode = 'stack',
-    orientation = 'vertical',
-    percentageLabels = false,
-    series,
-    x,
-    y,
-  } = props
-
-  const rows = flattenData(data, getCategory, series)
-  const stackLabels = percentageLabels ? createStackLabels(rows) : []
-  const layout = mode === 'group' ? group() : stack()
-  const colors = colorOptions(series, legend)
-  const focus = orientation === 'horizontal' ? 'group-y' : 'group-x'
+function createBarDefinition<TDatum>({
+  animation,
+  colors,
+  focus,
+  layout,
+  mode,
+  orientation,
+  rows,
+  stackLabels,
+  totalLabels,
+  x,
+  y,
+}: {
+  animation?: boolean | ChartAnimationOptions
+  colors: ReturnType<typeof colorOptions>
+  focus: 'group-x' | 'group-y'
+  layout: ReturnType<typeof group> | ReturnType<typeof stack>
+  mode: 'group' | 'stack'
+  orientation: 'horizontal' | 'vertical'
+  rows: FlatDatum<TDatum>[]
+  stackLabels: FlatDatum<TDatum>[]
+  totalLabels: FlatDatum<TDatum>[]
+  x: AxisOptions | undefined
+  y: AxisOptions | undefined
+}) {
   const stackTooltip =
     mode === 'stack'
       ? {
@@ -341,65 +356,151 @@ export function TanStackBarChart<TDatum>(
           ) => seriesTooltip(points, context, { reverse: true, orientation }),
         }
 
-  const definition =
-    orientation === 'horizontal'
-      ? defineChart({
-          focus,
-          marks: [
-            barX(rows, {
-              x: 'value',
-              y: 'category',
-              z: 'series',
-              color: 'series',
-              layout,
-              inset: 2,
-            }),
-            text(stackLabels, {
-              x: 'value',
-              y: 'category',
-              text: 'label',
-              fill: 'white',
-              fontSize: 12,
-              fontWeight: 700,
-            }),
-          ],
-          x: {
-            scale: scaleLinear,
-            grid: true,
-            axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-          },
-          y: {
-            scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
-            axis: { label: y?.label, ticks: { format: y?.tickFormat } },
-          },
-          color: colors,
-          tooltip: stackTooltip,
-        })
-      : defineChart({
-          focus,
-          marks: [
-            barY(rows, {
-              x: 'category',
-              y: 'value',
-              z: 'series',
-              color: 'series',
-              layout,
-              inset: 2,
-            }),
-          ],
-          x: {
-            scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
-            axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-          },
-          y: {
-            scale: scaleLinear,
-            nice: true,
-            grid: true,
-            axis: { label: y?.label, ticks: { format: y?.tickFormat } },
-          },
-          color: colors,
-          tooltip: stackTooltip,
-        })
+  return orientation === 'horizontal'
+    ? defineChart({
+        focus,
+        marks: [
+          barX(rows, {
+            id: 'bars',
+            key: datum => String(datum.category),
+            x: 'value',
+            y: 'category',
+            z: 'series',
+            color: 'series',
+            layout,
+            inset: 2,
+          }),
+          ...(stackLabels.length === 0
+            ? []
+            : [
+                text(stackLabels, {
+                  x: 'value',
+                  y: 'category',
+                  text: 'label',
+                  fill: 'white',
+                  fontSize: 12,
+                  fontWeight: 700,
+                }),
+              ]),
+          text(totalLabels, {
+            x: 'value',
+            y: 'category',
+            text: 'label',
+            fill: 'var(--text-1)',
+            fontSize: 12,
+            fontWeight: 700,
+            anchor: 'start',
+            dx: 6,
+          }),
+        ],
+        x: {
+          scale: x?.domain ? scaleLinear().domain(x.domain) : scaleLinear,
+          grid: true,
+          axis: { label: x?.label, ticks: { format: x?.tickFormat } },
+        },
+        y: {
+          scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
+          axis: { label: y?.label, ticks: { format: y?.tickFormat } },
+        },
+        color: colors,
+        tooltip: stackTooltip,
+        ...(animation === undefined ? {} : { svgAnimation: animation }),
+      })
+    : defineChart({
+        focus,
+        marks: [
+          barY(rows, {
+            id: 'bars',
+            key: datum => String(datum.category),
+            x: 'category',
+            y: 'value',
+            z: 'series',
+            color: 'series',
+            layout,
+            inset: 2,
+          }),
+          ...(stackLabels.length === 0
+            ? []
+            : [
+                text(stackLabels, {
+                  x: 'category',
+                  y: 'value',
+                  text: 'label',
+                  fill: 'white',
+                  fontSize: 12,
+                  fontWeight: 700,
+                }),
+              ]),
+          text(totalLabels, {
+            x: 'category',
+            y: 'value',
+            text: 'label',
+            fill: 'var(--text-1)',
+            fontSize: 12,
+            fontWeight: 700,
+            anchor: 'middle',
+            dy: -8,
+          }),
+        ],
+        x: {
+          scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
+          axis: { label: x?.label, ticks: { format: x?.tickFormat } },
+        },
+        y: {
+          scale: y?.domain ? scaleLinear().domain(y.domain) : scaleLinear,
+          nice: y?.domain === undefined,
+          grid: true,
+          axis: { label: y?.label, ticks: { format: y?.tickFormat } },
+        },
+        color: colors,
+        tooltip: stackTooltip,
+        ...(animation === undefined ? {} : { svgAnimation: animation }),
+      })
+}
+
+export function TanStackBarChart<TDatum>(
+  props: WideChartProps<TDatum> & {
+    orientation?: 'horizontal' | 'vertical'
+    mode?: 'group' | 'stack'
+    percentageLabels?: boolean
+    totalLabels?: boolean
+  },
+) {
+  const {
+    ariaLabel,
+    animation,
+    data,
+    getCategory,
+    height = DEFAULT_CHART_HEIGHT,
+    legend = false,
+    mode = 'stack',
+    orientation = 'vertical',
+    percentageLabels = false,
+    series,
+    totalLabels: showTotalLabels = false,
+    x,
+    y,
+  } = props
+
+  const rows = flattenData(data, getCategory, series)
+  const stackLabels = percentageLabels ? createStackLabels(rows) : []
+  const totalLabels = showTotalLabels ? createTotalLabels(rows) : []
+  const layout = mode === 'group' ? group() : stack()
+  const colors = colorOptions(series, legend)
+  const focus = orientation === 'horizontal' ? 'group-y' : 'group-x'
+  const definition = createBarDefinition({
+    animation,
+    colors,
+    focus,
+    layout,
+    mode,
+    orientation,
+    rows,
+    stackLabels,
+    totalLabels,
+    x,
+    y,
+  })
 
   return (
     <div className={styles.chartSurface}>
@@ -411,6 +512,7 @@ export function TanStackBarChart<TDatum>(
 export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
   const {
     ariaLabel,
+    animation,
     data,
     getCategory,
     height = DEFAULT_CHART_HEIGHT,
@@ -425,6 +527,8 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
     focus: 'group-x',
     marks: [
       lineY(rows, {
+        id: 'line',
+        key: datum => String(datum.category),
         x: 'category',
         y: 'value',
         z: 'series',
@@ -450,6 +554,7 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
       anchor: 'group-center',
       content: seriesTooltip,
     },
+    ...(animation === undefined ? {} : { svgAnimation: animation }),
   })
 
   return (
@@ -462,6 +567,7 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
 export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
   const {
     ariaLabel,
+    animation,
     data,
     getCategory,
     height = DEFAULT_CHART_HEIGHT,
@@ -476,6 +582,8 @@ export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
     focus: 'group-x',
     marks: [
       areaY(rows, {
+        id: 'area',
+        key: datum => String(datum.category),
         x: 'category',
         y: 'value',
         z: 'series',
@@ -499,6 +607,7 @@ export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
       anchor: 'group-center',
       content: seriesTooltip,
     },
+    ...(animation === undefined ? {} : { svgAnimation: animation }),
   })
 
   return (

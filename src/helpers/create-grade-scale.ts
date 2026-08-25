@@ -7,7 +7,7 @@ import { minMaxGrades } from './min-max-grades'
  * @param higherGrade - The higher grade.
  * @returns An array of grades between the specified lower and higher grades.
  */
-export function createGradeScaleFromAscents(ascents: Ascent[]): Grade[] {
+export function createGradeScaleFromAscents(ascents: readonly Pick<Ascent, 'grade'>[]): Grade[] {
   if (ascents.length === 0) return [...GRADES]
 
   const [lowerGrade, higherGrade] = minMaxGrades(ascents)

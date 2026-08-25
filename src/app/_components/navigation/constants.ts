@@ -3,7 +3,10 @@ import { getDomainLinks } from '~/constants/links'
 
 export function getNavigationItems(domain: Domain) {
   const links = getDomainLinks(domain)
-
+  const visualLinks: NavigationLink[] = [
+    { type: 'link', href: links.visualsQrCode, label: '💠 QR Code' },
+    { type: 'link', href: links.visualsBarcode, label: '🏷️ Barcode' },
+  ]
   return [
     { type: 'link', href: links.home, label: '🏠 Home' },
     { type: 'link', href: links.log, label: '📋 Log' },
@@ -19,10 +22,7 @@ export function getNavigationItems(domain: Domain) {
     {
       type: 'disclosure',
       label: '✨ Visuals',
-      links: [
-        { type: 'link', href: links.visualsQrCode, label: '💠 QR Code' },
-        { type: 'link', href: links.visualsBarcode, label: '🏷️ Barcode' },
-      ],
+      links: visualLinks,
     },
     { type: 'separator' },
     { type: 'link', href: links.indicators, label: '📈 Indicators' },
