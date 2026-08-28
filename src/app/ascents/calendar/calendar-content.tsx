@@ -26,8 +26,8 @@ export async function CalendarContent() {
 
   return (
     <>
-      {ascentYearsData.map(([year, ascents]) => (
-        <AscentCalendar allAscents={ascents} key={year} year={year} />
+      {ascentYearsData.map(([year, ascents], index) => (
+        <AscentCalendar allAscents={ascents} isLatestYear={index === 0} key={year} year={year} />
       ))}
     </>
   )

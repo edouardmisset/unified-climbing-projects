@@ -37,7 +37,7 @@
     }
   }
 
-  @media (width <= 40rem) {
+  @media (width <= 40rem), (orientation: landscape) and (height <= 40rem) {
     position: absolute;
     inset: 0 0 auto auto;
     z-index: var(--layer-3);

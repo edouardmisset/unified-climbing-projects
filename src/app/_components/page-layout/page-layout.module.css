@@ -45,6 +45,27 @@
   block-size: 100%;
 }
 
+.fullScreenOnPhoneLandscape {
+  @media (orientation: landscape) and (height <= 40rem) {
+    .header {
+      display: none;
+    }
+
+    .contentArea {
+      border-radius: 0;
+      box-shadow: none;
+
+      &::after {
+        border: 0;
+      }
+    }
+
+    .scrollArea {
+      scrollbar-gutter: auto;
+    }
+  }
+}
+
 .h1 {
   flex: 1;
   white-space: nowrap;

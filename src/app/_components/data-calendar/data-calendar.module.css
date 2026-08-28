@@ -1,3 +1,13 @@
+.calendarPage {
+  min-block-size: 100%;
+}
+
+.calendarYear {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+}
+
 .calendarContainer {
   max-inline-size: 100%;
   padding-block: var(--size-2);
@@ -9,5 +19,21 @@
 
   @media (width > 40rem) {
     overflow-x: auto;
+  }
+}
+
+@media (orientation: landscape) and (height <= 40rem) {
+  .calendarPage {
+    --year-grid-cell-size: max(var(--size-3), calc((100dvh - 4.5rem) / 8));
+  }
+
+  .historicalYear {
+    display: none;
+  }
+
+  .calendarYear > h2 {
+    margin-block: 0;
+    font-size: var(--font-size-1);
+    line-height: var(--font-lineheight-1);
   }
 }
