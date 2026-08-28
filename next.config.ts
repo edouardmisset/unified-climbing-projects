@@ -23,7 +23,7 @@ const config: NextConfig = {
     ]
   },
   reactCompiler: { compilationMode: 'infer' },
-  allowedDevOrigins: ['127.0.0.1'],
+  allowedDevOrigins: ['127.0.0.1', '192.168.1.86', 'localhost'],
   cacheComponents: true,
   partialPrefetching: true,
   experimental: {
