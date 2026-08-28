@@ -8,6 +8,7 @@ import { frequencyBy } from './frequency-by'
 import { sortNumericalValues } from './sort-values'
 
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/u
+const MINIMUM_DAY_DIGITS = 2
 // A known Monday, used as the base for generating weekday labels
 const REFERENCE_MONDAY = Temporal.PlainDate.from('2024-01-01')
 
@@ -50,6 +51,15 @@ function toValidPlainDates(data: StringDate[]): Temporal.PlainDate[] {
 
 export function formatEnglishWeekdayLabel(date: Date, style: WeekdayLabelStyle = 'short'): string {
   return toPlainDate(date).toLocaleString(US_LOCALE, { weekday: style })
+}
+
+export function formatEnglishYearMonthDay(date: string): string {
+  const plainDate = Temporal.PlainDate.from(date)
+  const year = plainDate.year.toString()
+  const month = `${plainDate.toLocaleString(US_LOCALE, { month: 'short' })}.`
+  const day = plainDate.day.toString().padStart(MINIMUM_DAY_DIGITS, '0')
+
+  return `${year} ${month} ${day}`
 }
 
 export function getEnglishWeekdayLabels(style: WeekdayLabelStyle = 'short'): string[] {

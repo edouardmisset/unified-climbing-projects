@@ -50,10 +50,11 @@ describe('animatedCragRace', () => {
     await screen.getByRole('img', { name: 'Ascents by grades per crag over time' }).hover()
     await expect.poll(() => container.querySelector('[data-controls-active="true"]')).not.toBeNull()
     await screen.getByRole('button', { name: 'Previous day: Crag race' }).click()
-    await expect.element(screen.getByText('2024-01-02').first()).toBeInTheDocument()
+    await expect.element(screen.getByText('2024 Jan. 02').first()).toBeInTheDocument()
 
     await screen.getByRole('button', { name: 'Restart: Crag race' }).click()
-    await expect.element(screen.getByText('Day 1 of 3').first()).toBeInTheDocument()
+    await expect.element(screen.getByText('2024 Jan. 01').first()).toBeInTheDocument()
+    await expect.element(screen.getByText('2 ascents').first()).toBeInTheDocument()
 
     await screen.getByRole('button', { name: 'Play: Crag race' }).click()
     await expect
@@ -106,12 +107,12 @@ describe('animatedCragRace', () => {
       .poll(
         () => charts[0]?.querySelector<HTMLParagraphElement>('p[aria-live="polite"]')?.textContent,
       )
-      .toContain('2 total ascents')
+      .toContain('2 ascents')
     await expect
       .poll(
         () => charts[1]?.querySelector<HTMLParagraphElement>('p[aria-live="polite"]')?.textContent,
       )
-      .toContain('3 total ascents')
+      .toContain('3 ascents')
   })
 
   it('updates crag bar geometry as playback advances', async () => {
@@ -157,7 +158,7 @@ describe('animatedCragRace', () => {
 
     await expect
       .poll(() => screen.container.textContent, { timeout: 4_000 })
-      .toContain('Day 2 of 3')
+      .toContain('2024 Jan. 02')
   })
 
   it('applies a speed change made during playback', async () => {
@@ -178,6 +179,6 @@ describe('animatedCragRace', () => {
 
     await expect
       .poll(() => screen.container.textContent, { timeout: 4_000 })
-      .toContain('Day 2 of 3')
+      .toContain('2024 Jan. 02')
   })
 })

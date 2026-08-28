@@ -2,9 +2,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: baseline;
   gap: var(--size-2);
   margin: 0;
+  font-family: var(--font-monospace-code);
   font-size: 0.875rem;
+}
+
+.status > :last-child {
+  margin-inline-start: auto;
+  text-align: end;
 }
 
 .controls {

@@ -15,6 +15,8 @@ import { ChartContainer } from '../chart-container/chart-container'
 import { TanStackBarChart, type ChartSeries } from '../tanstack-chart'
 import { ASCENT_GRADE_TO_COLOR, ASCENT_STYLE_TO_COLOR } from '~/constants/ascents'
 import { fromGradeToBackgroundColor } from '~/helpers/ascent-converter'
+import { formatEnglishYearMonthDay } from '~/helpers/date'
+import { formatCountWithEnglishNoun } from '~/helpers/format-plurals'
 import { ASCENT_STYLE } from '~/schema/ascent'
 import { createAscentPyramidTimeline, type AnimatedPyramidDatum } from './ascent-pyramid-timeline'
 import {
@@ -170,13 +172,11 @@ function useTimelinePlayback(frameCount: number) {
 
 function PlaybackControls({
   chartLabel,
-  frameCount,
   playback,
   totalAscents,
   date,
 }: {
   chartLabel: string
-  frameCount: number
   playback: Playback
   totalAscents: number
   date: string
@@ -271,9 +271,9 @@ function PlaybackControls({
 
       {playback.hasInteracted ? (
         <p aria-live='polite' className={styles.status}>
-          <span>{date}</span>
+          <span>{formatEnglishYearMonthDay(date)}</span>
           <span>
-            Day {playback.currentFrameIndex + 1} of {frameCount} · {totalAscents} total ascents
+            {formatCountWithEnglishNoun(totalAscents, { one: 'ascent', other: 'ascents' })}
           </span>
         </p>
       ) : undefined}
@@ -285,14 +285,12 @@ function ChartPanel({
   chartLabel,
   children,
   date,
-  frameCount,
   playback,
   totalAscents,
 }: {
   chartLabel: string
   children: React.ReactNode
   date: string
-  frameCount: number
   playback: Playback
   totalAscents: number
 }) {
@@ -348,7 +346,6 @@ function ChartPanel({
             <PlaybackControls
               chartLabel={chartLabel}
               date={date}
-              frameCount={frameCount}
               playback={playback}
               totalAscents={totalAscents}
             />
@@ -383,7 +380,6 @@ export function AnimatedCragRace({ ascents }: { ascents: AnimatedAscent[] }) {
       <ChartPanel
         chartLabel='Crag race'
         date={currentFrame.date}
-        frameCount={timeline.frames.length}
         playback={playback}
         totalAscents={currentFrame.totalAscents}
       >
@@ -416,7 +412,6 @@ export function AnimatedAscentPyramid({ ascents }: { ascents: AnimatedAscent[] }
       <ChartPanel
         chartLabel='Ascent pyramid'
         date={currentPyramidFrame.date}
-        frameCount={pyramidTimeline.frames.length}
         playback={playback}
         totalAscents={currentPyramidFrame.totalAscents}
       >

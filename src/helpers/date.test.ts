@@ -4,6 +4,7 @@ import {
   extractDateFromISODateString,
   findLongestGap,
   findLongestStreak,
+  formatEnglishYearMonthDay,
   formatEnglishWeekdayLabel,
   fromDateToStringDate,
   getDayOfYear,
@@ -93,6 +94,13 @@ describe('formatEnglishWeekdayLabel', () => {
     const monday = new Date(Date.UTC(2_024, 0, 1)) // January 1, 2024 is a Monday
     expect(formatEnglishWeekdayLabel(monday, 'long')).toBe('Monday')
     expect(formatEnglishWeekdayLabel(monday, 'short')).toBe('Mon')
+  })
+})
+
+describe('formatEnglishYearMonthDay', () => {
+  it('formats a calendar date with an abbreviated month and padded day', () => {
+    expect(formatEnglishYearMonthDay('2025-12-01')).toBe('2025 Dec. 01')
+    expect(formatEnglishYearMonthDay('2025-01-02')).toBe('2025 Jan. 02')
   })
 })
 
