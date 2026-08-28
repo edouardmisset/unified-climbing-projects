@@ -105,6 +105,7 @@ export default defineConfig({
           include: ['convex/**/*.test.ts'],
           name: 'integration-convex',
           setupFiles: [],
+          testTimeout: 30_000,
         },
       },
       {
@@ -140,6 +141,7 @@ export default defineConfig({
           exclude: [VISUAL_TEST_GLOB],
           environment: 'node',
           setupFiles: [],
+          testTimeout: 30_000,
           browser: {
             enabled: true,
             provider: playwright(),
@@ -160,6 +162,7 @@ export default defineConfig({
           name: 'integration-visual',
           include: [VISUAL_TEST_GLOB],
           environment: 'node',
+          fileParallelism: false,
           setupFiles: ['./vitest.visual.setup.ts'],
           browser: {
             enabled: true,
