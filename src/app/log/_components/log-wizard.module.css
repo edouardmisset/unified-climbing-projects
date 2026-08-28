@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--size-2);
   padding-block: var(--size-1);
   background: var(--panel-bg);
@@ -13,7 +14,7 @@
 
 .progress {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: var(--size-2);
   margin: 0;
@@ -59,6 +60,7 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-2);
+  margin-inline-start: auto;
 
   &:hover {
     color: var(--red-6);

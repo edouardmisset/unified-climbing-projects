@@ -58,8 +58,8 @@ export function GeneralStep({
       </div>
       <Field htmlFor='scope' label='Log contents'>
         <select {...register('scope')} className={formStyles.input} id='scope'>
-          <option value='ascents'>Ascents</option>
           <option value='training'>Training</option>
+          <option value='ascents'>Ascents</option>
           <option value='both'>Training & ascents</option>
         </select>
       </Field>
