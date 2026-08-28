@@ -1,13 +1,22 @@
 import { Suspense } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { CalendarYear } from '~/app/_components/data-calendar/calendar-year'
 import { Loader } from '~/app/_components/ui/loader/loader'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'
 import type { Ascent } from '~/schema/ascent'
 
-export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; year: number }) {
+export function AscentCalendar({
+  allAscents,
+  isLatestYear,
+  year,
+}: {
+  allAscents: Ascent[]
+  isLatestYear: boolean
+  year: number
+}) {
   return (
-    <>
+    <CalendarYear isLatestYear={isLatestYear} year={year}>
       <h2 className='superCenter'>{year}</h2>
       <Suspense fallback={<Loader />}>
         <DataCalendar
@@ -20,6 +29,6 @@ export function AscentCalendar({ allAscents, year }: { allAscents: Ascent[]; yea
           year={year}
         />
       </Suspense>
-    </>
+    </CalendarYear>
   )
 }

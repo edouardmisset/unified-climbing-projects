@@ -18,7 +18,7 @@
     "start": "next start",
     "style:lint": "stylelint --fix 'src/**/*.css'",
     "test": "vp test --project=unit --reporter=dot",
-    "test:integration": "vp test --project='integration-*' --reporter=dot --silent=passed-only",
+    "test:integration": "pnpm exec vp test --project=integration-convex --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-dom --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-browser --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-visual --reporter=dot --silent=passed-only",
     "test:e2e:ci": "playwright test",
     "test:all": "vp run test --silent=passed-only && vp run test:integration && vp run test:e2e",
     "fallow": "vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only && fallow",

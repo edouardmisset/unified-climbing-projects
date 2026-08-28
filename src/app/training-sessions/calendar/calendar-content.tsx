@@ -1,5 +1,5 @@
-import { Fragment } from 'react'
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { CalendarYear } from '~/app/_components/data-calendar/calendar-year'
 import NotFound from '~/app/not-found'
 import { createYearList, groupDataDaysByYear } from '~/data/helpers'
 import type { TrainingSessionListRecord } from '~/domain/training-session'
@@ -19,8 +19,8 @@ export async function CalendarContent() {
 
   return (
     <>
-      {trainingYears.map(year => (
-        <Fragment key={year}>
+      {trainingYears.map((year, index) => (
+        <CalendarYear isLatestYear={index === 0} key={year} year={year}>
           <h2 className='superCenter'>{year}</h2>
           <DataCalendar
             data={trainingSessions}
@@ -30,7 +30,7 @@ export async function CalendarContent() {
             }
             year={year}
           />
-        </Fragment>
+        </CalendarYear>
       ))}
     </>
   )

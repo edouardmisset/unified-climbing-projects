@@ -7,6 +7,8 @@ const email = process.env.E2E_CLERK_USER_EMAIL
 const HTTP_NOT_FOUND = 404
 const FIXTURE_YEAR = 2_025
 const ALL_ROUTES_TIMEOUT_MS = 120_000
+const PHONE_LANDSCAPE_VIEWPORT = { height: 390, width: 844 }
+const MIN_READABLE_CELL_SIZE = 16
 
 async function expectPageHeading(
   page: Page,
@@ -16,6 +18,37 @@ async function expectPageHeading(
   await page.goto(path)
   await expect(page).toHaveURL(new RegExp(`${path}$`, 'u'))
   await expect(page.getByRole('heading', { name: heading })).toBeVisible()
+}
+
+async function expectPhoneLandscapeCalendar(
+  page: Page,
+  path: string,
+  heading: string,
+): Promise<void> {
+  await page.goto(path)
+  await expect(page.getByRole('heading', { name: heading })).toBeHidden()
+  await expect(page.getByRole('button', { name: 'Open navigation drawer' })).toBeVisible()
+
+  const fullScreenLayout = page.locator('[data-fullscreen-on-phone-landscape="true"]')
+  await expect(fullScreenLayout).toBeVisible()
+  const layoutBox = await fullScreenLayout.boundingBox()
+  expect(layoutBox?.width).toBeGreaterThanOrEqual(PHONE_LANDSCAPE_VIEWPORT.width - 1)
+
+  const calendarYears = page.locator('[data-calendar-year]')
+  await expect(calendarYears.first()).toBeVisible()
+
+  const yearCount = await calendarYears.count()
+  await Promise.all(
+    Array.from({ length: yearCount - 1 }, (_, index) =>
+      expect(calendarYears.nth(index + 1)).toBeHidden(),
+    ),
+  )
+
+  const cell = calendarYears.first().locator('button').first()
+  await expect(cell).toBeVisible()
+  const cellBox = await cell.boundingBox()
+  expect(cellBox?.width).toBeGreaterThan(MIN_READABLE_CELL_SIZE)
+  expect(Math.abs((cellBox?.width ?? 0) - (cellBox?.height ?? 0))).toBeLessThanOrEqual(1)
 }
 
 test.describe('public smoke test', () => {
@@ -71,6 +104,10 @@ test.describe('authenticated smoke test', () => {
     await expectPageHeading(page, '/ascents/barcode', 'Ascents Barcode')
     await expectPageHeading(page, '/ascents/qr-code', 'Ascents QR')
 
+    await page.setViewportSize(PHONE_LANDSCAPE_VIEWPORT)
+    await expectPhoneLandscapeCalendar(page, '/ascents/calendar', 'Ascents Calendar')
+    await page.setViewportSize({ height: 720, width: 1_280 })
+
     await page.goto('/ascents/e2e-missing-ascent')
     await expect(page).toHaveURL(/\/ascents\/e2e-missing-ascent$/u)
     await expect(page.getByText('Ascent not found', { exact: true })).toBeVisible()
@@ -80,6 +117,10 @@ test.describe('authenticated smoke test', () => {
     await expectPageHeading(page, '/training-sessions/calendar', 'Training Calendar')
     await expectPageHeading(page, '/training-sessions/barcode', 'Training Barcode')
     await expectPageHeading(page, '/training-sessions/qr-code', 'Training QR')
+
+    await page.setViewportSize(PHONE_LANDSCAPE_VIEWPORT)
+    await expectPhoneLandscapeCalendar(page, '/training-sessions/calendar', 'Training Calendar')
+    await page.setViewportSize({ height: 720, width: 1_280 })
 
     await page.goto('/ascent-form')
     await expect(page).toHaveURL(/\/log$/u)

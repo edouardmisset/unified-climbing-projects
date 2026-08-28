@@ -16,7 +16,7 @@
 .yearGridCell {
   display: grid;
   place-items: center;
-  block-size: var(--size-3);
+  block-size: var(--year-grid-cell-size, var(--size-3));
   aspect-ratio: 1 / 1;
   font-size: var(--font-size-00);
   font-weight: var(--font-weight-7);
