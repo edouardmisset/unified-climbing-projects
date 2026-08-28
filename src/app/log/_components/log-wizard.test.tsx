@@ -37,7 +37,7 @@ function setupMocks() {
   })
 }
 
-function renderWizard(onUrlUpdate?: OnUrlUpdateFunction) {
+function renderWizard(onUrlUpdate?: OnUrlUpdateFunction, defaultScope?: 'ascents' | 'training') {
   return render(
     <NuqsTestingAdapter hasMemory onUrlUpdate={onUrlUpdate}>
       <LogWizard
@@ -48,6 +48,7 @@ function renderWizard(onUrlUpdate?: OnUrlUpdateFunction) {
           locations: ['Céüse', 'Arkose'],
           previousSessionTypes: [{ location: 'Arkose', type: 'Power' }],
         }}
+        defaultScope={defaultScope}
       />
     </NuqsTestingAdapter>,
   )
@@ -141,7 +142,19 @@ describe('log wizard', () => {
 
     expect(screen.getByRole('button', { name: 'Send' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+    expect(screen.queryByRole('heading', { name: 'Ascent 1' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Step 1: General' }))
+    await user.selectOptions(screen.getByLabelText('Log contents'), 'both')
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
     expect(screen.getByRole('heading', { name: 'Ascent 1' })).toBeInTheDocument()
+  })
+
+  it('does not instantiate an ascent for a training-only log', () => {
+    setupMocks()
+    renderWizard(undefined, 'training')
+
+    expect(screen.queryByRole('heading', { name: 'Ascent 1' })).not.toBeInTheDocument()
   })
 
   it('keeps step navigation separate from the selected log contents', async () => {

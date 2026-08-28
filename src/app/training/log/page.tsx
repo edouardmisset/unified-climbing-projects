@@ -4,7 +4,7 @@ import { LogFormWrapper } from '~/app/log/log-form-wrapper'
 
 export default function TrainingLogPage() {
   return (
-    <Layout gridClassName='padding' title='Log training'>
+    <Layout gridClassName='padding' title='Log'>
       <LogFormWrapper defaultScope='training' />
     </Layout>
   )
@@ -12,5 +12,5 @@ export default function TrainingLogPage() {
 
 export const metadata: Metadata = {
   description: 'Log a training session, climbing ascents, or both.',
-  title: 'Log · Training',
+  title: 'Log',
 }

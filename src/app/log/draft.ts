@@ -119,7 +119,10 @@ export function createInitialLogDraft({
 }: CreateInitialLogDraftOptions = {}): LogDraft {
   const discipline = historyDefaults?.discipline ?? 'Sport'
   return {
-    ascents: [createAscentDraft({ defaultGrade, discipline, historyDefaults })],
+    ascents:
+      defaultScope === 'training'
+        ? []
+        : [createAscentDraft({ defaultGrade, discipline, historyDefaults })],
     date: stringifyDate(new Date()).data ?? '',
     discipline,
     location: historyDefaults?.crag ?? '',

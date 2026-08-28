@@ -29,5 +29,5 @@ export default function LogPage() {
 export const metadata: Metadata = {
   description: 'Log a training session, climbing ascents, or both',
   keywords: ['climbing', 'training', 'ascent', 'log'],
-  title: 'Log climbing 📋',
+  title: 'Log',
 }
