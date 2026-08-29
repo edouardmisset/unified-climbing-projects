@@ -114,6 +114,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^21.2.0
         version: 21.2.2
+      '@edge-runtime/vm':
+        specifier: 5.0.0
+        version: 5.0.0
       '@fontsource/atkinson-hyperlegible':
         specifier: ^5.3.0
         version: 5.3.0
@@ -197,10 +200,10 @@ importers:
         version: '@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)'
       vite-plus:
         specifier: 'catalog:'
-        version: 0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
+        version: 0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
       vitest:
         specifier: 4.1.10
-        version: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+        version: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
       vitest-browser-react:
         specifier: 2.2.0
         version: 2.2.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(vitest@4.1.10)
@@ -704,6 +707,14 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss-selector-parser: ^7.1.1
+
+  '@edge-runtime/primitives@6.0.0':
+    resolution: {integrity: sha512-FqoxaBT+prPBHBwE1WXS1ocnu/VLTQyZ6NMUBAdbP7N2hsFTTxMC/jMu2D/8GAlMQfxeuppcPuCUk/HO3fpIvA==}
+    engines: {node: '>=18'}
+
+  '@edge-runtime/vm@5.0.0':
+    resolution: {integrity: sha512-NKBGBSIKUG584qrS1tyxVpX/AKJKQw5HgjYEnPLC0QsTw79JrGn+qUr8CXFb955Iy7GUdiiUv1rJ6JBGvaKb6w==}
+    engines: {node: '>=18'}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -5347,6 +5358,12 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.5
 
+  '@edge-runtime/primitives@6.0.0': {}
+
+  '@edge-runtime/vm@5.0.0':
+    dependencies:
+      '@edge-runtime/primitives': 6.0.0
+
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -6347,7 +6364,7 @@ snapshots:
       '@vitest/mocker': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
       playwright: 1.62.1
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -6359,7 +6376,7 @@ snapshots:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.6(@testing-library/dom@10.4.1)
       '@vitest/browser': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(vitest@4.1.10)
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -6375,7 +6392,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
       ws: 8.21.3
     transitivePeerDependencies:
       - bufferutil
@@ -6395,7 +6412,7 @@ snapshots:
       obug: 2.1.4
       std-env: 4.2.0
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
     optionalDependencies:
       '@vitest/browser': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(vitest@4.1.10)
 
@@ -6443,7 +6460,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.1
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
 
   '@vitest/utils@4.1.10':
     dependencies:
@@ -8313,7 +8330,7 @@ snapshots:
       object-keys: 1.1.1
       safe-push-apply: 1.0.0
 
-  oxfmt@0.57.0(vite-plus@0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)):
+  oxfmt@0.57.0(vite-plus@0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)):
     dependencies:
       tinypool: 2.1.0
     optionalDependencies:
@@ -8336,7 +8353,7 @@ snapshots:
       '@oxfmt/binding-win32-arm64-msvc': 0.57.0
       '@oxfmt/binding-win32-ia32-msvc': 0.57.0
       '@oxfmt/binding-win32-x64-msvc': 0.57.0
-      vite-plus: 0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
+      vite-plus: 0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
 
   oxlint-tsgolint@0.24.0:
     optionalDependencies:
@@ -8347,7 +8364,7 @@ snapshots:
       '@oxlint-tsgolint/win32-arm64': 0.24.0
       '@oxlint-tsgolint/win32-x64': 0.24.0
 
-  oxlint@1.72.0(oxlint-tsgolint@0.24.0)(vite-plus@0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)):
+  oxlint@1.72.0(oxlint-tsgolint@0.24.0)(vite-plus@0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.72.0
       '@oxlint/binding-android-arm64': 1.72.0
@@ -8369,7 +8386,7 @@ snapshots:
       '@oxlint/binding-win32-ia32-msvc': 1.72.0
       '@oxlint/binding-win32-x64-msvc': 1.72.0
       oxlint-tsgolint: 0.24.0
-      vite-plus: 0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
+      vite-plus: 0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
 
   p-limit@3.1.0:
     dependencies:
@@ -9104,7 +9121,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite-plus@0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0):
+  vite-plus@0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0):
     dependencies:
       '@oxc-project/types': 0.138.0
       '@oxlint/plugins': 1.68.0
@@ -9118,10 +9135,10 @@ snapshots:
       '@vitest/spy': 4.1.10
       '@vitest/utils': 4.1.10
       '@voidzero-dev/vite-plus-core': 0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)
-      oxfmt: 0.57.0(vite-plus@0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
-      oxlint: 1.72.0(oxlint-tsgolint@0.24.0)(vite-plus@0.2.4(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
+      oxfmt: 0.57.0(vite-plus@0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
+      oxlint: 1.72.0(oxlint-tsgolint@0.24.0)(vite-plus@0.2.4(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(esbuild@0.27.0)(happy-dom@20.11.6)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
       oxlint-tsgolint: 0.24.0
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
     optionalDependencies:
       '@vitest/browser-playwright': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(playwright@1.62.1)(vitest@4.1.10)
       '@voidzero-dev/vite-plus-darwin-arm64': 0.2.4
@@ -9167,12 +9184,12 @@ snapshots:
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
-      vitest: 4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
+      vitest: 4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6)
     optionalDependencies:
       '@types/react': 19.2.18
       '@types/react-dom': 19.2.4(@types/react@19.2.18)
 
-  vitest@4.1.10(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6):
+  vitest@4.1.10(@edge-runtime/vm@5.0.0)(@types/node@26.2.0)(@vitest/browser-playwright@4.1.10)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.6):
     dependencies:
       '@vitest/expect': 4.1.10
       '@vitest/mocker': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))
@@ -9195,6 +9212,7 @@ snapshots:
       vite: '@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0)'
       why-is-node-running: 2.3.0
     optionalDependencies:
+      '@edge-runtime/vm': 5.0.0
       '@types/node': 26.2.0
       '@vitest/browser-playwright': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(playwright@1.62.1)(vitest@4.1.10)
       '@vitest/browser-preview': 4.1.10(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.2.0)(esbuild@0.27.0)(jiti@2.6.1)(typescript@6.0.3)(yaml@2.9.0))(vitest@4.1.10)
