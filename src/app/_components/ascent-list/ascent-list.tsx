@@ -1,4 +1,3 @@
-import { sum } from '@edouardmisset/math/sum.ts'
 import { type CSSProperties, useState } from 'react'
 import NotFound from '~/app/not-found'
 import { MAX_COLUMNS_THRESHOLD } from '~/constants/generic'
@@ -49,7 +48,7 @@ export const AscentList = ({
     if (!isOpen) setSelectedAscent(undefined)
   }
 
-  const totalAscentPoints = sum(ascents.map(ascent => fromAscentToPoints(ascent)))
+  const totalAscentPoints = ascents.reduce((total, ascent) => total + fromAscentToPoints(ascent), 0)
 
   const columns =
     BASE_COLUMNS_COUNT + (showDetails ? DETAIL_COLUMNS_COUNT : 0) + (showPoints ? 1 : 0)

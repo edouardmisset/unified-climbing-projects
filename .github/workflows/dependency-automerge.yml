@@ -1,0 +1,127 @@
+name: Automerge low-risk dependency updates
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions: {}
+
+jobs:
+  automerge:
+    if: >-
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.head.ref == 'chore/update-dependencies' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == vars.DEPENDENCY_UPDATE_BOT_LOGIN
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+          RUNNER_TEMP: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+
+          gh api --paginate "repos/${REPOSITORY}/pulls/${PR_NUMBER}/files" --jq '.[].filename' > "${RUNNER_TEMP}/changed-files"
+
+          test -s "${RUNNER_TEMP}/changed-files"
+          while IFS= read -r file; do
+            case "${file}" in
+              package.json|pnpm-lock.yaml) ;;
+              *) echo "Refusing automerge: unexpected changed file ${file}"; exit 1 ;;
+            esac
+          done < "${RUNNER_TEMP}/changed-files"
+
+          grep -Fxq package.json "${RUNNER_TEMP}/changed-files"
+          grep -Fxq pnpm-lock.yaml "${RUNNER_TEMP}/changed-files"
+
+      - name: Check low-risk dependency updates
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+          RUNNER_TEMP: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+
+          for ref in base head; do
+            sha="${BASE_SHA}"
+            test "${ref}" = head && sha="${HEAD_SHA}"
+            gh api "repos/${REPOSITORY}/contents/package.json?ref=${sha}" --jq .content \
+              | tr -d '\n' | base64 --decode > "${RUNNER_TEMP}/${ref}-package.json"
+          done
+
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs'
+
+          const base = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/base-package.json`, 'utf8'))
+          const head = JSON.parse(readFileSync(`${process.env.RUNNER_TEMP}/head-package.json`, 'utf8'))
+
+          const withoutDependencies = ({ dependencies, devDependencies, ...packageJson }) => packageJson
+          if (JSON.stringify(withoutDependencies(base)) !== JSON.stringify(withoutDependencies(head))) {
+            throw new Error('package.json changes outside dependencies and devDependencies are not eligible for automerge')
+          }
+
+          const dependencyGroups = [
+            { name: 'production', base: base.dependencies ?? {}, head: head.dependencies ?? {}, allowMinor: false },
+            { name: 'development', base: base.devDependencies ?? {}, head: head.devDependencies ?? {}, allowMinor: true },
+          ]
+
+          const version = (specifier) => {
+            const match = specifier.match(/^([~^<>= ]*)(\d+)\.(\d+)\.(\d+)(?:\+[0-9A-Za-z.-]+)?$/)
+            if (!match) throw new Error(`Cannot classify dependency specifier ${specifier}`)
+            return { prefix: match[1], major: Number(match[2]), minor: Number(match[3]), patch: Number(match[4]) }
+          }
+
+          let changedCount = 0
+          for (const group of dependencyGroups) {
+            const { base: baseDependencies, head: headDependencies } = group
+
+            for (const name of Object.keys(baseDependencies)) {
+              if (!(name in headDependencies)) {
+                throw new Error(`Removed ${group.name} dependencies are not eligible for automerge`)
+              }
+            }
+            for (const name of Object.keys(headDependencies)) {
+              if (!(name in baseDependencies)) {
+                throw new Error(`Added ${group.name} dependencies are not eligible for automerge`)
+              }
+            }
+
+            for (const name of Object.keys(headDependencies)) {
+              if (baseDependencies[name] === headDependencies[name]) continue
+              changedCount += 1
+
+              const baseVersion = version(baseDependencies[name])
+              const headVersion = version(headDependencies[name])
+              const minorDelta = headVersion.minor - baseVersion.minor
+              const isPatch = headVersion.major === baseVersion.major && minorDelta === 0 && headVersion.patch > baseVersion.patch
+              const isMinor = group.allowMinor && headVersion.major === baseVersion.major && minorDelta > 0
+
+              if (baseVersion.prefix !== headVersion.prefix || (!isPatch && !isMinor)) {
+                throw new Error(`${group.name} dependency ${name} is not an eligible patch/minor update`)
+              }
+            }
+          }
+
+          if (changedCount === 0) throw new Error('No direct dependency update found')
+          NODE
+
+      - name: Enable squash automerge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: gh pr merge "${PR_NUMBER}" --repo "${REPOSITORY}" --auto --squash
