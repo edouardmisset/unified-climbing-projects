@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["npm"],
+  "timezone": "Etc/UTC",
+  "schedule": ["every monday at 3am"],
+  "minimumReleaseAge": "7 days",
+  "minimumReleaseAgeBehaviour": "timestamp-required",
+  "internalChecksFilter": "strict",
+  "prConcurrentLimit": 1,
+  "prHourlyLimit": 1,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every monday at 3am"],
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "description": "Keep GitHub Actions under human review",
+      "matchManagers": ["github-actions"],
+      "enabled": false
+    },
+    {
+      "description": "Keep pnpm updates under human review",
+      "matchPackageNames": ["pnpm"],
+      "automerge": false
+    },
+    {
+      "description": "Automerge production dependency patches",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "Automerge development dependency patches and minors",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "automergeType": "pr"
+    }
+  ]
+}
