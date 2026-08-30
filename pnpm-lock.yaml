@@ -39,8 +39,8 @@ importers:
         specifier: ^2.4.55
         version: 2.4.57(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@edouardmisset/array':
-        specifier: npm:@jsr/edouardmisset__array@^5.0.0
-        version: '@jsr/edouardmisset__array@5.0.1'
+        specifier: npm:@jsr/edouardmisset__array@^5.1.0
+        version: '@jsr/edouardmisset__array@5.1.0'
       '@edouardmisset/date':
         specifier: npm:@jsr/edouardmisset__date@^5.0.0
         version: '@jsr/edouardmisset__date@5.0.1'
@@ -1332,20 +1332,29 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@jsr/edouardmisset__array@5.0.1':
-    resolution: {integrity: sha512-dbJbkTZq8yZtV7Bd4HqLdpQi1PktZtzhPHaIDhNOun2At5RhAkZoBWHnZepUVIFKArBRP8ExK2RSsS3R2I3yvA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__array/5.0.1.tgz}
+  '@jsr/edouardmisset__array@5.1.0':
+    resolution: {integrity: sha512-lqBH5gyn2vO8AdLx1M6Rc/w3TNoqfGM5+M8lMvUl96FiMt5x2kWb/Hk6PxRNET8TBhDNfws7YbtfJTEtvPMgyQ==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__array/5.1.0.tgz}
 
   '@jsr/edouardmisset__date@5.0.1':
     resolution: {integrity: sha512-zGn3uIDo87u5NiorHCI6QrGW2g12AGtzY1fF9dhkqLYyXMNzbM5TpIVFSZM8mFzrEHrSVUCEw3tFdvZ/NyBO3A==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__date/5.0.1.tgz}
 
+  '@jsr/edouardmisset__date@5.1.0':
+    resolution: {integrity: sha512-QgC5GnSw2qMQQjIvAPQS+acRZ4ubcKa5HExu+kYtUGWSMEeRIoyTdRrdXI553V9U6gNhJ/3/kSBOi/qN8ljJKA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__date/5.1.0.tgz}
+
   '@jsr/edouardmisset__function@5.0.1':
     resolution: {integrity: sha512-IeoOpaCl7fGoz7IkT0C0Z5bhBn7M76MIb9H9U8WGmjBUzVLEdWkKVGBvLrd2VjvmOJEaGvgt4Hbzz4woNC4IQg==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__function/5.0.1.tgz}
+
+  '@jsr/edouardmisset__function@5.1.0':
+    resolution: {integrity: sha512-2t8HLU9vQuCiPQEKxZcZ8oaXfdd7jYiDR2LGmvkKhXOzHHbGL265sUleOpmbOz2/qsaFeyDg3P+BBMzbUvVJ9g==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__function/5.1.0.tgz}
 
   '@jsr/edouardmisset__math@5.0.0':
     resolution: {integrity: sha512-xLMgdM638RNApL+lcpJQ2VT/hbfU4CPVyMt56ADXAo4gm2mJlEW8tLXiG9S2R4gM1GBabnLl5jCwNHfmHFP9yw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/5.0.0.tgz}
 
   '@jsr/edouardmisset__object@5.0.0':
     resolution: {integrity: sha512-WuWoDRxf+uIB4pPsGuJ1f/+ZWS2kkEIzlHP0FTFWfC6yqYCBjHX1BdsKXEolQcIIY4UKf4ycpC36SVx/NmYlyw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.0.0.tgz}
+
+  '@jsr/edouardmisset__object@5.1.0':
+    resolution: {integrity: sha512-vbs1RyJQt2CnNSNbu6DMl2huy+312/7l2UQHIYN0goyZdcMq3W0WLgwtH7XsmzxscCb/BiGmgHhqhYyY5rX2fQ==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.1.0.tgz}
 
   '@jsr/edouardmisset__text@5.0.0':
     resolution: {integrity: sha512-lPjIkzBu+ktdHB7y9W/DgtYC55AtppET7yqUT63IJVInhNJNtnK9AIucGAYCf/v2A6/7CSsoCwjd2UplC2GvHA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__text/5.0.0.tgz}
@@ -1355,6 +1364,9 @@ packages:
 
   '@jsr/std__dotenv@0.225.7':
     resolution: {integrity: sha512-Efy4o/d2nZWf6R/mPau5qxqIyW7CGH7NIkfwDpxcTEqyh+3C2niUTgC65LQGSStoFqo/LHQvXFnADAQZLE3p/Q==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.7.tgz}
+
+  '@jsr/std__dotenv@0.225.8':
+    resolution: {integrity: sha512-KcGf0dNnJcQPPLiLXnB2hRmuB1/+L+RRYeEaxmcGwsZe45JrhVtMeULNUy7+0N5h9fr1cMHrGfMtE5xceReQMQ==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.8.tgz}
 
   '@keyv/bigmap@1.3.1':
     resolution: {integrity: sha512-WbzE9sdmQtKy8vrNPa9BRnwZh5UF4s1KTmSK0KUVLo3eff5BlQNNWDnFOouNpKfPKDnms9xynJjsMYjMaT/aFQ==}
@@ -6072,10 +6084,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@jsr/edouardmisset__array@5.0.1':
+  '@jsr/edouardmisset__array@5.1.0':
     dependencies:
-      '@jsr/edouardmisset__date': 5.0.1
-      '@jsr/edouardmisset__function': 5.0.1
+      '@jsr/edouardmisset__date': 5.1.0
+      '@jsr/edouardmisset__function': 5.1.0
       '@jsr/edouardmisset__type': 5.0.0
 
   '@jsr/edouardmisset__date@5.0.1':
@@ -6083,11 +6095,22 @@ snapshots:
       '@jsr/edouardmisset__function': 5.0.1
       '@jsr/edouardmisset__type': 5.0.0
 
+  '@jsr/edouardmisset__date@5.1.0':
+    dependencies:
+      '@jsr/edouardmisset__function': 5.1.0
+      '@jsr/edouardmisset__type': 5.0.0
+
   '@jsr/edouardmisset__function@5.0.1':
     dependencies:
       '@jsr/edouardmisset__object': 5.0.0
       '@jsr/edouardmisset__type': 5.0.0
       '@jsr/std__dotenv': 0.225.7
+
+  '@jsr/edouardmisset__function@5.1.0':
+    dependencies:
+      '@jsr/edouardmisset__object': 5.1.0
+      '@jsr/edouardmisset__type': 5.0.0
+      '@jsr/std__dotenv': 0.225.8
 
   '@jsr/edouardmisset__math@5.0.0':
     dependencies:
@@ -6098,11 +6121,17 @@ snapshots:
     dependencies:
       '@jsr/edouardmisset__type': 5.0.0
 
+  '@jsr/edouardmisset__object@5.1.0':
+    dependencies:
+      '@jsr/edouardmisset__type': 5.0.0
+
   '@jsr/edouardmisset__text@5.0.0': {}
 
   '@jsr/edouardmisset__type@5.0.0': {}
 
   '@jsr/std__dotenv@0.225.7': {}
+
+  '@jsr/std__dotenv@0.225.8': {}
 
   '@keyv/bigmap@1.3.1(keyv@5.6.0)':
     dependencies:

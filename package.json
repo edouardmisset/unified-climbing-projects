@@ -29,7 +29,7 @@
     "@base-ui/react": "^1.7.0",
     "@clerk/nextjs": "^6.39.2",
     "@clerk/themes": "^2.4.55",
-    "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^5.0.0",
+    "@edouardmisset/array": "npm:@jsr/edouardmisset__array@^5.1.0",
     "@edouardmisset/date": "npm:@jsr/edouardmisset__date@^5.0.0",
     "@edouardmisset/math": "npm:@jsr/edouardmisset__math@^5.0.0",
     "@edouardmisset/object": "npm:@jsr/edouardmisset__object@^5.0.0",
