@@ -25,13 +25,26 @@ const files = [
 
 const findings: string[] = []
 
+export function normalizeReference(reference: string): string | undefined {
+  const [firstCharacter] = reference
+  const lastCharacter = reference.at(-1)
+  const isQuoted = firstCharacter === "'" || firstCharacter === '"'
+
+  if (!isQuoted) return lastCharacter === "'" || lastCharacter === '"' ? undefined : reference
+  if (lastCharacter !== firstCharacter) return undefined
+
+  return reference.slice(1, -1)
+}
+
 for (const file of files) {
   const source = readFileSync(file, 'utf8')
   const usesPattern = /^\s*(?:-\s*)?uses:\s*(?<reference>[^\s#]+)(?:\s+#.*)?$/gmu
 
   for (const match of source.matchAll(usesPattern)) {
-    const { reference } = match.groups ?? {}
-    if (typeof reference !== 'string' || reference.length === 0) continue
+    const { reference: capturedReference } = match.groups ?? {}
+    if (typeof capturedReference !== 'string' || capturedReference.length === 0) continue
+    const reference = normalizeReference(capturedReference)
+    if (reference === undefined || reference.length === 0) continue
     if (reference.startsWith('./') || reference.startsWith('../')) continue
     if (/@[0-9a-f]{40}$/iu.test(reference)) continue
 

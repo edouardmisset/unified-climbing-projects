@@ -3,8 +3,7 @@
 Renovate proposes dependency updates every Monday at 03:00 UTC. Install the hosted Renovate
 GitHub App for this repository and commit the repository configuration in `renovate.json`.
 Renovate uses its npm manager for `package.json`, `pnpm-workspace.yaml`, and `pnpm-lock.yaml`,
-delegating lockfile updates to pnpm. Weekly lockfile maintenance keeps transitive dependencies
-fresh, but lockfile-only PRs remain manual-review changes. It is limited to one open update PR at a time.
+delegating lockfile updates to pnpm. It is limited to one open update PR at a time.
 
 GitHub Actions are intentionally outside Renovate's enabled managers. Action versions remain a
 human-reviewed change and are checked by `pnpm run verify:github-actions` in CI.
