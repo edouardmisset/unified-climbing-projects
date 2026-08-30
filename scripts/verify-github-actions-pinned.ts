@@ -27,7 +27,7 @@ const findings: string[] = []
 
 for (const file of files) {
   const source = readFileSync(file, 'utf8')
-  const usesPattern = /^\s*uses:\s*(?<reference>[^\s#]+)(?:\s+#.*)?$/gmu
+  const usesPattern = /^\s*(?:-\s*)?uses:\s*(?<reference>[^\s#]+)(?:\s+#.*)?$/gmu
 
   for (const match of source.matchAll(usesPattern)) {
     const { reference } = match.groups ?? {}
