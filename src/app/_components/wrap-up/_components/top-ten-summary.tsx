@@ -1,5 +1,3 @@
-import { sum } from '@edouardmisset/math'
-
 import { fromAscentToPoints, fromPointToGrade } from '~/helpers/ascent-converter'
 import { frenchNumberFormatter } from '~/helpers/number-formatter'
 import type { AscentListProps } from '~/schema/ascent'
@@ -25,7 +23,7 @@ export function TopTenSummary({ ascents }: AscentListProps) {
     ascent => ascent.points === Math.min(...topTenAscents.map(({ points }) => points)),
   )
 
-  const topTenScore = sum(topTenAscents.map(({ points }) => points))
+  const topTenScore = topTenAscents.reduce((total, { points }) => total + points, 0)
 
   const nextStepPoints = (lowestTopTenAscent?.points ?? 0) + SCORE_INCREMENT
   const displayHowToImprove =

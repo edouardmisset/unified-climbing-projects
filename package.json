@@ -17,12 +17,14 @@
     "spell": "cspell lint --no-progress --show-suggestions --show-context --locale 'en,fr' ./src/**/*.ts*",
     "start": "next start",
     "style:lint": "stylelint --fix 'src/**/*.css'",
+    "check:ci": "vp check && stylelint 'src/**/*.css'",
     "test": "vp test --project=unit --reporter=dot",
     "test:integration": "pnpm exec vp test --project=integration-convex --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-dom --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-browser --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-visual --reporter=dot --silent=passed-only && pnpm exec vp test --project=integration-visual-mobile --passWithNoTests --reporter=dot --silent=passed-only",
     "test:e2e:ci": "playwright test",
     "test:all": "vp run test --silent=passed-only && vp run test:integration && vp run test:e2e",
     "fallow": "vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only && fallow",
     "validate": "vp run check && vp run test:all && vp run build",
+    "verify:github-actions": "node --experimental-strip-types scripts/verify-github-actions-pinned.ts",
     "prepare": "vp config"
   },
   "dependencies": {
@@ -57,6 +59,7 @@
     "@clerk/testing": "^2.2.19",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
+    "@edge-runtime/vm": "5.0.0",
     "@fontsource/atkinson-hyperlegible": "^5.3.0",
     "@next/env": "^16.3.0",
     "@playwright/test": "1.62.1",
@@ -101,7 +104,7 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.24.0",
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   }
