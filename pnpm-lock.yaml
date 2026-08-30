@@ -42,8 +42,8 @@ importers:
         specifier: npm:@jsr/edouardmisset__date@^5.1.0
         version: '@jsr/edouardmisset__date@5.1.0'
       '@edouardmisset/math':
-        specifier: npm:@jsr/edouardmisset__math@^5.1.0
-        version: '@jsr/edouardmisset__math@5.1.0'
+        specifier: npm:@jsr/edouardmisset__math@^5.0.0
+        version: '@jsr/edouardmisset__math@5.0.0'
       '@edouardmisset/object':
         specifier: npm:@jsr/edouardmisset__object@^5.1.0
         version: '@jsr/edouardmisset__object@5.1.0'
@@ -1335,11 +1335,14 @@ packages:
   '@jsr/edouardmisset__date@5.1.0':
     resolution: {integrity: sha512-QgC5GnSw2qMQQjIvAPQS+acRZ4ubcKa5HExu+kYtUGWSMEeRIoyTdRrdXI553V9U6gNhJ/3/kSBOi/qN8ljJKA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__date/5.1.0.tgz}
 
+  '@jsr/edouardmisset__function@5.0.1':
+    resolution: {integrity: sha512-IeoOpaCl7fGoz7IkT0C0Z5bhBn7M76MIb9H9U8WGmjBUzVLEdWkKVGBvLrd2VjvmOJEaGvgt4Hbzz4woNC4IQg==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__function/5.0.1.tgz}
+
   '@jsr/edouardmisset__function@5.1.0':
     resolution: {integrity: sha512-2t8HLU9vQuCiPQEKxZcZ8oaXfdd7jYiDR2LGmvkKhXOzHHbGL265sUleOpmbOz2/qsaFeyDg3P+BBMzbUvVJ9g==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__function/5.1.0.tgz}
 
-  '@jsr/edouardmisset__math@5.1.0':
-    resolution: {integrity: sha512-g9Lz5ecSMIVk+sYsVIz22jxJoBx9HEOwCNTKDeAFCCrbpHJ2RX4BYgoC2N6CTZMEy6wubw2DqarjpJ7x9I9hEA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/5.1.0.tgz}
+  '@jsr/edouardmisset__math@5.0.0':
+    resolution: {integrity: sha512-xLMgdM638RNApL+lcpJQ2VT/hbfU4CPVyMt56ADXAo4gm2mJlEW8tLXiG9S2R4gM1GBabnLl5jCwNHfmHFP9yw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/5.0.0.tgz}
 
   '@jsr/edouardmisset__object@5.1.0':
     resolution: {integrity: sha512-vbs1RyJQt2CnNSNbu6DMl2huy+312/7l2UQHIYN0goyZdcMq3W0WLgwtH7XsmzxscCb/BiGmgHhqhYyY5rX2fQ==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.1.0.tgz}
@@ -1349,6 +1352,9 @@ packages:
 
   '@jsr/edouardmisset__type@5.0.0':
     resolution: {integrity: sha512-HomobMsderjoT0+isfigu9z3i9MWx+fMADv9da80stas3Vkunb3uqjIOQqJQ2UYOUzTQC+9AeyUj/n+EwZL7nw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__type/5.0.0.tgz}
+
+  '@jsr/std__dotenv@0.225.7':
+    resolution: {integrity: sha512-Efy4o/d2nZWf6R/mPau5qxqIyW7CGH7NIkfwDpxcTEqyh+3C2niUTgC65LQGSStoFqo/LHQvXFnADAQZLE3p/Q==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.7.tgz}
 
   '@jsr/std__dotenv@0.225.8':
     resolution: {integrity: sha512-KcGf0dNnJcQPPLiLXnB2hRmuB1/+L+RRYeEaxmcGwsZe45JrhVtMeULNUy7+0N5h9fr1cMHrGfMtE5xceReQMQ==, tarball: https://npm.jsr.io/~/11/@jsr/std__dotenv/0.225.8.tgz}
@@ -4315,10 +4321,6 @@ packages:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.5:
-    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
-    engines: {node: '>=12'}
-
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
@@ -4782,10 +4784,6 @@ packages:
   tinypool@2.1.0:
     resolution: {integrity: sha512-Pugqs6M0m7Lv1I7FtxN4aoyToKg1C4tu+/381vH35y8oENM/Ai7f7C4StcoK4/+BSw9ebcS8jRiVrORFKCALLw==}
     engines: {node: ^20.0.0 || >=22.0.0}
-
-  tinyrainbow@3.1.0:
-    resolution: {integrity: sha512-Bf+ILmBgretUrdJxzXM0SgXLZ3XfiaUuOj/IKQHuTXip+05Xn+uyEYdVg0kYDipTBcLrCVyUzAPz7QmArb0mmw==}
-    engines: {node: '>=14.0.0'}
 
   tinyrainbow@3.1.1:
     resolution: {integrity: sha512-yau8yJdTt989Mm0Bd/236QnzEiPf2xLLTqUZRUJOo/3CB078LSwzei343DgtJVmfJKJE3TMINY1u42SQsP6mXw==}
@@ -6032,15 +6030,21 @@ snapshots:
       '@jsr/edouardmisset__function': 5.1.0
       '@jsr/edouardmisset__type': 5.0.0
 
+  '@jsr/edouardmisset__function@5.0.1':
+    dependencies:
+      '@jsr/edouardmisset__object': 5.1.0
+      '@jsr/edouardmisset__type': 5.0.0
+      '@jsr/std__dotenv': 0.225.7
+
   '@jsr/edouardmisset__function@5.1.0':
     dependencies:
       '@jsr/edouardmisset__object': 5.1.0
       '@jsr/edouardmisset__type': 5.0.0
       '@jsr/std__dotenv': 0.225.8
 
-  '@jsr/edouardmisset__math@5.1.0':
+  '@jsr/edouardmisset__math@5.0.0':
     dependencies:
-      '@jsr/edouardmisset__function': 5.1.0
+      '@jsr/edouardmisset__function': 5.0.1
       '@jsr/edouardmisset__type': 5.0.0
 
   '@jsr/edouardmisset__object@5.1.0':
@@ -6050,6 +6054,8 @@ snapshots:
   '@jsr/edouardmisset__text@5.0.0': {}
 
   '@jsr/edouardmisset__type@5.0.0': {}
+
+  '@jsr/std__dotenv@0.225.7': {}
 
   '@jsr/std__dotenv@0.225.8': {}
 
@@ -6730,7 +6736,7 @@ snapshots:
       magic-string: 0.30.21
       pngjs: 7.0.0
       sirv: 3.0.2
-      tinyrainbow: 3.1.0
+      tinyrainbow: 3.1.1
       vitest: 4.1.11(@edge-runtime/vm@5.0.0)(@types/node@26.4.0)(@vitest/browser-playwright@4.1.11)(@vitest/browser-preview@4.1.10)(@vitest/coverage-v8@4.1.11)(@vitest/ui@4.1.11)(@voidzero-dev/vite-plus-core@0.2.4(@types/node@26.4.0)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(typescript@6.0.3)(yaml@2.9.0))(happy-dom@20.11.15)
       ws: 8.21.1
     transitivePeerDependencies:
@@ -6779,7 +6785,7 @@ snapshots:
       '@vitest/spy': 4.1.10
       '@vitest/utils': 4.1.10
       chai: 6.2.2
-      tinyrainbow: 3.1.0
+      tinyrainbow: 3.1.1
 
   '@vitest/expect@4.1.11':
     dependencies:
@@ -6808,7 +6814,7 @@ snapshots:
 
   '@vitest/pretty-format@4.1.10':
     dependencies:
-      tinyrainbow: 3.1.0
+      tinyrainbow: 3.1.1
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -6857,7 +6863,7 @@ snapshots:
     dependencies:
       '@vitest/pretty-format': 4.1.10
       convert-source-map: 2.0.0
-      tinyrainbow: 3.1.0
+      tinyrainbow: 3.1.1
 
   '@vitest/utils@4.1.11':
     dependencies:
@@ -7273,7 +7279,7 @@ snapshots:
   cspell-glob@10.0.1:
     dependencies:
       '@cspell/url': 10.0.1
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   cspell-grammar@10.0.1:
     dependencies:
@@ -8869,8 +8875,6 @@ snapshots:
 
   picomatch@2.3.2: {}
 
-  picomatch@4.0.5: {}
-
   picomatch@4.0.7: {}
 
   pkg-dir@5.0.0:
@@ -9422,8 +9426,6 @@ snapshots:
 
   tinypool@2.1.0: {}
 
-  tinyrainbow@3.1.0: {}
-
   tinyrainbow@3.1.1: {}
 
   to-regex-range@5.0.1:
@@ -9438,7 +9440,7 @@ snapshots:
 
   ts-declaration-location@1.0.7(typescript@6.0.3):
     dependencies:
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       typescript: 6.0.3
 
   tslib@2.8.1: {}
