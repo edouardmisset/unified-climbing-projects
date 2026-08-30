@@ -74,7 +74,7 @@
     "@vitest/browser-playwright": "4.1.10",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
-    "convex-test": "^0.0.55",
+    "convex-test": "^0.0.56",
     "cspell": "^10.0.1",
     "eslint-plugin-compat": "^7.0.2",
     "eslint-plugin-react-you-might-not-need-an-effect": "^1.0.1",
