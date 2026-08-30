@@ -45,8 +45,8 @@ importers:
         specifier: npm:@jsr/edouardmisset__math@^5.1.0
         version: '@jsr/edouardmisset__math@5.1.0'
       '@edouardmisset/object':
-        specifier: npm:@jsr/edouardmisset__object@^5.0.0
-        version: '@jsr/edouardmisset__object@5.0.0'
+        specifier: npm:@jsr/edouardmisset__object@^5.1.0
+        version: '@jsr/edouardmisset__object@5.1.0'
       '@edouardmisset/text':
         specifier: npm:@jsr/edouardmisset__text@^5.0.0
         version: '@jsr/edouardmisset__text@5.0.0'
@@ -1340,9 +1340,6 @@ packages:
 
   '@jsr/edouardmisset__math@5.1.0':
     resolution: {integrity: sha512-g9Lz5ecSMIVk+sYsVIz22jxJoBx9HEOwCNTKDeAFCCrbpHJ2RX4BYgoC2N6CTZMEy6wubw2DqarjpJ7x9I9hEA==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__math/5.1.0.tgz}
-
-  '@jsr/edouardmisset__object@5.0.0':
-    resolution: {integrity: sha512-WuWoDRxf+uIB4pPsGuJ1f/+ZWS2kkEIzlHP0FTFWfC6yqYCBjHX1BdsKXEolQcIIY4UKf4ycpC36SVx/NmYlyw==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.0.0.tgz}
 
   '@jsr/edouardmisset__object@5.1.0':
     resolution: {integrity: sha512-vbs1RyJQt2CnNSNbu6DMl2huy+312/7l2UQHIYN0goyZdcMq3W0WLgwtH7XsmzxscCb/BiGmgHhqhYyY5rX2fQ==, tarball: https://npm.jsr.io/~/11/@jsr/edouardmisset__object/5.1.0.tgz}
@@ -6044,10 +6041,6 @@ snapshots:
   '@jsr/edouardmisset__math@5.1.0':
     dependencies:
       '@jsr/edouardmisset__function': 5.1.0
-      '@jsr/edouardmisset__type': 5.0.0
-
-  '@jsr/edouardmisset__object@5.0.0':
-    dependencies:
       '@jsr/edouardmisset__type': 5.0.0
 
   '@jsr/edouardmisset__object@5.1.0':
