@@ -18,10 +18,10 @@ allowBuilds:
   unrs-resolver: true
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@0.2.4
-  vitest: 4.1.10
+  vitest: 4.1.11
   vite-plus: 0.2.4
-  '@vitest/coverage-v8': 4.1.10
-  '@vitest/ui': 4.1.10
+  '@vitest/coverage-v8': 4.1.11
+  '@vitest/ui': 4.1.11
 peerDependencyRules:
   allowAny:
     - vite
