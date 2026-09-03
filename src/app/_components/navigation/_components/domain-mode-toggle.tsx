@@ -44,7 +44,7 @@ export function DomainModeToggle({ onNavigate }: { onNavigate?: () => void }) {
               }}
               type='button'
             >
-              <span aria-hidden className={styles.linkIcon}>
+              <span aria-hidden className={styles.linkIcon} title={label}>
                 <Icon size={18} strokeWidth={1.9} />
               </span>
               <span className={styles.domainModeText}>{label}</span>
