@@ -29,6 +29,7 @@ export function NavigationDisclosure({ icon, item, onNavigate, text }: Navigatio
         onClick={() => {
           setOpen(current => !current)
         }}
+        title={text}
         type='button'
       >
         <span aria-hidden className={styles.linkIcon}>
