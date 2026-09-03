@@ -1,21 +1,21 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, type LucideIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
-import { splitNavigationLabel } from '../helpers'
 import styles from '../navigation.module.css'
 
 type NavigationDisclosureProps = {
-  icon: string
+  icon: LucideIcon
   item: Extract<NavigationElement, { type: 'disclosure' }>
   onNavigate?: () => void
   text: string
 }
 
 export function NavigationDisclosure({ icon, item, onNavigate, text }: NavigationDisclosureProps) {
+  const Icon = icon
   const pathname = usePathname()
   const containsActiveLink = item.links.some(({ href }) => pathname === href)
   const [open, setOpen] = useState(containsActiveLink)
@@ -32,33 +32,29 @@ export function NavigationDisclosure({ icon, item, onNavigate, text }: Navigatio
         type='button'
       >
         <span aria-hidden className={styles.linkIcon}>
-          {icon}
+          <Icon size={18} strokeWidth={1.9} />
         </span>
         <span className={styles.linkText}>{text}</span>
         <ChevronDown aria-hidden className={styles.disclosureIcon} size={16} />
       </button>
       {open ? (
         <ul className={styles.disclosureLinks}>
-          {item.links.map(({ href, label }) => {
-            const child = splitNavigationLabel(label)
-
-            return (
-              <li key={href}>
-                <Link
-                  aria-label={label}
-                  className={styles.link}
-                  href={href}
-                  onClick={onNavigate}
-                  title={label}
-                >
-                  <span aria-hidden className={styles.linkIcon}>
-                    {child.icon}
-                  </span>
-                  <span className={styles.linkText}>{child.text}</span>
-                </Link>
-              </li>
-            )
-          })}
+          {item.links.map(({ href, icon: ChildIcon, label }) => (
+            <li key={href}>
+              <Link
+                aria-label={label}
+                className={styles.link}
+                href={href}
+                onClick={onNavigate}
+                title={label}
+              >
+                <span aria-hidden className={styles.linkIcon}>
+                  <ChildIcon size={18} strokeWidth={1.9} />
+                </span>
+                <span className={styles.linkText}>{label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       ) : undefined}
     </li>

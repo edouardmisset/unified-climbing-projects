@@ -1,11 +1,13 @@
+import { Dumbbell, Mountain, type LucideIcon } from 'lucide-react'
+
 export const DOMAINS = ['ascents', 'training'] as const
 
 export type Domain = (typeof DOMAINS)[number]
 
 export const DOMAIN_DETAILS = {
-  ascents: { icon: '🧗', label: 'Ascents' },
-  training: { icon: '💪', label: 'Training' },
-} as const satisfies Record<Domain, { icon: string; label: string }>
+  ascents: { icon: Mountain, label: 'Ascents' },
+  training: { icon: Dumbbell, label: 'Training' },
+} as const satisfies Record<Domain, { icon: LucideIcon; label: string }>
 
 export function isDomain(value: string | undefined): value is Domain {
   return value !== undefined && DOMAINS.includes(value as Domain)

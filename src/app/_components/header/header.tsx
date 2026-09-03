@@ -14,14 +14,9 @@ export function Header() {
 
   const isDark = theme === 'dark'
   const domain = getDomainFromPathname(pathname)
-  const isPublicPage = [
-    '/',
-    '/privacy',
-    '/terms',
-    '/sign-in',
-    '/sign-up',
-    '/prototype/navigation',
-  ].some(route => pathname === route || pathname.startsWith(`${route}/`))
+  const isPublicPage = ['/', '/privacy', '/terms', '/sign-in', '/sign-up'].some(
+    route => pathname === route || pathname.startsWith(`${route}/`),
+  )
 
   if (isPublicPage) return
 

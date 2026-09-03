@@ -30,7 +30,7 @@ export function DomainModeToggle({ onNavigate }: { onNavigate?: () => void }) {
     <li className={styles.domainMode}>
       <div aria-label='Current climbing focus' className={styles.domainModeControl}>
         {DOMAINS.map(domain => {
-          const { icon, label } = DOMAIN_DETAILS[domain]
+          const { icon: Icon, label } = DOMAIN_DETAILS[domain]
           const isSelected = domain === currentDomain
 
           return (
@@ -45,7 +45,7 @@ export function DomainModeToggle({ onNavigate }: { onNavigate?: () => void }) {
               type='button'
             >
               <span aria-hidden className={styles.linkIcon}>
-                {icon}
+                <Icon size={18} strokeWidth={1.9} />
               </span>
               <span className={styles.domainModeText}>{label}</span>
             </button>

@@ -4,6 +4,7 @@ import { PanelLeftClose, PanelLeftOpen, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getDomainFromPathname } from '~/constants/domain'
+import { getDomainLinks } from '~/constants/links'
 import { DomainModeToggle } from './_components/domain-mode-toggle'
 import { MobileNavigationTrigger } from './_components/mobile-navigation-trigger'
 import { NavigationItem } from './_components/navigation-item'
@@ -30,6 +31,7 @@ export const Navigation = ({
   const pathname = usePathname()
   const domain = getDomainFromPathname(pathname) ?? 'ascents'
   const navigationItems = getNavigationItems(domain)
+  const settingsHref = getDomainLinks(domain).settings
 
   const desktopMode = desktopExpanded ? 'desktop-expanded' : 'desktop-collapsed'
 
@@ -52,17 +54,19 @@ export const Navigation = ({
       data-desktop-expanded={desktopExpanded}
     >
       <div className={styles.desktopRail}>
-        <button
-          aria-expanded={desktopExpanded}
-          aria-label={desktopToggleLabel}
-          className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.desktopToggle}`}
-          onClick={handleDesktopToggle}
-          type='button'
-        >
-          <span aria-hidden className={styles.toggleIcon}>
-            {desktopExpanded ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
-          </span>
-        </button>
+        <div className={styles.railHeader}>
+          <button
+            aria-expanded={desktopExpanded}
+            aria-label={desktopToggleLabel}
+            className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.desktopToggle}`}
+            onClick={handleDesktopToggle}
+            type='button'
+          >
+            <span aria-hidden className={styles.toggleIcon}>
+              {desktopExpanded ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+            </span>
+          </button>
+        </div>
 
         <ul className={styles.navList} data-mode={desktopMode}>
           <DomainModeToggle />
@@ -72,7 +76,11 @@ export const Navigation = ({
               key={`desktop-${createNavigationElementKey(item, index)}`}
             />
           ))}
-          <NavigationUserSection isDark={isDark} onToggleTheme={onToggleTheme} />
+          <NavigationUserSection
+            isDark={isDark}
+            onToggleTheme={onToggleTheme}
+            settingsHref={settingsHref}
+          />
         </ul>
       </div>
 
@@ -104,7 +112,12 @@ export const Navigation = ({
                     key={`mobile-${createNavigationElementKey(item, index)}`}
                   />
                 ))}
-                <NavigationUserSection isDark={isDark} onToggleTheme={onToggleTheme} />
+                <NavigationUserSection
+                  isDark={isDark}
+                  onNavigate={handleMobileNavigate}
+                  onToggleTheme={onToggleTheme}
+                  settingsHref={settingsHref}
+                />
               </ul>
             </Drawer.Popup>
           </Drawer.Portal>

@@ -10,7 +10,7 @@ describe('navigation items', () => {
       return []
     })
 
-    expect(hrefs).toContain('/ascents/settings')
+    expect(hrefs).not.toContain('/ascents/settings')
     expect(hrefs).toContain('/ascents/log')
     expect(hrefs).toContain('/ascents/visuals/qr-code')
     expect(hrefs).not.toContain('/ascents/top-ten')
