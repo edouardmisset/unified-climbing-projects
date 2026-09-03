@@ -13,7 +13,7 @@ function toUtcDate(plainDate: Temporal.PlainDate): Date {
 }
 
 function getTrailingRange(duration: Temporal.DurationLike): DateRange {
-  const today = Temporal.Now.plainDateISO()
+  const today = Temporal.Now.plainDateISO('UTC')
 
   return {
     startDate: toUtcDate(today.subtract(duration)),
@@ -25,8 +25,8 @@ function getTrailingRange(duration: Temporal.DurationLike): DateRange {
 const PERIOD_TO_RANGE = {
   'Last month': () => getTrailingRange({ months: 1 }),
   'Last year': () => getTrailingRange({ years: 1 }),
-  Unemployment: () => PERIOD_TO_DATES.Unemployment,
-  'Road-Trip': () => PERIOD_TO_DATES['Road-Trip'],
+  Unemployment: () => ({ ...PERIOD_TO_DATES.Unemployment }),
+  'Road-Trip': () => ({ ...PERIOD_TO_DATES['Road-Trip'] }),
 } as const satisfies Record<Period, () => DateRange>
 
 export function isDateInPeriod(date: Date, period: Period | undefined): boolean {
