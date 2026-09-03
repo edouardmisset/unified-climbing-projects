@@ -7,3 +7,8 @@ export type ValueAndLabel = {
   label: string
   value: string
 }
+
+export type OptionGroup = {
+  label: string
+  options: readonly string[]
+}

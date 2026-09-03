@@ -1,5 +1,6 @@
 import { capitalize } from '@edouardmisset/text'
 import type { ChangeEventHandler } from 'react'
+import type { OptionGroup } from '~/types/generic'
 import { ALL_VALUE } from '../dashboard/constants.ts'
 import { CustomLabel } from '../ui/custom-label/custom-label'
 import { Option } from '../ui/option/option.tsx'
@@ -8,7 +9,7 @@ import styles from './custom-select.module.css'
 type CustomSelectProps = {
   handleChange: ChangeEventHandler<HTMLSelectElement>
   selectedOption: string
-  options: string[] | number[] | readonly string[]
+  options: readonly (string | number | OptionGroup)[]
   name: string
   id?: string
   title?: string
@@ -27,9 +28,17 @@ export function CustomSelect(props: CustomSelectProps) {
         value={selectedOption}
       >
         <Option label={capitalize(ALL_VALUE)} value={ALL_VALUE} />
-        {options.map(option => (
-          <Option key={option} label={String(option)} value={String(option)} />
-        ))}
+        {options.map(option =>
+          typeof option === 'object' ? (
+            <optgroup key={option.label} label={option.label}>
+              {option.options.map(groupedOption => (
+                <Option key={groupedOption} label={groupedOption} value={groupedOption} />
+              ))}
+            </optgroup>
+          ) : (
+            <Option key={option} label={String(option)} value={String(option)} />
+          ),
+        )}
       </select>
     </CustomLabel>
   )
