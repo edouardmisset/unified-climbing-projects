@@ -1,11 +1,10 @@
-import { isDateInRange } from '@edouardmisset/date'
 import { stringEqualsCaseInsensitive } from '@edouardmisset/text'
 import type { z } from 'zod'
 import type { Ascent } from '~/schema/ascent.ts'
-import { PERIOD_TO_DATES } from '~/schema/generic.ts'
 import type { optionalAscentFilterSchema } from '~/types/optional-ascent-filter'
 import { matchesText, matchesValue, matchesYear } from './filter-matchers.ts'
 import { fromGradeToNumber } from './grade-converter.ts'
+import { isDateInPeriod } from './period.ts'
 
 type OptionalAscentFilter = z.infer<typeof optionalAscentFilterSchema>
 
@@ -51,7 +50,7 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
       matchesValue(ascent.tries, tries) &&
       matchesText(ascent.crag, crag) &&
       matchesOptionalText(ascent.area, area) &&
-      matchesPeriod(ascentDate, period)
+      isDateInPeriod(ascentDate, period)
     )
   })
 }
@@ -59,13 +58,6 @@ export function filterAscents(ascents: Ascent[], filters?: OptionalAscentFilter)
 function matchesOptionalText(actual: string | undefined, expected: string | undefined): boolean {
   if (expected === undefined) return true
   return actual !== undefined && stringEqualsCaseInsensitive(actual, expected)
-}
-
-function matchesPeriod(date: Date, period: NonNullable<OptionalAscentFilter>['period']): boolean {
-  return (
-    period === undefined ||
-    (period in PERIOD_TO_DATES && isDateInRange(date, { ...PERIOD_TO_DATES[period] }))
-  )
 }
 
 export function getHardestAscent(ascents: Ascent[]): Ascent | undefined {

@@ -13,7 +13,12 @@ export const optionalAscentYear = z
 export const positiveInteger = z.number().int().min(0)
 export const percentSchema = z.number().int().min(0).max(100)
 
-export const PERIOD = ['Road-Trip', 'Unemployment'] as const
+/** Rolling windows, so their boundaries are computed in `~/helpers/period`, not stored below. */
+export const RECENT_PERIOD = ['Last month', 'Last year'] as const
+export const SPECIAL_PERIOD = ['Unemployment', 'Road-Trip'] as const
+type SpecialPeriod = (typeof SPECIAL_PERIOD)[number]
+
+export const PERIOD = [...RECENT_PERIOD, ...SPECIAL_PERIOD] as const
 export const periodSchema = z.enum(PERIOD)
 export type Period = z.infer<typeof periodSchema>
 export const PERIOD_TO_DATES = {
@@ -25,4 +30,4 @@ export const PERIOD_TO_DATES = {
     startDate: new Date('2019-06-01'),
     endDate: new Date('2019-09-10'),
   },
-} as const satisfies Record<Period, { startDate: Date; endDate: Date }>
+} as const satisfies Record<SpecialPeriod, { startDate: Date; endDate: Date }>

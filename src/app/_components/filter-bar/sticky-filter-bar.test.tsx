@@ -117,6 +117,38 @@ describe('stickyFilterBar', () => {
     expect(screen.getByRole('button', { name: 'Clear filters' })).toBeDisabled()
   })
 
+  it('renders grouped options as optgroups and keeps All outside them', async () => {
+    const setDate = vi.fn<(value: string) => void>()
+    const user = userEvent.setup()
+    render(
+      <StickyFilterBar
+        filters={[
+          {
+            name: 'Date',
+            options: [
+              { label: 'Recent', options: ['Last month'] },
+              { label: 'Years', options: ['2026', '2025'] },
+              { label: 'Special periods', options: ['Road-Trip'] },
+            ],
+            selectedValue: 'all',
+            setValue: setDate,
+            title: 'Date',
+          },
+        ]}
+        showSearch={false}
+      />,
+    )
+
+    const select = screen.getByLabelText('Date')
+    expect(
+      [...select.querySelectorAll<HTMLOptGroupElement>('optgroup')].map(({ label }) => label),
+    ).toStrictEqual(['Recent', 'Years', 'Special periods'])
+    expect(within(select).getByRole('option', { name: 'All' }).closest('optgroup')).toBeNull()
+
+    await user.selectOptions(select, 'Road-Trip')
+    expect(setDate).toHaveBeenCalledWith('Road-Trip')
+  })
+
   it('opens the mobile filter sheet from the compact filter control', async () => {
     const user = userEvent.setup()
     render(

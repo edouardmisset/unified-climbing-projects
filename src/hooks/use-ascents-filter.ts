@@ -1,10 +1,9 @@
-import { isValidNumber } from '@edouardmisset/math'
-import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import {
   deriveAscentFilterModel,
   type AscentFilterFacets,
 } from '~/helpers/derive-ascent-filter-model'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
+import { resolveDateSelection } from '~/helpers/period'
 import type { Ascent } from '~/schema/ascent'
 import { useAscentsQueryState } from './use-ascents-query-state'
 
@@ -30,19 +29,16 @@ export function useAscentsFilterModel(ascents: Ascent[]): {
     selectedStyle,
   } = useAscentsQueryState()
 
-  const selectedYearNumber = Number(selectedYear)
+  const { period, year } = resolveDateSelection(selectedYear, selectedPeriod)
   return deriveAscentFilterModel(ascents, {
     area: normalizeFilterValue(selectedArea),
     crag: normalizeFilterValue(selectedCrag),
     discipline: normalizeFilterValue(selectedDiscipline),
     grade: normalizeFilterValue(selectedGrade),
-    period: normalizeFilterValue(selectedPeriod),
+    period,
     route: selectedRoute,
     style: normalizeFilterValue(selectedStyle),
-    year:
-      selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-        ? selectedYearNumber
-        : undefined,
+    year,
   })
 }
 
