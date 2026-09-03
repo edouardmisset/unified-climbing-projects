@@ -16,6 +16,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: var(--size-2);
     min-inline-size: 12rem;
     min-block-size: 7rem;
     padding: var(--size-3);
