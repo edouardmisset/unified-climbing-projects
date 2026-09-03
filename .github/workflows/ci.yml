@@ -41,7 +41,7 @@ jobs:
         run: pnpm run verify:github-actions
 
       - name: Audit dependencies
-        run: pnpm audit --audit-level=high
+        run: pnpm run audit
 
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium

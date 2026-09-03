@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit": "pnpm audit --audit-level=high",
     "build": "vp run build:next",
     "format": "vp fmt ./src",
     "lint": "vp lint --fix ./src",
