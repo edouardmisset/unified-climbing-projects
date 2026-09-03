@@ -173,14 +173,7 @@
       inset-inline-start: 0;
       inline-size: 0.25rem;
       border-radius: 100dvw;
-      background-image: linear-gradient(
-        -60deg,
-        var(--patagonia-color-1) 0 15%,
-        var(--patagonia-color-2) 15% 30%,
-        var(--patagonia-color-3) 30% 50%,
-        var(--patagonia-color-4) 50% 70%,
-        var(--patagonia-color-5) 70% 100%
-      );
+      background: var(--accent);
     }
   }
 }

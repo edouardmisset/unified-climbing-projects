@@ -1,13 +1,3 @@
 .scope {
   block-size: 100%;
-
-  &[data-domain='ascents'] {
-    --domain-accent: light-dark(var(--orange-8), var(--orange-4));
-    --accent: var(--domain-accent);
-  }
-
-  &[data-domain='training'] {
-    --domain-accent: light-dark(var(--cyan-8), var(--cyan-4));
-    --accent: var(--domain-accent);
-  }
 }

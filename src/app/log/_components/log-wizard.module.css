@@ -50,7 +50,7 @@
 
 .activeStep {
   color: var(--text-1);
-  border-color: var(--patagonia-color-4);
+  border-color: var(--accent);
 }
 
 .resetButton {

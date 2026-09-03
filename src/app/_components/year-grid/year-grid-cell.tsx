@@ -123,7 +123,7 @@ const getAdjustedBackgroundColor = ({
 const getOutlineForToday = (date: string): CSSProperties['outline'] => {
   if (date === '' || !datesEqual(new Date(date), new Date())) return
 
-  return '2px solid var(--text-1)'
+  return '2px solid var(--accent)'
 }
 
 type YearGridCellProps = Omit<DayDescriptor, 'shortText' | 'title'> & {

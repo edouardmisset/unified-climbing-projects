@@ -12,14 +12,6 @@
     inset 0 1px 0 var(--panel-shadow-inner);
   isolation: isolate;
 
-  &[data-domain='ascents'] {
-    --accent: light-dark(var(--orange-8), var(--orange-4));
-  }
-
-  &[data-domain='training'] {
-    --accent: light-dark(var(--cyan-8), var(--cyan-4));
-  }
-
   @media (width > 40rem) {
     inline-size: var(--rail-collapsed-size);
     min-inline-size: var(--rail-collapsed-size);

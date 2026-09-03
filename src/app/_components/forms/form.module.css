@@ -46,11 +46,11 @@
   }
 
   &::before {
-    background: linear-gradient(to right, var(--patagonia-color-4) 60%, transparent);
+    background: linear-gradient(to right, var(--accent) 60%, transparent);
   }
 
   &::after {
-    background: linear-gradient(to left, var(--patagonia-color-4) 60%, transparent);
+    background: linear-gradient(to left, var(--accent) 60%, transparent);
   }
 }
 

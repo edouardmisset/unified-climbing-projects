@@ -49,9 +49,9 @@
   --panel-shadow-inner: oklch(from var(--surface-1) l c h / 35%);
   --control-bg: oklch(from var(--surface-1) l c h / 16%);
   --control-bg-focus: oklch(from var(--surface-1) l c h / 24%);
-  --control-border-hover: oklch(from var(--surface-4) l c h / 70%);
-  --control-border-focus: oklch(from var(--accent) l c h / 70%);
-  --control-ring: oklch(from var(--accent) l c h / 25%);
+  --control-border-hover: color-mix(in oklch, var(--accent), transparent 40%);
+  --control-border-focus: var(--accent);
+  --control-ring: color-mix(in oklch, var(--accent), transparent 75%);
 
   /* Animation */
   --rotating-angle: 0turn;
@@ -74,6 +74,14 @@
   transition-timing-function: cubic-bezier(0, 0.3, 0.1, 1);
 
   interpolate-size: allow-keywords;
+}
+
+:where([data-domain='ascents']) {
+  --accent: light-dark(var(--orange-8), var(--orange-4));
+}
+
+:where([data-domain='training']) {
+  --accent: light-dark(var(--cyan-8), var(--cyan-4));
 }
 
 ::selection {
