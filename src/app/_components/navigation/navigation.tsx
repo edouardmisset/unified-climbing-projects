@@ -58,6 +58,7 @@ export const Navigation = ({
           <button
             aria-expanded={desktopExpanded}
             aria-label={desktopToggleLabel}
+            title={desktopToggleLabel}
             className={`${baseUiStyles.interactiveControl} ${baseUiStyles.neutralControlSurface} ${styles.desktopToggle}`}
             onClick={handleDesktopToggle}
             type='button'
