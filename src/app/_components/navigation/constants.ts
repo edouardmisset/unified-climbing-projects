@@ -1,38 +1,52 @@
+import {
+  BarChart3,
+  CalendarDays,
+  ChartNoAxesCombined,
+  ClipboardList,
+  FileBadge,
+  House,
+  Dumbbell,
+  Mountain,
+  Sparkles,
+  type LucideIcon,
+} from 'lucide-react'
 import type { Domain } from '~/constants/domain'
 import { getDomainLinks } from '~/constants/links'
 
 export function getNavigationItems(domain: Domain) {
   const links = getDomainLinks(domain)
   const visualLinks: NavigationLink[] = [
-    { type: 'link', href: links.visualsQrCode, label: '💠 QR Code' },
-    { type: 'link', href: links.visualsBarcode, label: '🏷️ Barcode' },
+    { type: 'link', href: links.visualsQrCode, icon: Sparkles, label: 'QR Code' },
+    { type: 'link', href: links.visualsBarcode, icon: FileBadge, label: 'Barcode' },
   ]
   return [
-    { type: 'link', href: links.home, label: '🏠 Home' },
-    { type: 'link', href: links.log, label: '📋 Log' },
+    { type: 'link', href: links.home, icon: House, label: 'Home' },
+    { type: 'link', href: links.log, icon: ClipboardList, label: 'Log' },
     { type: 'separator' },
     {
       type: 'link',
       href: links.records,
-      label: domain === 'ascents' ? '📇 Ascents' : '📇 Sessions',
+      icon: domain === 'ascents' ? Mountain : Dumbbell,
+      label: domain === 'ascents' ? 'Ascents' : 'Sessions',
     },
-    { type: 'link', href: links.calendar, label: '📅 Calendar' },
-    { type: 'link', href: links.dashboard, label: '📊 Dashboard' },
+    { type: 'link', href: links.calendar, icon: CalendarDays, label: 'Calendar' },
+    { type: 'link', href: links.dashboard, icon: BarChart3, label: 'Dashboard' },
     { type: 'separator' },
     {
       type: 'disclosure',
-      label: '✨ Visuals',
+      icon: Sparkles,
+      label: 'Visuals',
       links: visualLinks,
     },
     { type: 'separator' },
-    { type: 'link', href: links.indicators, label: '📈 Indicators' },
-    { type: 'link', href: links.settings, label: '⚙️ Settings' },
+    { type: 'link', href: links.indicators, icon: ChartNoAxesCombined, label: 'Indicators' },
   ] as const satisfies NavigationElement[]
 }
 
 type NavigationLink = {
   type: 'link'
   href: string
+  icon: LucideIcon
   label: string
 }
 
@@ -42,12 +56,14 @@ type NavigationSeparator = {
 
 type NavigationGroup = {
   type: 'group'
+  icon: LucideIcon
   label: string
   links: NavigationLink[]
 }
 
 type NavigationDisclosure = {
   type: 'disclosure'
+  icon: LucideIcon
   label: string
   links: NavigationLink[]
 }

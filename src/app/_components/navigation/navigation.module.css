@@ -17,20 +17,33 @@
   padding-block-end: var(--size-2);
 }
 
+.railHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-2);
+  min-block-size: 2.5rem;
+  padding-inline: var(--size-2);
+}
+
 .desktopToggle {
   display: inline-flex;
-  align-self: flex-start;
   align-items: center;
-  gap: var(--size-2);
-  inline-size: fit-content;
-  max-inline-size: calc(100% - var(--size-2));
-  min-block-size: 2.5rem;
-  margin-inline-start: var(--size-1);
-  padding-inline: var(--size-2);
+  justify-content: center;
+  flex: 0 0 2.5rem;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  padding: 0;
   background: var(--control-bg);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-2);
   backdrop-filter: blur(10px);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      inline-size var(--sneeze) var(--ease-3),
+      flex-basis var(--sneeze) var(--ease-3);
+  }
 
   &:focus-visible {
     outline: none;
@@ -45,6 +58,10 @@
   align-items: center;
   justify-content: center;
   inline-size: 1.5rem;
+}
+
+.desktopUserContent {
+  inline-size: 100%;
 }
 
 .navList {
@@ -115,7 +132,7 @@
 }
 
 .domainModeButton {
-  justify-content: center;
+  justify-content: flex-start;
   min-inline-size: 0;
 
   &[data-selected='true'] {
@@ -136,6 +153,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--size-2);
+  justify-content: flex-start;
   inline-size: 100%;
   min-block-size: 2.5rem;
   padding: var(--size-2);
@@ -189,6 +207,7 @@
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
+  justify-content: flex-start;
   inline-size: 1.5rem;
   font-size: var(--font-size-2);
 }
@@ -203,6 +222,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--size-2);
+  justify-content: flex-start;
   margin: 0;
   padding: var(--size-1) var(--size-2);
   color: color-mix(in oklch, var(--text-1), transparent 20%);
@@ -256,7 +276,7 @@
   flex-direction: column;
   gap: var(--size-1);
   margin: 0;
-  padding: 0 0 0 var(--size-3);
+  padding: 0;
   list-style: none;
 }
 
@@ -391,6 +411,40 @@
 
   .domainModeButton {
     justify-content: center;
+  }
+
+  .link,
+  .disclosureTrigger,
+  .groupLabel {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .linkIcon {
+    justify-content: center;
+  }
+
+  .disclosureIcon {
+    display: none;
+  }
+
+  .disclosureLinks {
+    padding-inline-start: 0;
+  }
+
+  .railHeader {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .desktopUserContent {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .desktopToggle {
+    flex-basis: 100%;
+    inline-size: 100%;
   }
 }
 
