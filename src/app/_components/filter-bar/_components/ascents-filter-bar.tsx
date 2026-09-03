@@ -3,6 +3,7 @@ import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
 import { useAscentsQueryState } from '~/hooks/use-ascents-query-state.ts'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
+import { createDateFilter } from '../date-filter'
 import type { FilterConfig } from '../types'
 
 export default function AscentsFilterBar({
@@ -29,7 +30,6 @@ export default function AscentsFilterBar({
     setRoute,
   } = useAscentsQueryState()
 
-  const effectiveSelectedYear = getEffectiveFilterValue(facets.years, selectedYear)
   const effectiveSelectedDiscipline = getEffectiveFilterValue(
     facets.disciplines,
     selectedDiscipline,
@@ -37,7 +37,6 @@ export default function AscentsFilterBar({
   const effectiveSelectedStyle = getEffectiveFilterValue(facets.styles, selectedStyle)
   const effectiveSelectedCrag = getEffectiveFilterValue(facets.crags, selectedCrag)
   const effectiveSelectedArea = getEffectiveFilterValue(facets.areas, selectedArea)
-  const effectiveSelectedPeriod = getEffectiveFilterValue(facets.periods, selectedPeriod)
 
   const filters = [
     {
@@ -47,13 +46,13 @@ export default function AscentsFilterBar({
       selectedValue: effectiveSelectedDiscipline,
       title: 'Climbing Discipline',
     },
-    {
-      setValue: createValueSetter(setYear),
-      name: 'Year',
-      options: facets.years,
-      selectedValue: effectiveSelectedYear,
-      title: 'Year',
-    },
+    createDateFilter({
+      years: facets.years,
+      selectedYear,
+      selectedPeriod,
+      setYear: createValueSetter(setYear),
+      setPeriod: createValueSetter(setPeriod),
+    }),
     {
       setValue: createValueSetter(setCrag),
       name: 'Crag',
@@ -74,13 +73,6 @@ export default function AscentsFilterBar({
       options: facets.styles,
       selectedValue: effectiveSelectedStyle,
       title: 'Ascent Style',
-    },
-    {
-      setValue: createValueSetter(setPeriod),
-      name: 'Period',
-      options: facets.periods,
-      selectedValue: effectiveSelectedPeriod,
-      title: 'Period',
     },
   ] as const satisfies FilterConfig[]
 

@@ -1,7 +1,6 @@
-import { isValidNumber } from '@edouardmisset/math'
-import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
+import { resolveDateSelection } from '~/helpers/period'
 import type { TrainingSession } from '~/schema/training'
 import { useTrainingSessionsQueryState } from './use-training-sessions-query-state'
 
@@ -16,18 +15,15 @@ export function useTrainingSessionsFilter(trainingSessions: TrainingSession[]): 
     selectedLocationType,
   } = useTrainingSessionsQueryState()
 
-  const selectedYearNumber = Number(selectedYear)
+  const { period, year } = resolveDateSelection(selectedYear, selectedPeriod)
   const filteredTrainingSessions = filterTrainingSessions(trainingSessions, {
     discipline: normalizeFilterValue(selectedDiscipline),
     location: normalizeFilterValue(selectedLocation),
     load: normalizeFilterValue(selectedLoad),
     locationType: normalizeFilterValue(selectedLocationType),
-    period: normalizeFilterValue(selectedPeriod),
+    period,
     type: normalizeFilterValue(selectedSessionType),
-    year:
-      selectedYear !== ALL_VALUE && isValidNumber(selectedYearNumber)
-        ? selectedYearNumber
-        : undefined,
+    year,
   })
 
   return filteredTrainingSessions

@@ -1,9 +1,9 @@
-import { isDateInRange } from '@edouardmisset/date'
 import { stringEqualsCaseInsensitive, stringIncludes } from '@edouardmisset/text'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
+import { isDateInPeriod } from '~/helpers/period'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import { ASCENT_STYLE, type Ascent } from '~/schema/ascent'
-import { PERIOD, PERIOD_TO_DATES, type Period } from '~/schema/generic'
+import type { Period } from '~/schema/generic'
 
 export type AscentFilterValues = {
   area?: string
@@ -20,7 +20,6 @@ export type AscentFilterFacets = {
   areas: string[]
   crags: string[]
   disciplines: Ascent['discipline'][]
-  periods: Period[]
   styles: Ascent['style'][]
   years: string[]
 }
@@ -32,7 +31,6 @@ export function deriveAscentFilterModel(
   const areas = new Set<string>()
   const crags = new Set<string>()
   const disciplines = new Set<Ascent['discipline']>()
-  const periods = new Set<Period>()
   const styles = new Set<Ascent['style']>()
   const years = new Set<string>()
   const results: Ascent[] = []
@@ -44,7 +42,7 @@ export function deriveAscentFilterModel(
       crag: matchesText(ascent.crag, filters.crag),
       discipline: filters.discipline === undefined || ascent.discipline === filters.discipline,
       grade: matchesText(ascent.grade, filters.grade),
-      period: matchesPeriod(date, filters.period),
+      period: isDateInPeriod(date, filters.period),
       style: filters.style === undefined || ascent.style === filters.style,
       year: filters.year === undefined || date.getFullYear() === filters.year,
     }
@@ -53,7 +51,7 @@ export function deriveAscentFilterModel(
         ([key, value]) => excluded.includes(key as keyof typeof matches) || value,
       )
 
-    if (matchesOther('year', 'grade')) years.add(String(date.getFullYear()))
+    if (matchesOther('year', 'grade', 'period')) years.add(String(date.getFullYear()))
     if (matchesOther('discipline', 'grade')) disciplines.add(ascent.discipline)
     if (matchesOther('style', 'grade')) styles.add(ascent.style)
     if (matchesOther('crag', 'grade')) {
@@ -64,8 +62,6 @@ export function deriveAscentFilterModel(
       const area = ascent.area?.trim()
       if (area !== undefined && area !== '') areas.add(area)
     }
-    if (matchesOther('period', 'grade'))
-      for (const period of PERIOD) if (matchesPeriod(date, period)) periods.add(period)
 
     if (Object.values(matches).every(Boolean) && matchesRoute(ascent.name, filters.route))
       results.push(ascent)
@@ -77,7 +73,6 @@ export function deriveAscentFilterModel(
       areas: [...areas].toSorted(compareStringsAscending),
       crags: [...crags].toSorted(compareStringsAscending),
       disciplines: ASCENT_DISCIPLINES.filter(discipline => disciplines.has(discipline)),
-      periods: PERIOD.filter(period => periods.has(period)),
       styles: ASCENT_STYLE.filter(style => styles.has(style)),
       years: [...years].toSorted((a, b) => Number(b) - Number(a)),
     },
@@ -89,10 +84,6 @@ function matchesText(actual: string | undefined, expected: string | undefined): 
     expected === undefined ||
     (actual !== undefined && stringEqualsCaseInsensitive(actual, expected))
   )
-}
-
-function matchesPeriod(date: Date, period: Period | undefined): boolean {
-  return period === undefined || isDateInRange(date, { ...PERIOD_TO_DATES[period] })
 }
 
 function matchesRoute(name: string, route: string | undefined): boolean {

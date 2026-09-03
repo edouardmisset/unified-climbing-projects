@@ -1,5 +1,4 @@
 import { average } from '@edouardmisset/math'
-import { sum } from '@edouardmisset/math/sum.ts'
 import { DEFAULT_BOULDER_HEIGHT } from '~/constants/ascents'
 import { filterAscents } from '~/helpers/filter-ascents'
 import { formatUnit } from '~/helpers/number-formatter'
@@ -13,10 +12,9 @@ export function VerticalMilestoneSummary({ ascents }: AscentListProps) {
 
   if (boulders.length === 0 && routes.length === 0) return
 
-  const totalHeight = sum(
-    ...routes.map(({ height }) => height ?? 0),
-    ...boulders.map(({ height }) => height ?? DEFAULT_BOULDER_HEIGHT),
-  )
+  const totalHeight =
+    routes.reduce((total, { height }) => total + (height ?? 0), 0) +
+    boulders.reduce((total, { height }) => total + (height ?? DEFAULT_BOULDER_HEIGHT), 0)
 
   const averageHeight =
     routes.length > 0

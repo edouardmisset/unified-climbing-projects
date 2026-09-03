@@ -27,9 +27,9 @@ jobs:
       (!startsWith(github.event.head_commit.message, 'Merge pull request') &&
        !contains(github.event.head_commit.message, '(#'))
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: pnpm/setup@v1
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
           cache: true
           install: false
@@ -37,11 +37,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify GitHub Actions are pinned
+        run: pnpm run verify:github-actions
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Check format, lint, and type safety
-        run: pnpm run check
+        run: pnpm run check:ci
 
       - name: Run tests with coverage gates
         run: pnpm exec vp test --project=unit --project=integration-convex --project=integration-dom --project=integration-browser --coverage --reporter=dot --silent=passed-only
@@ -55,7 +61,7 @@ jobs:
 
       - name: Upload Linux baselines
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: visual-linux-baselines-${{ github.run_id }}
           path: src/**/__screenshots__/**/*-linux.png

@@ -1,9 +1,9 @@
-import { isDateInRange } from '@edouardmisset/date'
 import type { LocationType } from '~/app/_components/filter-bar/types'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { calculateLoad } from '~/helpers/calculate-load'
 import { matchesText, matchesValue, matchesYear } from '~/helpers/filter-matchers'
-import { PERIOD_TO_DATES, type Period } from '~/schema/generic'
+import { isDateInPeriod } from '~/helpers/period'
+import type { Period } from '~/schema/generic'
 import type { LoadCategory, TrainingSession } from '~/schema/training.ts'
 
 type OptionalTrainingInput = Partial<Omit<TrainingSession, 'date' | 'comments'>> & {
@@ -55,14 +55,10 @@ export function filterTrainingSessions(
       matchesLoad(trainingSession, load) &&
       matchesValue(trainingSession.type, type) &&
       matchesValue(trainingSession.volume, volume) &&
-      matchesPeriod(trainingSessionDate, period) &&
+      isDateInPeriod(trainingSessionDate, period) &&
       matchesLocationType(trainingSession, locationType)
     )
   })
-}
-
-function matchesPeriod(date: Date, period: Period | undefined): boolean {
-  return period === undefined || isDateInRange(date, { ...PERIOD_TO_DATES[period] })
 }
 
 function matchesLoad(session: TrainingSession, load: LoadCategory | undefined): boolean {

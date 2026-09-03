@@ -1,18 +1,15 @@
-import { isDateInRange } from '@edouardmisset/date'
-import { isValidNumber } from '@edouardmisset/math'
-
-import { ALL_VALUE } from '~/app/_components/dashboard/constants'
 import { isIndoorSession } from '~/app/_components/wrap-up/_components/training-summary/helpers'
 import { createYearList } from '~/data/helpers.ts'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import { filterTrainingSessions } from '~/helpers/filter-training'
 import { getEffectiveFilterValue } from '~/helpers/get-effective-filter-value'
 import { normalizeFilterValue } from '~/helpers/normalize-filter-value'
+import { resolveDateSelection } from '~/helpers/period'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
-import { PERIOD, PERIOD_TO_DATES } from '~/schema/generic'
 import type { TrainingSessionListProps } from '~/schema/training.ts'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
+import { createDateFilter } from '../date-filter'
 import { type FilterConfig, LOCATION_TYPES } from '../types'
 
 export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSessionListProps) {
@@ -27,27 +24,25 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     setLocationType,
   } = useTrainingSessionsQueryState()
 
-  const filteredForYear = filterTrainingSessions(trainingSessions, {
+  const filteredExcludingDate = filterTrainingSessions(trainingSessions, {
     discipline: normalizeFilterValue(selectedDiscipline),
     locationType: normalizeFilterValue(selectedLocationType),
-    period: normalizeFilterValue(selectedPeriod),
   })
-  const yearList = createYearList(filteredForYear, { descending: true, continuous: false }).map(
-    String,
-  )
+  const yearList = createYearList(filteredExcludingDate, {
+    descending: true,
+    continuous: false,
+  }).map(String)
 
   const effectiveSelectedYear = getEffectiveFilterValue(yearList, selectedYear)
-
-  const parsedSelectedYear = Number(effectiveSelectedYear)
-  const selectedYearNumber =
-    effectiveSelectedYear !== ALL_VALUE && isValidNumber(parsedSelectedYear)
-      ? parsedSelectedYear
-      : undefined
+  const { period: selectedDatePeriod, year: selectedYearNumber } = resolveDateSelection(
+    effectiveSelectedYear,
+    selectedPeriod,
+  )
 
   const filteredForDiscipline = filterTrainingSessions(trainingSessions, {
     year: selectedYearNumber,
     locationType: normalizeFilterValue(selectedLocationType),
-    period: normalizeFilterValue(selectedPeriod),
+    period: selectedDatePeriod,
   })
   const disciplineList = ASCENT_DISCIPLINES.filter(discipline =>
     filteredForDiscipline.some(session => session.discipline === discipline),
@@ -58,7 +53,7 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
   const filteredForLocationType = filterTrainingSessions(trainingSessions, {
     year: selectedYearNumber,
     discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    period: normalizeFilterValue(selectedPeriod),
+    period: selectedDatePeriod,
   })
   const hasIndoor = filteredForLocationType.some(({ type }) => isIndoorSession({ type }))
   const hasOutdoor = filteredForLocationType.some(({ type }) => type === 'Outdoor')
@@ -71,27 +66,14 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
     selectedLocationType,
   )
 
-  const filteredForPeriod = filterTrainingSessions(trainingSessions, {
-    year: selectedYearNumber,
-    discipline: normalizeFilterValue(effectiveSelectedDiscipline),
-    locationType: normalizeFilterValue(effectiveSelectedLocationType),
-  })
-  const periodList = PERIOD.filter(period =>
-    filteredForPeriod.some(({ date }) =>
-      isDateInRange(new Date(date), { ...PERIOD_TO_DATES[period] }),
-    ),
-  )
-
-  const effectiveSelectedPeriod = getEffectiveFilterValue(periodList, selectedPeriod)
-
   const filters = [
-    {
-      setValue: createValueSetter(setYear),
-      name: 'Year',
-      options: yearList,
-      selectedValue: effectiveSelectedYear,
-      title: 'Year',
-    },
+    createDateFilter({
+      years: yearList,
+      selectedYear: effectiveSelectedYear,
+      selectedPeriod,
+      setYear: createValueSetter(setYear),
+      setPeriod: createValueSetter(setPeriod),
+    }),
     {
       setValue: createValueSetter(setLocationType),
       name: 'Location Type',
@@ -105,13 +87,6 @@ export function TrainingDashboardFilterBar({ trainingSessions }: TrainingSession
       options: disciplineList,
       selectedValue: effectiveSelectedDiscipline,
       title: 'Climbing Discipline',
-    },
-    {
-      setValue: createValueSetter(setPeriod),
-      name: 'Period',
-      options: periodList,
-      selectedValue: effectiveSelectedPeriod,
-      title: 'Period',
     },
   ] as const satisfies FilterConfig[]
 

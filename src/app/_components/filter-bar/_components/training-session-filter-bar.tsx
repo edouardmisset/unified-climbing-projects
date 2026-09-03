@@ -2,10 +2,10 @@ import { createYearList } from '~/data/helpers.ts'
 import { TRAINING_SESSION_TYPES } from '~/domain/training-session'
 import { compareStringsAscending } from '~/helpers/sort-strings.ts'
 import { useTrainingSessionsQueryState } from '~/hooks/use-training-sessions-query-state.ts'
-import { PERIOD } from '~/schema/generic'
 import { LOAD_CATEGORIES, type TrainingSessionListProps } from '~/schema/training.ts'
 import { createValueSetter } from '../helpers'
 import { StickyFilterBar } from '../sticky-filter-bar'
+import { createDateFilter } from '../date-filter'
 import type { FilterConfig } from '../types'
 
 export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionListProps) {
@@ -46,26 +46,19 @@ export function TrainingSessionFilterBar({ trainingSessions }: TrainingSessionLi
       selectedValue: selectedLoad,
       title: 'Load',
     },
-    {
-      setValue: createValueSetter(setYear),
-      name: 'Year',
-      options: yearList,
-      selectedValue: selectedYear,
-      title: 'Year',
-    },
+    createDateFilter({
+      years: yearList,
+      selectedYear,
+      selectedPeriod,
+      setYear: createValueSetter(setYear),
+      setPeriod: createValueSetter(setPeriod),
+    }),
     {
       setValue: createValueSetter(setLocation),
       name: 'Location',
       options: locationList,
       selectedValue: selectedLocation,
       title: 'Location',
-    },
-    {
-      setValue: createValueSetter(setPeriod),
-      name: 'Period',
-      options: PERIOD,
-      selectedValue: selectedPeriod,
-      title: 'Period',
     },
   ] as const satisfies FilterConfig[]
 
