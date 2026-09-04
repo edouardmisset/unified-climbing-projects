@@ -26,6 +26,11 @@ export type TrainingSessionsGaugeTypeDatum = TrainingSessionsGaugeDatum & {
   groupId: GaugeGroupId
 }
 
+type TrainingSessionsGaugeData = {
+  groupData: TrainingSessionsGaugeDatum[]
+  typeData: TrainingSessionsGaugeTypeDatum[]
+}
+
 const TYPE_GROUPS = [
   {
     id: 'Outdoor',
@@ -65,10 +70,9 @@ const GROUP_FILL_BY_ID: Record<GaugeGroupId, string> = {
   Others: 'var(--otherTraining)',
 }
 
-export function getTrainingSessionsGaugeData(sessions: TrainingSession[]): {
-  groupData: TrainingSessionsGaugeDatum[]
-  typeData: TrainingSessionsGaugeTypeDatum[]
-} {
+export function getTrainingSessionsGaugeData(
+  sessions: TrainingSession[],
+): TrainingSessionsGaugeData {
   if (sessions.length === 0) return { groupData: [], typeData: [] }
 
   const typeCounts = new Map<TrainingSessionType, number>()
