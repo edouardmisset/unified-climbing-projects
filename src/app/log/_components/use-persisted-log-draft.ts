@@ -16,6 +16,8 @@ type UsePersistedLogDraftOptions = {
   subscribe: UseFormSubscribe<LogDraft>
 }
 
+type UsePersistedLogDraftOutput = { resetDraft: VoidFunction }
+
 function removeStoredDraft(storageKey: string): void {
   try {
     globalThis.localStorage.removeItem(storageKey)
@@ -43,7 +45,7 @@ export function usePersistedLogDraft({
   initialDraft,
   reset,
   subscribe,
-}: UsePersistedLogDraftOptions): { resetDraft: () => void } {
+}: UsePersistedLogDraftOptions): UsePersistedLogDraftOutput {
   const { isLoaded, user } = useUser()
   // oxlint-disable-next-line unicorn/no-useless-undefined -- React 19 requires an initial ref value.
   const saveTimeout = useRef<ReturnType<typeof globalThis.setTimeout>>(undefined)

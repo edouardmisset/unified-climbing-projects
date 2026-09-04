@@ -40,10 +40,12 @@ export function isDateInPeriod(date: Date, period: Period | undefined): boolean 
 export function resolveDateSelection(
   selectedYear: string,
   selectedPeriod: OrAll<Period>,
-): { period: Period | undefined; year: number | undefined } {
+): ResolveDateSelectionResult {
   const period = normalizeFilterValue(selectedPeriod)
   if (period !== undefined) return { period, year: undefined }
 
   const year = Number(selectedYear)
   return { period: undefined, year: isValidNumber(year) ? year : undefined }
 }
+
+type ResolveDateSelectionResult = { period: Period | undefined; year: number | undefined }
