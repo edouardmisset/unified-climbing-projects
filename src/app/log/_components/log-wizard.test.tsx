@@ -8,7 +8,7 @@ import type { submitClimbingLog } from '../actions'
 import LogWizard from './log-wizard'
 
 const mocks = vi.hoisted(() => ({
-  refresh: vi.fn<() => void>(),
+  refresh: vi.fn<VoidFunction>(),
   submitClimbingLog: vi.fn<typeof submitClimbingLog>(),
 }))
 

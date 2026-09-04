@@ -9,7 +9,7 @@ import type { LogDraft } from '../draft'
 import { Field } from './field'
 import styles from './log-wizard.module.css'
 
-export function AscentFields({ index, onRemove }: { index: number; onRemove: () => void }) {
+export function AscentFields({ index, onRemove }: { index: number; onRemove: VoidFunction }) {
   const { control, register, setValue } = useFormContext<LogDraft>()
   const prefix = `ascents.${index}` as const
   const tries = useWatch({ control, name: `${prefix}.tries` })

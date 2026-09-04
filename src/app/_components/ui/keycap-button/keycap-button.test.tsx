@@ -18,7 +18,7 @@ describe('keycapButton Component', () => {
   })
 
   it('handles click events', async () => {
-    const handleClick = vi.fn<() => void>()
+    const handleClick = vi.fn<VoidFunction>()
 
     render(<KeycapButton label='Click me' onClick={handleClick} type='button' />)
 
@@ -51,7 +51,7 @@ describe('keycapButton Component', () => {
   })
 
   it('handles keyboard interaction', async () => {
-    const handleClick = vi.fn<() => void>()
+    const handleClick = vi.fn<VoidFunction>()
 
     render(<KeycapButton label='Keyboard test' onClick={handleClick} type='button' />)
 

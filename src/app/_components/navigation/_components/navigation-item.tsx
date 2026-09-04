@@ -5,7 +5,7 @@ import styles from '../navigation.module.css'
 
 type NavigationItemProps = {
   item: NavigationElement
-  onNavigate?: () => void
+  onNavigate?: VoidFunction
 }
 
 export function NavigationItem({ item, onNavigate }: NavigationItemProps) {

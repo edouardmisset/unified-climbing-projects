@@ -17,7 +17,7 @@
     "eslint-plugin-react-you-might-not-need-an-effect"
   ],
   "duplicates": {
-    "minOccurrences": 3,
+    "minOccurrences": 2,
     "ignore": ["**/lib/**", "**/legacy/**", "**/__generated__/**", "**/generated/**"]
   },
   "health": {

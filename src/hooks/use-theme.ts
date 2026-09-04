@@ -33,7 +33,7 @@ function getThemeSnapshot(): ThemeMode {
   return getStoredTheme() ?? getSystemTheme()
 }
 
-function subscribeToThemeChanges(onStoreChange: () => void) {
+function subscribeToThemeChanges(onStoreChange: VoidFunction) {
   if (!Reflect.has(globalThis, 'window'))
     return () => {
       // There is no browser subscription to clean up during server rendering.

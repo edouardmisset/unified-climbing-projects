@@ -7,8 +7,8 @@ import styles from './navigation-user-section.module.css'
 
 type NavigationUserSectionProps = {
   isDark: boolean
-  onToggleTheme: () => void
-  onNavigate?: () => void
+  onToggleTheme: VoidFunction
+  onNavigate?: VoidFunction
   settingsHref: string
 }
 

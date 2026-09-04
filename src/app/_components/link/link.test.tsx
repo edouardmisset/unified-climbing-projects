@@ -13,7 +13,7 @@ const usePathnameMock = vi.mocked(usePathname)
 
 describe('link', () => {
   it('preserves active state and click handling for the current route', async () => {
-    const handleClick = vi.fn<() => void>()
+    const handleClick = vi.fn<VoidFunction>()
     usePathnameMock.mockReturnValue('/settings')
     render(
       <Link className='custom' href='/settings' onClick={handleClick}>

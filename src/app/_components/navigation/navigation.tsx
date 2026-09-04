@@ -18,7 +18,7 @@ type NavigationProps = {
   desktopExpanded: boolean
   onDesktopExpandedChange: (expanded: boolean) => void
   isDark: boolean
-  onToggleTheme: () => void
+  onToggleTheme: VoidFunction
 }
 
 export const Navigation = ({

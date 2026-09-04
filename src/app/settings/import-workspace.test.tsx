@@ -8,7 +8,7 @@ import { ImportWorkspace } from './import-workspace'
 
 const mocks = vi.hoisted(() => ({
   previewImport: vi.fn<typeof previewImport>(),
-  refresh: vi.fn<() => void>(),
+  refresh: vi.fn<VoidFunction>(),
   runImport: vi.fn<typeof runImport>(),
   undoImport: vi.fn<typeof undoImport>(),
 }))

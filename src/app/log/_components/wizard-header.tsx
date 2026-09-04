@@ -13,7 +13,7 @@ export function WizardHeader({
   onNavigate,
 }: {
   activeStep: LogStep
-  onDiscard: () => void
+  onDiscard: VoidFunction
   onNavigate: (step: LogStep) => void
 }) {
   return (

@@ -7,7 +7,7 @@ import type { getAllTrainingSessions } from '~/services/training'
 import SettingsPage from './page'
 
 vi.mock(import('next/navigation'), () => ({
-  useRouter: (() => ({ refresh: vi.fn<() => void>() })) as unknown as typeof useRouter,
+  useRouter: (() => ({ refresh: vi.fn<VoidFunction>() })) as unknown as typeof useRouter,
 }))
 
 vi.mock(import('~/services/ascents'), () => ({

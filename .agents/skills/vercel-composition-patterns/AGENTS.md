@@ -390,7 +390,7 @@ interface ComposerState {
 
 interface ComposerActions {
   update: (updater: (state: ComposerState) => ComposerState) => void
-  submit: () => void
+  submit: VoidFunction
 }
 
 interface ComposerMeta {

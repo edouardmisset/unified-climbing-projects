@@ -10,7 +10,7 @@ import {
 } from '~/constants/domain'
 import styles from '../navigation.module.css'
 
-export function DomainModeToggle({ onNavigate }: { onNavigate?: () => void }) {
+export function DomainModeToggle({ onNavigate }: { onNavigate?: VoidFunction }) {
   const pathname = usePathname()
   const router = useRouter()
   const currentDomain = getDomainFromPathname(pathname) ?? 'ascents'

@@ -641,7 +641,7 @@ Preload heavy bundles before they're needed to reduce perceived latency.
 **Example: preload on hover/focus**
 
 ```tsx
-function EditorButton({ onClick }: { onClick: () => void }) {
+function EditorButton({ onClick }: { onClick: VoidFunction }) {
   const preload = () => {
     if (typeof window !== 'undefined') {
       void import('./monaco-editor')
@@ -1355,7 +1355,7 @@ Use `useSWRSubscription()` to share global event listeners across component inst
 **Incorrect: N instances = N listeners**
 
 ```tsx
-function useKeyboardShortcut(key: string, callback: () => void) {
+function useKeyboardShortcut(key: string, callback: VoidFunction) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.metaKey && e.key === key) {
@@ -1376,9 +1376,9 @@ When using the `useKeyboardShortcut` hook multiple times, each instance will reg
 import useSWRSubscription from 'swr/subscription'
 
 // Module-level Map to track callbacks per key
-const keyCallbacks = new Map<string, Set<() => void>>()
+const keyCallbacks = new Map<string, Set<VoidFunction>>()
 
-function useKeyboardShortcut(key: string, callback: () => void) {
+function useKeyboardShortcut(key: string, callback: VoidFunction) {
   // Register this callback in the Map
   useEffect(() => {
     if (!keyCallbacks.has(key)) {
@@ -1780,7 +1780,7 @@ To address this issue, extract the default value into a constant.
 **Incorrect: `onClick` has different values on every rerender**
 
 ```tsx
-const UserAvatar = memo(function UserAvatar({ onClick = () => {} }: { onClick?: () => void }) {
+const UserAvatar = memo(function UserAvatar({ onClick = () => {} }: { onClick?: VoidFunction }) {
   // ...
 })
 
@@ -1793,7 +1793,7 @@ const UserAvatar = memo(function UserAvatar({ onClick = () => {} }: { onClick?: 
 ```tsx
 const NOOP = () => {};
 
-const UserAvatar = memo(function UserAvatar({ onClick = NOOP }: { onClick?: () => void }) {
+const UserAvatar = memo(function UserAvatar({ onClick = NOOP }: { onClick?: VoidFunction }) {
   // ...
 })
 
@@ -3182,7 +3182,7 @@ function processLargeDataset(items: Item[]) {
 **With fallback for unsupported browsers:**
 
 ```typescript
-const scheduleIdleWork = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1))
+const scheduleIdleWork = window.requestIdleCallback ?? ((cb: VoidFunction) => setTimeout(cb, 1))
 
 scheduleIdleWork(() => {
   // Non-critical work
@@ -3566,7 +3566,7 @@ Effect Event functions do not have a stable identity. Their identity intentional
 ```tsx
 import { useEffect, useEffectEvent } from 'react'
 
-function ChatRoom({ roomId, onConnected }: { roomId: string; onConnected: () => void }) {
+function ChatRoom({ roomId, onConnected }: { roomId: string; onConnected: VoidFunction }) {
   const handleConnected = useEffectEvent(onConnected)
 
   useEffect(() => {
@@ -3586,7 +3586,7 @@ Including the Effect Event in dependencies makes the effect re-run every render 
 ```tsx
 import { useEffect, useEffectEvent } from 'react'
 
-function ChatRoom({ roomId, onConnected }: { roomId: string; onConnected: () => void }) {
+function ChatRoom({ roomId, onConnected }: { roomId: string; onConnected: VoidFunction }) {
   const handleConnected = useEffectEvent(onConnected)
 
   useEffect(() => {
