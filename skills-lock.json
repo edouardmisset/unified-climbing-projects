@@ -7,6 +7,18 @@
       "skillPath": "skills/building-components/SKILL.md",
       "computedHash": "20889af7cb9b3abca1e38824f7fffaa873eb0cc4d45187967b97bd85462cf934"
     },
+    "fallow": {
+      "source": "fallow-rs/fallow-skills",
+      "sourceType": "github",
+      "skillPath": "fallow/skills/fallow/SKILL.md",
+      "computedHash": "a51149b68b454fc8b9989490cb687fbe6753952ff84911fed0b7ae32da49ffe1"
+    },
+    "fallow-review": {
+      "source": "fallow-rs/fallow-skills",
+      "sourceType": "github",
+      "skillPath": "fallow/skills/fallow-review/SKILL.md",
+      "computedHash": "5c8619575f3589bf88941c274e5eac9d6c8348225db14e7d04e8cac30454a3e1"
+    },
     "next-best-practices": {
       "source": "vercel-labs/openreview",
       "sourceType": "github",
