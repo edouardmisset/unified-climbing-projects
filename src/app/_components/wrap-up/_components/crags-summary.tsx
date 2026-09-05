@@ -3,7 +3,6 @@ import { frequencyBy } from '~/helpers/frequency-by'
 import { compareStringsAscending } from '~/helpers/sort-strings'
 import type { AscentListProps } from '~/schema/ascent'
 import type { TrainingSessionListProps } from '~/schema/training'
-import ascentsWithPopoverStyles from '../../ascents-with-popover/ascents-with-popover.module.css'
 import { Card } from '../../ui/card/card'
 import { Popover } from '../../ui/popover/popover'
 
@@ -32,7 +31,7 @@ export function CragsSummary({
       <div>
         You visited{' '}
         <Popover
-          className={ascentsWithPopoverStyles.popover}
+          className='dashedTarget'
           popoverTitle='Crags'
           trigger={
             <span>
@@ -40,9 +39,9 @@ export function CragsSummary({
             </span>
           }
         >
-          <ul className={ascentsWithPopoverStyles.list}>
+          <ul className='scrollList'>
             {crags.toSorted(compareStringsAscending).map(crag => (
-              <li className={ascentsWithPopoverStyles.item} key={crag}>
+              <li className='scrollListItem' key={crag}>
                 {crag}
               </li>
             ))}
@@ -54,7 +53,7 @@ export function CragsSummary({
             <br />
             Crags without ascents:{' '}
             <Popover
-              className={ascentsWithPopoverStyles.popover}
+              className='dashedTarget'
               popoverTitle='Crags without ascents'
               trigger={
                 <span>
@@ -62,9 +61,9 @@ export function CragsSummary({
                 </span>
               }
             >
-              <ul className={ascentsWithPopoverStyles.list}>
+              <ul className='scrollList'>
                 {cragsWithoutAscents.map(crag => (
-                  <li className={ascentsWithPopoverStyles.item} key={crag}>
+                  <li className='scrollListItem' key={crag}>
                     {crag}
                   </li>
                 ))}

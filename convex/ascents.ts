@@ -4,7 +4,6 @@ import {
   ascentPublicOutputSchema,
   ascentStoredDocumentSchema,
 } from '~/domain/ascent'
-import { omitServerControlledFields } from '~/domain/common'
 import { createAscentFingerprintInput } from '~/domain/fingerprint-input'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
@@ -12,19 +11,15 @@ import { mutation, query } from './_generated/server'
 import { requireIdentity } from './auth'
 import { createContentFingerprint } from './fingerprint'
 import { assertWritesEnabled } from './maintenance'
+import { getOwnedRecord } from './owned-record'
+import { createPublicRecordMapper, omitComments } from './public-record'
 
 const publicAscentInputValidator = zodToConvex(ascentPublicInputSchema)
 
-function toPublicAscent(record: unknown) {
-  return ascentPublicOutputSchema.parse(
-    omitServerControlledFields(ascentStoredDocumentSchema.parse(record)),
-  )
-}
-
-function toPublicAscentListItem(record: unknown) {
-  const { comments: _comments, ...ascent } = toPublicAscent(record)
-  return ascent
-}
+const toPublicAscent = createPublicRecordMapper(
+  ascentStoredDocumentSchema,
+  ascentPublicOutputSchema,
+)
 
 export const get = query({
   args: {},
@@ -35,7 +30,7 @@ export const get = query({
       .query('ascents')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicAscentListItem(record))
+    return records.map(record => omitComments(toPublicAscent(record)))
   },
 })
 
@@ -58,10 +53,8 @@ export const getById = query({
   args: { id: v.string() },
   handler: async (ctx, { id }) => {
     const { subject } = await requireIdentity(ctx)
-    const normalizedId = ctx.db.normalizeId('ascents', id)
-    if (!normalizedId) return
-    const record = await ctx.db.get(normalizedId)
-    if (!record || record.ownerId !== subject) return
+    const record = await getOwnedRecord(ctx, { id, ownerId: subject, table: 'ascents' })
+    if (!record) return
     return toPublicAscent(record)
   },
 })

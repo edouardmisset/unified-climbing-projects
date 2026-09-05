@@ -1,6 +1,6 @@
-import { Link } from '../../link/link'
 import type { NavigationElement } from '../constants'
 import { NavigationDisclosure } from './navigation-disclosure'
+import { NavigationLink } from './navigation-link'
 import styles from '../navigation.module.css'
 
 type NavigationItemProps = {
@@ -9,26 +9,8 @@ type NavigationItemProps = {
 }
 
 export function NavigationItem({ item, onNavigate }: NavigationItemProps) {
-  if (item.type === 'link') {
-    const { href, icon: Icon, label } = item
-
-    return (
-      <li className={styles.item}>
-        <Link
-          aria-label={label}
-          className={styles.link}
-          href={href}
-          onClick={onNavigate}
-          title={label}
-        >
-          <span aria-hidden className={styles.linkIcon}>
-            <Icon size={18} strokeWidth={1.9} />
-          </span>
-          <span className={styles.linkText}>{label}</span>
-        </Link>
-      </li>
-    )
-  }
+  if (item.type === 'link')
+    return <NavigationLink {...item} className={styles.item} onNavigate={onNavigate} />
 
   if (item.type === 'separator')
     return (
@@ -56,21 +38,8 @@ export function NavigationItem({ item, onNavigate }: NavigationItemProps) {
         <span className={styles.groupText}>{item.label}</span>
       </p>
       <ul className={styles.groupLinks}>
-        {item.links.map(({ href, icon: Icon, label }) => (
-          <li key={href}>
-            <Link
-              aria-label={label}
-              className={styles.link}
-              href={href}
-              onClick={onNavigate}
-              title={label}
-            >
-              <span aria-hidden className={styles.linkIcon}>
-                <Icon size={18} strokeWidth={1.9} />
-              </span>
-              <span className={styles.linkText}>{label}</span>
-            </Link>
-          </li>
+        {item.links.map(link => (
+          <NavigationLink key={link.href} {...link} onNavigate={onNavigate} />
         ))}
       </ul>
     </li>

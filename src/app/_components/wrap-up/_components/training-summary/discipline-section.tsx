@@ -41,7 +41,7 @@ export function DisciplineSection(props: DisciplineSectionProps) {
         {header} <span className={styles.headerSmall}>({percentage})</span>
       </h4>
       <Popover
-        className={styles.target}
+        className='dashedTarget'
         popoverTitle={`${firstLabel}: ${formatNumber(firstCount)} sessions`}
         title={`${firstLabel} Training Sessions: ${formatNumber(firstCount)}`}
         trigger={firstLabel}
@@ -50,7 +50,7 @@ export function DisciplineSection(props: DisciplineSectionProps) {
       </Popover>{' '}
       /{' '}
       <Popover
-        className={styles.target}
+        className='dashedTarget'
         popoverTitle={`${secondLabel}: ${formatNumber(secondCount)} sessions`}
         title={`${secondLabel} Training Sessions: ${formatNumber(secondCount)}`}
         trigger={secondLabel}

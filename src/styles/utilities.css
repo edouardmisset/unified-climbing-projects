@@ -144,26 +144,50 @@
   clip-path: inset(100%);
 }
 
-.contrastColor {
-  /* Fallback for browsers that don't support RCS */
-  color: white;
-  text-shadow:
-    0 0 0.05em black,
-    0 0 0.05em black,
-    0 0 0.05em black,
-    0 0 0.05em black;
+.scrollList {
+  display: flex;
+  flex-direction: column;
+  max-block-size: 20rem;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
 
-  @supports (color: oklch(from lightblue l c h)) {
-    --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
+.scrollListItem {
+  padding: 0;
+}
 
-    color: oklch(from var(--color) var(--l) 0 h);
-    text-shadow: none;
+.frostedEdge {
+  --thickness: var(--size-1);
+
+  position: absolute;
+  block-size: 100%;
+  pointer-events: none;
+  background: var(--transparent-background);
+  backdrop-filter: blur(var(--size-2)) brightness(120%);
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black var(--thickness),
+    transparent var(--thickness)
+  );
+}
+
+.dashedTarget {
+  display: inline-block;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-style: dashed;
+  text-decoration-color: currentcolor;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: color var(--sneeze);
   }
 
-  /* stylelint-disable-next-line function-no-unknown */
-  @supports (color: contrast-color(lightblue)) {
-    /* stylelint-disable-next-line function-no-unknown */
-    color: contrast-color(var(--color));
-    text-shadow: none;
+  &:hover {
+    color: oklch(from var(--text) calc(l * 0.7) c h);
+    background-color: transparent;
   }
 }

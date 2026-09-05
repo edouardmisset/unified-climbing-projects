@@ -1,12 +1,11 @@
 import type { AscentListProps } from '~/schema/ascent'
 import { AscentListItem } from './ascent-list-item'
-import styles from './ascents-with-popover.module.css'
 
 function AscentListComponent(props: AscentListProps) {
   const { ascents } = props
 
   return (
-    <ul className={styles.list}>
+    <ul className='scrollList'>
       {ascents.map(({ _id, ...ascent }) => (
         <AscentListItem {...ascent} key={_id} />
       ))}

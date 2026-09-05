@@ -1,16 +1,15 @@
 import { NON_BREAKING_SPACE } from '~/constants/generic'
 import { formatShortDate, fromClimbingDisciplineToEmoji } from '~/helpers/formatters'
 import type { TrainingSession } from '~/schema/training'
-import styles from './training-summary.module.css'
 
 export function SessionList({ sessions }: { sessions: TrainingSession[] }) {
   return (
-    <ul className={styles.list}>
+    <ul className='scrollList'>
       {sessions.map(({ _id, discipline, date, location }) => {
         const disciplineIcon = discipline ? fromClimbingDisciplineToEmoji(discipline) : '―'
 
         return (
-          <li className={styles.item} key={_id}>
+          <li className='scrollListItem' key={_id}>
             {disciplineIcon}
             {NON_BREAKING_SPACE}
             <span className='monospace'>{formatShortDate(date)}</span>

@@ -52,7 +52,7 @@ export function StickyFilterBar({ filters, search, setSearch, showSearch }: Base
   return (
     <search className={styles.container}>
       <div className={styles.background} />
-      <div className={styles.edge} />
+      <div className={`${styles.edge} frostedEdge`} />
       <div className={styles.filters}>
         {setSearch === undefined || search === undefined || !showSearch ? undefined : (
           <SearchInput
