@@ -5,7 +5,6 @@ import { writeAscentsDisciplineText } from '~/helpers/write-ascents-discipline-t
 import type { AscentListProps } from '~/schema/ascent'
 import { Popover } from '../ui/popover/popover'
 import { AscentList } from './ascent-list'
-import styles from './ascents-with-popover.module.css'
 
 export function AscentsWithPopover({ ascents }: AscentListProps) {
   const ascentsDisciplineText = writeAscentsDisciplineText(ascents)
@@ -14,7 +13,7 @@ export function AscentsWithPopover({ ascents }: AscentListProps) {
 
   return (
     <Popover
-      className={styles.popover}
+      className='dashedTarget'
       popoverTitle={title}
       trigger={
         <strong>

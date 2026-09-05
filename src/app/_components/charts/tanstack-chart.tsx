@@ -285,19 +285,7 @@ function seriesTooltip<TDatum>(
   }
 }
 
-function createBarDefinition<TDatum>({
-  animation,
-  colors,
-  focus,
-  layout,
-  mode,
-  orientation,
-  rows,
-  stackLabels,
-  totalLabels,
-  x,
-  y,
-}: {
+type BarDefinitionOptions<TDatum> = {
   animation?: boolean | ChartAnimationOptions
   colors: ReturnType<typeof colorOptions>
   focus: 'group-x' | 'group-y'
@@ -309,153 +297,154 @@ function createBarDefinition<TDatum>({
   totalLabels: FlatDatum<TDatum>[]
   x: AxisOptions | undefined
   y: AxisOptions | undefined
-}) {
-  const stackTooltip =
-    mode === 'stack'
-      ? {
-          use: tooltip,
-          anchor: 'group-center' as const,
-          content: (
-            points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
-            context: ChartTooltipContentContext,
-          ) => {
-            const seriesPoints = points.filter(point => point.datum.label === undefined)
-            if (seriesPoints.length === 0) return { rows: [] }
-            const [first] = seriesPoints
-            if (!first) return { rows: [] }
-            const formatValue = orientation === 'horizontal' ? context.formatX : context.formatY
-            const category = orientation === 'horizontal' ? first.yValue : first.xValue
-            const getValue = (point: { xValue: ChartValue; yValue: ChartValue }) =>
-              orientation === 'horizontal' ? point.xValue : point.yValue
-            const total = seriesPoints.reduce((sum, point) => {
-              const value = getValue(point)
-              return sum + (typeof value === 'number' ? value : 0)
-            }, 0)
-            return {
-              title: formatChartValue(category),
-              rows: seriesPoints.toReversed().map(point => {
-                const value = getValue(point)
-                const rawValue = typeof value === 'number' ? value : 0
-                const percentage = total === 0 ? 0 : rawValue / total
-                return {
-                  color: point.color,
-                  label: point.groupLabel,
-                  value: `${percentFormatter.format(percentage)} (${formatValue(value)})`,
-                }
-              }),
-            }
-          },
-          sort: 'color-domain' as const,
-        }
-      : {
-          use: tooltip,
-          anchor: 'group-center' as const,
-          content: (
-            points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
-            context: ChartTooltipContentContext,
-          ) => seriesTooltip(points, context, { reverse: true, orientation }),
-        }
+}
 
-  return orientation === 'horizontal'
-    ? defineChart({
-        focus,
-        marks: [
-          barX(rows, {
-            id: 'bars',
-            key: datum => String(datum.category),
-            x: 'value',
-            y: 'category',
-            z: 'series',
-            color: 'series',
-            layout,
-            inset: 2,
-          }),
-          ...(stackLabels.length === 0
-            ? []
-            : [
-                text(stackLabels, {
-                  x: 'value',
-                  y: 'category',
-                  text: 'label',
-                  fill: 'white',
-                  fontSize: 12,
-                  fontWeight: 700,
-                }),
-              ]),
-          text(totalLabels, {
-            x: 'value',
-            y: 'category',
+function stackTooltipContent<TDatum>(
+  points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
+  context: ChartTooltipContentContext,
+  orientation: 'horizontal' | 'vertical',
+): ChartTooltipContent {
+  const seriesPoints = points.filter(point => point.datum.label === undefined)
+  const [first] = seriesPoints
+  if (!first) return { rows: [] }
+
+  const horizontal = orientation === 'horizontal'
+  const formatValue = horizontal ? context.formatX : context.formatY
+  const category = horizontal ? first.yValue : first.xValue
+  const values = seriesPoints.map(point => {
+    const value = horizontal ? point.xValue : point.yValue
+    return {
+      point,
+      rawValue: typeof value === 'number' ? value : 0,
+      value,
+    }
+  })
+  const total = values.reduce((sum, entry) => sum + entry.rawValue, 0)
+
+  return {
+    title: formatChartValue(category),
+    rows: values.toReversed().map(({ point, rawValue, value }) => {
+      const percentage = total === 0 ? 0 : rawValue / total
+      return {
+        color: point.color,
+        label: point.groupLabel,
+        value: `${percentFormatter.format(percentage)} (${formatValue(value)})`,
+      }
+    }),
+  }
+}
+
+type BarTooltip<TDatum> = {
+  use: typeof tooltip
+  anchor: 'group-center'
+  content: (
+    points: readonly ChartPoint<FlatDatum<TDatum>, ChartValue, ChartValue>[],
+    context: ChartTooltipContentContext,
+  ) => ChartTooltipContent
+  sort?: 'color-domain'
+}
+
+function createBarTooltip<TDatum>(
+  mode: 'group' | 'stack',
+  orientation: 'horizontal' | 'vertical',
+): BarTooltip<TDatum> {
+  if (mode === 'stack')
+    return {
+      use: tooltip,
+      anchor: 'group-center',
+      content: (points, context) => stackTooltipContent(points, context, orientation),
+      sort: 'color-domain',
+    }
+
+  return {
+    use: tooltip,
+    anchor: 'group-center',
+    content: (points, context) => seriesTooltip(points, context, { reverse: true, orientation }),
+  }
+}
+
+function animationOptions(animation?: boolean | ChartAnimationOptions) {
+  if (animation === undefined) return {}
+  return { svgAnimation: animation }
+}
+
+function horizontalBarAxes(x: AxisOptions | undefined, y: AxisOptions | undefined) {
+  return {
+    x: {
+      scale: x?.domain ? scaleLinear().domain(x.domain) : scaleLinear,
+      grid: true,
+      axis: { label: x?.label, ticks: { format: x?.tickFormat } },
+    },
+    y: {
+      scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
+      axis: { label: y?.label, ticks: { format: y?.tickFormat } },
+    },
+  }
+}
+
+function verticalBarAxes(x: AxisOptions | undefined, y: AxisOptions | undefined) {
+  return {
+    x: {
+      scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
+      axis: { label: x?.label, ticks: { format: x?.tickFormat } },
+    },
+    y: {
+      scale: y?.domain ? scaleLinear().domain(y.domain) : scaleLinear,
+      nice: y?.domain === undefined,
+      grid: true,
+      axis: { label: y?.label, ticks: { format: y?.tickFormat } },
+    },
+  }
+}
+
+function createBarDefinition<TDatum>(options: BarDefinitionOptions<TDatum>) {
+  const barTooltip = createBarTooltip(options.mode, options.orientation)
+  const horizontal = options.orientation === 'horizontal'
+  const labelPosition = horizontal
+    ? { x: 'value' as const, y: 'category' as const }
+    : { x: 'category' as const, y: 'value' as const }
+  const barOptions = {
+    id: 'bars',
+    key: (datum: FlatDatum<TDatum>) => String(datum.category),
+    z: 'series' as const,
+    color: 'series' as const,
+    layout: options.layout,
+    inset: 2,
+  }
+  const bars = horizontal
+    ? barX(options.rows, { ...barOptions, x: 'value' as const, y: 'category' as const })
+    : barY(options.rows, { ...barOptions, x: 'category' as const, y: 'value' as const })
+  const stackLabel =
+    options.stackLabels.length === 0
+      ? []
+      : [
+          text(options.stackLabels, {
+            ...labelPosition,
             text: 'label',
-            fill: 'var(--text-1)',
+            fill: 'white',
             fontSize: 12,
             fontWeight: 700,
-            anchor: 'start',
-            dx: 6,
           }),
-        ],
-        x: {
-          scale: x?.domain ? scaleLinear().domain(x.domain) : scaleLinear,
-          grid: true,
-          axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-        },
-        y: {
-          scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
-          axis: { label: y?.label, ticks: { format: y?.tickFormat } },
-        },
-        color: colors,
-        tooltip: stackTooltip,
-        ...(animation === undefined ? {} : { svgAnimation: animation }),
-      })
-    : defineChart({
-        focus,
-        marks: [
-          barY(rows, {
-            id: 'bars',
-            key: datum => String(datum.category),
-            x: 'category',
-            y: 'value',
-            z: 'series',
-            color: 'series',
-            layout,
-            inset: 2,
-          }),
-          ...(stackLabels.length === 0
-            ? []
-            : [
-                text(stackLabels, {
-                  x: 'category',
-                  y: 'value',
-                  text: 'label',
-                  fill: 'white',
-                  fontSize: 12,
-                  fontWeight: 700,
-                }),
-              ]),
-          text(totalLabels, {
-            x: 'category',
-            y: 'value',
-            text: 'label',
-            fill: 'var(--text-1)',
-            fontSize: 12,
-            fontWeight: 700,
-            anchor: 'middle',
-            dy: -8,
-          }),
-        ],
-        x: {
-          scale: () => scaleBand<ChartValue>().padding(BAND_PADDING),
-          axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-        },
-        y: {
-          scale: y?.domain ? scaleLinear().domain(y.domain) : scaleLinear,
-          nice: y?.domain === undefined,
-          grid: true,
-          axis: { label: y?.label, ticks: { format: y?.tickFormat } },
-        },
-        color: colors,
-        tooltip: stackTooltip,
-        ...(animation === undefined ? {} : { svgAnimation: animation }),
-      })
+        ]
+  const totalLabel = text(options.totalLabels, {
+    ...labelPosition,
+    text: 'label',
+    fill: 'var(--text-1)',
+    fontSize: 12,
+    fontWeight: 700,
+    ...(horizontal ? { anchor: 'start' as const, dx: 6 } : { anchor: 'middle' as const, dy: -8 }),
+  })
+
+  return defineChart({
+    focus: options.focus,
+    marks: [bars, ...stackLabel, totalLabel],
+    ...(horizontal
+      ? horizontalBarAxes(options.x, options.y)
+      : verticalBarAxes(options.x, options.y)),
+    color: options.colors,
+    tooltip: barTooltip,
+    ...animationOptions(options.animation),
+  })
 }
 
 export function TanStackBarChart<TDatum>(
@@ -509,7 +498,12 @@ export function TanStackBarChart<TDatum>(
   )
 }
 
-export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
+type SeriesChartKind = 'area' | 'line'
+
+function TanStackSeriesChart<TDatum>({
+  kind,
+  ...props
+}: WideChartProps<TDatum> & { kind: SeriesChartKind }) {
   const {
     ariaLabel,
     animation,
@@ -521,30 +515,40 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
     x,
     y,
   } = props
-
   const rows = flattenData(data, getCategory, series)
+  const mark =
+    kind === 'line'
+      ? lineY(rows, {
+          id: 'line',
+          key: datum => String(datum.category),
+          x: 'category',
+          y: 'value',
+          z: 'series',
+          color: 'series',
+          points: true,
+          strokeWidth: 2,
+          curve: SMOOTH_CURVE,
+        })
+      : areaY(rows, {
+          id: 'area',
+          key: datum => String(datum.category),
+          x: 'category',
+          y: 'value',
+          z: 'series',
+          color: 'series',
+          layout: stack({ offset: 'normalize' }),
+          fillOpacity: 0.8,
+        })
   const definition = defineChart({
     focus: 'group-x',
-    marks: [
-      lineY(rows, {
-        id: 'line',
-        key: datum => String(datum.category),
-        x: 'category',
-        y: 'value',
-        z: 'series',
-        color: 'series',
-        points: true,
-        strokeWidth: 2,
-        curve: SMOOTH_CURVE,
-      }),
-    ],
+    marks: [mark],
     x: {
       scale: () => scalePoint<ChartValue>().padding(POINT_PADDING),
       axis: { label: x?.label, ticks: { format: x?.tickFormat } },
     },
     y: {
       scale: scaleLinear,
-      nice: true,
+      ...(kind === 'line' ? { nice: true } : {}),
       grid: true,
       axis: { label: y?.label, ticks: { format: y?.tickFormat } },
     },
@@ -554,7 +558,7 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
       anchor: 'group-center',
       content: seriesTooltip,
     },
-    ...(animation === undefined ? {} : { svgAnimation: animation }),
+    ...animationOptions(animation),
   })
 
   return (
@@ -564,57 +568,12 @@ export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
   )
 }
 
+export function TanStackLineChart<TDatum>(props: WideChartProps<TDatum>) {
+  return <TanStackSeriesChart {...props} kind='line' />
+}
+
 export function TanStackAreaChart<TDatum>(props: WideChartProps<TDatum>) {
-  const {
-    ariaLabel,
-    animation,
-    data,
-    getCategory,
-    height = DEFAULT_CHART_HEIGHT,
-    legend = true,
-    series,
-    x,
-    y,
-  } = props
-
-  const rows = flattenData(data, getCategory, series)
-  const definition = defineChart({
-    focus: 'group-x',
-    marks: [
-      areaY(rows, {
-        id: 'area',
-        key: datum => String(datum.category),
-        x: 'category',
-        y: 'value',
-        z: 'series',
-        color: 'series',
-        layout: stack({ offset: 'normalize' }),
-        fillOpacity: 0.8,
-      }),
-    ],
-    x: {
-      scale: () => scalePoint<ChartValue>().padding(POINT_PADDING),
-      axis: { label: x?.label, ticks: { format: x?.tickFormat } },
-    },
-    y: {
-      scale: scaleLinear,
-      grid: true,
-      axis: { label: y?.label, ticks: { format: y?.tickFormat } },
-    },
-    color: colorOptions(series, legend),
-    tooltip: {
-      use: tooltip,
-      anchor: 'group-center',
-      content: seriesTooltip,
-    },
-    ...(animation === undefined ? {} : { svgAnimation: animation }),
-  })
-
-  return (
-    <div className={styles.chartSurface}>
-      <Chart definition={definition} height={height} ariaLabel={ariaLabel} />
-    </div>
-  )
+  return <TanStackSeriesChart {...props} kind='area' />
 }
 
 type DonutDatum = { color: string; label: string; value: number }

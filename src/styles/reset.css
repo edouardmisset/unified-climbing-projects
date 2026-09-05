@@ -376,19 +376,32 @@ not to see them */
   content: ' *';
 }
 
-:where(::placeholder) {
+:where(::placeholder),
+.contrastColor {
   color: white;
   text-shadow:
     0 0 0.05em black,
     0 0 0.05em black,
     0 0 0.05em black,
     0 0 0.05em black;
-  opacity: 0.8;
 
   @supports (color: oklch(from lightblue l c h)) {
     --l: clamp(0, (var(--l-threshold, 0.623) / l - 1) * infinity, 1);
 
     color: oklch(from var(--color) var(--l) 0 h);
+    text-shadow: none;
+  }
+}
+
+:where(::placeholder) {
+  opacity: 0.8;
+}
+
+/* stylelint-disable-next-line function-no-unknown */
+.contrastColor {
+  @supports (color: contrast-color(lightblue)) {
+    /* stylelint-disable-next-line function-no-unknown */
+    color: contrast-color(var(--color));
     text-shadow: none;
   }
 }
