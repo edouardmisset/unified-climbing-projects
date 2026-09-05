@@ -126,6 +126,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
             }}
             required
             type='number'
+            inputMode='numeric'
           />
         </Field>
       </div>
@@ -165,6 +166,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
             id={`${prefix}.height`}
             min={0}
             type='number'
+            inputMode='numeric'
           />
         </Field>
       </div>
@@ -177,6 +179,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
             max={5}
             min={0}
             type='number'
+            inputMode='numeric'
           />
         </Field>
         <Field htmlFor={`${prefix}.area`} label='Area'>

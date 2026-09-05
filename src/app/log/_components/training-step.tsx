@@ -45,6 +45,7 @@ export function TrainingStep() {
             min={0}
             step={5}
             type='number'
+            inputMode='numeric'
           />
         </Field>
         <Field htmlFor='volume' label='Volume (%)'>
@@ -56,6 +57,7 @@ export function TrainingStep() {
             min={0}
             step={5}
             type='number'
+            inputMode='numeric'
           />
         </Field>
       </div>
