@@ -11,7 +11,7 @@ import { Field } from './field'
 import styles from './log-wizard.module.css'
 import { SendButton } from './send-button'
 
-export function TrainingStep() {
+export function TrainingStep({ isActive }: { isActive: boolean }) {
   const {
     control,
     formState: { isSubmitting },
@@ -36,12 +36,12 @@ export function TrainingStep() {
           >
             <XIcon aria-hidden='true' size={18} />
           </button>
-          <Field htmlFor='training-type' label='Session type' required>
+          <Field htmlFor='training-type' label='Session type' required={isActive}>
             <select
               {...register('training.type')}
               className={formStyles.input}
               id='training-type'
-              required
+              required={isActive}
             >
               {TRAINING_SESSION_TYPES.map(type => (
                 <option key={type} value={type}>
@@ -126,7 +126,9 @@ export function TrainingStep() {
           <PlusIcon aria-hidden='true' size={20} />
         </button>
       )}
-      {hasTraining || ascents.length > 0 ? <SendButton isSubmitting={isSubmitting} /> : undefined}
+      {isActive && (hasTraining || ascents.length > 0) ? (
+        <SendButton isSubmitting={isSubmitting} />
+      ) : undefined}
     </>
   )
 }

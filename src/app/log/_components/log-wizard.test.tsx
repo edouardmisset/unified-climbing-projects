@@ -40,9 +40,10 @@ function setupMocks() {
 function renderWizard(
   onUrlUpdate?: OnUrlUpdateFunction,
   defaultScope?: 'ascents' | 'training' | 'both',
+  searchParams?: string,
 ) {
   return render(
-    <NuqsTestingAdapter hasMemory onUrlUpdate={onUrlUpdate}>
+    <NuqsTestingAdapter hasMemory onUrlUpdate={onUrlUpdate} searchParams={searchParams}>
       <LogWizard
         bootstrap={{
           areas: ['Berlin'],
@@ -90,7 +91,10 @@ describe('log wizard', () => {
     await user.click(screen.getByRole('button', { name: step }))
     if (step === 'Step 2: Training')
       await user.click(screen.getByRole('button', { name: 'Add training session' }))
-    const input = screen.getByLabelText(label)
+    const input =
+      step === 'Step 2: Training'
+        ? screen.getByLabelText(label, { selector: '#training-comments' })
+        : screen.getByLabelText(label)
     expect(screen.queryByRole('button', { name: `Clear ${label}` })).not.toBeInTheDocument()
     await user.type(input, 'Keep editing')
     await user.click(screen.getByRole('button', { name: `Clear ${label}` }))
@@ -180,7 +184,7 @@ describe('log wizard', () => {
 
     expect(screen.getByLabelText('Grade')).toHaveValue('7a')
     expect(screen.getByLabelText('Personal grade')).toHaveValue('7a')
-    expect(screen.getByLabelText('Discipline')).toBeRequired()
+    expect(screen.getByRole('combobox', { name: 'Discipline' })).toBeRequired()
     expect(screen.getByLabelText('Grade')).toBeRequired()
     expect(screen.getByLabelText('Style')).toBeRequired()
   })
@@ -239,7 +243,10 @@ describe('log wizard', () => {
     await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
     await user.click(screen.getByRole('button', { name: 'Add training session' }))
     expect(screen.queryByRole('button', { name: 'Add training session' })).not.toBeInTheDocument()
-    await user.type(screen.getByLabelText('Comments'), 'Training notes')
+    await user.type(
+      screen.getByLabelText('Comments', { selector: '#training-comments' }),
+      'Training notes',
+    )
     await user.click(screen.getByRole('button', { name: 'Remove training session' }))
     expect(screen.queryByLabelText('Session type')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
@@ -252,6 +259,38 @@ describe('log wizard', () => {
     expect(mocks.submitClimbingLog).toHaveBeenCalledWith(
       expect.objectContaining({ ascents: [], hasTraining: true }),
     )
+  })
+
+  it('reconciles ascents added while the ascent step is hidden on first render', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard(undefined, 'training', 'step=training')
+
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+
+    expect(screen.queryByRole('heading', { name: 'Ascent 1' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Add ascent' }))
+    expect(screen.getByRole('heading', { name: 'Ascent 1' })).toBeInTheDocument()
+  })
+
+  it('does not let hidden ascent fields block a training submission', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    mocks.submitClimbingLog.mockResolvedValue({
+      error: 'Ascent name is required',
+      field: 'ascents.0.name',
+      success: false,
+    })
+    renderWizard(undefined, 'both')
+
+    await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    await waitFor(() => {
+      expect(mocks.submitClimbingLog).toHaveBeenCalledWith(
+        expect.objectContaining({ hasTraining: true }),
+      )
+    })
   })
 
   it('does not instantiate an ascent for a training-only log', () => {
@@ -273,6 +312,25 @@ describe('log wizard', () => {
     expect(screen.getByRole('button', { name: 'Send' })).toBeInTheDocument()
   })
 
+  it('does nothing when navigating to the current step', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    const queryStrings: string[] = []
+    renderWizard(
+      event => {
+        queryStrings.push(event.queryString)
+      },
+      undefined,
+      'step=general',
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Step 1: General' }))
+    expect(queryStrings).toHaveLength(0)
+
+    await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
+    expect(queryStrings).toContain('?step=training')
+  })
+
   it('keeps the optional personal grade mounted when it is cleared', async () => {
     setupMocks()
     const user = userEvent.setup()
@@ -290,7 +348,7 @@ describe('log wizard', () => {
     const user = userEvent.setup()
     renderWizard(undefined, 'ascents')
 
-    await user.selectOptions(screen.getByLabelText('Discipline'), 'Bouldering')
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Discipline' }), 'Bouldering')
     await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
     await user.click(screen.getByRole('button', { name: 'Add training session' }))
 
