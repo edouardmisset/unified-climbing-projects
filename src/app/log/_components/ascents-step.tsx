@@ -2,7 +2,6 @@ import { Activity } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { PlusIcon } from 'lucide-react'
 import formStyles from '~/app/_components/forms/form.module.css'
-import { includesAscents } from '~/domain/climbing-log'
 import { createAscentDraft, type LogDraft } from '../draft'
 import type { LogWizardBootstrap } from '../log-defaults'
 import { AscentFields } from './ascent-fields'
@@ -22,7 +21,7 @@ export function AscentsStep({
     getValues,
   } = useFormContext<LogDraft>()
   const { append, fields, remove } = useFieldArray({ control, name: 'ascents' })
-  const scope = useWatch({ control, name: 'scope' })
+  const hasTraining = useWatch({ control, name: 'hasTraining' })
   const appendAscent = () => {
     append(
       createAscentDraft({
@@ -45,7 +44,7 @@ export function AscentsStep({
           ))}
         </datalist>
         {fields.map((field, index) => (
-          <section className={styles.ascentCard} key={field.id}>
+          <section className={styles.entityCard} key={field.id}>
             <AscentFields
               index={index}
               isActive={isActive}
@@ -67,12 +66,12 @@ export function AscentsStep({
           </section>
         ))}
         {fields.length === 0 ? (
-          <button className={styles.emptyAddAscentButton} onClick={appendAscent} type='button'>
+          <button className={styles.emptyAddButton} onClick={appendAscent} type='button'>
             <PlusIcon aria-hidden='true' size={20} />
             Add ascent
           </button>
         ) : undefined}
-        {isActive && includesAscents(scope) ? (
+        {isActive && (fields.length > 0 || hasTraining) ? (
           <SendButton isSubmitting={isSubmitting} />
         ) : undefined}
       </>

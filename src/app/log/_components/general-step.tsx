@@ -3,7 +3,12 @@ import { useFormContext } from 'react-hook-form'
 import formStyles from '~/app/_components/forms/form.module.css'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
 import { createAscentDraft, type LogDraft } from '../draft'
-import { type LogWizardBootstrap, inferEnergySystem, inferSessionType } from '../log-defaults'
+import {
+  inferEnergySystem,
+  inferLogContents,
+  inferSessionType,
+  type LogWizardBootstrap,
+} from '../log-defaults'
 import { Field } from './field'
 
 export function GeneralStep({
@@ -23,7 +28,6 @@ export function GeneralStep({
   } = useFormContext<LogDraft>()
   const disciplineField = register('discipline')
   const locationField = register('location')
-  const scopeField = register('scope')
   const dateField = register('date')
   const dateInputRef = useRef<HTMLInputElement>(null)
 
@@ -31,15 +35,24 @@ export function GeneralStep({
     if (isActive) dateInputRef.current?.focus()
   }, [isActive])
 
-  const ensureAscentDraft = () => {
-    if (getValues('ascents').length > 0) return
-    setValue('ascents', [
-      createAscentDraft({
-        defaultGrade: bootstrap.defaultGrade,
-        discipline: getValues('discipline'),
-        historyDefaults: bootstrap.latestAscent,
-      }),
-    ])
+  const inferDefaultContents = (location: string) => {
+    const inferredContents = inferLogContents(
+      location,
+      bootstrap.indoorLocations,
+      bootstrap.outdoorLocations,
+    )
+
+    if (inferredContents.hasTraining && !getValues('hasTraining'))
+      setValue('hasTraining', true, { shouldDirty: true })
+
+    if (inferredContents.hasAscents && getValues('ascents').length === 0)
+      setValue('ascents', [
+        createAscentDraft({
+          defaultGrade: bootstrap.defaultGrade,
+          discipline: getValues('discipline'),
+          historyDefaults: bootstrap.latestAscent,
+        }),
+      ])
   }
 
   return (
@@ -81,24 +94,7 @@ export function GeneralStep({
           </select>
         </Field>
       </div>
-      <Field htmlFor='scope' label='Log contents'>
-        <select
-          {...scopeField}
-          className={formStyles.input}
-          id='scope'
-          onChange={event => {
-            void scopeField.onChange(event)
-            const scope = event.target.value as LogDraft['scope']
-            if (scope === 'training') setValue('ascents', [])
-            else ensureAscentDraft()
-          }}
-        >
-          <option value='training'>Training</option>
-          <option value='ascents'>Ascents</option>
-          <option value='both'>Training & ascents</option>
-        </select>
-      </Field>
-      <Field htmlFor='location' label='Location'>
+      <Field clearName='location' htmlFor='location' label='Location'>
         <input
           {...locationField}
           className={formStyles.input}
@@ -106,6 +102,7 @@ export function GeneralStep({
           list='location-list'
           onChange={event => {
             void locationField.onChange(event)
+            inferDefaultContents(event.target.value)
             const inferredType = inferSessionType(
               event.target.value,
               bootstrap.crags,

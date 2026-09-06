@@ -39,7 +39,12 @@ export function AscentFields({
         </button>
       </header>
       <div className={formStyles.row}>
-        <Field htmlFor={`${prefix}.name`} label='Name' required={isActive}>
+        <Field
+          clearName={`${prefix}.name`}
+          htmlFor={`${prefix}.name`}
+          label='Name'
+          required={isActive}
+        >
           <input
             {...register(`${prefix}.name`)}
             className={formStyles.input}
@@ -134,6 +139,7 @@ export function AscentFields({
             }}
             required={isActive}
             type='number'
+            inputMode='numeric'
           />
         </Field>
       </div>
@@ -173,6 +179,7 @@ export function AscentFields({
             id={`${prefix}.height`}
             min={0}
             type='number'
+            inputMode='numeric'
           />
         </Field>
       </div>
@@ -185,9 +192,10 @@ export function AscentFields({
             max={5}
             min={0}
             type='number'
+            inputMode='numeric'
           />
         </Field>
-        <Field htmlFor={`${prefix}.area`} label='Area'>
+        <Field clearName={`${prefix}.area`} htmlFor={`${prefix}.area`} label='Area'>
           <input
             {...register(`${prefix}.area`)}
             className={formStyles.input}
@@ -197,7 +205,7 @@ export function AscentFields({
           />
         </Field>
       </div>
-      <Field htmlFor={`${prefix}.comments`} label='Comments'>
+      <Field clearName={`${prefix}.comments`} htmlFor={`${prefix}.comments`} label='Comments'>
         <textarea
           {...register(`${prefix}.comments`)}
           className={`${formStyles.input} ${formStyles.textarea}`}

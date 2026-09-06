@@ -115,7 +115,7 @@
   }
 }
 
-.ascentCard {
+.entityCard {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -230,7 +230,7 @@
   padding-block-start: var(--size-2);
 }
 
-.emptyAddAscentButton {
+.emptyAddButton {
   display: flex;
   align-items: center;
   justify-self: center;
