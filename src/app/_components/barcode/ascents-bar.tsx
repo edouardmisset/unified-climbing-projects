@@ -16,7 +16,7 @@ const AscentsPopoverDescription = lazy(async () =>
   })),
 )
 
-export const AscentsBar = ({ weeklyAscents }: AscentsBarsProps) => {
+export function AscentsBar({ weeklyAscents }: AscentsBarsProps) {
   const numberOfAscents = weeklyAscents.length
   const isSingleAscent = numberOfAscents <= 1
 

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { usePathname } from 'next/navigation'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vite-plus/test'
 import { Link } from './link'
 
 vi.mock(import('next/navigation'), async importOriginal => ({

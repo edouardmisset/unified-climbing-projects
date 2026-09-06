@@ -116,7 +116,9 @@ export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
         autoComplete='off'
         className={formStyles.form}
         name='climbing-log-form'
-        onSubmit={event => void submit(event)}
+        onSubmit={event => {
+          void submit(event)
+        }}
         spellCheck={false}
       >
         <WizardHeader activeStep={step} onDiscard={requestReset} onNavigate={goToStep} />

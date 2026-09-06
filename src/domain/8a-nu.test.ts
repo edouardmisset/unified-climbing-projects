@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import { CanonicalCsvError } from './csv'
 import { SANITIZED_8A_NU_FIXTURE } from './fixtures/8a-nu.fixture'
 import { parse8aNuAscentCsv } from './8a-nu'

@@ -12,12 +12,12 @@ type NavigationUserSectionProps = {
   settingsHref: string
 }
 
-export const NavigationUserSection = ({
+export function NavigationUserSection({
   isDark,
   onNavigate,
   onToggleTheme,
   settingsHref,
-}: NavigationUserSectionProps) => {
+}: NavigationUserSectionProps) {
   const handleThemeChange = (_checked: boolean) => {
     onToggleTheme()
   }

@@ -21,12 +21,12 @@ type NavigationProps = {
   onToggleTheme: VoidFunction
 }
 
-export const Navigation = ({
+export function Navigation({
   desktopExpanded,
   onDesktopExpandedChange,
   isDark,
   onToggleTheme,
-}: NavigationProps) => {
+}: NavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
   const domain = getDomainFromPathname(pathname) ?? 'ascents'
@@ -127,5 +127,3 @@ export const Navigation = ({
     </nav>
   )
 }
-
-Navigation.displayName = 'Navigation'

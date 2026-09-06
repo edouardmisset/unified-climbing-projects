@@ -30,11 +30,7 @@ type TableStyle = CSSProperties & {
   '--max-width': string
 }
 
-export const AscentList = ({
-  ascents,
-  showDetails = true,
-  showPoints = false,
-}: AscentListProps) => {
+export function AscentList({ ascents, showDetails = true, showPoints = false }: AscentListProps) {
   const [selectedAscent, setSelectedAscent] = useState<Ascent | undefined>()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 

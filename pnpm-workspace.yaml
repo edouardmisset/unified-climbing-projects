@@ -9,8 +9,8 @@ overrides:
   nanoid: 3.3.18
   postcss: 8.5.26
   sharp: ^0.35.0
-  vite: 'catalog:'
-  vitest: 'catalog:'
+  vite@*: 'catalog:'
+  vitest@*: 'catalog:'
 
 allowBuilds:
   '@clerk/shared': true
@@ -30,11 +30,12 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 trustLockfile: false
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.4
-  vitest: 4.1.10
-  vite-plus: 0.2.4
-  '@vitest/coverage-v8': 4.1.10
-  '@vitest/ui': 4.1.10
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+  vitest: 4.1.11
+  vite-plus: 0.3.0
+  '@vitest/coverage-v8': 4.1.11
+  '@vitest/ui': 4.1.11
+  '@vitest/browser-playwright': 4.1.11
 peerDependencyRules:
   allowAny:
     - vite
@@ -44,3 +45,13 @@ peerDependencyRules:
     vitest: '*'
 minimumReleaseAgeExclude:
   - '@tanstack/charts@0.12.0'
+  - vite-plus
+  - '@voidzero-dev/*'
+  - oxlint
+  - '@oxlint/*'
+  - oxlint-tsgolint
+  - '@oxlint-tsgolint/*'
+  - oxfmt
+  - '@oxfmt/*'
+  - vitest
+  - '@vitest/*'

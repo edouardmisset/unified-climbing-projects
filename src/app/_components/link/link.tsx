@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import styles from './link.module.css'
 
-export const Link = ({
+export function Link({
   href,
   children,
   className,
   ...props
-}: { children: ReactNode; href: string } & React.ComponentProps<typeof NextLink>) => {
+}: { children: ReactNode; href: string } & React.ComponentProps<typeof NextLink>) {
   const pathname = usePathname()
   const isActive = pathname === href
 

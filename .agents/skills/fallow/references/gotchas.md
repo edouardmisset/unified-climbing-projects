@@ -615,17 +615,17 @@ These are separate features and can be used independently or together:
 ```yaml
 # WRONG: expecting inline review comments from FALLOW_COMMENT
 variables:
-  FALLOW_COMMENT: "true"
+  FALLOW_COMMENT: 'true'
 # This only posts a summary comment, not inline annotations
 
 # CORRECT: use FALLOW_REVIEW for inline diff comments
 variables:
-  FALLOW_REVIEW: "true"
+  FALLOW_REVIEW: 'true'
 
 # CORRECT: use both for summary + inline
 variables:
-  FALLOW_COMMENT: "true"
-  FALLOW_REVIEW: "true"
+  FALLOW_COMMENT: 'true'
+  FALLOW_REVIEW: 'true'
 ```
 
 Both require a `GITLAB_TOKEN` CI/CD variable (project access token with `api` scope). `CI_JOB_TOKEN` is read-only for MR notes in the official GitLab API, so it is not enough for summary comments or inline discussions.

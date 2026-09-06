@@ -1,5 +1,5 @@
 import { convexTest } from 'convex-test'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import type { AscentPublicInput } from '../src/domain/ascent'
 import type { TrainingSessionPublicInput } from '../src/domain/training-session'
 import { api } from './_generated/api'

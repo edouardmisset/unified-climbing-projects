@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test'
-import { page } from 'vitest/browser'
+import { page } from 'vite-plus/test/browser'
 import { render } from 'vitest-browser-react'
 import { groupDataDaysByYear } from '~/data/helpers'
 import { fromAscentsToCalendarEntries } from '~/helpers/ascent-calendar-helpers'

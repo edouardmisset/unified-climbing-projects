@@ -5,7 +5,7 @@ import { formatNumber, formatWholePercent } from '~/helpers/number-formatter'
 import type { TrainingSessionListProps } from '~/schema/training'
 import styles from '../ascent-list/ascent-list.module.css'
 
-export const TrainingSessionList = ({ trainingSessions }: TrainingSessionListProps) => {
+export function TrainingSessionList({ trainingSessions }: TrainingSessionListProps) {
   if (trainingSessions.length === 0) return <NotFound />
 
   return (
