@@ -58,15 +58,18 @@ export function AscentList({ ascents, showDetails = true, showPoints = false }: 
 
   return (
     <>
-      <table className={styles.table} style={tableStyles}>
+      <table className={`${styles.table} ${styles.ascentTable}`} style={tableStyles}>
         <thead className={`${styles.header} gridFullWidth`}>
           <tr className={`${styles.headerRow} gridFullWidth`}>
             <th
               aria-label='Discipline'
-              className={`${styles.cell} ${styles.headerCell}`}
+              className={`${styles.cell} ${styles.headerCell} ${styles.stickyColumn}`}
               title='Discipline: 🧗 route, 🪨 boulder...'
             />
-            <th className={`${styles.cell} ${styles.headerCell}`} title='Name of the route'>
+            <th
+              className={`${styles.cell} ${styles.headerCell} ${styles.stickyColumn} ${styles.stickyNameColumn}`}
+              title='Name of the route'
+            >
               Name
             </th>
             {showPoints && (
@@ -163,10 +166,13 @@ export function AscentList({ ascents, showDetails = true, showPoints = false }: 
                 role='button'
                 tabIndex={0}
               >
-                <td className={`${styles.cell} marginAuto`} title={discipline}>
+                <td
+                  className={`${styles.cell} ${styles.stickyColumn} marginAuto`}
+                  title={discipline}
+                >
                   {fromClimbingDisciplineToEmoji(discipline)}
                 </td>
-                <td className={styles.cell}>
+                <td className={`${styles.cell} ${styles.stickyColumn} ${styles.stickyNameColumn}`}>
                   <strong title={name}>{name}</strong>
                 </td>
                 {showPoints && (
@@ -221,19 +227,25 @@ export function AscentList({ ascents, showDetails = true, showPoints = false }: 
           <tr className={`${styles.footerRow} gridFullWidth`}>
             {showPoints ? (
               <>
-                <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
                 <td className={`${styles.footerCell} ${styles.cell}`} aria-hidden='true' />
+                <th
+                  className={`${styles.footerCell} ${styles.cell} ${styles.stickyColumn} ${styles.stickyNameColumn}`}
+                >
+                  Total
+                </th>
                 <td className={`${styles.footerCell} ${styles.cell}`}>
                   <strong>{frenchNumberFormatter.format(totalAscentPoints)}</strong>
                 </td>
               </>
             ) : (
               <>
-                <th className={`${styles.footerCell} ${styles.cell}`}>Total</th>
-                <td className={`${styles.footerCell} ${styles.cell}`}>
-                  <strong>{formatNumber(ascents.length)}</strong>{' '}
+                <td className={`${styles.footerCell} ${styles.cell}`} aria-hidden='true' />
+                <th
+                  className={`${styles.footerCell} ${styles.cell} ${styles.stickyColumn} ${styles.stickyNameColumn}`}
+                >
+                  Total <strong>{formatNumber(ascents.length)}</strong>{' '}
                   {writeAscentsDisciplineText(ascents)}
-                </td>
+                </th>
               </>
             )}
           </tr>
