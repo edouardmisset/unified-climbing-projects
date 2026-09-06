@@ -1,7 +1,6 @@
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { PlusIcon } from 'lucide-react'
 import formStyles from '~/app/_components/forms/form.module.css'
-import { includesAscents } from '~/domain/climbing-log'
 import { createAscentDraft, type LogDraft } from '../draft'
 import type { LogWizardBootstrap } from '../log-defaults'
 import { AscentFields } from './ascent-fields'
@@ -15,7 +14,7 @@ export function AscentsStep({ bootstrap }: { bootstrap: LogWizardBootstrap }) {
     getValues,
   } = useFormContext<LogDraft>()
   const { append, fields, remove } = useFieldArray({ control, name: 'ascents' })
-  const scope = useWatch({ control, name: 'scope' })
+  const hasTraining = useWatch({ control, name: 'hasTraining' })
   const appendAscent = () => {
     append(
       createAscentDraft({
@@ -63,7 +62,7 @@ export function AscentsStep({ bootstrap }: { bootstrap: LogWizardBootstrap }) {
           Add ascent
         </button>
       ) : undefined}
-      {includesAscents(scope) ? <SendButton isSubmitting={isSubmitting} /> : undefined}
+      {fields.length > 0 || hasTraining ? <SendButton isSubmitting={isSubmitting} /> : undefined}
     </>
   )
 }

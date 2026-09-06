@@ -31,7 +31,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
         </button>
       </header>
       <div className={formStyles.row}>
-        <Field htmlFor={`${prefix}.name`} label='Name' required>
+        <Field clearName={`${prefix}.name`} htmlFor={`${prefix}.name`} label='Name' required>
           <input
             {...register(`${prefix}.name`)}
             className={formStyles.input}
@@ -182,7 +182,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
             inputMode='numeric'
           />
         </Field>
-        <Field htmlFor={`${prefix}.area`} label='Area'>
+        <Field clearName={`${prefix}.area`} htmlFor={`${prefix}.area`} label='Area'>
           <input
             {...register(`${prefix}.area`)}
             className={formStyles.input}
@@ -192,7 +192,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
           />
         </Field>
       </div>
-      <Field htmlFor={`${prefix}.comments`} label='Comments'>
+      <Field clearName={`${prefix}.comments`} htmlFor={`${prefix}.comments`} label='Comments'>
         <textarea
           {...register(`${prefix}.comments`)}
           className={`${formStyles.input} ${formStyles.textarea}`}

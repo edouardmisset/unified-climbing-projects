@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form'
 import formStyles from '~/app/_components/forms/form.module.css'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
-import { createAscentDraft, type LogDraft } from '../draft'
+import type { LogDraft } from '../draft'
 import { type LogWizardBootstrap, inferEnergySystem, inferSessionType } from '../log-defaults'
 import { Field } from './field'
 
@@ -14,24 +14,11 @@ export function GeneralStep({
 }) {
   const {
     formState: { dirtyFields },
-    getValues,
     register,
     setValue,
   } = useFormContext<LogDraft>()
   const disciplineField = register('discipline')
   const locationField = register('location')
-  const scopeField = register('scope')
-
-  const ensureAscentDraft = () => {
-    if (getValues('ascents').length > 0) return
-    setValue('ascents', [
-      createAscentDraft({
-        defaultGrade: bootstrap.defaultGrade,
-        discipline: getValues('discipline'),
-        historyDefaults: bootstrap.latestAscent,
-      }),
-    ])
-  }
 
   return (
     <>
@@ -69,24 +56,7 @@ export function GeneralStep({
           </select>
         </Field>
       </div>
-      <Field htmlFor='scope' label='Log contents'>
-        <select
-          {...scopeField}
-          className={formStyles.input}
-          id='scope'
-          onChange={event => {
-            void scopeField.onChange(event)
-            const scope = event.target.value as LogDraft['scope']
-            if (scope === 'training') setValue('ascents', [])
-            else ensureAscentDraft()
-          }}
-        >
-          <option value='training'>Training</option>
-          <option value='ascents'>Ascents</option>
-          <option value='both'>Training & ascents</option>
-        </select>
-      </Field>
-      <Field htmlFor='location' label='Location'>
+      <Field clearName='location' htmlFor='location' label='Location'>
         <input
           {...locationField}
           className={formStyles.input}

@@ -12,10 +12,10 @@ import {
   energySystemSchema,
   trainingSessionTypeSchema,
 } from '~/domain/training-session'
-import { LOG_SCOPES } from '~/domain/climbing-log'
+import type { LogScope } from '~/domain/climbing-log'
 import { z } from 'zod'
 
-export const LOG_DRAFT_VERSION = 2
+export const LOG_DRAFT_VERSION = 3
 export const LOG_STEP_VALUES = ['general', 'training', 'ascents'] as const
 
 const optionalDraftValue = <T extends z.ZodType>(schema: T) => z.union([z.literal(''), schema])
@@ -54,7 +54,7 @@ export const logDraftSchema = z
     date: z.string(),
     discipline: ascentDisciplineSchema,
     location: z.string(),
-    scope: z.enum(LOG_SCOPES),
+    hasTraining: z.boolean(),
     training: trainingDraftSchema,
   })
   .strict()
@@ -104,7 +104,7 @@ export function createAscentDraft({
 
 type CreateInitialLogDraftOptions = {
   defaultGrade?: AscentDraft['grade']
-  defaultScope?: LogDraft['scope']
+  defaultScope?: LogScope
   defaultTrainingEnergySystem?: LogDraft['training']['energySystem']
   defaultTrainingType?: LogDraft['training']['type']
   historyDefaults?: AscentHistoryDefaults
@@ -112,7 +112,7 @@ type CreateInitialLogDraftOptions = {
 
 export function createInitialLogDraft({
   defaultGrade,
-  defaultScope = 'ascents',
+  defaultScope,
   defaultTrainingEnergySystem = '',
   defaultTrainingType = 'Outdoor',
   historyDefaults,
@@ -120,13 +120,13 @@ export function createInitialLogDraft({
   const discipline = historyDefaults?.discipline ?? 'Sport'
   return {
     ascents:
-      defaultScope === 'training'
+      defaultScope !== 'ascents' && defaultScope !== 'both'
         ? []
         : [createAscentDraft({ defaultGrade, discipline, historyDefaults })],
     date: stringifyDate(new Date()).data ?? '',
     discipline,
     location: historyDefaults?.crag ?? '',
-    scope: defaultScope,
+    hasTraining: defaultScope === 'training' || defaultScope === 'both',
     training: {
       anatomicalRegion: '',
       comments: '',

@@ -20,7 +20,7 @@ import { WizardHeader } from './wizard-header'
 
 type LogWizardProps = {
   bootstrap: LogWizardBootstrap
-  defaultScope?: LogDraft['scope']
+  defaultScope?: 'ascents' | 'training' | 'both'
 }
 
 export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
