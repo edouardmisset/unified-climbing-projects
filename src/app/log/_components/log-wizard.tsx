@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { Activity, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { type FieldPath, FormProvider, useForm } from 'react-hook-form'
@@ -143,11 +143,17 @@ export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
           </p>
         ) : undefined}
         <div className={styles.stepContent}>
-          {step === 'general' ? (
-            <GeneralStep bootstrap={bootstrap} maximumDate={initialDraft.date} />
-          ) : undefined}
-          {step === 'training' ? <TrainingStep /> : undefined}
-          {step === 'ascents' ? <AscentsStep bootstrap={bootstrap} /> : undefined}
+          <Activity mode={step === 'general' ? 'visible' : 'hidden'}>
+            <GeneralStep
+              bootstrap={bootstrap}
+              isActive={step === 'general'}
+              maximumDate={initialDraft.date}
+            />
+          </Activity>
+          <Activity mode={step === 'training' ? 'visible' : 'hidden'}>
+            <TrainingStep isActive={step === 'training'} />
+          </Activity>
+          <AscentsStep bootstrap={bootstrap} isActive={step === 'ascents'} />
         </div>
       </form>
     </FormProvider>

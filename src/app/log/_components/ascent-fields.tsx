@@ -9,7 +9,15 @@ import type { LogDraft } from '../draft'
 import { Field } from './field'
 import styles from './log-wizard.module.css'
 
-export function AscentFields({ index, onRemove }: { index: number; onRemove: VoidFunction }) {
+export function AscentFields({
+  index,
+  isActive,
+  onRemove,
+}: {
+  index: number
+  isActive: boolean
+  onRemove: VoidFunction
+}) {
   const { control, register, setValue } = useFormContext<LogDraft>()
   const prefix = `ascents.${index}` as const
   const tries = useWatch({ control, name: `${prefix}.tries` })
@@ -31,21 +39,21 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
         </button>
       </header>
       <div className={formStyles.row}>
-        <Field htmlFor={`${prefix}.name`} label='Name' required>
+        <Field htmlFor={`${prefix}.name`} label='Name' required={isActive}>
           <input
             {...register(`${prefix}.name`)}
             className={formStyles.input}
             id={`${prefix}.name`}
-            required
+            required={isActive}
             type='text'
           />
         </Field>
-        <Field htmlFor={`${prefix}.discipline`} label='Discipline' required>
+        <Field htmlFor={`${prefix}.discipline`} label='Discipline' required={isActive}>
           <select
             {...register(`${prefix}.discipline`)}
             className={formStyles.input}
             id={`${prefix}.discipline`}
-            required
+            required={isActive}
           >
             {ASCENT_DISCIPLINES.map(discipline => (
               <option key={discipline} value={discipline}>
@@ -72,7 +80,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
                   shouldTouch: true,
                 })
               }}
-              required
+              required={isActive}
               value={fromGradeToNumber(field.value)}
             />
           )}
@@ -95,12 +103,12 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
         />
       </div>
       <div className={formStyles.row}>
-        <Field htmlFor={`${prefix}.style`} label='Style' required>
+        <Field htmlFor={`${prefix}.style`} label='Style' required={isActive}>
           <select
             {...register(`${prefix}.style`)}
             className={formStyles.input}
             id={`${prefix}.style`}
-            required
+            required={isActive}
           >
             {ASCENT_STYLES.map(style => (
               <option
@@ -113,7 +121,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
             ))}
           </select>
         </Field>
-        <Field htmlFor={`${prefix}.tries`} label='Tries' required>
+        <Field htmlFor={`${prefix}.tries`} label='Tries' required={isActive}>
           <input
             {...triesField}
             className={formStyles.input}
@@ -124,7 +132,7 @@ export function AscentFields({ index, onRemove }: { index: number; onRemove: Voi
               if (ascentRequiresRedpoint(event.target.value))
                 setValue(`${prefix}.style`, REDPOINT_STYLE, { shouldDirty: true })
             }}
-            required
+            required={isActive}
             type='number'
           />
         </Field>

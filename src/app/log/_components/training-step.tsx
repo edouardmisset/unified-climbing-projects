@@ -10,7 +10,7 @@ import type { LogDraft } from '../draft'
 import { Field } from './field'
 import { SendButton } from './send-button'
 
-export function TrainingStep() {
+export function TrainingStep({ isActive }: { isActive: boolean }) {
   const {
     control,
     formState: { isSubmitting },
@@ -21,12 +21,12 @@ export function TrainingStep() {
   return (
     <>
       <h2 className={formStyles.groupHeader}>Training details</h2>
-      <Field htmlFor='training-type' label='Session type' required>
+      <Field htmlFor='training-type' label='Session type' required={isActive}>
         <select
           {...register('training.type')}
           className={formStyles.input}
           id='training-type'
-          required
+          required={isActive}
         >
           {TRAINING_SESSION_TYPES.map(type => (
             <option key={type} value={type}>
@@ -96,7 +96,7 @@ export function TrainingStep() {
           id='training-comments'
         />
       </Field>
-      {includesTraining(scope) ? <SendButton isSubmitting={isSubmitting} /> : undefined}
+      {isActive && includesTraining(scope) ? <SendButton isSubmitting={isSubmitting} /> : undefined}
     </>
   )
 }
