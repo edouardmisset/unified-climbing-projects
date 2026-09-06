@@ -1,3 +1,4 @@
+import { Activity } from 'react'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 import { PlusIcon } from 'lucide-react'
 import formStyles from '~/app/_components/forms/form.module.css'
@@ -8,7 +9,13 @@ import { AscentFields } from './ascent-fields'
 import styles from './log-wizard.module.css'
 import { SendButton } from './send-button'
 
-export function AscentsStep({ bootstrap }: { bootstrap: LogWizardBootstrap }) {
+export function AscentsStep({
+  bootstrap,
+  isActive,
+}: {
+  bootstrap: LogWizardBootstrap
+  isActive: boolean
+}) {
   const {
     control,
     formState: { isSubmitting },
@@ -27,43 +34,48 @@ export function AscentsStep({ bootstrap }: { bootstrap: LogWizardBootstrap }) {
   }
 
   return (
-    <>
-      <h2 className={formStyles.groupHeader}>Ascents</h2>
-      <datalist id='area-list'>
-        {bootstrap.areas.map(area => (
-          <option key={area} value={area}>
-            {area}
-          </option>
+    <Activity mode={isActive ? 'visible' : 'hidden'}>
+      <>
+        <h2 className={formStyles.groupHeader}>Ascents</h2>
+        <datalist id='area-list'>
+          {bootstrap.areas.map(area => (
+            <option key={area} value={area}>
+              {area}
+            </option>
+          ))}
+        </datalist>
+        {fields.map((field, index) => (
+          <section className={styles.ascentCard} key={field.id}>
+            <AscentFields
+              index={index}
+              isActive={isActive}
+              onRemove={() => {
+                remove(index)
+              }}
+            />
+            {index === fields.length - 1 ? (
+              <button
+                aria-label='Add ascent'
+                className={styles.addAscentButton}
+                onClick={appendAscent}
+                title='Add ascent'
+                type='button'
+              >
+                <PlusIcon aria-hidden='true' size={20} />
+              </button>
+            ) : undefined}
+          </section>
         ))}
-      </datalist>
-      {fields.map((field, index) => (
-        <section className={styles.ascentCard} key={field.id}>
-          <AscentFields
-            index={index}
-            onRemove={() => {
-              remove(index)
-            }}
-          />
-          {index === fields.length - 1 ? (
-            <button
-              aria-label='Add ascent'
-              className={styles.addAscentButton}
-              onClick={appendAscent}
-              title='Add ascent'
-              type='button'
-            >
-              <PlusIcon aria-hidden='true' size={20} />
-            </button>
-          ) : undefined}
-        </section>
-      ))}
-      {fields.length === 0 ? (
-        <button className={styles.emptyAddAscentButton} onClick={appendAscent} type='button'>
-          <PlusIcon aria-hidden='true' size={20} />
-          Add ascent
-        </button>
-      ) : undefined}
-      {includesAscents(scope) ? <SendButton isSubmitting={isSubmitting} /> : undefined}
-    </>
+        {fields.length === 0 ? (
+          <button className={styles.emptyAddAscentButton} onClick={appendAscent} type='button'>
+            <PlusIcon aria-hidden='true' size={20} />
+            Add ascent
+          </button>
+        ) : undefined}
+        {isActive && includesAscents(scope) ? (
+          <SendButton isSubmitting={isSubmitting} />
+        ) : undefined}
+      </>
+    </Activity>
   )
 }

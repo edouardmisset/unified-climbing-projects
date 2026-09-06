@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import formStyles from '~/app/_components/forms/form.module.css'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
@@ -7,9 +8,11 @@ import { Field } from './field'
 
 export function GeneralStep({
   bootstrap,
+  isActive,
   maximumDate,
 }: {
   bootstrap: LogWizardBootstrap
+  isActive: boolean
   maximumDate: string
 }) {
   const {
@@ -21,6 +24,12 @@ export function GeneralStep({
   const disciplineField = register('discipline')
   const locationField = register('location')
   const scopeField = register('scope')
+  const dateField = register('date')
+  const dateInputRef = useRef<HTMLInputElement>(null)
+
+  useLayoutEffect(() => {
+    if (isActive) dateInputRef.current?.focus()
+  }, [isActive])
 
   const ensureAscentDraft = () => {
     if (getValues('ascents').length > 0) return
@@ -37,19 +46,21 @@ export function GeneralStep({
     <>
       <h2 className={formStyles.groupHeader}>General details</h2>
       <div className={formStyles.row}>
-        <Field htmlFor='date' label='Date' required>
+        <Field htmlFor='date' label='Date' required={isActive}>
           <input
-            {...register('date')}
-            // oxlint-disable-next-line jsx_a11y/no-autofocus
-            autoFocus
+            {...dateField}
             className={formStyles.input}
             id='date'
             max={maximumDate}
-            required
+            ref={element => {
+              dateField.ref(element)
+              dateInputRef.current = element
+            }}
+            required={isActive}
             type='date'
           />
         </Field>
-        <Field htmlFor='discipline' label='Discipline' required>
+        <Field htmlFor='discipline' label='Discipline' required={isActive}>
           <select
             {...disciplineField}
             className={formStyles.input}
@@ -60,6 +71,7 @@ export function GeneralStep({
               const discipline = event.target.value as LogDraft['discipline']
               setValue('training.energySystem', inferEnergySystem(discipline))
             }}
+            required={isActive}
           >
             {ASCENT_DISCIPLINES.map(discipline => (
               <option key={discipline} value={discipline}>
