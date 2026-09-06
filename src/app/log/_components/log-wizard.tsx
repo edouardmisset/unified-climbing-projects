@@ -10,7 +10,12 @@ import formStyles from '~/app/_components/forms/form.module.css'
 import { Dialog } from '~/app/_components/ui/dialog/dialog'
 import { submitClimbingLog } from '../actions'
 import { createInitialLogDraft, type LogDraft, type LogStep, LOG_STEP_VALUES } from '../draft'
-import { inferEnergySystem, inferSessionType, type LogWizardBootstrap } from '../log-defaults'
+import {
+  inferEnergySystem,
+  inferLogContents,
+  inferSessionType,
+  type LogWizardBootstrap,
+} from '../log-defaults'
 import { AscentsStep } from './ascents-step'
 import { GeneralStep } from './general-step'
 import styles from './log-wizard.module.css'
@@ -27,9 +32,17 @@ export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
   'use no memo'
   const router = useRouter()
   const defaultDiscipline = bootstrap.latestAscent?.discipline ?? 'Sport'
-  const defaultLocation = bootstrap.latestAscent?.crag ?? ''
+  const defaultLocation = bootstrap.latestLocation ?? bootstrap.latestAscent?.crag ?? ''
+  const inferredContents = inferLogContents(
+    defaultLocation,
+    bootstrap.indoorLocations,
+    bootstrap.outdoorLocations,
+  )
   const initialDraft = createInitialLogDraft({
     defaultGrade: bootstrap.defaultGrade,
+    defaultHasAscent: inferredContents.hasAscents,
+    defaultHasTraining: inferredContents.hasTraining,
+    defaultLocation,
     defaultScope,
     defaultTrainingEnergySystem: inferEnergySystem(defaultDiscipline),
     defaultTrainingType:

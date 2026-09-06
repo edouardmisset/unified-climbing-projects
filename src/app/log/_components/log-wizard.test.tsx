@@ -37,19 +37,27 @@ function setupMocks() {
   })
 }
 
+type RenderWizardOptions = {
+  latestLocation?: string
+  searchParams?: string
+}
+
 function renderWizard(
   onUrlUpdate?: OnUrlUpdateFunction,
   defaultScope?: 'ascents' | 'training' | 'both',
-  searchParams?: string,
+  options?: RenderWizardOptions,
 ) {
   return render(
-    <NuqsTestingAdapter hasMemory onUrlUpdate={onUrlUpdate} searchParams={searchParams}>
+    <NuqsTestingAdapter hasMemory onUrlUpdate={onUrlUpdate} searchParams={options?.searchParams}>
       <LogWizard
         bootstrap={{
           areas: ['Berlin'],
           crags: ['Céüse'],
           defaultGrade: '7a',
+          indoorLocations: ['Arkose'],
+          latestLocation: options?.latestLocation,
           locations: ['Céüse', 'Arkose'],
+          outdoorLocations: ['Céüse'],
           previousSessionTypes: [{ location: 'Arkose', type: 'Power' }],
         }}
         defaultScope={defaultScope}
@@ -66,15 +74,41 @@ describe('log wizard', () => {
     expect(screen.queryByLabelText('Log contents')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
     expect(screen.queryByLabelText('Name')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add ascent' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Send' })).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
     expect(screen.queryByLabelText('Session type')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add training session' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Add training session' }))
     await user.type(screen.getByLabelText('Comments'), 'Persist me')
     first.unmount()
     renderWizard()
     await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
-    expect(screen.getByLabelText('Comments')).toHaveValue('Persist me')
+    expect(screen.getByLabelText('Comments', { selector: '#training-comments' })).toHaveValue(
+      'Persist me',
+    )
+  })
+
+  it('infers the initial entity from the latest known location', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard(undefined, undefined, { latestLocation: 'Arkose' })
+
+    await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
+    expect(screen.getByLabelText('Session type')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+    expect(screen.getByRole('button', { name: 'Add ascent' })).toBeInTheDocument()
+  })
+
+  it('adds the inferred entity when a known location is entered', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard()
+
+    await user.type(screen.getByLabelText('Location'), 'Arkose')
+    await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
+
+    expect(screen.getByLabelText('Session type')).toBeInTheDocument()
   })
 
   it.each([
@@ -264,7 +298,7 @@ describe('log wizard', () => {
   it('reconciles ascents added while the ascent step is hidden on first render', async () => {
     setupMocks()
     const user = userEvent.setup()
-    renderWizard(undefined, 'training', 'step=training')
+    renderWizard(undefined, 'training', { searchParams: 'step=training' })
 
     await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
 
@@ -321,7 +355,7 @@ describe('log wizard', () => {
         queryStrings.push(event.queryString)
       },
       undefined,
-      'step=general',
+      { searchParams: 'step=general' },
     )
 
     await user.click(screen.getByRole('button', { name: 'Step 1: General' }))
@@ -377,7 +411,6 @@ describe('log wizard', () => {
 
     await user.type(screen.getByLabelText('Location'), 'Arkose')
     await user.click(screen.getByRole('button', { name: 'Step 2: Training' }))
-    await user.click(screen.getByRole('button', { name: 'Add training session' }))
 
     expect(screen.getByLabelText('Session type')).toHaveValue('Power')
   })

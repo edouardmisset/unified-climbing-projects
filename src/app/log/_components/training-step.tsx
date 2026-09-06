@@ -25,17 +25,21 @@ export function TrainingStep({ isActive }: { isActive: boolean }) {
     <>
       <h2 className={formStyles.groupHeader}>Training details</h2>
       {hasTraining ? (
-        <>
-          <button
-            aria-label='Remove training session'
-            className={styles.removeButton}
-            onClick={() => {
-              setValue('hasTraining', false, { shouldDirty: true })
-            }}
-            type='button'
-          >
-            <XIcon aria-hidden='true' size={18} />
-          </button>
+        <section className={styles.entityCard}>
+          <header className={styles.cardHeader}>
+            <h3 className={styles.cardTitle}>Training session</h3>
+            <button
+              aria-label='Remove training session'
+              className={styles.removeButton}
+              onClick={() => {
+                setValue('hasTraining', false, { shouldDirty: true })
+              }}
+              title='Remove training session'
+              type='button'
+            >
+              <XIcon aria-hidden='true' size={18} />
+            </button>
+          </header>
           <Field htmlFor='training-type' label='Session type' required={isActive}>
             <select
               {...register('training.type')}
@@ -113,17 +117,18 @@ export function TrainingStep({ isActive }: { isActive: boolean }) {
               id='training-comments'
             />
           </Field>
-        </>
+        </section>
       ) : (
         <button
           aria-label='Add training session'
-          className={styles.addAscentButton}
+          className={styles.emptyAddButton}
           onClick={() => {
             setValue('hasTraining', true, { shouldDirty: true })
           }}
           type='button'
         >
           <PlusIcon aria-hidden='true' size={20} />
+          Add training session
         </button>
       )}
       {isActive && (hasTraining || ascents.length > 0) ? (

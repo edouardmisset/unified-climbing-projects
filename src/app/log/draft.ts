@@ -104,6 +104,9 @@ export function createAscentDraft({
 
 type CreateInitialLogDraftOptions = {
   defaultGrade?: AscentDraft['grade']
+  defaultHasAscent?: boolean
+  defaultHasTraining?: boolean
+  defaultLocation?: string
   defaultScope?: LogScope
   defaultTrainingEnergySystem?: LogDraft['training']['energySystem']
   defaultTrainingType?: LogDraft['training']['type']
@@ -112,21 +115,30 @@ type CreateInitialLogDraftOptions = {
 
 export function createInitialLogDraft({
   defaultGrade,
+  defaultHasAscent = false,
+  defaultHasTraining = false,
+  defaultLocation,
   defaultScope,
   defaultTrainingEnergySystem = '',
   defaultTrainingType = 'Outdoor',
   historyDefaults,
 }: CreateInitialLogDraftOptions = {}): LogDraft {
   const discipline = historyDefaults?.discipline ?? 'Sport'
+  const hasAscent =
+    defaultScope === 'ascents' ||
+    defaultScope === 'both' ||
+    (defaultScope === undefined && defaultHasAscent)
+  const hasTraining =
+    defaultScope === 'training' ||
+    defaultScope === 'both' ||
+    (defaultScope === undefined && defaultHasTraining)
+
   return {
-    ascents:
-      defaultScope !== 'ascents' && defaultScope !== 'both'
-        ? []
-        : [createAscentDraft({ defaultGrade, discipline, historyDefaults })],
+    ascents: hasAscent ? [createAscentDraft({ defaultGrade, discipline, historyDefaults })] : [],
     date: stringifyDate(new Date()).data ?? '',
     discipline,
-    location: historyDefaults?.crag ?? '',
-    hasTraining: defaultScope === 'training' || defaultScope === 'both',
+    location: defaultLocation ?? historyDefaults?.crag ?? '',
+    hasTraining,
     training: {
       anatomicalRegion: '',
       comments: '',

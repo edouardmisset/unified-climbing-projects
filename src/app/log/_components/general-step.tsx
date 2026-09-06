@@ -2,8 +2,13 @@ import { useLayoutEffect, useRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import formStyles from '~/app/_components/forms/form.module.css'
 import { ASCENT_DISCIPLINES } from '~/domain/ascent'
-import type { LogDraft } from '../draft'
-import { type LogWizardBootstrap, inferEnergySystem, inferSessionType } from '../log-defaults'
+import { createAscentDraft, type LogDraft } from '../draft'
+import {
+  inferEnergySystem,
+  inferLogContents,
+  inferSessionType,
+  type LogWizardBootstrap,
+} from '../log-defaults'
 import { Field } from './field'
 
 export function GeneralStep({
@@ -17,6 +22,7 @@ export function GeneralStep({
 }) {
   const {
     formState: { dirtyFields },
+    getValues,
     register,
     setValue,
   } = useFormContext<LogDraft>()
@@ -28,6 +34,26 @@ export function GeneralStep({
   useLayoutEffect(() => {
     if (isActive) dateInputRef.current?.focus()
   }, [isActive])
+
+  const inferDefaultContents = (location: string) => {
+    const inferredContents = inferLogContents(
+      location,
+      bootstrap.indoorLocations,
+      bootstrap.outdoorLocations,
+    )
+
+    if (inferredContents.hasTraining && !getValues('hasTraining'))
+      setValue('hasTraining', true, { shouldDirty: true })
+
+    if (inferredContents.hasAscents && getValues('ascents').length === 0)
+      setValue('ascents', [
+        createAscentDraft({
+          defaultGrade: bootstrap.defaultGrade,
+          discipline: getValues('discipline'),
+          historyDefaults: bootstrap.latestAscent,
+        }),
+      ])
+  }
 
   return (
     <>
@@ -76,6 +102,7 @@ export function GeneralStep({
           list='location-list'
           onChange={event => {
             void locationField.onChange(event)
+            inferDefaultContents(event.target.value)
             const inferredType = inferSessionType(
               event.target.value,
               bootstrap.crags,

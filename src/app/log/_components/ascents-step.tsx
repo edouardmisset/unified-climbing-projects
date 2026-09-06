@@ -44,7 +44,7 @@ export function AscentsStep({
           ))}
         </datalist>
         {fields.map((field, index) => (
-          <section className={styles.ascentCard} key={field.id}>
+          <section className={styles.entityCard} key={field.id}>
             <AscentFields
               index={index}
               isActive={isActive}
@@ -66,7 +66,7 @@ export function AscentsStep({
           </section>
         ))}
         {fields.length === 0 ? (
-          <button className={styles.emptyAddAscentButton} onClick={appendAscent} type='button'>
+          <button className={styles.emptyAddButton} onClick={appendAscent} type='button'>
             <PlusIcon aria-hidden='true' size={20} />
             Add ascent
           </button>
