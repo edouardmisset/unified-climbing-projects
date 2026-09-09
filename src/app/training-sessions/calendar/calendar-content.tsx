@@ -1,4 +1,5 @@
 import { DataCalendar } from '~/app/_components/data-calendar/data-calendar'
+import { CalendarLegend } from '~/app/_components/data-calendar/calendar-legend'
 import { CalendarYear } from '~/app/_components/data-calendar/calendar-year'
 import NotFound from '~/app/not-found'
 import { createYearList, groupDataDaysByYear } from '~/data/helpers'
@@ -21,7 +22,6 @@ export async function CalendarContent() {
     <>
       {trainingYears.map((year, index) => (
         <CalendarYear isLatestYear={index === 0} key={year} year={year}>
-          <h2 className='superCenter'>{year}</h2>
           <DataCalendar
             data={trainingSessions}
             dataTransformationFunction={groupDataDaysByYear<TrainingSessionListRecord>}
@@ -32,6 +32,17 @@ export async function CalendarContent() {
           />
         </CalendarYear>
       ))}
+      <CalendarLegend
+        items={[
+          { color: 'var(--endurance)', label: 'Endurance' },
+          { color: 'var(--strength)', label: 'Strength' },
+          { color: 'var(--stamina)', label: 'Skill & stamina' },
+          { color: 'var(--tapered)', label: 'Recovery' },
+          { color: 'var(--outdoor)', label: 'Outdoor' },
+          { color: 'var(--otherTraining)', label: 'Other' },
+        ]}
+        note='Cell labels show the session type; shade shows intensity or volume.'
+      />
     </>
   )
 }

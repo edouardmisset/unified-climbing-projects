@@ -1,10 +1,10 @@
 .yearGrid {
-  --gap: 2px;
+  --gap: 1px;
   --cell-color: var(--surface-4);
   --text-color: var(--text-1);
   --border-color: currentcolor;
   --border-width: 1px;
-  --border-radius: 2px;
+  --border-radius: 12.5%;
   display: grid;
   grid-auto-flow: column;
   gap: var(--gap, 1px);
@@ -23,7 +23,7 @@
   background-color: var(--cell-color);
 
   && {
-    border-radius: var(--radius-1, 2px);
+    border-radius: var(--border-radius, 2px);
   }
 }
 
@@ -54,6 +54,10 @@
 }
 
 .firstColumn {
+  block-size: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: sticky;
   inset-inline-start: 0;
   grid-column: 1 / 2;

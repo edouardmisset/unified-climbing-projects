@@ -8,6 +8,53 @@
   inline-size: 100%;
 }
 
+.calendarSummary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-3);
+  padding-block: var(--size-1);
+  color: var(--text-1);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.calendarSummary::-webkit-details-marker {
+  display: none;
+}
+
+.calendarSummary::before {
+  content: '›';
+  font-size: 1.5em;
+  line-height: 1;
+  transform: rotate(90deg);
+  transition: transform 150ms;
+}
+
+.calendarYear:not([open]) > .calendarSummary::before {
+  transform: rotate(0deg);
+}
+
+.calendarYear[data-latest-year='true'] > .calendarSummary {
+  color: var(--accent);
+  font-size: clamp(2rem, 2vw + 1rem, 2.5rem);
+  font-weight: var(--font-weight-7);
+}
+
+.calendarYear[data-latest-year='true'] > .calendarSummary::after {
+  padding: 0.35rem 0.65rem;
+  color: var(--text-2);
+  background: var(--control-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  content: 'Latest';
+  font-size: var(--font-size-0);
+  font-weight: var(--font-weight-6);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .calendarContainer {
   max-inline-size: 100%;
   padding-block: var(--size-2);
@@ -22,6 +69,45 @@
   }
 }
 
+.calendarLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2) var(--size-4);
+  align-items: center;
+  inline-size: min(100%, 90rem);
+  padding-block: var(--size-3) var(--size-1);
+  margin-inline: auto;
+  color: var(--text-2);
+  font-size: var(--font-size-0);
+  border-block-start: 1px solid var(--panel-border);
+}
+
+.legendItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2) var(--size-3);
+}
+
+.legendItem {
+  display: inline-flex;
+  gap: var(--size-1);
+  align-items: center;
+  white-space: nowrap;
+}
+
+.legendSwatch {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  border: 1px solid color-mix(in oklch, var(--text-1), transparent 70%);
+  border-radius: var(--radius-1);
+}
+
+.legendNote {
+  flex: 1 1 18rem;
+  color: var(--text-2);
+  font-size: inherit;
+}
+
 @media (orientation: landscape) and (height <= 40rem) {
   .calendarPage {
     --year-grid-cell-size: max(var(--size-3), calc((100dvh - 4.5rem) / 8));
@@ -31,9 +117,21 @@
     display: none;
   }
 
-  .calendarYear > h2 {
+  .calendarSummary {
     margin-block: 0;
     font-size: var(--font-size-1);
-    line-height: var(--font-lineheight-1);
+  }
+
+  .calendarYear[data-latest-year='true'] > .calendarSummary {
+    font-size: var(--font-size-1);
+  }
+
+  .calendarYear[data-latest-year='true'] > .calendarSummary::after {
+    padding: 0.2rem 0.45rem;
+    font-size: var(--font-size-00);
+  }
+
+  .calendarLegend {
+    padding-inline: var(--size-2);
   }
 }

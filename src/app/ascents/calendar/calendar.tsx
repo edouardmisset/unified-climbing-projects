@@ -17,7 +17,6 @@ export function AscentCalendar({
 }) {
   return (
     <CalendarYear isLatestYear={isLatestYear} year={year}>
-      <h2 className='superCenter'>{year}</h2>
       <Suspense fallback={<Loader />}>
         <DataCalendar
           data={allAscents}

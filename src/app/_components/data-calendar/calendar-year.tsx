@@ -11,12 +11,14 @@ export function CalendarYear({
   year: number
 }): React.JSX.Element {
   return (
-    <section
+    <details
       className={`${styles.calendarYear} ${isLatestYear ? '' : styles.historicalYear}`}
       data-calendar-year={year}
       data-latest-year={isLatestYear}
+      open={isLatestYear}
     >
+      <summary className={styles.calendarSummary}>{year}</summary>
       {children}
-    </section>
+    </details>
   )
 }

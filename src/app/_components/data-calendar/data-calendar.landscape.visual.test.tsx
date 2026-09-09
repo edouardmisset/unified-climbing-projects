@@ -24,7 +24,6 @@ describe('calendar phone landscape layout', () => {
       const { container } = await render(
         <div className={styles.calendarPage} data-testid='calendar'>
           <CalendarYear isLatestYear year={YEAR}>
-            <h2>{YEAR}</h2>
             <DataCalendar
               data={sampleAscents}
               dataTransformationFunction={groupDataDaysByYear}
@@ -33,7 +32,6 @@ describe('calendar phone landscape layout', () => {
             />
           </CalendarYear>
           <CalendarYear isLatestYear={false} year={YEAR - 1}>
-            <h2>{YEAR - 1}</h2>
             <DataCalendar
               data={sampleAscents}
               dataTransformationFunction={groupDataDaysByYear}
@@ -50,6 +48,16 @@ describe('calendar phone landscape layout', () => {
 
       expect(latestYear).not.toBeNull()
       expect(historicalYear).not.toBeNull()
+      expect(latestYear?.hasAttribute('open')).toBe(true)
+      expect(historicalYear?.hasAttribute('open')).toBe(false)
+
+      const latestSummary = latestYear?.querySelector<HTMLElement>('summary')
+      expect(latestSummary).not.toBeNull()
+      latestSummary?.click()
+      expect(latestYear?.hasAttribute('open')).toBe(false)
+      latestSummary?.click()
+      expect(latestYear?.hasAttribute('open')).toBe(true)
+
       expect(latestYear ? getComputedStyle(latestYear).display : '').not.toBe('none')
       expect(historicalYear ? getComputedStyle(historicalYear).display : '').toBe('none')
       expect(cell).not.toBeNull()

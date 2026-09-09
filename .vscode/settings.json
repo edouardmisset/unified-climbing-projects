@@ -52,9 +52,11 @@
     "activityBarTop.inactiveForeground": "#e7e7e799",
     "commandCenter.foreground": "#e7e7e7",
     "statusBar.debuggingBackground": "#9109cf",
-    "statusBar.debuggingForeground": "#e7e7e7"
+    "statusBar.debuggingForeground": "#e7e7e7",
+    "activityBar.activeBorder": "#e7e7e7",
+    "activityBarTop.activeBorder": "#e7e7e7"
   },
   "peacock.color": "#9109cf",
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
   "cSpell.words": ["BOULDERING", "neobrutalism"]
 }
