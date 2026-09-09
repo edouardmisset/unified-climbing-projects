@@ -154,20 +154,7 @@
 }
 
 .controlsEdge {
-  --thickness: var(--size-1);
-
-  position: absolute;
   inset: 100% 0 auto;
-  block-size: 100%;
-  pointer-events: none;
-  background: var(--transparent-background);
-  backdrop-filter: blur(var(--size-2)) brightness(120%);
-  mask-image: linear-gradient(
-    to bottom,
-    black 0,
-    black var(--thickness),
-    transparent var(--thickness)
-  );
 }
 
 .controlsContent {

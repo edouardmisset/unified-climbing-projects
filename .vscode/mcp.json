@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "fallow": {
+      "type": "http",
+      "url": "https://docs.fallow.tools/mcp"
+    }
+  },
+  "inputs": []
+}

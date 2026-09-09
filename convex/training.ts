@@ -5,26 +5,21 @@ import {
   trainingSessionPublicOutputSchema,
   trainingSessionStoredDocumentSchema,
 } from '~/domain/training-session'
-import { omitServerControlledFields } from '~/domain/common'
 import { zodToConvex } from 'convex-helpers/server/zod'
 import { v } from 'convex/values'
 import { mutation, query } from './_generated/server'
 import { requireIdentity } from './auth'
 import { createContentFingerprint } from './fingerprint'
 import { assertWritesEnabled } from './maintenance'
+import { getOwnedRecord } from './owned-record'
+import { createPublicRecordMapper, omitComments } from './public-record'
 
 const publicTrainingInputValidator = zodToConvex(trainingSessionPublicInputSchema)
 
-function toPublicTrainingSession(record: unknown) {
-  return trainingSessionPublicOutputSchema.parse(
-    omitServerControlledFields(trainingSessionStoredDocumentSchema.parse(record)),
-  )
-}
-
-function toPublicTrainingSessionListItem(record: unknown) {
-  const { comments: _comments, ...session } = toPublicTrainingSession(record)
-  return session
-}
+const toPublicTrainingSession = createPublicRecordMapper(
+  trainingSessionStoredDocumentSchema,
+  trainingSessionPublicOutputSchema,
+)
 
 export const get = query({
   args: {},
@@ -35,7 +30,7 @@ export const get = query({
       .query('training')
       .withIndex('by_owner', queryBuilder => queryBuilder.eq('ownerId', subject))
       .collect()
-    return records.map(record => toPublicTrainingSessionListItem(record))
+    return records.map(record => omitComments(toPublicTrainingSession(record)))
   },
 })
 
@@ -60,10 +55,8 @@ export const getById = query({
   args: { id: v.string() },
   handler: async (ctx, { id }) => {
     const { subject } = await requireIdentity(ctx)
-    const normalizedId = ctx.db.normalizeId('training', id)
-    if (!normalizedId) return
-    const record = await ctx.db.get(normalizedId)
-    if (!record || record.ownerId !== subject) return
+    const record = await getOwnedRecord(ctx, { id, ownerId: subject, table: 'training' })
+    if (!record) return
     return toPublicTrainingSession(record)
   },
 })

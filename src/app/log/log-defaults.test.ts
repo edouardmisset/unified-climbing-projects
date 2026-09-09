@@ -5,6 +5,7 @@ import {
   buildLogWizardBootstrap,
   findMostFrequentGrade,
   inferEnergySystem,
+  inferLogContents,
   inferSessionType,
 } from './log-defaults'
 
@@ -46,6 +47,21 @@ describe('log defaults', () => {
     expect(inferSessionType('Unknown', ['Céüse'], previous)).toBeUndefined()
   })
 
+  it('infers log contents from known indoor locations and crags', () => {
+    expect(inferLogContents('Arkose', ['Arkose'], ['Céüse'])).toStrictEqual({
+      hasAscents: false,
+      hasTraining: true,
+    })
+    expect(inferLogContents('Céüse', ['Arkose'], ['Céüse'])).toStrictEqual({
+      hasAscents: true,
+      hasTraining: false,
+    })
+    expect(inferLogContents('Unknown', ['Arkose'], ['Céüse'])).toStrictEqual({
+      hasAscents: false,
+      hasTraining: false,
+    })
+  })
+
   it('uses recency to break ties between the most frequent grades', () => {
     expect(
       findMostFrequentGrade([
@@ -60,12 +76,22 @@ describe('log defaults', () => {
   it('builds serializable suggestions and the latest type per location', () => {
     const bootstrap = buildLogWizardBootstrap(
       [ascent('7a', '2026-03-03')],
-      [session('Arkose', 'Power', '2026-03-01'), session('Arkose', 'Endurance', '2026-02-01')],
+      [
+        session('Arkose', 'Power', '2026-03-01'),
+        session('Arkose', 'Endurance', '2026-02-01'),
+        session('Fontainebleau', 'Outdoor', '2026-01-01'),
+      ],
     )
 
     expect(bootstrap.defaultGrade).toBe('7a')
     expect(bootstrap.crags).toStrictEqual(['Céüse'])
-    expect(bootstrap.locations).toStrictEqual(['Céüse', 'Arkose'])
-    expect(bootstrap.previousSessionTypes).toStrictEqual([{ location: 'arkose', type: 'Power' }])
+    expect(bootstrap.indoorLocations).toStrictEqual(['Arkose'])
+    expect(bootstrap.latestLocation).toBe('Céüse')
+    expect(bootstrap.locations).toStrictEqual(['Céüse', 'Arkose', 'Fontainebleau'])
+    expect(bootstrap.outdoorLocations).toStrictEqual(['Céüse', 'Fontainebleau'])
+    expect(bootstrap.previousSessionTypes).toStrictEqual([
+      { location: 'arkose', type: 'Power' },
+      { location: 'fontainebleau', type: 'Outdoor' },
+    ])
   })
 })

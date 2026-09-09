@@ -1,7 +1,7 @@
 import { WEEKS_IN_YEAR } from '~/constants/generic'
 import styles from './year-grid.module.css'
 
-const WeekCell = ({
+function WeekCell({
   columnNumber,
   index,
   columns,
@@ -9,7 +9,7 @@ const WeekCell = ({
   columnNumber: number
   columns: number[]
   index: number
-}) => {
+}) {
   const hasExtraColumn = columns[1] === WEEKS_IN_YEAR
 
   // Adjust the grid column based on the presence of an extra column and the current index

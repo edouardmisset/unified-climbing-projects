@@ -37,19 +37,12 @@ type YearlyDaysCollection<T> = Record<number, T[][]>
 function initializeYearlyDataDaysCollection<T extends StringDate = TrainingSession | Ascent>(
   data: T[],
   getFractionInYear: (year: number) => number,
-): YearlyDaysCollection<T> {
+) {
   const years = createYearList(data, { continuous: true })
-  const yearlyDataCollections: YearlyDaysCollection<T> = {}
 
-  for (const year of years) {
-    // number of weeks or days in a year
-    const fractionsInYear = getFractionInYear(year)
-
-    yearlyDataCollections[year] = Array.from({
-      length: fractionsInYear,
-    }).map(() => [] as T[])
-  }
-  return yearlyDataCollections
+  return Object.fromEntries(
+    years.map(year => [year, Array.from({ length: getFractionInYear(year) }, (): T[] => [])]),
+  ) satisfies YearlyDaysCollection<T>
 }
 
 export function groupDataDaysByYear<T extends StringDate = Ascent | TrainingSession>(

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { Activity, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { type FieldPath, FormProvider, useForm } from 'react-hook-form'
@@ -10,7 +10,12 @@ import formStyles from '~/app/_components/forms/form.module.css'
 import { Dialog } from '~/app/_components/ui/dialog/dialog'
 import { submitClimbingLog } from '../actions'
 import { createInitialLogDraft, type LogDraft, type LogStep, LOG_STEP_VALUES } from '../draft'
-import { inferEnergySystem, inferSessionType, type LogWizardBootstrap } from '../log-defaults'
+import {
+  inferEnergySystem,
+  inferLogContents,
+  inferSessionType,
+  type LogWizardBootstrap,
+} from '../log-defaults'
 import { AscentsStep } from './ascents-step'
 import { GeneralStep } from './general-step'
 import styles from './log-wizard.module.css'
@@ -20,16 +25,24 @@ import { WizardHeader } from './wizard-header'
 
 type LogWizardProps = {
   bootstrap: LogWizardBootstrap
-  defaultScope?: LogDraft['scope']
+  defaultScope?: 'ascents' | 'training' | 'both'
 }
 
 export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
   'use no memo'
   const router = useRouter()
   const defaultDiscipline = bootstrap.latestAscent?.discipline ?? 'Sport'
-  const defaultLocation = bootstrap.latestAscent?.crag ?? ''
+  const defaultLocation = bootstrap.latestLocation ?? bootstrap.latestAscent?.crag ?? ''
+  const inferredContents = inferLogContents(
+    defaultLocation,
+    bootstrap.indoorLocations,
+    bootstrap.outdoorLocations,
+  )
   const initialDraft = createInitialLogDraft({
     defaultGrade: bootstrap.defaultGrade,
+    defaultHasAscent: inferredContents.hasAscents,
+    defaultHasTraining: inferredContents.hasTraining,
+    defaultLocation,
     defaultScope,
     defaultTrainingEnergySystem: inferEnergySystem(defaultDiscipline),
     defaultTrainingType:
@@ -103,7 +116,9 @@ export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
         autoComplete='off'
         className={formStyles.form}
         name='climbing-log-form'
-        onSubmit={event => void submit(event)}
+        onSubmit={event => {
+          void submit(event)
+        }}
         spellCheck={false}
       >
         <WizardHeader activeStep={step} onDiscard={requestReset} onNavigate={goToStep} />
@@ -143,11 +158,17 @@ export default function LogWizard({ bootstrap, defaultScope }: LogWizardProps) {
           </p>
         ) : undefined}
         <div className={styles.stepContent}>
-          {step === 'general' ? (
-            <GeneralStep bootstrap={bootstrap} maximumDate={initialDraft.date} />
-          ) : undefined}
-          {step === 'training' ? <TrainingStep /> : undefined}
-          {step === 'ascents' ? <AscentsStep bootstrap={bootstrap} /> : undefined}
+          <Activity mode={step === 'general' ? 'visible' : 'hidden'}>
+            <GeneralStep
+              bootstrap={bootstrap}
+              isActive={step === 'general'}
+              maximumDate={initialDraft.date}
+            />
+          </Activity>
+          <Activity mode={step === 'training' ? 'visible' : 'hidden'}>
+            <TrainingStep isActive={step === 'training'} />
+          </Activity>
+          <AscentsStep bootstrap={bootstrap} isActive={step === 'ascents'} />
         </div>
       </form>
     </FormProvider>

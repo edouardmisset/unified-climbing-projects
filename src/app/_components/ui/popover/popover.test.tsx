@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vite-plus/test'
 import { render } from 'vitest-browser-react'
 import { Popover } from './popover'
 
-function MountObserver({ onMount }: { onMount: () => void }) {
+function MountObserver({ onMount }: { onMount: VoidFunction }) {
   useEffect(onMount, [onMount])
 
   return 'Deferred content'
@@ -76,7 +76,7 @@ describe('popover', () => {
   })
 
   it('defers mounting its content until it opens', async () => {
-    const onMount = vi.fn<() => void>()
+    const onMount = vi.fn<VoidFunction>()
     const screen = await render(
       <Popover popoverTitle='Details' showOnInterest trigger='Open details'>
         <MountObserver onMount={onMount} />

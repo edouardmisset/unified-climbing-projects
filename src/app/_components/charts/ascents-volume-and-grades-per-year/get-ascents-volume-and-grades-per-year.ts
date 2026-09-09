@@ -14,17 +14,19 @@ type AscentsVolumeAndGradesPerYearDatum = {
   year: number
 }
 
-function getGradeStats(gradeNumbers: number[]): {
-  avg: number | undefined
-  max: number | undefined
-} {
+function getGradeStats(gradeNumbers: number[]): GetGradeStatsResult {
   if (gradeNumbers.length === 0) return { avg: undefined, max: undefined }
 
+  const averageGrade = average(...gradeNumbers)
+  if (averageGrade.error) return { avg: undefined, max: undefined }
+
   return {
-    avg: Math.round(average(...gradeNumbers).data ?? 0),
+    avg: Math.round(averageGrade.data),
     max: Math.max(...gradeNumbers),
   }
 }
+
+type GetGradeStatsResult = { avg: undefined; max: undefined } | { avg: number; max: number }
 
 export function getAscentsVolumeAndGradesPerYear(
   ascents: Ascent[],

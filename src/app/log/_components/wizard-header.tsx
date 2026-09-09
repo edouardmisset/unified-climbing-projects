@@ -13,7 +13,7 @@ export function WizardHeader({
   onNavigate,
 }: {
   activeStep: LogStep
-  onDiscard: () => void
+  onDiscard: VoidFunction
   onNavigate: (step: LogStep) => void
 }) {
   return (
@@ -26,6 +26,8 @@ export function WizardHeader({
               aria-label={`Step ${index + 1}: ${STEP_LABELS[step]}`}
               className={`${styles.stepButton} ${step === activeStep ? styles.activeStep : ''}`}
               onClick={() => {
+                if (step === activeStep) return
+
                 onNavigate(step)
               }}
               type='button'

@@ -16,13 +16,13 @@ const MONDAY_INDEX = 1
 const WEEK_53_START_INDEX = 4
 const PREVIOUS_MONDAY_OFFSET = 6
 
-export const YearGrid = ({
+export function YearGrid({
   dayCollection,
   year,
 }: {
   year: number
   dayCollection: DayDescriptor[]
-}) => {
+}) {
   const displayedNumberOfWeeks = Math.ceil((getNumberOfDaysInYear(year) + 1) / DAYS_IN_WEEK)
   const firstDayOfYear = new Date(year, 0, 1, NOON_HOUR)
   const firstDayIndex = firstDayOfYear.getUTCDay()

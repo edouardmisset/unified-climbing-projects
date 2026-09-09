@@ -15,8 +15,9 @@ import {
 } from './common'
 
 export const ASCENT_DISCIPLINES = ['Sport', 'Bouldering', 'Multi-Pitch'] as const
+export type AscentDiscipline = (typeof ASCENT_DISCIPLINES)[number]
 export const ASCENT_STYLES = ['Onsight', 'Flash', 'Redpoint'] as const
-
+export type AscentStyle = (typeof ASCENT_STYLES)[number]
 export const ASCENT_GRADES = [
   '1a',
   '1a+',

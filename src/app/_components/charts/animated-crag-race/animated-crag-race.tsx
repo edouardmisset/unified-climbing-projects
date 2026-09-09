@@ -341,7 +341,7 @@ function ChartPanel({
       >
         <div className={styles.controlsContainer}>
           <div className={styles.controlsBackground} />
-          <div className={styles.controlsEdge} />
+          <div className={`${styles.controlsEdge} frostedEdge`} />
           <div className={styles.controlsContent}>
             <PlaybackControls
               chartLabel={chartLabel}

@@ -19,7 +19,7 @@ const TrainingPopoverDescription = lazy(async () =>
   })),
 )
 
-export const TrainingBar = ({ weeklyTraining }: TrainingBarsProps) => {
+export function TrainingBar({ weeklyTraining }: TrainingBarsProps) {
   const numberOfTraining = weeklyTraining.length
   const isSingleWeekTraining = numberOfTraining <= 1
 

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 import {
   OWNER_ISOLATION_MATRIX,
   SYNTHETIC_ISOLATION_FIXTURE,

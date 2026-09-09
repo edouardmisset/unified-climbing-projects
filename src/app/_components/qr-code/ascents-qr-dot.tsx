@@ -12,7 +12,7 @@ const AscentsPopoverDescription = lazy(async () =>
   })),
 )
 
-export const AscentsQRDot = ({ ascents }: { ascents?: Ascent[] }) => {
+export function AscentsQRDot({ ascents }: { ascents?: Ascent[] }) {
   const [firstAscent] = ascents ?? []
   const hardestAscent = ascents === undefined ? undefined : getHardestAscent(ascents)
 

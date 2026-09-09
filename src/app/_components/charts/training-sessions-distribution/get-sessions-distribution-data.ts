@@ -19,6 +19,13 @@ type DistributionPalette<T extends DistributionKey> = {
   labels: Record<T, string>
 }
 
+type SessionsDistributionData = {
+  data: RadialBarData
+  colors: Record<string, string>
+  legendData: { id: string; label: string; color: string }[]
+  totals: Record<string, number>
+}
+
 const ENERGY_SYSTEM_COLORS = {
   'Anaerobic Alactic': 'var(--energySystemAA)',
   Aerobic: 'var(--energySystemAE)',
@@ -43,12 +50,7 @@ const ANATOMICAL_REGION_LABELS = {
   General: 'General',
 } as const
 
-export function getSessionsDistributionData(sessions: TrainingSession[]): {
-  data: RadialBarData
-  colors: Record<string, string>
-  legendData: { id: string; label: string; color: string }[]
-  totals: Record<string, number>
-} {
+export function getSessionsDistributionData(sessions: TrainingSession[]): SessionsDistributionData {
   if (sessions.length === 0) return { colors: {}, data: [], legendData: [], totals: {} }
 
   const energySystemCounts = countDefinedValues(sessions.map(({ energySystem }) => energySystem))

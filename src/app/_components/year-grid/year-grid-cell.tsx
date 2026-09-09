@@ -20,7 +20,7 @@ const TrainingPopoverDescription = lazy(async () =>
   ),
 )
 
-export const YearGridCell = (props: YearGridCellProps) => {
+export function YearGridCell(props: YearGridCellProps) {
   const {
     date,
     backgroundColor,

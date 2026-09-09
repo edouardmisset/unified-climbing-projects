@@ -9,7 +9,7 @@ const squareIndices = Array.from({ length: numberOfSquareInMarker }, (_, index) 
 const leftRegEx = /left/iu
 const topRegEx = /top/iu
 
-export const Marker = ({ placement }: { placement: MarkerPlacement }) => {
+export function Marker({ placement }: { placement: MarkerPlacement }) {
   const startingColumn = leftRegEx.test(placement) ? 1 : -1
   const startingRow = topRegEx.test(placement) ? 1 : -1
 

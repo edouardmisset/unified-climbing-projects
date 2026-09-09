@@ -59,54 +59,64 @@ export function ImportWorkspace({ recentJobs }: ImportWorkspaceProps) {
     }
 
     setIsWorking(true)
-    try {
-      const text = decodeUtf8Csv(await file.arrayBuffer())
-      const parsed = parseImportSource(source, text)
-      if (parsed.length === 0) throw new Error('The file has headers but no data rows.')
-      if (parsed.length > MAX_ROWS)
-        throw new Error('File exceeds 10,000 rows. Split it into smaller files.')
-      const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
-      const result = await previewImport(kind, parsed)
-      setRows(parsed)
-      setPreview(result)
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Unable to parse this file.')
-    } finally {
-      setIsWorking(false)
-    }
+
+    await file
+      .arrayBuffer()
+      .then(buffer => {
+        const text = decodeUtf8Csv(buffer)
+        const parsed = parseImportSource(source, text)
+        if (parsed.length === 0) throw new Error('The file has headers but no data rows.')
+        if (parsed.length > MAX_ROWS)
+          throw new Error('File exceeds 10,000 rows. Split it into smaller files.')
+        const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
+        return previewImport(kind, parsed).then(result => {
+          setRows(parsed)
+          setPreview(result)
+        })
+      })
+      .catch(error => {
+        setMessage(error instanceof Error ? error.message : 'Unable to parse this file.')
+      })
+      .finally(() => {
+        setIsWorking(false)
+      })
   }
 
   const confirmImport = async () => {
     if (rows.length === 0) return
     setIsWorking(true)
     setMessage('')
-    try {
-      const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
-      const result = await runImport(kind, rows, allowDuplicates)
-      setMessage(`Imported ${result.inserted} records; skipped ${result.skipped} duplicates.`)
-      setRows([])
-      setPreview(undefined)
-      router.refresh()
-    } catch (error) {
-      setMessage(
-        `${error instanceof Error ? error.message : 'Import failed.'} Retry by selecting the file again; existing fingerprints will skip completed batches.`,
-      )
-    } finally {
-      setIsWorking(false)
-    }
+    const kind: ImportKind = source === 'canonical-training' ? 'training' : 'ascents'
+    await runImport(kind, rows, allowDuplicates)
+      .then(result => {
+        setMessage(`Imported ${result.inserted} records; skipped ${result.skipped} duplicates.`)
+        setRows([])
+        setPreview(undefined)
+        router.refresh()
+      })
+      .catch(error => {
+        setMessage(
+          `${error instanceof Error ? error.message : 'Import failed.'} Retry by selecting the file again; existing fingerprints will skip completed batches.`,
+        )
+      })
+      .finally(() => {
+        setIsWorking(false)
+      })
   }
 
   const undo = async (jobId: string) => {
     setIsWorking(true)
-    try {
-      const result = await undoImport(jobId)
-      setMessage(`Removed ${result.deleted} records from that import.`)
-      router.refresh()
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Undo failed.')
-    } finally {
-      setIsWorking(false)
-    }
+    await undoImport(jobId)
+      .then(result => {
+        setMessage(`Removed ${result.deleted} records from that import.`)
+        router.refresh()
+      })
+      .catch(error => {
+        setMessage(error instanceof Error ? error.message : 'Undo failed.')
+      })
+      .finally(() => {
+        setIsWorking(false)
+      })
   }
 
   return (

@@ -18,7 +18,7 @@ export default function Error({
   reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void
+  reset: VoidFunction
 }) {
   return (
     <div>
@@ -43,7 +43,7 @@ export default function GlobalError({
   reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void
+  reset: VoidFunction
 }) {
   return (
     <html>

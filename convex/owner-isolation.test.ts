@@ -1,5 +1,5 @@
 import { convexTest } from 'convex-test'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { ascentListOutputSchema, type AscentPublicInput } from '../src/domain/ascent'
 import {
   trainingSessionListOutputSchema,

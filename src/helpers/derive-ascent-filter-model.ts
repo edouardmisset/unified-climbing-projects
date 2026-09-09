@@ -24,12 +24,14 @@ export type AscentFilterFacets = {
   years: string[]
 }
 
+type DeriveAscentFilterModelResult = { ascents: Ascent[]; facets: AscentFilterFacets }
+
 export function deriveAscentFilterModel(
   ascents: Ascent[],
   filters: AscentFilterValues,
-): { ascents: Ascent[]; facets: AscentFilterFacets } {
-  const areas = new Set<string>()
-  const crags = new Set<string>()
+): DeriveAscentFilterModelResult {
+  const areas = new Set<NonNullable<Ascent['area']>>()
+  const crags = new Set<NonNullable<Ascent['crag']>>()
   const disciplines = new Set<Ascent['discipline']>()
   const styles = new Set<Ascent['style']>()
   const years = new Set<string>()

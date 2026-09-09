@@ -11,7 +11,6 @@ import {
   trainingSessionFormSchema,
   trainingSessionPublicInputSchema,
 } from '~/domain/training-session'
-import { includesAscents, includesTraining, LOG_SCOPES } from '~/domain/climbing-log'
 import { z } from 'zod'
 
 const ascentDetailsSchema = ascentFormObjectSchema
@@ -41,25 +40,25 @@ const climbingLogDraftValueSchema = z
     date: calendarDateSchema,
     discipline: ascentDisciplineSchema,
     location: optionalTextCodec,
-    scope: z.enum(LOG_SCOPES),
+    hasTraining: z.boolean(),
     training: trainingDetailsSchema.partial(),
   })
   .superRefine((form, context) => {
-    if (includesAscents(form.scope) && form.ascents.length === 0)
+    if (!form.hasTraining && form.ascents.length === 0)
       context.addIssue({
         code: 'custom',
-        message: 'Log at least one ascent',
+        message: 'Add at least one ascent or a training session',
         path: ['ascents'],
       })
 
-    if (includesAscents(form.scope) && form.location === undefined)
+    if (form.ascents.length > 0 && form.location === undefined)
       context.addIssue({
         code: 'custom',
         message: 'A location is required when logging ascents',
         path: ['location'],
       })
 
-    if (includesTraining(form.scope)) {
+    if (form.hasTraining) {
       const trainingResult = trainingValueDetailsSchema.safeParse(form.training)
       if (!trainingResult.success)
         for (const issue of trainingResult.error.issues)
@@ -73,17 +72,15 @@ const climbingLogDraftValueSchema = z
 type ClimbingLogDraftValue = z.output<typeof climbingLogDraftValueSchema>
 
 function buildClimbingLogValue(form: ClimbingLogDraftValue) {
-  const ascents: AscentPublicInput[] = includesAscents(form.scope)
-    ? form.ascents.map(ascent =>
-        ascentPublicInputSchema.parse({
-          ...ascent,
-          crag: form.location,
-          date: form.date,
-        }),
-      )
-    : []
+  const ascents: AscentPublicInput[] = form.ascents.map(ascent =>
+    ascentPublicInputSchema.parse({
+      ...ascent,
+      crag: form.location,
+      date: form.date,
+    }),
+  )
 
-  const training: TrainingSessionPublicInput | undefined = includesTraining(form.scope)
+  const training: TrainingSessionPublicInput | undefined = form.hasTraining
     ? trainingSessionPublicInputSchema.parse({
         ...form.training,
         date: form.date,
@@ -95,7 +92,16 @@ function buildClimbingLogValue(form: ClimbingLogDraftValue) {
   return { ascents, training }
 }
 
-export const climbingLogFormSchema = climbingLogDraftValueSchema.transform(buildClimbingLogValue)
+export const climbingLogFormSchema = z.preprocess(value => {
+  if (
+    typeof value === 'object' &&
+    value !== null &&
+    'hasTraining' in value &&
+    value.hasTraining === false
+  )
+    return { ...value, training: {} }
+  return value
+}, climbingLogDraftValueSchema.transform(buildClimbingLogValue))
 
 export type ClimbingLogFormInput = z.input<typeof climbingLogFormSchema>
 export type ClimbingLogValue = z.output<typeof climbingLogFormSchema>

@@ -10,7 +10,7 @@ import styles from '../navigation.module.css'
 type NavigationDisclosureProps = {
   icon: LucideIcon
   item: Extract<NavigationElement, { type: 'disclosure' }>
-  onNavigate?: () => void
+  onNavigate?: VoidFunction
   text: string
 }
 

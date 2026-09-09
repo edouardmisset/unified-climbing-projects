@@ -11,7 +11,7 @@ const TrainingPopoverDescription = lazy(async () =>
   })),
 )
 
-export const TrainingsQRDot = ({ trainingSessions }: { trainingSessions: TrainingSession[] }) => {
+export function TrainingsQRDot({ trainingSessions }: { trainingSessions: TrainingSession[] }) {
   const [firstSession] = trainingSessions
 
   const sessionClassName =

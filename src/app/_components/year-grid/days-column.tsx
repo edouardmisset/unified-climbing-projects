@@ -5,7 +5,7 @@ import styles from './year-grid.module.css'
 
 const weekDays = ['', ...getEnglishWeekdayLabels()]
 
-const DayCell = ({ day, index }: { day: string; index: number }) => {
+function DayCell({ day, index }: { day: string; index: number }) {
   const backgroundStyle: CSSProperties | undefined =
     index >= WEEKEND_START_DAY_INDEX ? { backgroundColor: 'var(--surface-3)' } : undefined
 

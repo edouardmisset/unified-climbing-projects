@@ -82,7 +82,7 @@ function processLargeDataset(items: Item[]) {
 **With fallback for unsupported browsers:**
 
 ```typescript
-const scheduleIdleWork = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1))
+const scheduleIdleWork = window.requestIdleCallback ?? ((cb: VoidFunction) => setTimeout(cb, 1))
 
 scheduleIdleWork(() => {
   // Non-critical work

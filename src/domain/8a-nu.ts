@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { type AscentImportRow, ascentDomainSchema } from './ascent'
+import {
+  type AscentDiscipline,
+  type AscentImportRow,
+  type AscentStyle,
+  ascentDomainSchema,
+} from './ascent'
 import { type CanonicalCsvContract, parseCanonicalCsv } from './csv'
 
 export const EIGHT_A_NU_COLUMNS = [
@@ -24,6 +29,9 @@ export const EIGHT_A_NU_COLUMNS = [
   'sits',
 ] as const
 
+const EIGHT_A_CLIMBING_TYPES = ['BOULDER', 'ROUTE'] as const satisfies Readonly<readonly string[]>
+const EIGHT_A_ASCENT_TYPES = ['f', 'os', 'rp'] as const satisfies Readonly<readonly string[]>
+
 const raw8aNuRowSchema = z
   .object({
     area_name: z.string(),
@@ -39,28 +47,35 @@ const raw8aNuRowSchema = z
     rating: z.string(),
     recommended: z.string(),
     repeats: z.string(),
-    route_boulder: z.string(),
+    route_boulder: z.enum(EIGHT_A_CLIMBING_TYPES),
     sector_name: z.string(),
     sits: z.string(),
     sub_type: z.string(),
     tries: z.string(),
-    type: z.string(),
+    type: z.enum(EIGHT_A_ASCENT_TYPES),
   })
   .strict()
 
-const disciplineBy8aNuKind: Readonly<Partial<Record<string, 'Bouldering' | 'Sport'>>> = {
+const disciplineBy8aNuKind = {
   BOULDER: 'Bouldering',
   ROUTE: 'Sport',
-} as const
+} as const satisfies Readonly<
+  Partial<
+    Record<
+      (typeof EIGHT_A_CLIMBING_TYPES)[number],
+      Extract<AscentDiscipline, 'Bouldering' | 'Sport'>
+    >
+  >
+>
 
-const styleBy8aNuType: Readonly<Partial<Record<string, 'Flash' | 'Onsight' | 'Redpoint'>>> = {
+const styleBy8aNuType = {
   f: 'Flash',
   os: 'Onsight',
   rp: 'Redpoint',
   // v1 does not track top-rope ascents. 8a.nu top-rope rows (`tr`) are
   // intentionally absent here so the `!style` check below rejects them
   // instead of importing them under another style.
-} as const
+} as const satisfies Readonly<Partial<Record<(typeof EIGHT_A_ASCENT_TYPES)[number], AscentStyle>>>
 
 function optionalText(value: string): string | undefined {
   const trimmed = value.trim()
@@ -78,8 +93,6 @@ function parse8aNuRow(input: unknown): AscentImportRow {
   const row = raw8aNuRowSchema.parse(input)
   const discipline = disciplineBy8aNuKind[row.route_boulder]
   const style = styleBy8aNuType[row.type]
-  if (!discipline) throw new Error(`Unsupported 8a.nu climb type "${row.route_boulder}"`)
-  if (!style) throw new Error(`Unsupported 8a.nu ascent type "${row.type}"`)
 
   const parsedTries = optionalInteger(row.tries)
   const sector = optionalText(row.sector_name)

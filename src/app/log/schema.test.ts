@@ -13,11 +13,32 @@ const generalDetails = {
   date: '2026-07-30',
   discipline: 'Sport',
   location: 'Céüse',
-  scope: 'ascents',
+  hasTraining: false,
   training: {},
 } as const
 
 describe('climbing log form schema', () => {
+  it('ignores removed training even when its retained fields are invalid', () => {
+    const result = climbingLogFormSchema.parse({
+      ...generalDetails,
+      ascents: [ascent],
+      training: { intensity: '999', type: '' },
+    })
+    expect(result.training).toBeUndefined()
+    expect(result.ascents).toHaveLength(1)
+  })
+
+  it('validates an added training session', () => {
+    expect(
+      climbingLogFormSchema.safeParse({
+        ...generalDetails,
+        ascents: [],
+        hasTraining: true,
+        training: { type: '', intensity: '999' },
+      }).success,
+    ).toBe(false)
+  })
+
   it('creates a canonical ascent-only log', () => {
     const result = climbingLogFormSchema.parse({
       ...generalDetails,
@@ -44,7 +65,7 @@ describe('climbing log form schema', () => {
     const result = climbingLogFormSchema.parse({
       ...generalDetails,
       ascents: [],
-      scope: 'training',
+      hasTraining: true,
       training: {
         intensity: '80',
         type: 'Endurance',
@@ -69,7 +90,7 @@ describe('climbing log form schema', () => {
     const result = climbingLogFormSchema.parse({
       ...generalDetails,
       ascents: [ascent, { ...ascent, discipline: 'Bouldering', name: 'Big Boss' }],
-      scope: 'both',
+      hasTraining: true,
       training: { type: 'Outdoor' },
     })
 

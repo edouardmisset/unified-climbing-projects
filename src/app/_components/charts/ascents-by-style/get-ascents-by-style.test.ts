@@ -5,6 +5,7 @@ import { getAscentsByStyle } from './get-ascents-by-style'
 
 describe('getAscentsByStyle', () => {
   const testAscents = sampleAscents
+
   it('should return empty array for empty input', () => {
     const result = getAscentsByStyle([])
     expect(result).toStrictEqual([])

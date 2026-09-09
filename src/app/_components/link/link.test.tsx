@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { usePathname } from 'next/navigation'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vite-plus/test'
 import { Link } from './link'
 
 vi.mock(import('next/navigation'), async importOriginal => ({
@@ -13,7 +13,7 @@ const usePathnameMock = vi.mocked(usePathname)
 
 describe('link', () => {
   it('preserves active state and click handling for the current route', async () => {
-    const handleClick = vi.fn<() => void>()
+    const handleClick = vi.fn<VoidFunction>()
     usePathnameMock.mockReturnValue('/settings')
     render(
       <Link className='custom' href='/settings' onClick={handleClick}>
