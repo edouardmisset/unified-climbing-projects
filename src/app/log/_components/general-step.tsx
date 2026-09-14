@@ -55,6 +55,20 @@ export function GeneralStep({
       ])
   }
 
+  const syncAscentDisciplines = (
+    discipline: LogDraft['discipline'],
+    previousDiscipline: LogDraft['discipline'],
+  ) => {
+    const ascents = getValues('ascents')
+    const nextAscents = ascents.map((ascent, index) =>
+      dirtyFields.ascents?.[index]?.discipline === true && ascent.discipline !== previousDiscipline
+        ? ascent
+        : { ...ascent, discipline },
+    )
+    if (nextAscents.some((ascent, index) => ascent !== ascents[index]))
+      setValue('ascents', nextAscents)
+  }
+
   return (
     <>
       <h2 className={formStyles.groupHeader}>General details</h2>
@@ -79,9 +93,11 @@ export function GeneralStep({
             className={formStyles.input}
             id='discipline'
             onChange={event => {
+              const previousDiscipline = getValues('discipline')
               void disciplineField.onChange(event)
-              if (dirtyFields.training?.energySystem === true) return
               const discipline = event.target.value as LogDraft['discipline']
+              syncAscentDisciplines(discipline, previousDiscipline)
+              if (dirtyFields.training?.energySystem === true) return
               setValue('training.energySystem', inferEnergySystem(discipline))
             }}
             required={isActive}

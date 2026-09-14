@@ -209,6 +209,33 @@ describe('log wizard', () => {
     expect(screen.getByRole('heading', { name: 'Ascent 2' })).toBeInTheDocument()
   })
 
+  it('updates inferred ascent discipline when the general discipline changes', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard()
+
+    await user.type(screen.getByLabelText('Location'), 'Céüse')
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Discipline' }), 'Bouldering')
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+
+    expect(screen.getByRole('combobox', { name: 'Discipline' })).toHaveValue('Bouldering')
+  })
+
+  it('preserves an explicitly overridden ascent discipline', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard()
+
+    await user.type(screen.getByLabelText('Location'), 'Céüse')
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Discipline' }), 'Bouldering')
+    await user.click(screen.getByRole('button', { name: 'Step 1: General' }))
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Discipline' }), 'Multi-Pitch')
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+
+    expect(screen.getByRole('combobox', { name: 'Discipline' })).toHaveValue('Bouldering')
+  })
+
   it('uses the supplied most-frequent grade for new ascents', async () => {
     setupMocks()
     const user = userEvent.setup()
