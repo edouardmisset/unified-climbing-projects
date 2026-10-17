@@ -23,12 +23,14 @@ export function AscentsStep({
   const { append, fields, remove } = useFieldArray({ control, name: 'ascents' })
   const hasTraining = useWatch({ control, name: 'hasTraining' })
   const appendAscent = () => {
+    const previousAscent = getValues('ascents').at(-1)
+    const newAscent = createAscentDraft({
+      defaultGrade: bootstrap.defaultGrade,
+      discipline: getValues('discipline'),
+      historyDefaults: bootstrap.latestAscent,
+    })
     append(
-      createAscentDraft({
-        defaultGrade: bootstrap.defaultGrade,
-        discipline: getValues('discipline'),
-        historyDefaults: bootstrap.latestAscent,
-      }),
+      previousAscent ? { ...newAscent, area: previousAscent.area } : newAscent,
     )
   }
 
