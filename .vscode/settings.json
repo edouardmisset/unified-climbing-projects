@@ -54,7 +54,8 @@
     "statusBar.debuggingBackground": "#9109cf",
     "statusBar.debuggingForeground": "#e7e7e7",
     "activityBar.activeBorder": "#e7e7e7",
-    "activityBarTop.activeBorder": "#e7e7e7"
+    "activityBarTop.activeBorder": "#e7e7e7",
+    "statusBar.inactiveBackground": "#9109cf"
   },
   "peacock.color": "#9109cf",
   "js/ts.tsdk.path": "node_modules/typescript/lib",
