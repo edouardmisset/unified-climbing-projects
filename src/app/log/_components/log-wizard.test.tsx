@@ -277,6 +277,24 @@ describe('log wizard', () => {
     expect(screen.queryByRole('heading', { name: 'Ascent 2' })).not.toBeInTheDocument()
   })
 
+  it('reuses the previous ascent sector for each new ascent', async () => {
+    setupMocks()
+    const user = userEvent.setup()
+    renderWizard(undefined, 'ascents')
+
+    await user.click(screen.getByRole('button', { name: 'Step 3: Ascents' }))
+    await user.type(screen.getAllByLabelText('Area')[0], 'North Sector')
+    await user.click(screen.getByRole('button', { name: 'Add ascent' }))
+
+    expect(screen.getAllByLabelText('Area')[1]).toHaveValue('North Sector')
+
+    await user.clear(screen.getAllByLabelText('Area')[1])
+    await user.type(screen.getAllByLabelText('Area')[1], 'South Sector')
+    await user.click(screen.getByRole('button', { name: 'Add ascent' }))
+
+    expect(screen.getAllByLabelText('Area')[2]).toHaveValue('South Sector')
+  })
+
   it('submits an ascent-only draft through the server action', async () => {
     setupMocks()
     const user = userEvent.setup()
